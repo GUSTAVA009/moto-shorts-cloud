@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "review_required": true,
   "episodes": [
     {
@@ -602,6 +602,151 @@
         "overlay": "ОТПРАВЬ ДРУГУ-МЕЧТАТЕЛЮ",
         "description": "Отправь ролик другу, с которым мечтаешь однажды проехать по дюнам."
       }
+    },
+    {
+      "id": "wet-road-checklist-08",
+      "auto_preview": true,
+      "max_duration_seconds": 32,
+      "title": "Мокрый асфальт: ты проверяешь эти 3 вещи? 🌧️ #shorts",
+      "narration": "Мокрый асфальт красиво блестит, но перед поездкой я проверил бы три вещи. Первое — давление и состояние шин. Второе — тормоза и стоп-сигнал. Третье — свет, зеркала и чистый визор. Точные значения ищи в инструкции своего мотоцикла. А что ты проверяешь первым?",
+      "description": "Перед дождливой поездкой — три простые проверки: шины, тормоза и видимость. Точные параметры смотри в инструкции своего мотоцикла. 🌧️\n\n#мото #дождь #советы #shorts",
+      "caption_start": "КРАСИВО. НО ДОЖДЬ МЕНЯЕТ ВСЁ.",
+      "caption_middle": "3 ПРОВЕРКИ ДО ПОЕЗДКИ",
+      "caption_end": "А ЧТО ПРОВЕРЯЕШЬ ТЫ?",
+      "story_steps": [
+        {
+          "at": 7,
+          "text": "1. ШИНЫ И ДАВЛЕНИЕ"
+        },
+        {
+          "at": 12.5,
+          "text": "2. ТОРМОЗА И СТОП-СИГНАЛ"
+        },
+        {
+          "at": 18.5,
+          "text": "3. СВЕТ, ЗЕРКАЛА, ВИЗОР"
+        }
+      ],
+      "music_bpm": 112,
+      "music_style": "night-drive",
+      "tags": [
+        "мото",
+        "дождь",
+        "безопасность",
+        "мотоциклы",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ: ЧТО ПРОВЕРЯЕШЬ?",
+        "description": "Напиши в комментариях, что проверяешь первым перед поездкой."
+      },
+      "editorial": {
+        "environment": "rainy-city-and-mountain-roads",
+        "bike": "wet-weather-road-motorcycles",
+        "people": "commuter-rider-and-pre-ride-inspector",
+        "story": "original-pre-ride-rain-safety-explainer",
+        "visual": "rainy-neon-reflections-and-tire-closeups"
+      },
+      "editorial_references": [
+        "https://msf-usa.org/motorcycle-safety-awareness-month/",
+        "https://msf-usa.org/documents/library/t-clocs-pre-ride-inspection-checklist/",
+        "https://msf-usa.org/msf-news/autumn-calls-for-extra-attention-from-motorcyclists-and-drivers/"
+      ],
+      "footage": [
+        {
+          "key": "city_rain",
+          "url": "https://www.pexels.com/download/video/38992869/",
+          "source_page": "https://www.pexels.com/video/motorbike-ride-through-rainy-urban-streets-38992869/",
+          "author": "Umar Khan",
+          "license": "Pexels License"
+        },
+        {
+          "key": "tire_closeup",
+          "url": "https://www.pexels.com/download/video/36103039/",
+          "source_page": "https://www.pexels.com/video/motorbike-tire-repair-and-maintenance-indoors-36103039/",
+          "author": "MNRD JON",
+          "license": "Pexels License"
+        },
+        {
+          "key": "mountain_rain",
+          "url": "https://www.pexels.com/download/video/40347382/",
+          "source_page": "https://www.pexels.com/video/motorcycle-adventure-through-rainy-mountain-road-40347382/",
+          "author": "Tom Shutkin",
+          "license": "Pexels License"
+        },
+        {
+          "key": "bike_check",
+          "url": "https://www.pexels.com/download/video/5199297/",
+          "source_page": "https://www.pexels.com/video/a-man-checking-his-motor-bike-5199297/",
+          "author": "cottonbro studio",
+          "license": "Pexels License"
+        },
+        {
+          "key": "night_rain",
+          "url": "https://www.pexels.com/download/video/35777415/",
+          "source_page": "https://www.pexels.com/video/night-rainfall-on-urban-street-with-motorbikes-35777415/",
+          "author": "benedicto 13",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "city_rain",
+          "start": 0.5,
+          "seconds": 2.5
+        },
+        {
+          "source": "tire_closeup",
+          "start": 0.3,
+          "seconds": 2.6
+        },
+        {
+          "source": "mountain_rain",
+          "start": 0,
+          "seconds": 2.4
+        },
+        {
+          "source": "bike_check",
+          "start": 3,
+          "seconds": 2.5
+        },
+        {
+          "source": "night_rain",
+          "start": 1,
+          "seconds": 2.3
+        },
+        {
+          "source": "city_rain",
+          "start": 5.5,
+          "seconds": 2.5
+        },
+        {
+          "source": "tire_closeup",
+          "start": 5,
+          "seconds": 2.4
+        },
+        {
+          "source": "mountain_rain",
+          "start": 3,
+          "seconds": 2.4
+        },
+        {
+          "source": "bike_check",
+          "start": 8,
+          "seconds": 2.3
+        },
+        {
+          "source": "night_rain",
+          "start": 8,
+          "seconds": 2.5
+        },
+        {
+          "source": "city_rain",
+          "start": 9.4,
+          "seconds": 2.4
+        }
+      ]
     }
   ]
 }
