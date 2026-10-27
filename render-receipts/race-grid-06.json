@@ -1,6 +1,6 @@
 {
   "id": "race-grid-06",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40582540913",
   "notes": "If render failed, inspect and reconcile before retry."
 }
