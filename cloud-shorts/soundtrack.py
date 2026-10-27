@@ -16,18 +16,52 @@ SAMPLE_RATE = 32000
 SEED = 21844
 TWO_PI = 2 * math.pi
 
+# All notes are newly synthesized, sample-free and independent of recorded music.
+# Different categories receive different harmony and rhythm rather than the same
+# audio bed applied to every new video.
+STYLES = {
+    "action": {
+        "chords": [(40, [64, 67, 71]), (36, [60, 64, 67]), (43, [67, 71, 74]), (38, [62, 66, 69])],
+        "kick": ((0, .61), (1.5, .34), (2, .52), (3.25, .27)),
+        "snare": (.30, 1, 3), "hat": .11, "bass": .29, "lead": .088,
+    },
+    "night-drive": {
+        "chords": [(45, [69, 72, 76]), (41, [65, 69, 72]), (36, [60, 64, 67]), (43, [67, 71, 74])],
+        "kick": ((0, .48), (2, .50)), "snare": (.22, 1, 3),
+        "hat": .07, "bass": .31, "lead": .118,
+    },
+    "garage-groove": {
+        "chords": [(38, [62, 65, 69]), (34, [58, 62, 65]), (41, [65, 69, 72]), (36, [60, 64, 67])],
+        "kick": ((0, .58), (1.75, .34), (3, .48)), "snare": (.36, 1.0, 2.75),
+        "hat": .085, "bass": .35, "lead": .063,
+    },
+    "race-breakbeat": {
+        "chords": [(43, [67, 70, 74]), (39, [63, 67, 70]), (46, [70, 74, 77]), (41, [65, 69, 72])],
+        "kick": ((0, .65), (.75, .26), (1.5, .49), (2, .60), (3.5, .35)),
+        "snare": (.36, 1, 2.5, 3), "hat": .125, "bass": .30, "lead": .10,
+    },
+    "desert-cinematic": {
+        "chords": [(47, [71, 74, 78]), (43, [67, 71, 74]), (38, [62, 66, 69]), (45, [69, 73, 76])],
+        "kick": ((0, .46), (2, .40)), "snare": (.16, 3),
+        "hat": .05, "bass": .30, "lead": .10,
+    },
+}
+
 
 def midi_frequency(note):
     return 440.0 * 2.0 ** ((note - 69) / 12.0)
 
 
-def generate(path, seconds, bpm=BPM, sample_rate=SAMPLE_RATE):
-    """Render a short, energetic E-minor electronic groove beneath narration."""
+def generate(path, seconds, bpm=BPM, sample_rate=SAMPLE_RATE, style="action", seed=None):
+    """Generate a fresh background track matching the episode's atmosphere."""
     if not (4.0 <= seconds <= 180.0):
         raise ValueError("Music duration must be 4-180 seconds")
+    if style not in STYLES or not (50 <= int(bpm) <= 200):
+        raise ValueError("Unsupported original music style or BPM")
+    settings = STYLES[style]
     n = math.ceil(seconds * sample_rate)
     samples = array("f", [0.0]) * n
-    rng = random.Random(SEED)
+    rng = random.Random(SEED if seed is None else int(seed))
     beat = 60.0 / float(bpm)
     bar = beat * 4
 
@@ -101,13 +135,7 @@ def generate(path, seconds, bpm=BPM, sample_rate=SAMPLE_RATE):
             previous = noise
             samples[first + k] += bright * math.exp(-t * speed) * strength
 
-    # E minor, C major, G major, D major. Bass roots E2, C2, G2, D2.
-    chords = [
-        (40, [64, 67, 71]),  # Em
-        (36, [60, 64, 67]),  # C
-        (43, [67, 71, 74]),  # G
-        (38, [62, 66, 69]),  # D
-    ]
+    chords = settings["chords"]
     bars = math.ceil(seconds / bar)
     for b in range(bars):
         tbar = b * bar
@@ -116,33 +144,35 @@ def generate(path, seconds, bpm=BPM, sample_rate=SAMPLE_RATE):
             break
 
         # Tight modern kick/snare groove; variation avoids machine-gun repetition.
-        for pos, level in ((0.0, 0.61), (1.5, 0.34), (2.0, 0.52),
-                           (3.25 if b % 2 == 0 else 3.5, 0.27)):
+        for pos, level in settings["kick"]:
             at = tbar + pos * beat
             if at < seconds:
                 add_kick(at, level)
-        for pos in (1, 3):
+        snare_strength, *snare_beats = settings["snare"]
+        for pos in snare_beats:
             at = tbar + pos * beat
             if at < seconds:
-                add_snare(at, 0.26 if pos == 1 else 0.32)
+                add_snare(at, snare_strength)
         for h in range(8):
             at = tbar + h * beat / 2
             if at < seconds:
-                add_hat(at, (0.075 if h % 2 == 0 else 0.11),
+                add_hat(at, settings["hat"] * (0.7 if h % 2 == 0 else 1.0),
                         open_hat=(h == 7 and b % 2 == 1))
 
         for pos, level in ((0.0, 0.29), (0.75, 0.15), (2.0, 0.22),
                            (2.75, 0.18)):
             at = tbar + pos * beat
             if at < seconds:
-                add_note(at, root, 0.61 * beat, level, "bass")
+                add_note(at, root, 0.61 * beat,
+                         level * settings["bass"] / .29, "bass")
 
         # Musical tonal motif, sparse enough to leave room for spoken narration.
         for j, pos in enumerate((0.0, 1.5, 2.5, 3.5)):
             at = tbar + pos * beat
             if at < seconds:
                 note = tones[(j + b) % len(tones)]
-                add_note(at, note + (12 if j == 3 else 0), 0.56, 0.088)
+                add_note(at, note + (12 if j == 3 else 0),
+                         0.56, settings["lead"])
 
     # Prevent clipping, fade in/out to avoid crackle at Shorts edits.
     peak = max((abs(v) for v in samples), default=0)
@@ -163,7 +193,7 @@ def generate(path, seconds, bpm=BPM, sample_rate=SAMPLE_RATE):
         output.setframerate(sample_rate)
         output.writeframes(pcm.tobytes())
     return {"wav": str(path), "seconds": seconds, "bpm": bpm,
-            "style": "original electronic action groove, E minor",
+            "style": "original procedural " + style,
             "source": "deterministic programmatic synthesis; no samples"}
 
 if __name__ == "__main__":
