@@ -13,9 +13,20 @@ on:
   workflow_dispatch:
     inputs:
       video_run_id:
-        description: "Successful GitHub Actions render run ID with artifact first-motorcycle-short-review"
+        description: "Successful NEW Shorts render run ID (never reuse the published first video)"
         required: true
         type: string
+      episode:
+        description: "Select exactly the reviewed episode"
+        required: true
+        type: choice
+        options: [jump-second-01, forest-group-02]
+      artifact_kind:
+        description: "Which cloud preview workflow produced the MP4?"
+        required: true
+        type: choice
+        default: new
+        options: [new, daily]
       privacy:
         description: "New YouTube API apps without audit are restricted to private"
         required: true
@@ -47,6 +58,8 @@ jobs:
     needs: safety-tests
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    env:
+      EPISODE: ${{ inputs.episode }}
     permissions:
       contents: write
       actions: read
@@ -55,7 +68,7 @@ jobs:
       - name: Download a reviewed Shorts MP4 from an existing render
         uses: actions/download-artifact@v4
         with:
-          name: first-motorcycle-short-review
+          name: ${{ inputs.artifact_kind == 'daily' && format('daily-preview-{0}-{1}', inputs.episode, inputs.video_run_id) || format('new-shorts-{0}-{1}', inputs.episode, inputs.video_run_id) }}
           path: staged
           repository: ${{ github.repository }}
           run-id: ${{ inputs.video_run_id }}
@@ -63,8 +76,8 @@ jobs:
       - name: Validate final file and clean YouTube description, without Google access
         run: |
           python3 cloud-shorts/youtube_upload.py \
-            --video staged/first_motorcycle_short.mp4 \
-            --metadata staged/publication.json \
+            --video "staged/$EPISODE/$EPISODE.mp4" \
+            --metadata "staged/$EPISODE/publication.json" \
             --privacy "${{ inputs.privacy }}" \
             --dry-run
       - name: Validate OAuth setup and audit before reserving an upload
@@ -93,7 +106,7 @@ jobs:
           YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
         run: |
           python3 cloud-shorts/upload_guard.py reserve \
-            --video staged/first_motorcycle_short.mp4 \
+            --video "staged/$EPISODE/$EPISODE.mp4" \
             --channel "$YOUTUBE_EXPECTED_CHANNEL_ID" \
             --output upload-guard-reservation.json
       - name: Install free official Google API client
@@ -107,8 +120,8 @@ jobs:
           YOUTUBE_API_AUDITED: ${{ vars.YOUTUBE_API_AUDITED }}
         run: |
           python3 cloud-shorts/youtube_upload.py \
-            --video staged/first_motorcycle_short.mp4 \
-            --metadata staged/publication.json \
+            --video "staged/$EPISODE/$EPISODE.mp4" \
+            --metadata "staged/$EPISODE/publication.json" \
             --privacy "${{ inputs.privacy }}" \
             --receipt youtube-upload-receipt.json
       - name: Finalize durable upload receipt
