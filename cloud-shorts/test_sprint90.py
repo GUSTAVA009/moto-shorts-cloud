@@ -20,9 +20,9 @@ class Sprint90Tests(unittest.TestCase):
         self.assertEqual(m["longform_views_if_5_minutes_average"],47676)
         self.assertEqual(m["earn_progress_data_as_of"],"2026-10-22")
 
-    def test_security_and_region_blockers(self):
+    def test_2fa_verified_and_region_still_unverified(self):
         m=sprint90.required_metrics(self.b)
-        self.assertFalse(m["two_step_verification_complete"])
+        self.assertTrue(m["two_step_verification_complete"])  # Verified by YouTube Studio Earn on 2026-10-28
         self.assertFalse(m["payments_country_verified"])
         self.assertFalse(m["ypp_approved"])
 
