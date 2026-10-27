@@ -220,14 +220,39 @@ def assemble_clips(ep, sources, work, target_seconds):
     return silent, total
 
 
+def fitted_story_beats(ep, total):
+    """Place authored explanation beats within the actual synthesized narration.
+
+    Static time marks can exceed real TTS duration. Never silently drop the
+    third fact or overlap the closing question and lower-third.
+    """
+    steps = ep.get("story_steps", [])
+    if not steps:
+        return []
+    start = 3.05
+    end = total - 3.35
+    step = (end - start) / len(steps)
+    if step < 1.45:
+        raise RuntimeError("Narration too short for all fact captions; revise script")
+    result = []
+    for index, item in enumerate(steps):
+        begin = start + index * step
+        until = min(end, begin + min(2.45, step - 0.20))
+        result.append((item["text"], begin, until))
+    return result
+
+
 def draw_captions(ep, work, total):
     if not FONT.is_file():
         raise RuntimeError("Expected Cyrillic font not present")
     spans = [
         ("caption_start", 0.05, min(2.45, total - 4.0)),
-        ("caption_middle", min(3.9, total - 4.0), min(6.35, total - 2.8)),
-        ("caption_end", total - 2.75, total - 0.12),
     ]
+    # Fact explanations take the middle of a story-driven Short. Do not
+    # place generic middle captions on top of the factual sequence.
+    if not ep.get("story_steps"):
+        spans.append(("caption_middle", min(3.9, total - 4.0), min(6.35, total - 2.8)))
+    spans.append(("caption_end", total - 2.75, total - 0.12))
     filters = []
     for i, (field, lo, hi) in enumerate(spans):
         if hi <= lo:
@@ -244,13 +269,9 @@ def draw_captions(ep, work, total):
         ])
     # New, longer narrative Shorts can display independently authored,
     # time-coded factual beats rather than silent slides or recycled templates.
-    for j, item in enumerate(ep.get("story_steps", [])):
-        at = float(item["at"])
-        if at >= total - 2.7:
-            continue
-        until = min(total - 2.7, at + 2.2)
+    for j, (beat_text, at, until) in enumerate(fitted_story_beats(ep, total)):
         beat_file = work / ("story_beat_%02d.txt" % j)
-        beat_file.write_text(item["text"], encoding="utf-8")
+        beat_file.write_text(beat_text, encoding="utf-8")
         filters.extend([
             "drawbox=x=23:y=126:w=674:h=92:color=black@0.45:t=fill:"
             "enable='between(t,%.3f,%.3f)'" % (at,until),
