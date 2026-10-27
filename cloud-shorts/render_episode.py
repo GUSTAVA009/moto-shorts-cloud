@@ -91,6 +91,21 @@ def validate_episode(ep):
             raise ValueError("Missing or disallowed public field: " + field)
     if len(ep["title"]) > 100 or len(ep["narration"]) > 350:
         raise ValueError("Title/narration too long")
+    max_duration = float(ep.get("max_duration_seconds", 19.5))
+    if not 9.0 <= max_duration <= 36.0:
+        raise ValueError("Story video max duration must be between 9 and 36 seconds")
+    story_steps = ep.get("story_steps", [])
+    if not isinstance(story_steps, list) or len(story_steps) > 4:
+        raise ValueError("At most four original story beat captions")
+    previous_at = 0.0
+    for item in story_steps:
+        t = float(item.get("at", -1))
+        caption = str(item.get("text", "")).strip()
+        if not (2.5 <= t <= max_duration - 2.7) or t <= previous_at + 1.0:
+            raise ValueError("Invalid or overlapping story beat time")
+        if not (4 <= len(caption) <= 29) or any(bad in caption.casefold() for bad in BAN):
+            raise ValueError("Invalid original story beat title")
+        previous_at = t
     if "http" in ep["description"].lower() or "www." in ep["description"].lower():
         raise ValueError("No URL in YouTube description")
     if not (2 <= len(ep.get("footage", [])) <= 8):
@@ -227,6 +242,23 @@ def draw_captions(ep, work, total):
             "x=(w-text_w)/2:y=154:enable='between(t,%.3f,%.3f)'"
             % (FONT, caption_file, lo, hi),
         ])
+    # New, longer narrative Shorts can display independently authored,
+    # time-coded factual beats rather than silent slides or recycled templates.
+    for j, item in enumerate(ep.get("story_steps", [])):
+        at = float(item["at"])
+        if at >= total - 2.7:
+            continue
+        until = min(total - 2.7, at + 2.2)
+        beat_file = work / ("story_beat_%02d.txt" % j)
+        beat_file.write_text(item["text"], encoding="utf-8")
+        filters.extend([
+            "drawbox=x=23:y=126:w=674:h=92:color=black@0.45:t=fill:"
+            "enable='between(t,%.3f,%.3f)'" % (at,until),
+            "drawtext=fontfile=%s:textfile=%s:fontsize=34:fontcolor=white:"
+            "shadowcolor=black@0.95:shadowx=2:shadowy=2:"
+            "x=(w-text_w)/2:y=154:enable='between(t,%.3f,%.3f)'"
+            % (FONT, beat_file, at, until),
+        ])
     # Quiet lower-third CTA rotates per episode; story and final question remain readable.
     filters.extend(overlay_filters(ep, work, total, FONT))
     filters.append("fade=t=out:st=%.2f:d=0.30" % max(0, total - 0.30))
@@ -248,7 +280,7 @@ def render(ep, output_dir):
     wav = work / "new_narration.wav"
     voice_duration = make_voice(ep["narration"], wav, work / "voice_model")
     # Speech drives the duration; no long silent post-narration section.
-    requested = max(9.0, min(19.5, voice_duration + 1.0))
+    requested = max(9.0, min(float(ep.get("max_duration_seconds", 19.5)), voice_duration + 1.0))
     if voice_duration > requested - 0.25:
         raise RuntimeError("Voice too long for video, shorten the original narration")
     silent, total = assemble_clips(ep, sources, work, requested)
@@ -303,7 +335,7 @@ def render(ep, output_dir):
         "-movflags", "+faststart", "-t", f"{total:.3f}", output,
     ], 270)
     duration, streams = probe(output)
-    if not (7 <= duration <= 22) or not (output.stat().st_size > 500_000):
+    if not (7 <= duration <= 37) or not (output.stat().st_size > 500_000):
         raise RuntimeError("Final MP4 unexpected size/duration")
     if not any(s["codec_type"] == "video" and s.get("width") == 720
                and s.get("height") == 1280 for s in streams):
