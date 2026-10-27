@@ -7,6 +7,7 @@ any existing video; it only creates video drafts for owner review.
 from __future__ import annotations
 import argparse
 import base64
+import binascii
 import json
 import os
 from pathlib import Path
@@ -79,8 +80,8 @@ def decode_history(entry):
     if not entry or not isinstance(entry.get("content"), str) or not entry["content"].strip() or not entry.get("sha"):
         raise RuntimeError("Persistent used-footage ledger missing: refuse to render")
     try:
-        history = json.loads(base64.b64decode(entry["content"], validate=True))
-    except (ValueError, TypeError, UnicodeDecodeError) as exc:
+        history = json.loads(base64.b64decode(re.sub(r"\\s+", "", entry["content"]), validate=True))
+    except (ValueError, TypeError, UnicodeDecodeError, binascii.Error):
         raise RuntimeError("Corrupt permanent footage registry") from None
     if history.get("version") != 1 or not isinstance(history.get("used"), dict):
         raise RuntimeError("Invalid permanent footage registry")
