@@ -18,6 +18,9 @@ import urllib.request
 
 BRANCH = "render-ledger"
 EPISODES = Path(__file__).with_name("episodes.json")
+HISTORY_PATH = "history/used_footage.json"
+
+from editorial_guard import source_id, validate_catalog
 
 
 def api(path, method="GET", data=None):
@@ -71,8 +74,30 @@ def pick(episodes, exists):
     return None
 
 
+def decode_history(entry):
+    """Refuse any clip if the persistent footage ledger is unavailable."""
+    if not entry or not isinstance(entry.get("content"), str) or not entry.get("sha"):
+        raise RuntimeError("Persistent used-footage ledger missing: refuse to render")
+    history = json.loads(base64.b64decode(entry["content"]))
+    if history.get("version") != 1 or not isinstance(history.get("used"), dict):
+        raise RuntimeError("Invalid permanent footage registry")
+    return history
+
+
+def assert_new_sources(episode, history):
+    for source in episode["footage"]:
+        sid = source_id(source)
+        prev = history["used"].get(sid)
+        if prev is not None and prev.get("episode") != episode["id"]:
+            raise RuntimeError(
+                "PERMANENT_SOURCE_REUSE_BLOCKED: " + sid + " already in "
+                + str(prev.get("episode"))
+            )
+
+
 def choose(catalog, output):
     data = json.loads(Path(catalog).read_text(encoding="utf8"))
+    validate_catalog(data)
     ep = pick(data["episodes"], lambda slug: api(item_path(slug)) is not None)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -80,6 +105,10 @@ def choose(catalog, output):
         output.write_text("has_job=false\n", encoding="utf8")
         print("QUEUE_EMPTY; no duplicate Shorts will be rendered")
         return
+    item = next(episode for episode in data["episodes"] if episode["id"] == ep)
+    entry = api(HISTORY_PATH)
+    history = decode_history(entry)
+    assert_new_sources(item, history)
     run_id = os.environ.get("GITHUB_RUN_ID", "")
     if not run_id.isdigit():
         raise RuntimeError("Missing GitHub run identifier")
@@ -88,6 +117,16 @@ def choose(catalog, output):
         "notes": "If render failed, inspect and reconcile before retry."
     }
     store(item_path(ep), record, "Reserve fresh Shorts preview " + ep)
+    # Record the source IDs permanently before any media download; if the
+    # optimistic-lock update fails, the reservation blocks the release.
+    for source in item["footage"]:
+        sid = source_id(source)
+        history["used"][sid] = {
+            "episode": ep, "source": source["source_page"],
+            "status": "reserved-or-rendered",
+        }
+    history.setdefault("scene_profiles", {})[ep] = item["editorial"]
+    store(HISTORY_PATH, history, "Permanently reserve footage for " + ep, entry["sha"])
     output.write_text("has_job=true\nepisode=" + ep + "\n", encoding="utf8")
     print("QUEUE_RESERVED", ep)
 
