@@ -1,6 +1,6 @@
 {
   "id": "steep-hill-03",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40560875103",
   "notes": "If render failed, inspect and reconcile before retry."
 }
