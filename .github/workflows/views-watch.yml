@@ -1,0 +1,51 @@
+name: YouTube Shorts - Real Views Watch
+on:
+  push:
+    branches: [main]
+    paths:
+      - "cloud-shorts/views_watch.py"
+      - "cloud-shorts/test_views_watch.py"
+      - ".github/workflows/views-watch.yml"
+  schedule:
+    - cron: "19 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: moto-shorts-views-watch
+  cancel-in-progress: false
+
+jobs:
+  views:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test public counters without any keys or video uploads
+        run: |
+          python3 -m unittest discover -s cloud-shorts -p 'test_views_watch.py' -v
+      - name: Check free-quota YouTube API key
+        id: api
+        env:
+          YOUTUBE_DATA_API_KEY: ${{ secrets.YOUTUBE_DATA_API_KEY }}
+        run: |
+          if [ -n "$YOUTUBE_DATA_API_KEY" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "YouTube Data API key is not configured yet. No views guessed, no uploads performed." >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Read actual views and update six-hour history
+        if: steps.api.outputs.ready == 'true'
+        env:
+          YOUTUBE_DATA_API_KEY: ${{ secrets.YOUTUBE_DATA_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 cloud-shorts/views_watch.py
+      - name: Explain non-publishing behavior
+        if: always()
+        run: |
+          echo "This workflow only reads public statistics for the existing published Shorts. It does not publish, edit, reupload or artificially inflate any video." >> "$GITHUB_STEP_SUMMARY"
