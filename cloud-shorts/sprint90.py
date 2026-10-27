@@ -127,7 +127,7 @@ def markdown(baseline,metrics,days,planned_publishes):
         "- Канал: https://www.youtube.com/channel/"+baseline["channel_id"],
         "",
     ])
-    return "\n".join(lines).replace(",", " ")+"\n"
+    return "\n".join(lines)+"\n"
 
 def main():
     p=argparse.ArgumentParser()
