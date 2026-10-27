@@ -127,6 +127,21 @@
       "episode": "wet-road-checklist-08",
       "source": "https://www.pexels.com/video/night-rainfall-on-urban-street-with-motorbikes-35777415/",
       "status": "reserved-or-rendered"
+    },
+    "6801307": {
+      "episode": "helmet-fit-09",
+      "source": "https://www.pexels.com/video/a-woman-wearing-an-helmet-6801307/",
+      "status": "reserved-or-rendered"
+    },
+    "12405712": {
+      "episode": "helmet-fit-09",
+      "source": "https://www.pexels.com/video/man-wearing-helmet-12405712/",
+      "status": "reserved-or-rendered"
+    },
+    "9607102": {
+      "episode": "helmet-fit-09",
+      "source": "https://www.pexels.com/video/a-man-sitting-on-his-motorcycle-9607102/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -185,6 +200,13 @@
       "people": "commuter-rider-and-pre-ride-inspector",
       "story": "original-pre-ride-rain-safety-explainer",
       "visual": "rainy-neon-reflections-and-tire-closeups"
+    },
+    "helmet-fit-09": {
+      "environment": "helmet-fitting-station",
+      "bike": "everyday-commuter-motorcycles",
+      "people": "female-and-male-helmet-wearers",
+      "story": "helmet-fit-versus-style",
+      "visual": "bright-closeup-protective-gear"
     }
   }
 }
