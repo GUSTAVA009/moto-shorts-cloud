@@ -76,9 +76,12 @@ def pick(episodes, exists):
 
 def decode_history(entry):
     """Refuse any clip if the persistent footage ledger is unavailable."""
-    if not entry or not isinstance(entry.get("content"), str) or not entry.get("sha"):
+    if not entry or not isinstance(entry.get("content"), str) or not entry["content"].strip() or not entry.get("sha"):
         raise RuntimeError("Persistent used-footage ledger missing: refuse to render")
-    history = json.loads(base64.b64decode(entry["content"]))
+    try:
+        history = json.loads(base64.b64decode(entry["content"], validate=True))
+    except (ValueError, TypeError, UnicodeDecodeError) as exc:
+        raise RuntimeError("Corrupt permanent footage registry") from None
     if history.get("version") != 1 or not isinstance(history.get("used"), dict):
         raise RuntimeError("Invalid permanent footage registry")
     return history
