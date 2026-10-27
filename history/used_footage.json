@@ -157,6 +157,21 @@
       "episode": "mountain-road-10",
       "source": "https://www.pexels.com/video/a-man-driving-his-motorcycle-6664273/",
       "status": "reserved-or-rendered"
+    },
+    "39539524": {
+      "episode": "city-scooter-choice-11",
+      "source": "https://www.pexels.com/video/urban-scooter-traffic-on-cobblestone-street-39539524/",
+      "status": "reserved-or-rendered"
+    },
+    "37330137": {
+      "episode": "city-scooter-choice-11",
+      "source": "https://www.pexels.com/video/busy-street-scene-with-motorists-and-traffic-37330137/",
+      "status": "reserved-or-rendered"
+    },
+    "16686250": {
+      "episode": "city-scooter-choice-11",
+      "source": "https://www.pexels.com/video/a-person-riding-a-motorcycle-at-night-16686250/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -229,6 +244,13 @@
       "people": "independent-touring-riders",
       "story": "scenic-road-with-hidden-hazards",
       "visual": "daylight-elevated-roads"
+    },
+    "city-scooter-choice-11": {
+      "environment": "dense-urban-scooter-traffic",
+      "bike": "city-scooters-and-road-motorcycle",
+      "people": "everyday-city-commuters",
+      "story": "city-bike-size-tradeoff",
+      "visual": "busy-streets-day-to-night"
     }
   }
 }
