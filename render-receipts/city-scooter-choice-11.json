@@ -1,6 +1,6 @@
 {
   "id": "city-scooter-choice-11",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40598684343",
   "notes": "If render failed, inspect and reconcile before retry."
 }
