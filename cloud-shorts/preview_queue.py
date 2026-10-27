@@ -80,7 +80,7 @@ def decode_history(entry):
     if not entry or not isinstance(entry.get("content"), str) or not entry["content"].strip() or not entry.get("sha"):
         raise RuntimeError("Persistent used-footage ledger missing: refuse to render")
     try:
-        history = json.loads(base64.b64decode(re.sub(r"\\s+", "", entry["content"]), validate=True))
+        history = json.loads(base64.b64decode("".join(entry["content"].split()), validate=True))
     except (ValueError, TypeError, UnicodeDecodeError, binascii.Error):
         raise RuntimeError("Corrupt permanent footage registry") from None
     if history.get("version") != 1 or not isinstance(history.get("used"), dict):
