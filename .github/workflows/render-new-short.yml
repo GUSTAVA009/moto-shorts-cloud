@@ -16,6 +16,10 @@ on:
           - race-grid-06
           - sand-horizon-07
           - wet-road-checklist-08
+          - helmet-fit-09
+          - mountain-road-10
+          - city-scooter-choice-11
+          - retro-restoration-12
 
 permissions:
   contents: read
