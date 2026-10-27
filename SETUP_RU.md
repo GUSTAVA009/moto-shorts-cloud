@@ -8,7 +8,7 @@
 
 Открой Google Cloud: https://console.cloud.google.com/auth/overview?project=moto-shorts-factory
 
-- Audience → Test users: добавь действительный адрес Google-аккаунта, который владеет целевым YouTube-каналом. Адрес технической поддержки из настройки branding не обязательно является Google-аккаунтом. Ранее такой адрес Google отклонил; не вводи неподтверждённый адрес повторно.
+- Audience → Test users: проверь фактический адрес в https://myaccount.google.com/ и добавь именно его. В предыдущем тестовом адресе были перепутаны две буквы (BMW/BWM). После добавления правильного адреса удали ошибочный. Не публикуй этот адрес, client JSON или OAuth-токены в GitHub.
 - Clients → Moto Shorts Desktop Uploader: скачай JSON Desktop OAuth client; храни его только приватно, никогда не загружай в GitHub.
 - Один раз, только для OAuth на доверенном компьютере, открой терминал в папке проекта и выполни:
 
