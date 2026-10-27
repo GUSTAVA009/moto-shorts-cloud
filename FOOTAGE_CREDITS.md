@@ -17,3 +17,17 @@ Pexels License: https://www.pexels.com/legal-pages/license/
 - ROMAN ODINTSOV — [Man riding a motorcycle](https://www.pexels.com/video/a-man-driving-his-motorcycle-6664273/)
 
 These links document source authors and provenance. All downloaded media must be reviewed for actual depiction, rights, quality, and synchronization before any video is publicly released.
+
+## City scooter comparison — city-scooter-choice-11
+
+- Sergei Starostin — [Urban scooter traffic on cobblestone street](https://www.pexels.com/video/urban-scooter-traffic-on-cobblestone-street-39539524/)
+- benedicto 13 — [Busy street scene with motorists and traffic](https://www.pexels.com/video/busy-street-scene-with-motorists-and-traffic-37330137/)
+- syam krishnan — [A person riding a motorcycle at night](https://www.pexels.com/video/a-person-riding-a-motorcycle-at-night-16686250/)
+
+## Vintage motorcycles — retro-restoration-12
+
+- SHOX ART — [Vintage green motorbike at outdoor exhibition](https://www.pexels.com/video/vintage-green-motorbike-at-outdoor-exhibition-29032330/)
+- Zakhar Vozhdaienko — [Motorcycle gas-tank restoration process](https://www.pexels.com/video/motorcycle-gas-tank-restoration-process-34228822/)
+- Emrul Kausar Emon — [Mechanic assembling a classic motorcycle engine](https://www.pexels.com/video/mechanic-assembling-classic-motorcycle-engine-34948766/)
+
+The footage in each story comes from independent shoots. Descriptions must not imply that visually unrelated individuals or bikes are part of one continuous real-life event. Links above are for internal/source credits only, not to be injected into public YouTube descriptions.
