@@ -6,7 +6,7 @@ on:
     paths:
       - 'cloud-shorts/render_short.py'
       - 'cloud-shorts/soundtrack.py'
-      - '.github/workflows/first-moto-short.yml'
+      - '.github/workflows/render-preview.yml'
   workflow_dispatch:
 permissions:
   contents: read
