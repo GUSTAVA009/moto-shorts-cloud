@@ -31,7 +31,7 @@ class TestGrowthReport(unittest.TestCase):
         result=g.report(data)
         self.assertEqual(result["subscriber_gap"],480)
         self.assertIsNone(result["actual_income_usd"])
-        self.assertIsNone(result["ypp_enabled"])
+        self.assertFalse(result["ypp_enabled"])  # Verified disabled in YouTube Studio Earn
         md=g.markdown(result,data["measured_date"])
         self.assertIn("250 000 000",md)
         self.assertIn("не фактический RPM",md)
