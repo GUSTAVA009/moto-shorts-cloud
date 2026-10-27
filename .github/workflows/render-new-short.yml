@@ -23,13 +23,13 @@ permissions:
   contents: read
 
 concurrency:
-  group: render-new-short-${{ github.event.inputs.episode || 'jump-second-01' }}
+  group: render-new-short-${{ github.run_id }}
   cancel-in-progress: false
 
 jobs:
   cloud-preview:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 16
     env:
       EPISODE: ${{ github.event.inputs.episode || 'jump-second-01' }}
     steps:
@@ -38,7 +38,7 @@ jobs:
         run: python3 -m unittest discover -s cloud-shorts -p 'test_*.py' -v
       - name: Install free video and neural voice tools
         run: |
-          sudo apt-get install -y --no-install-recommends ffmpeg fonts-dejavu-core
+          timeout 120s sudo apt-get install -y -o Dpkg::Use-Pty=0 --no-install-recommends ffmpeg fonts-dejavu-core
           python3 -m pip install --disable-pip-version-check piper-tts==1.8.0
       - name: Render new original short entirely on cloud runner
         run: |
