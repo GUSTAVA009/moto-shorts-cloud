@@ -9,6 +9,7 @@ on:
       - "cloud-shorts/soundtrack.py"
       - "cloud-shorts/engagement_cta.py"
       - "cloud-shorts/growth_report.py"
+      - "cloud-shorts/sprint90.py"
       - "cloud-shorts/growth_baseline.json"
       - "cloud-shorts/test_*.py"
       - ".github/workflows/validate-pipeline.yml"
@@ -51,10 +52,14 @@ jobs:
           PY
       - name: Show honest subscriber and $5000 gross target dashboard
         run: python3 cloud-shorts/growth_report.py --output cloud-shorts/dist/growth-report.md
-      - name: Archive fact-based subscriber and revenue goal report
+      - name: Create realistic 90-day YouTube Partner Program pace report
+        run: python3 cloud-shorts/sprint90.py --output cloud-shorts/dist/sprint90.md
+      - name: Archive channel scoreboard and urgent 90-day sprint
         uses: actions/upload-artifact@v4
         with:
-          name: growth-scoreboard-${{ github.run_id }}
-          path: cloud-shorts/dist/growth-report.md
+          name: growth-sprint90-${{ github.run_id }}
+          path: |
+            cloud-shorts/dist/growth-report.md
+            cloud-shorts/dist/sprint90.md
           retention-days: 30
           if-no-files-found: error
