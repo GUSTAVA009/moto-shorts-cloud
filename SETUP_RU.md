@@ -62,3 +62,12 @@ GitHub Actions: https://github.com/GUSTAVA009/moto-shorts-cloud/actions
 - https://developers.google.com/youtube/data/revision_history
 - https://developers.google.com/youtube/data/guides/quota_and_compliance_audits
 - https://developers.google.com/identity/protocols/oauth2
+
+## 6. Статус после включения двухэтапной защиты — 28 октября 2026
+
+- Двухэтапная аутентификация **включена и распознана YouTube Studio**; предупреждение из раздела монетизации исчезло.
+- [Безопасная диагностика прямой загрузки](.github/workflows/youtube-api-readiness.yml) проверена 28.10: GitHub Secrets `YOUTUBE_CLIENT_ID`, `YOUTUBE_CLIENT_SECRET` и `YOUTUBE_REFRESH_TOKEN` **отсутствуют**; `YOUTUBE_EXPECTED_CHANNEL_ID` не соответствует каналу или ещё не создана; флаг прохождения YouTube API-аудита отсутствует.
+- Проверка показывает только имена незаполненных настроек — не читает и не выводит токены; **на YouTube ничего не загружает**.
+- Пока прямой канал загрузки заблокирован, действуют три публикации, уже запланированные через Publora: **28, 29 и 30 октября в 16:45 UTC**. Их повторно загружать через API **нельзя**.
+- Следующий шаг для обхода лимита Publora — один раз завершить согласие владельца Google OAuth, безопасно заполнить три Repository Secrets и `YOUTUBE_EXPECTED_CHANNEL_ID=UCS0QCodPcFBTjMt4ioEWOUw` в GitHub. **Никогда не отправлять секреты в сообщения.** Для публичной загрузки через новый Google API-проект также необходим предусмотренный правилами YouTube аудит.
+
