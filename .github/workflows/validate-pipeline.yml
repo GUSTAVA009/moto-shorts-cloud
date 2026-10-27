@@ -1,0 +1,46 @@
+name: Shorts Factory - Fast Code and Episode Checks
+on:
+  push:
+    branches: [main]
+    paths:
+      - "cloud-shorts/episodes.json"
+      - "cloud-shorts/render_episode.py"
+      - "cloud-shorts/tts_voice.py"
+      - "cloud-shorts/soundtrack.py"
+      - "cloud-shorts/test_*.py"
+      - ".github/workflows/validate-pipeline.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Python syntax and all safety tests (no external downloads)
+        run: |
+          python3 -m compileall -q cloud-shorts
+          python3 -m unittest discover -s cloud-shorts -p 'test_*.py' -v
+      - name: Validate public episode descriptions and internal attribution
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          import sys
+          sys.path.insert(0, "cloud-shorts")
+          from render_episode import validate_episode
+          catalog = json.loads(Path("cloud-shorts/episodes.json").read_text(encoding="utf8"))
+          ids = set()
+          used_sources = set()
+          for ep in catalog["episodes"]:
+              slug = validate_episode(ep)
+              assert slug not in ids, "Duplicated story"
+              ids.add(slug)
+              for source in ep["footage"]:
+                  assert source["source_page"] not in used_sources, "Reused source video across different stories"
+                  used_sources.add(source["source_page"])
+          print("VALIDATED", len(ids), "original episodes and", len(used_sources), "distinct licensed footage sources")
+          PY
