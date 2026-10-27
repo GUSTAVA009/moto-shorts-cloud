@@ -19,13 +19,15 @@
     "payouts_usd": null,
     "actual_monthly_income_usd": null,
     "ypp_eligibility_state": "not_eligible",
-    "two_step_verification_required": true,
+    "two_step_verification_required": false,
     "eligibility_snapshot_source": "YouTube Studio > Earn screenshot on 2026-10-28, progress label data as of 2026-10-22",
     "eligibility_snapshot_date": "2026-10-22",
     "qualified_shorts_views_90d": 780,
     "qualified_longform_watch_hours_365d": 27,
     "verified_adsense_country": null,
-    "verified_ypp_region_eligibility": null
+    "verified_ypp_region_eligibility": null,
+    "two_step_verification_status": "verified_by_youtube_studio_earn",
+    "two_step_verification_verified_at": "2026-10-28"
   },
   "goals": {
     "subscriber_milestone": 1000,
@@ -37,5 +39,5 @@
     "daily_qualified_views_needed_from_zero": 111112,
     "weekly_original_longform_target": 1
   },
-  "notes": "YouTube Studio Earn showed 520/1000 subs, 780/10m qualifying Shorts views (90d), 27/4000 valid public long-video hours (365d) as-of 22 Oct 2026, with 2FA setup required. 990 public views on recent Short are NOT comparable to valid 90-day channel total as snapshots differ; source data may lag. YPP/AdSense region not verified. No bot or recycled footage."
+  "notes": "YouTube Studio Earn on 2026-10-28 no longer shows two-step verification setup required (verified after owner enabled it). Earn progress statistics remain as of 2026-10-22: 520/1000 subscribers, 780/10m valid Shorts views, 27/4000 valid longform hours. New public views of individual Shorts are not equivalent to qualifying YPP totals. AdSense country and region eligibility still unverified."
 }
