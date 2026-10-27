@@ -45,6 +45,8 @@ jobs:
           ]
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf8") as fp:
               fp.write("\n".join(lines) + "\n")
+          print("MISSING_OAUTH_SECRET_NAMES:", ", ".join(missing) if missing else "none")
+          print("TARGET_CHANNEL_MATCHED:", channel_ok)
           print("CHECKED: " + ("private-configuration-present" if not missing and channel_ok else "private-configuration-blocked"))
           print("PUBLIC_API_UPLOAD: " + ("audit-flag-present" if audited else "blocked-pending-audit"))
           PY
