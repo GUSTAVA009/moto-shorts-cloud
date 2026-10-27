@@ -1,5 +1,8 @@
 name: New Shorts - Fresh Russian TTS + Licensed Footage
 on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/render-new-short.yml']
   workflow_dispatch:
     inputs:
       episode:
@@ -15,6 +18,7 @@ on:
           - garage-wrench-05
           - race-grid-06
           - sand-horizon-07
+          - wet-road-checklist-08
 
 permissions:
   contents: read
