@@ -266,7 +266,12 @@ def render(ep, output_dir):
         total, _ = probe(silent)
         print("ACTION_HOOK_TRIM", opening_trim, "new duration", round(total, 2), flush=True)
     soundtrack = work / "original_instrumental.wav"
-    make_music(soundtrack, total, bpm=int(ep.get("music_bpm", 128)))
+    music_style = ep.get("music_style", "action")
+    # Per-episode seed prevents the same instrumental playing underneath
+    # different scenes, even when their music genre is similar.
+    music_seed = int(hashlib.sha256(slug.encode("utf8")).hexdigest()[:8], 16)
+    make_music(soundtrack, total, bpm=int(ep.get("music_bpm", 128)),
+               style=music_style, seed=music_seed)
     captions = draw_captions(ep, work, total)
 
     output = output_dir / (slug + ".mp4")
@@ -309,12 +314,14 @@ def render(ep, output_dir):
     publication = {
         "title": ep["title"],
         "description": clean_description(ep["description"]),
-        "tags": ["мото", "мотокросс", "shorts"],
+        "tags": ep.get("tags", ["мото", "shorts"]),
         "status": "REVIEW_REQUIRED",
         "youtube_published": False,
         "duration_seconds": round(duration, 2),
         "voice_engine": "piper-tts ru_RU-dmitri-medium, CC0 training set",
         "audio_source": "Fresh synthesized narration and original procedural music",
+        "music_style": music_style,
+        "editorial_profile": ep.get("editorial"),
         "episode_id": slug,
     }
     (output_dir / "publication.json").write_text(
