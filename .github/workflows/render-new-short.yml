@@ -9,7 +9,7 @@ on:
         description: Choose a new original story
         type: choice
         required: true
-        default: garage-wrench-05
+        default: wet-road-checklist-08
         options:
           - jump-second-01
           - forest-group-02
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 16
     env:
-      EPISODE: ${{ github.event.inputs.episode || 'garage-wrench-05' }}
+      EPISODE: ${{ github.event.inputs.episode || 'wet-road-checklist-08' }}
     steps:
       - uses: actions/checkout@v4
       - name: Verify scripts, licenses, and content before downloading
