@@ -1,0 +1,87 @@
+name: YouTube Shorts - Direct API Upload (free, opt-in)
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - cloud-shorts/youtube_upload.py
+      - cloud-shorts/test_youtube_upload.py
+      - cloud-shorts/oauth_bootstrap.py
+      - .github/workflows/youtube-direct-upload.yml
+  workflow_dispatch:
+    inputs:
+      video_run_id:
+        description: "Successful GitHub Actions render run ID with artifact first-motorcycle-short-review"
+        required: true
+        type: string
+      privacy:
+        description: "New YouTube API apps without audit are restricted to private"
+        required: true
+        default: private
+        type: choice
+        options:
+          - private
+          - unlisted
+          - public
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: youtube-direct-${{ github.event_name }}-${{ inputs.video_run_id || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  safety-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate uploader without any keys or uploads
+        run: python3 -m unittest discover -s cloud-shorts -p test_youtube_upload.py -v
+
+  upload:
+    if: github.event_name == 'workflow_dispatch'
+    needs: safety-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download a reviewed Shorts MP4 from an existing render
+        uses: actions/download-artifact@v4
+        with:
+          name: first-motorcycle-short-review
+          path: staged
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.video_run_id }}
+          github-token: ${{ github.token }}
+      - name: Validate final file and clean YouTube description, without Google access
+        run: |
+          python3 cloud-shorts/youtube_upload.py \
+            --video staged/first_motorcycle_short.mp4 \
+            --metadata staged/publication.json \
+            --privacy "${{ inputs.privacy }}" \
+            --dry-run
+      - name: Install free official Google API client
+        run: python3 -m pip install --disable-pip-version-check google-api-python-client google-auth
+      - name: Upload to precisely authorized YouTube channel (OAuth)
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+          YOUTUBE_API_AUDITED: ${{ vars.YOUTUBE_API_AUDITED }}
+        run: |
+          python3 cloud-shorts/youtube_upload.py \
+            --video staged/first_motorcycle_short.mp4 \
+            --metadata staged/publication.json \
+            --privacy "${{ inputs.privacy }}" \
+            --receipt youtube-upload-receipt.json
+      - name: Store upload receipt without OAuth keys
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-upload-receipt-${{ github.run_id }}
+          path: youtube-upload-receipt.json
+          retention-days: 30
+          if-no-files-found: error
