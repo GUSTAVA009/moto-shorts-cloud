@@ -8,21 +8,34 @@
   "published_videos": 57,
   "last_public_short": {
     "video_id": "26FQE80Io-Y",
-    "views": 909,
+    "views": 990,
     "likes": 6,
-    "comments": 0
+    "comments": 0,
+    "observed_source": "vidIQ owned YouTube video details, 2026-10-28; public counter may be newer than Earn tab"
   },
   "monetization": {
-    "ypp_enabled": null,
+    "ypp_enabled": false,
     "adsense_country": null,
     "payouts_usd": null,
-    "actual_monthly_income_usd": null
+    "actual_monthly_income_usd": null,
+    "ypp_eligibility_state": "not_eligible",
+    "two_step_verification_required": true,
+    "eligibility_snapshot_source": "YouTube Studio > Earn screenshot on 2026-10-28, progress label data as of 2026-10-22",
+    "eligibility_snapshot_date": "2026-10-22",
+    "qualified_shorts_views_90d": 780,
+    "qualified_longform_watch_hours_365d": 27,
+    "verified_adsense_country": null,
+    "verified_ypp_region_eligibility": null
   },
   "goals": {
     "subscriber_milestone": 1000,
     "gross_monthly_income_usd": 5000,
     "shorts_engaged_views_90d_for_ads": 10000000,
-    "longform_valid_watch_hours_12m_for_ads": 4000
+    "longform_valid_watch_hours_12m_for_ads": 4000,
+    "urgent_90_day_target": true,
+    "shorts_qualified_target_date": "2027-01-26",
+    "daily_qualified_views_needed_from_zero": 111112,
+    "weekly_original_longform_target": 1
   },
-  "notes": "Targets are objectives, not financial forecasts. Channel metadata country RU is not proof of owner's legal residence or AdSense country. No bot engagement or reuse of stock footage."
+  "notes": "YouTube Studio Earn showed 520/1000 subs, 780/10m qualifying Shorts views (90d), 27/4000 valid public long-video hours (365d) as-of 22 Oct 2026, with 2FA setup required. 990 public views on recent Short are NOT comparable to valid 90-day channel total as snapshots differ; source data may lag. YPP/AdSense region not verified. No bot or recycled footage."
 }
