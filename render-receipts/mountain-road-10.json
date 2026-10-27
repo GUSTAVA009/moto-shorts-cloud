@@ -1,6 +1,6 @@
 {
   "id": "mountain-road-10",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40597407879",
   "notes": "If render failed, inspect and reconcile before retry."
 }
