@@ -43,7 +43,7 @@ class Sprint90Tests(unittest.TestCase):
         text=sprint90.markdown(self.b,m,90,45)
         self.assertIn("skользящие 90 дней",text)
         self.assertIn("Не копировать чужую подборку",text)
-        self.assertIn("two",sprint90.recommendations(m)[0].lower())
+        self.assertIn("2-step",sprint90.recommendations(m)[0].lower())
 
 if __name__=="__main__":
     unittest.main()
