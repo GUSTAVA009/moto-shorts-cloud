@@ -1,6 +1,6 @@
 {
   "id": "retro-restoration-12",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40601427506",
   "notes": "If render failed, inspect and reconcile before retry."
 }
