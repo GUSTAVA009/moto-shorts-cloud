@@ -1,13 +1,5 @@
 name: New Shorts - Fresh Russian TTS + Licensed Footage
 on:
-  push:
-    branches: [main]
-    paths:
-      - cloud-shorts/episodes.json
-      - cloud-shorts/tts_voice.py
-      - cloud-shorts/render_episode.py
-      - cloud-shorts/test_render_episode.py
-      - .github/workflows/render-new-short.yml
   workflow_dispatch:
     inputs:
       episode:
