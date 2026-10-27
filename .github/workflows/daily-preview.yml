@@ -1,10 +1,12 @@
-name: Shorts Factory - One New Cloud Preview Per Day
+name: Shorts Factory - Three Unique Cloud Previews Daily
 on:
   push:
     branches: [main]
     paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json']
   schedule:
     - cron: "17 07 * * *"
+    - cron: "17 12 * * *"
+    - cron: "17 18 * * *"
   workflow_dispatch:
 
 permissions:
@@ -12,7 +14,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: moto-shorts-daily-queue
+  group: moto-shorts-unique-preview-queue
   cancel-in-progress: false
 
 jobs:
