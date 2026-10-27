@@ -71,7 +71,13 @@
         "people": "solo-helmeted-rider",
         "story": "jump-and-landing",
         "visual": "daylight-dirt"
-      }
+      },
+      "music_style": "action",
+      "tags": [
+        "мото",
+        "прыжок",
+        "shorts"
+      ]
     },
     {
       "id": "forest-group-02",
@@ -146,7 +152,13 @@
         "people": "group-of-friends",
         "story": "longer-than-planned-ride",
         "visual": "green-forest"
-      }
+      },
+      "music_style": "action",
+      "tags": [
+        "мото",
+        "друзья",
+        "shorts"
+      ]
     },
     {
       "id": "steep-hill-03",
@@ -213,7 +225,13 @@
         "people": "solo-hill-rider",
         "story": "hill-challenge",
         "visual": "stone-steep"
-      }
+      },
+      "music_style": "action",
+      "tags": [
+        "мото",
+        "подъём",
+        "shorts"
+      ]
     },
     {
       "id": "neon-city-04",
@@ -258,7 +276,7 @@
       "shots": [
         {
           "source": "night_stunt",
-          "start": 0.5,
+          "start": 5,
           "seconds": 2.3
         },
         {
@@ -273,7 +291,7 @@
         },
         {
           "source": "night_stunt",
-          "start": 4,
+          "start": 12,
           "seconds": 2
         },
         {
@@ -292,11 +310,18 @@
           "seconds": 2
         }
       ],
-      "opening_trim_seconds": 0
+      "opening_trim_seconds": 0,
+      "music_style": "night-drive",
+      "tags": [
+        "мото",
+        "ночнойгород",
+        "мотоциклы",
+        "shorts"
+      ]
     },
     {
       "id": "garage-wrench-05",
-      "auto_preview": false,
+      "auto_preview": true,
       "title": "Эту часть мотопокатушек никто не показывает… 🔧 #shorts",
       "narration": "За каждым красивым заездом кто-то остаётся в гараже. Ключи, колёса, масло и терпение. Вот почему у любой поездки есть история, которую не видно с дороги.",
       "description": "За кадром почти всегда остаётся мастерская. 🔧 Кто из вас сам чинит мотоцикл?\n\n#мото #ремонт #shorts",
@@ -371,7 +396,14 @@
           "seconds": 1.9
         }
       ],
-      "opening_trim_seconds": 0
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "tags": [
+        "мото",
+        "гараж",
+        "ремонт",
+        "shorts"
+      ]
     },
     {
       "id": "race-grid-06",
@@ -450,7 +482,13 @@
           "seconds": 2.2
         }
       ],
-      "opening_trim_seconds": 0
+      "opening_trim_seconds": 0,
+      "music_style": "race-breakbeat",
+      "tags": [
+        "мотокросс",
+        "гонки",
+        "shorts"
+      ]
     },
     {
       "id": "sand-horizon-07",
@@ -522,7 +560,13 @@
           "seconds": 2.1
         }
       ],
-      "opening_trim_seconds": 0
+      "opening_trim_seconds": 0,
+      "music_style": "desert-cinematic",
+      "tags": [
+        "мото",
+        "пустыня",
+        "shorts"
+      ]
     }
   ]
 }
