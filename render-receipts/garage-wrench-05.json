@@ -1,6 +1,6 @@
 {
   "id": "garage-wrench-05",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40582234041",
   "notes": "If render failed, inspect and reconcile before retry."
 }
