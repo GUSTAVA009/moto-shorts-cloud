@@ -2,16 +2,16 @@
   "schema_version": 1,
   "measured_date": "2026-10-28",
   "channel_id": "UCS0QCodPcFBTjMt4ioEWOUw",
-  "source": "vidIQ connected channel + public video data; channel analytics may lag",
+  "source": "Connected vidIQ owned channel and recent upload records; qualified Shorts eligibility remains the official dated YouTube Earn snapshot",
   "subscribers": 520,
   "lifetime_views": 60309,
   "published_videos": 57,
   "last_public_short": {
     "video_id": "26FQE80Io-Y",
-    "views": 990,
+    "views": 1276,
     "likes": 6,
     "comments": 0,
-    "observed_source": "vidIQ owned YouTube video details, 2026-10-28; public counter may be newer than Earn tab"
+    "observed_source": "vidIQ owned channel video details, 2026-10-28; public counters differ from delayed eligible Shorts views in YouTube Earn"
   },
   "monetization": {
     "ypp_enabled": false,
@@ -39,5 +39,5 @@
     "daily_qualified_views_needed_from_zero": 111112,
     "weekly_original_longform_target": 1
   },
-  "notes": "YouTube Studio Earn on 2026-10-28 no longer shows two-step verification setup required (verified after owner enabled it). Earn progress statistics remain as of 2026-10-22: 520/1000 subscribers, 780/10m valid Shorts views, 27/4000 valid longform hours. New public views of individual Shorts are not equivalent to qualifying YPP totals. AdSense country and region eligibility still unverified."
+  "notes": "YouTube Earn still last directly observed as of 2026-10-22: 520/1000 subscribers, 780/10,000,000 qualified Shorts views and 27/4000 valid long-form hours. On 2026-10-28 vidIQ reports latest public Short at 1276 views but this is NOT official YPP-eligible progress. Publora Starter has 3 existing scheduled releases on October 28-30. Google 2-Step Verification confirmed; direct GitHub OAuth upload secrets missing and payment country remains unverified."
 }
