@@ -31,3 +31,18 @@ These links document source authors and provenance. All downloaded media must be
 - Emrul Kausar Emon — [Mechanic assembling a classic motorcycle engine](https://www.pexels.com/video/mechanic-assembling-classic-motorcycle-engine-34948766/)
 
 The footage in each story comes from independent shoots. Descriptions must not imply that visually unrelated individuals or bikes are part of one continuous real-life event. Links above are for internal/source credits only, not to be injected into public YouTube descriptions.
+
+
+## Mud traction — mud-traction-13
+
+- Harvey Tan Villarino — [Off-road motorcycle navigating muddy track](https://www.pexels.com/video/off-road-motorcycle-navigating-muddy-track-36364696/)
+- Eno Eltora — [Motocross FPV drone](https://www.pexels.com/video/motocross-fpv-drone-18326010/)
+- Prodèép Nëpalënsis — [Rider crossing muddy field](https://www.pexels.com/video/a-man-riding-a-motorcycle-through-a-muddy-field-18540657/)
+
+## Motorcycle care and inspection — bike-care-14
+
+- vikesh zen — [Motorcycle wash at a local workshop](https://www.pexels.com/video/motorcycle-wash-at-local-workshop-31912089/)
+- Anastasia Shuraeva — [Woman repairing her motorcycle](https://www.pexels.com/video/woman-repairing-her-motorcycle-9606876/)
+- cottonbro studio — [Motorcycle maintenance check-up](https://www.pexels.com/video/a-man-doing-maintenance-check-up-on-his-motorcycle-5199294/)
+
+These are independent footage sources: the Shorts commentary must not imply a continuous real-world event. Licensing and provenance are tracked here instead of inserting footage-source links in YouTube descriptions.
