@@ -142,6 +142,21 @@
       "episode": "helmet-fit-09",
       "source": "https://www.pexels.com/video/a-man-sitting-on-his-motorcycle-9607102/",
       "status": "reserved-or-rendered"
+    },
+    "11309846": {
+      "episode": "mountain-road-10",
+      "source": "https://www.pexels.com/video/motorcyclist-on-road-11309846/",
+      "status": "reserved-or-rendered"
+    },
+    "11259866": {
+      "episode": "mountain-road-10",
+      "source": "https://www.pexels.com/video/man-and-motorcycle-next-to-road-on-cliff-11259866/",
+      "status": "reserved-or-rendered"
+    },
+    "6664273": {
+      "episode": "mountain-road-10",
+      "source": "https://www.pexels.com/video/a-man-driving-his-motorcycle-6664273/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -207,6 +222,13 @@
       "people": "female-and-male-helmet-wearers",
       "story": "helmet-fit-versus-style",
       "visual": "bright-closeup-protective-gear"
+    },
+    "mountain-road-10": {
+      "environment": "highway-by-mountain-cliff",
+      "bike": "travel-road-motorcycles",
+      "people": "independent-touring-riders",
+      "story": "scenic-road-with-hidden-hazards",
+      "visual": "daylight-elevated-roads"
     }
   }
 }
