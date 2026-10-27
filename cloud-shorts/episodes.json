@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "review_required": true,
   "episodes": [
     {
@@ -64,7 +64,14 @@
           "seconds": 2.6
         }
       ],
-      "opening_trim_seconds": 0.8
+      "opening_trim_seconds": 0.8,
+      "editorial": {
+        "environment": "outdoor-motocross-track",
+        "bike": "offroad-race-bikes",
+        "people": "solo-helmeted-rider",
+        "story": "jump-and-landing",
+        "visual": "daylight-dirt"
+      }
     },
     {
       "id": "forest-group-02",
@@ -132,7 +139,14 @@
           "start": 9,
           "seconds": 2.6
         }
-      ]
+      ],
+      "editorial": {
+        "environment": "wooded-trail",
+        "bike": "group-trail-bikes",
+        "people": "group-of-friends",
+        "story": "longer-than-planned-ride",
+        "visual": "green-forest"
+      }
     },
     {
       "id": "steep-hill-03",
@@ -192,7 +206,323 @@
           "seconds": 2.2
         }
       ],
-      "opening_trim_seconds": 1.7
+      "opening_trim_seconds": 1.7,
+      "editorial": {
+        "environment": "rocky-steep-hill",
+        "bike": "hill-climb-dirt-bike",
+        "people": "solo-hill-rider",
+        "story": "hill-challenge",
+        "visual": "stone-steep"
+      }
+    },
+    {
+      "id": "neon-city-04",
+      "auto_preview": true,
+      "title": "Ночные огни или закат? 🌆🏍️ #shorts",
+      "narration": "Один выбирает закат. Другой просыпается, когда включают ночные огни. Разные люди, разные мотоциклы, разные дороги. Что выбрал бы ты — день или ночь?",
+      "description": "Один город — тысячи маршрутов. 🌆 Тебе ближе закат или ночные огни?\n\n#мото #город #shorts",
+      "caption_start": "ЗАКАТ ИЛИ НОЧНОЙ ГОРОД?",
+      "caption_middle": "РАЗНЫЕ БАЙКИ — РАЗНЫЕ МИРЫ",
+      "caption_end": "ТВОЙ ВЫБОР: ДЕНЬ ИЛИ НОЧЬ?",
+      "music_bpm": 124,
+      "editorial": {
+        "environment": "night-city-neon",
+        "bike": "urban-sport-and-street-bikes",
+        "people": "different-urban-riders",
+        "story": "night-vs-sunset-choice",
+        "visual": "neon-dusk-urban"
+      },
+      "footage": [
+        {
+          "key": "night_stunt",
+          "url": "https://www.pexels.com/download/video/9607292/",
+          "source_page": "https://www.pexels.com/video/person-riding-a-big-bike-9607292/",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License"
+        },
+        {
+          "key": "sunset_rider",
+          "url": "https://www.pexels.com/download/video/32902284/",
+          "source_page": "https://www.pexels.com/video/motorcyclist-rides-at-sunset-in-urban-cityscape-32902284/",
+          "author": "Hasan basri Yentekün",
+          "license": "Pexels License"
+        },
+        {
+          "key": "night_city",
+          "url": "https://www.pexels.com/download/video/36077827/",
+          "source_page": "https://www.pexels.com/video/nighttime-motorbike-ride-through-city-streets-36077827/",
+          "author": "J-Steve Pham",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "night_stunt",
+          "start": 0.5,
+          "seconds": 2.3
+        },
+        {
+          "source": "sunset_rider",
+          "start": 1,
+          "seconds": 2.1
+        },
+        {
+          "source": "night_city",
+          "start": 0,
+          "seconds": 2.1
+        },
+        {
+          "source": "night_stunt",
+          "start": 4,
+          "seconds": 2
+        },
+        {
+          "source": "sunset_rider",
+          "start": 4,
+          "seconds": 2
+        },
+        {
+          "source": "night_city",
+          "start": 3,
+          "seconds": 2.3
+        },
+        {
+          "source": "night_stunt",
+          "start": 7,
+          "seconds": 2
+        }
+      ],
+      "opening_trim_seconds": 0
+    },
+    {
+      "id": "garage-wrench-05",
+      "auto_preview": false,
+      "title": "Эту часть мотопокатушек никто не показывает… 🔧 #shorts",
+      "narration": "За каждым красивым заездом кто-то остаётся в гараже. Ключи, колёса, масло и терпение. Вот почему у любой поездки есть история, которую не видно с дороги.",
+      "description": "За кадром почти всегда остаётся мастерская. 🔧 Кто из вас сам чинит мотоцикл?\n\n#мото #ремонт #shorts",
+      "caption_start": "ПОКАТУШКИ НАЧИНАЮТСЯ ЗДЕСЬ",
+      "caption_middle": "МАСЛО. ИНСТРУМЕНТЫ. ТЕРПЕНИЕ.",
+      "caption_end": "САМ ЧИНИШЬ СВОЙ БАЙК?",
+      "music_bpm": 102,
+      "editorial": {
+        "environment": "indoor-garage-workshop",
+        "bike": "workshop-road-and-classic-bikes",
+        "people": "mechanics-of-different-ages",
+        "story": "unseen-repair-work",
+        "visual": "industrial-closeups"
+      },
+      "footage": [
+        {
+          "key": "tire_mechanic",
+          "url": "https://www.pexels.com/download/video/37416331/",
+          "source_page": "https://www.pexels.com/video/indonesian-mechanic-repairing-motorcycle-tire-37416331/",
+          "author": "setengah lima sore",
+          "license": "Pexels License"
+        },
+        {
+          "key": "elder_mechanic",
+          "url": "https://www.pexels.com/download/video/34540535/",
+          "source_page": "https://www.pexels.com/video/elderly-mechanic-fixing-motorcycle-wheel-34540535/",
+          "author": "Nishant Aneja",
+          "license": "Pexels License"
+        },
+        {
+          "key": "repair_team",
+          "url": "https://www.pexels.com/download/video/34946392/",
+          "source_page": "https://www.pexels.com/video/motorcycle-repair-in-garage-workshop-34946392/",
+          "author": "Thangaraj Editor",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "tire_mechanic",
+          "start": 0.6,
+          "seconds": 2.1
+        },
+        {
+          "source": "elder_mechanic",
+          "start": 1,
+          "seconds": 2
+        },
+        {
+          "source": "repair_team",
+          "start": 0.3,
+          "seconds": 2.1
+        },
+        {
+          "source": "tire_mechanic",
+          "start": 3,
+          "seconds": 2.1
+        },
+        {
+          "source": "elder_mechanic",
+          "start": 4.5,
+          "seconds": 2.1
+        },
+        {
+          "source": "repair_team",
+          "start": 3.8,
+          "seconds": 2.2
+        },
+        {
+          "source": "tire_mechanic",
+          "start": 6.4,
+          "seconds": 1.9
+        }
+      ],
+      "opening_trim_seconds": 0
+    },
+    {
+      "id": "race-grid-06",
+      "auto_preview": false,
+      "title": "Первый поворот решает всё! 🏁 #shorts",
+      "narration": "На старте все стоят рядом. Но через пару секунд в первом повороте уже видно, кто нашёл свою траекторию. За кем бы ты следил — за первым или за тем, кто догоняет?",
+      "description": "Один старт — множество тактик. 🏁 Ты следишь за лидером или за тем, кто атакует сзади?\n\n#мотокросс #гонки #shorts",
+      "caption_start": "ТРИ СЕКУНДЫ ДО СТАРТА",
+      "caption_middle": "КТО ВЫБЕРЕТ ТРАЕКТОРИЮ?",
+      "caption_end": "ЛИДЕР ИЛИ ДОГОНЯЮЩИЙ?",
+      "music_bpm": 148,
+      "editorial": {
+        "environment": "professional-racing-circuit",
+        "bike": "race-spec-motocross-bikes",
+        "people": "competing-race-pack",
+        "story": "race-start-and-first-corner",
+        "visual": "bright-race-paddock"
+      },
+      "footage": [
+        {
+          "key": "start_line",
+          "url": "https://www.pexels.com/download/video/18387838/",
+          "source_page": "https://www.pexels.com/video/mxgp-world-champions-motorcyles-start-18387838/",
+          "author": "Cihan KAHRAMAN",
+          "license": "Pexels License"
+        },
+        {
+          "key": "race_start",
+          "url": "https://www.pexels.com/download/video/12902841/",
+          "source_page": "https://www.pexels.com/video/start-of-motocross-race-12902841/",
+          "author": "Tom Fisk",
+          "license": "Pexels License"
+        },
+        {
+          "key": "race_curve",
+          "url": "https://www.pexels.com/download/video/30398227/",
+          "source_page": "https://www.pexels.com/video/exciting-track-motorcycle-race-with-multiple-riders-30398227/",
+          "author": "Harvey Tan Villarino",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "start_line",
+          "start": 0,
+          "seconds": 2.2
+        },
+        {
+          "source": "race_start",
+          "start": 0,
+          "seconds": 2
+        },
+        {
+          "source": "race_curve",
+          "start": 0,
+          "seconds": 1.8
+        },
+        {
+          "source": "start_line",
+          "start": 2.7,
+          "seconds": 2
+        },
+        {
+          "source": "race_start",
+          "start": 3,
+          "seconds": 2.2
+        },
+        {
+          "source": "race_curve",
+          "start": 2.7,
+          "seconds": 1.9
+        },
+        {
+          "source": "start_line",
+          "start": 5,
+          "seconds": 2.2
+        }
+      ],
+      "opening_trim_seconds": 0
+    },
+    {
+      "id": "sand-horizon-07",
+      "auto_preview": false,
+      "title": "За горизонтом — только песок! 🏜️ #shorts",
+      "narration": "Здесь нет ни улиц, ни светофоров. Только песчаные просторы, след колеса и пыль за спиной. Поехал бы через дюны ради такого заката?",
+      "description": "Песчаная трасса, вечерний свет и только звук мотора. 🏜️ Поехал бы сюда?\n\n#мото #пустыня #shorts",
+      "caption_start": "НИ ГОРОДА. НИ СВЕТОФОРОВ.",
+      "caption_middle": "ТОЛЬКО ПЕСОК И ГОРИЗОНТ",
+      "caption_end": "ТЫ БЫ ПОЕХАЛ?",
+      "music_bpm": 116,
+      "editorial": {
+        "environment": "open-sand-desert",
+        "bike": "desert-trail-dirt-bike",
+        "people": "single-desert-rider",
+        "story": "ride-over-dunes-at-sunset",
+        "visual": "orange-sunset-and-sand"
+      },
+      "footage": [
+        {
+          "key": "desert_drone",
+          "url": "https://www.pexels.com/download/video/4904747/",
+          "source_page": "https://www.pexels.com/video/a-person-riding-a-motorcycle-4904747/",
+          "author": "ArtHouse Studio",
+          "license": "Pexels License"
+        },
+        {
+          "key": "dust_sunset",
+          "url": "https://www.pexels.com/download/video/35433585/",
+          "source_page": "https://www.pexels.com/video/dirt-bike-kicking-up-dust-at-sunset-35433585/",
+          "author": "Ruyel",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "dust_sunset",
+          "start": 0.3,
+          "seconds": 2.2
+        },
+        {
+          "source": "desert_drone",
+          "start": 0,
+          "seconds": 2.3
+        },
+        {
+          "source": "dust_sunset",
+          "start": 3,
+          "seconds": 2
+        },
+        {
+          "source": "desert_drone",
+          "start": 3.4,
+          "seconds": 2.3
+        },
+        {
+          "source": "dust_sunset",
+          "start": 5.7,
+          "seconds": 2
+        },
+        {
+          "source": "desert_drone",
+          "start": 6.5,
+          "seconds": 2.1
+        },
+        {
+          "source": "dust_sunset",
+          "start": 7.4,
+          "seconds": 2.1
+        }
+      ],
+      "opening_trim_seconds": 0
     }
   ]
 }
