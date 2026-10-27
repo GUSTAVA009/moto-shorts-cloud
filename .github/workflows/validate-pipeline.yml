@@ -7,6 +7,9 @@ on:
       - "cloud-shorts/render_episode.py"
       - "cloud-shorts/tts_voice.py"
       - "cloud-shorts/soundtrack.py"
+      - "cloud-shorts/engagement_cta.py"
+      - "cloud-shorts/growth_report.py"
+      - "cloud-shorts/growth_baseline.json"
       - "cloud-shorts/test_*.py"
       - ".github/workflows/validate-pipeline.yml"
   workflow_dispatch:
@@ -32,6 +35,7 @@ jobs:
           import sys
           sys.path.insert(0, "cloud-shorts")
           from render_episode import validate_episode
+          from engagement_cta import validate_cta_mix
           catalog = json.loads(Path("cloud-shorts/episodes.json").read_text(encoding="utf8"))
           ids = set()
           used_sources = set()
@@ -43,4 +47,14 @@ jobs:
                   assert source["source_page"] not in used_sources, "Reused source video across different stories"
                   used_sources.add(source["source_page"])
           print("VALIDATED", len(ids), "original episodes and", len(used_sources), "distinct licensed footage sources")
+          print("NATURAL_CTA_ROTATION", validate_cta_mix(catalog["episodes"]))
           PY
+      - name: Show honest subscriber and $5000 gross target dashboard
+        run: python3 cloud-shorts/growth_report.py --output cloud-shorts/dist/growth-report.md
+      - name: Archive fact-based subscriber and revenue goal report
+        uses: actions/upload-artifact@v4
+        with:
+          name: growth-scoreboard-${{ github.run_id }}
+          path: cloud-shorts/dist/growth-report.md
+          retention-days: 30
+          if-no-files-found: error
