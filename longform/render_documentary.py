@@ -16,6 +16,7 @@ HERE=Path(__file__).resolve().parent
 sys.path.insert(0,str(ROOT/"cloud-shorts"))
 from tts_voice import render as voice_render
 from soundtrack import generate as music_render
+from editorial_guard import PUBLISHED_SOURCE_IDS
 FONT=Path("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")
 MANIFEST=HERE/"01-rain-production.json"
 
@@ -54,11 +55,14 @@ def validate(cfg):
     short_catalog=json.loads((ROOT/"cloud-shorts"/"episodes.json").read_text(encoding="utf8"))
     short_ids={re.search(r"-(\d+)/?$",s["source_page"]).group(1)
                for ep in short_catalog["episodes"] for s in ep["footage"]}
+    short_ids.update(PUBLISHED_SOURCE_IDS)
     if ids.intersection(short_ids):
         raise ValueError("Source previously used in Shorts catalog")
     chars=0
     for seg in scenes:
         narration=str(seg.get("narration",""))
+        if any(word in narration.casefold() for word in ("хапыч", "эндуро")):
+            raise ValueError("Narration contains banned channel phrase")
         if not 100<=len(narration)<=350:
             raise ValueError("Narration too short or exceeds approved TTS length")
         chars+=len(narration)
