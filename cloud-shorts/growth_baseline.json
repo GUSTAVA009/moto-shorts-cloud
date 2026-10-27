@@ -5,7 +5,7 @@
   "source": "Connected vidIQ owned channel and recent upload records; qualified Shorts eligibility remains the official dated YouTube Earn snapshot",
   "subscribers": 520,
   "lifetime_views": 60309,
-  "published_videos": 57,
+  "published_videos": 58,
   "last_public_short": {
     "video_id": "26FQE80Io-Y",
     "views": 1276,
@@ -37,7 +37,23 @@
     "urgent_90_day_target": true,
     "shorts_qualified_target_date": "2027-01-26",
     "daily_qualified_views_needed_from_zero": 111112,
-    "weekly_original_longform_target": 1
+    "weekly_original_longform_target": 1,
+    "upcoming_ypp_ads_thresholds_effective": "2027-02-01",
+    "new_applicant_subscribers_from_2027": 1000,
+    "new_applicant_qualified_shorts_views_90d_from_2027": 20000000,
+    "new_applicant_qualified_longform_hours_365d_from_2027": 8000,
+    "policy_reference": "https://support.google.com/youtube/answer/12843009",
+    "longform_original_weekly_target": 2
   },
-  "notes": "YouTube Earn still last directly observed as of 2026-10-22: 520/1000 subscribers, 780/10,000,000 qualified Shorts views and 27/4000 valid long-form hours. On 2026-10-28 vidIQ reports latest public Short at 1276 views but this is NOT official YPP-eligible progress. Publora Starter has 3 existing scheduled releases on October 28-30. Google 2-Step Verification confirmed; direct GitHub OAuth upload secrets missing and payment country remains unverified."
+  "notes": "YouTube Earn still last directly observed as of 2026-10-22: 520/1000 subscribers, 780/10,000,000 qualified Shorts views and 27/4000 valid long-form hours. On 2026-10-28 vidIQ reports latest public Short at 1276 views but this is NOT official YPP-eligible progress. Publora Starter has 3 existing scheduled releases on October 28-30. Google 2-Step Verification confirmed; direct GitHub OAuth upload secrets missing and payment country remains unverified. New original mountain-road-10 Shorts published via Publora on 2026-10-28; same 3 previously scheduled releases were left untouched. Current qualified views and watch hours remain dated 2026-10-22 and must not be inferred from public counters. New YPP entry thresholds from 2027-02-01 apply only to new applicants.",
+  "latest_release": {
+    "id": "mountain-road-10",
+    "title": "Красивая горная дорога. А что за поворотом?",
+    "publisher": "Publora",
+    "publora_post_group_id": "6ae12aa6e11e5a8e83581a5d",
+    "verified_status": "published",
+    "status_verified_date": "2026-10-28",
+    "public_video_id": null,
+    "counts_are_unavailable": true
+  }
 }
