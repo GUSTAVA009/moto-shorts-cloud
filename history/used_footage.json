@@ -172,6 +172,21 @@
       "episode": "city-scooter-choice-11",
       "source": "https://www.pexels.com/video/a-person-riding-a-motorcycle-at-night-16686250/",
       "status": "reserved-or-rendered"
+    },
+    "29032330": {
+      "episode": "retro-restoration-12",
+      "source": "https://www.pexels.com/video/vintage-green-motorbike-at-outdoor-exhibition-29032330/",
+      "status": "reserved-or-rendered"
+    },
+    "34228822": {
+      "episode": "retro-restoration-12",
+      "source": "https://www.pexels.com/video/motorcycle-gas-tank-restoration-process-34228822/",
+      "status": "reserved-or-rendered"
+    },
+    "34948766": {
+      "episode": "retro-restoration-12",
+      "source": "https://www.pexels.com/video/mechanic-assembling-classic-motorcycle-engine-34948766/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -251,6 +266,13 @@
       "people": "everyday-city-commuters",
       "story": "city-bike-size-tradeoff",
       "visual": "busy-streets-day-to-night"
+    },
+    "retro-restoration-12": {
+      "environment": "classic-motorcycle-exhibition-and-workshops",
+      "bike": "vintage-restoration-motorcycles",
+      "people": "exhibition-visitors-and-craftsmen",
+      "story": "restoration-beyond-visual-polish",
+      "visual": "retro-metal-and-hands-at-work"
     }
   }
 }
