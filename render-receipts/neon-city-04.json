@@ -1,6 +1,6 @@
 {
   "id": "neon-city-04",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40581450572",
   "notes": "If render failed, inspect and reconcile before retry."
 }
