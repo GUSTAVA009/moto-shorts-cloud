@@ -116,6 +116,9 @@ def validate_episode(ep):
         total += seconds
     if total < 12:
         raise ValueError("Insufficient footage duration")
+    opening_trim = float(ep.get("opening_trim_seconds", 0.0))
+    if not 0 <= opening_trim <= 2.0:
+        raise ValueError("Action hook trim must be between 0 and 2 seconds")
     return slug
 
 
@@ -243,6 +246,23 @@ def render(ep, output_dir):
     if voice_duration > requested - 0.25:
         raise RuntimeError("Voice too long for video, shorten the original narration")
     silent, total = assemble_clips(ep, sources, work, requested)
+    # Cut blank establishing footage BEFORE the speech, music, and captions
+    # are mixed. Start with visible action rather than an empty hill/track.
+    opening_trim = float(ep.get("opening_trim_seconds", 0.0))
+    if opening_trim > 0:
+        if total - opening_trim < max(7.0, voice_duration + 0.3):
+            raise RuntimeError("Opening trim would cut off the narration")
+        action_first = work / "action_first.mp4"
+        run([
+            "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
+            "-ss", f"{opening_trim:.3f}", "-i", silent,
+            "-t", f"{total - opening_trim:.3f}", "-an",
+            "-c:v", "libx264", "-preset", "veryfast", "-crf", "21",
+            "-pix_fmt", "yuv420p", "-r", "30", action_first,
+        ], 180)
+        silent = action_first
+        total, _ = probe(silent)
+        print("ACTION_HOOK_TRIM", opening_trim, "new duration", round(total, 2), flush=True)
     soundtrack = work / "original_instrumental.wav"
     make_music(soundtrack, total, bpm=int(ep.get("music_bpm", 128)))
     captions = draw_captions(ep, work, total)
@@ -272,7 +292,7 @@ def render(ep, output_dir):
         "-movflags", "+faststart", "-t", f"{total:.3f}", output,
     ], 270)
     duration, streams = probe(output)
-    if not (8 <= duration <= 22) or not (output.stat().st_size > 500_000):
+    if not (7 <= duration <= 22) or not (output.stat().st_size > 500_000):
         raise RuntimeError("Final MP4 unexpected size/duration")
     if not any(s["codec_type"] == "video" and s.get("width") == 720
                and s.get("height") == 1280 for s in streams):
