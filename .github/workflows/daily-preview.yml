@@ -1,5 +1,8 @@
 name: Shorts Factory - One New Cloud Preview Per Day
 on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py']
   schedule:
     - cron: "17 07 * * *"
   workflow_dispatch:
