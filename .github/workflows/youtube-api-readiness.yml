@@ -1,0 +1,50 @@
+name: YouTube Direct API - Free Publishing Readiness
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/youtube-api-readiness.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check integration safely (no upload, no API request, no token output)
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+          YOUTUBE_API_AUDITED: ${{ vars.YOUTUBE_API_AUDITED }}
+        run: |
+          python3 - <<'PY'
+          import os
+          missing = [
+              name for name in ("YOUTUBE_CLIENT_ID", "YOUTUBE_CLIENT_SECRET", "YOUTUBE_REFRESH_TOKEN")
+              if not os.getenv(name)
+          ]
+          expected = os.getenv("YOUTUBE_EXPECTED_CHANNEL_ID", "")
+          channel_ok = expected == "UCS0QCodPcFBTjMt4ioEWOUw"
+          audited = os.getenv("YOUTUBE_API_AUDITED", "").lower() == "true"
+          lines = [
+              "## Direct YouTube API publishing readiness (read-only)",
+              "",
+              "**No video or Google API request was made.** Secrets were never displayed.",
+              "",
+              "- OAuth secrets: " + ("configured" if not missing else "missing " + ", ".join(missing)),
+              "- Exact channel ID: " + ("verified" if channel_ok else "missing or mismatched"),
+              "- Official public-upload API compliance audit flag: " + ("declared complete (verify evidence)" if audited else "not declared; public uploads stay blocked"),
+              "- Private upload readiness: " + ("configuration present (not token-tested)" if not missing and channel_ok else "blocked"),
+              "- Public upload readiness: " + ("requires real OAuth and audit verification" if audited and not missing and channel_ok else "blocked"),
+              "- Existing Publora scheduled uploads are independent and MUST NOT be uploaded again via API.",
+          ]
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf8") as fp:
+              fp.write("\n".join(lines) + "\n")
+          print("CHECKED: " + ("private-configuration-present" if not missing and channel_ok else "private-configuration-blocked"))
+          print("PUBLIC_API_UPLOAD: " + ("audit-flag-present" if audited else "blocked-pending-audit"))
+          PY
