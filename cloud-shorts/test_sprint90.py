@@ -41,7 +41,7 @@ class Sprint90Tests(unittest.TestCase):
     def test_report_warns_not_to_copy_other_creators(self):
         m=sprint90.required_metrics(self.b)
         text=sprint90.markdown(self.b,m,90,45)
-        self.assertIn("skользящие 90 дней",text)
+        self.assertIn("скользящие 90 дней",text)
         self.assertIn("Не копировать чужую подборку",text)
         self.assertIn("2-step",sprint90.recommendations(m)[0].lower())
 
