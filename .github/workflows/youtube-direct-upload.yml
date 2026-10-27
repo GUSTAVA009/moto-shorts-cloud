@@ -7,6 +7,8 @@ on:
       - cloud-shorts/youtube_upload.py
       - cloud-shorts/test_youtube_upload.py
       - cloud-shorts/oauth_bootstrap.py
+      - cloud-shorts/upload_guard.py
+      - cloud-shorts/test_upload_guard.py
       - .github/workflows/youtube-direct-upload.yml
   workflow_dispatch:
     inputs:
@@ -29,7 +31,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: youtube-direct-${{ github.event_name }}-${{ inputs.video_run_id || github.ref }}
+  group: youtube-direct-uploads
   cancel-in-progress: false
 
 jobs:
@@ -38,13 +40,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Validate uploader without any keys or uploads
-        run: python3 -m unittest discover -s cloud-shorts -p test_youtube_upload.py -v
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_*.py' -v
 
   upload:
     if: github.event_name == 'workflow_dispatch'
     needs: safety-tests
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    permissions:
+      contents: write
+      actions: read
     steps:
       - uses: actions/checkout@v4
       - name: Download a reviewed Shorts MP4 from an existing render
@@ -62,6 +67,35 @@ jobs:
             --metadata staged/publication.json \
             --privacy "${{ inputs.privacy }}" \
             --dry-run
+      - name: Validate OAuth setup and audit before reserving an upload
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_API_AUDITED: ${{ vars.YOUTUBE_API_AUDITED }}
+          REQUESTED_PRIVACY: ${{ inputs.privacy }}
+        run: |
+          python3 - <<'PY'
+          import os
+          required = ("YOUTUBE_CLIENT_ID", "YOUTUBE_CLIENT_SECRET", "YOUTUBE_REFRESH_TOKEN")
+          missing = [key for key in required if not os.environ.get(key)]
+          if missing:
+              raise SystemExit("Google OAuth secrets not yet installed: " + ", ".join(missing))
+          if os.environ["REQUESTED_PRIVACY"] != "private" and os.environ.get("YOUTUBE_API_AUDITED", "").lower() != "true":
+              raise SystemExit("Google API project not audited. Only private uploads are enabled.")
+          print("OAuth secret presence and privacy gate checked; no values displayed")
+          PY
+      - name: Reserve video hash in durable GitHub upload ledger
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID || 'UCS0QCodPcFBTjMt4ioEWOUw' }}
+        run: |
+          python3 cloud-shorts/upload_guard.py reserve \
+            --video staged/first_motorcycle_short.mp4 \
+            --channel "$YOUTUBE_EXPECTED_CHANNEL_ID" \
+            --output upload-guard-reservation.json
       - name: Install free official Google API client
         run: python3 -m pip install --disable-pip-version-check google-api-python-client google-auth
       - name: Upload to precisely authorized YouTube channel (OAuth)
@@ -69,13 +103,21 @@ jobs:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
-          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID || 'UCS0QCodPcFBTjMt4ioEWOUw' }}
           YOUTUBE_API_AUDITED: ${{ vars.YOUTUBE_API_AUDITED }}
         run: |
           python3 cloud-shorts/youtube_upload.py \
             --video staged/first_motorcycle_short.mp4 \
             --metadata staged/publication.json \
             --privacy "${{ inputs.privacy }}" \
+            --receipt youtube-upload-receipt.json
+      - name: Finalize durable upload receipt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 cloud-shorts/upload_guard.py finish \
+            --reservation upload-guard-reservation.json \
             --receipt youtube-upload-receipt.json
       - name: Store upload receipt without OAuth keys
         if: success()
