@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "measured_date": "2026-10-28",
+  "channel_id": "UCS0QCodPcFBTjMt4ioEWOUw",
+  "source": "vidIQ connected channel + public video data; channel analytics may lag",
+  "subscribers": 520,
+  "lifetime_views": 60309,
+  "published_videos": 57,
+  "last_public_short": {
+    "video_id": "26FQE80Io-Y",
+    "views": 909,
+    "likes": 6,
+    "comments": 0
+  },
+  "monetization": {
+    "ypp_enabled": null,
+    "adsense_country": null,
+    "payouts_usd": null,
+    "actual_monthly_income_usd": null
+  },
+  "goals": {
+    "subscriber_milestone": 1000,
+    "gross_monthly_income_usd": 5000,
+    "shorts_engaged_views_90d_for_ads": 10000000,
+    "longform_valid_watch_hours_12m_for_ads": 4000
+  },
+  "notes": "Targets are objectives, not financial forecasts. Channel metadata country RU is not proof of owner's legal residence or AdSense country. No bot engagement or reuse of stock footage."
+}
