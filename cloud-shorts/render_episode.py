@@ -368,6 +368,7 @@ def render(ep, output_dir):
     receipt = {
         "episode": slug,
         "license_sources": ep["footage"],
+        "editorial_references": ep.get("editorial_references", []),
         "voice_model_card": "https://huggingface.co/rhasspy/piper-voices/blob/main/"
                             "ru/ru_RU/dmitri/medium/MODEL_CARD",
     }
