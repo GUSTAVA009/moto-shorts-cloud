@@ -1,15 +1,19 @@
 name: New Shorts - Fresh Russian TTS + Licensed Footage
 on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/render-new-short.yml']
   workflow_dispatch:
     inputs:
       episode:
         description: Choose a new original story
         type: choice
         required: true
-        default: forest-group-02
+        default: steep-hill-03
         options:
           - jump-second-01
           - forest-group-02
+          - steep-hill-03
 
 permissions:
   contents: read
@@ -23,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 16
     env:
-      EPISODE: ${{ github.event.inputs.episode || 'forest-group-02' }}
+      EPISODE: ${{ github.event.inputs.episode || 'steep-hill-03' }}
     steps:
       - uses: actions/checkout@v4
       - name: Verify scripts, licenses, and content before downloading
