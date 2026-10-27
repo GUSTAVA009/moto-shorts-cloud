@@ -102,6 +102,31 @@
       "episode": "garage-wrench-05",
       "source": "https://www.pexels.com/video/indonesian-mechanic-repairing-motorcycle-tire-37416331/",
       "status": "reserved-or-rendered"
+    },
+    "38992869": {
+      "episode": "wet-road-checklist-08",
+      "source": "https://www.pexels.com/video/motorbike-ride-through-rainy-urban-streets-38992869/",
+      "status": "reserved-or-rendered"
+    },
+    "36103039": {
+      "episode": "wet-road-checklist-08",
+      "source": "https://www.pexels.com/video/motorbike-tire-repair-and-maintenance-indoors-36103039/",
+      "status": "reserved-or-rendered"
+    },
+    "40347382": {
+      "episode": "wet-road-checklist-08",
+      "source": "https://www.pexels.com/video/motorcycle-adventure-through-rainy-mountain-road-40347382/",
+      "status": "reserved-or-rendered"
+    },
+    "5199297": {
+      "episode": "wet-road-checklist-08",
+      "source": "https://www.pexels.com/video/a-man-checking-his-motor-bike-5199297/",
+      "status": "reserved-or-rendered"
+    },
+    "35777415": {
+      "episode": "wet-road-checklist-08",
+      "source": "https://www.pexels.com/video/night-rainfall-on-urban-street-with-motorbikes-35777415/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -153,6 +178,13 @@
       "people": "single-desert-rider",
       "story": "ride-over-dunes-at-sunset",
       "visual": "orange-sunset-and-sand"
+    },
+    "wet-road-checklist-08": {
+      "environment": "rainy-city-and-mountain-roads",
+      "bike": "wet-weather-road-motorcycles",
+      "people": "commuter-rider-and-pre-ride-inspector",
+      "story": "original-pre-ride-rain-safety-explainer",
+      "visual": "rainy-neon-reflections-and-tire-closeups"
     }
   }
 }
