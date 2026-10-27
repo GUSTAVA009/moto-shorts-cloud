@@ -28,7 +28,11 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
-          python3 -m unittest discover -s cloud-shorts -p 'test_*.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_render_episode.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_editorial_guard.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_preview_queue.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_engagement_cta.py' -v
+          python3 cloud-shorts/editorial_guard.py --catalog cloud-shorts/episodes.json
           python3 cloud-shorts/preview_queue.py choose --output "$GITHUB_OUTPUT"
       - name: Install free audio/video engines
         if: steps.pick.outputs.has_job == 'true'
