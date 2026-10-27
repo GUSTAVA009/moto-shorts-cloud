@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "review_required": true,
   "episodes": [
     {
@@ -130,6 +130,65 @@
           "source": "mud_trail",
           "start": 9,
           "seconds": 2.6
+        }
+      ]
+    },
+    {
+      "id": "steep-hill-03",
+      "auto_preview": true,
+      "title": "Снизу этот подъём выглядел легче… 😳 #shorts",
+      "narration": "Снизу кажется, что тут легко проехать. Но склон становится круче с каждым метром. Ты бы поехал первым или посмотрел со стороны?",
+      "description": "Каждый метр подъёма становится сложнее предыдущего! 🏍️ А ты бы решился попробовать?\n\n#мото #подъём #shorts",
+      "caption_start": "СНИЗУ КАЖЕТСЯ ЛЕГКО",
+      "caption_middle": "А ТУТ ПОЧТИ СТЕНА...",
+      "caption_end": "КТО ПОЕДЕТ ПЕРВЫМ?",
+      "music_bpm": 132,
+      "footage": [
+        {
+          "key": "vertical_climb",
+          "url": "https://www.pexels.com/download/video/5803641/",
+          "source_page": "https://www.pexels.com/video/vertical-video-of-a-motocross-rider-going-uphill-5803641/",
+          "author": "cottonbro studio",
+          "license": "Pexels License"
+        },
+        {
+          "key": "drone_hill",
+          "url": "https://www.pexels.com/download/video/8373234/",
+          "source_page": "https://www.pexels.com/video/drone-footage-of-motocross-rider-going-uphill-8373234/",
+          "author": "Jose Valdivia",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "vertical_climb",
+          "start": 0,
+          "seconds": 2.1
+        },
+        {
+          "source": "drone_hill",
+          "start": 0.2,
+          "seconds": 2.2
+        },
+        {
+          "source": "vertical_climb",
+          "start": 2.2,
+          "seconds": 2.1
+        },
+        {
+          "source": "drone_hill",
+          "start": 2.8,
+          "seconds": 2.1
+        },
+        {
+          "source": "vertical_climb",
+          "start": 4.5,
+          "seconds": 2
+        },
+        {
+          "source": "drone_hill",
+          "start": 5,
+          "seconds": 2.2
         }
       ]
     }
