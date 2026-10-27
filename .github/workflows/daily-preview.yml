@@ -1,0 +1,70 @@
+name: Shorts Factory - One New Cloud Preview Per Day
+on:
+  schedule:
+    - cron: "17 07 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: moto-shorts-daily-queue
+  cancel-in-progress: false
+
+jobs:
+  daily-draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check content queue and reserve next episode
+        id: pick
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: |
+          python3 -m unittest discover -s cloud-shorts -p 'test_*.py' -v
+          python3 cloud-shorts/preview_queue.py choose --output "$GITHUB_OUTPUT"
+      - name: Install free audio/video engines
+        if: steps.pick.outputs.has_job == 'true'
+        run: |
+          sudo apt-get install -y -o Dpkg::Use-Pty=0 --no-install-recommends ffmpeg fonts-dejavu-core
+          python3 -m pip install --disable-pip-version-check piper-tts==1.8.0
+      - name: Produce next unique Shorts preview in GitHub Cloud
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          EPISODE: ${{ steps.pick.outputs.episode }}
+        run: |
+          python3 cloud-shorts/render_episode.py --episode "$EPISODE"
+          ffprobe -v error -show_entries stream=codec_type,width,height \
+            -show_entries format=duration -of json "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4"
+      - name: Store MP4, cover, metadata and internal licence records
+        if: steps.pick.outputs.has_job == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-preview-${{ steps.pick.outputs.episode }}-${{ github.run_id }}
+          path: cloud-shorts/dist/new/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Mark one-off preview as completed
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          EPISODE: ${{ steps.pick.outputs.episode }}
+        run: |
+          python3 cloud-shorts/preview_queue.py finish --episode "$EPISODE"
+      - name: Record status
+        if: always()
+        env:
+          HAS_JOB: ${{ steps.pick.outputs.has_job }}
+          EPISODE: ${{ steps.pick.outputs.episode }}
+        run: |
+          if [ "$HAS_JOB" = "true" ]; then
+            echo "Cloud preview prepared for $EPISODE. Human review required; not posted to YouTube." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No new approved episodes in the queue; did not produce duplicates." >> "$GITHUB_STEP_SUMMARY"
+          fi
