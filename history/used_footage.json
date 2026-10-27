@@ -1,0 +1,158 @@
+{
+  "version": 1,
+  "policy": "No footage reuse across any published, rejected or previewed Shorts. Append-only historical IDs.",
+  "initialized_at": "2026-10-27",
+  "used": {
+    "4904747": {
+      "episode": "sand-horizon-07",
+      "source": "https://www.pexels.com/video/a-person-riding-a-motorcycle-4904747/",
+      "status": "reserved-or-rendered"
+    },
+    "5803097": {
+      "episode": "forest-group-02",
+      "source": "https://www.pexels.com/video/people-riding-dirt-bike-in-a-forest-5803097/",
+      "status": "reserved-or-rendered"
+    },
+    "5803517": {
+      "episode": "published-first-short",
+      "source": "first-publication",
+      "status": "published"
+    },
+    "5803637": {
+      "episode": "published-first-short",
+      "source": "first-publication",
+      "status": "published"
+    },
+    "5803641": {
+      "episode": "steep-hill-03",
+      "source": "https://www.pexels.com/video/vertical-video-of-a-motocross-rider-going-uphill-5803641/",
+      "status": "reserved-or-rendered"
+    },
+    "5803642": {
+      "episode": "forest-group-02",
+      "source": "https://www.pexels.com/video/motorcyclists-passing-through-a-muddy-track-5803642/",
+      "status": "reserved-or-rendered"
+    },
+    "8373234": {
+      "episode": "steep-hill-03",
+      "source": "https://www.pexels.com/video/drone-footage-of-motocross-rider-going-uphill-8373234/",
+      "status": "reserved-or-rendered"
+    },
+    "9607292": {
+      "episode": "neon-city-04",
+      "source": "https://www.pexels.com/video/person-riding-a-big-bike-9607292/",
+      "status": "reserved-or-rendered"
+    },
+    "10839346": {
+      "episode": "race-grid-06",
+      "source": "https://www.pexels.com/video/race-on-motocross-dirt-track-10839346/",
+      "status": "reserved-or-rendered"
+    },
+    "12902841": {
+      "episode": "race-grid-06",
+      "source": "https://www.pexels.com/video/start-of-motocross-race-12902841/",
+      "status": "reserved-or-rendered"
+    },
+    "15144714": {
+      "episode": "jump-second-01",
+      "source": "https://www.pexels.com/video/a-motocross-rider-jumping-on-a-dirt-track-during-a-competition-15144714/",
+      "status": "reserved-or-rendered"
+    },
+    "18387838": {
+      "episode": "race-grid-06",
+      "source": "https://www.pexels.com/video/mxgp-world-champions-motorcyles-start-18387838/",
+      "status": "reserved-or-rendered"
+    },
+    "30398227": {
+      "episode": "race-grid-06-rejected-preview",
+      "source": "early-preview",
+      "status": "rejected"
+    },
+    "31881744": {
+      "episode": "jump-second-01",
+      "source": "https://www.pexels.com/video/intense-off-road-motocross-adventure-video-31881744/",
+      "status": "reserved-or-rendered"
+    },
+    "32902284": {
+      "episode": "neon-city-04",
+      "source": "https://www.pexels.com/video/motorcyclist-rides-at-sunset-in-urban-cityscape-32902284/",
+      "status": "reserved-or-rendered"
+    },
+    "34540535": {
+      "episode": "garage-wrench-05",
+      "source": "https://www.pexels.com/video/elderly-mechanic-fixing-motorcycle-wheel-34540535/",
+      "status": "reserved-or-rendered"
+    },
+    "34946392": {
+      "episode": "garage-wrench-05",
+      "source": "https://www.pexels.com/video/motorcycle-repair-in-garage-workshop-34946392/",
+      "status": "reserved-or-rendered"
+    },
+    "35433585": {
+      "episode": "sand-horizon-07",
+      "source": "https://www.pexels.com/video/dirt-bike-kicking-up-dust-at-sunset-35433585/",
+      "status": "reserved-or-rendered"
+    },
+    "36077827": {
+      "episode": "neon-city-04",
+      "source": "https://www.pexels.com/video/nighttime-motorbike-ride-through-city-streets-36077827/",
+      "status": "reserved-or-rendered"
+    },
+    "37416331": {
+      "episode": "garage-wrench-05",
+      "source": "https://www.pexels.com/video/indonesian-mechanic-repairing-motorcycle-tire-37416331/",
+      "status": "reserved-or-rendered"
+    }
+  },
+  "scene_profiles": {
+    "jump-second-01": {
+      "environment": "outdoor-motocross-track",
+      "bike": "offroad-race-bikes",
+      "people": "solo-helmeted-rider",
+      "story": "jump-and-landing",
+      "visual": "daylight-dirt"
+    },
+    "forest-group-02": {
+      "environment": "wooded-trail",
+      "bike": "group-trail-bikes",
+      "people": "group-of-friends",
+      "story": "longer-than-planned-ride",
+      "visual": "green-forest"
+    },
+    "steep-hill-03": {
+      "environment": "rocky-steep-hill",
+      "bike": "hill-climb-dirt-bike",
+      "people": "solo-hill-rider",
+      "story": "hill-challenge",
+      "visual": "stone-steep"
+    },
+    "neon-city-04": {
+      "environment": "night-city-neon",
+      "bike": "urban-sport-and-street-bikes",
+      "people": "different-urban-riders",
+      "story": "night-vs-sunset-choice",
+      "visual": "neon-dusk-urban"
+    },
+    "garage-wrench-05": {
+      "environment": "indoor-garage-workshop",
+      "bike": "workshop-road-and-classic-bikes",
+      "people": "mechanics-of-different-ages",
+      "story": "unseen-repair-work",
+      "visual": "industrial-closeups"
+    },
+    "race-grid-06": {
+      "environment": "professional-racing-circuit",
+      "bike": "race-spec-motocross-bikes",
+      "people": "competing-race-pack",
+      "story": "race-start-and-first-corner",
+      "visual": "bright-race-paddock"
+    },
+    "sand-horizon-07": {
+      "environment": "open-sand-desert",
+      "bike": "desert-trail-dirt-bike",
+      "people": "single-desert-rider",
+      "story": "ride-over-dunes-at-sunset",
+      "visual": "orange-sunset-and-sand"
+    }
+  }
+}
