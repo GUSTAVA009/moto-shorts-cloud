@@ -18,6 +18,7 @@ import urllib.request
 
 from soundtrack import generate as make_music
 from tts_voice import render as make_voice
+from editorial_guard import validate_catalog
 
 HERE = Path(__file__).resolve().parent
 EPISODES = HERE / "episodes.json"
@@ -124,6 +125,7 @@ def validate_episode(ep):
 
 def load_episode(path, slug):
     raw = json.loads(Path(path).read_text(encoding="utf-8"))
+    validate_catalog(raw)  # Fail before fetching any footage if previously used source appears.
     for ep in raw["episodes"]:
         validate_episode(ep)
         if ep["id"] == slug:
