@@ -13,3 +13,11 @@
 Облачный запуск: GitHub Actions. Использование API и Google OAuth — только с разрешения владельца канала.
 
 See `SETUP_RU.md` after installation.
+
+## Продолжить настройку
+
+- [Инструкция на русском: Google OAuth и GitHub Actions](SETUP_RU.md)
+- [Облачная сборка Shorts](.github/workflows/render-preview.yml)
+- [Безопасная прямая загрузка YouTube](.github/workflows/youtube-direct-upload.yml)
+
+После подтверждения владельца Google-аккаунта нужно установить секреты в GitHub Actions. Без этого прямые загрузки намеренно не выполняются. Первый ранее опубликованный ролик не следует загружать заново.
