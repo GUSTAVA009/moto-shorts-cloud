@@ -1,0 +1,61 @@
+name: New Shorts - Fresh Russian TTS + Licensed Footage
+on:
+  push:
+    branches: [main]
+    paths:
+      - cloud-shorts/episodes.json
+      - cloud-shorts/tts_voice.py
+      - cloud-shorts/render_episode.py
+      - cloud-shorts/test_render_episode.py
+      - .github/workflows/render-new-short.yml
+  workflow_dispatch:
+    inputs:
+      episode:
+        description: Choose a new original story
+        type: choice
+        required: true
+        default: jump-second-01
+        options:
+          - jump-second-01
+          - forest-group-02
+
+permissions:
+  contents: read
+
+concurrency:
+  group: render-new-short-${{ github.event.inputs.episode || 'jump-second-01' }}
+  cancel-in-progress: false
+
+jobs:
+  cloud-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      EPISODE: ${{ github.event.inputs.episode || 'jump-second-01' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify scripts, licenses, and content before downloading
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_*.py' -v
+      - name: Install free video and neural voice tools
+        run: |
+          sudo apt-get install -y --no-install-recommends ffmpeg fonts-dejavu-core
+          python3 -m pip install --disable-pip-version-check piper-tts==1.8.0
+      - name: Render new original short entirely on cloud runner
+        run: |
+          python3 cloud-shorts/render_episode.py --episode "$EPISODE"
+      - name: Validate audible voice, music and full vertical picture
+        run: |
+          FILE="cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4"
+          test -s "$FILE"
+          ffprobe -v error -show_entries format=duration \
+            -show_entries stream=codec_type,width,height -of json "$FILE"
+          test -s "cloud-shorts/dist/new/$EPISODE/publication.json"
+          test -s "cloud-shorts/dist/new/$EPISODE/license_sources.json"
+          test -s "cloud-shorts/dist/new/$EPISODE/thumbnail.jpg"
+      - name: Save MP4, thumbnail, public description, internal licence records
+        uses: actions/upload-artifact@v4
+        with:
+          name: new-shorts-${{ env.EPISODE }}-${{ github.run_id }}
+          path: cloud-shorts/dist/new/
+          retention-days: 5
+          if-no-files-found: error
