@@ -19,6 +19,7 @@ import urllib.request
 from soundtrack import generate as make_music
 from tts_voice import render as make_voice
 from editorial_guard import validate_catalog
+from engagement_cta import validate_cta, overlay_filters, build_description
 
 HERE = Path(__file__).resolve().parent
 EPISODES = HERE / "episodes.json"
@@ -117,6 +118,7 @@ def validate_episode(ep):
         total += seconds
     if total < 12:
         raise ValueError("Insufficient footage duration")
+    validate_cta(ep)
     opening_trim = float(ep.get("opening_trim_seconds", 0.0))
     if not 0 <= opening_trim <= 2.0:
         raise ValueError("Action hook trim must be between 0 and 2 seconds")
@@ -225,6 +227,8 @@ def draw_captions(ep, work, total):
             "x=(w-text_w)/2:y=154:enable='between(t,%.3f,%.3f)'"
             % (FONT, caption_file, lo, hi),
         ])
+    # Quiet lower-third CTA rotates per episode; story and final question remain readable.
+    filters.extend(overlay_filters(ep, work, total, FONT))
     filters.append("fade=t=out:st=%.2f:d=0.30" % max(0, total - 0.30))
     return ",".join(filters)
 
@@ -313,7 +317,7 @@ def render(ep, output_dir):
     ], 35)
     publication = {
         "title": ep["title"],
-        "description": clean_description(ep["description"]),
+        "description": clean_description(build_description(ep)),
         "tags": ep.get("tags", ["мото", "shorts"]),
         "status": "REVIEW_REQUIRED",
         "youtube_published": False,
@@ -323,6 +327,7 @@ def render(ep, output_dir):
         "music_style": music_style,
         "editorial_profile": ep.get("editorial"),
         "episode_id": slug,
+        "engagement_cta": {"kind": ep["cta"]["kind"], "overlay": ep["cta"]["overlay"]},
     }
     (output_dir / "publication.json").write_text(
         json.dumps(publication, ensure_ascii=False, indent=2), encoding="utf8"
