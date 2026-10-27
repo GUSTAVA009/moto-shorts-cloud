@@ -153,7 +153,7 @@ def assemble_clips(ep, sources, work, target_seconds):
     segments = []
     shots = ep["shots"]
     scene_count = 0
-    while remaining > 0.07 and scene_count < 18:
+    while remaining > 0.30 and scene_count < 18:
         shot = shots[scene_count % len(shots)]
         src = sources[shot["source"]]
         src_duration, streams = probe(src)
@@ -166,8 +166,10 @@ def assemble_clips(ep, sources, work, target_seconds):
             # their real runtime rather than requesting nonexistent frames.
             start = max(0.0, src_duration - min(2.5, remaining) - 0.2)
             seconds = min(float(shot["seconds"]), remaining, src_duration - start - 0.1)
-        if seconds < 0.8:
+        if seconds < 0.8 and remaining > 0.8:
             raise RuntimeError("Source too short for any valid cut: " + shot["source"])
+        if seconds < 0.28:
+            break  # avoid exporting a near-empty last segment
         out = work / ("scene_%02d.mp4" % scene_count)
         run([
             "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
@@ -181,7 +183,7 @@ def assemble_clips(ep, sources, work, target_seconds):
         segments.append(out)
         remaining -= seconds
         scene_count += 1
-    if remaining > 0.25:
+    if remaining > 0.35:
         raise RuntimeError("Not enough video scenes for narration")
     playlist = work / "playlist.txt"
     playlist.write_text("".join("file '%s'\n" % p.name for p in segments), encoding="utf-8")
