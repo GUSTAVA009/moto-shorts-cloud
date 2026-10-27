@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "review_required": true,
+  "episodes": [
+    {
+      "id": "jump-second-01",
+      "title": "Одна секунда до прыжка! 😳 #shorts",
+      "narration": "Секунда на разгон. Мгновение в воздухе. И дальше всё решает приземление. А ты бы рискнул повторить такой прыжок?",
+      "description": "На земле всё кажется простым. Но в воздухе уже не передумаешь! 🏍️ А ты бы рискнул?\n\n#мото #мотокросс #shorts",
+      "caption_start": "СЕКУНДА ДО ПРЫЖКА",
+      "caption_middle": "А ДАЛЬШЕ — ПОЛЁТ",
+      "caption_end": "ТЫ БЫ РИСКНУЛ?",
+      "music_bpm": 132,
+      "footage": [
+        {
+          "key": "race_jump",
+          "url": "https://videos.pexels.com/video-files/15144714/15144714-uhd_3840_2160_25fps.mp4",
+          "source_page": "https://www.pexels.com/video/a-motocross-rider-jumping-on-a-dirt-track-during-a-competition-15144714/",
+          "author": "Michael Novogradac",
+          "license": "Pexels License"
+        },
+        {
+          "key": "mud_action",
+          "url": "https://videos.pexels.com/video-files/31881744/13580715_1080_1920_30fps.mp4",
+          "source_page": "https://www.pexels.com/video/intense-off-road-motocross-adventure-video-31881744/",
+          "author": "setengah lima sore",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "race_jump",
+          "start": 0,
+          "seconds": 2.5
+        },
+        {
+          "source": "mud_action",
+          "start": 0.5,
+          "seconds": 2.2
+        },
+        {
+          "source": "race_jump",
+          "start": 3,
+          "seconds": 2.4
+        },
+        {
+          "source": "mud_action",
+          "start": 4.4,
+          "seconds": 2.5
+        },
+        {
+          "source": "race_jump",
+          "start": 6,
+          "seconds": 2.8
+        },
+        {
+          "source": "mud_action",
+          "start": 8.5,
+          "seconds": 2.6
+        },
+        {
+          "source": "race_jump",
+          "start": 10.5,
+          "seconds": 2.6
+        }
+      ]
+    },
+    {
+      "id": "forest-group-02",
+      "title": "Поехали всего на час… 🌲 #shorts",
+      "narration": "Договаривались просто прокатиться. Потом лес, повороты и ещё одна тропа. Теперь никто не хочет возвращаться. Узнаёшь свою компанию?",
+      "description": "Знакомая история? Планировали один короткий круг, а получили целое приключение! 🌲🏍️\n\n#мото #покатушки #shorts",
+      "caption_start": "ОДИН КОРОТКИЙ КРУГ",
+      "caption_middle": "А ПОТОМ ЕЩЁ ОДИН...",
+      "caption_end": "УЗНАЁШЬ СВОИХ?",
+      "music_bpm": 126,
+      "footage": [
+        {
+          "key": "forest",
+          "url": "https://www.pexels.com/download/video/5803097/",
+          "source_page": "https://www.pexels.com/video/people-riding-dirt-bike-in-a-forest-5803097/",
+          "author": "cottonbro studio",
+          "license": "Pexels License"
+        },
+        {
+          "key": "mud_trail",
+          "url": "https://www.pexels.com/download/video/5803642/",
+          "source_page": "https://www.pexels.com/video/motorcyclists-passing-through-a-muddy-track-5803642/",
+          "author": "cottonbro studio",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "forest",
+          "start": 0,
+          "seconds": 2
+        },
+        {
+          "source": "mud_trail",
+          "start": 0,
+          "seconds": 2.4
+        },
+        {
+          "source": "forest",
+          "start": 2.6,
+          "seconds": 2
+        },
+        {
+          "source": "mud_trail",
+          "start": 3,
+          "seconds": 2.4
+        },
+        {
+          "source": "forest",
+          "start": 4.8,
+          "seconds": 2
+        },
+        {
+          "source": "mud_trail",
+          "start": 6,
+          "seconds": 2.8
+        },
+        {
+          "source": "forest",
+          "start": 0.3,
+          "seconds": 2
+        },
+        {
+          "source": "mud_trail",
+          "start": 9,
+          "seconds": 2.6
+        }
+      ]
+    }
+  ]
+}
