@@ -1,0 +1,57 @@
+name: GUSTAVA - Original Longform Documentary Preview
+on:
+  push:
+    branches: [main]
+    paths:
+      - longform/01-rain-production.json
+      - longform/render_documentary.py
+      - longform/test_render_documentary.py
+      - .github/workflows/longform-documentary-preview.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gustava-longform-rain-01
+  cancel-in-progress: false
+
+jobs:
+  documentary-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check facts, catalog references and rights without network/media
+        run: |
+          python3 -m unittest discover -s longform -p 'test_render_documentary.py' -v
+          python3 longform/render_documentary.py --check-only
+      - name: Install free local open-source renderer and speech engine
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -o Dpkg::Use-Pty=0 --no-install-recommends ffmpeg fonts-dejavu-core
+          python3 -m pip install --disable-pip-version-check pillow piper-tts==1.8.0
+      - name: Render full original 16:9 Russian documentary
+        run: |
+          python3 longform/render_documentary.py
+      - name: Validate video, audio, duration and source manifests
+        run: |
+          FILE="longform/dist/rain-checklist-long-01/rain-checklist-long-01.mp4"
+          test -s "$FILE"
+          test -s "longform/dist/rain-checklist-long-01/qa.json"
+          test -s "longform/dist/rain-checklist-long-01/source_rights.json"
+          test -s "longform/dist/rain-checklist-long-01/publication.json"
+          ffprobe -v error -show_entries format=duration,size -show_entries stream=codec_type,width,height -of json "$FILE"
+      - name: Keep reviewed MP4 separate from public YouTube
+        uses: actions/upload-artifact@v4
+        with:
+          name: gustava-longform-01-review-${{ github.run_id }}
+          path: |
+            longform/dist/rain-checklist-long-01/*.mp4
+            longform/dist/rain-checklist-long-01/*.png
+            longform/dist/rain-checklist-long-01/*.json
+          retention-days: 14
+          if-no-files-found: error
+      - name: Mark for human editorial review - no automatic publication
+        run: |
+          echo "An original long-form MP4 preview has been rendered. Human viewing and editorial review are required before upload." >> "$GITHUB_STEP_SUMMARY"
