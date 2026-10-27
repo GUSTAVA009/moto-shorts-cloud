@@ -1,8 +1,5 @@
 name: New Shorts - Fresh Russian TTS + Licensed Footage
 on:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/render-new-short.yml']
   workflow_dispatch:
     inputs:
       episode:
