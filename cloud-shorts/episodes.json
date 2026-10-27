@@ -747,6 +747,224 @@
           "seconds": 2.4
         }
       ]
+    },
+    {
+      "id": "helmet-fit-09",
+      "title": "Шлем выглядит идеально. А подходит ли он тебе? 🪖 #shorts",
+      "narration": "Красивый шлем ещё не значит подходящий. Перед поездкой проверь три вещи: правильный размер и посадку, застёжку и маркировку безопасности. Выбирай защиту, а не только цвет. Как ты выбирал свой первый шлем?",
+      "description": "Сравниваем экипировку и разбираем, что действительно стоит проверить до поездки. 🪖\n\n#мото #мотошлем #экипировка #shorts",
+      "caption_start": "ШЛЕМ ПОДХОДИТ ТЕБЕ?",
+      "caption_middle": "НЕ ТОЛЬКО ВНЕШНИЙ ВИД",
+      "caption_end": "КАК ВЫБИРАЛ ТЫ?",
+      "max_duration_seconds": 29,
+      "music_style": "garage-groove",
+      "music_bpm": 114,
+      "footage": [
+        {
+          "key": "rider_helmet",
+          "url": "https://videos.pexels.com/video-files/6801307/6801307-hd_720_1280_50fps.mp4",
+          "source_page": "https://www.pexels.com/video/a-woman-wearing-an-helmet-6801307/",
+          "author": "Michelle Leman",
+          "license": "Pexels License"
+        },
+        {
+          "key": "helmet_check",
+          "url": "https://videos.pexels.com/video-files/12405712/12405712-hd_1080_1920_30fps.mp4",
+          "source_page": "https://www.pexels.com/video/man-wearing-helmet-12405712/",
+          "author": "RDNE Stock project",
+          "license": "Pexels License"
+        },
+        {
+          "key": "motorcycle_owner",
+          "url": "https://videos.pexels.com/video-files/9607102/9607102-hd_720_1280_25fps.mp4",
+          "source_page": "https://www.pexels.com/video/a-man-sitting-on-his-motorcycle-9607102/",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "rider_helmet",
+          "start": 0.4,
+          "seconds": 2.3
+        },
+        {
+          "source": "helmet_check",
+          "start": 1,
+          "seconds": 2.4
+        },
+        {
+          "source": "rider_helmet",
+          "start": 5,
+          "seconds": 2.3
+        },
+        {
+          "source": "helmet_check",
+          "start": 5.2,
+          "seconds": 2.5
+        },
+        {
+          "source": "motorcycle_owner",
+          "start": 1.2,
+          "seconds": 2.3
+        },
+        {
+          "source": "helmet_check",
+          "start": 10,
+          "seconds": 2.5
+        },
+        {
+          "source": "rider_helmet",
+          "start": 9.5,
+          "seconds": 2.5
+        },
+        {
+          "source": "motorcycle_owner",
+          "start": 5,
+          "seconds": 2.4
+        },
+        {
+          "source": "helmet_check",
+          "start": 15,
+          "seconds": 2.5
+        }
+      ],
+      "story_steps": [
+        {
+          "at": 4.2,
+          "text": "1. РАЗМЕР И ПОСАДКА"
+        },
+        {
+          "at": 8,
+          "text": "2. ПРОВЕРКА ЗАСТЁЖКИ"
+        },
+        {
+          "at": 11.8,
+          "text": "3. МАРКИРОВКА"
+        }
+      ],
+      "opening_trim_seconds": 0.25,
+      "editorial": {
+        "environment": "helmet-fitting-station",
+        "bike": "everyday-commuter-motorcycles",
+        "people": "female-and-male-helmet-wearers",
+        "story": "helmet-fit-versus-style",
+        "visual": "bright-closeup-protective-gear"
+      },
+      "tags": [
+        "мото",
+        "шлем",
+        "экипировка",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОРАЗБОРЫ",
+        "description": "Подпишись, если хочешь ещё понятных разборов экипировки."
+      },
+      "auto_preview": true
+    },
+    {
+      "id": "mountain-road-10",
+      "title": "Красивая горная дорога. А что за поворотом? 🏔️ #shorts",
+      "narration": "С воздуха горная дорога кажется идеальной. Но её красота обманчива: за поворотом не видно встречную полосу, а погода может резко измениться. В незнакомом месте важнее обзор и спокойный темп, чем эффектный кадр. Ты бы поехал сюда?",
+      "description": "Красивый маршрут — не повод забывать об обзоре и безопасном темпе. 🏔️ Какой перевал мечтаешь проехать?\n\n#мото #мотопутешествие #горы #shorts",
+      "caption_start": "ДОРОГА КАК ИЗ КИНО",
+      "caption_middle": "ЗА ПОВОРОТОМ НЕ ВИДНО",
+      "caption_end": "ПОЕХАЛ БЫ СЮДА?",
+      "max_duration_seconds": 29,
+      "music_style": "desert-cinematic",
+      "music_bpm": 116,
+      "footage": [
+        {
+          "key": "mountain_ride",
+          "url": "https://videos.pexels.com/video-files/11309846/11309846-hd_720_1280_30fps.mp4",
+          "source_page": "https://www.pexels.com/video/motorcyclist-on-road-11309846/",
+          "author": "Dronepilot Chile",
+          "license": "Pexels License"
+        },
+        {
+          "key": "cliff_pause",
+          "url": "https://videos.pexels.com/video-files/11259866/11259866-hd_1080_1920_30fps.mp4",
+          "source_page": "https://www.pexels.com/video/man-and-motorcycle-next-to-road-on-cliff-11259866/",
+          "author": "Dronepilot Chile",
+          "license": "Pexels License"
+        },
+        {
+          "key": "road_rider",
+          "url": "https://videos.pexels.com/video-files/6664273/6664273-hd_1080_1872_30fps.mp4",
+          "source_page": "https://www.pexels.com/video/a-man-driving-his-motorcycle-6664273/",
+          "author": "ROMAN ODINTSOV",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "cliff_pause",
+          "start": 3,
+          "seconds": 2.5
+        },
+        {
+          "source": "mountain_ride",
+          "start": 0.5,
+          "seconds": 2.4
+        },
+        {
+          "source": "road_rider",
+          "start": 2,
+          "seconds": 2.4
+        },
+        {
+          "source": "mountain_ride",
+          "start": 6,
+          "seconds": 2.7
+        },
+        {
+          "source": "cliff_pause",
+          "start": 15,
+          "seconds": 2.5
+        },
+        {
+          "source": "road_rider",
+          "start": 6,
+          "seconds": 2.4
+        },
+        {
+          "source": "mountain_ride",
+          "start": 12,
+          "seconds": 2.4
+        },
+        {
+          "source": "cliff_pause",
+          "start": 25,
+          "seconds": 2.6
+        },
+        {
+          "source": "road_rider",
+          "start": 10,
+          "seconds": 2.4
+        }
+      ],
+      "opening_trim_seconds": 0.2,
+      "editorial": {
+        "environment": "highway-by-mountain-cliff",
+        "bike": "travel-road-motorcycles",
+        "people": "independent-touring-riders",
+        "story": "scenic-road-with-hidden-hazards",
+        "visual": "daylight-elevated-roads"
+      },
+      "tags": [
+        "мото",
+        "мотопутешествие",
+        "горы",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ ДЛЯ ПОЕЗДКИ",
+        "description": "Отправь другу, с которым мечтаешь проехать горный маршрут."
+      },
+      "auto_preview": true
     }
   ]
 }
