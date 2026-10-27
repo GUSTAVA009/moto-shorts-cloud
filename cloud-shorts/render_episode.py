@@ -162,7 +162,12 @@ def assemble_clips(ep, sources, work, target_seconds):
         start = float(shot["start"])
         seconds = min(float(shot["seconds"]), remaining, src_duration - start - 0.1)
         if seconds < 0.9:
-            raise RuntimeError("Source too short for selected cut: " + shot["source"])
+            # Some Pexels previews are only a few seconds long. Reframe inside
+            # their real runtime rather than requesting nonexistent frames.
+            start = max(0.0, src_duration - min(2.5, remaining) - 0.2)
+            seconds = min(float(shot["seconds"]), remaining, src_duration - start - 0.1)
+        if seconds < 0.8:
+            raise RuntimeError("Source too short for any valid cut: " + shot["source"])
         out = work / ("scene_%02d.mp4" % scene_count)
         run([
             "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
