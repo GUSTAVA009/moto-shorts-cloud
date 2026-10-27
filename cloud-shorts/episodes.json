@@ -63,7 +63,8 @@
           "start": 10.5,
           "seconds": 2.6
         }
-      ]
+      ],
+      "opening_trim_seconds": 0.8
     },
     {
       "id": "forest-group-02",
@@ -190,7 +191,8 @@
           "start": 5,
           "seconds": 2.2
         }
-      ]
+      ],
+      "opening_trim_seconds": 1.7
     }
   ]
 }
