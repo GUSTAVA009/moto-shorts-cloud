@@ -14,7 +14,7 @@ on:
         description: Choose a new original story
         type: choice
         required: true
-        default: jump-second-01
+        default: forest-group-02
         options:
           - jump-second-01
           - forest-group-02
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 16
     env:
-      EPISODE: ${{ github.event.inputs.episode || 'jump-second-01' }}
+      EPISODE: ${{ github.event.inputs.episode || 'forest-group-02' }}
     steps:
       - uses: actions/checkout@v4
       - name: Verify scripts, licenses, and content before downloading
