@@ -438,10 +438,10 @@
           "license": "Pexels License"
         },
         {
-          "key": "race_curve",
-          "url": "https://www.pexels.com/download/video/30398227/",
-          "source_page": "https://www.pexels.com/video/exciting-track-motorcycle-race-with-multiple-riders-30398227/",
-          "author": "Harvey Tan Villarino",
+          "key": "dirt_corner",
+          "url": "https://www.pexels.com/download/video/10839346/",
+          "source_page": "https://www.pexels.com/video/race-on-motocross-dirt-track-10839346/",
+          "author": "Midtrack -",
           "license": "Pexels License"
         }
       ],
@@ -457,7 +457,7 @@
           "seconds": 2
         },
         {
-          "source": "race_curve",
+          "source": "dirt_corner",
           "start": 0,
           "seconds": 1.8
         },
@@ -472,7 +472,7 @@
           "seconds": 2.2
         },
         {
-          "source": "race_curve",
+          "source": "dirt_corner",
           "start": 2.7,
           "seconds": 1.9
         },
@@ -492,7 +492,7 @@
     },
     {
       "id": "sand-horizon-07",
-      "auto_preview": false,
+      "auto_preview": true,
       "title": "За горизонтом — только песок! 🏜️ #shorts",
       "narration": "Здесь нет ни улиц, ни светофоров. Только песчаные просторы, след колеса и пыль за спиной. Поехал бы через дюны ради такого заката?",
       "description": "Песчаная трасса, вечерний свет и только звук мотора. 🏜️ Поехал бы сюда?\n\n#мото #пустыня #shorts",
