@@ -277,6 +277,16 @@
       "episode": "elspeth-beard-s1-e01",
       "source": "https://www.pexels.com/video/woman-holding-her-helmet-and-standing-beside-her-motorcycle-9607104/",
       "status": "reserved-or-rendered"
+    },
+    "8499670": {
+      "episode": "elspeth-beard-s1-e02",
+      "source": "https://www.pexels.com/video/close-up-of-a-map-of-the-united-states-of-america-8499670/",
+      "status": "reserved-or-rendered"
+    },
+    "31918568": {
+      "episode": "elspeth-beard-s1-e02",
+      "source": "https://www.pexels.com/video/solo-motorcycle-adventure-on-a-scenic-trail-31918568/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -390,7 +400,7 @@
       "bike": "bmw-r60-six-solo-tour-vintage",
       "people": "solo-female-traveler-illustration-riders",
       "story": "unaccompanied-us-leg-after-brother-ride",
-      "visual": "north-america-map-open-highway-vintage-contrast"
+      "visual": "usa-map-vintage-travel-open-highway-motorcycle"
     }
   }
 }
