@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Continuous, source-backed motorcycle STORY IDEA discovery — never a blind publisher.
+"""Diverse, original story RESEARCH leads; not an automatic article-to-video scraper.
 
-RSS headlines are research leads, not scripts or licensed footage. New ideas
-are deduplicated in GitHub's render-ledger. Editorial research and visual
-rights are mandatory before promotion into episodes.json.
+Headlines/links are for internal verification. Never republish the headline,
+website images, video, article or original narration without permission.
+A new item is a research candidate ONLY, not permission to create/publish MP4.
 """
 from __future__ import annotations
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -16,12 +17,39 @@ import xml.etree.ElementTree as ET
 
 import preview_queue as ledger
 
+# Each feed is a research signal, NOT a source of commercially licensed video.
+# Using several publishers reduces dependence on a single motorcycle niche.
 FEEDS = [
-    "https://www.rideapart.com/rss/news/all/",
-    "https://thethrottlehand.com/feed.xml",
+    ("https://www.rideapart.com/rss/news/all/", "motorcycle"),
+    ("https://thethrottlehand.com/feed.xml", "motorcycle"),
+    ("https://www.sciencedaily.com/rss/top/science.xml", "science"),
+    ("https://www.sciencedaily.com/rss/top/technology.xml", "engineering"),
+    ("https://www.sciencedaily.com/rss/top/environment.xml", "nature"),
+    ("https://www.sciencedaily.com/rss/top/society.xml", "history"),
+    ("https://www.sciencedaily.com/rss/strange_offbeat.xml", "surprising_facts"),
+    ("https://www.jpl.nasa.gov/feeds/news/", "space"),
+    ("https://cneos.jpl.nasa.gov/feed/news.xml", "space"),
 ]
-ALLOWED_HOSTS = {"rideapart.com", "www.rideapart.com", "thethrottlehand.com", "www.thethrottlehand.com"}
+ALLOWED_HOSTS = {
+    "rideapart.com", "www.rideapart.com",
+    "thethrottlehand.com", "www.thethrottlehand.com",
+    "sciencedaily.com", "www.sciencedaily.com",
+    "jpl.nasa.gov", "www.jpl.nasa.gov",
+    "cneos.jpl.nasa.gov",
+}
+RESEARCH_PILLARS = frozenset({
+    "motorcycle", "science", "engineering", "nature", "history",
+    "surprising_facts", "space",
+})
 STATE_PATH = "idea-candidates/seen.json"
+# A broad entertainment channel should not generate sensitive medical,
+# political or sensationalized tragedy clips from a single unverified headline.
+HIGH_STAKES = re.compile(
+    r"\b(cancer|stroke|alzheimers|alzheimer|suicide|murder|killed|terror|"
+    r"warfare|election|president|vaccine|dementia|clinical trial|"
+    r"diabetes|heart disease|covid|children dying|fatal crash)\b",
+    flags=re.IGNORECASE,
+)
 
 
 def clean(value):
@@ -36,46 +64,66 @@ def parse_rss(xml):
         link = (item.findtext("link") or "").strip()
         if title and link:
             entries.append((title, link))
-    for entry in root.findall(".//{http://www.w3.org/2005/Atom}entry"):
-        title = clean(entry.findtext("{http://www.w3.org/2005/Atom}title") or "")
-        links = entry.findall("{http://www.w3.org/2005/Atom}link")
-        link = next((x.get("href", "") for x in links if x.get("rel", "alternate") == "alternate"), "")
+    atom = "{http://www.w3.org/2005/Atom}"
+    for entry in root.findall(".//" + atom + "entry"):
+        title = clean(entry.findtext(atom + "title") or "")
+        links = entry.findall(atom + "link")
+        link = next((x.get("href", "") for x in links
+                     if x.get("rel", "alternate") == "alternate"), "")
         if title and link:
             entries.append((title, link))
     return entries
 
 
-def make_candidate(title, link):
+def make_candidate(title, link, pillar=None):
     url = urllib.parse.urlsplit(link)
     if url.scheme != "https" or url.hostname not in ALLOWED_HOSTS:
         return None
-    key = hashlib.sha256((url.netloc + url.path).encode("utf8")).hexdigest()[:20]
+    if HIGH_STAKES.search(title):
+        return None
+    if pillar is not None and pillar not in RESEARCH_PILLARS:
+        return None
+    key = hashlib.sha256(
+        (url.netloc.casefold() + url.path.rstrip("/")).encode("utf8")
+    ).hexdigest()[:20]
     lower = title.casefold()
-    topic = ("tech" if any(w in lower for w in ("repair", "engine", "mechanic", "restore", "parts")) else
-             "trip" if any(w in lower for w in ("travel", "road", "trip", "adventure", "tour")) else
-             "race" if any(w in lower for w in ("race", "motogp", "rally", "rider", "dakar")) else
-             "motorcycle_culture")
+    legacy_topic = (
+        "tech" if any(w in lower for w in ("repair", "engine", "mechanic", "restore", "parts"))
+        else "trip" if any(w in lower for w in ("travel", "road", "trip", "adventure", "tour"))
+        else "race" if any(w in lower for w in ("race", "motogp", "rally", "rider", "dakar"))
+        else "motorcycle_culture"
+    )
+    topic = pillar or legacy_topic
     return {
-        "id": key, "source_headline": title,
+        "id": key, "source_headline": clean(title),
         "source_url": urllib.parse.urlunsplit((url.scheme, url.netloc, url.path, "", "")),
-        "topic": topic,
-        "pitch_ru": "Исследовать, что произошло, чем это важно для мотоциклистов и какие факты можно подтвердить.",
+        "topic": topic, "pillar": pillar or "motorcycle",
+        "pitch_ru": "Исследовать один необычный факт; найти первоисточник, контекст, объяснение и неожиданную, но правдивую развязку.",
         "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
-        "verification": "Check primary sources, accuracy, chronology, context and video rights.",
+        "verification": "Two independent corroborating sources, correct context, exact date, original script, commercial footage rights and final Russian speech QA.",
+        "sources_required": 2,
         "must_create_new_script": True,
         "use_headline_as_narration": False,
         "use_source_images_without_license": False,
+        "auto_publish": False,
     }
 
 
-def new_ideas(previous, entries, limit=16):
+def new_ideas(previous, entries, limit=24, per_pillar=5):
+    """Fair, deduplicated lead picking across different research pillars."""
     seen = set(previous)
+    count = Counter()
     candidates = []
-    for title, link in entries:
-        c = make_candidate(title, link)
-        if c is None or c["id"] in seen:
+    for row in entries:
+        if not isinstance(row, (tuple, list)) or len(row) not in (2, 3):
+            continue
+        title, link = row[:2]
+        pillar = row[2] if len(row) == 3 else None
+        c = make_candidate(title, link, pillar)
+        if c is None or c["id"] in seen or count[c["pillar"]] >= per_pillar:
             continue
         seen.add(c["id"])
+        count[c["pillar"]] += 1
         candidates.append(c)
         if len(candidates) >= limit:
             break
@@ -83,43 +131,60 @@ def new_ideas(previous, entries, limit=16):
 
 
 def get_feed(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "GUSTAVA-MotoResearch/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "GUSTAVA-Research/2.0"})
     with urllib.request.urlopen(req, timeout=25) as res:
         body = res.read(1500000)
     return parse_rss(body)
 
 
+def round_robin_groups(groups):
+    """Avoid bias where the first RSS source uses the entire daily quota."""
+    max_len = max((len(rows) for _, rows in groups), default=0)
+    for index in range(max_len):
+        for pillar, rows in groups:
+            if index < len(rows):
+                title, link = rows[index]
+                yield (title, link, pillar)
+
+
 def main():
-    paths = []
-    for url in FEEDS:
+    groups = []
+    for url, pillar in FEEDS:
         try:
-            paths.extend(get_feed(url))
+            groups.append((pillar, get_feed(url)))
         except (ValueError, ET.ParseError, TimeoutError, OSError) as exc:
-            print("FEED_UNAVAILABLE", urllib.parse.urlsplit(url).hostname, type(exc).__name__)
+            print("FEED_UNAVAILABLE", urllib.parse.urlsplit(url).hostname,
+                  pillar, type(exc).__name__)
+    entries = list(round_robin_groups(groups))
     previous_entry = ledger.api(STATE_PATH)
     if previous_entry:
         import base64
         state = json.loads(base64.b64decode(previous_entry["content"]))
         if state.get("version") != 1:
-            raise RuntimeError("Corrupt story history — cannot deduplicate")
+            raise RuntimeError("Corrupt research history: cannot deduplicate")
     else:
         state = {"version": 1, "seen_ids": []}
     current_ids = state.get("seen_ids", [])
     if not isinstance(current_ids, list):
-        raise RuntimeError("Story history format invalid")
-    fresh = new_ideas(current_ids, paths)
+        raise RuntimeError("Research history format invalid")
+    fresh = new_ideas(current_ids, entries)
+    by_pillar = dict(Counter(c["pillar"] for c in fresh))
     dest = Path("cloud-shorts/dist/story-ideas.json")
     dest.parent.mkdir(parents=True, exist_ok=True)
-    dest.write_text(json.dumps({"source_count":len(paths), "new_count":len(fresh),
-                                "candidates":fresh,
-                                "disclaimer":"Not fact-checked scripts; not approved video or archival rights."},
-                               ensure_ascii=False, indent=2)+"\n", encoding="utf8")
+    dest.write_text(
+        json.dumps({
+            "source_count": len(entries), "new_count": len(fresh),
+            "by_pillar": by_pillar, "candidates": fresh,
+            "disclaimer": "Research only. No source article, photography or video is licensed for republication. No auto-generation without fact checking.",
+        }, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf8",
+    )
     if fresh:
         state["seen_ids"] = (current_ids + [c["id"] for c in fresh])[-10000:]
-        ledger.store(STATE_PATH, state, "Record fresh motorcycle research leads",
+        ledger.store(STATE_PATH, state, "Persist deduplicated general-interest research leads",
                      old_sha=previous_entry["sha"] if previous_entry else None)
-    print("NEW_ORIGINAL_RESEARCH_LEADS",len(fresh),"/",len(paths),
-          "No articles or images copied to video")
+    print("NEW_ORIGINAL_RESEARCH_LEADS", len(fresh), "/",
+          len(entries), "PILLARS", by_pillar, "NO_AUTO_PUBLISH")
 
 
 if __name__ == "__main__":
