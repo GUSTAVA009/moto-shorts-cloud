@@ -32,6 +32,34 @@ class TestPreviewQueue(unittest.TestCase):
         history["used"][old_id]["episode"] = scene["id"]
         pq.assert_new_sources(scene, history)
 
+    def test_revised_unpublished_audio_may_retry_but_only_three_attempts(self):
+        episode = {"id": "motorcycle-serial-01", "auto_preview": True}
+        bad = {"id": episode["id"], "state": "preview_ready",
+               "attempt_count": 1, "preview_fingerprint": "old-script",
+               "voice_qa_passed": False, "mixed_audio_qa_passed": False}
+        self.assertTrue(pq.eligible_retry(episode, bad, "revised-script"))
+        self.assertFalse(pq.eligible_retry(episode, bad, "old-script"))
+        bad["state"] = "reserved"
+        self.assertFalse(pq.eligible_retry(episode, bad, "revised-script"))
+        bad["state"] = "preview_ready"
+        bad["attempt_count"] = 3
+        self.assertFalse(pq.eligible_retry(episode, bad, "revised-script"))
+
+    def test_successful_audio_preview_is_never_remade(self):
+        ep = {"id": "motorcycle-serial-02"}
+        record = {"id": ep["id"], "state": "preview_ready",
+                  "voice_qa_passed": True, "mixed_audio_qa_passed": True,
+                  "attempt_count": 1, "preview_fingerprint": "past"}
+        self.assertFalse(pq.eligible_retry(ep, record, "future"))
+
+    def test_modified_script_changes_fingerprint(self):
+        ep = {"id": "new-test-01", "narration": "Первое путешествие"}
+        a = pq.preview_fingerprint(ep)
+        ep["narration"] = "Второе путешествие"
+        b = pq.preview_fingerprint(ep)
+        self.assertNotEqual(a, b)
+        self.assertEqual(len(a), 64)
+
     def test_missing_or_corrupt_registry_fails_closed(self):
         with self.assertRaises(RuntimeError):
             pq.decode_history(None)
