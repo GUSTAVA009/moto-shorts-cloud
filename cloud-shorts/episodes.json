@@ -1435,6 +1435,161 @@
       },
       "auto_preview": true,
       "auto_publish": true
+    },
+    {
+      "id": "elspeth-beard-s1-e01",
+      "title": "1982: она одна отправилась вокруг света на BMW! 🏍️ Часть 1/6 #shorts",
+      "narration": "Осень тысяча девятьсот восемьдесят второго года. В двадцать три года британка Элспет Берд решает объехать мир на старом мотоцикле БМВ. Она копила деньги, работая в лондонском пабе, и отправила мотоцикл кораблём в Нью-Йорк. Тогда не было ни смартфонов, ни навигатора. Как началась её поездка? Узнаем во второй серии.",
+      "description": "МОТОИСТОРИИ — ЧАСТЬ 1/6. В 1982 году Элспет Берд отправилась в кругосветное мотопутешествие на BMW R60/6. Реальные события, авторский рассказ и иллюстративные кадры (не архивные съёмки Элспет).\n\n#мотоистории #мотоцикл #путешествия #shorts",
+      "caption_start": "1982: ОДНА ВОКРУГ СВЕТА",
+      "caption_middle": "BMW R60/6 · 1974",
+      "caption_end": "ЧАСТЬ 2: АМЕРИКА",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.15,
+      "music_style": "desert-cinematic",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "vintage",
+          "url": "https://www.pexels.com/download/video/40347391/",
+          "source_page": "https://www.pexels.com/video/classic-motorcycle-on-urban-street-40347391/",
+          "author": "Tom Shutkin",
+          "license": "Pexels License"
+        },
+        {
+          "key": "woman_bike",
+          "url": "https://www.pexels.com/download/video/37104102/",
+          "source_page": "https://www.pexels.com/video/woman-posing-on-motorcycle-in-urban-setting-37104102/",
+          "author": "frank minjarez",
+          "license": "Pexels License"
+        },
+        {
+          "key": "woman_plan",
+          "url": "https://www.pexels.com/download/video/7429438/",
+          "source_page": "https://www.pexels.com/video/video-of-a-woman-looking-at-the-map-7429438/",
+          "author": "Vlada Karpovich",
+          "license": "Pexels License"
+        },
+        {
+          "key": "map_detail",
+          "url": "https://www.pexels.com/download/video/7606352/",
+          "source_page": "https://www.pexels.com/video/a-paper-map-lying-on-the-floor-7606352/",
+          "author": "Marina Leonova",
+          "license": "Pexels License"
+        },
+        {
+          "key": "road_ride",
+          "url": "https://www.pexels.com/download/video/4443736/",
+          "source_page": "https://www.pexels.com/video/a-woman-riding-a-motorcycle-on-a-road-4443736/",
+          "author": "cottonbro studio",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "vintage",
+          "start": 0.2,
+          "seconds": 2.1
+        },
+        {
+          "source": "woman_bike",
+          "start": 0.3,
+          "seconds": 2.4
+        },
+        {
+          "source": "woman_plan",
+          "start": 1,
+          "seconds": 2.7
+        },
+        {
+          "source": "map_detail",
+          "start": 2,
+          "seconds": 2.4
+        },
+        {
+          "source": "road_ride",
+          "start": 1,
+          "seconds": 2.4
+        },
+        {
+          "source": "woman_bike",
+          "start": 3,
+          "seconds": 2.1
+        },
+        {
+          "source": "map_detail",
+          "start": 5,
+          "seconds": 2.5
+        },
+        {
+          "source": "road_ride",
+          "start": 4.3,
+          "seconds": 2.5
+        },
+        {
+          "source": "woman_plan",
+          "start": 6.2,
+          "seconds": 2.4
+        },
+        {
+          "source": "vintage",
+          "start": 0.1,
+          "seconds": 2.1
+        }
+      ],
+      "story_steps": [
+        {
+          "at": 4.8,
+          "text": "ОКТЯБРЬ 1982 · ЛОНДОН"
+        },
+        {
+          "at": 9.7,
+          "text": "1974 · BMW R60/6"
+        },
+        {
+          "at": 15.2,
+          "text": "ПЕРВЫЙ ПУНКТ: НЬЮ-ЙОРК"
+        }
+      ],
+      "editorial": {
+        "environment": "historical-1982-london-new-york-departure",
+        "bike": "seventies-vintage-flat-twin",
+        "people": "historical-female-traveler-illustrations",
+        "story": "documented-woman-world-trip-departure",
+        "visual": "maps-vintage-machine-timeline"
+      },
+      "tags": [
+        "мотоистории",
+        "Элспет Берд",
+        "мотоцикл",
+        "BMW R60/6",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА ПРОДОЛЖЕНИЕ",
+        "description": "Подпишись, чтобы не пропустить вторую часть реальной мотоистории."
+      },
+      "episode_series": {
+        "id": "gustava-real-motorcycle-stories",
+        "season_id": "elspeth-beard-1982",
+        "chapter": 1,
+        "chapter_total": 6,
+        "historical_reconstruction": true,
+        "illustration_disclaimer": "ИЛЛЮСТРАТИВНЫЕ КАДРЫ",
+        "sources": [
+          "https://www.elspethbeard.com/travels",
+          "https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/",
+          "https://brightonmuseums.org.uk/discovery/history-stories/elspeth-beard-first-british-woman-to-motorcycle-around-the-world/"
+        ]
+      },
+      "editorial_references": [
+        "https://www.elspethbeard.com/travels",
+        "https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/",
+        "https://brightonmuseums.org.uk/discovery/history-stories/elspeth-beard-first-british-woman-to-motorcycle-around-the-world/"
+      ],
+      "auto_preview": true,
+      "auto_publish": false
     }
   ]
 }
