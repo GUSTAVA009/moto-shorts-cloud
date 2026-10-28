@@ -37,7 +37,12 @@ _NUMBERS = {
 
 
 def tokens(text):
-    raw = re.findall(r"[а-яa-z0-9]+", str(text).casefold().replace("ё", "е"))
+    normalized = str(text).casefold().replace("ё", "е")
+    # "восьмидесятых" and the ASR transcription "80-х" mean the same decade,
+    # not a fabricated or mispronounced number.
+    normalized = re.sub(r"\bвосьмидесятых\b", "80", normalized)
+    normalized = re.sub(r"\b80[-–][хx]\b", "80", normalized)
+    raw = re.findall(r"[а-яa-z0-9]+", normalized)
     out = []
     i = 0
     while i < len(raw):
