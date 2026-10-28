@@ -2,7 +2,7 @@ name: Shorts Factory - Three Unique Cloud Previews Daily
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json']
+    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/publora_autopublish.py']
   schedule:
     - cron: "17 07 * * *"
     - cron: "17 12 * * *"
