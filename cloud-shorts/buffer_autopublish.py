@@ -34,8 +34,14 @@ def required(name):
 def validate(ep, meta, voice, mixed, video):
     qa = dict(voice, mixed_audio=mixed)
     prior.publication_allowed(ep, meta, qa, video)
-    if min(float(voice.get("lexical_coverage", 0)), float(mixed.get("lexical_coverage", 0))) < .95:
-        raise ValueError("Narration accuracy below 95%; publishing blocked")
+    if min(float(voice.get("lexical_coverage", 0)), float(mixed.get("lexical_coverage", 0))) < .97:
+        raise ValueError("Narration accuracy below 97%; publishing blocked")
+    # ASR alone cannot certify natural prosody or a consistent human-like style.
+    # Human approval must come from explicit listening, never an agent estimate.
+    if voice.get("human_narration_approved") is not True:
+        raise ValueError("Narrator style must pass a real listening review")
+    if mixed.get("final_mix_listened") is not True:
+        raise ValueError("Final MP4 audio must pass a real listening review")
     if required("YOUTUBE_EXPECTED_CHANNEL_ID") != CHANNEL:
         raise ValueError("Wrong destination YouTube channel")
     return prior.file_sha256(video)
