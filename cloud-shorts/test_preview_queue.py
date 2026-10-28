@@ -52,6 +52,25 @@ class TestPreviewQueue(unittest.TestCase):
                   "attempt_count": 1, "preview_fingerprint": "past"}
         self.assertFalse(pq.eligible_retry(ep, record, "future"))
 
+    def test_documentary_media_fix_can_replace_passed_unpublished_preview_once(self):
+        episode={"id":"elspeth-beard-s1-e01",
+                 "episode_series":{"historical_reconstruction":True}}
+        receipt={"id":episode["id"],"state":"preview_ready","attempt_count":2,
+                 "voice_qa_passed":True,"mixed_audio_qa_passed":True,
+                 "preview_fingerprint":"misleading-footage"}
+        self.assertTrue(pq.eligible_retry(episode,receipt,"correct-illustrations"))
+        receipt["attempt_count"]=3
+        self.assertFalse(pq.eligible_retry(episode,receipt,"new-still"))
+        receipt["attempt_count"]=2
+        self.assertFalse(pq.eligible_retry(episode,receipt,"misleading-footage"))
+
+    def test_normal_good_video_cannot_reupload_due_to_irrelevant_code_change(self):
+        ep={"id":"my-new-moto-short"}
+        receipt={"id":ep["id"],"state":"preview_ready","attempt_count":1,
+                 "voice_qa_passed":True,"mixed_audio_qa_passed":True,
+                 "preview_fingerprint":"prior-version"}
+        self.assertFalse(pq.eligible_retry(ep,receipt,"new-code"))
+
     def test_modified_script_changes_fingerprint(self):
         ep = {"id": "new-test-01", "narration": "Первое путешествие"}
         a = pq.preview_fingerprint(ep)
