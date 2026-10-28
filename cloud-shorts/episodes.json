@@ -1440,7 +1440,7 @@
       "id": "elspeth-beard-s1-e01",
       "title": "1982: она одна отправилась вокруг света на BMW! 🏍️ Часть 1/6 #shorts",
       "narration": "Осень тысяча девятьсот восемьдесят второго года. В двадцать три года британка Элспет Берд решает объехать мир на старом мотоцикле БМВ. Она копила деньги, работая в лондонском пабе, и отправила мотоцикл кораблём в Нью-Йорк. Тогда не было ни смартфонов, ни навигатора. Как началась её поездка? Узнаем во второй серии.",
-      "description": "МОТОИСТОРИИ — ЧАСТЬ 1/6. В 1982 году Элспет Берд отправилась в кругосветное мотопутешествие на BMW R60/6. Реальные события, авторский рассказ и иллюстративные кадры (не архивные съёмки Элспет).\n\n#мотоистории #мотоцикл #путешествия #shorts",
+      "description": "МОТОИСТОРИИ — ЧАСТЬ 1/6. В 1982 году Элспет Берд отправилась в кругосветное мотопутешествие на BMW R60/6. Реальные события, авторский рассказ и иллюстративные кадры (не архивные съёмки Элспет); реальные марки техники в кадрах могут отличаться.\n\n#мотоистории #мотоцикл #путешествия #shorts",
       "caption_start": "1982: ОДНА ВОКРУГ СВЕТА",
       "caption_middle": "BMW R60/6 · 1974",
       "caption_end": "ЧАСТЬ 2: АМЕРИКА",
@@ -1449,13 +1449,6 @@
       "music_style": "desert-cinematic",
       "music_bpm": 104,
       "footage": [
-        {
-          "key": "vintage",
-          "url": "https://www.pexels.com/download/video/40347391/",
-          "source_page": "https://www.pexels.com/video/classic-motorcycle-on-urban-street-40347391/",
-          "author": "Tom Shutkin",
-          "license": "Pexels License"
-        },
         {
           "key": "woman_bike",
           "url": "https://www.pexels.com/download/video/37104102/",
@@ -1483,12 +1476,19 @@
           "source_page": "https://www.pexels.com/video/a-woman-riding-a-motorcycle-on-a-road-4443736/",
           "author": "cottonbro studio",
           "license": "Pexels License"
+        },
+        {
+          "key": "rural_road",
+          "url": "https://www.pexels.com/download/video/35604904/",
+          "source_page": "https://www.pexels.com/video/scenic-country-road-motorcycle-ride-in-daylight-35604904/",
+          "author": "Edoardo Geninatti",
+          "license": "Pexels License"
         }
       ],
       "shots": [
         {
-          "source": "vintage",
-          "start": 0.2,
+          "source": "map_detail",
+          "start": 0.6,
           "seconds": 2.1
         },
         {
@@ -1532,8 +1532,8 @@
           "seconds": 2.4
         },
         {
-          "source": "vintage",
-          "start": 0.1,
+          "source": "rural_road",
+          "start": 0.3,
           "seconds": 2.1
         }
       ],
@@ -1556,7 +1556,7 @@
         "bike": "seventies-vintage-flat-twin",
         "people": "historical-female-traveler-illustrations",
         "story": "documented-woman-world-trip-departure",
-        "visual": "maps-vintage-machine-timeline"
+        "visual": "travel-map-and-period-context-not-brand-mislabelled"
       },
       "tags": [
         "мотоистории",
