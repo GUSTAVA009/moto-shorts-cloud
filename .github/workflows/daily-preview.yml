@@ -83,7 +83,7 @@ jobs:
           GITHUB_RUN_ID: ${{ github.run_id }}
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
-          python3 cloud-shorts/preview_queue.py finish --episode "$EPISODE" --qa-report "cloud-shorts/dist/new/$EPISODE/voice_qa.json"
+          python3 cloud-shorts/preview_queue.py finish --episode "$EPISODE" --qa-report "cloud-shorts/dist/new/$EPISODE/voice_qa.json" --mixed-qa-report "cloud-shorts/dist/new/$EPISODE/mixed_audio_qa.json"
       - name: Publish NEW MP4 through Publora only after Russian QA and account opt-in
         if: steps.pick.outputs.has_job == 'true'
         env:
@@ -106,6 +106,7 @@ jobs:
             --video "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4" \
             --metadata "cloud-shorts/dist/new/$EPISODE/publication.json" \
             --voice-qa "cloud-shorts/dist/new/$EPISODE/voice_qa.json"
+            --mixed-qa "cloud-shorts/dist/new/$EPISODE/mixed_audio_qa.json"
       - name: Record status
         if: always()
         env:
@@ -113,7 +114,7 @@ jobs:
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
           if [ "$HAS_JOB" = "true" ]; then
-            echo "Cloud preview prepared for $EPISODE. Human review required; not posted to YouTube." >> "$GITHUB_STEP_SUMMARY"
+            echo "Unique MP4 preview ready for $EPISODE. Confirm publication separately in Publora; public upload is subject to voice QA, opt-in and plan quota." >> "$GITHUB_STEP_SUMMARY"
           else
             echo "No new approved episodes in the queue; did not produce duplicates." >> "$GITHUB_STEP_SUMMARY"
           fi
