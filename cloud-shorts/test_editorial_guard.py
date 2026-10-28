@@ -40,13 +40,27 @@ class EditorialGuardTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "settings"):
             g.validate_catalog(data)
 
-    def test_same_people_bike_or_story_rejected(self):
-        for field in ["bike", "people", "story"]:
+    def test_same_people_subject_or_story_rejected(self):
+        for field in ["subject", "people", "story"]:
             with self.subTest(field=field):
                 data = copy.deepcopy(self.data)
-                data["episodes"][-1]["editorial"][field] = data["episodes"][-2]["editorial"][field]
+                last = data["episodes"][-1]["editorial"]
+                prior = data["episodes"][-2]["editorial"]
+                if field == "subject":
+                    last["subject"] = g.editorial_subject(prior)
+                    last.pop("bike", None)
+                else:
+                    last[field] = prior[field]
                 with self.assertRaises(ValueError):
                     g.validate_catalog(data)
+
+    def test_generic_science_subject_is_accepted(self):
+        self.assertEqual(
+            g.editorial_subject({"subject": "science-experiment"}),
+            "science-experiment"
+        )
+        with self.assertRaises(ValueError):
+            g.editorial_subject({})
 
     def test_branding_banned_from_public_description(self):
         data = copy.deepcopy(self.data)
