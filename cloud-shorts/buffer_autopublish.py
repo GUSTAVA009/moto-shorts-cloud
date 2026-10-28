@@ -47,7 +47,7 @@ def public_url(sha):
 def upload_r2(video, sha):
     import boto3
     endpoint = required("R2_ENDPOINT")
-    if not re.fullmatch(r"https://[a-f0-9]{32}\\.r2\\.cloudflarestorage\\.com", endpoint):
+    if not re.fullmatch(r"https://[a-f0-9]{32}\.r2\.cloudflarestorage\.com", endpoint):
         raise ValueError("Invalid Cloudflare R2 endpoint")
     client = boto3.client("s3", region_name="auto", endpoint_url=endpoint,
         aws_access_key_id=required("R2_ACCESS_KEY_ID"),
@@ -67,7 +67,7 @@ def buffer_post(title, description, media_url):
     if not re.fullmatch(r"[A-Za-z0-9_-]{6,100}", channel_id):
         raise ValueError("Invalid Buffer channel ID")
     payload = {"query": MUTATION, "variables": {"input": {
-        "channelId": channel_id, "text": title.strip() + "\\n\\n" + description.strip(),
+        "channelId": channel_id, "text": title.strip() + "\n\n" + description.strip(),
         "schedulingType":"automatic", "mode":"addToQueue",
         "assets":[{"video":{"url":media_url}}]
     }}}
