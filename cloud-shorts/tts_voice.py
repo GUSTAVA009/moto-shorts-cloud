@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate a new Russian voiceover for each episode on the GitHub runner.
 
-Voice: Piper dmitri medium. Model card declares CC0 training dataset.
+Voice: Piper denis medium (selected after independently measured Russian intelligibility). Model card declares CC0 training dataset.
 Never download a model with a NonCommercial dataset for monetized videos.
 """
 from __future__ import annotations
@@ -13,10 +13,10 @@ import sys
 import urllib.request
 import wave
 
-BASE_URL = "https://huggingface.co/rhasspy/piper-voices/resolve/main/ru/ru_RU/dmitri/medium/"
-STEM = "ru_RU-dmitri-medium.onnx"
-MODEL_SHA256 = "f073356ebc4bd0f80c5af58df2953a5988bd5bdab1eb38635ce960b071fbefcb"
-VOICE_CARD = "https://huggingface.co/rhasspy/piper-voices/blob/main/ru/ru_RU/dmitri/medium/MODEL_CARD"
+BASE_URL = "https://huggingface.co/rhasspy/piper-voices/resolve/main/ru/ru_RU/denis/medium/"
+STEM = "ru_RU-denis-medium.onnx"
+MODEL_SHA256 = "15fab56e11a097858ee115545d0f697fc2a316c41a291a5362349fb870411b0"
+VOICE_CARD = "https://huggingface.co/rhasspy/piper-voices/blob/main/ru/ru_RU/denis/medium/MODEL_CARD"
 
 
 def sha256(path):
