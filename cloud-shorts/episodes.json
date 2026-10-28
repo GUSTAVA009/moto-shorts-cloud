@@ -1315,7 +1315,8 @@
         "overlay": "НАПИШИ СВОЮ ИСТОРИЮ",
         "description": "Расскажи в комментариях о сложном участке, который тебе запомнился."
       },
-      "auto_preview": true
+      "auto_preview": true,
+      "auto_publish": true
     },
     {
       "id": "bike-care-14",
@@ -1432,7 +1433,8 @@
         "overlay": "ОТПРАВЬ ДРУГУ С БАЙКОМ",
         "description": "Поделись с другом, который любит свою технику."
       },
-      "auto_preview": true
+      "auto_preview": true,
+      "auto_publish": true
     }
   ]
 }
