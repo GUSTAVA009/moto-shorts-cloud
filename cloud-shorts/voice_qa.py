@@ -100,7 +100,8 @@ def main():
         report = check(chosen, args.wav, args.model)
     except Exception as exc:
         report = {"episode_id": args.episode, "status": "manual_review_required",
-                  "passed": False, "reason": "ASR_QA_UNAVAILABLE: " + type(exc).__name__}
+                  "passed": False, "reason": "ASR_QA_UNAVAILABLE: " + type(exc).__name__,
+                  "debug_exception": str(exc)[:260]}
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
     print("VOICE_QA", report["status"], "coverage", report.get("lexical_coverage", "unknown"))
