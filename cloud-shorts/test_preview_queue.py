@@ -60,6 +60,8 @@ class TestPreviewQueue(unittest.TestCase):
                  "preview_fingerprint":"misleading-footage"}
         self.assertTrue(pq.eligible_retry(episode,receipt,"correct-illustrations"))
         receipt["attempt_count"]=3
+        self.assertTrue(pq.eligible_retry(episode,receipt,"new-still"))
+        receipt["attempt_count"]=5
         self.assertFalse(pq.eligible_retry(episode,receipt,"new-still"))
         receipt["attempt_count"]=2
         self.assertFalse(pq.eligible_retry(episode,receipt,"misleading-footage"))
