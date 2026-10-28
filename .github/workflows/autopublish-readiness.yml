@@ -1,0 +1,40 @@
+name: GUSTAVA - Autopublish Readiness (No Publication)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/autopublish-readiness.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PUBLORA_API_KEY: ${{ secrets.PUBLORA_API_KEY }}
+      PUBLORA_AUTO_PUBLISH_ENABLED: ${{ vars.PUBLORA_AUTO_PUBLISH_ENABLED }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify all offline release and duplicate-prevention gates
+        run: |
+          python3 -m unittest discover -s cloud-shorts -p 'test_publora_autopublish.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_voice_qa.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_find_pending_publication.py' -v
+      - name: Read-only private credential and manual activation diagnostic
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          ready_key=bool(os.environ.get("PUBLORA_API_KEY","").startswith("sk_"))
+          enabled=(os.environ.get("PUBLORA_AUTO_PUBLISH_ENABLED","").lower()=="true")
+          lines=["## Autopublish readiness (no upload)",
+                 "- Valid Publora API key configured: "+("YES" if ready_key else "NO"),
+                 "- Repository opt-in enabled: "+("YES" if enabled else "NO"),
+                 "- GitHub automatic public release: "+("CONFIGURED_FOR_API_CHECK" if ready_key and enabled else "NOT_ACTIVE"),
+                 "- Content release still requires exact narration, facts, media rights, uniqueness and quota.",
+                 "- This workflow never displays the API key and never posts a video."]
+          Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text("\n".join(lines)+"\n",encoding="utf8")
+          print("PUBLICATION_READINESS","CONFIGURED" if ready_key and enabled else "BLOCKED")
+          PY
