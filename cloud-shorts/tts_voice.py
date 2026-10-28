@@ -66,9 +66,16 @@ def render(text, output, model_dir):
     safe_download(BASE_URL + STEM + ".json", config, 3_000)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
+    # Piper's default zero pause makes Russian function words blend together.
+    # Preserve punctuation and slow phoneme timing without altering pitch.
     cmd = [
         sys.executable, "-m", "piper",
-        "-m", str(model), "-f", str(output), "--", text
+        "-m", str(model), "-f", str(output),
+        "--length-scale", "1.12",
+        "--sentence-silence", "0.24",
+        "--noise-scale", "0.42",
+        "--noise-w", "0.75",
+        "--", text
     ]
     result = subprocess.run(cmd, capture_output=True, text=True, timeout=200)
     if result.returncode != 0:
