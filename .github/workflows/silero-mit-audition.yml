@@ -1,9 +1,6 @@
 name: GUSTAVA - Test MIT Silero Russian Voice (No Publish)
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: [".github/workflows/silero-mit-audition.yml", "cloud-shorts/episodes.json"]
 
 permissions:
   contents: read
