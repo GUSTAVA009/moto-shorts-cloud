@@ -59,3 +59,20 @@ These are modern **illustrative** stock clips. None depicts Elspeth Beard or her
 - cottonbro studio — [Woman riding a motorcycle on a country road](https://www.pexels.com/video/a-woman-riding-a-motorcycle-on-a-road-4443736/)
 
 Story sources: [Elspeth Beard's own account](https://www.elspethbeard.com/), [first-person Mad or Nomad interview](https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/), [Brighton Museums](https://brightonmuseums.org.uk/discovery/history-stories/elspeth-beard-first-british-woman-to-motorcycle-around-the-world/). Archival photographs, book pages, interview recordings and celebrity likenesses are not reused.
+
+## Real motorcycle history — Elspeth Beard S01E02 (illustration, not archive)
+
+The sources listed below are newly licensed modern clips. They do **not**
+depict the actual 1982 expedition or the real Elspeth Beard.
+
+- Lara Jameson — https://www.pexels.com/video/pins-attached-to-a-paper-map-8828766/
+- Ben Blight — https://www.pexels.com/video/motorcycle-journey-through-the-desert-36625886/
+- tejinder ladi photography — https://www.pexels.com/video/woman-riding-a-motorcycle-on-road-11247139/
+- Mazin Omron — https://www.pexels.com/video/aerial-view-of-scenic-desert-highway-35282898/
+- Dubang chang — https://www.pexels.com/video/desert-driving-freeway-california-28296051/
+
+Primary source: https://www.elspethbeard.com/travels
+First-person route source: https://www.hagerty.co.uk/articles/interviews/the-one-that-got-away-elspeth-beards-bmw-r75-5/
+Context interview: https://expeditionportal.com/living-legends-elspeth-beard/
+
+Preserve author/rights inventory internally, never add stock URLs to public YouTube video descriptions.
