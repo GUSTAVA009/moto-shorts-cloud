@@ -16,9 +16,11 @@ class BufferBridgeTests(unittest.TestCase):
                    "description":"Досмотри до конца."}
         self.voice={"episode_id":self.episode["id"],"status":"passed",
                     "passed":True,"lexical_coverage":.98,
+                    "human_narration_approved":True,
                     "ending_coverage":1,"final_word_present":True}
         self.mixed={"episode_id":self.episode["id"],"source":"FINAL_MIXED_MP4",
                     "status":"passed","passed":True,"lexical_coverage":.97,
+                    "final_mix_listened":True,
                     "ending_coverage":1,"final_word_present":True,
                     "numerics_match":True,
                     "mp4_sha256":b.prior.file_sha256(self.video)}
@@ -30,12 +32,22 @@ class BufferBridgeTests(unittest.TestCase):
             self.assertTrue(b.deliver(self.episode,self.meta,self.voice,self.mixed,self.video,True)["dry_run"])
     def test_refuse_inaccurate_voice(self):
         self.voice["lexical_coverage"]=.80
-        with self.env(),self.assertRaisesRegex(ValueError,"95%"):
+        with self.env(),self.assertRaisesRegex(ValueError,"97%"):
             b.validate(self.episode,self.meta,self.voice,self.mixed,self.video)
     def test_refuse_inaccurate_final_mix(self):
         self.mixed["lexical_coverage"]=.81
-        with self.env(),self.assertRaisesRegex(ValueError,"95%"):
+        with self.env(),self.assertRaisesRegex(ValueError,"97%"):
             b.validate(self.episode,self.meta,self.voice,self.mixed,self.video)
+    def test_refuse_unreviewed_narrator(self):
+        self.voice["human_narration_approved"]=False
+        with self.env(),self.assertRaisesRegex(ValueError,"listening review"):
+            b.validate(self.episode,self.meta,self.voice,self.mixed,self.video)
+
+    def test_refuse_unreviewed_final_mp4_audio(self):
+        self.mixed["final_mix_listened"]=False
+        with self.env(),self.assertRaisesRegex(ValueError,"Final MP4 audio"):
+            b.validate(self.episode,self.meta,self.voice,self.mixed,self.video)
+
     def test_refuse_wrong_channel(self):
         with self.env(YOUTUBE_EXPECTED_CHANNEL_ID="UCaaaaaaaaaaaaaaaaaaaaaa"):
             with self.assertRaisesRegex(ValueError,"Wrong destination"):
