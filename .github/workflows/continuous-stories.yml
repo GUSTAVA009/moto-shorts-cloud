@@ -1,9 +1,9 @@
-name: GUSTAVA - Continuous Verified Motorcycle Story Leads
+name: GUSTAVA - Continuous Cross-Niche Verified Story Research
 on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['.github/workflows/continuous-stories.yml']
+    paths: ['.github/workflows/continuous-stories.yml', 'cloud-shorts/source_watch.py', 'cloud-shorts/test_source_watch.py']
   schedule:
     - cron: "41 06 * * *"
     - cron: "41 14 * * *"
@@ -21,17 +21,17 @@ jobs:
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
-      - name: Generate research candidates without copying source media
+      - name: Gather balanced science, nature, engineering, space, history and motorcycle leads
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           python3 -m unittest discover -s cloud-shorts -p 'test_source_watch.py' -v
           python3 cloud-shorts/source_watch.py
-      - name: Archive research leads for independent scripts
+      - name: Archive non-publishable research leads for independent scripts
         uses: actions/upload-artifact@v4
         with:
-          name: original-moto-story-leads-${{ github.run_id }}
+          name: multi-topic-original-story-leads-${{ github.run_id }}
           path: cloud-shorts/dist/story-ideas.json
           if-no-files-found: error
           retention-days: 30
