@@ -19,7 +19,12 @@ class PubloraAutopublishTests(unittest.TestCase):
                      "description": "Русская озвучка и новые кадры.", "tags": ["мото"]}
         self.qa = {"episode_id": self.episode["id"], "passed": True,
                    "status": "passed", "lexical_coverage": .97, "ending_coverage": 1.0,
-                   "final_word_present": True}
+                   "final_word_present": True, "numerics_match": True}
+        self.qa["mixed_audio"] = {
+            "episode_id": self.episode["id"], "source": "FINAL_MIXED_MP4",
+            "passed": True, "status": "passed", "lexical_coverage": .97,
+            "ending_coverage": 1.0, "final_word_present": True,
+            "numerics_match": True, "mp4_sha256": p.file_sha256(self.video)}
 
     def tearDown(self):
         self.tmp.cleanup()
@@ -29,6 +34,33 @@ class PubloraAutopublishTests(unittest.TestCase):
             result = p.publish(self.episode, self.meta, self.qa, self.video, True)
         self.assertTrue(result["publication_allowed"])
         self.assertEqual(len(result["sha256"]), 64)
+
+    def test_missing_final_mixed_audio_qa_blocks_publication(self):
+        self.qa.pop("mixed_audio")
+        with self.assertRaisesRegex(ValueError, "mixed Russian"):
+            p.publication_allowed(self.episode, self.meta, self.qa, self.video)
+
+    def test_different_file_hash_is_blocked_even_when_qa_passed(self):
+        self.qa["mixed_audio"]["mp4_sha256"] = "f" * 64
+        with self.assertRaisesRegex(ValueError, "does not match"):
+            p.publication_allowed(self.episode, self.meta, self.qa, self.video)
+
+    def test_music_obscures_last_words_blocked(self):
+        self.qa["mixed_audio"]["passed"] = False
+        with self.assertRaisesRegex(ValueError, "mixed Russian"):
+            p.publication_allowed(self.episode, self.meta, self.qa, self.video)
+
+    def test_plan_quota_exhausted_before_reserving_any_upload(self):
+        with patch.dict(p.os.environ, {"PUBLORA_AUTO_PUBLISH_ENABLED": "true",
+                                        "PUBLORA_API_KEY": "sk_testing"}):
+            with patch.object(p, "check_connection", return_value=True):
+                with patch.object(p, "http", return_value={
+                  "context":{"plan":{"key":"starter"},
+                             "quotas":{"monthlyPosts":{"remaining":0}}}
+                }):
+                    with patch.object(p, "record", side_effect=AssertionError("Should not reserve")):
+                        result = p.publish(self.episode, self.meta, self.qa, self.video)
+        self.assertIn("quota exhausted", result["skipped"])
 
     def test_missing_words_block_publication(self):
         self.qa["lexical_coverage"] = .61
