@@ -280,6 +280,16 @@ def draw_captions(ep, work, total):
             "x=(w-text_w)/2:y=154:enable='between(t,%.3f,%.3f)'"
             % (FONT, beat_file, at, until),
         ])
+    # Documentary chapters use separately licensed, present-day illustration,
+    # NEVER archival footage of their real historical protagonist.
+    if ep.get("episode_series", {}).get("historical_reconstruction") is True:
+        disclosure = work / "historical_illustration_label.txt"
+        disclosure.write_text("ИЛЛЮСТРАТИВНЫЕ КАДРЫ", encoding="utf8")
+        filters.extend([
+            "drawbox=x=25:y=238:w=480:h=52:color=black@0.60:t=fill",
+            "drawtext=fontfile=%s:textfile=%s:fontsize=22:fontcolor=white:"
+            "borderw=1:bordercolor=black@0.8:x=44:y=252" % (FONT, disclosure),
+        ])
     # Quiet lower-third CTA rotates per episode; story and final question remain readable.
     filters.extend(overlay_filters(ep, work, total, FONT))
     filters.append("fade=t=out:st=%.2f:d=0.30" % max(0, total - 0.30))
