@@ -1,0 +1,28 @@
+name: Buffer R2 Connector - Safe Offline Tests
+on:
+  pull_request:
+    paths:
+      - 'cloud-shorts/buffer_autopublish.py'
+      - 'cloud-shorts/test_buffer_autopublish.py'
+      - 'cloud-shorts/publora_autopublish.py'
+      - 'cloud-shorts/preview_queue.py'
+      - '.github/workflows/buffer-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python syntax check
+        run: |
+          python3 -m py_compile cloud-shorts/buffer_autopublish.py
+          python3 -m py_compile cloud-shorts/publora_autopublish.py
+      - name: Test Buffer delivery without any network writes
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_buffer_autopublish.py' -v
+      - name: Regression tests for shared Publora publication guard
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_publora_autopublish.py' -v
