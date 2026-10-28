@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['.github/workflows/series-preview.yml', 'cloud-shorts/episodes.json', 'cloud-shorts/tts_voice.py', 'cloud-shorts/voice_qa.py']
+    paths: ['.github/workflows/series-preview.yml', 'cloud-shorts/episodes.json', 'cloud-shorts/tts_voice.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/voice_qa.py']
 
 permissions:
   contents: read
@@ -27,7 +27,7 @@ jobs:
       - name: Install speech and video processing dependencies
         run: |
           sudo apt-get install -y -o Dpkg::Use-Pty=0 --no-install-recommends ffmpeg fonts-dejavu-core
-          python3 -m pip install --disable-pip-version-check piper-tts==1.8.0 faster-whisper==1.2.1 av==18.1.0
+          python3 -m pip install --disable-pip-version-check piper-tts==1.8.0 faster-whisper==1.2.1 av==18.1.0 silero==0.5.5
       - name: Produce series part 1 with corrected audio and clearly labelled stock illustration
         run: |
           python3 cloud-shorts/render_episode.py --episode "$EPISODE"
