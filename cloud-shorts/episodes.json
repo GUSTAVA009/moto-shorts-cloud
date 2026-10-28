@@ -1450,10 +1450,10 @@
       "music_bpm": 104,
       "footage": [
         {
-          "key": "woman_bike",
-          "url": "https://www.pexels.com/download/video/9607104/",
-          "source_page": "https://www.pexels.com/video/woman-holding-her-helmet-and-standing-beside-her-motorcycle-9607104/",
-          "author": "Anastasia Shuraeva",
+          "key": "classic_motorcycle",
+          "url": "https://www.pexels.com/download/video/8745448/",
+          "source_page": "https://www.pexels.com/video/close-up-of-a-motorcycle-8745448/",
+          "author": "ROMAN ODINTSOV",
           "license": "Pexels License"
         },
         {
@@ -1465,9 +1465,9 @@
         },
         {
           "key": "map_detail",
-          "url": "https://www.pexels.com/download/video/7606352/",
-          "source_page": "https://www.pexels.com/video/a-paper-map-lying-on-the-floor-7606352/",
-          "author": "Marina Leonova",
+          "url": "https://www.pexels.com/download/video/7009802/",
+          "source_page": "https://www.pexels.com/video/close-up-view-of-world-map-7009802/",
+          "author": "Tima Miroshnichenko",
           "license": "Pexels License"
         },
         {
@@ -1492,7 +1492,7 @@
           "seconds": 2.1
         },
         {
-          "source": "woman_bike",
+          "source": "classic_motorcycle",
           "start": 0.3,
           "seconds": 2.4
         },
@@ -1512,7 +1512,7 @@
           "seconds": 2.4
         },
         {
-          "source": "woman_bike",
+          "source": "classic_motorcycle",
           "start": 3,
           "seconds": 2.1
         },
@@ -1556,7 +1556,7 @@
         "bike": "seventies-vintage-flat-twin",
         "people": "historical-female-traveler-illustrations",
         "story": "documented-woman-world-trip-departure",
-        "visual": "period-timeline-and-helmeted-woman-illustration"
+        "visual": "world-map-timeline-vintage-motorcycle-detail"
       },
       "tags": [
         "мотоистории",
