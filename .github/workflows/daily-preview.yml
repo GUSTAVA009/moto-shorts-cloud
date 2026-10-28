@@ -54,7 +54,7 @@ jobs:
         env:
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
-          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1 || true
+          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1 av==18.1.0 || true
           python3 cloud-shorts/voice_qa.py \
             --episode "$EPISODE" \
             --wav "cloud-shorts/work/$EPISODE/new_narration.wav" \
