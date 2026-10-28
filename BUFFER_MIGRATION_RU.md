@@ -1,6 +1,6 @@
 # GUSTAVA — переход с Publora на Buffer Free + Cloudflare R2
 
-Статус: **код подготовлен, публикация отключена, подключение владельца требуется**.
+Статус на 28 октября 2026: **Buffer Free и YouTube GUSTAVA Enduro подключены; API блокируется до подтверждения почты; R2 не подключён; публикация выключена**.
 Не нужен домашний компьютер, VPN-сервер или прямой YouTube OAuth.
 
 ## Что настроено
@@ -12,11 +12,12 @@
 - Речевая проверка для нового маршрута требует ≥95% распознанного текста **и в исходной озвучке, и в готовом MP4**. Не гарантирует художественное качество тембра или интонации.
 
 ## Однократно подключить аккаунты
-1. https://buffer.com — бесплатный аккаунт; подключить Google-аккаунт **владельца** канала GUSTAVA Enduro (YouTube ID `UCS0QCodPcFBTjMt4ioEWOUw`).
-2. В Buffer создать API-ключ и найти **Buffer channel ID**. Это отдельный идентификатор, не YouTube ID. Инструкция: https://developers.buffer.com/guides/your-first-post.html
+1. **Выполнено:** Buffer Free зарегистрирован, Google-канал GUSTAVA Enduro подключён и визуально проверен. YouTube ID `UCS0QCodPcFBTjMt4ioEWOUw`, Buffer channel ID `6ae238b32f1f5ed648ff9011` (уже закреплён в исходном коде).
+2. **Ожидается обязательное действие владельца:** подтвердить адрес электронной почты из письма Buffer. Раздел https://publish.buffer.com/settings/api показывает `Get started by verifying your email`, поэтому ключ пока создать нельзя. После перехода по ссылке из письма обновить страницу и создать один личный API-ключ. Не вставлять его в чат, публичный репозиторий или консольный лог; сохранить в GitHub Actions Secret `BUFFER_API_KEY`. Ранее созданная авторизация YouTube останется.
+2a. После появления ключа запустить безопасную **read-only** проверку через workflow `buffer-readiness.yml`, она проверит YouTube ID и занятость очереди без публикаций.
 3. Cloudflare R2: создать bucket и узкий R2 S3-токен с доступом только к bucket; включить постоянный публичный HTTPS-адрес (лучше custom domain). Учесть, что любой обладатель ссылки сможет открыть исходный MP4.
 4. В GitHub Actions Secrets добавить `BUFFER_API_KEY`, `R2_ENDPOINT` (формат `https://<account-id>.r2.cloudflarestorage.com`), `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`.
-5. В GitHub Actions Variables добавить `BUFFER_CHANNEL_ID`, `R2_BUCKET`, `R2_PUBLIC_BASE_URL` и `YOUTUBE_EXPECTED_CHANNEL_ID=UCS0QCodPcFBTjMt4ioEWOUw`.
+5. В GitHub Actions Variables добавить `R2_BUCKET`, `R2_PUBLIC_BASE_URL` и `YOUTUBE_EXPECTED_CHANNEL_ID=UCS0QCodPcFBTjMt4ioEWOUw`. Переменная `BUFFER_CHANNEL_ID` **не требуется**: проверенный ID уже записан в коде.
 6. Не включать `BUFFER_AUTO_PUBLISH_ENABLED` до теста с новым **неопубликованным** выпуском и проверки живого поста в YouTube. Даже при включённом переключателе нынешний workflow запускается **только вручную**.
 7. Отдельный Publora backlog заблокирован дополнительной переменной `PUBLORA_CATCHUP_ENABLED`, чтобы не расходовать последние публикации. Уже запланированные посты продолжат жить в Publora отдельно.
 
@@ -29,3 +30,10 @@ Buffer Free допускает до 10 роликов **в очереди одн
 Не включайте массовый автопостинг, пока визуальное качество, права на кадры и озвучка не прошли проверку владельца. Для расширения до полностью автономных публикаций потребуется отдельный workflow, который проверяет реальный статус публикации и свободное место в очереди.
 
 Источники: https://developers.buffer.com/examples/create-video-post.html , https://developers.buffer.com/guides/hosting-media .
+
+
+## Исправления в API
+- Для YouTube Buffer требует `metadata.youtube.title` и `metadata.youtube.categoryId` при создании видео. Включено: категория `2` (Autos & Vehicles), отдельный заголовок, privacy `public`, madeForKids `false`.
+- Целевой Buffer channel ID жёстко закреплён в коде и проверяется; публикация в другом канале запрещена.
+- Автопубликация защищена проверкой 95% ASR и прежним общим журналом (Publora + Buffer).
+- GitHub CI `buffer-tests.yml` запускает тесты без доступа к API и публикации.
