@@ -1,0 +1,9 @@
+{
+  "id": "octopus-camouflage-19",
+  "state": "reserved",
+  "run_id": "40679684574",
+  "attempt_count": 1,
+  "preview_fingerprint": "bab3691ef59c80e4e9d8db1f615d3cfdb437885bdee0b681a22dbe0722bee970",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
