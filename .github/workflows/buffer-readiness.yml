@@ -1,0 +1,24 @@
+name: Buffer - Verify Connected YouTube Channel (read-only)
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Buffer Free API key, target channel and queue without publishing
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: |
+          if [ -z "$BUFFER_API_KEY" ]; then
+            echo "BUFFER_API_KEY missing in GitHub Secrets" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          python3 cloud-shorts/buffer_readiness.py | tee buffer-readiness.txt
+          cat buffer-readiness.txt >> "$GITHUB_STEP_SUMMARY"
+          echo "Read-only: no videos sent to Buffer or YouTube." >> "$GITHUB_STEP_SUMMARY"
