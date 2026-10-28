@@ -1890,6 +1890,393 @@
       },
       "auto_preview": true,
       "auto_publish": false
+    },
+    {
+      "id": "aviation-round-windows-18",
+      "research_pillar": "engineering",
+      "title": "Почему у самолётов закруглённые окна? ✈️ #shorts",
+      "narration": "Почему окна самолёта закруглены? Это не украшение. Во время полёта герметичный корпус испытывает перепад давления. Острые углы собирают больше напряжения в металле. А частые полёты утомляют конструкцию. После аварий первых реактивных лайнеров инженеры пересмотрели форму проёмов. Плавные углы помогают распределить нагрузку. Замечал их раньше?",
+      "description": "Почему иллюминаторы в пассажирских самолётах имеют плавные углы? Разбираем инженерную причину и историю первых реактивных лайнеров. Современные кадры служат иллюстрацией, не архивной съёмкой.\n\n#самолёты #авиация #интересныефакты #shorts",
+      "caption_start": "ОКНА НЕ СЛУЧАЙНО КРУГЛЫЕ",
+      "caption_middle": "НАГРУЗКА В УГЛАХ",
+      "caption_end": "ЗАМЕЧАЛ ЭТО?",
+      "max_duration_seconds": 32,
+      "opening_trim_seconds": 0.2,
+      "music_style": "night-drive",
+      "music_bpm": 112,
+      "footage": [
+        {
+          "key": "cabin_window",
+          "url": "https://www.pexels.com/download/video/29900534/",
+          "source_page": "https://www.pexels.com/video/aerial-view-from-airplane-window-with-wing-29900534/",
+          "author": "Dilara Hazıroğlu",
+          "license": "Pexels License"
+        },
+        {
+          "key": "wing_clouds",
+          "url": "https://www.pexels.com/download/video/7318808/",
+          "source_page": "https://www.pexels.com/video/plane-wing-from-a-window-7318808/",
+          "author": "Pavel Danilyuk",
+          "license": "Pexels License"
+        },
+        {
+          "key": "jet_takeoff",
+          "url": "https://www.pexels.com/download/video/34769921/",
+          "source_page": "https://www.pexels.com/video/airplane-taking-off-from-runway-at-airport-34769921/",
+          "author": "Peter Xie",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "cabin_window",
+          "start": 0.2,
+          "seconds": 2.6
+        },
+        {
+          "source": "wing_clouds",
+          "start": 0.3,
+          "seconds": 2.4
+        },
+        {
+          "source": "jet_takeoff",
+          "start": 0.3,
+          "seconds": 2.1
+        },
+        {
+          "source": "cabin_window",
+          "start": 4.3,
+          "seconds": 2.5
+        },
+        {
+          "source": "wing_clouds",
+          "start": 4,
+          "seconds": 2.5
+        },
+        {
+          "source": "jet_takeoff",
+          "start": 4,
+          "seconds": 2.2
+        },
+        {
+          "source": "cabin_window",
+          "start": 9,
+          "seconds": 2.5
+        },
+        {
+          "source": "wing_clouds",
+          "start": 8.5,
+          "seconds": 2.6
+        },
+        {
+          "source": "jet_takeoff",
+          "start": 6.2,
+          "seconds": 2.3
+        },
+        {
+          "source": "cabin_window",
+          "start": 13.5,
+          "seconds": 2.3
+        }
+      ],
+      "story_steps": [
+        {
+          "at": 4.7,
+          "text": "1. ПЕРЕПАД ДАВЛЕНИЯ"
+        },
+        {
+          "at": 9.7,
+          "text": "2. НАПРЯЖЕНИЕ В УГЛАХ"
+        },
+        {
+          "at": 15.4,
+          "text": "3. ПЛАВНЫЕ ПЕРЕХОДЫ"
+        }
+      ],
+      "editorial": {
+        "environment": "airline-passenger-window-and-runway",
+        "subject": "pressurized-airplane-rounded-windows",
+        "people": "passengers-and-aircraft-engineers",
+        "story": "historical-airliner-window-stress-explained",
+        "visual": "round-window-clouds-metal-fuselage"
+      },
+      "editorial_references": [
+        "https://www.smithsonianmag.com/air-space-magazine/anatomy-of-an-airliner-38863113/",
+        "https://www.smithsonianmag.com/air-space-magazine/how-things-work-cabin-pressure-2870604/",
+        "https://airandspace.si.edu/stories/editorial/garbers-thirteen-famous-aircraft"
+      ],
+      "tags": [
+        "самолёт",
+        "авиация",
+        "факты",
+        "техника",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "ЗАМЕЧАЛ ТАКИЕ ОКНА?",
+        "description": "Ты задумывался об этом во время полёта?"
+      },
+      "auto_preview": true,
+      "auto_publish": true
+    },
+    {
+      "id": "octopus-camouflage-19",
+      "research_pillar": "nature",
+      "title": "Как осьминог становится невидимым? 🐙 #shorts",
+      "narration": "Осьминог способен почти исчезнуть на фоне камней. Как? Под кожей у него тысячи клеток с пигментом. Мышцы растягивают или сжимают их, меняя рисунок и цвет. А ещё животное может менять рельеф кожи, подражая камню или кораллу. Так осьминог прячется от хищников и подбирается к добыче. Сможешь найти его на кадре?",
+      "description": "Секрет камуфляжа осьминога: пигментные клетки, мышцы и изменение фактуры кожи. Настоящие подводные кадры из разных мест, а не съёмка одного животного.\n\n#осьминог #природа #удивительныефакты #shorts",
+      "caption_start": "НАЙДИ ОСЬМИНОГА",
+      "caption_middle": "КОЖА МЕНЯЕТ РИСУНОК",
+      "caption_end": "УВИДЕЛ ЕГО?",
+      "max_duration_seconds": 30,
+      "opening_trim_seconds": 0.1,
+      "music_style": "desert-cinematic",
+      "music_bpm": 108,
+      "footage": [
+        {
+          "key": "hidden_octopus",
+          "url": "https://www.pexels.com/download/video/33897078/",
+          "source_page": "https://www.pexels.com/video/octopus-camouflaging-on-coral-reef-underwater-33897078/",
+          "author": "JUN HO LEE",
+          "license": "Pexels License"
+        },
+        {
+          "key": "aquarium_octopus",
+          "url": "https://www.pexels.com/download/video/17836505/",
+          "source_page": "https://www.pexels.com/video/pulpa-aquarium-biarritz-17836505/",
+          "author": "Entdecker Fuchs",
+          "license": "Pexels License"
+        },
+        {
+          "key": "coral_context",
+          "url": "https://www.pexels.com/download/video/31629374/",
+          "source_page": "https://www.pexels.com/video/vibrant-underwater-coral-reef-exploration-31629374/",
+          "author": "Thomas Judge",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "hidden_octopus",
+          "start": 0.15,
+          "seconds": 2.2
+        },
+        {
+          "source": "aquarium_octopus",
+          "start": 0.4,
+          "seconds": 2.2
+        },
+        {
+          "source": "coral_context",
+          "start": 0.5,
+          "seconds": 2.1
+        },
+        {
+          "source": "hidden_octopus",
+          "start": 2.3,
+          "seconds": 2.1
+        },
+        {
+          "source": "aquarium_octopus",
+          "start": 3.7,
+          "seconds": 2.1
+        },
+        {
+          "source": "coral_context",
+          "start": 4,
+          "seconds": 2.4
+        },
+        {
+          "source": "hidden_octopus",
+          "start": 4.4,
+          "seconds": 2.2
+        },
+        {
+          "source": "aquarium_octopus",
+          "start": 6.1,
+          "seconds": 2.2
+        },
+        {
+          "source": "coral_context",
+          "start": 7,
+          "seconds": 2.2
+        },
+        {
+          "source": "aquarium_octopus",
+          "start": 10.2,
+          "seconds": 2.3
+        }
+      ],
+      "story_steps": [
+        {
+          "at": 4.8,
+          "text": "1. ПИГМЕНТ В КЛЕТКАХ"
+        },
+        {
+          "at": 10.1,
+          "text": "2. МЫШЦЫ МЕНЯЮТ ЦВЕТ"
+        },
+        {
+          "at": 15.6,
+          "text": "3. ИЗМЕНЯЕТСЯ И РЕЛЬЕФ"
+        }
+      ],
+      "editorial": {
+        "environment": "coral-reef-and-octopus-aquarium",
+        "subject": "octopus-chromatophore-and-texture-camouflage",
+        "people": "wildlife-documentary-divers-and-observers",
+        "story": "visible-invisible-cephalopod-skin-science",
+        "visual": "octopus-coral-reef-rapid-natural-camouflage"
+      },
+      "editorial_references": [
+        "https://ocean.si.edu/ocean-life/invertebrates/how-octopuses-and-squids-change-color",
+        "https://ocean.si.edu/ocean-life/invertebrates/octopuses-squids-and-relatives",
+        "https://oceanexplorer.noaa.gov/multimedia/okeanos-explorations-seascape-alaska-ex2306-gallery-media-dive08-octopus-2/"
+      ],
+      "tags": [
+        "осьминог",
+        "океан",
+        "наука",
+        "животные",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ТОМУ, КТО НЕ ВЕРИТ",
+        "description": "Покажи необычную способность осьминога другу."
+      },
+      "auto_preview": true,
+      "auto_publish": true
+    },
+    {
+      "id": "hydraulic-press-explained-20",
+      "research_pillar": "engineering",
+      "title": "Как машина сгибает толстый металл? ⚙️ #shorts",
+      "narration": "Лист металла входит в пресс и выходит согнутой деталью. Как это работает? Станок прижимает заготовку к специальной форме. Сила меняет геометрию материала. Толщина листа, давление и форма инструмента влияют на результат. Так делают детали для машин и конструкций. На кадрах разные мастерские, но принцип общий. Ты ожидал такой точности?",
+      "description": "Настоящие разные промышленные процессы: гибка металлических листов и работа прессового оборудования. Объясняем принцип, не выдавая кадры разных мастерских за один станок.\n\n#производство #техника #интересныефакты #shorts",
+      "caption_start": "МЕТАЛЛ СГИБАЮТ ВОТ ТАК",
+      "caption_middle": "СИЛА + ФОРМА",
+      "caption_end": "ВИДЕЛ ТАКОЕ?",
+      "max_duration_seconds": 31,
+      "opening_trim_seconds": 0.2,
+      "music_style": "garage-groove",
+      "music_bpm": 114,
+      "footage": [
+        {
+          "key": "metal_bend",
+          "url": "https://www.pexels.com/download/video/31751363/",
+          "source_page": "https://www.pexels.com/video/industrial-metal-bending-process-close-up-31751363/",
+          "author": "Dominik Zítka",
+          "license": "Pexels License"
+        },
+        {
+          "key": "press_close",
+          "url": "https://www.pexels.com/download/video/29564687/",
+          "source_page": "https://www.pexels.com/video/hydraulic-press-demonstration-with-metal-plates-29564687/",
+          "author": "aksinfo7 universe",
+          "license": "Pexels License"
+        },
+        {
+          "key": "fabricator",
+          "url": "https://www.pexels.com/download/video/40261631/",
+          "source_page": "https://www.pexels.com/video/sheet-metal-bending-process-in-industrial-setting-40261631/",
+          "author": "Om Prakash",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "metal_bend",
+          "start": 0.3,
+          "seconds": 2.3
+        },
+        {
+          "source": "press_close",
+          "start": 0.3,
+          "seconds": 2.2
+        },
+        {
+          "source": "fabricator",
+          "start": 0.4,
+          "seconds": 2.5
+        },
+        {
+          "source": "metal_bend",
+          "start": 2.9,
+          "seconds": 2.2
+        },
+        {
+          "source": "press_close",
+          "start": 2.8,
+          "seconds": 2.2
+        },
+        {
+          "source": "fabricator",
+          "start": 3.7,
+          "seconds": 2.5
+        },
+        {
+          "source": "metal_bend",
+          "start": 5.5,
+          "seconds": 2.1
+        },
+        {
+          "source": "press_close",
+          "start": 5.2,
+          "seconds": 2.2
+        },
+        {
+          "source": "fabricator",
+          "start": 6.8,
+          "seconds": 2.2
+        },
+        {
+          "source": "fabricator",
+          "start": 9,
+          "seconds": 2.1
+        }
+      ],
+      "story_steps": [
+        {
+          "at": 4.8,
+          "text": "1. ЛИСТ И ЗАГОТОВКА"
+        },
+        {
+          "at": 10.1,
+          "text": "2. ДАВЛЕНИЕ И ФОРМА"
+        },
+        {
+          "at": 15.3,
+          "text": "3. ГОТОВАЯ ДЕТАЛЬ"
+        }
+      ],
+      "editorial": {
+        "environment": "precision-metalworking-factory-interiors",
+        "subject": "industrial-sheet-metal-press-forming",
+        "people": "factory-operators-and-metalworking-technicians",
+        "story": "how-a-flat-sheet-is-bent-by-industrial-press",
+        "visual": "sheet-metal-press-hydraulic-force-dies"
+      },
+      "editorial_references": [
+        "https://www.energy.gov/sites/default/files/2021-07/Module_3D.pdf",
+        "https://www.asme.org/codes-standards/find-codes-standards/b5-55m-specification-performance-standard-power-press-brakes",
+        "https://www.energy.gov/sites/prod/files/2013/11/f4/autoroadmap.pdf"
+      ],
+      "tags": [
+        "завод",
+        "производство",
+        "технологии",
+        "техника",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ЕЩЁ НЕОБЫЧНЫЕ МЕХАНИЗМЫ",
+        "description": "Подпишись на новые разборы необычной техники."
+      },
+      "auto_preview": true,
+      "auto_publish": true
     }
   ]
 }
