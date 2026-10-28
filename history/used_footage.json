@@ -202,6 +202,21 @@
       "episode": "mud-traction-13",
       "source": "https://www.pexels.com/video/a-man-riding-a-motorcycle-through-a-muddy-field-18540657/",
       "status": "reserved-or-rendered"
+    },
+    "31912089": {
+      "episode": "bike-care-14",
+      "source": "https://www.pexels.com/video/motorcycle-wash-at-local-workshop-31912089/",
+      "status": "reserved-or-rendered"
+    },
+    "9606876": {
+      "episode": "bike-care-14",
+      "source": "https://www.pexels.com/video/woman-repairing-her-motorcycle-9606876/",
+      "status": "reserved-or-rendered"
+    },
+    "5199294": {
+      "episode": "bike-care-14",
+      "source": "https://www.pexels.com/video/a-man-doing-maintenance-check-up-on-his-motorcycle-5199294/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -295,6 +310,13 @@
       "people": "multiple-independent-offroad-riders",
       "story": "traction-and-route-decisions",
       "visual": "brown-wet-mud-and-fpv-drone"
+    },
+    "bike-care-14": {
+      "environment": "motorcycle-wash-and-urban-maintenance",
+      "bike": "everyday-cleaned-and-inspected-bikes",
+      "people": "workshop-professionals-and-owners",
+      "story": "washing-versus-service-inspection",
+      "visual": "soap-hands-tools-and-engine"
     }
   }
 }
