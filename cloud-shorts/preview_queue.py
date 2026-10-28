@@ -135,7 +135,7 @@ def choose(catalog, output):
     print("QUEUE_RESERVED", ep)
 
 
-def finish(slug, qa_report=None):
+def finish(slug, qa_report=None, mixed_report=None):
     path = item_path(slug)
     item = api(path)
     if item is None:
@@ -159,6 +159,22 @@ def finish(slug, qa_report=None):
         and report.get("final_word_present") is True
     )
     contents["voice_qa_coverage"] = report.get("lexical_coverage")
+    mix = {}
+    if mixed_report and Path(mixed_report).is_file():
+        try:
+            mix = json.loads(Path(mixed_report).read_text(encoding="utf8"))
+        except (ValueError, OSError):
+            mix = {}
+    contents["mixed_audio_qa_passed"] = (
+        mix.get("episode_id") == slug
+        and mix.get("source") == "FINAL_MIXED_MP4"
+        and mix.get("status") == "passed"
+        and mix.get("passed") is True
+        and mix.get("final_word_present") is True
+        and mix.get("numerics_match") is True
+        and mix.get("lexical_coverage", 0) >= .79
+    )
+    contents["mixed_audio_qa_coverage"] = mix.get("lexical_coverage")
     store(path, contents, "Rendered unique Shorts preview " + slug, item["sha"])
     print("QUEUE_PREVIEW_READY", slug)
 
@@ -170,11 +186,12 @@ def main():
     p.add_argument("--output", type=Path, default=Path("queue.properties"))
     p.add_argument("--episode", default="")
     p.add_argument("--qa-report", type=Path, default=None)
+    p.add_argument("--mixed-qa-report", type=Path, default=None)
     args = p.parse_args()
     if args.action == "choose":
         choose(args.catalog, args.output)
     else:
-        finish(args.episode, args.qa_report)
+        finish(args.episode, args.qa_report, args.mixed_qa_report)
 
 
 if __name__ == "__main__":
