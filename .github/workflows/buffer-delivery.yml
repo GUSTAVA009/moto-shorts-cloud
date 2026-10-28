@@ -1,0 +1,85 @@
+name: Buffer + R2 - Reviewed Shorts Delivery (manual, disabled by default)
+on:
+  workflow_dispatch:
+    inputs:
+      video_run_id:
+        description: "Run ID of a reviewed, never published daily-preview video"
+        required: true
+        type: string
+      episode:
+        description: "Unique approved episode ID; must not exist in publication receipts"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: gustava-buffer-r2-delivery
+  cancel-in-progress: false
+
+jobs:
+  deliver:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Offline safety tests (no publication)
+        run: |
+          python3 -m unittest discover -s cloud-shorts -p 'test_buffer_autopublish.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_publora_autopublish.py' -v
+      - name: Confirm opt-in and secret presence without exposing values
+        env:
+          BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ vars.R2_BUCKET }}
+          R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+        run: |
+          python3 - <<'PY'
+          import os
+          if os.environ.get("BUFFER_AUTO_PUBLISH_ENABLED", "").lower() != "true":
+              raise SystemExit("Buffer publishing disabled by default")
+          needed = ("BUFFER_API_KEY", "R2_ENDPOINT",
+                    "R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY", "R2_BUCKET",
+                    "R2_PUBLIC_BASE_URL", "YOUTUBE_EXPECTED_CHANNEL_ID")
+          missing = [name for name in needed if not os.getenv(name)]
+          if missing: raise SystemExit("Missing setup variables: " + ", ".join(missing))
+          if os.environ["YOUTUBE_EXPECTED_CHANNEL_ID"] != "UCS0QCodPcFBTjMt4ioEWOUw":
+              raise SystemExit("Wrong destination channel")
+          print("Opt-in configured; API credentials are not displayed")
+          PY
+      - name: Fetch exact rendered MP4 and independent QA reports
+        uses: actions/download-artifact@v4
+        with:
+          name: daily-preview-${{ inputs.episode }}-${{ inputs.video_run_id }}
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.video_run_id }}
+          github-token: ${{ github.token }}
+          path: staged
+      - name: Queue in Buffer with permanent R2 media URL
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          EPISODE: ${{ inputs.episode }}
+          BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET: ${{ vars.R2_BUCKET }}
+          R2_PUBLIC_BASE_URL: ${{ vars.R2_PUBLIC_BASE_URL }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+        run: |
+          python3 -m pip install --disable-pip-version-check boto3
+          python3 cloud-shorts/buffer_autopublish.py \
+            --episode "$EPISODE" \
+            --video "staged/$EPISODE/$EPISODE.mp4" \
+            --metadata "staged/$EPISODE/publication.json" \
+            --voice-qa "staged/$EPISODE/voice_qa.json" \
+            --mixed-qa "staged/$EPISODE/mixed_audio_qa.json"
