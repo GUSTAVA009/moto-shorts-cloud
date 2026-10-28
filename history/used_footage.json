@@ -187,6 +187,21 @@
       "episode": "retro-restoration-12",
       "source": "https://www.pexels.com/video/mechanic-assembling-classic-motorcycle-engine-34948766/",
       "status": "reserved-or-rendered"
+    },
+    "36364696": {
+      "episode": "mud-traction-13",
+      "source": "https://www.pexels.com/video/off-road-motorcycle-navigating-muddy-track-36364696/",
+      "status": "reserved-or-rendered"
+    },
+    "18326010": {
+      "episode": "mud-traction-13",
+      "source": "https://www.pexels.com/video/motocross-fpv-drone-18326010/",
+      "status": "reserved-or-rendered"
+    },
+    "18540657": {
+      "episode": "mud-traction-13",
+      "source": "https://www.pexels.com/video/a-man-riding-a-motorcycle-through-a-muddy-field-18540657/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -273,6 +288,13 @@
       "people": "exhibition-visitors-and-craftsmen",
       "story": "restoration-beyond-visual-polish",
       "visual": "retro-metal-and-hands-at-work"
+    },
+    "mud-traction-13": {
+      "environment": "muddy-offroad-obstacles",
+      "bike": "offroad-motocross-trail-bikes",
+      "people": "multiple-independent-offroad-riders",
+      "story": "traction-and-route-decisions",
+      "visual": "brown-wet-mud-and-fpv-drone"
     }
   }
 }
