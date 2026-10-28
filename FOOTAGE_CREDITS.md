@@ -53,9 +53,9 @@ These are independent footage sources: the Shorts commentary must not imply a co
 These are modern **illustrative** stock clips. None depicts Elspeth Beard or her real 1982–1984 journey. Every picture remains labelled illustrative in the video.
 
 - Tom Shutkin — [Vintage motorcycle parked on urban street](https://www.pexels.com/video/classic-motorcycle-on-urban-street-40347391/)
-- Anastasia Shuraeva — [Helmeted woman standing beside motorcycle](https://www.pexels.com/video/woman-holding-her-helmet-and-standing-beside-her-motorcycle-9607104/)
+- ROMAN ODINTSOV — [Classic motorcycle closeup](https://www.pexels.com/video/close-up-of-a-motorcycle-8745448/)
 - Vlada Karpovich — [Woman planning a trip using a map](https://www.pexels.com/video/video-of-a-woman-looking-at-the-map-7429438/)
-- Marina Leonova — [Paper map and pins](https://www.pexels.com/video/a-paper-map-lying-on-the-floor-7606352/)
+- Tima Miroshnichenko — [World map and period-appropriate travel details](https://www.pexels.com/video/close-up-view-of-world-map-7009802/)
 - cottonbro studio — [Woman riding a motorcycle on a country road](https://www.pexels.com/video/a-woman-riding-a-motorcycle-on-a-road-4443736/)
 
 Story sources: [Elspeth Beard's own account](https://www.elspethbeard.com/), [first-person Mad or Nomad interview](https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/), [Brighton Museums](https://brightonmuseums.org.uk/discovery/history-stories/elspeth-beard-first-british-woman-to-motorcycle-around-the-world/). Archival photographs, book pages, interview recordings and celebrity likenesses are not reused.
