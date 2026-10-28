@@ -352,6 +352,21 @@
       "episode": "octopus-camouflage-19",
       "source": "https://www.pexels.com/video/vibrant-underwater-coral-reef-exploration-31629374/",
       "status": "reserved-or-rendered"
+    },
+    "31751363": {
+      "episode": "hydraulic-press-explained-20",
+      "source": "https://www.pexels.com/video/industrial-metal-bending-process-close-up-31751363/",
+      "status": "reserved-or-rendered"
+    },
+    "29564687": {
+      "episode": "hydraulic-press-explained-20",
+      "source": "https://www.pexels.com/video/hydraulic-press-demonstration-with-metal-plates-29564687/",
+      "status": "reserved-or-rendered"
+    },
+    "40261631": {
+      "episode": "hydraulic-press-explained-20",
+      "source": "https://www.pexels.com/video/sheet-metal-bending-process-in-industrial-setting-40261631/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -487,6 +502,13 @@
       "people": "wildlife-documentary-divers-and-observers",
       "story": "visible-invisible-cephalopod-skin-science",
       "visual": "octopus-coral-reef-rapid-natural-camouflage"
+    },
+    "hydraulic-press-explained-20": {
+      "environment": "precision-metalworking-factory-interiors",
+      "subject": "industrial-sheet-metal-press-forming",
+      "people": "factory-operators-and-metalworking-technicians",
+      "story": "how-a-flat-sheet-is-bent-by-industrial-press",
+      "visual": "sheet-metal-press-hydraulic-force-dies"
     }
   }
 }
