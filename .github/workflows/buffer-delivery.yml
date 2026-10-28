@@ -33,7 +33,6 @@ jobs:
         env:
           BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-          BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
           R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
@@ -45,7 +44,7 @@ jobs:
           import os
           if os.environ.get("BUFFER_AUTO_PUBLISH_ENABLED", "").lower() != "true":
               raise SystemExit("Buffer publishing disabled by default")
-          needed = ("BUFFER_API_KEY", "BUFFER_CHANNEL_ID", "R2_ENDPOINT",
+          needed = ("BUFFER_API_KEY", "R2_ENDPOINT",
                     "R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY", "R2_BUCKET",
                     "R2_PUBLIC_BASE_URL", "YOUTUBE_EXPECTED_CHANNEL_ID")
           missing = [name for name in needed if not os.getenv(name)]
@@ -70,7 +69,6 @@ jobs:
           EPISODE: ${{ inputs.episode }}
           BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-          BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
           R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
