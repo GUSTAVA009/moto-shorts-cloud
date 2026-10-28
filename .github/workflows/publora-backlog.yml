@@ -14,7 +14,10 @@ concurrency:
 
 jobs:
   catch-up:
-    if: ${{ vars.PUBLORA_AUTO_PUBLISH_ENABLED == 'true' }}
+    # Safety hold: prevent consuming the last Publora monthly slots while migrating.
+    # Existing externally scheduled Publora posts are not affected.
+    # Requires a separate explicit PUBLORA_CATCHUP_ENABLED=true to resume.
+    if: ${{ vars.PUBLORA_AUTO_PUBLISH_ENABLED == 'true' && vars.PUBLORA_CATCHUP_ENABLED == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
