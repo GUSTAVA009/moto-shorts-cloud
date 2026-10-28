@@ -13,11 +13,15 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  documentary-part-one:
+  documentary-preview:
     runs-on: ubuntu-latest
     timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        episode: [elspeth-beard-s1-e01, elspeth-beard-s1-e02]
     env:
-      EPISODE: elspeth-beard-s1-e01
+      EPISODE: ${{ matrix.episode }}
     steps:
       - uses: actions/checkout@v4
       - name: Test voice segmentation, chronology, unique sources and public disclosures
@@ -47,7 +51,7 @@ jobs:
       - name: Archive private preview and audio quality report for editorial approval
         uses: actions/upload-artifact@v4
         with:
-          name: gustava-real-history-e01-corrected-${{ github.run_id }}
-          path: cloud-shorts/dist/new/elspeth-beard-s1-e01/
+          name: gustava-real-history-${{ matrix.episode }}-${{ github.run_id }}
+          path: cloud-shorts/dist/new/${{ matrix.episode }}/
           retention-days: 14
           if-no-files-found: error
