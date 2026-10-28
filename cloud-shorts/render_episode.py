@@ -301,15 +301,15 @@ def render(ep, output_dir):
     wav = work / "new_narration.wav"
     voice_duration = make_voice(ep["narration"], wav, work / "voice_model")
     # Speech drives the duration; no long silent post-narration section.
-    requested = max(9.0, min(float(ep.get("max_duration_seconds", 19.5)), voice_duration + 1.0))
-    if voice_duration > requested - 0.25:
+    requested = max(9.0, min(float(ep.get("max_duration_seconds", 19.5)), voice_duration + 1.25))
+    if voice_duration > requested - 0.75:
         raise RuntimeError("Voice too long for video, shorten the original narration")
     silent, total = assemble_clips(ep, sources, work, requested)
     # Cut blank establishing footage BEFORE the speech, music, and captions
     # are mixed. Start with visible action rather than an empty hill/track.
     opening_trim = float(ep.get("opening_trim_seconds", 0.0))
     if opening_trim > 0:
-        if total - opening_trim < max(7.0, voice_duration + 0.3):
+        if total - opening_trim < max(7.0, voice_duration + 0.70):
             raise RuntimeError("Opening trim would cut off the narration")
         action_first = work / "action_first.mp4"
         run([
