@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [".github/workflows/voice-comparison.yml"]
+    paths: [".github/workflows/voice-comparison.yml", "cloud-shorts/tts_voice.py"]
 
 permissions:
   contents: read
@@ -26,6 +26,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: russian-voice-a-b-${{ github.run_id }}
-          path: cloud-shorts/dist/voice-ab/
+          path: |
+            cloud-shorts/dist/voice-ab/*.wav
+            cloud-shorts/dist/voice-ab/scores.json
           retention-days: 7
           if-no-files-found: error
