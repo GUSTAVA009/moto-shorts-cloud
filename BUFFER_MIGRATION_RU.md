@@ -38,6 +38,17 @@ Buffer Free допускает до 10 роликов **в очереди одн
 - Автопубликация защищена проверкой 95% ASR и прежним общим журналом (Publora + Buffer).
 - GitHub CI `buffer-tests.yml` запускает тесты без доступа к API и публикации.
 
+## 28.10.2026 — подтверждена первая живая публикация через Buffer Free
+
+- **ПРОВЕРЕНО:** Buffer Free → YouTube GUSTAVA Enduro работает при ручной загрузке MP4 в авторизованном браузере Microsoft Edge.
+- Выпуск: **«Чтобы повернуть ВПРАВО, руль идёт ВЛЕВО?!»**, YouTube Shorts: https://www.youtube.com/shorts/AzzsTyozOXQ
+- Верификация: официальный YouTube RSS `/feeds/videos.xml?channel_id=UCS0QCodPcFBTjMt4ioEWOUw` показал ID `AzzsTyozOXQ`, время `2026-10-28T19:08:42Z`. Отдельный yt-dlp подтвердил 29 секунд, доступный ролик и корректный `channel_id`.
+- Ролик сделан из шести лицензированных реальных видеофрагментов Mixkit, оригинальной музыки, русской AI-озвучки и субтитров. Исходная озвучка ASR 98,31%; финальный MP4 ASR 96,61%.
+- Универсальная команда OmniRoute успешно выполнила задачу видео-планирования и независимого ревью (`completed-reviewed`). Сами MP4 и музыка собраны отдельными локальными медиа-инструментами; **OmniRoute не является видеогенератором**.
+- **Важно:** эта успешная публикация прошла через **веб-интерфейс Buffer, не через GitHub Buffer GraphQL API**. Она не подтверждает работу R2/GitHub доставки; PR и облачный autopublish остаются отключёнными. Для облака ещё нужны секреты в GitHub, R2 и read-only тест API.
+- Существующие записи Publora не затронуты; месячная квота Publora на этот выпуск не расходована.
+- Для предотвращения повторной публикации запомнить Shorts ID `AzzsTyozOXQ`; не отправлять аналогичный выпуск через Publora, Buffer или GitHub повторно.
+
 ## 28.10.2026 — Codex MCP и безопасность ключей
 - Установлено `codex mcp add buffer --url https://mcp.buffer.com/mcp` на авторизованном ПК; OAuth вернул `Successfully logged in`.
 - `codex mcp list` подтверждает `buffer https://mcp.buffer.com/mcp enabled OAuth`; повторная регистрация Buffer не требуется. Локальный MCP **не** предоставляет GitHub Actions автоматически управляемые облачные OAuth credentials.
