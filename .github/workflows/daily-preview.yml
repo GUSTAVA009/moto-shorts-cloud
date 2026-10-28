@@ -105,7 +105,7 @@ jobs:
             --episode "$EPISODE" \
             --video "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4" \
             --metadata "cloud-shorts/dist/new/$EPISODE/publication.json" \
-            --voice-qa "cloud-shorts/dist/new/$EPISODE/voice_qa.json"
+            --voice-qa "cloud-shorts/dist/new/$EPISODE/voice_qa.json" \
             --mixed-qa "cloud-shorts/dist/new/$EPISODE/mixed_audio_qa.json"
       - name: Record status
         if: always()
