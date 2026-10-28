@@ -154,7 +154,7 @@ def prior_series_episode(episode):
         return None
     import re as _re
     eid = str(episode["id"])
-    if not _re.search(r"-e\\d{2}$", eid):
+    if not _re.search(r"-e\d{2}$", eid):
         raise ValueError("Documentary filename must end in chronological chapter")
     return eid[:-2] + f"{chapter-1:02d}"
 
