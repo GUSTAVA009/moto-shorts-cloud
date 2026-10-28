@@ -297,6 +297,31 @@
       "episode": "elspeth-beard-s1-e01",
       "source": "https://www.pexels.com/video/close-up-view-of-world-map-7009802/",
       "status": "reserved-or-rendered"
+    },
+    "36924507": {
+      "episode": "elspeth-beard-s1-e03",
+      "source": "https://www.pexels.com/video/sydney-opera-house-and-harbor-aerial-view-36924507/",
+      "status": "reserved-or-rendered"
+    },
+    "30614790": {
+      "episode": "elspeth-beard-s1-e03",
+      "source": "https://www.pexels.com/video/artisan-craftsman-working-with-metal-in-workshop-30614790/",
+      "status": "reserved-or-rendered"
+    },
+    "29913842": {
+      "episode": "elspeth-beard-s1-e03",
+      "source": "https://www.pexels.com/video/close-up-of-metal-drilling-process-in-workshop-29913842/",
+      "status": "reserved-or-rendered"
+    },
+    "8470295": {
+      "episode": "elspeth-beard-s1-e03",
+      "source": "https://www.pexels.com/video/a-mechanic-cutting-metal-parts-with-a-grinder-8470295/",
+      "status": "reserved-or-rendered"
+    },
+    "35310554": {
+      "episode": "elspeth-beard-s1-e03",
+      "source": "https://www.pexels.com/video/motorcycle-ride-on-scenic-mountain-road-35310554/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -411,6 +436,13 @@
       "people": "solo-female-traveler-illustration-riders",
       "story": "unaccompanied-us-leg-after-brother-ride",
       "visual": "usa-map-vintage-travel-open-highway-motorcycle"
+    },
+    "elspeth-beard-s1-e03": {
+      "environment": "sydney-work-and-diy-aluminium-panniers",
+      "bike": "classic-global-touring-motorcycle-hard-luggage",
+      "people": "anonymous-craftsmen-and-sydney-illustration",
+      "story": "temporary-sydney-work-aluminium-self-made-luggage",
+      "visual": "sydney-harbor-aluminium-craft-and-historic-travel"
     }
   }
 }
