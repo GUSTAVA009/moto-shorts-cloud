@@ -1589,8 +1589,9 @@
         "https://brightonmuseums.org.uk/discovery/history-stories/elspeth-beard-first-british-woman-to-motorcycle-around-the-world/"
       ],
       "auto_preview": true,
-      "auto_publish": false,
-      "voice_engine": "silero_cis_base_mit"
+      "auto_publish": true,
+      "voice_engine": "silero_cis_base_mit",
+      "publication_approval": "Release only after current source fingerprint, final WAV QA and MP4 mixed QA pass; authorized original automated Shorts"
     },
     {
       "id": "elspeth-beard-s1-e02",
