@@ -52,5 +52,5 @@ jobs:
             --episode "$EPISODE" \
             --video "staged/$EPISODE/$EPISODE.mp4" \
             --metadata "staged/$EPISODE/publication.json" \
-            --voice-qa "staged/$EPISODE/voice_qa.json"
+            --voice-qa "staged/$EPISODE/voice_qa.json" \
             --mixed-qa "staged/$EPISODE/mixed_audio_qa.json"
