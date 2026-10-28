@@ -115,6 +115,12 @@ def deliver(ep, meta, voice, mixed, video, dry_run=False):
     public_url(sha)
     if ledger.api(receipt_path) is not None:
         return {"skipped":"Existing Publora/Buffer publication receipt; do not duplicate"}
+    # A full Free-plan queue is a temporary condition. Check BEFORE reserving
+    # the once-only upload slot, so the episode is not permanently stranded.
+    from buffer_readiness import inspect
+    preflight = inspect()
+    if not preflight["queue_has_room"]:
+        return {"skipped":"Buffer queue is full; do not reserve or upload"}
     receipt={"episode":ep["id"],"sha256":sha,"provider":"buffer",
              "state":"reserved","run_id":os.getenv("GITHUB_RUN_ID",""),
              "warning":"No automatic retry after an uncertain result"}
