@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['.github/workflows/series-preview.yml']
+    paths: ['.github/workflows/series-preview.yml', 'cloud-shorts/episodes.json']
 
 permissions:
   contents: read
