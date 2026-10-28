@@ -1,0 +1,47 @@
+name: GUSTAVA - Accurate Real Motorcycle History Series Preview
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/series-preview.yml']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gustava-real-history-serial-preview
+  cancel-in-progress: false
+
+jobs:
+  documentary-part-one:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      EPISODE: elspeth-beard-s1-e01
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test voice segmentation, chronology, unique sources and public disclosures
+        run: |
+          python3 -m unittest discover -s cloud-shorts -p 'test_*.py' -v
+          python3 cloud-shorts/editorial_guard.py --catalog cloud-shorts/episodes.json
+      - name: Install speech and video processing dependencies
+        run: |
+          sudo apt-get install -y -o Dpkg::Use-Pty=0 --no-install-recommends ffmpeg fonts-dejavu-core
+          python3 -m pip install --disable-pip-version-check piper-tts==1.8.0 faster-whisper==1.2.1 av==18.1.0
+      - name: Produce series part 1 with corrected audio and clearly labelled stock illustration
+        run: |
+          python3 cloud-shorts/render_episode.py --episode "$EPISODE"
+          ffprobe -v error -show_entries format=duration -show_entries stream=codec_type,width,height -of json "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4"
+      - name: Verify exact words via independent Russian ASR
+        run: |
+          python3 cloud-shorts/voice_qa.py --episode "$EPISODE" \
+            --wav "cloud-shorts/work/$EPISODE/new_narration.wav" \
+            --out "cloud-shorts/dist/new/$EPISODE/voice_qa.json"
+          cat "cloud-shorts/dist/new/$EPISODE/voice_qa.json"
+      - name: Archive private preview and audio quality report for editorial approval
+        uses: actions/upload-artifact@v4
+        with:
+          name: gustava-real-history-e01-corrected-${{ github.run_id }}
+          path: cloud-shorts/dist/new/elspeth-beard-s1-e01/
+          retention-days: 14
+          if-no-files-found: error
