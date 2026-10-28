@@ -18,6 +18,7 @@ import urllib.request
 
 from soundtrack import generate as make_music
 from tts_voice import render as make_voice
+from silero_voice import render as make_silero_voice, MODEL_ID as SILERO_MODEL_ID, SPEAKER as SILERO_SPEAKER
 from editorial_guard import validate_catalog
 from engagement_cta import validate_cta, overlay_filters, build_description
 
@@ -309,7 +310,15 @@ def render(ep, output_dir):
         sources[src["key"]] = target
 
     wav = work / "new_narration.wav"
-    voice_duration = make_voice(ep["narration"], wav, work / "voice_model")
+    engine = ep.get("voice_engine", "piper_ru")
+    if engine == "silero_cis_base_mit":
+        voice_duration = make_silero_voice(ep["narration"], wav, work / "voice_model")
+        engine_label = "Silero " + SILERO_MODEL_ID + " / " + SILERO_SPEAKER + " (MIT)"
+    elif engine == "piper_ru":
+        voice_duration = make_voice(ep["narration"], wav, work / "voice_model")
+        engine_label = "Piper ru_RU-denis-medium (CC0 training set)"
+    else:
+        raise ValueError("Unknown or noncommercial voice engine")
     # Speech drives the duration; no long silent post-narration section.
     requested = max(9.0, min(float(ep.get("max_duration_seconds", 19.5)), voice_duration + 1.25))
     if voice_duration > requested - 0.75:
@@ -385,7 +394,7 @@ def render(ep, output_dir):
         "status": "REVIEW_REQUIRED",
         "youtube_published": False,
         "duration_seconds": round(duration, 2),
-        "voice_engine": "piper-tts ru_RU-dmitri-medium, CC0 training set",
+        "voice_engine": engine_label,
         "audio_source": "Fresh synthesized narration and original procedural music",
         "music_style": music_style,
         "editorial_profile": ep.get("editorial"),
