@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "series_id": "gustava-real-motorcycle-stories",
+  "season_id": "elspeth-beard-1982",
+  "series_display_name": "GUSTAVA | Мотоистории — по реальным событиям",
+  "season_title": "Одна на BMW вокруг света: история Элспет Берд",
+  "release_status": "research_ready_footage_rights_and_voice_QA_required",
+  "format": "six original narrated Shorts, each 20–35 seconds; chapters connect chronologically",
+  "display_rules": {
+    "episode_label": "МОТОИСТОРИИ",
+    "chapter_format": "ЧАСТЬ {chapter}/6",
+    "visual_theme": "dark-graphite / restrained orange accents, consistent with GUSTAVA channel",
+    "truthfulness": "NO fabricated dialogue, named eyewitness quotes, invented chronology, or unlicensed archive photos",
+    "illustration_notice": "Иллюстративные кадры. История основана на подтверждённых событиях",
+    "archival_media": "Do not copy book pages, press photos or interview video without a separate explicit license",
+    "public_description_links": false
+  },
+  "sources": {
+    "s1": "https://www.elspethbeard.com/travels",
+    "s2": "https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/",
+    "s3": "https://brightonmuseums.org.uk/discovery/history-stories/elspeth-beard-first-british-woman-to-motorcycle-around-the-world/",
+    "s4": "https://www.jacadatravel.com/the-explorer/women-travel-interviews-elspeth-beard/",
+    "s5": "https://www.hagerty.co.uk/articles/interviews/the-one-that-got-away-elspeth-beards-bmw-r75-5/"
+  },
+  "episodes": [
+    {
+      "chapter": 1,
+      "title": "1982: одна девушка, старый BMW и целый мир",
+      "hook": "Ей было 23. Мотоциклу — восемь лет.",
+      "facts": [
+        "В октябре 1982 года Элспет Берд отправилась в кругосветное путешествие.",
+        "Для поездки она использовала BMW R60/6 выпуска 1974 года.",
+        "Подготовку финансировала работой в лондонском пабе."
+      ],
+      "narration": "Осень 1982 года. Двадцатитрёхлетняя Элспет Берд готовит старый BMW R60/6 к кругосветной поездке. Она накопила деньги, работая в лондонском пабе, и отправила мотоцикл в Нью-Йорк. Ни навигатора, ни привычной нам связи. Где же начался её путь? Продолжение — во второй части.",
+      "next": "Америка без готового маршрута",
+      "ref": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "visual": [
+        "author-made chronological date card 1982",
+        "original world route map, first segment London to New York",
+        "generic licensed closeups of period-style motorcycle labelled ILLUSTRATION; never represent rider as Elspeth"
+      ],
+      "id": "elspeth-beard-s1-e01",
+      "source_urls": [
+        "https://www.elspethbeard.com/travels",
+        "https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/",
+        "https://brightonmuseums.org.uk/discovery/history-stories/elspeth-beard-first-british-woman-to-motorcycle-around-the-world/"
+      ],
+      "state": "fact_checked_script_ready_not_produced",
+      "rights_restriction": "Only original maps/diagrams and individually licensed visuals; stock must be labelled illustration."
+    },
+    {
+      "chapter": 2,
+      "title": "Америка: путь без навигатора",
+      "hook": "Она начала с Нью-Йорка. Что дальше?",
+      "facts": [
+        "В 1982 году начальный этап маршрута прошёл через США.",
+        "Кругосветный путь далее включал Новую Зеландию и Австралию.",
+        "Годом ранее она проехала через США на другом BMW вместе с братом."
+      ],
+      "narration": "Перед большой поездкой Элспет уже пересекала Америку с братом — тогда они ехали на BMW R75/5. Но в 1982-м всё иначе: она начинает собственный путь из Нью-Йорка на BMW R60/6. Впереди Америка, затем Новая Зеландия и Австралия. Почему пришлось менять багаж? Об этом — в следующей серии.",
+      "next": "Как она построила кофры своими руками",
+      "ref": [
+        "s1",
+        "s2",
+        "s5"
+      ],
+      "visual": [
+        "original route map of United States",
+        "1981 vs 1982 bike models graphic clearly identifying different machines",
+        "licensed travel road footage labelled illustration"
+      ],
+      "id": "elspeth-beard-s1-e02",
+      "source_urls": [
+        "https://www.elspethbeard.com/travels",
+        "https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/",
+        "https://www.hagerty.co.uk/articles/interviews/the-one-that-got-away-elspeth-beards-bmw-r75-5/"
+      ],
+      "state": "fact_checked_script_ready_not_produced",
+      "rights_restriction": "Only original maps/diagrams and individually licensed visuals; stock must be labelled illustration."
+    },
+    {
+      "chapter": 3,
+      "title": "Сидней: багаж, который пришлось построить",
+      "hook": "Мягких сумок оказалось недостаточно.",
+      "facts": [
+        "До Сиднея Элспет использовала мягкие сумки.",
+        "Находясь в Сиднее, она изготовила багаж из алюминиевых листов.",
+        "Изготовленные кофры были ремонтопригодными и закрывающимися на замок."
+      ],
+      "narration": "В пути по Австралии Элспет поняла: обычные мягкие сумки не решают всех задач. В Сиднее она сама изготовила алюминиевые кофры и верхний багажник. Листы металла, заклёпки, простая конструкция — зато можно чинить в дороге. Но впереди были испытания куда сложнее. Четвёртая часть — о двух авариях.",
+      "next": "Две аварии на пути",
+      "ref": [
+        "s2",
+        "s3"
+      ],
+      "visual": [
+        "original technical diagram of aluminium luggage",
+        "generic licensed metalworking close-ups, labelled illustrative",
+        "original map highlighting Sydney"
+      ],
+      "id": "elspeth-beard-s1-e03",
+      "source_urls": [
+        "https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/",
+        "https://brightonmuseums.org.uk/discovery/history-stories/elspeth-beard-first-british-woman-to-motorcycle-around-the-world/"
+      ],
+      "state": "fact_checked_script_ready_not_produced",
+      "rights_restriction": "Only original maps/diagrams and individually licensed visuals; stock must be labelled illustration."
+    },
+    {
+      "chapter": 4,
+      "title": "Две аварии: Австралия и Таиланд",
+      "hook": "Дорога оказалась опаснее ожиданий.",
+      "facts": [
+        "Во время маршрута у неё были серьёзные аварии в Австралии и Таиланде.",
+        "В Таиланде ей помогала местная семья, пока она восстанавливалась.",
+        "Несмотря на трудности, путешествие продолжилось."
+      ],
+      "narration": "Путешествие Элспет не было непрерывной чередой красивых видов. Она попала в аварии в Австралии и Таиланде. После происшествия в Таиланде местная семья помогала ей восстановиться. В истории важен не придуманный героизм, а то, как она смогла продолжить путь. Дальше — путешествие через Азию.",
+      "next": "Через Азию без современных карт",
+      "ref": [
+        "s3",
+        "s2"
+      ],
+      "visual": [
+        "original dated map showing Australia and Thailand",
+        "restrained non-graphic original symbolic crash timeline, no fabricated accident footage",
+        "licensed landscape montage clearly labelled ILLUSTRATION"
+      ],
+      "id": "elspeth-beard-s1-e04",
+      "source_urls": [
+        "https://brightonmuseums.org.uk/discovery/history-stories/elspeth-beard-first-british-woman-to-motorcycle-around-the-world/",
+        "https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/"
+      ],
+      "state": "fact_checked_script_ready_not_produced",
+      "rights_restriction": "Only original maps/diagrams and individually licensed visuals; stock must be labelled illustration."
+    },
+    {
+      "chapter": 5,
+      "title": "Азия: километры без GPS",
+      "hook": "Когда нет интернета, как искать дорогу?",
+      "facts": [
+        "Маршрут проходил через Индию, Непал, Пакистан, Иран и Турцию.",
+        "В те годы Элспет приходилось ориентироваться без интернета и GPS.",
+        "Она познакомилась с путешественником Робертом во время азиатского этапа маршрута."
+      ],
+      "narration": "После Юго-Восточной Азии её дорога продолжилась через Индию, Непал, Пакистан, Иран и Турцию. Без телефона и GPS многие решения приходилось принимать на месте. На азиатском этапе Элспет встретила другого путешественника — Роберта. Что ждало её при возвращении домой? Финальная серия покажет итог поездки.",
+      "next": "Возвращение после 35 тысяч миль",
+      "ref": [
+        "s2",
+        "s4",
+        "s3"
+      ],
+      "visual": [
+        "original animated Asia route map, no claimed exact day-to-day path",
+        "licensed generic road panoramas labelled illustrative",
+        "original diagram of 1980s travel kit"
+      ],
+      "id": "elspeth-beard-s1-e05",
+      "source_urls": [
+        "https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/",
+        "https://www.jacadatravel.com/the-explorer/women-travel-interviews-elspeth-beard/",
+        "https://brightonmuseums.org.uk/discovery/history-stories/elspeth-beard-first-british-woman-to-motorcycle-around-the-world/"
+      ],
+      "state": "fact_checked_script_ready_not_produced",
+      "rights_restriction": "Only original maps/diagrams and individually licensed visuals; stock must be labelled illustration."
+    },
+    {
+      "chapter": 6,
+      "title": "1984: домой после 35 тысяч миль",
+      "hook": "Она вернулась, но мир узнал историю не сразу.",
+      "facts": [
+        "Элспет вернулась в Великобританию в 1984 году.",
+        "Длина поездки составила около 35 000 миль.",
+        "Позже она сложила фотографии и записи в коробку, а в 2017 году опубликовала книгу о путешествии."
+      ],
+      "narration": "В 1984 году Элспет Берд вернулась домой, преодолев около тридцати пяти тысяч миль. Она сохранила записи и фотографии, но десятилетиями они оставались в коробке. Позже история получила признание, а в 2017 году вышла её книга. Это финал путешествия Элспет — и начало новой серии реальных мотоисторий.",
+      "next": "Следующий сезон: другой реальный мотопутешественник",
+      "ref": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "visual": [
+        "original route and distance tally graphics",
+        "original 1982-1984 calendar",
+        "licensed generic motorcycle footage with illustration disclaimer"
+      ],
+      "id": "elspeth-beard-s1-e06",
+      "source_urls": [
+        "https://www.elspethbeard.com/travels",
+        "https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/",
+        "https://brightonmuseums.org.uk/discovery/history-stories/elspeth-beard-first-british-woman-to-motorcycle-around-the-world/"
+      ],
+      "state": "fact_checked_script_ready_not_produced",
+      "rights_restriction": "Only original maps/diagrams and individually licensed visuals; stock must be labelled illustration."
+    }
+  ],
+  "next_season_rules": "Each future season requires three independent relevant factual sources, an unambiguous real event, chronology validation, and licensed or original illustrative assets before release."
+}
