@@ -1591,6 +1591,155 @@
       "auto_preview": true,
       "auto_publish": false,
       "voice_engine": "silero_cis_base_mit"
+    },
+    {
+      "id": "elspeth-beard-s1-e02",
+      "title": "Америка без навигатора: одна на старом BMW 🏍️ Часть 2/6 #shorts",
+      "narration": "За год до кругосветной поездки она уже пересекла Америку вместе с братом. Тогда они ехали вдвоём на другом БМВ. Но теперь всё иначе. В Нью-Йорк она вернулась одна и двинулась на запад через США. Маршрут выбирала по погоде, ориентируясь на солнце. А впереди ждали Новая Зеландия и Австралия. Продолжение в третьей серии.",
+      "description": "МОТОИСТОРИИ — ЧАСТЬ 2/6. В 1982 году Элспет Берд начала первый этап кругосветного мотопутешествия из Нью-Йорка, спустя год после поездки через США вместе с братом на другом BMW. Видеоряд — современные иллюстративные кадры, не архив её путешествия.\n\n#мотоистории #мотоцикл #путешествия #shorts",
+      "caption_start": "1982 · ОДНА ЧЕРЕЗ АМЕРИКУ",
+      "caption_middle": "BMW R60/6 · БЕЗ GPS",
+      "caption_end": "ЧАСТЬ 3: АВСТРАЛИЯ",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "desert-cinematic",
+      "music_bpm": 106,
+      "voice_engine": "silero_cis_base_mit",
+      "footage": [
+        {
+          "key": "world_map",
+          "url": "https://www.pexels.com/download/video/8828766/",
+          "source_page": "https://www.pexels.com/video/pins-attached-to-a-paper-map-8828766/",
+          "author": "Lara Jameson",
+          "license": "Pexels License"
+        },
+        {
+          "key": "desert_motorcycle",
+          "url": "https://www.pexels.com/download/video/36625886/",
+          "source_page": "https://www.pexels.com/video/motorcycle-journey-through-the-desert-36625886/",
+          "author": "Ben Blight",
+          "license": "Pexels License"
+        },
+        {
+          "key": "woman_road",
+          "url": "https://www.pexels.com/download/video/11247139/",
+          "source_page": "https://www.pexels.com/video/woman-riding-a-motorcycle-on-road-11247139/",
+          "author": "tejinder ladi photography",
+          "license": "Pexels License"
+        },
+        {
+          "key": "desert_highway",
+          "url": "https://www.pexels.com/download/video/35282898/",
+          "source_page": "https://www.pexels.com/video/aerial-view-of-scenic-desert-highway-35282898/",
+          "author": "Mazin Omron",
+          "license": "Pexels License"
+        },
+        {
+          "key": "open_road",
+          "url": "https://www.pexels.com/download/video/28296051/",
+          "source_page": "https://www.pexels.com/video/desert-driving-freeway-california-28296051/",
+          "author": "Dubang chang",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "world_map",
+          "start": 0.3,
+          "seconds": 2.2
+        },
+        {
+          "source": "woman_road",
+          "start": 0.6,
+          "seconds": 2.5
+        },
+        {
+          "source": "desert_motorcycle",
+          "start": 0.1,
+          "seconds": 2.5
+        },
+        {
+          "source": "desert_highway",
+          "start": 0.3,
+          "seconds": 2.1
+        },
+        {
+          "source": "open_road",
+          "start": 0.3,
+          "seconds": 2.5
+        },
+        {
+          "source": "woman_road",
+          "start": 3.5,
+          "seconds": 2.6
+        },
+        {
+          "source": "world_map",
+          "start": 3.8,
+          "seconds": 2.4
+        },
+        {
+          "source": "desert_motorcycle",
+          "start": 3,
+          "seconds": 2.5
+        },
+        {
+          "source": "open_road",
+          "start": 5.3,
+          "seconds": 2.6
+        },
+        {
+          "source": "desert_highway",
+          "start": 3.5,
+          "seconds": 2.1
+        }
+      ],
+      "story_steps": [
+        {
+          "at": 4.8,
+          "text": "1981 · ВДВОЁМ ЧЕРЕЗ США"
+        },
+        {
+          "at": 10.1,
+          "text": "1982 · ОДНА НА BMW"
+        },
+        {
+          "at": 15.6,
+          "text": "ДАЛЬШЕ · НОВАЯ ЗЕЛАНДИЯ"
+        }
+      ],
+      "editorial": {
+        "environment": "american-solo-motorcycle-road-map-desert-1982",
+        "bike": "bmw-r60-six-solo-tour-vintage",
+        "people": "solo-female-traveler-illustration-riders",
+        "story": "unaccompanied-us-leg-after-brother-ride",
+        "visual": "north-america-map-open-highway-vintage-contrast"
+      },
+      "editorial_references": [
+        "https://www.elspethbeard.com/travels",
+        "https://www.hagerty.co.uk/articles/interviews/the-one-that-got-away-elspeth-beards-bmw-r75-5/",
+        "https://expeditionportal.com/living-legends-elspeth-beard/"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ: ПРОЕХАЛ БЫ БЕЗ GPS?",
+        "description": "Напиши, смог бы проехать такую дорогу без современного навигатора."
+      },
+      "episode_series": {
+        "id": "gustava-real-motorcycle-stories",
+        "season_id": "elspeth-beard-1982",
+        "chapter": 2,
+        "chapter_total": 6,
+        "historical_reconstruction": true,
+        "illustration_disclaimer": "ИЛЛЮСТРАТИВНЫЕ КАДРЫ",
+        "sources": [
+          "https://www.elspethbeard.com/travels",
+          "https://www.hagerty.co.uk/articles/interviews/the-one-that-got-away-elspeth-beards-bmw-r75-5/",
+          "https://expeditionportal.com/living-legends-elspeth-beard/"
+        ]
+      },
+      "auto_preview": true,
+      "auto_publish": false
     }
   ]
 }
