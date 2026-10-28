@@ -143,12 +143,19 @@ def eligible_retry(episode, receipt, new_fingerprint):
         return False
     if receipt.get("state") != "preview_ready":
         return False
-    if receipt.get("voice_qa_passed") is True and receipt.get("mixed_audio_qa_passed") is True:
-        return False
     attempts = int(receipt.get("attempt_count", 1))
     if not 1 <= attempts < MAX_ATTEMPTS:
         return False
-    return receipt.get("preview_fingerprint") != new_fingerprint
+    # Real-event documentaries may pass language QA but still have factually
+    # misleading illustrations. A verified editorial/media revision is worth
+    # one bounded unpublished replacement preview (not a YouTube re-upload).
+    changed = receipt.get("preview_fingerprint") != new_fingerprint
+    if not changed:
+        return False
+    if (receipt.get("voice_qa_passed") is True
+            and receipt.get("mixed_audio_qa_passed") is True):
+        return bool(episode.get("episode_series", {}).get("historical_reconstruction"))
+    return True
 
 
 def choose(catalog, output):
