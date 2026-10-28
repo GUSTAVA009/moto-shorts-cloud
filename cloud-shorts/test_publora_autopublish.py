@@ -18,7 +18,8 @@ class PubloraAutopublishTests(unittest.TestCase):
         self.meta = {"episode_id": self.episode["id"], "title": "Тестовый мото ролик",
                      "description": "Русская озвучка и новые кадры.", "tags": ["мото"]}
         self.qa = {"episode_id": self.episode["id"], "passed": True,
-                   "status": "passed", "lexical_coverage": .97, "ending_coverage": 1.0}
+                   "status": "passed", "lexical_coverage": .97, "ending_coverage": 1.0,
+                   "final_word_present": True}
 
     def tearDown(self):
         self.tmp.cleanup()
