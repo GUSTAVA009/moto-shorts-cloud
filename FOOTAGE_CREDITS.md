@@ -92,3 +92,36 @@ Historical sources:
 - https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/
 
 Do not display internal footage links in the public YouTube description.
+
+## Broad-audience pilots — 28 October 2026 (original, separately sourced)
+
+These are separate, modern illustrative productions. Do not claim historical airplane or
+octopus shots are from the same event or individual. Links below are private provenance
+records, never automatic additions to public YouTube descriptions.
+
+### aviation-round-windows-18 — aircraft windows and stress
+
+- Dilara Hazıroğlu — [Airplane cabin/window](https://www.pexels.com/video/aerial-view-from-airplane-window-with-wing-29900534/)
+- Pavel Danilyuk — [Wing seen from window](https://www.pexels.com/video/plane-wing-from-a-window-7318808/)
+- Peter Xie — [Aircraft takeoff](https://www.pexels.com/video/airplane-taking-off-from-runway-at-airport-34769921/)
+- Independent fact checks: [Smithsonian, cabin window geometry](https://www.smithsonianmag.com/air-space-magazine/anatomy-of-an-airliner-38863113/); [Smithsonian, cabin pressurization](https://www.smithsonianmag.com/air-space-magazine/how-things-work-cabin-pressure-2870604/).
+- Visual guard: contemporary flight footage, **not** footage of the de Havilland Comet accidents.
+
+### octopus-camouflage-19 — real cephalopod camouflage
+
+- JUN HO LEE — [Camouflaged octopus at reef](https://www.pexels.com/video/octopus-camouflaging-on-coral-reef-underwater-33897078/)
+- Entdecker Fuchs — [Aquarium octopus](https://www.pexels.com/video/pulpa-aquarium-biarritz-17836505/)
+- Thomas Judge — [Reef environment](https://www.pexels.com/video/vibrant-underwater-coral-reef-exploration-31629374/)
+- Scientific fact checks: [Smithsonian Ocean, chromatophores](https://ocean.si.edu/ocean-life/invertebrates/how-octopuses-and-squids-change-color); [NOAA, observed octopus changing coloration](https://oceanexplorer.noaa.gov/multimedia/okeanos-explorations-seascape-alaska-ex2306-gallery-media-dive08-octopus-2/).
+- Visual guard: multiple animals and environments; do not imply one continuous experiment.
+
+### hydraulic-press-explained-20 — manufacturing processes
+
+- Dominik Zítka — [Sheet-metal bending](https://www.pexels.com/video/industrial-metal-bending-process-close-up-31751363/)
+- aksinfo7 universe — [Press demonstration](https://www.pexels.com/video/hydraulic-press-demonstration-with-metal-plates-29564687/)
+- Om Prakash — [Industrial sheet metal bend](https://www.pexels.com/video/sheet-metal-bending-process-in-industrial-setting-40261631/)
+- Technical references: [US DOE — sheet-metal forming](https://www.energy.gov/sites/default/files/2021-07/Module_3D.pdf); [ASME — power press brakes](https://www.asme.org/codes-standards/find-codes-standards/b5-55m-specification-performance-standard-power-press-brakes).
+- Visual guard: independent workshops; not one manufacturing line or a particular named press.
+
+All 9 videos were independently located on Pexels under its marked free video license.
+Each is additionally validated/downloaded and checked by the cloud rendering pipeline.
