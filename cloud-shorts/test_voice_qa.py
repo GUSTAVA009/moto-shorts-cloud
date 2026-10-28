@@ -29,6 +29,12 @@ class VoiceQATests(unittest.TestCase):
         self.assertEqual(q.tokens("В двадцать три года"),
                          q.tokens("В 23 года"))
 
+    def test_decade_does_not_fake_a_wrong_year(self):
+        self.assertEqual(q.tokens("В начале восьмидесятых. Я уехал."),
+                         q.tokens("В начале 80-х. Я уехал."))
+        self.assertNotEqual(q.tokens("В тысяча девятьсот восемьдесят втором."),
+                            q.tokens("В 1882."))
+
     def test_real_swallowed_number_not_hidden_by_normalization(self):
         original = "В двадцать три года она уехала из Лондона в Америку на мотоцикле."
         mangled = "В двадцать года она уехала из Лондона в Америку на мотоцикле."
