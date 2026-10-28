@@ -53,7 +53,7 @@ def safe_download(url, target, min_bytes):
 
 def split_phrases(text):
     """Keep entire words while splitting only at semantic punctuation."""
-    parts = [x.strip() for x in re.split(r"(?<=[,.!?;])\\s+", str(text).strip()) if x.strip()]
+    parts = [x.strip() for x in re.split(r"(?<=[,.!?;])\s+", str(text).strip()) if x.strip()]
     # No per-word chopping: tiny chunks sound unnatural.
     if not 1 <= len(parts) <= 24:
         raise ValueError("Narration has invalid phrase count")
@@ -83,7 +83,7 @@ def join_phrases(parts, output):
                 target.writeframes(audio.readframes(audio.getnframes()))
             if idx < len(parts) - 1:
                 gap = 0.27 if phrase.endswith((".", "!", "?")) else 0.15
-                target.writeframes(b"\\x00" * (int(params[2] * gap) * params[1]))
+                target.writeframes(b"\x00" * (int(params[2] * gap) * params[1]))
 
 
 def render(text, output, model_dir):
