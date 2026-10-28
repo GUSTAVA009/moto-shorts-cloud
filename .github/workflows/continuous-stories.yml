@@ -1,0 +1,34 @@
+name: GUSTAVA - Continuous Verified Motorcycle Story Leads
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "41 06 * * *"
+    - cron: "41 14 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gustava-research-idea-ledger
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate research candidates without copying source media
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 -m unittest discover -s cloud-shorts -p 'test_source_watch.py' -v
+          python3 cloud-shorts/source_watch.py
+      - name: Archive research leads for independent scripts
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-moto-story-leads-${{ github.run_id }}
+          path: cloud-shorts/dist/story-ideas.json
+          if-no-files-found: error
+          retention-days: 30
