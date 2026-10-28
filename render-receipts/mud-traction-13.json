@@ -1,6 +1,6 @@
 {
   "id": "mud-traction-13",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40618348435",
   "notes": "If render failed, inspect and reconcile before retry."
 }
