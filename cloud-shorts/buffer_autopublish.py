@@ -20,6 +20,10 @@ MUTATION = """mutation CreatePost($input: CreatePostInput!) {
   }
 }"""
 CHANNEL = "UCS0QCodPcFBTjMt4ioEWOUw"
+# The 24-character Buffer ID was verified in the already authorized Buffer channel URL.
+BUFFER_CHANNEL = "6ae238b32f1f5ed648ff9011"
+YOUTUBE_CATEGORIES = {"1", "2", "10", "15", "17", "19", "20", "22",
+                      "23", "24", "25", "26", "27", "28", "29"}
 
 def required(name):
     v = os.environ.get(name, "").strip()
@@ -62,13 +66,24 @@ def upload_r2(video, sha):
             raise RuntimeError("MP4 is not accessible at permanent public HTTPS URL")
     return url
 
-def buffer_post(title, description, media_url):
-    channel_id = required("BUFFER_CHANNEL_ID")
-    if not re.fullmatch(r"[A-Za-z0-9_-]{6,100}", channel_id):
-        raise ValueError("Invalid Buffer channel ID")
+def buffer_post(title, description, media_url, meta=None):
+    # YouTube requires title AND categoryId in metadata.youtube for every new
+    # API post. Merely placing the title in text makes the mutation fail.
+    details = meta if isinstance(meta, dict) else {}
+    channel_id = os.environ.get("BUFFER_CHANNEL_ID", "").strip() or BUFFER_CHANNEL
+    if channel_id != BUFFER_CHANNEL:
+        raise ValueError("Buffer channel ID differs from the verified GUSTAVA Enduro channel")
+    category_id = str(details.get("youtube_category_id", "2"))
+    if category_id not in YOUTUBE_CATEGORIES:
+        raise ValueError("Unknown YouTube category ID")
+    youtube = {"title":title.strip(), "categoryId":category_id,
+               "privacy":"public", "madeForKids":False}
+    if "ai_generated" in details:
+        youtube["isAiGenerated"] = bool(details["ai_generated"])
     payload = {"query": MUTATION, "variables": {"input": {
-        "channelId": channel_id, "text": title.strip() + "\n\n" + description.strip(),
+        "channelId": channel_id, "text": description.strip(),
         "schedulingType":"automatic", "mode":"addToQueue",
+        "metadata":{"youtube":youtube},
         "assets":[{"video":{"url":media_url}}]
     }}}
     req = urllib.request.Request("https://api.buffer.com",
@@ -94,7 +109,7 @@ def deliver(ep, meta, voice, mixed, video, dry_run=False):
         return {"dry_run":True, "episode":ep["id"],"sha256":sha}
     if os.getenv("BUFFER_AUTO_PUBLISH_ENABLED","").lower() != "true":
         return {"skipped":"BUFFER_AUTO_PUBLISH_ENABLED not true"}
-    for key in ("BUFFER_API_KEY","BUFFER_CHANNEL_ID","R2_ENDPOINT","R2_ACCESS_KEY_ID",
+    for key in ("BUFFER_API_KEY","R2_ENDPOINT","R2_ACCESS_KEY_ID",
                 "R2_SECRET_ACCESS_KEY","R2_BUCKET","R2_PUBLIC_BASE_URL"):
         required(key)
     public_url(sha)
@@ -110,7 +125,7 @@ def deliver(ep, meta, voice, mixed, video, dry_run=False):
     prior.update(receipt_path,receipt)
     receipt["state"]="queue_requested"
     prior.update(receipt_path,receipt)
-    post=buffer_post(meta["title"],meta["description"],media_url)
+    post=buffer_post(meta["title"],meta["description"],media_url,meta)
     receipt.update(state="queued",buffer_post_id=post["id"],due_at=post.get("dueAt"))
     prior.update(receipt_path,receipt)
     return {"queued":True,"episode":ep["id"],"buffer_post_id":post["id"],
