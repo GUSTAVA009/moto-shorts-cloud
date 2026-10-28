@@ -93,6 +93,12 @@ jobs:
           PUBLORA_API_KEY: ${{ secrets.PUBLORA_API_KEY }}
           PUBLORA_AUTO_PUBLISH_ENABLED: ${{ vars.PUBLORA_AUTO_PUBLISH_ENABLED }}
         run: |
+          # Safety hold after unintelligible 2026-10-28 aviation narration; preview creation continues.
+          # Remove only after verified natural Russian voice and final MP4 review.
+          if [ "true" = "true" ]; then
+            echo "VOICE_QUALITY_PUBLICATION_HOLD: New automatic YouTube uploads paused until verified free local TTS and video pipeline." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
           if [ "$PUBLORA_AUTO_PUBLISH_ENABLED" != "true" ] || [ -z "$PUBLORA_API_KEY" ]; then
             echo "AUTO_PUBLISH_NOT_CONFIGURED: No upload; set verified Publora key and repo variable." >> "$GITHUB_STEP_SUMMARY"
             exit 0
