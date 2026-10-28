@@ -45,7 +45,8 @@ def publication_allowed(episode, meta, qa, video):
         raise ValueError("Metadata/ASR episode mismatch; do not upload")
     if qa.get("passed") is not True or qa.get("status") != "passed":
         raise ValueError("Russian voice QA incomplete: no automatic release")
-    if qa.get("lexical_coverage", 0) < .79 or qa.get("ending_coverage", 0) < .60:
+    if (qa.get("lexical_coverage", 0) < .79 or qa.get("ending_coverage", 0) < .60
+            or qa.get("final_word_present") is not True):
         raise ValueError("Missing or clipped Russian narration")
     if not video.is_file() or not 100000 <= video.stat().st_size <= 150*1024*1024:
         raise ValueError("Invalid MP4 file or unexpected size")
