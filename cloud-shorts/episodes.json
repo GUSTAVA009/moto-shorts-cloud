@@ -1741,6 +1741,155 @@
       },
       "auto_preview": true,
       "auto_publish": false
+    },
+    {
+      "id": "elspeth-beard-s1-e03",
+      "title": "В Сиднее кончились деньги. Что она придумала? 🏍️ Часть 3/6 #shorts",
+      "narration": "В Сиднее у неё закончились деньги. Чтобы продолжить путь, девушка несколько месяцев работала. А ещё сама сделала новые кофры для багажа из листового алюминия. Их можно было запереть и отремонтировать в дороге. Так старый мотоцикл стал лучше готов к новым испытаниям. Но впереди была серьёзная авария. Что случилось? Продолжение в четвёртой серии.",
+      "description": "МОТОИСТОРИИ — ЧАСТЬ 3/6. Во время реального кругосветного путешествия 1982–1984 годов Элспет Берд зарабатывала в Сиднее на продолжение пути и изготовила запираемые алюминиевые кофры для своего BMW. Видеоряд содержит только современные иллюстративные кадры, не архивную запись путешествия.\n\n#мотоистории #мотоцикл #австралия #shorts",
+      "caption_start": "СИДНЕЙ: ДЕНЬГИ КОНЧИЛИСЬ",
+      "caption_middle": "БАГАЖ ИЗ АЛЮМИНИЯ",
+      "caption_end": "ЧАСТЬ 4: АВАРИЯ",
+      "max_duration_seconds": 34,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "opening_trim_seconds": 0.1,
+      "voice_engine": "silero_cis_base_mit",
+      "footage": [
+        {
+          "key": "sydney",
+          "url": "https://www.pexels.com/download/video/36924507/",
+          "source_page": "https://www.pexels.com/video/sydney-opera-house-and-harbor-aerial-view-36924507/",
+          "author": "Talha Resitoglu",
+          "license": "Pexels License"
+        },
+        {
+          "key": "handwork",
+          "url": "https://www.pexels.com/download/video/30614790/",
+          "source_page": "https://www.pexels.com/video/artisan-craftsman-working-with-metal-in-workshop-30614790/",
+          "author": "Kenan Turguç",
+          "license": "Pexels License"
+        },
+        {
+          "key": "drilling",
+          "url": "https://www.pexels.com/download/video/29913842/",
+          "source_page": "https://www.pexels.com/video/close-up-of-metal-drilling-process-in-workshop-29913842/",
+          "author": "Mario Spencer",
+          "license": "Pexels License"
+        },
+        {
+          "key": "grinder",
+          "url": "https://www.pexels.com/download/video/8470295/",
+          "source_page": "https://www.pexels.com/video/a-mechanic-cutting-metal-parts-with-a-grinder-8470295/",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License"
+        },
+        {
+          "key": "mountain",
+          "url": "https://www.pexels.com/download/video/35310554/",
+          "source_page": "https://www.pexels.com/video/motorcycle-ride-on-scenic-mountain-road-35310554/",
+          "author": "Shital Khadgi",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "sydney",
+          "start": 0.3,
+          "seconds": 2.6
+        },
+        {
+          "source": "sydney",
+          "start": 4.8,
+          "seconds": 2.3
+        },
+        {
+          "source": "handwork",
+          "start": 0.4,
+          "seconds": 2.5
+        },
+        {
+          "source": "drilling",
+          "start": 0.7,
+          "seconds": 2.4
+        },
+        {
+          "source": "grinder",
+          "start": 1.5,
+          "seconds": 2.2
+        },
+        {
+          "source": "handwork",
+          "start": 2.2,
+          "seconds": 2.4
+        },
+        {
+          "source": "drilling",
+          "start": 4,
+          "seconds": 2.5
+        },
+        {
+          "source": "grinder",
+          "start": 5.2,
+          "seconds": 2.3
+        },
+        {
+          "source": "mountain",
+          "start": 1.8,
+          "seconds": 2.7
+        },
+        {
+          "source": "sydney",
+          "start": 7.9,
+          "seconds": 2.5
+        }
+      ],
+      "story_steps": [
+        {
+          "at": 4.7,
+          "text": "СИДНЕЙ · РАБОТА 7 МЕСЯЦЕВ"
+        },
+        {
+          "at": 10.2,
+          "text": "КОФРЫ ИЗ ЛИСТОВОГО МЕТАЛЛА"
+        },
+        {
+          "at": 16.4,
+          "text": "ВПЕРЕДИ · АВАРИЯ"
+        }
+      ],
+      "editorial": {
+        "environment": "sydney-work-and-diy-aluminium-panniers",
+        "bike": "classic-global-touring-motorcycle-hard-luggage",
+        "people": "anonymous-craftsmen-and-sydney-illustration",
+        "story": "temporary-sydney-work-aluminium-self-made-luggage",
+        "visual": "sydney-harbor-aluminium-craft-and-historic-travel"
+      },
+      "editorial_references": [
+        "https://www.elspethbeard.com/travels",
+        "https://www.svmc.se/smc_filer/SMC%20centralt/Rapporter/2019/Dream%20big.pdf",
+        "https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "ЛАЙК ЗА НАХОДЧИВОСТЬ",
+        "description": "Поставь лайк, если впечатлила её находчивость в дороге."
+      },
+      "episode_series": {
+        "id": "gustava-real-motorcycle-stories",
+        "season_id": "elspeth-beard-1982",
+        "chapter": 3,
+        "chapter_total": 6,
+        "historical_reconstruction": true,
+        "illustration_disclaimer": "ИЛЛЮСТРАТИВНЫЕ КАДРЫ",
+        "sources": [
+          "https://www.elspethbeard.com/travels",
+          "https://www.svmc.se/smc_filer/SMC%20centralt/Rapporter/2019/Dream%20big.pdf",
+          "https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/"
+        ]
+      },
+      "auto_preview": true,
+      "auto_publish": false
     }
   ]
 }
