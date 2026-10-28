@@ -31,7 +31,7 @@ class RussianPhrasesTests(unittest.TestCase):
             t.join_phrases(pairs,target)
             with wave.open(str(target),"rb") as w:
                 pcm=w.readframes(w.getnframes())
-                self.assertEqual(w.getnframes(),2000+int(22050*.27))
+                self.assertEqual(w.getnframes(),2000+int(22050*.27)+int(22050*.22)+int(22050*.20))
                 self.assertIn(b"\x00"*120,pcm)
 
 
