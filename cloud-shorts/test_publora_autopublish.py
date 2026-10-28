@@ -56,6 +56,28 @@ class PubloraAutopublishTests(unittest.TestCase):
                 result = p.publish(self.episode, self.meta, self.qa, self.video)
         self.assertIn("PUBLORA_AUTO_PUBLISH_ENABLED", result["skipped"])
 
+    def test_historical_episode_needs_chronological_predecessor(self):
+        self.episode["id"] = "elspeth-beard-s1-e02"
+        self.episode["episode_series"] = {
+            "historical_reconstruction": True, "chapter": 2, "chapter_total": 6
+        }
+        self.assertEqual(p.prior_series_episode(self.episode), "elspeth-beard-s1-e01")
+        with patch.object(p.ledger, "api", return_value=None):
+            with self.assertRaisesRegex(RuntimeError, "PREDECESSOR"):
+                p.enforce_series_release_order(self.episode)
+
+    def test_historical_stock_must_be_clearly_disclosed(self):
+        self.episode["episode_series"] = {
+            "historical_reconstruction": True, "chapter": 1, "chapter_total": 6
+        }
+        self.episode["editorial_references"] = [
+            "https://www.elspethbeard.com/", "https://www.madornomad.com/"
+        ]
+        with self.assertRaisesRegex(ValueError, "documentary"):
+            p.publication_allowed(self.episode, self.meta, self.qa, self.video)
+        self.meta["description"] += " Иллюстративные кадры, не архивная съёмка."
+        self.assertTrue(p.publication_allowed(self.episode, self.meta, self.qa, self.video))
+
     def test_receipt_slug_traversal_rejected(self):
         with self.assertRaises(ValueError):
             p.receipt_path("../other")
