@@ -171,17 +171,24 @@ def choose(catalog, output):
     for item in listed:
         entry = api(item_path(item["id"]))
         records[item["id"]] = (entry, decode_receipt(entry))
-    selected = None
-    # Historical serial continuity: repair part one before beginning part two.
-    for item in listed:
-        old_entry, receipt = records[item["id"]]
-        if not item.get("episode_series"):
-            continue
-        if eligible_retry(item, receipt, preview_fingerprint(item)):
-            if api("publication-receipts/" + item["id"] + ".json") is None:
-                selected = item
-                break
-    # New licensed scenes get an opportunity before repeating old non-series previews.
+    # New, independently verified cross-niche pilots have priority for the
+    # limited 14-day test. Never force a completed or reserved video to rerender.
+    selected = next((ep for ep in listed
+                     if ep.get("research_pillar") in ("engineering", "nature", "science",
+                                                      "history", "space", "surprising_facts")
+                     and records[ep["id"]][0] is None), None)
+    # Historical serial continuity: repair part one before beginning part two,
+    # but do not let repeated serial retries indefinitely block topic experiments.
+    if selected is None:
+        for item in listed:
+            old_entry, receipt = records[item["id"]]
+            if not item.get("episode_series"):
+                continue
+            if eligible_retry(item, receipt, preview_fingerprint(item)):
+                if api("publication-receipts/" + item["id"] + ".json") is None:
+                    selected = item
+                    break
+    # Then try any new licensed episode before retrying an old non-series clip.
     if selected is None:
         selected = next((ep for ep in listed if records[ep["id"]][0] is None), None)
     # Published/cleared originals are not retried. Failed unreleased, approved
