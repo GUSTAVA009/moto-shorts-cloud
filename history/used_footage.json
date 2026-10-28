@@ -272,6 +272,11 @@
       "episode": "elspeth-beard-s1-e01",
       "source": "https://www.pexels.com/video/scenic-country-road-motorcycle-ride-in-daylight-35604904/",
       "status": "reserved-or-rendered"
+    },
+    "9607104": {
+      "episode": "elspeth-beard-s1-e01",
+      "source": "https://www.pexels.com/video/woman-holding-her-helmet-and-standing-beside-her-motorcycle-9607104/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -378,7 +383,7 @@
       "bike": "seventies-vintage-flat-twin",
       "people": "historical-female-traveler-illustrations",
       "story": "documented-woman-world-trip-departure",
-      "visual": "travel-map-and-period-context-not-brand-mislabelled"
+      "visual": "period-timeline-and-helmeted-woman-illustration"
     },
     "elspeth-beard-s1-e02": {
       "environment": "american-solo-motorcycle-road-map-desert-1982",
