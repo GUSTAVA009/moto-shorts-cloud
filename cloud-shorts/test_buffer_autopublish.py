@@ -58,4 +58,44 @@ class BufferBridgeTests(unittest.TestCase):
         with self.env(R2_PUBLIC_BASE_URL="https://cdn.example.org/vid.mp4?X-Amz-Date=2026"):
             with self.assertRaises(ValueError):b.public_url("a"*64)
 
+
+    def test_buffer_video_post_has_required_youtube_metadata(self):
+        """Buffer must receive video, category, title, and the exact verified channel."""
+        import io
+        import json
+        payloads = []
+        class Response(io.BytesIO):
+            def __enter__(self): return self
+            def __exit__(self, *_): self.close()
+        def stub_open(request, timeout=None):
+            payloads.append(json.loads(request.data.decode("utf8")))
+            return Response(json.dumps({"data":{"createPost":{"post":{"id":"post-id-123"}}}}).encode())
+        with self.env(BUFFER_API_KEY="test-do-not-publish"):
+            with patch.object(b.urllib.request, "urlopen", side_effect=stub_open):
+                post=b.buffer_post("Тестовый ролик","Описание без ссылок",
+                    "https://media.example.org/shorts/1.mp4",
+                    {"youtube_category_id":"2","ai_generated":False})
+        self.assertEqual(post["id"],"post-id-123")
+        entry=payloads[0]["variables"]["input"]
+        self.assertEqual(entry["channelId"], b.BUFFER_CHANNEL)
+        self.assertEqual(entry["text"], "Описание без ссылок")
+        self.assertEqual(entry["metadata"]["youtube"]["title"],"Тестовый ролик")
+        self.assertEqual(entry["metadata"]["youtube"]["categoryId"],"2")
+        self.assertIs(entry["metadata"]["youtube"]["madeForKids"],False)
+        self.assertEqual(entry["schedulingType"],"automatic")
+        self.assertEqual(entry["mode"],"addToQueue")
+        self.assertEqual(entry["assets"][0]["video"]["url"],"https://media.example.org/shorts/1.mp4")
+
+    def test_wrong_buffer_channel_id_is_blocked(self):
+        with self.env(BUFFER_API_KEY="unused", BUFFER_CHANNEL_ID="another-channel"):
+            with self.assertRaisesRegex(ValueError,"differs"):
+                b.buffer_post("Title","Desc","https://media.example.org/example.mp4")
+
+    def test_invalid_youtube_category_is_blocked_before_network(self):
+        with self.env(BUFFER_API_KEY="unused"),patch.object(b.urllib.request,"urlopen",
+                    side_effect=AssertionError("No network allowed")):
+            with self.assertRaisesRegex(ValueError,"category"):
+                b.buffer_post("Title","Desc","https://media.example.org/example.mp4",
+                              {"youtube_category_id":"not-a-category"})
+
 if __name__=="__main__": unittest.main()
