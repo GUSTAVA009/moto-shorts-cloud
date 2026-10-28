@@ -23,6 +23,17 @@ class VoiceQATests(unittest.TestCase):
         t = "ты поехали город он остался дома своём старом мотоцикле"
         self.assertFalse(q.score(s, t)["passed"])
 
+    def test_russian_age_and_year_equivalence(self):
+        self.assertEqual(q.tokens("Осень тысяча девятьсот восемьдесят второго года."),
+                         q.tokens("Осень 1982 года."))
+        self.assertEqual(q.tokens("В двадцать три года"),
+                         q.tokens("В 23 года"))
+
+    def test_real_swallowed_number_not_hidden_by_normalization(self):
+        original = "В двадцать три года она уехала из Лондона в Америку на мотоцикле."
+        mangled = "В двадцать года она уехала из Лондона в Америку на мотоцикле."
+        self.assertFalse(q.score(original, mangled)["passed"])
+
     def test_extra_words_not_accepted_as_full_readback(self):
         self.assertFalse(q.score("Сначала проверь двигатель, затем шлем, потом дорогу.",
                                  "Проверь двигатель.")["passed"])
