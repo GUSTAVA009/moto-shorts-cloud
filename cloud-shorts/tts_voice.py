@@ -6,6 +6,7 @@ Never download a model with a NonCommercial dataset for monetized videos.
 """
 from __future__ import annotations
 import hashlib
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -50,6 +51,41 @@ def safe_download(url, target, min_bytes):
         raise
 
 
+def split_phrases(text):
+    """Keep entire words while splitting only at semantic punctuation."""
+    parts = [x.strip() for x in re.split(r"(?<=[,.!?;])\\s+", str(text).strip()) if x.strip()]
+    # No per-word chopping: tiny chunks sound unnatural.
+    if not 1 <= len(parts) <= 24:
+        raise ValueError("Narration has invalid phrase count")
+    return parts
+
+
+def join_phrases(parts, output):
+    """Concatenate matching mono WAVs with bounded real acoustic pauses."""
+    if not parts:
+        raise ValueError("Missing speech phrases")
+    output = Path(output)
+    params = None
+    with wave.open(str(output), "wb") as target:
+        for idx, (path, phrase) in enumerate(parts):
+            with wave.open(str(path), "rb") as audio:
+                cur = (audio.getnchannels(), audio.getsampwidth(),
+                       audio.getframerate(), audio.getcomptype())
+                if idx == 0:
+                    params = cur
+                    if cur[0] != 1 or cur[1] != 2 or cur[3] != "NONE":
+                        raise ValueError("Expected 16-bit mono Piper PCM")
+                    target.setnchannels(1)
+                    target.setsampwidth(2)
+                    target.setframerate(cur[2])
+                elif cur != params:
+                    raise ValueError("Piper sentence WAV formats disagree")
+                target.writeframes(audio.readframes(audio.getnframes()))
+            if idx < len(parts) - 1:
+                gap = 0.27 if phrase.endswith((".", "!", "?")) else 0.15
+                target.writeframes(b"\\x00" * (int(params[2] * gap) * params[1]))
+
+
 def render(text, output, model_dir):
     text = str(text).strip()
     if not (25 <= len(text) <= 350):
@@ -66,20 +102,31 @@ def render(text, output, model_dir):
     safe_download(BASE_URL + STEM + ".json", config, 3_000)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    # Piper's default zero pause makes Russian function words blend together.
-    # Preserve punctuation and slow phoneme timing without altering pitch.
-    cmd = [
-        sys.executable, "-m", "piper",
-        "-m", str(model), "-f", str(output),
-        "--length-scale", "1.12",
-        "--sentence-silence", "0.24",
-        "--noise-scale", "0.42",
-        "--noise-w", "0.75",
-        "--", text
-    ]
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=200)
-    if result.returncode != 0:
-        raise RuntimeError("Piper TTS failed: " + result.stderr[-1400:])
+    # Synthesize complete clauses separately instead of feeding one uninterrupted
+    # paragraph into VITS. This prevents sounds across a comma or a full stop
+    # from collapsing into one another, then inserts real PCM silence.
+    parts = split_phrases(text)
+    output_files = []
+    try:
+        for index, phrase in enumerate(parts):
+            part = output.with_name(output.stem + ".phrase-%02d.wav" % index)
+            cmd = [
+                sys.executable, "-m", "piper",
+                "-m", str(model), "-f", str(part),
+                "--length-scale", "1.18",
+                "--sentence-silence", "0.00",
+                "--noise-scale", "0.42",
+                "--noise-w", "0.75",
+                "--", phrase
+            ]
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
+            if result.returncode != 0 or not part.is_file():
+                raise RuntimeError("Piper phrase generation failed: " + result.stderr[-950:])
+            output_files.append((part, phrase))
+        join_phrases(output_files, output)
+    finally:
+        for path, _ in output_files:
+            path.unlink(missing_ok=True)
     if not output.is_file():
         raise RuntimeError("Voiceover WAV was not created")
     with wave.open(str(output), "rb") as inp:
