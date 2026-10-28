@@ -1,9 +1,6 @@
 name: GUSTAVA - Compare Legal Russian Voices Without Publishing
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: [".github/workflows/voice-comparison.yml", "cloud-shorts/tts_voice.py", "cloud-shorts/episodes.json"]
 
 permissions:
   contents: read
