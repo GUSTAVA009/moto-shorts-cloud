@@ -217,6 +217,31 @@
       "episode": "bike-care-14",
       "source": "https://www.pexels.com/video/a-man-doing-maintenance-check-up-on-his-motorcycle-5199294/",
       "status": "reserved-or-rendered"
+    },
+    "40347391": {
+      "episode": "elspeth-beard-s1-e01",
+      "source": "https://www.pexels.com/video/classic-motorcycle-on-urban-street-40347391/",
+      "status": "reserved-or-rendered"
+    },
+    "37104102": {
+      "episode": "elspeth-beard-s1-e01",
+      "source": "https://www.pexels.com/video/woman-posing-on-motorcycle-in-urban-setting-37104102/",
+      "status": "reserved-or-rendered"
+    },
+    "7429438": {
+      "episode": "elspeth-beard-s1-e01",
+      "source": "https://www.pexels.com/video/video-of-a-woman-looking-at-the-map-7429438/",
+      "status": "reserved-or-rendered"
+    },
+    "7606352": {
+      "episode": "elspeth-beard-s1-e01",
+      "source": "https://www.pexels.com/video/a-paper-map-lying-on-the-floor-7606352/",
+      "status": "reserved-or-rendered"
+    },
+    "4443736": {
+      "episode": "elspeth-beard-s1-e01",
+      "source": "https://www.pexels.com/video/a-woman-riding-a-motorcycle-on-a-road-4443736/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -317,6 +342,13 @@
       "people": "workshop-professionals-and-owners",
       "story": "washing-versus-service-inspection",
       "visual": "soap-hands-tools-and-engine"
+    },
+    "elspeth-beard-s1-e01": {
+      "environment": "historical-1982-london-new-york-departure",
+      "bike": "seventies-vintage-flat-twin",
+      "people": "historical-female-traveler-illustrations",
+      "story": "documented-woman-world-trip-departure",
+      "visual": "maps-vintage-machine-timeline"
     }
   }
 }
