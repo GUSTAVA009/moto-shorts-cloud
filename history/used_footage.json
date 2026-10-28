@@ -267,6 +267,11 @@
       "episode": "elspeth-beard-s1-e02",
       "source": "https://www.pexels.com/video/desert-driving-freeway-california-28296051/",
       "status": "reserved-or-rendered"
+    },
+    "35604904": {
+      "episode": "elspeth-beard-s1-e01",
+      "source": "https://www.pexels.com/video/scenic-country-road-motorcycle-ride-in-daylight-35604904/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -373,7 +378,7 @@
       "bike": "seventies-vintage-flat-twin",
       "people": "historical-female-traveler-illustrations",
       "story": "documented-woman-world-trip-departure",
-      "visual": "maps-vintage-machine-timeline"
+      "visual": "travel-map-and-period-context-not-brand-mislabelled"
     },
     "elspeth-beard-s1-e02": {
       "environment": "american-solo-motorcycle-road-map-desert-1982",
