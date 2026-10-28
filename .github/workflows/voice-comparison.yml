@@ -1,0 +1,31 @@
+name: GUSTAVA - Compare Legal Russian Voices Without Publishing
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/voice-comparison.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install speech A/B test tools
+        run: |
+          sudo apt-get install -y -o Dpkg::Use-Pty=0 --no-install-recommends ffmpeg
+          python3 -m pip install --disable-pip-version-check piper-tts==1.8.0 faster-whisper==1.2.1 av==18.1.0
+      - name: Compare independent Russian voice accuracy using the same factual script
+        run: |
+          python3 cloud-shorts/compare_voices.py --episode "elspeth-beard-s1-e01"
+          cat cloud-shorts/dist/voice-ab/scores.json
+      - name: Keep audition WAV and independent ASR scores
+        uses: actions/upload-artifact@v4
+        with:
+          name: russian-voice-a-b-${{ github.run_id }}
+          path: cloud-shorts/dist/voice-ab/
+          retention-days: 7
+          if-no-files-found: error
