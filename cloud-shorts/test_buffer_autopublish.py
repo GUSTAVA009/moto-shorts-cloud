@@ -98,4 +98,16 @@ class BufferBridgeTests(unittest.TestCase):
                 b.buffer_post("Title","Desc","https://media.example.org/example.mp4",
                               {"youtube_category_id":"not-a-category"})
 
+    def test_full_queue_skips_without_reserving_or_uploading(self):
+        settings={"BUFFER_AUTO_PUBLISH_ENABLED":"true","BUFFER_API_KEY":"unused",
+                  "R2_ENDPOINT":"https://"+"a"*32+".r2.cloudflarestorage.com",
+                  "R2_ACCESS_KEY_ID":"test","R2_SECRET_ACCESS_KEY":"test",
+                  "R2_BUCKET":"test","R2_PUBLIC_BASE_URL":"https://cdn.example.org"}
+        with self.env(**settings),patch.object(b.ledger,"api",return_value=None),\
+             patch("buffer_readiness.inspect",return_value={"queue_has_room":False}),\
+             patch.object(b.prior,"record",side_effect=AssertionError("no reservation")),\
+             patch.object(b,"upload_r2",side_effect=AssertionError("no upload")):
+            result=b.deliver(self.episode,self.meta,self.voice,self.mixed,self.video)
+        self.assertIn("full",result["skipped"])
+
 if __name__=="__main__": unittest.main()
