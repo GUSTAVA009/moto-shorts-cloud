@@ -40,7 +40,9 @@ def select(catalog, receipt_entries, published, artifacts):
         slug=obj.get("id")
         if slug not in allowed or obj.get("state")!="preview_ready":
             continue
-        if obj.get("voice_qa_passed") is not True or slug in published:
+        if (obj.get("voice_qa_passed") is not True
+                or obj.get("mixed_audio_qa_passed") is not True
+                or slug in published):
             continue
         run=str(obj.get("run_id",""))
         if not run.isdigit():
