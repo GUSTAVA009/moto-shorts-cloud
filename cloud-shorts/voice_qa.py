@@ -16,8 +16,46 @@ import sys
 import wave
 
 
+# ASR commonly writes "тысяча девятьсот восемьдесят второго" as "1982".
+# Normalize numerals on BOTH sides instead of falsely claiming four words vanished.
+_NUMBERS = {
+    "ноль": 0, "один": 1, "одна": 1, "одно": 1, "две": 2, "два": 2,
+    "второго": 2, "второй": 2, "вторая": 2, "вторую": 2,
+    "три": 3, "третий": 3, "четыре": 4, "пять": 5, "шесть": 6,
+    "семь": 7, "восемь": 8, "девять": 9, "десять": 10,
+    "одиннадцать": 11, "двенадцать": 12, "тринадцать": 13,
+    "четырнадцать": 14, "пятнадцать": 15, "шестнадцать": 16,
+    "семнадцать": 17, "восемнадцать": 18, "девятнадцать": 19,
+    "двадцать": 20, "тридцать": 30, "сорок": 40,
+    "пятьдесят": 50, "шестьдесят": 60, "семьдесят": 70,
+    "восемьдесят": 80, "девяносто": 90, "сто": 100,
+    "двести": 200, "триста": 300, "четыреста": 400,
+    "пятьсот": 500, "шестьсот": 600, "семьсот": 700,
+    "восемьсот": 800, "девятьсот": 900,
+    "тысяча": 1000, "тысячи": 1000, "тысяч": 1000,
+}
+
+
 def tokens(text):
-    return re.findall(r"[а-яa-z0-9]+", str(text).casefold().replace("ё", "е"))
+    raw = re.findall(r"[а-яa-z0-9]+", str(text).casefold().replace("ё", "е"))
+    out = []
+    i = 0
+    while i < len(raw):
+        if raw[i] not in _NUMBERS:
+            out.append(raw[i])
+            i += 1
+            continue
+        value, n = 0, i
+        while n < len(raw) and raw[n] in _NUMBERS:
+            unit = _NUMBERS[raw[n]]
+            if unit == 1000 and value and value < 10:
+                value *= 1000
+            else:
+                value += unit
+            n += 1
+        out.append(str(value))
+        i = n
+    return out
 
 
 def match_ratio(reference, actual):
