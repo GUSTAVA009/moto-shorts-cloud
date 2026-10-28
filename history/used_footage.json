@@ -322,6 +322,21 @@
       "episode": "elspeth-beard-s1-e03",
       "source": "https://www.pexels.com/video/motorcycle-ride-on-scenic-mountain-road-35310554/",
       "status": "reserved-or-rendered"
+    },
+    "29900534": {
+      "episode": "aviation-round-windows-18",
+      "source": "https://www.pexels.com/video/aerial-view-from-airplane-window-with-wing-29900534/",
+      "status": "reserved-or-rendered"
+    },
+    "7318808": {
+      "episode": "aviation-round-windows-18",
+      "source": "https://www.pexels.com/video/plane-wing-from-a-window-7318808/",
+      "status": "reserved-or-rendered"
+    },
+    "34769921": {
+      "episode": "aviation-round-windows-18",
+      "source": "https://www.pexels.com/video/airplane-taking-off-from-runway-at-airport-34769921/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -443,6 +458,13 @@
       "people": "anonymous-craftsmen-and-sydney-illustration",
       "story": "temporary-sydney-work-aluminium-self-made-luggage",
       "visual": "sydney-harbor-aluminium-craft-and-historic-travel"
+    },
+    "aviation-round-windows-18": {
+      "environment": "airline-passenger-window-and-runway",
+      "subject": "pressurized-airplane-rounded-windows",
+      "people": "passengers-and-aircraft-engineers",
+      "story": "historical-airliner-window-stress-explained",
+      "visual": "round-window-clouds-metal-fuselage"
     }
   }
 }
