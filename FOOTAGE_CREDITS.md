@@ -65,9 +65,9 @@ Story sources: [Elspeth Beard's own account](https://www.elspethbeard.com/), [fi
 The sources listed below are newly licensed modern clips. They do **not**
 depict the actual 1982 expedition or the real Elspeth Beard.
 
-- Lara Jameson — https://www.pexels.com/video/pins-attached-to-a-paper-map-8828766/
+- RDNE Stock project — https://www.pexels.com/video/close-up-of-a-map-of-the-united-states-of-america-8499670/
 - Ben Blight — https://www.pexels.com/video/motorcycle-journey-through-the-desert-36625886/
-- tejinder ladi photography — https://www.pexels.com/video/woman-riding-a-motorcycle-on-road-11247139/
+- Suhas Hanjar — https://www.pexels.com/video/solo-motorcycle-adventure-on-a-scenic-trail-31918568/
 - Mazin Omron — https://www.pexels.com/video/aerial-view-of-scenic-desert-highway-35282898/
 - Dubang chang — https://www.pexels.com/video/desert-driving-freeway-california-28296051/
 
