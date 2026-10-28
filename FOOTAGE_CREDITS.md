@@ -76,3 +76,19 @@ First-person route source: https://www.hagerty.co.uk/articles/interviews/the-one
 Context interview: https://expeditionportal.com/living-legends-elspeth-beard/
 
 Preserve author/rights inventory internally, never add stock URLs to public YouTube video descriptions.
+
+## Real documentary series S01E03 — Sydney and hand-built panniers
+
+All shots are **modern illustrative footage**, not Elspeth Beard's archival film.
+- Talha Resitoglu — https://www.pexels.com/video/sydney-opera-house-and-harbor-aerial-view-36924507/
+- Kenan Turguç — https://www.pexels.com/video/artisan-craftsman-working-with-metal-in-workshop-30614790/
+- Mario Spencer — https://www.pexels.com/video/close-up-of-metal-drilling-process-in-workshop-29913842/
+- Anastasia Shuraeva — https://www.pexels.com/video/a-mechanic-cutting-metal-parts-with-a-grinder-8470295/
+- Shital Khadgi — https://www.pexels.com/video/motorcycle-ride-on-scenic-mountain-road-35310554/
+
+Historical sources:
+- https://www.elspethbeard.com/travels
+- https://www.svmc.se/smc_filer/SMC%20centralt/Rapporter/2019/Dream%20big.pdf
+- https://www.madornomad.com/the-first-british-woman-to-motorcycle-round-the-world/
+
+Do not display internal footage links in the public YouTube description.
