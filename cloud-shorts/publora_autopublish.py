@@ -48,10 +48,19 @@ def publication_allowed(episode, meta, qa, video):
     if (qa.get("lexical_coverage", 0) < .79 or qa.get("ending_coverage", 0) < .60
             or qa.get("final_word_present") is not True):
         raise ValueError("Missing or clipped Russian narration")
+    mix = qa.get("mixed_audio")
+    if (not isinstance(mix, dict) or mix.get("episode_id") != episode["id"]
+            or mix.get("source") != "FINAL_MIXED_MP4"
+            or mix.get("passed") is not True or mix.get("final_word_present") is not True
+            or mix.get("lexical_coverage", 0) < .79
+            or mix.get("numerics_match") is not True):
+        raise ValueError("Final MP4 mixed Russian narration QA failed")
     if not video.is_file() or not 100000 <= video.stat().st_size <= 150*1024*1024:
         raise ValueError("Invalid MP4 file or unexpected size")
     if video.suffix.lower() != ".mp4" or not meta.get("title") or not meta.get("description"):
         raise ValueError("Invalid upload metadata")
+    if mix.get("mp4_sha256") != file_sha256(video):
+        raise ValueError("Final MP4 does not match its independent mixed-audio QA proof")
     if len(meta["title"]) > 100 or any(s in meta["description"].lower() for s in ("https://", "www.")):
         raise ValueError("Illegal title or external links in description")
     if not episode.get("footage") or any(s.get("license") != "Pexels License"
@@ -189,6 +198,20 @@ def publish(episode, meta, qa, video, dry_run=False):
     if not os.environ.get("PUBLORA_API_KEY"):
         return {"skipped": "PUBLORA_API_KEY is not installed in GitHub Secrets"}
     check_connection()
+    # Read-only plan quota before reserving a once-only publication hash.
+    # A full plan quota must NOT permanently block the episode for next month.
+    context = http("GET", "/account-context").get("context", {})
+    limit = context.get("quotas", {}).get("monthlyPosts", {})
+    if not isinstance(limit, dict) or not isinstance(context.get("plan"), dict):
+        raise RuntimeError("Publora account quota cannot be verified")
+    remaining = limit.get("remaining")
+    if isinstance(remaining, int) and remaining <= 0:
+        return {"skipped": "Publora monthly publication quota exhausted; no upload reserved"}
+    if remaining is None and limit.get("scope") == "connection":
+        matches = [x for x in limit.get("connections", [])
+                   if x.get("platformSelection") == EXPECTED_CHANNEL]
+        if len(matches) != 1 or matches[0].get("remaining") == 0:
+            return {"skipped": "Publora YouTube connection has no verified quota"}
     enforce_series_release_order(episode)
     if ledger.api(path):
         return {"skipped": "Publication receipt already exists; manual reconciliation if incomplete"}
@@ -240,13 +263,19 @@ def main():
     p.add_argument("--video", type=Path, required=True)
     p.add_argument("--metadata", type=Path, required=True)
     p.add_argument("--voice-qa", type=Path, required=True)
+    p.add_argument("--mixed-qa", type=Path, required=True)
     p.add_argument("--dry-run", action="store_true")
     args = p.parse_args()
     eps = json.loads(args.catalog.read_text(encoding="utf8"))["episodes"]
     episode = next((e for e in eps if e["id"] == args.episode), None)
     if episode is None:
         raise SystemExit("Episode not found")
+    if episode.get("auto_publish") is not True:
+        print("PUBLISH_RESULT", json.dumps({"skipped": "Episode not approved for autopublish",
+                                             "episode": episode["id"]}))
+        return
     qa = json.loads(args.voice_qa.read_text(encoding="utf8"))
+    qa["mixed_audio"] = json.loads(args.mixed_qa.read_text(encoding="utf8"))
     meta = json.loads(args.metadata.read_text(encoding="utf8"))
     result = publish(episode, meta, qa, args.video, args.dry_run)
     print("PUBLISH_RESULT", json.dumps(result, ensure_ascii=False))
