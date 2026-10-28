@@ -15,7 +15,7 @@ import wave
 
 BASE_URL = "https://huggingface.co/rhasspy/piper-voices/resolve/main/ru/ru_RU/denis/medium/"
 STEM = "ru_RU-denis-medium.onnx"
-MODEL_SHA256 = "15fab56e11a097858ee115545d0f697fc2a316c41a291a5362349fb870411b0"
+MODEL_SHA256 = "15fab56e11a097858ee115545d0f697fc2a316c41a291a5362349fb870411b0a"
 VOICE_CARD = "https://huggingface.co/rhasspy/piper-voices/blob/main/ru/ru_RU/denis/medium/MODEL_CARD"
 
 
