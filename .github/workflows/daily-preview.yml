@@ -2,7 +2,7 @@ name: Shorts Factory - Three Unique Cloud Previews Daily
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/publora_autopublish.py']
+    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/mixed_audio_qa.py', 'cloud-shorts/publora_autopublish.py']
   schedule:
     - cron: "17 07 * * *"
     - cron: "17 12 * * *"
@@ -59,6 +59,14 @@ jobs:
             --episode "$EPISODE" \
             --wav "cloud-shorts/work/$EPISODE/new_narration.wav" \
             --out "cloud-shorts/dist/new/$EPISODE/voice_qa.json"
+      - name: Verify original Russian words remain clear after MP4 music mixing
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          EPISODE: ${{ steps.pick.outputs.episode }}
+        run: |
+          python3 cloud-shorts/mixed_audio_qa.py --episode "$EPISODE" \
+            --mp4 "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4" \
+            --out "cloud-shorts/dist/new/$EPISODE/mixed_audio_qa.json"
       - name: Store MP4, cover, metadata and internal licence records
         if: steps.pick.outputs.has_job == 'true'
         uses: actions/upload-artifact@v4
