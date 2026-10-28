@@ -74,9 +74,11 @@ def score(reference, recognized):
     # Missing sentence tails and short first words are treated as serious faults.
     end_exact = bool(expected and heard and expected[-1] in heard[-3:])
     tail_three = match_ratio(expected[-3:], heard[-5:])
+    numerics_match = ([x for x in expected if x.isdigit()] ==
+                      [x for x in heard if x.isdigit()])
     passed = bool(len(expected) >= 6 and coverage >= 0.79
                   and first >= 0.60 and last >= 0.60
-                  and end_exact and tail_three >= 0.67)
+                  and end_exact and tail_three >= 0.67 and numerics_match)
     return {
         "passed": passed,
         "status": "passed" if passed else "manual_review_required",
@@ -85,6 +87,7 @@ def score(reference, recognized):
         "ending_coverage": round(last, 3),
         "final_three_coverage": round(tail_three, 3),
         "final_word_present": end_exact,
+        "numerics_match": numerics_match,
         "expected_words": len(expected),
         "recognized_words": len(heard),
         "recognized_text": str(recognized).strip()[:1200],
