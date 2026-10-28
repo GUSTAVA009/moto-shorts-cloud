@@ -105,6 +105,7 @@ RENDER_DEPENDENCIES = (
     "soundtrack.py", "voice_qa.py", "mixed_audio_qa.py",
 )
 MAX_ATTEMPTS = 3
+MAX_DOCUMENTARY_ATTEMPTS = 5  # extra licensed visual corrections, unpublished only
 
 
 def preview_fingerprint(episode):
@@ -144,7 +145,9 @@ def eligible_retry(episode, receipt, new_fingerprint):
     if receipt.get("state") != "preview_ready":
         return False
     attempts = int(receipt.get("attempt_count", 1))
-    if not 1 <= attempts < MAX_ATTEMPTS:
+    limit = (MAX_DOCUMENTARY_ATTEMPTS if
+             episode.get("episode_series", {}).get("historical_reconstruction") else MAX_ATTEMPTS)
+    if not 1 <= attempts < limit:
         return False
     # Real-event documentaries may pass language QA but still have factually
     # misleading illustrations. A verified editorial/media revision is worth
