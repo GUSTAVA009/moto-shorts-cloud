@@ -337,6 +337,21 @@
       "episode": "aviation-round-windows-18",
       "source": "https://www.pexels.com/video/airplane-taking-off-from-runway-at-airport-34769921/",
       "status": "reserved-or-rendered"
+    },
+    "33897078": {
+      "episode": "octopus-camouflage-19",
+      "source": "https://www.pexels.com/video/octopus-camouflaging-on-coral-reef-underwater-33897078/",
+      "status": "reserved-or-rendered"
+    },
+    "17836505": {
+      "episode": "octopus-camouflage-19",
+      "source": "https://www.pexels.com/video/pulpa-aquarium-biarritz-17836505/",
+      "status": "reserved-or-rendered"
+    },
+    "31629374": {
+      "episode": "octopus-camouflage-19",
+      "source": "https://www.pexels.com/video/vibrant-underwater-coral-reef-exploration-31629374/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -465,6 +480,13 @@
       "people": "passengers-and-aircraft-engineers",
       "story": "historical-airliner-window-stress-explained",
       "visual": "round-window-clouds-metal-fuselage"
+    },
+    "octopus-camouflage-19": {
+      "environment": "coral-reef-and-octopus-aquarium",
+      "subject": "octopus-chromatophore-and-texture-camouflage",
+      "people": "wildlife-documentary-divers-and-observers",
+      "story": "visible-invisible-cephalopod-skin-science",
+      "visual": "octopus-coral-reef-rapid-natural-camouflage"
     }
   }
 }
