@@ -9,6 +9,7 @@ import argparse
 import base64
 import binascii
 import json
+import hashlib
 import os
 from pathlib import Path
 import re
@@ -99,40 +100,124 @@ def assert_new_sources(episode, history):
             )
 
 
+RENDER_DEPENDENCIES = (
+    "render_episode.py", "tts_voice.py", "silero_voice.py",
+    "soundtrack.py", "voice_qa.py", "mixed_audio_qa.py",
+)
+MAX_ATTEMPTS = 3
+
+
+def preview_fingerprint(episode):
+    """Change only when actual narration, visuals or render/QA implementation changes."""
+    spec = {k: v for k, v in episode.items()
+            if k not in ("auto_preview", "auto_publish")}
+    h = hashlib.sha256(json.dumps(
+        spec, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf8"))
+    for filename in RENDER_DEPENDENCIES:
+        path = Path(__file__).with_name(filename)
+        if not path.is_file():
+            raise RuntimeError("Missing core render dependency: " + filename)
+        h.update(filename.encode("ascii"))
+        h.update(path.read_bytes())
+    return h.hexdigest()
+
+
+def decode_receipt(entry):
+    """Do not accept a broken ledger entry as permission to republish."""
+    if entry is None:
+        return None
+    if not isinstance(entry.get("content"), str) or not entry.get("sha"):
+        raise RuntimeError("Corrupt render receipt")
+    try:
+        record = json.loads(base64.b64decode(entry["content"], validate=False))
+    except (ValueError, TypeError, binascii.Error) as exc:
+        raise RuntimeError("Invalid render receipt: no blind retry") from exc
+    if not isinstance(record, dict) or not record.get("id"):
+        raise RuntimeError("Invalid render receipt shape")
+    return record
+
+
+def eligible_retry(episode, receipt, new_fingerprint):
+    """Rerender only a genuinely revised, never-published failed preview."""
+    if receipt is None or receipt.get("id") != episode["id"]:
+        return False
+    if receipt.get("state") != "preview_ready":
+        return False
+    if receipt.get("voice_qa_passed") is True and receipt.get("mixed_audio_qa_passed") is True:
+        return False
+    attempts = int(receipt.get("attempt_count", 1))
+    if not 1 <= attempts < MAX_ATTEMPTS:
+        return False
+    return receipt.get("preview_fingerprint") != new_fingerprint
+
+
 def choose(catalog, output):
     data = json.loads(Path(catalog).read_text(encoding="utf8"))
     validate_catalog(data)
-    ep = pick(data["episodes"], lambda slug: api(item_path(slug)) is not None)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    if ep is None:
+    listed = [ep for ep in data["episodes"] if ep.get("auto_preview") is True]
+    records = {}
+    for item in listed:
+        entry = api(item_path(item["id"]))
+        records[item["id"]] = (entry, decode_receipt(entry))
+    selected = None
+    # Historical serial continuity: repair part one before beginning part two.
+    for item in listed:
+        old_entry, receipt = records[item["id"]]
+        if not item.get("episode_series"):
+            continue
+        if eligible_retry(item, receipt, preview_fingerprint(item)):
+            if api("publication-receipts/" + item["id"] + ".json") is None:
+                selected = item
+                break
+    # New licensed scenes get an opportunity before repeating old non-series previews.
+    if selected is None:
+        selected = next((ep for ep in listed if records[ep["id"]][0] is None), None)
+    # Published/cleared originals are not retried. Failed unreleased, approved
+    # Shorts can be improved only when the text or sound engine was revised.
+    if selected is None:
+        for item in listed:
+            if item.get("auto_publish") is not True:
+                continue
+            _, receipt = records[item["id"]]
+            if eligible_retry(item, receipt, preview_fingerprint(item)):
+                if api("publication-receipts/" + item["id"] + ".json") is None:
+                    selected = item
+                    break
+    if selected is None:
         output.write_text("has_job=false\n", encoding="utf8")
-        print("QUEUE_EMPTY; no duplicate Shorts will be rendered")
+        print("QUEUE_EMPTY: no new or revised legally cleared video to render")
         return
-    item = next(episode for episode in data["episodes"] if episode["id"] == ep)
+    item = selected
+    slug = item["id"]
+    existing, old_receipt = records[slug]
     entry = api(HISTORY_PATH)
     history = decode_history(entry)
     assert_new_sources(item, history)
     run_id = os.environ.get("GITHUB_RUN_ID", "")
     if not run_id.isdigit():
         raise RuntimeError("Missing GitHub run identifier")
+    attempt = int(old_receipt.get("attempt_count", 1)) + 1 if old_receipt else 1
     record = {
-        "id": ep, "state": "reserved", "run_id": run_id,
-        "notes": "If render failed, inspect and reconcile before retry."
+        "id": slug, "state": "reserved", "run_id": run_id,
+        "attempt_count": attempt,
+        "preview_fingerprint": preview_fingerprint(item),
+        "previous_run_id": old_receipt.get("run_id") if old_receipt else None,
+        "notes": "Revised preview only; never retry a public or uncertain upload."
     }
-    store(item_path(ep), record, "Reserve fresh Shorts preview " + ep)
-    # Record the source IDs permanently before any media download; if the
-    # optimistic-lock update fails, the reservation blocks the release.
+    store(item_path(slug), record, "Reserve unique or revised Shorts preview " + slug,
+          old_sha=existing["sha"] if existing else None)
     for source in item["footage"]:
         sid = source_id(source)
         history["used"][sid] = {
-            "episode": ep, "source": source["source_page"],
+            "episode": slug, "source": source["source_page"],
             "status": "reserved-or-rendered",
         }
-    history.setdefault("scene_profiles", {})[ep] = item["editorial"]
-    store(HISTORY_PATH, history, "Permanently reserve footage for " + ep, entry["sha"])
-    output.write_text("has_job=true\nepisode=" + ep + "\n", encoding="utf8")
-    print("QUEUE_RESERVED", ep)
+    history.setdefault("scene_profiles", {})[slug] = item["editorial"]
+    store(HISTORY_PATH, history, "Record licensed sources for " + slug, entry["sha"])
+    output.write_text("has_job=true\nepisode=" + slug + "\n", encoding="utf8")
+    print("QUEUE_RESERVED", slug, "attempt", attempt)
 
 
 def finish(slug, qa_report=None, mixed_report=None):
