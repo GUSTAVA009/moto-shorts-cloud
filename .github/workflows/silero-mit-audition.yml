@@ -1,0 +1,32 @@
+name: GUSTAVA - Test MIT Silero Russian Voice (No Publish)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/silero-mit-audition.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  legal-audition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install independently licensed Russian speech model and ASR
+        run: |
+          python3 -m pip install --disable-pip-version-check torch numpy silero faster-whisper==1.2.1 av==18.1.0
+      - name: Test Russian date, names, numbers and word completeness
+        run: |
+          python3 cloud-shorts/silero_mit_audition.py
+          cat cloud-shorts/dist/silero-mit/scores.json
+      - name: Export WAV speech samples and ASR measurements
+        uses: actions/upload-artifact@v4
+        with:
+          name: gustava-legal-russian-voice-test-${{ github.run_id }}
+          path: |
+            cloud-shorts/dist/silero-mit/*.wav
+            cloud-shorts/dist/silero-mit/scores.json
+          retention-days: 7
+          if-no-files-found: error
