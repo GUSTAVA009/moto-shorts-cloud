@@ -242,6 +242,31 @@
       "episode": "elspeth-beard-s1-e01",
       "source": "https://www.pexels.com/video/a-woman-riding-a-motorcycle-on-a-road-4443736/",
       "status": "reserved-or-rendered"
+    },
+    "8828766": {
+      "episode": "elspeth-beard-s1-e02",
+      "source": "https://www.pexels.com/video/pins-attached-to-a-paper-map-8828766/",
+      "status": "reserved-or-rendered"
+    },
+    "36625886": {
+      "episode": "elspeth-beard-s1-e02",
+      "source": "https://www.pexels.com/video/motorcycle-journey-through-the-desert-36625886/",
+      "status": "reserved-or-rendered"
+    },
+    "11247139": {
+      "episode": "elspeth-beard-s1-e02",
+      "source": "https://www.pexels.com/video/woman-riding-a-motorcycle-on-road-11247139/",
+      "status": "reserved-or-rendered"
+    },
+    "35282898": {
+      "episode": "elspeth-beard-s1-e02",
+      "source": "https://www.pexels.com/video/aerial-view-of-scenic-desert-highway-35282898/",
+      "status": "reserved-or-rendered"
+    },
+    "28296051": {
+      "episode": "elspeth-beard-s1-e02",
+      "source": "https://www.pexels.com/video/desert-driving-freeway-california-28296051/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -349,6 +374,13 @@
       "people": "historical-female-traveler-illustrations",
       "story": "documented-woman-world-trip-departure",
       "visual": "maps-vintage-machine-timeline"
+    },
+    "elspeth-beard-s1-e02": {
+      "environment": "american-solo-motorcycle-road-map-desert-1982",
+      "bike": "bmw-r60-six-solo-tour-vintage",
+      "people": "solo-female-traveler-illustration-riders",
+      "story": "unaccompanied-us-leg-after-brother-ride",
+      "visual": "north-america-map-open-highway-vintage-contrast"
     }
   }
 }
