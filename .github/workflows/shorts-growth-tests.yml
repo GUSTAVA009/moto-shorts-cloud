@@ -1,0 +1,30 @@
+name: Shorts - Growth and Natural Voice Quality Tests
+on:
+  pull_request:
+    paths:
+      - 'cloud-shorts/growth_policy.py'
+      - 'cloud-shorts/test_growth_policy.py'
+      - 'cloud-shorts/voice_quality_gate.py'
+      - 'cloud-shorts/test_voice_quality_gate.py'
+      - '.github/workflows/shorts-growth-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate analyzer and TTS guard syntax
+        run: |
+          python3 -m py_compile cloud-shorts/growth_policy.py
+          python3 -m py_compile cloud-shorts/voice_quality_gate.py
+      - name: Run growth strategy regression tests
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_growth_policy.py' -v
+      - name: Run voice guard regression tests
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_voice_quality_gate.py' -v
+      - name: Confirm no publication permission
+        run: echo "Read-only quality tests completed; nothing is sent to Buffer/YouTube."
