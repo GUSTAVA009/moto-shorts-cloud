@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['.github/workflows/series-preview.yml', 'cloud-shorts/episodes.json', 'cloud-shorts/tts_voice.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/voice_qa.py']
+    paths: ['.github/workflows/series-preview.yml', 'cloud-shorts/episodes.json', 'cloud-shorts/tts_voice.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/voice_qa.py', 'cloud-shorts/mixed_audio_qa.py']
 
 permissions:
   contents: read
@@ -38,6 +38,12 @@ jobs:
             --wav "cloud-shorts/work/$EPISODE/new_narration.wav" \
             --out "cloud-shorts/dist/new/$EPISODE/voice_qa.json"
           cat "cloud-shorts/dist/new/$EPISODE/voice_qa.json"
+      - name: Independently verify speech remains intelligible in final MP4 with music
+        run: |
+          python3 cloud-shorts/mixed_audio_qa.py --episode "$EPISODE" \
+            --mp4 "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4" \
+            --out "cloud-shorts/dist/new/$EPISODE/mixed_audio_qa.json"
+          cat "cloud-shorts/dist/new/$EPISODE/mixed_audio_qa.json"
       - name: Archive private preview and audio quality report for editorial approval
         uses: actions/upload-artifact@v4
         with:
