@@ -2,7 +2,8 @@
   "episode": "aviation-round-windows-18",
   "sha256": "03eec4208e5566b9b4611ddb6a86e608feda86307f665626579e09227a681479",
   "run_id": "40637377395",
-  "state": "publish_requested",
+  "state": "submitted",
   "warning": "Never repeat this logical upload after an unknown response",
-  "post_group_id": "6ae18704e11e5a8e835b4128"
+  "post_group_id": "6ae18704e11e5a8e835b4128",
+  "publora_status": "scheduled"
 }
