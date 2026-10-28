@@ -1,8 +1,8 @@
-"""Editorial safeguards: a new Shorts episode must be a genuinely new production.
+"""Editorial safeguards for independent original stories across any subject.
 
-Enforces distinct source videos, story, environment, motorcycle style and people
-from recent episodes. Cannot identify people/vehicles by computer vision:
-human review is still required before public publication.
+Require unique visual sources, narrative, subjects and settings. Legacy motorcycle
+catalogs use editorial.bike; all new non-motorcycle episodes use editorial.subject.
+These checks cannot assess visual/factual accuracy: human review remains essential.
 """
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from urllib.parse import urlparse
 # Source footage used in the already published first YouTube video.
 # Never use it again in any of the new production previews.
 PUBLISHED_SOURCE_IDS = {"5803637", "5803517"}
-PROFILE_FIELDS = ("environment", "bike", "people", "story", "visual")
+PROFILE_FIELDS = ("environment", "people", "story", "visual")
 BLOCKED_PUBLIC_TERMS = ("хапыч", "эндуро")
 ID_RE = re.compile(r"-(\d{5,10})/?$")
 
@@ -28,6 +28,14 @@ def source_id(footage: dict) -> str:
     if not match:
         raise ValueError("Source has no Pexels video ID")
     return match.group(1)
+
+
+def editorial_subject(profile):
+    """Preserve the existing motorcycle catalogue while enabling any other topic."""
+    value = profile.get("subject") if "subject" in profile else profile.get("bike")
+    if not isinstance(value, str) or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", value):
+        raise ValueError("Invalid editorial subject (or legacy bike)")
+    return value
 
 
 def validate_catalog(data):
@@ -71,7 +79,7 @@ def validate_catalog(data):
             if not isinstance(value, str) or not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", value):
                 raise ValueError("Invalid editorial " + field + " in " + slug)
             tag_tuple.append(value)
-        tag_tuple = tuple(tag_tuple)
+        tag_tuple = tuple(tag_tuple + [editorial_subject(profile)])
         if tag_tuple in used_profiles:
             raise ValueError("Duplicate concept/profile in " + slug)
         used_profiles.add(tag_tuple)
@@ -85,8 +93,9 @@ def validate_catalog(data):
             if profile["story"] == recent["story"]:
                 raise ValueError("Reused story/event arc for " + slug)
         if previous:
-            if profile["bike"] == previous[-1]["bike"] or profile["people"] == previous[-1]["people"]:
-                raise ValueError("Must change both motorcycle and people compared with last episode")
+            if (editorial_subject(profile) == editorial_subject(previous[-1])
+                    or profile["people"] == previous[-1]["people"]):
+                raise ValueError("Must change both story subject and people compared with last episode")
 
         sources = ep.get("footage") or []
         if len(sources) < 2:
