@@ -78,12 +78,16 @@ def join_phrases(parts, output):
                     target.setnchannels(1)
                     target.setsampwidth(2)
                     target.setframerate(cur[2])
+                    # Lead-in silence prevents the first consonant from being clipped
+                    # by TTS/decoder onset. Trailing silence preserves final syllable.
+                    target.writeframes(b"\x00" * (int(cur[2] * 0.22) * cur[1]))
                 elif cur != params:
                     raise ValueError("Piper sentence WAV formats disagree")
                 target.writeframes(audio.readframes(audio.getnframes()))
             if idx < len(parts) - 1:
                 gap = 0.27 if phrase.endswith((".", "!", "?")) else 0.15
                 target.writeframes(b"\x00" * (int(params[2] * gap) * params[1]))
+        target.writeframes(b"\x00" * (int(params[2] * 0.20) * params[1]))
 
 
 def render(text, output, model_dir):
