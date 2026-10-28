@@ -135,7 +135,7 @@ def choose(catalog, output):
     print("QUEUE_RESERVED", ep)
 
 
-def finish(slug):
+def finish(slug, qa_report=None):
     path = item_path(slug)
     item = api(path)
     if item is None:
@@ -144,6 +144,21 @@ def finish(slug):
     if contents.get("run_id") != os.environ.get("GITHUB_RUN_ID") or contents.get("state") != "reserved":
         raise RuntimeError("Render reservation changed; no auto-retry")
     contents["state"] = "preview_ready"
+    # The independent ASR result is bound to the render receipt. Backlog
+    # publishing may only select files with an explicit passing report.
+    report = {}
+    if qa_report and Path(qa_report).is_file():
+        try:
+            report = json.loads(Path(qa_report).read_text(encoding="utf8"))
+        except (ValueError, OSError):
+            report = {}
+    contents["voice_qa_passed"] = (
+        report.get("episode_id") == slug
+        and report.get("passed") is True
+        and report.get("status") == "passed"
+        and report.get("final_word_present") is True
+    )
+    contents["voice_qa_coverage"] = report.get("lexical_coverage")
     store(path, contents, "Rendered unique Shorts preview " + slug, item["sha"])
     print("QUEUE_PREVIEW_READY", slug)
 
@@ -154,11 +169,12 @@ def main():
     p.add_argument("--catalog", type=Path, default=EPISODES)
     p.add_argument("--output", type=Path, default=Path("queue.properties"))
     p.add_argument("--episode", default="")
+    p.add_argument("--qa-report", type=Path, default=None)
     args = p.parse_args()
     if args.action == "choose":
         choose(args.catalog, args.output)
     else:
-        finish(args.episode)
+        finish(args.episode, args.qa_report)
 
 
 if __name__ == "__main__":
