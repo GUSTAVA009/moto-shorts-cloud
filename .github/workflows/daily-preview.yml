@@ -49,6 +49,16 @@ jobs:
           python3 cloud-shorts/render_episode.py --episode "$EPISODE"
           ffprobe -v error -show_entries stream=codec_type,width,height \
             -show_entries format=duration -of json "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4"
+      - name: Independent Russian speech QA (missing words and endings)
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          EPISODE: ${{ steps.pick.outputs.episode }}
+        run: |
+          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1 || true
+          python3 cloud-shorts/voice_qa.py \
+            --episode "$EPISODE" \
+            --wav "cloud-shorts/work/$EPISODE/new_narration.wav" \
+            --out "cloud-shorts/dist/new/$EPISODE/voice_qa.json"
       - name: Store MP4, cover, metadata and internal licence records
         if: steps.pick.outputs.has_job == 'true'
         uses: actions/upload-artifact@v4
@@ -66,6 +76,28 @@ jobs:
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
           python3 cloud-shorts/preview_queue.py finish --episode "$EPISODE"
+      - name: Publish NEW MP4 through Publora only after Russian QA and account opt-in
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          EPISODE: ${{ steps.pick.outputs.episode }}
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PUBLORA_API_KEY: ${{ secrets.PUBLORA_API_KEY }}
+          PUBLORA_AUTO_PUBLISH_ENABLED: ${{ vars.PUBLORA_AUTO_PUBLISH_ENABLED }}
+        run: |
+          if [ "$PUBLORA_AUTO_PUBLISH_ENABLED" != "true" ] || [ -z "$PUBLORA_API_KEY" ]; then
+            echo "AUTO_PUBLISH_NOT_CONFIGURED: No upload; set verified Publora key and repo variable." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          if [ ! -s "cloud-shorts/dist/new/$EPISODE/voice_qa.json" ]; then
+            echo "VOICE_QA_MISSING: public upload blocked" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          python3 cloud-shorts/publora_autopublish.py \
+            --episode "$EPISODE" \
+            --video "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4" \
+            --metadata "cloud-shorts/dist/new/$EPISODE/publication.json" \
+            --voice-qa "cloud-shorts/dist/new/$EPISODE/voice_qa.json"
       - name: Record status
         if: always()
         env:
