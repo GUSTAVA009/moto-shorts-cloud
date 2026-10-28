@@ -1,9 +1,6 @@
 name: GUSTAVA - Accurate Real Motorcycle History Series Preview
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/series-preview.yml', 'cloud-shorts/episodes.json', 'cloud-shorts/tts_voice.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/voice_qa.py', 'cloud-shorts/mixed_audio_qa.py']
 
 permissions:
   contents: read
