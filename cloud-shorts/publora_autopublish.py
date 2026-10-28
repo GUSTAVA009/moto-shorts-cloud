@@ -57,6 +57,12 @@ def publication_allowed(episode, meta, qa, video):
     if not episode.get("footage") or any(s.get("license") != "Pexels License"
                                       for s in episode["footage"]):
         raise ValueError("Unverified commercial footage rights")
+    series = episode.get("episode_series")
+    if series and series.get("historical_reconstruction"):
+        refs = episode.get("editorial_references") or []
+        if (len(set(refs)) < 2 or any(not str(u).startswith("https://") for u in refs)
+                or "иллюстративные" not in meta["description"].casefold()):
+            raise ValueError("Real-event documentary lacks independent sources or illustration disclosure")
     return True
 
 
@@ -136,6 +142,41 @@ def upload_file(group_id, video, basename):
     raise RuntimeError("Publora media has not reached ready; keep draft")
 
 
+def prior_series_episode(episode):
+    """Historical chapters must appear in sequence, never part 5 before part 4."""
+    series = episode.get("episode_series")
+    if not series:
+        return None
+    chapter = int(series.get("chapter", 0))
+    if chapter < 1 or chapter > int(series.get("chapter_total", 0)):
+        raise ValueError("Invalid documentary chapter")
+    if chapter == 1:
+        return None
+    import re as _re
+    eid = str(episode["id"])
+    if not _re.search(r"-e\\d{2}$", eid):
+        raise ValueError("Documentary filename must end in chronological chapter")
+    return eid[:-2] + f"{chapter-1:02d}"
+
+
+def enforce_series_release_order(episode):
+    previous = prior_series_episode(episode)
+    if previous is None:
+        return
+    entry = ledger.api(receipt_path(previous))
+    if not entry or not entry.get("content"):
+        raise RuntimeError("SERIES_PREDECESSOR_NOT_PUBLISHED: earlier episode receipt missing")
+    import base64
+    receipt = json.loads(base64.b64decode(entry["content"]))
+    group = receipt.get("post_group_id")
+    if not isinstance(group, str) or not re.fullmatch(r"[0-9a-fA-F]{24}", group):
+        raise RuntimeError("SERIES_PREDECESSOR_NOT_PUBLISHED: earlier post ID not confirmed")
+    remote = http("GET", "/get-post/" + group)
+    if remote.get("status") != "published" or not any(
+            x.get("status") == "published" for x in remote.get("posts", [])):
+        raise RuntimeError("SERIES_PREDECESSOR_NOT_PUBLISHED: wait for earlier episode on YouTube")
+
+
 def publish(episode, meta, qa, video, dry_run=False):
     publication_allowed(episode, meta, qa, video)
     video_sha = file_sha256(video)
@@ -148,6 +189,7 @@ def publish(episode, meta, qa, video, dry_run=False):
     if not os.environ.get("PUBLORA_API_KEY"):
         return {"skipped": "PUBLORA_API_KEY is not installed in GitHub Secrets"}
     check_connection()
+    enforce_series_release_order(episode)
     if ledger.api(path):
         return {"skipped": "Publication receipt already exists; manual reconciliation if incomplete"}
     reservation = {"episode": episode["id"], "sha256": video_sha,
