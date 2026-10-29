@@ -1,0 +1,35 @@
+name: GUSTAVA - Stable MP4 Hosting Proof
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/buffer-media-proof.yml]
+permissions:
+  contents: write
+jobs:
+  test-media:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Build fresh synthetic MP4 for a private integration test (no user media)
+        shell: bash
+        run: |
+          ffmpeg -hide_banner -loglevel error -y -f lavfi -i 'testsrc2=size=360x640:rate=30:duration=4' -f lavfi -i 'sine=frequency=350:sample_rate=48000:duration=4' -map 0:v:0 -map 1:a:0 -c:v libx264 -preset veryfast -pix_fmt yuv420p -c:a aac -b:a 80k -movflags +faststart -t 4 buffer-media-proof.mp4
+          ffprobe -v error -show_entries format=duration,size -of default=noprint_wrappers=1 buffer-media-proof.mp4
+      - name: Publish only the synthetic MP4 to a stable GitHub Releases URL
+        shell: bash
+        run: |
+          tag='buffer-media-proof-20261029'
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo 'EXISTING_TEST_RELEASE'
+          else
+            gh release create "$tag" buffer-media-proof.mp4 --title 'Automated MP4 Transport Test' --notes 'Synthetic 4-second test video only. Not a YouTube publication.' --latest=false
+          fi
+          url="https://github.com/${GITHUB_REPOSITORY}/releases/download/${tag}/buffer-media-proof.mp4"
+          curl -fL --max-time 60 --retry 2 -o downloaded.mp4 "$url"
+          cmp -s downloaded.mp4 buffer-media-proof.mp4
+          printf 'RELEASE_MEDIA_PUBLIC_AND_BYTE_IDENTICAL YES\n'
+          printf 'PERMANENT_RELEASE_URL %s\n' "$url"
+          echo 'No Buffer post was created. No user footage was accessed.' >> "$GITHUB_STEP_SUMMARY"
