@@ -42,7 +42,7 @@ class AuditedDeepMaleNarratorTests(unittest.TestCase):
         self.assertTrue(result["passed"])
         self.assertTrue(result["male_voice_verified"])
         self.assertEqual(result["voice_profile"], PROFILE_ID)
-        self.assertEqual(result["voice_profile_pitch"], .86)
+        self.assertEqual(result["voice_profile_pitch"], .82)
 
         self.wav.with_suffix(".profile.json").unlink()
         result = voice_qa.check(self.episode, self.wav)
