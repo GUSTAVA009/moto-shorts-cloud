@@ -3134,7 +3134,7 @@
         "overlay": "НАПИШИ: ВИДЕЛ ТАКОЙ ПРЫЖОК?",
         "description": "Расскажи в комментариях, был ли ты на мотокроссе."
       },
-      "voice_profile": "gustava_male_deep_v1",
+      "voice_profile": "gustava_male_deep_v2",
       "voice_revision_requested": true,
       "voice_revision_note": "User requested lower, fuller, natural male narrator. Bounded re-render of unpublished episode; previous bright timbre is superseded. No posted version may be duplicated."
     },
@@ -3321,7 +3321,7 @@
         "overlay": "ПОДПИШИСЬ НА МОТОМАРШРУТЫ",
         "description": "Подпишись, если ценишь красивые виды в дороге."
       },
-      "voice_profile": "gustava_male_deep_v1",
+      "voice_profile": "gustava_male_deep_v2",
       "voice_revision_requested": true,
       "voice_revision_note": "User requested lower, fuller, natural male narrator. Bounded re-render of unpublished episode; previous bright timbre is superseded. No posted version may be duplicated."
     }
