@@ -35,7 +35,7 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python3 cloud-shorts/find_pending_buffer.py --output "$GITHUB_OUTPUT"
       - name: Download the exact QA-verified MP4
-        if: steps.pick.outputs.has_job == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED == 'true'
+        if: steps.pick.outputs.has_job == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED != 'false'
         uses: actions/download-artifact@v4
         with:
           name: ${{ steps.pick.outputs.artifact_name }}
@@ -44,13 +44,13 @@ jobs:
           github-token: ${{ github.token }}
           path: staged
       - name: Publish only through Buffer (no blind retry)
-        if: steps.pick.outputs.has_job == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED == 'true'
+        if: steps.pick.outputs.has_job == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED != 'false'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-          BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED }}
-          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+          BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED || 'true' }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID || 'UCS0QCodPcFBTjMt4ioEWOUw' }}
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
           set -euo pipefail
