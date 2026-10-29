@@ -1,54 +1,61 @@
-# GUSTAVA Enduro: активация автоматической публикации MP4
+# GUSTAVA Enduro — автономный конвейер YouTube через Buffer
 
-Производство, контроль звука и загрузчик подключены в `moto-shorts-cloud`.
-**Автопубликация через GitHub пока отключена**: для неё нужны отдельный Publora API key
-и явная настройка GitHub Actions. Ни секреты, ни ключи в этот репозиторий не записывать.
+**Актуальная конфигурация с 29 октября 2026:** публикация только через **Buffer**.
+Старый сторонний загрузчик, его GitHub Actions и тесты удалены. Его опубликованные
+ранее ролики и исторические квитанции остаются нетронутыми, чтобы не создавать дубликаты.
 
-## Единственная настройка владельца
+## Рабочий путь
 
-1. Открой **[Publora](https://app.publora.com/dashboard)** → боковое меню **API** →
-   **Generate API Key**. Убедись, что авторизован именно аккаунт с подключённым
-   YouTube-каналом GUSTAVA Enduro (`youtube-UCS0QCodPcFBTjMt4ioEWOUw`).
-2. В GitHub открой **[Actions secrets](https://github.com/GUSTAVA009/moto-shorts-cloud/settings/secrets/actions)** →
-   **New repository secret**. Имя: `PUBLORA_API_KEY`; значение: созданный ключ
-   (начинается с `sk_`). Никому не отправляй его сообщением.
-3. В том же GitHub открой **[Actions variables](https://github.com/GUSTAVA009/moto-shorts-cloud/settings/variables/actions)** →
-   **New repository variable**. Имя: `PUBLORA_AUTO_PUBLISH_ENABLED`, значение: `true`.
-4. Проверь `GUSTAVA - Autopublish Readiness (No Publication)` в
-   [GitHub Actions](https://github.com/GUSTAVA009/moto-shorts-cloud/actions/workflows/autopublish-readiness.yml).
-   Он не публикует ничего и показывает только **YES/NO** без значения ключа.
+1. `.github/workflows/continuous-stories.yml` — дважды в сутки исследует только
+   мототематику (эндуро, мотокросс, мотоэкипировка и реальная мототехника).
+   Исследование НЕ превращается автоматически в видео без сценария и прав на кадры.
+2. `.github/workflows/daily-preview.yml` — до трёх попыток сборки новых MP4 в день:
+   оригинальный сценарий и лицензионные видеокадры, русская озвучка, музыка, монтаж.
+3. `voice_qa.py` и `mixed_audio_qa.py` — проверяют полноту слов и финальный звук.
+   `channel_focus.py`, `editorial_guard.py` и `publication_safety.py` запрещают
+   посторонние темы, повторные видео, ошибки метаданных и нарушения лицензий.
+4. `.github/workflows/buffer-backlog.yml` — запускается после успешного рендера
+   и дополнительно четыре раза в сутки. Отбирает **один** оригинальный MP4 со
+   статусом `auto_publish:true`, допустимым голосом Kokoro-RU, подтверждённым QA
+   и без квитанции о прежнем выпуске. Публикация по умолчанию разрешена; экстренная
+   остановка: GitHub Actions variable `BUFFER_AUTO_PUBLISH_ENABLED=false`.
+5. `buffer_autopublish.py` сверяет реальный YouTube-канал
+   `UCS0QCodPcFBTjMt4ioEWOUw`, загружает проверенный MP4 в **GitHub Releases**
+   и передаёт постоянную HTTPS-ссылку в Buffer для постановки в очередь.
+   В случае неопределённого ответа API повторная отправка запрещена.
+6. Buffer публикует запланированный Shorts на **GUSTAVA Enduro (@gustava009)**.
 
-## Как устроен дальнейший конвейер
+## Текущее состояние проверки
 
-`daily-preview.yml` собирает один новый уникальный Shorts за запуск — максимум три запуска
-в день. `voice_qa.py` проверяет русскую речь относительно точного сценария,
-в том числе окончания, возраст, годы. Если `voice_qa.passed != true`, видео остаётся
-предпросмотром — **не загружается публично**.
+- `BUFFER_API_KEY` установлен как GitHub Actions Secret — не выводить его значение.
+- GitHub Releases → Buffer проверены на **тестовом черновике**; черновик удалён.
+- Конфигурация Buffer имеет рабочие слоты; GitHub Actions подтвердил состояние
+  `BUFFER_CREDENTIAL_STATUS READY` и `BUFFER_READINESS ENABLED`.
+- В последнем запуске `buffer-backlog.yml` новых квалифицированных оригинальных
+  MP4 не нашлось: **публикация не выполнялась**. Успех workflow означает успешную
+  проверку, не наличие нового ролика в Buffer.
+- Ранее опубликованные видео остаются в YouTube без изменений. Не удалять
+  записи о старых публикациях из `render-ledger/publication-receipts/` —
+  они нужны для предотвращения повторных загрузок.
 
-`publora_autopublish.py` проверяет только созданный и ещё не опубликованный выпуск
-(`auto_publish:true`), лицензионные и редакторские свидетельства, канал, квоту,
-результаты QA. Только затем отправляет новый MP4 в подключённый Publora и запускает
-публикацию YouTube. До внешнего вызова записывает постоянную бронь
-`render-ledger/publication-receipts/`, чтобы не продублировать ролик при сбое.
+## Быстрые проверки
 
-`publora-backlog.yml` каждые три часа пытается найти только уже проверенный,
-готовый, ещё не отправленный MP4; неизвестные исходы требуют сверки с Publora.
+- [Buffer publishing workflow](https://github.com/GUSTAVA009/moto-shorts-cloud/actions/workflows/buffer-backlog.yml)
+- [Buffer authentication and queue](https://github.com/GUSTAVA009/moto-shorts-cloud/actions/workflows/buffer-readiness.yml)
+- [Rendering](https://github.com/GUSTAVA009/moto-shorts-cloud/actions/workflows/daily-preview.yml)
+- [Quality and safety tests](https://github.com/GUSTAVA009/moto-shorts-cloud/actions/workflows/validate-pipeline.yml)
+- [Buffer publishing queue](https://publish.buffer.com/channels/6ae238b32f1f5ed648ff9011/schedule?tab=queue)
 
-## Текущие ограничения
+## Ограничения и безопасность
 
-- Publora Starter: **15 постов в месяц и 3 отложенных**. Этого недостаточно
-  для регулярных двух-трёх выпусков ежедневно. По документированным тарифам,
-  Pro: **без фиксированного месячного лимита публикаций при соблюдении политики добросовестного использования**; стоимость, регион и условия
-  нужно проверить в интерфейсе владельца.
-- Уточнить настоящую страну AdSense/YPP. Рост просмотров не гарантирует выплаты.
-- Нельзя массово публиковать повторяющиеся нарезки или неподтверждённые
-  документальные реконструкции: защита YouTube от шаблонного и повторно
-  используемого контента остаётся критичной.
-- Уже опубликованные видео не пересоздаются. Три запланированных
-  на 28–30 октября 2026 года выпуска не изменяются.
-
-## Проверенные источники
-
-- https://docs.publora.com/README
-- https://docs.publora.com/endpoints/upload-media
-- https://docs.publora.com/endpoints/update-post
+- **Только мототемы**. Архивные эксперименты о самолётах, воде, погоде,
+  осьминогах и промышленности имеют `auto_preview:false` и
+  `auto_publish:false`. Сам редакционный фильтр также блокирует их.
+- Видео не выходят, если нет нового лицензированного исходника,
+  успешно проверенной озвучки или подтверждения уникальности.
+- Ни личные видеозаписи с Windows-ПК, ни локальная Music Studio не используются.
+- Для монетизации нужны реальные квалифицированные метрики YouTube Studio.
+  Автопубликация сама по себе не гарантирует 10 млн просмотров, 4 тыс. часов
+  или конкретный доход.
+- API-ключ, ранее пересланный в чате, следует ротировать и обновить GitHub Secret
+  без записи значения в репозиторий.
