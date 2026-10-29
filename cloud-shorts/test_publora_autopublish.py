@@ -13,6 +13,9 @@ class PubloraAutopublishTests(unittest.TestCase):
         self.video.write_bytes(b"x" * 500001)
         self.episode = {
             "id": "new-original-22", "auto_publish": True,
+            "title": "Мотоцикл на трассе",
+            "narration": "Мотоцикл проходит крутой поворот.",
+            "editorial": {"bike": "offroad-trail-motorcycle"},
             "footage": [{"license": "Pexels License"}]
         }
         self.meta = {"episode_id": self.episode["id"], "title": "Тестовый мото ролик",
