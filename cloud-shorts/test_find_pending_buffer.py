@@ -7,7 +7,10 @@ class BufferBacklogTests(unittest.TestCase):
     def setUp(self):
         self.catalog = {"episodes": [
             {"id": "new-original-22", "auto_publish": True,
-             "voice_engine": "kokoro_ru_dima"}]}
+             "voice_engine": "kokoro_ru_dima",
+             "title": "Мотоцикл на сложном подъёме",
+             "narration": "Мотоцикл преодолевает поворот на грунтовой трассе.",
+             "editorial": {"bike": "offroad-trail-motorcycle"}}]}
         self.receipts = [{"id": "new-original-22", "state": "preview_ready",
                           "voice_qa_passed": True,
                           "mixed_audio_qa_passed": True, "run_id": "12345"}]
