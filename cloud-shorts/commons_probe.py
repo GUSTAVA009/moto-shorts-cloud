@@ -18,7 +18,7 @@ for term in SEARCHES:
         "generator": "search", "gsrsearch": term,
         "gsrnamespace": 6, "gsrlimit": 50,
         "prop": "imageinfo",
-        "iiprop": "url|mime|size|extmetadata",
+        "iiprop": "url|mime|size|sha1|extmetadata",
         "iiextmetadatafilter": "LicenseShortName|LicenseUrl|Copyrighted|Artist|ImageDescription",
     }
     url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
@@ -33,7 +33,7 @@ for term in SEARCHES:
             mime = info.get("mime", "")
             if mime.startswith("video/"):
                 results.append({"title":row.get("title"),"license":lic,"mime":mime,
-                                "size":info.get("size"),"url":(info.get("url") or "")[:120]})
+                                "size":info.get("size"),"sha1":info.get("sha1"),"url":(info.get("url") or "")[:120]})
         print("COMMONS_RESEARCH", term, "video_results", len(results),
               json.dumps(results[:15], ensure_ascii=False), flush=True)
     except Exception as e:
