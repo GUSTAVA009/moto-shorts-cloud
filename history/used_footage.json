@@ -427,6 +427,16 @@
       "episode": "tire-workshop-24",
       "source": "https://www.pexels.com/video/motorcycle-tire-replacement-outdoors-36127778/",
       "status": "reserved-or-rendered"
+    },
+    "10544833": {
+      "episode": "trail-choices-25",
+      "source": "https://www.pexels.com/video/aerial-view-on-driving-enduro-motorcycles-10544833/",
+      "status": "reserved-or-rendered"
+    },
+    "28750463": {
+      "episode": "trail-choices-25",
+      "source": "https://www.pexels.com/video/off-road-motorbike-adventure-through-mountain-trail-28750463/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -597,6 +607,13 @@
       "people": "two-independent-tire-repair-workers",
       "story": "tire-wear-pretrip-inspection",
       "visual": "wheel-rubber-and-mechanical-tools"
+    },
+    "trail-choices-25": {
+      "environment": "rugged-open-mountain-tracks",
+      "bike": "dual-sport-hill-motorcycles",
+      "people": "independent-mountain-trail-groups",
+      "story": "compare-open-hill-routes",
+      "visual": "mountain-drone-trail-dust"
     }
   }
 }
