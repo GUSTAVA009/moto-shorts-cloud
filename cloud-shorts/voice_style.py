@@ -2,7 +2,7 @@
 """Natural, low male narration profile for GUSTAVA motorcycle Shorts.
 
 The source remains the consented Russian Kokoro male actor Dima. We lower
-pitch by 2.6 semitones and let formants shift with it (more chest resonance),
+pitch by approximately 3.4 semitones and let formants shift with it (more chest resonance),
 without introducing another voice layer or altering reading speed. Moderate
 EQ adds presence; no synthetic growls, clipping or fake 'stereo' vocals.
 
@@ -22,20 +22,22 @@ import subprocess
 import tempfile
 import wave
 
-PROFILE_ID = "gustava_male_deep_v1"
+PROFILE_ID = "gustava_male_deep_v2"
 SPEAKER = "dima"
 MODEL = "zaakirio/kokoro-ru"
-PITCH = 0.86
+PITCH = 0.82
 SAMPLE_RATE = 24000
 MIN_SECONDS = 3.0
 MAX_SECONDS = 35.0
 
 FILTER = (
-    "rubberband=pitch=0.86:formant=shifted:transients=crisp:"
+    "rubberband=pitch=0.82:formant=shifted:transients=crisp:"
     "window=standard:pitchq=quality,"
     "highpass=f=65,"
-    "equalizer=f=170:t=q:w=1.1:g=1.8,"
-    "equalizer=f=3100:t=q:w=1.2:g=0.8,"
+    "equalizer=f=170:t=q:w=1.1:g=2.5,"
+    "equalizer=f=3100:t=q:w=1.2:g=1.0,"
+    "acompressor=threshold=0.18:ratio=1.7:attack=12:release=90:makeup=1.08,"
+    "asoftclip=type=tanh:threshold=0.92,"
     "alimiter=limit=0.93"
 )
 
@@ -124,6 +126,7 @@ def apply(wav, ffmpeg="ffmpeg"):
             "profile_id": PROFILE_ID, "speaker": SPEAKER,
             "source_model": MODEL, "pitch": PITCH,
             "formants": "shifted", "synthesized_voice_only": True,
+            "timbre_processing": "light_compression_soft_saturation_v2",
             "quality_passed": True, "processed_wav_sha256": sha256(wav),
             "audio": after,
             "disclaimer": "Pitch/tone DSP is not a human assessment of perceived timbre.",
