@@ -1,13 +1,9 @@
 {
   "id": "bike-care-14",
-  "state": "preview_ready",
-  "run_id": "40744597958",
-  "attempt_count": 2,
-  "preview_fingerprint": "1b198b5c9bfc0d8fdcedeb31ac7937416e91f04d66e9f1acbb13c9ac5874b186",
-  "previous_run_id": "40618677195",
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": false,
-  "voice_qa_coverage": 0.688,
-  "mixed_audio_qa_passed": false,
-  "mixed_audio_qa_coverage": 0.646
+  "state": "reserved",
+  "run_id": "40876021301",
+  "attempt_count": 3,
+  "preview_fingerprint": "9e29a6e66f550cb16094c85850c744861190b70d1995457e89fe0ca4f2c5dbbf",
+  "previous_run_id": "40744597958",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
