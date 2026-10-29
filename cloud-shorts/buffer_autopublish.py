@@ -42,24 +42,35 @@ def buffer(query, variables=None):
     return data.get("data") or {}
 
 
-def verify_channel():
-    if os.getenv('YOUTUBE_EXPECTED_CHANNEL_ID', YOUTUBE) != YOUTUBE:
-        raise RuntimeError('Expected YouTube channel does not match Buffer channel')
-    q = 'query { channel(input:{id:"' + CHANNEL + '"}) {id name service serviceId isQueuePaused isDisconnected} }'
-    c = buffer(q).get("channel") or {}
-    if (c.get("id") != CHANNEL or c.get("service") != "youtube" or
-        c.get("serviceId") != YOUTUBE or c.get("isQueuePaused") is not False or
-        c.get("isDisconnected") is not False):
-        raise RuntimeError("Incorrect or unavailable YouTube channel")
-    q = ('query {posts(first:100,input:{organizationId:"' + ORG +
+def verify_channel(include_sent=False):
+    """Verify pinned YouTube destination, queue and recent sent posts in ONE API call."""
+    if os.getenv("YOUTUBE_EXPECTED_CHANNEL_ID", YOUTUBE) != YOUTUBE:
+        raise RuntimeError("Expected YouTube channel does not match Buffer channel")
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=2)).isoformat().replace("+00:00", "Z")
+    q = ('query { channel(input:{id:"' + CHANNEL +
+         '"}) {id name service serviceId isQueuePaused isDisconnected} '
+         'scheduledPosts: posts(first:100,input:{organizationId:"' + ORG +
          '",filter:{status:[scheduled],channelIds:["' + CHANNEL +
-         '"]}}) {edges {node {id text dueAt}} pageInfo {hasNextPage}}}')
-    p = buffer(q).get("posts") or {}
-    if (p.get("pageInfo") or {}).get("hasNextPage"):
-        raise RuntimeError("Buffer queue full or pagination unresolved")
-    items = [x["node"] for x in p.get("edges") or []]
-    return items
-
+         '"]}}) {edges {node {id text dueAt}} pageInfo {hasNextPage}} '
+         'sentPosts: posts(first:100,input:{organizationId:"' + ORG +
+         '",filter:{status:[sent],channelIds:["' + CHANNEL +
+         '"],startDate:"' + cutoff +
+         '"}}) {edges {node {id dueAt}} pageInfo {hasNextPage}} }')
+    data = buffer(q)
+    channel = data.get("channel") or {}
+    if (channel.get("id") != CHANNEL or channel.get("service") != "youtube" or
+            channel.get("serviceId") != YOUTUBE or
+            channel.get("isQueuePaused") is not False or
+            channel.get("isDisconnected") is not False):
+        raise RuntimeError("Incorrect or unavailable YouTube channel")
+    scheduled = data.get("scheduledPosts") or {}
+    sent = data.get("sentPosts") or {}
+    if ((scheduled.get("pageInfo") or {}).get("hasNextPage") or
+            (sent.get("pageInfo") or {}).get("hasNextPage")):
+        raise RuntimeError("Buffer inventory incomplete; cannot risk exceeding posting limits")
+    posts = [x["node"] for x in scheduled.get("edges") or []]
+    sent_posts = [x["node"] for x in sent.get("edges") or []]
+    return (posts, sent_posts) if include_sent else posts
 
 
 def recently_sent():
@@ -146,12 +157,12 @@ def publish(episode, video, metadata, voice, mixed):
     voice["mixed_audio"] = mixed
     publication_allowed(episode, metadata, voice, video)
     validate_video(video)
-    posts = verify_channel()
-    if len(posts) >= 25:
-        return {"skipped": "Buffer queue near capacity (25 pending); retry later"}
+    posts, sent_posts = verify_channel(include_sent=True)
+    if len(posts) >= 10:
+        return {"skipped": "Buffer queue at 10 pending posts (Free plan safety cap); retry after the next release"}
     if any(p.get("text", "").strip() == metadata["description"].strip() for p in posts):
         raise RuntimeError("Potential identical scheduled post in Buffer")
-    due_at = choose_slot(posts + recently_sent(),
+    due_at = choose_slot(posts + sent_posts,
                          timezone_name=os.getenv("GUSTAVA_POST_TIMEZONE", "Europe/Moscow"))
     sha = file_sha256(video)
     url = release_url(episode["id"], video, sha)
