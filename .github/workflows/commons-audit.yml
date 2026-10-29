@@ -1,0 +1,18 @@
+name: GUSTAVA - Copyright-Clean Motorcycle Media Audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'cloud-shorts/commons_probe.py'
+      - '.github/workflows/commons-audit.yml'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Find commercially usable motorcycle video candidates on Wikimedia Commons
+        run: python3 cloud-shorts/commons_probe.py
