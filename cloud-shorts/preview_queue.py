@@ -106,6 +106,7 @@ RENDER_DEPENDENCIES = (
     "asr_fallback.py",
 )
 MAX_ATTEMPTS = 3
+MAX_VISUAL_REPAIR_ATTEMPTS = 4  # one confirmed frozen-footage correction before any upload
 MAX_DOCUMENTARY_ATTEMPTS = 5  # extra licensed visual corrections, unpublished only
 
 
@@ -146,8 +147,11 @@ def eligible_retry(episode, receipt, new_fingerprint):
     if receipt.get("state") != "preview_ready":
         return False
     attempts = int(receipt.get("attempt_count", 1))
+    visual_repair = (episode.get("visual_revision_requested") is True
+                     and episode.get("visual_revision_reason") == "source_freeze_confirmed")
     limit = (MAX_DOCUMENTARY_ATTEMPTS if
-             episode.get("episode_series", {}).get("historical_reconstruction") else MAX_ATTEMPTS)
+             episode.get("episode_series", {}).get("historical_reconstruction")
+             else MAX_VISUAL_REPAIR_ATTEMPTS if visual_repair else MAX_ATTEMPTS)
     if not 1 <= attempts < limit:
         return False
     # Real-event documentaries may pass language QA but still have factually
@@ -164,6 +168,7 @@ def eligible_retry(episode, receipt, new_fingerprint):
         # be permitted for public auto-release.
         return bool(
             episode.get("episode_series", {}).get("historical_reconstruction")
+            or visual_repair
             or (episode.get("voice_revision_requested") is True
                 and episode.get("auto_publish") is not True)
         )
@@ -176,6 +181,10 @@ def choose(catalog, output):
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
     listed = [ep for ep in data["episodes"] if ep.get("auto_preview") is True]
+    def unpublished(slug):
+        # Legacy uploads and Buffer reservations both block rerenders.
+        return (api("publication-receipts/" + slug + ".json") is None
+                and api("buffer-publication-receipts/" + slug + ".json") is None)
     records = {}
     for item in listed:
         entry = api(item_path(item["id"]))
@@ -190,11 +199,12 @@ def choose(catalog, output):
     # retries. It cannot target a published video, only a revised preview.
     if selected is None:
         for item in listed:
-            if item.get("voice_revision_requested") is not True:
+            if not (item.get("voice_revision_requested") is True
+                    or item.get("visual_revision_requested") is True):
                 continue
             _, receipt = records[item["id"]]
             if eligible_retry(item, receipt, preview_fingerprint(item)):
-                if api("publication-receipts/" + item["id"] + ".json") is None:
+                if unpublished(item["id"]):
                     selected = item
                     break
     # Historical serial continuity: repair part one before beginning part two,
@@ -205,12 +215,12 @@ def choose(catalog, output):
             if not item.get("episode_series"):
                 continue
             if eligible_retry(item, receipt, preview_fingerprint(item)):
-                if api("publication-receipts/" + item["id"] + ".json") is None:
+                if unpublished(item["id"]):
                     selected = item
                     break
     # Then try any new licensed episode before retrying an old non-series clip.
     if selected is None:
-        selected = next((ep for ep in listed if records[ep["id"]][0] is None), None)
+        selected = next((ep for ep in listed if records[ep["id"]][0] is None and unpublished(ep["id"])), None)
     # Published/cleared originals are not retried. Failed unreleased, approved
     # Shorts can be improved only when the text or sound engine was revised.
     if selected is None:
@@ -219,7 +229,7 @@ def choose(catalog, output):
                 continue
             _, receipt = records[item["id"]]
             if eligible_retry(item, receipt, preview_fingerprint(item)):
-                if api("publication-receipts/" + item["id"] + ".json") is None:
+                if unpublished(item["id"]):
                     selected = item
                     break
     if selected is None:
