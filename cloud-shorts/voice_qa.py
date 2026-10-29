@@ -81,9 +81,9 @@ def score(reference, recognized):
     tail_three = match_ratio(expected[-3:], heard[-5:])
     numerics_match = ([x for x in expected if x.isdigit()] ==
                       [x for x in heard if x.isdigit()])
-    passed = bool(len(expected) >= 6 and coverage >= 0.79
-                  and first >= 0.60 and last >= 0.60
-                  and end_exact and tail_three >= 0.67 and numerics_match)
+    passed = bool(len(expected) >= 6 and coverage >= 0.97
+                  and first >= 0.95 and last >= 0.95
+                  and end_exact and tail_three >= 0.99 and numerics_match)
     return {
         "passed": passed,
         "status": "passed" if passed else "manual_review_required",
@@ -111,20 +111,16 @@ def read_duration(path):
 
 
 def check(episode, wav, model="base"):
-    from faster_whisper import WhisperModel
+    from asr_fallback import transcribe
     audio_path = Path(wav)
     duration = read_duration(audio_path)
-    detector = WhisperModel(model, device="cpu", compute_type="int8")
-    segments, _ = detector.transcribe(
-        str(audio_path), language="ru", beam_size=5, vad_filter=False,
-        condition_on_previous_text=False)
-    recognized = " ".join(segment.text.strip() for segment in segments)
+    recognized, asr_engine = transcribe(audio_path, model)
     result = score(episode["narration"], recognized)
     result.update({
         "episode_id": episode["id"],
         "duration_seconds": round(duration, 3),
         "wav_sha256": hashlib.sha256(audio_path.read_bytes()).hexdigest(),
-        "engine": "faster-whisper CPU, independent Russian ASR",
+        "engine": asr_engine,
         "model": model,
     })
     return result
@@ -150,7 +146,8 @@ def main():
                   "debug_exception": str(exc)[:260]}
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
-    print("VOICE_QA", report["status"], "coverage", report.get("lexical_coverage", "unknown"))
+    print("VOICE_QA", report["status"], "coverage", report.get("lexical_coverage", "unknown"),
+          "reason", report.get("reason","none"),flush=True)
     # The render is retained for a human reviewer even if automatic release is blocked.
     return 0
 
