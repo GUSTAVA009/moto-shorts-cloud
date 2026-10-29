@@ -10,7 +10,7 @@ import os
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-import preview_queue as ledger
+from autofill_catalog import github
 from buffer_autopublish import verify_channel
 from ten_daily_slots import LOCAL_TIMES
 
@@ -65,7 +65,7 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
 def main():
     now = datetime.now(timezone.utc)
     catalog = json.loads((HERE / "episodes.json").read_text("utf8"))
-    tree = ledger.request_json("git/trees/render-ledger?recursive=1")
+    tree = github("GET", "git/trees/render-ledger?recursive=1")
     if tree.get("truncated"):
         raise RuntimeError("Unable to confirm unique used footage inventory")
     saved = {Path(x["path"]).stem for x in tree.get("tree", [])
