@@ -175,6 +175,42 @@ def eligible_retry(episode, receipt, new_fingerprint):
     return True
 
 
+def eligible_abandoned_source_retry(episode, receipt, new_fingerprint, old_conclusion):
+    """Recover only an explicitly revised source from a completed failed Actions run."""
+    if not isinstance(receipt, dict) or receipt.get("id") != episode.get("id"):
+        return False
+    if receipt.get("state") != "reserved":
+        return False
+    if episode.get("source_revision_requested") is not True:
+        return False
+    if episode.get("source_revision_reason") != "oversized_source_replaced":
+        return False
+    if int(receipt.get("attempt_count", 1)) >= MAX_ATTEMPTS:
+        return False
+    if receipt.get("preview_fingerprint") == new_fingerprint:
+        return False
+    return old_conclusion in ("failure", "cancelled", "timed_out")
+
+
+def failed_action_conclusion(run_id):
+    """Fail closed unless GitHub confirms the prior render job terminated."""
+    token = os.environ.get("GITHUB_TOKEN", "").strip()
+    repo = os.environ.get("GITHUB_REPOSITORY", "")
+    if not str(run_id).isdigit() or not token or repo != "GUSTAVA009/moto-shorts-cloud":
+        raise RuntimeError("Unverifiable reserved render; never start parallel retry")
+    url = "https://api.github.com/repos/" + repo + "/actions/runs/" + str(run_id)
+    req = urllib.request.Request(url, headers={
+        "Authorization": "Bearer " + token,
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "gustava-verified-reservation-recovery",
+    })
+    with urllib.request.urlopen(req, timeout=25) as response:
+        data = json.load(response)
+    if data.get("id") != int(run_id) or data.get("status") != "completed":
+        raise RuntimeError("Prior render still running or missing; no recovery permitted")
+    return data.get("conclusion")
+
+
 def choose(catalog, output):
     data = json.loads(Path(catalog).read_text(encoding="utf8"))
     validate_catalog(data)
@@ -207,6 +243,25 @@ def choose(catalog, output):
                 if unpublished(item["id"]):
                     selected = item
                     break
+    # A failed download may leave a permanent 'reserved' receipt. Recover
+    # only after the media source has been REPLACED and GitHub confirms the
+    # previous render actually failed. Never allow a parallel or public retry.
+    if selected is None:
+        for item in listed:
+            if item.get("source_revision_requested") is not True:
+                continue
+            _, receipt = records[item["id"]]
+            if not receipt or receipt.get("state") != "reserved":
+                continue
+            if not unpublished(item["id"]):
+                continue
+            new_fp = preview_fingerprint(item)
+            if receipt.get("preview_fingerprint") == new_fp:
+                continue
+            outcome = failed_action_conclusion(receipt.get("run_id"))
+            if eligible_abandoned_source_retry(item, receipt, new_fp, outcome):
+                selected = item
+                break
     # Historical serial continuity: repair part one before beginning part two,
     # but do not let repeated serial retries indefinitely block topic experiments.
     if selected is None:
