@@ -16,7 +16,10 @@ POST_ID = "6ae385c3b3aaeefe231f44cb"  # forest-corner-23, verified ledger receip
 
 def main():
     queue = verify_channel()  # Refuses a wrong, disconnected, or paused YouTube destination
-    q = 'query { post(input:{id:"' + POST_ID + '"}) { id channelId status dueAt assets { mimeType } } }'
+    q = ('query { post(input:{id:"' + POST_ID +
+         '"}) { id channelId status dueAt text assets { mimeType source } ' +
+         'metadata { __typename ... on YoutubePostMetadata ' +
+         '{ title category { categoryId } madeForKids isAiGenerated privacy } } } }')
     post = buffer(q).get("post") or {}
     if post.get("id") != POST_ID or post.get("channelId") != CHANNEL:
         raise RuntimeError("Priority post does not belong to the verified YouTube channel")
@@ -34,13 +37,31 @@ def main():
     if due <= now + timedelta(minutes=2):
         print("ALREADY_DUE_SOON: leave existing schedule intact", post["dueAt"])
         return
+    # Buffer validates the FULL post on edit; an id+mode-only edit fails for YouTube.
+    # Explicitly carry the exact original video, text and YouTube metadata forward.
+    asset = post["assets"][0] if len(post["assets"]) == 1 else {}
+    media_url = asset.get("source")
+    if not media_url or "github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-forest-corner-23-" not in media_url:
+        raise RuntimeError("Unexpected video source; refusing to replace media")
+    yt = post.get("metadata") or {}
+    title = yt.get("title")
+    category = (yt.get("category") or {}).get("categoryId")
+    if not title or not category or not post.get("text"):
+        raise RuntimeError("Existing YouTube metadata incomplete; cannot safely edit")
+    carried = {"id": POST_ID, "mode": "shareNow",
+               "text": post["text"],
+               "assets": [{"video": {"url": media_url}}],
+               "metadata": {"youtube": {"title": title, "categoryId": category,
+                   "madeForKids": bool(yt.get("madeForKids", False)),
+                   "isAiGenerated": bool(yt.get("isAiGenerated", True)),
+                   "privacy": "public"}}}
     mutation = """mutation($input:EditPostInput!){
       editPost(input:$input) {
         ... on PostActionSuccess { post { id channelId status dueAt } }
         ... on MutationError { message }
       }
     }"""
-    result = buffer(mutation, {"input": {"id": POST_ID, "mode": "shareNow"}}).get("editPost") or {}
+    result = buffer(mutation, {"input": carried}).get("editPost") or {}
     posted = result.get("post") or {}
     if result.get("message"):
         raise RuntimeError("Buffer refused shareNow: " + str(result["message"])[:180])
