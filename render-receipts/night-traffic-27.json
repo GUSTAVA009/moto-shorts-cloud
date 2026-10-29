@@ -1,0 +1,9 @@
+{
+  "id": "night-traffic-27",
+  "state": "reserved",
+  "run_id": "40929639066",
+  "attempt_count": 1,
+  "preview_fingerprint": "16175c5d8e9183587e3a7346ef3c186e99d72d8b17963dbb03dfb57cb65aa880",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
