@@ -6,7 +6,15 @@ on:
     types: [completed]
   push:
     branches: [main]
-    paths: ['.github/workflows/buffer-backlog.yml']
+    paths:
+      - '.github/workflows/buffer-backlog.yml'
+      - 'cloud-shorts/buffer_autopublish.py'
+      - 'cloud-shorts/publication_safety.py'
+      - 'cloud-shorts/find_pending_buffer.py'
+      - 'cloud-shorts/find_pending_publication.py'
+      - 'cloud-shorts/channel_focus.py'
+      - 'cloud-shorts/test_buffer_autopublish.py'
+      - 'cloud-shorts/test_publish_workflows.py'
   schedule:
     - cron: "17 2,8,14,20 * * *"
 permissions:
