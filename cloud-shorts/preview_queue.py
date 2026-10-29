@@ -23,6 +23,7 @@ EPISODES = Path(__file__).with_name("episodes.json")
 HISTORY_PATH = "history/used_footage.json"
 
 from editorial_guard import source_id, validate_catalog
+from voice_style import PROFILE_ID as REQUIRED_MALE_PROFILE
 
 
 def api(path, method="GET", data=None):
@@ -103,7 +104,7 @@ def assert_new_sources(episode, history):
 RENDER_DEPENDENCIES = (
     "render_episode.py", "tts_voice.py", "silero_voice.py",
     "soundtrack.py", "kokoro_voice.py", "voice_qa.py", "mixed_audio_qa.py",
-    "asr_fallback.py", "qa_autorepair.py", "moto_assets.py",
+    "asr_fallback.py", "qa_autorepair.py", "moto_assets.py", "voice_style.py",
 )
 MAX_ATTEMPTS = 3
 MAX_VISUAL_REPAIR_ATTEMPTS = 4  # one confirmed frozen-footage correction before any upload
@@ -149,9 +150,16 @@ def eligible_retry(episode, receipt, new_fingerprint):
     attempts = int(receipt.get("attempt_count", 1))
     visual_repair = (episode.get("visual_revision_requested") is True
                      and episode.get("visual_revision_reason") == "source_freeze_confirmed")
+    male_voice_repair = (
+        episode.get("voice_engine") == "kokoro_ru_dima"
+        and episode.get("voice_revision_requested") is True
+        and episode.get("voice_profile") == REQUIRED_MALE_PROFILE
+        and receipt.get("voice_profile") != REQUIRED_MALE_PROFILE
+    )
     limit = (MAX_DOCUMENTARY_ATTEMPTS if
              episode.get("episode_series", {}).get("historical_reconstruction")
-             else MAX_VISUAL_REPAIR_ATTEMPTS if visual_repair else MAX_ATTEMPTS)
+             else MAX_VISUAL_REPAIR_ATTEMPTS
+             if visual_repair or male_voice_repair else MAX_ATTEMPTS)
     if not 1 <= attempts < limit:
         return False
     # Real-event documentaries may pass language QA but still have factually
@@ -169,6 +177,7 @@ def eligible_retry(episode, receipt, new_fingerprint):
         return bool(
             episode.get("episode_series", {}).get("historical_reconstruction")
             or visual_repair
+            or male_voice_repair
             or (episode.get("voice_revision_requested") is True
                 and episode.get("auto_publish") is not True)
         )
@@ -348,6 +357,8 @@ def finish(slug, qa_report=None, mixed_report=None):
         and report.get("final_word_present") is True
     )
     contents["voice_qa_coverage"] = report.get("lexical_coverage")
+    contents["voice_profile"] = report.get("voice_profile")
+    contents["male_voice_verified"] = report.get("male_voice_verified") is True
     mix = {}
     if mixed_report and Path(mixed_report).is_file():
         try:
