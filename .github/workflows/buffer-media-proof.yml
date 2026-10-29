@@ -12,7 +12,9 @@ jobs:
     timeout-minutes: 10
     env:
       GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
     steps:
+      - uses: actions/checkout@v4
       - name: Build fresh synthetic MP4 for a private integration test (no user media)
         shell: bash
         run: |
