@@ -15,6 +15,8 @@ import re
 import sys
 import wave
 
+from voice_style import PROFILE_ID as MALE_PROFILE, validate_report as validate_male_style
+
 
 # ASR commonly writes "тысяча девятьсот восемьдесят второго" as "1982".
 # Normalize numerals on BOTH sides instead of falsely claiming four words vanished.
@@ -123,6 +125,20 @@ def check(episode, wav, model="small"):
         "engine": asr_engine,
         "model": model,
     })
+    if episode.get("voice_engine") == "kokoro_ru_dima":
+        # Source WAV SHA must match the exact approved low-male narrator.
+        # A previous bright-voiced Dima preview is NOT eligible for Buffer.
+        try:
+            profile = validate_male_style(audio_path)
+            result["male_voice_verified"] = True
+            result["voice_profile"] = MALE_PROFILE
+            result["voice_profile_pitch"] = profile["pitch"]
+        except (ValueError, OSError, TypeError, KeyError, json.JSONDecodeError) as exc:
+            result["male_voice_verified"] = False
+            result["voice_profile"] = None
+            result["passed"] = False
+            result["status"] = "manual_review_required"
+            result["reason"] = "DEEP_MALE_PROFILE_MISSING_OR_INVALID: " + type(exc).__name__
     return result
 
 
