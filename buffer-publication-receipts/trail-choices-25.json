@@ -2,6 +2,8 @@
   "episode": "trail-choices-25",
   "sha256": "defce653cd91a885a69d16bdfc70648476a129733c96d1d6e3bd092597e14da9",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-trail-choices-25-defce653cd91/trail-choices-25.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae38bc6a23f0986fe0b83d6",
+  "due_at": "2026-10-30T05:25:00.000Z"
 }
