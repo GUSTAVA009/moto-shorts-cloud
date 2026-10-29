@@ -70,6 +70,7 @@ def github(method, path, payload=None):
 
 def main():
     # Race-safe inventory fetched only at the start of this single-worker job.
+    # Create one original at a time, protected by GitHub SHA compare-and-swap.
     data = github("GET", "contents/" + CATALOG_PATH + "?ref=main")
     catalog = json.loads(base64.b64decode(data["content"]))
     tree = github("GET", "git/trees/render-ledger?recursive=1")
@@ -79,7 +80,20 @@ def main():
                 if x["path"].startswith("render-receipts/")
                 and x["path"].endswith(".json")}
     seeds = json.loads(SEEDS.read_text(encoding="utf8"))
-    selection = candidate(catalog, seeds, reserved)
+    try:
+        selection = candidate(catalog, seeds, reserved)
+    except RuntimeError as exc:
+        if "CURATED_STORY_BANK_EXHAUSTED" not in str(exc):
+            raise
+        from moto_autocreate import create_one, story_model_client
+        if not story_model_client():
+            raise RuntimeError(
+                "STORY_SUPPLY_BLOCKED: curated archive exhausted and original "
+                "model key missing (OPENAI_API_KEY or OPENROUTER_API_KEY)"
+            ) from exc
+        selected = create_one(catalog)
+        selection = (dict(catalog, episodes=catalog["episodes"] + [selected]),
+                     selected["id"])
     if selection is None:
         print("BACKLOG_HEALTHY: queued originals still available")
         return 0
