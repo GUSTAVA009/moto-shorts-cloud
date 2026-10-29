@@ -296,8 +296,11 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
 
 
 def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_results,
-               prose_factory=original_story):
-    used = {source_id(x) for ep in catalog["episodes"] for x in ep["footage"]}
+               prose_factory=original_story, permanently_used=()):
+    # IDs from removed failed/revised footage are still reserved forever.
+    used = set(permanently_used) | {
+        source_id(x) for ep in catalog["episodes"] for x in ep["footage"]
+    }
     themes = [choose_theme(catalog["episodes"])]
     # Every source must be independently rights-verified. Search multiple
     # results/pages, preferring explicitly motor-related original stock footage.
