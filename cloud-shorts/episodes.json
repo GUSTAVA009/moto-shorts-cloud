@@ -2954,7 +2954,7 @@
       "research_pillar": "motorcycle",
       "voice_engine": "kokoro_ru_dima",
       "title": "Мотоциклы в ночном городе: что самое сложное? 🌃 #shorts",
-      "narration": "Ночной город красив с высоты. Но в потоке мотоцикл легко потерять из виду. На перекрестке важны спокойный темп, внимание к машинам и запас места для маневра. Два разных города, но один вопрос. А ты любишь ездить вечером?",
+      "narration": "Вечером улицы полны огней. Среди машин особенно важно замечать людей на байках. На перекрестке важны спокойный темп, внимание к машинам и запас места для маневра. Два разных города, но один вопрос. А ты любишь ездить вечером?",
       "description": "Ночной город, реальные мотоциклы и дорожный поток. Какое время для поездки нравится тебе? 🌃\n\n#мото #город #ночь #shorts",
       "caption_start": "НОЧНОЙ ГОРОД ДРУГОЙ",
       "caption_middle": "В ПОТОКЕ НУЖНО ВНИМАНИЕ",
@@ -3039,7 +3039,9 @@
       },
       "source_revision_requested": true,
       "source_revision_reason": "oversized_source_replaced",
-      "source_revision_note": "First night clip 128MB was fine; second 4K 91-second source exceeded 350MB. New 1080p 19-second licensed night street source has motorcycles."
+      "source_revision_note": "First night clip 128MB was fine; second 4K 91-second source exceeded 350MB. New 1080p 19-second licensed night street source has motorcycles.",
+      "voice_revision_requested": true,
+      "voice_revision_note": "2026-10-29 original ASR substituted 'Ночный' and plural 'мотоциклы'; replace two ambiguous initial sentences; QA threshold unchanged."
     },
     {
       "id": "jump-track-28",
