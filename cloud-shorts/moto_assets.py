@@ -25,7 +25,7 @@ def commons_file_title(item):
     page_path = urllib.parse.unquote(url.path)
     if not page_path.startswith("/wiki/File:"):
         raise ValueError("Commons provenance must identify a named File page")
-    title = page_path.removeprefix("/wiki/")
+    title = page_path.removeprefix("/wiki/").replace("_", " ")
     if ".." in title or "/" in title or len(title) > 290:
         raise ValueError("Malformed Commons file title")
     return title
