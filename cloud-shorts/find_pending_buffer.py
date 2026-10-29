@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Select a unique, independently QA-passed Shorts artifact for Buffer.
 
-Both Publora and Buffer reservations permanently exclude repeat publications.
+Both historical publication receipts and Buffer reservations exclude repeats.
 No upload or public action occurs in the selector.
 """
 import argparse
