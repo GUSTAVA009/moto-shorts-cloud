@@ -2552,6 +2552,378 @@
         }
       ],
       "channel_fit": "off_topic_archived"
+    },
+    {
+      "id": "forest-corner-23",
+      "auto_preview": true,
+      "auto_publish": true,
+      "voice_engine": "kokoro_ru_dima",
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "title": "Лесная тропа: что скрывает поворот? 🏍️ #shorts",
+      "narration": "Лесная тропа кажется ровной. Но за поворотом дорога может стать совсем другой. На мотоцикле важно видеть путь заранее и не спешить. Сначала смотри на грунт, потом выбирай темп. А ты часто ездишь по лесным тропам?",
+      "description": "Два разных лесных маршрута и настоящие мотоциклисты. Твой любимый маршрут — лес или трасса? 🏍️\n\n#мото #мотокросс #лес #shorts",
+      "caption_start": "ЗА ПОВОРОТОМ НЕ ВИДНО",
+      "caption_middle": "СНАЧАЛА ОЦЕНИ ГРУНТ",
+      "caption_end": "ТЫ БЫ ПОЕХАЛ СЮДА?",
+      "max_duration_seconds": 32,
+      "music_bpm": 124,
+      "music_style": "action",
+      "opening_trim_seconds": 0.1,
+      "footage": [
+        {
+          "key": "trail_rider",
+          "url": "https://www.pexels.com/download/video/9328029/",
+          "source_page": "https://www.pexels.com/video/a-person-riding-a-motorbike-9328029/",
+          "author": "Andrew Kota",
+          "license": "Pexels License"
+        },
+        {
+          "key": "forest_path",
+          "url": "https://www.pexels.com/download/video/35021631/",
+          "source_page": "https://www.pexels.com/video/enduro-rider-on-a-scenic-forest-trail-35021631/",
+          "author": "Tom Jurman",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "trail_rider",
+          "start": 0.3,
+          "seconds": 2.4
+        },
+        {
+          "source": "forest_path",
+          "start": 0.4,
+          "seconds": 2.4
+        },
+        {
+          "source": "trail_rider",
+          "start": 2.9,
+          "seconds": 2.4
+        },
+        {
+          "source": "forest_path",
+          "start": 3.1,
+          "seconds": 2.4
+        },
+        {
+          "source": "trail_rider",
+          "start": 5.5,
+          "seconds": 2.4
+        },
+        {
+          "source": "forest_path",
+          "start": 5.8,
+          "seconds": 2.4
+        },
+        {
+          "source": "trail_rider",
+          "start": 1.1,
+          "seconds": 2.4
+        },
+        {
+          "source": "forest_path",
+          "start": 1.1,
+          "seconds": 2.4
+        }
+      ],
+      "editorial": {
+        "environment": "shaded-forest-bends",
+        "bike": "trail-moto-crossbike",
+        "people": "two-independent-forest-riders",
+        "story": "blind-bend-surface-awareness",
+        "visual": "green-woodland-paths-and-motion"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "ТВОЯ ЛЮБИМАЯ ТРОПА?",
+        "description": "Напиши, какие тропы тебе нравятся больше всего."
+      }
+    },
+    {
+      "id": "tire-workshop-24",
+      "auto_preview": true,
+      "auto_publish": true,
+      "voice_engine": "kokoro_ru_dima",
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "title": "Мотоциклетное колесо: что проверяют мастера? 🔧 #shorts",
+      "narration": "Красивая шина еще не значит, что она в порядке. Посмотри, как мастера работают с колесом мотоцикла. Перед поездкой важно проверить давление и состояние резины по инструкции производителя. Уход за колесами начинается с осмотра. Когда ты проверял шины?",
+      "description": "Реальный ремонт мотоциклетных колес в разных местах. Проверка перед поездкой важнее внешнего вида. 🔧\n\n#мото #мастерская #шины #shorts",
+      "caption_start": "ШИНА ВЫГЛЯДИТ НОРМАЛЬНО?",
+      "caption_middle": "ПРОВЕРЬ СОСТОЯНИЕ",
+      "caption_end": "КОГДА ТЫ ПРОВЕРЯЛ ШИНЫ?",
+      "max_duration_seconds": 32,
+      "music_bpm": 106,
+      "music_style": "garage-groove",
+      "opening_trim_seconds": 0.1,
+      "footage": [
+        {
+          "key": "tire_tools",
+          "url": "https://www.pexels.com/download/video/5700508/",
+          "source_page": "https://www.pexels.com/video/faceless-man-repairing-a-tire-5700508/",
+          "author": "Erkan Avanoğlu",
+          "license": "Pexels License"
+        },
+        {
+          "key": "wheel_repair",
+          "url": "https://www.pexels.com/download/video/36127778/",
+          "source_page": "https://www.pexels.com/video/motorcycle-tire-replacement-outdoors-36127778/",
+          "author": "MNRD JON",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "tire_tools",
+          "start": 0.3,
+          "seconds": 2.4
+        },
+        {
+          "source": "wheel_repair",
+          "start": 0.4,
+          "seconds": 2.4
+        },
+        {
+          "source": "tire_tools",
+          "start": 2.9,
+          "seconds": 2.4
+        },
+        {
+          "source": "wheel_repair",
+          "start": 3.1,
+          "seconds": 2.4
+        },
+        {
+          "source": "tire_tools",
+          "start": 5.5,
+          "seconds": 2.4
+        },
+        {
+          "source": "wheel_repair",
+          "start": 5.8,
+          "seconds": 2.4
+        },
+        {
+          "source": "tire_tools",
+          "start": 1.1,
+          "seconds": 2.4
+        },
+        {
+          "source": "wheel_repair",
+          "start": 1.1,
+          "seconds": 2.4
+        }
+      ],
+      "editorial": {
+        "environment": "tire-repair-workshop-and-driveway",
+        "bike": "motorcycle-wheel-maintenance",
+        "people": "two-independent-tire-repair-workers",
+        "story": "tire-wear-pretrip-inspection",
+        "visual": "wheel-rubber-and-mechanical-tools"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С БАЙКОМ",
+        "description": "Отправь другу, который любит обслуживать мотоцикл."
+      }
+    },
+    {
+      "id": "trail-choices-25",
+      "auto_preview": true,
+      "auto_publish": true,
+      "voice_engine": "kokoro_ru_dima",
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "title": "Горная трасса на мотоцикле: какую линию выбрать? 🏍️ #shorts",
+      "narration": "С высоты грунтовая дорога кажется простой. Но среди камней и поворотов путь меняется. На мотоцикле важно смотреть вперед и выбирать спокойный темп. Эти два горных маршрута выглядят по-разному. А какой склон ты хотел бы увидеть вживую?",
+      "description": "Два разных горных маршрута и мотоциклы на грунте. Какой пейзаж нравится тебе больше? 🏍️\n\n#мото #горы #путешествия #shorts",
+      "caption_start": "СВЕРХУ КАЖЕТСЯ ПРОСТО",
+      "caption_middle": "ВЫБЕРИ СВОЙ ПУТЬ",
+      "caption_end": "КАКОЙ МАРШРУТ ТВОЙ?",
+      "max_duration_seconds": 32,
+      "music_bpm": 128,
+      "music_style": "action",
+      "opening_trim_seconds": 0.1,
+      "footage": [
+        {
+          "key": "dusty_trail",
+          "url": "https://www.pexels.com/download/video/10544833/",
+          "source_page": "https://www.pexels.com/video/aerial-view-on-driving-enduro-motorcycles-10544833/",
+          "author": "Jose Valdivia",
+          "license": "Pexels License"
+        },
+        {
+          "key": "mountain_trail",
+          "url": "https://www.pexels.com/download/video/28750463/",
+          "source_page": "https://www.pexels.com/video/off-road-motorbike-adventure-through-mountain-trail-28750463/",
+          "author": "Brice Guimberteau",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "dusty_trail",
+          "start": 0.3,
+          "seconds": 2.4
+        },
+        {
+          "source": "mountain_trail",
+          "start": 0.4,
+          "seconds": 2.4
+        },
+        {
+          "source": "dusty_trail",
+          "start": 2.9,
+          "seconds": 2.4
+        },
+        {
+          "source": "mountain_trail",
+          "start": 3.1,
+          "seconds": 2.4
+        },
+        {
+          "source": "dusty_trail",
+          "start": 5.5,
+          "seconds": 2.4
+        },
+        {
+          "source": "mountain_trail",
+          "start": 5.8,
+          "seconds": 2.4
+        },
+        {
+          "source": "dusty_trail",
+          "start": 1.1,
+          "seconds": 2.4
+        },
+        {
+          "source": "mountain_trail",
+          "start": 1.1,
+          "seconds": 2.4
+        }
+      ],
+      "editorial": {
+        "environment": "rugged-open-mountain-tracks",
+        "bike": "dual-sport-hill-motorcycles",
+        "people": "independent-mountain-trail-groups",
+        "story": "compare-open-hill-routes",
+        "visual": "mountain-drone-trail-dust"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "КАКОЙ ПОДЪЁМ ТВОЙ?",
+        "description": "Расскажи, какую трассу выбрал бы для поездки."
+      }
+    },
+    {
+      "id": "highland-tour-26",
+      "auto_preview": true,
+      "auto_publish": true,
+      "voice_engine": "kokoro_ru_dima",
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "title": "Мотоцикл среди гор: где дорога красивее? 🏔️ #shorts",
+      "narration": "У каждого мотоциклиста есть дорога мечты. Одному нравятся зеленые горы, другому открытые каменные склоны. И там и там важно смотреть на повороты и следить за погодой. Красивый вид не заменяет внимание. А куда ты поехал бы завтра?",
+      "description": "Горные трассы, настоящие мотоциклы и два разных пейзажа. Куда отправился бы ты? 🏔️\n\n#мото #мотопутешествие #горы #shorts",
+      "caption_start": "ДОРОГА МЕЧТЫ",
+      "caption_middle": "ГОРЫ ИЛИ ПУСТЫНЯ?",
+      "caption_end": "КУДА ПОЕДЕМ?",
+      "max_duration_seconds": 32,
+      "music_bpm": 116,
+      "music_style": "desert-cinematic",
+      "opening_trim_seconds": 0.1,
+      "footage": [
+        {
+          "key": "green_mountains",
+          "url": "https://www.pexels.com/download/video/5053058/",
+          "source_page": "https://www.pexels.com/video/aerial-shot-of-motorcycle-cruising-on-mountains-5053058/",
+          "author": "Pavel Danilyuk",
+          "license": "Pexels License"
+        },
+        {
+          "key": "arid_mountains",
+          "url": "https://www.pexels.com/download/video/9472118/",
+          "source_page": "https://www.pexels.com/video/aerial-footage-of-a-person-riding-a-motorcycle-at-the-desert-9472118/",
+          "author": "Yogendra Singh",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "green_mountains",
+          "start": 0.3,
+          "seconds": 2.4
+        },
+        {
+          "source": "arid_mountains",
+          "start": 0.4,
+          "seconds": 2.4
+        },
+        {
+          "source": "green_mountains",
+          "start": 2.9,
+          "seconds": 2.4
+        },
+        {
+          "source": "arid_mountains",
+          "start": 3.1,
+          "seconds": 2.4
+        },
+        {
+          "source": "green_mountains",
+          "start": 5.5,
+          "seconds": 2.4
+        },
+        {
+          "source": "arid_mountains",
+          "start": 5.8,
+          "seconds": 2.4
+        },
+        {
+          "source": "green_mountains",
+          "start": 1.1,
+          "seconds": 2.4
+        },
+        {
+          "source": "arid_mountains",
+          "start": 1.1,
+          "seconds": 2.4
+        }
+      ],
+      "editorial": {
+        "environment": "highland-versus-arid-roadtrip",
+        "bike": "touring-moto-adventure-bikes",
+        "people": "independent-scenic-road-travelers",
+        "story": "green-vs-arid-motorcycle-trips",
+        "visual": "two-contrasting-scenic-road-aerials"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА НОВЫЕ МАРШРУТЫ",
+        "description": "Подпишись, если любишь дорогу и новые места."
+      }
     }
   ]
 }
