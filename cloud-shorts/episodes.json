@@ -3226,6 +3226,98 @@
         "overlay": "ОТПРАВЬ ТОМУ КТО ЛЮБИТ ЗИМУ",
         "description": "Отправь знакомому, который любит зимние поездки."
       }
+    },
+    {
+      "id": "sunset-ride-30",
+      "auto_preview": true,
+      "auto_publish": true,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "kokoro_ru_dima",
+      "title": "Закат и мотоцикл: зачем делать остановку? 🌄 #shorts",
+      "narration": "Дорога на закате кажется бесконечной. Но иногда лучший момент путешествия наступает, когда мотоцикл остановился. Можно посмотреть на свет, горы и небо. Главное выбрать безопасное место для отдыха. А ты любишь утренние поездки или вечерние?",
+      "description": "Две разные поездки и настоящие закаты. Красивый маршрут хорош, когда есть время остановиться. 🌄\n\n#мото #путешествия #закат #shorts",
+      "caption_start": "ДОРОГА НА ЗАКАТЕ",
+      "caption_middle": "ОСТАНОВИСЬ И ОГЛЯНИСЬ",
+      "caption_end": "ТЕБЕ УТРО ИЛИ ВЕЧЕР?",
+      "max_duration_seconds": 33,
+      "opening_trim_seconds": 0.1,
+      "music_style": "desert-cinematic",
+      "music_bpm": 108,
+      "footage": [
+        {
+          "key": "hilltop_sunset",
+          "url": "https://www.pexels.com/download/video/40167910/",
+          "source_page": "https://www.pexels.com/video/motorcyclist-at-sunset-on-scenic-hilltop-40167910/",
+          "author": "Sushant Lokhande",
+          "license": "Pexels License"
+        },
+        {
+          "key": "rural_sunset",
+          "url": "https://www.pexels.com/download/video/36834937/",
+          "source_page": "https://www.pexels.com/video/motorcycle-ride-on-scenic-country-road-36834937/",
+          "author": "Sascha Weber",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "hilltop_sunset",
+          "start": 0.1,
+          "seconds": 2.5
+        },
+        {
+          "source": "rural_sunset",
+          "start": 0.2,
+          "seconds": 2.5
+        },
+        {
+          "source": "hilltop_sunset",
+          "start": 2.6,
+          "seconds": 2.5
+        },
+        {
+          "source": "rural_sunset",
+          "start": 2.8,
+          "seconds": 2.5
+        },
+        {
+          "source": "hilltop_sunset",
+          "start": 4.9,
+          "seconds": 2.5
+        },
+        {
+          "source": "rural_sunset",
+          "start": 5.1,
+          "seconds": 2.5
+        },
+        {
+          "source": "hilltop_sunset",
+          "start": 1.5,
+          "seconds": 2.5
+        },
+        {
+          "source": "rural_sunset",
+          "start": 1.6,
+          "seconds": 2.5
+        }
+      ],
+      "editorial": {
+        "environment": "sunset-hilltop-and-rural-motorway",
+        "bike": "sunset-touring-motorcycles",
+        "people": "unrelated-roadtrip-solo-travelers",
+        "story": "sunset-rest-stop-journey-reflection",
+        "visual": "warm-sunlight-bikes-and-hills"
+      },
+      "tags": [
+        "мото",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОМАРШРУТЫ",
+        "description": "Подпишись, если ценишь красивые виды в дороге."
+      }
     }
   ]
 }
