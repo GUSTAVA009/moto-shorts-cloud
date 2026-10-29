@@ -31,18 +31,14 @@ def media_audio_present(video):
 
 
 def check(episode, video, model="base"):
-    from faster_whisper import WhisperModel
+    from asr_fallback import transcribe
     duration = media_audio_present(video)
-    detector = WhisperModel(model, device="cpu", compute_type="int8")
-    segments, _ = detector.transcribe(
-        str(video), language="ru", beam_size=5,
-        vad_filter=False, condition_on_previous_text=False)
-    recognized = " ".join(part.text.strip() for part in segments)
+    recognized, asr_engine = transcribe(video,model)
     result = score(episode["narration"], recognized)
     result.update({
         "episode_id": episode["id"],
         "source": "FINAL_MIXED_MP4",
-        "engine": "independent faster-whisper of final voiced video + soundtrack",
+        "engine": asr_engine+" on FINAL MIXED MP4",
         "duration_seconds": round(duration, 3),
         "mp4_sha256": hashlib.sha256(Path(video).read_bytes()).hexdigest(),
         "model": model,
@@ -71,7 +67,8 @@ def main():
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
     print("FINAL_MIXED_AUDIO_QA", report["status"],
-          "coverage", report.get("lexical_coverage", "unknown"))
+          "coverage", report.get("lexical_coverage", "unknown"),
+          "reason", report.get("reason","none"),flush=True)
     return 0   # Failure is recorded, not hidden; release requires passed=True.
 
 
