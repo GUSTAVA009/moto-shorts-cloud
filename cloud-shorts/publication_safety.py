@@ -7,6 +7,7 @@ import hashlib
 from pathlib import Path
 
 from channel_focus import assert_motorcycle_episode
+from voice_style import PROFILE_ID as REQUIRED_MALE_PROFILE
 
 
 def file_sha256(path):
@@ -24,6 +25,10 @@ def publication_allowed(episode, meta, qa, video):
     assert_motorcycle_episode(episode)
     if meta.get("episode_id") != episode["id"] or qa.get("episode_id") != episode["id"]:
         raise ValueError("Metadata/ASR episode mismatch; do not upload")
+    if episode.get("voice_engine") == "kokoro_ru_dima":
+        if (qa.get("male_voice_verified") is not True
+                or qa.get("voice_profile") != REQUIRED_MALE_PROFILE):
+            raise ValueError("DEEP_MALE_VOICE_REQUIRED: old bright/feminine narration cannot be uploaded")
     if qa.get("passed") is not True or qa.get("status") != "passed":
         raise ValueError("Russian voice QA incomplete: no automatic release")
     if (qa.get("lexical_coverage", 0) < .97 or qa.get("ending_coverage", 0) < .95
