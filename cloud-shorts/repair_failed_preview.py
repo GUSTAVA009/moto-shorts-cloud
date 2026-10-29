@@ -99,17 +99,24 @@ def repair_episode(catalog, ep_id, voice_qa, mixed_qa, receipt):
 def main(base):
     base = Path(base)
     reports = list(base.glob("*/voice_qa.json"))
-    if len(reports) != 1:
-        print("REPAIR_SKIPPED: no uniquely identified failed QA artifact", flush=True)
+    technical = list(base.glob("*/repair_history.json"))
+    if len(reports) == 1:
+        ep_id = reports[0].parent.name
+        mixed_file = reports[0].with_name("mixed_audio_qa.json")
+        if not mixed_file.is_file():
+            print("REPAIR_SKIPPED: mixed ASR report missing", flush=True)
+            return 0
+        raw = json.loads(reports[0].read_text(encoding="utf8"))
+        mix = json.loads(mixed_file.read_text(encoding="utf8"))
+        mode = "voice"
+    elif not reports and len(technical) == 1:
+        ep_id = technical[0].parent.name
+        diag = json.loads(technical[0].read_text(encoding="utf8"))
+        mode = "source"
+    else:
+        print("REPAIR_SKIPPED: no single verifiable failure artifact", flush=True)
         return 0
-    voice_file = reports[0]
-    ep_id = voice_file.parent.name
-    mixed_file = voice_file.with_name("mixed_audio_qa.json")
-    if not mixed_file.is_file():
-        print("REPAIR_SKIPPED: mixed ASR report missing", flush=True)
-        return 0
-    voice = json.loads(voice_file.read_text(encoding="utf8"))
-    mixed = json.loads(mixed_file.read_text(encoding="utf8"))
+
     if ledger.api("buffer-publication-receipts/" + ep_id + ".json") or ledger.api(
         "publication-receipts/" + ep_id + ".json"):
         print("REPAIR_SKIPPED: already queued or published; never retry", flush=True)
@@ -129,23 +136,39 @@ def main(base):
         return 0
     source = github("GET", "contents/" + CATALOG + "?ref=main")
     old = json.loads(base64.b64decode(source["content"]))
-    candidate = repair_episode(old, ep_id, voice, mixed, receipt)
+    if mode == "voice":
+        candidate = repair_episode(old, ep_id, raw, mix, receipt)
+        message = "Auto-repair one mispronounced Russian phrase in unreleased " + ep_id
+    else:
+        from source_repair import episode_theme, discover_new_sources, source_repair
+        ep = next((x for x in old["episodes"] if x["id"] == ep_id), None)
+        theme = episode_theme(ep) if ep else None
+        if not theme:
+            print("SOURCE_REPAIR_BLOCKED: no exact motorcycle topic", flush=True)
+            return 0
+        history_ref = ledger.api(ledger.HISTORY_PATH)
+        history = ledger.decode_history(history_ref)  # mandatory permanent anti-reuse
+        permanently_used = set(history["used"])
+        new_media = discover_new_sources(theme, permanently_used,
+                                          os.getenv("PEXELS_API_KEY", ""))
+        candidate = source_repair(old, ep_id, receipt, diag, new_media,
+                                  permanently_used=permanently_used)
+        message = "Auto-replace broken licensed motorcycle footage in unpublished " + ep_id
     if candidate is None:
-        print("REPAIR_NEEDS_REVIEW: no safe semantic-preserving rephrase available")
+        print("REPAIR_NEEDS_REVIEW: no safe licensed or semantic-preserving repair available")
         return 0
     value = base64.b64encode((json.dumps(candidate, ensure_ascii=False, indent=2)
                               + "\n").encode("utf8")).decode("ascii")
     github("PUT", "contents/" + CATALOG, {
-        "branch":"main", "sha":source["sha"], "content":value,
-        "message":"Auto-repair one mispronounced Russian phrase in unreleased " + ep_id,
+        "branch": "main", "sha": source["sha"], "content": value,
+        "message": message,
     })
-    # Never count a script revision as a successful audio fix. Re-render and
-    # independently QA the changed audio before any Buffer API write.
+    # This is NOT publication: the changed source/text receives a fresh
+    # independent render, narration ASR, final mixed audio and motion QA.
     github("POST", "actions/workflows/daily-preview.yml/dispatches",
-           {"ref":"main"})
-    print("REPAIR_RERENDER_REQUESTED", ep_id, "new_qa_required", flush=True)
+           {"ref": "main"})
+    print("REPAIR_RERENDER_REQUESTED", ep_id, mode, flush=True)
     return 0
-
 
 if __name__ == "__main__":
     try:
