@@ -1,40 +1,49 @@
-name: GUSTAVA - Autopublish Readiness (No Publication)
+name: GUSTAVA - Buffer Autopublish Readiness (No Publication)
 on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['.github/workflows/autopublish-readiness.yml']
-
+    paths:
+      - '.github/workflows/autopublish-readiness.yml'
+      - 'cloud-shorts/publication_safety.py'
+      - 'cloud-shorts/buffer_autopublish.py'
+      - 'cloud-shorts/test_publication_safety.py'
+      - 'cloud-shorts/test_buffer_autopublish.py'
+      - 'cloud-shorts/test_publish_workflows.py'
 permissions:
   contents: read
-
 jobs:
-  status:
+  buffer-readiness:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 6
     env:
-      PUBLORA_API_KEY: ${{ secrets.PUBLORA_API_KEY }}
-      PUBLORA_AUTO_PUBLISH_ENABLED: ${{ vars.PUBLORA_AUTO_PUBLISH_ENABLED }}
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED }}
+      YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
     steps:
       - uses: actions/checkout@v4
-      - name: Verify all offline release and duplicate-prevention gates
+      - name: Validate offline editorial, mixed audio and duplicate-protection gates
         run: |
-          python3 -m unittest discover -s cloud-shorts -p 'test_publora_autopublish.py' -v
-          python3 -m unittest discover -s cloud-shorts -p 'test_voice_qa.py' -v
-          python3 -m unittest discover -s cloud-shorts -p 'test_find_pending_publication.py' -v
-      - name: Read-only private credential and manual activation diagnostic
+          python3 -m compileall -q cloud-shorts
+          python3 -m unittest discover -s cloud-shorts -p 'test_publication_safety.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_buffer_autopublish.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_find_pending_buffer.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_publish_workflows.py' -v
+      - name: Report Buffer-only readiness without uploading anything
         run: |
           python3 - <<'PY'
           import os
           from pathlib import Path
-          ready_key=bool(os.environ.get("PUBLORA_API_KEY","").startswith("sk_"))
-          enabled=(os.environ.get("PUBLORA_AUTO_PUBLISH_ENABLED","").lower()=="true")
-          lines=["## Autopublish readiness (no upload)",
-                 "- Valid Publora API key configured: "+("YES" if ready_key else "NO"),
-                 "- Repository opt-in enabled: "+("YES" if enabled else "NO"),
-                 "- GitHub automatic public release: "+("CONFIGURED_FOR_API_CHECK" if ready_key and enabled else "NOT_ACTIVE"),
-                 "- Content release still requires exact narration, facts, media rights, uniqueness and quota.",
-                 "- This workflow never displays the API key and never posts a video."]
-          Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text("\n".join(lines)+"\n",encoding="utf8")
-          print("PUBLICATION_READINESS","CONFIGURED" if ready_key and enabled else "BLOCKED")
+          key = bool(os.environ.get('BUFFER_API_KEY'))
+          enabled = os.environ.get('BUFFER_AUTO_PUBLISH_ENABLED') == 'true'
+          channel = os.environ.get('YOUTUBE_EXPECTED_CHANNEL_ID') == 'UCS0QCodPcFBTjMt4ioEWOUw'
+          lines = ['## GUSTAVA Enduro - Buffer-only transport', '',
+                   '- Buffer API key configured: '+('YES' if key else 'NO'),
+                   '- Automatic publishing opt-in: '+('YES' if enabled else 'NO'),
+                   '- Expected YouTube channel ID matches: '+('YES' if channel else 'NO'),
+                   '- Legacy publisher workflow: REMOVED',
+                   '- MP4 storage: GitHub Releases, no R2 credentials required',
+                   '- This check never publishes or schedules a video']
+          Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(lines)+'\n',encoding='utf8')
+          print('BUFFER_READINESS', 'ENABLED' if key and enabled and channel else 'INCOMPLETE')
           PY
