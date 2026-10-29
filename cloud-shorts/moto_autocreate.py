@@ -268,6 +268,7 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
         "id": slug, "auto_preview": True, "auto_publish": True,
         "channel_niche": "motorcycle", "research_pillar": "motorcycle",
         "voice_engine": "kokoro_ru_dima",
+        "voice_profile": "gustava_male_deep_v1",
         **{k: prose[k] for k in ("title", "narration", "description",
             "caption_start", "caption_middle", "caption_end")},
         "max_duration_seconds": 34, "opening_trim_seconds": 0.1,
