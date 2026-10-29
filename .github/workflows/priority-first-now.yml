@@ -1,0 +1,26 @@
+name: GUSTAVA - Release First Verified Short Now
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/priority-first-now.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gustava-first-buffer-priority-release
+  cancel-in-progress: false
+
+jobs:
+  release-existing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      YOUTUBE_EXPECTED_CHANNEL_ID: UCS0QCodPcFBTjMt4ioEWOUw
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trigger immediate release of the existing reviewed video (no duplicate upload)
+        run: python3 cloud-shorts/priority_first_now.py
