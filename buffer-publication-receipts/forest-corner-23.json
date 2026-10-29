@@ -2,6 +2,8 @@
   "episode": "forest-corner-23",
   "sha256": "720582461d313fe1a7cf23a9985d3cbde366c58e7ecfba63081ed82b75d40306",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-forest-corner-23-720582461d31/forest-corner-23.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae385c3b3aaeefe231f44cb",
+  "due_at": "2026-10-29T18:53:00.000Z"
 }
