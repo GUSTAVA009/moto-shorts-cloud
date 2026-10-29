@@ -1,9 +1,9 @@
 {
   "version": 1,
   "created_at": "2026-10-28",
-  "status": "original_moto_shorts_and_broad_research_candidates_separated",
+  "status": "GUSTAVA_ENDURO_MOTORCYCLE_FOCUS_ACTIVE_2026_10_29",
   "purpose": "Urgent organic subscriber and qualified Shorts views growth, but no mass-produced/reused content",
-  "gate": "Each concept must have new commercial-use real footage rights, fact-checked independent commentary, visual consistency, real story arc, polished Russian audio and manual review before release.",
+  "gate": "Only motorcycle/enduro/motocross/trail riding/moto repairs and verifiable rider stories may enter automatic MP4 generation and YouTube publishing. Archive all unrelated scientific and general-interest leads.",
   "shorts": [
     {
       "id": "winter-bike-gear",
@@ -263,7 +263,7 @@
     }
   ],
   "diversification": {
-    "status": "controlled_14_day_cross_niche_experiment",
+    "status": "broad_cross_niche_experiment_cancelled_by_owner_2026_10_29",
     "starts": "2026-10-28",
     "checkpoints": [
       "2026-11-01",
@@ -271,18 +271,17 @@
       "2026-11-11"
     ],
     "objective": "Find evidence-based audience growth toward 1000 subscribers and qualified YPP watch-time/view thresholds in under 60 days; no guarantee",
-    "channel_positioning": "Unusual verified stories, surprising science, how-things-work and real adventures; motorcycles remain one sub-series",
+    "channel_positioning": "GUSTAVA Enduro: original enduro, off-road motorcycle riding, motocross, moto-adventure and relevant motorcycle maintenance stories only.",
     "initial_pillar_shares": {
-      "engineering": 30,
-      "nature": 25,
-      "history": 25,
-      "space": 10,
-      "motorcycle": 10
+      "enduro_and_trail_riding": 55,
+      "motocross_and_moto_racing": 20,
+      "motorcycle_gear_and_maintenance": 15,
+      "moto_travel_and_real_rider_stories": 10
     },
     "pilot_video_ids": [
-      "aviation-round-windows-18",
-      "octopus-camouflage-19",
-      "hydraulic-press-explained-20"
+      "mud-traction-13",
+      "steep-hill-03",
+      "sand-horizon-07"
     ],
     "minimum_sample": "Compare several actually published clean Shorts per pillar; do not extrapolate from a single viral outlier",
     "success_metrics": [
@@ -293,10 +292,10 @@
       "shares per 1000 engaged views",
       "long-form watch hours from related-video bridge"
     ],
-    "production": "2-3 distinct Shorts daily only when licensing, voice ASR and final MP4 QA pass and plan quota permits; prioritize 2 genuine 8-15 minute long videos weekly to pursue qualifying watch hours",
-    "guardrails": "No stolen clips, fabricated human events, inauthentic stock compilations, bot traffic, medical/political misinformation, or unlicensed archives; never rename banner/branding without user request",
+    "production": "Create at most 2-3 unique motorcycle Shorts daily only after factual checks, legally licensed footage, central narration and final video QA. Build long-form motorcycle stories for qualified watch hours. No unrelated niche experiments.",
+    "guardrails": "Keep GUSTAVA Enduro's motorcycle audience focus. No general-science, aviation, animal, factory or weather clips unrelated to riding; no reused sources, unlicensed footage, deceptive engagement or unsafe stunts.",
     "monthly_quota_notice": "Publora Starter confirmed 15 platform posts per UTC month; expanding to 60-90/month requires authorized plan upgrade or other compliant uploader.",
-    "status_note": "Ideas are research-only until two independent sources, independently licensed clips, complete original script and MP4 QA."
+    "status_note": "Non-motorcycle ideas may remain in research archive but have auto_preview=false and auto_publish=false; the editorial code will refuse off-topic video generation or publication."
   },
   "broad_topic_ideas": [
     {
@@ -308,7 +307,7 @@
       "verification": "science museums or physics university textbooks",
       "suggested_format": "serial_and_longform",
       "target_seconds": 40,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -321,7 +320,7 @@
       "verification": "NASA Earth Observatory, NOAA",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -334,7 +333,7 @@
       "verification": "university physics demonstrations",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -347,7 +346,7 @@
       "verification": "USGS Water Science School",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -360,7 +359,7 @@
       "verification": "Smithsonian, peer-reviewed biology",
       "suggested_format": "serial_and_longform",
       "target_seconds": 40,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -373,7 +372,7 @@
       "verification": "scientific entomology/Smithsonian",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -386,7 +385,7 @@
       "verification": "peer-reviewed animal biology",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -399,7 +398,7 @@
       "verification": "NOAA, Smithsonian Ocean",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -412,7 +411,7 @@
       "verification": "TeleGeography, cable operator docs",
       "suggested_format": "serial_and_longform",
       "target_seconds": 40,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -425,7 +424,7 @@
       "verification": "FHWA bridge design manuals",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -438,7 +437,7 @@
       "verification": "machine manufacturer and ASME",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -451,7 +450,7 @@
       "verification": "glass industry manufacturing references",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -464,7 +463,7 @@
       "verification": "Royal Geographical Society, museum archives",
       "suggested_format": "serial_and_longform",
       "target_seconds": 40,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -477,7 +476,7 @@
       "verification": "National Archaeological Museum, scholarly publications",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -490,7 +489,7 @@
       "verification": "NASA, peer-reviewed research",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -503,7 +502,7 @@
       "verification": "Smithsonian, aviation history museums",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -516,7 +515,7 @@
       "verification": "NASA Science Mars",
       "suggested_format": "serial_and_longform",
       "target_seconds": 40,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -529,7 +528,7 @@
       "verification": "NASA OSIRIS-REx",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -542,7 +541,7 @@
       "verification": "NASA Moon illusion",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -555,7 +554,7 @@
       "verification": "NASA JWST, ESA official",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -568,7 +567,7 @@
       "verification": "primary expedition sources + independent reportage",
       "suggested_format": "serial_and_longform",
       "target_seconds": 40,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -581,7 +580,7 @@
       "verification": "official local heritage agency + named restorer",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -594,7 +593,7 @@
       "verification": "official museum archive and restorer interview",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     },
@@ -607,7 +606,7 @@
       "verification": "marine archaeology institutions",
       "suggested_format": "original_short_explainer",
       "target_seconds": 28,
-      "status": "RESEARCH_ONLY_NOT_APPROVED_FOR_PUBLICATION",
+      "status": "ARCHIVED_OUT_OF_NICHE_NOT_FOR_GUSTAVA_ENDURO",
       "auto_publish": false,
       "auto_preview": false
     }
