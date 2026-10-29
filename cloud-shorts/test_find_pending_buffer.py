@@ -13,7 +13,8 @@ class BufferBacklogTests(unittest.TestCase):
              "editorial": {"bike": "offroad-trail-motorcycle"}}]}
         self.receipts = [{"id": "new-original-22", "state": "preview_ready",
                           "voice_qa_passed": True,
-                          "mixed_audio_qa_passed": True, "run_id": "12345"}]
+                          "mixed_audio_qa_passed": True, "voice_profile": "gustava_male_deep_v1",
+                          "male_voice_verified": True, "run_id": "12345"}]
         self.artifacts = [{"name": "daily-preview-new-original-22-12345",
                            "expired": False}]
 
@@ -34,6 +35,11 @@ class BufferBacklogTests(unittest.TestCase):
 
     def test_unapproved_episode_is_not_selected(self):
         self.catalog["episodes"][0]["auto_publish"] = False
+        self.assertIsNone(f.select_for_buffer(
+            self.catalog, self.receipts, self.artifacts, []))
+
+    def test_old_feminine_timbre_does_not_reenter_buffer(self):
+        self.receipts[0].pop("male_voice_verified")
         self.assertIsNone(f.select_for_buffer(
             self.catalog, self.receipts, self.artifacts, []))
 
