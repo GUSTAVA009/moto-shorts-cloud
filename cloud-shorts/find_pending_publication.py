@@ -14,7 +14,6 @@ import urllib.request
 import base64
 
 import preview_queue as ledger
-import publora_autopublish as publisher
 from channel_focus import is_motorcycle_episode
 
 
