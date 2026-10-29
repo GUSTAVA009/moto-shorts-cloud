@@ -397,6 +397,16 @@
       "episode": "why-ice-floats-22",
       "source": "https://www.pexels.com/video/aerial-view-of-floating-ice-on-water-surface-36449711/",
       "status": "reserved-or-rendered"
+    },
+    "9328029": {
+      "episode": "forest-corner-23",
+      "source": "https://www.pexels.com/video/a-person-riding-a-motorbike-9328029/",
+      "status": "reserved-or-rendered"
+    },
+    "35021631": {
+      "episode": "forest-corner-23",
+      "source": "https://www.pexels.com/video/enduro-rider-on-a-scenic-forest-trail-35021631/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -553,6 +563,13 @@
       "people": "science-visual-observers-without-actors",
       "story": "ice-buoyancy-from-molecular-spacing",
       "visual": "kinetic-ice-glass-and-aerial-sea-ice"
+    },
+    "forest-corner-23": {
+      "environment": "shaded-forest-bends",
+      "bike": "trail-moto-crossbike",
+      "people": "two-independent-forest-riders",
+      "story": "blind-bend-surface-awareness",
+      "visual": "green-woodland-paths-and-motion"
     }
   }
 }
