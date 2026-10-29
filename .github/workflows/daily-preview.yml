@@ -2,7 +2,7 @@ name: Shorts Factory - Three Unique Cloud Previews Daily
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/asr_fallback.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/kokoro_voice.py', 'cloud-shorts/mixed_audio_qa.py', 'cloud-shorts/publication_safety.py', 'cloud-shorts/channel_focus.py']
+    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/render_episode.py', 'cloud-shorts/test_motion_gate.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/asr_fallback.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/kokoro_voice.py', 'cloud-shorts/mixed_audio_qa.py', 'cloud-shorts/publication_safety.py', 'cloud-shorts/channel_focus.py']
   schedule:
     # All times UTC. 04:05 UTC = 07:05 Moscow (UTC+3).
     - cron: "05 04 * * *"
@@ -32,6 +32,8 @@ jobs:
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
           python3 -m unittest discover -s cloud-shorts -p 'test_render_episode.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_motion_gate.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_visual_revision.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_editorial_guard.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_preview_queue.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_engagement_cta.py' -v
