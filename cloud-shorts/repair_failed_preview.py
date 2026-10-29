@@ -19,6 +19,7 @@ import preview_queue as ledger
 from editorial_guard import validate_catalog
 from render_episode import validate_episode
 from voice_qa import tokens, match_ratio
+from difflib import SequenceMatcher
 from autofill_catalog import github
 
 CATALOG = "cloud-shorts/episodes.json"
@@ -46,12 +47,22 @@ def simple_rewrite(expected, heard):
     expected_tokens, heard_tokens = tokens(expected), tokens(heard)
     if match_ratio(expected_tokens, heard_tokens) < .60:
         return None  # Incomplete ASR transcription is not evidence of a bad phrase.
-    heard_set = set(heard_tokens)
+    mismatched = set()
+    for tag, before, after, _heard_start, _heard_end in SequenceMatcher(
+            None, expected_tokens, heard_tokens, autojunk=False).get_opcodes():
+        if tag != "equal":
+            mismatched.update(range(before, after))
     for old, new in SAFE_REWRITES:
-        if old in expected.casefold() and not set(tokens(old)).issubset(heard_set):
+        if old not in expected.casefold():
+            continue
+        for occurrence in re.finditer(re.escape(old), expected, flags=re.I):
+            token_start = len(tokens(expected[:occurrence.start()]))
+            n = len(tokens(old))
+            if not mismatched.intersection(range(token_start, token_start + n)):
+                continue  # Another occurrence may have been spoken correctly.
             def preserve_capital(match):
                 return new[0].upper() + new[1:] if match.group(0)[0].isupper() else new
-            updated = re.sub(re.escape(old), preserve_capital, expected, count=1, flags=re.I)
+            updated = expected[:occurrence.start()] + preserve_capital(occurrence) + expected[occurrence.end():]
             if updated != expected and 25 <= len(updated) <= MAX_LEN:
                 return updated
     return None
