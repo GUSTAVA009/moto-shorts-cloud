@@ -1,13 +1,9 @@
 {
   "id": "tire-workshop-24",
-  "state": "preview_ready",
-  "run_id": "40923664467",
-  "attempt_count": 1,
-  "preview_fingerprint": "b22d73790d5f37bdf2759f46b8742d5199c48de52d2011b5b94b6e2466d508be",
-  "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": false,
-  "voice_qa_coverage": 0.946,
-  "mixed_audio_qa_passed": false,
-  "mixed_audio_qa_coverage": 0.946
+  "state": "reserved",
+  "run_id": "40925010236",
+  "attempt_count": 2,
+  "preview_fingerprint": "19f9de14250be7e4faf9ad78feb2dbdf2684d9fdf800bba73c35b68fc0ba8354",
+  "previous_run_id": "40923664467",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
