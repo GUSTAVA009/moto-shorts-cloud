@@ -1,6 +1,9 @@
 name: GUSTAVA - Verified Shorts to Buffer Queue
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/buffer-backlog.yml']
   schedule:
     - cron: "17 2,8,14,20 * * *"
 permissions:
@@ -20,13 +23,14 @@ jobs:
         run: |
           python3 -m compileall -q cloud-shorts
           python3 -m unittest discover -s cloud-shorts -p 'test_buffer_autopublish.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_find_pending_buffer.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_find_pending_publication.py' -v
       - name: Select one original, QA-passed, never-published video
         id: pick
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-        run: python3 cloud-shorts/find_pending_publication.py --output "$GITHUB_OUTPUT"
+        run: python3 cloud-shorts/find_pending_buffer.py --output "$GITHUB_OUTPUT"
       - name: Download the exact QA-verified MP4
         if: steps.pick.outputs.has_job == 'true'
         uses: actions/download-artifact@v4
