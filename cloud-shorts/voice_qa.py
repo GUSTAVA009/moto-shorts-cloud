@@ -110,7 +110,7 @@ def read_duration(path):
         return duration
 
 
-def check(episode, wav, model="base"):
+def check(episode, wav, model="small"):
     from asr_fallback import transcribe
     audio_path = Path(wav)
     duration = read_duration(audio_path)
@@ -132,7 +132,7 @@ def main():
     p.add_argument("--episode", required=True)
     p.add_argument("--wav", required=True, type=Path)
     p.add_argument("--out", required=True, type=Path)
-    p.add_argument("--model", default="base")
+    p.add_argument("--model", default="small")
     args = p.parse_args()
     episodes = json.loads(args.catalog.read_text(encoding="utf8"))["episodes"]
     chosen = next((e for e in episodes if e["id"] == args.episode), None)
