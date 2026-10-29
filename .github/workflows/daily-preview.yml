@@ -57,7 +57,14 @@ jobs:
         env:
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
-          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1 openai-whisper
+          # faster-whisper 1.2.1 passes metadata_errors, removed by PyAV 19.
+          # Pin the verified decoder API so the primary Russian ASR actually works.
+          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1 av==18.1.0 openai-whisper
+          python3 - <<'PY'
+          import av
+          print('PYAV_PINNED_FOR_FAST_WHISPER', av.__version__)
+          assert av.__version__.startswith('18.1.')
+          PY
           python3 cloud-shorts/voice_qa.py \
             --episode "$EPISODE" \
             --wav "cloud-shorts/work/$EPISODE/new_narration.wav" \
