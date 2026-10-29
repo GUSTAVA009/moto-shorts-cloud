@@ -2572,6 +2572,13 @@
       "opening_trim_seconds": 0.1,
       "footage": [
         {
+          "key": "woodland_riders",
+          "url": "https://www.pexels.com/download/video/5803089/",
+          "source_page": "https://www.pexels.com/video/two-motorcyclists-in-the-woods-5803089/",
+          "author": "cottonbro studio",
+          "license": "Pexels License"
+        },
+        {
           "key": "trail_rider",
           "url": "https://www.pexels.com/download/video/9328029/",
           "source_page": "https://www.pexels.com/video/a-person-riding-a-motorbike-9328029/",
@@ -2579,61 +2586,66 @@
           "license": "Pexels License"
         },
         {
-          "key": "forest_path",
-          "url": "https://www.pexels.com/download/video/35021631/",
-          "source_page": "https://www.pexels.com/video/enduro-rider-on-a-scenic-forest-trail-35021631/",
-          "author": "Tom Jurman",
+          "key": "woods_group",
+          "url": "https://www.pexels.com/download/video/5803091/",
+          "source_page": "https://www.pexels.com/video/two-men-riding-a-dirt-bike-5803091/",
+          "author": "cottonbro studio",
           "license": "Pexels License"
         }
       ],
       "shots": [
         {
-          "source": "trail_rider",
-          "start": 0.3,
-          "seconds": 2.4
+          "source": "woodland_riders",
+          "start": 0.2,
+          "seconds": 2
         },
         {
-          "source": "forest_path",
+          "source": "trail_rider",
           "start": 0.4,
-          "seconds": 2.4
+          "seconds": 2.2
+        },
+        {
+          "source": "woods_group",
+          "start": 0.4,
+          "seconds": 2
+        },
+        {
+          "source": "woodland_riders",
+          "start": 3,
+          "seconds": 2
         },
         {
           "source": "trail_rider",
-          "start": 2.9,
-          "seconds": 2.4
+          "start": 3.2,
+          "seconds": 2
         },
         {
-          "source": "forest_path",
+          "source": "woods_group",
           "start": 3.1,
-          "seconds": 2.4
+          "seconds": 2
+        },
+        {
+          "source": "woodland_riders",
+          "start": 5,
+          "seconds": 2
         },
         {
           "source": "trail_rider",
           "start": 5.5,
-          "seconds": 2.4
+          "seconds": 2
         },
         {
-          "source": "forest_path",
-          "start": 5.8,
-          "seconds": 2.4
-        },
-        {
-          "source": "trail_rider",
-          "start": 1.1,
-          "seconds": 2.4
-        },
-        {
-          "source": "forest_path",
-          "start": 1.1,
-          "seconds": 2.4
+          "source": "woods_group",
+          "start": 6,
+          "seconds": 2
         }
       ],
       "editorial": {
-        "environment": "shaded-forest-bends",
-        "bike": "trail-moto-crossbike",
-        "people": "two-independent-forest-riders",
-        "story": "blind-bend-surface-awareness",
-        "visual": "green-woodland-paths-and-motion"
+        "environment": "active-woodland-forest-rides",
+        "bike": "dirt-motocross-motorcycles",
+        "people": "independent-trail-motorcyclists-in-forest",
+        "story": "blind-bend-ride-and-terrain-awareness",
+        "visual": "moving-forest-riders-and-real-trail-obstacles"
       },
       "tags": [
         "мото",
@@ -2645,8 +2657,11 @@
         "overlay": "НАПИШИ ПРО ЛЮБИМУЮ ТРОПУ",
         "description": "Напиши, какие тропы тебе нравятся больше всего."
       },
-      "voice_revision_requested": true,
-      "voice_revision_note": "ASR diagnosed 2026-10-29: replace mispronounced 'на мотоцикле' and clipped 'темп'; never change quality threshold."
+      "voice_revision_requested": false,
+      "voice_revision_note": "ASR diagnosed 2026-10-29: replace mispronounced 'на мотоцикле' and clipped 'темп'; never change quality threshold.",
+      "visual_revision_requested": true,
+      "visual_revision_reason": "source_freeze_confirmed",
+      "visual_revision_note": "Independent ffmpeg freeze detection found static 7.1-9.5s in previous video. Replaced static landscape source with new verified forest action, no public upload occurred."
     },
     {
       "id": "tire-workshop-24",
