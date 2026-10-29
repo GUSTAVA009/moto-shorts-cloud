@@ -15,6 +15,7 @@ import base64
 
 import preview_queue as ledger
 from channel_focus import is_motorcycle_episode
+from voice_style import PROFILE_ID as REQUIRED_MALE_PROFILE
 
 
 def gh(path):
@@ -47,6 +48,8 @@ def select(catalog, receipt_entries, published, artifacts):
             continue
         if (obj.get("voice_qa_passed") is not True
                 or obj.get("mixed_audio_qa_passed") is not True
+                or obj.get("voice_profile") != REQUIRED_MALE_PROFILE
+                or obj.get("male_voice_verified") is not True
                 or slug in published):
             continue
         run=str(obj.get("run_id",""))
