@@ -45,14 +45,14 @@ def publication_allowed(episode, meta, qa, video):
         raise ValueError("Metadata/ASR episode mismatch; do not upload")
     if qa.get("passed") is not True or qa.get("status") != "passed":
         raise ValueError("Russian voice QA incomplete: no automatic release")
-    if (qa.get("lexical_coverage", 0) < .79 or qa.get("ending_coverage", 0) < .60
+    if (qa.get("lexical_coverage", 0) < .97 or qa.get("ending_coverage", 0) < .95
             or qa.get("final_word_present") is not True):
         raise ValueError("Missing or clipped Russian narration")
     mix = qa.get("mixed_audio")
     if (not isinstance(mix, dict) or mix.get("episode_id") != episode["id"]
             or mix.get("source") != "FINAL_MIXED_MP4"
             or mix.get("passed") is not True or mix.get("final_word_present") is not True
-            or mix.get("lexical_coverage", 0) < .79
+            or mix.get("lexical_coverage", 0) < .97
             or mix.get("numerics_match") is not True):
         raise ValueError("Final MP4 mixed Russian narration QA failed")
     if not video.is_file() or not 100000 <= video.stat().st_size <= 150*1024*1024:
