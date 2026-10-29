@@ -2943,6 +2943,98 @@
         "overlay": "ПОДПИШИСЬ НА НОВЫЕ МАРШРУТЫ",
         "description": "Подпишись, если любишь дорогу и новые места."
       }
+    },
+    {
+      "id": "night-traffic-27",
+      "auto_preview": true,
+      "auto_publish": true,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "kokoro_ru_dima",
+      "title": "Мотоциклы в ночном городе: что самое сложное? 🌃 #shorts",
+      "narration": "Ночной город красив с высоты. Но в потоке мотоцикл легко потерять из виду. На перекрестке важны спокойный темп, внимание к машинам и запас места для маневра. Два разных города, но один вопрос. А ты любишь ездить вечером?",
+      "description": "Ночной город, реальные мотоциклы и дорожный поток. Какое время для поездки нравится тебе? 🌃\n\n#мото #город #ночь #shorts",
+      "caption_start": "НОЧНОЙ ГОРОД ДРУГОЙ",
+      "caption_middle": "В ПОТОКЕ НУЖНО ВНИМАНИЕ",
+      "caption_end": "ТЫ ЕЗДИШЬ НОЧЬЮ?",
+      "max_duration_seconds": 33,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 122,
+      "footage": [
+        {
+          "key": "city_intersection",
+          "url": "https://www.pexels.com/download/video/36077846/",
+          "source_page": "https://www.pexels.com/video/motorbikes-navigate-busy-city-intersection-at-night-36077846/",
+          "author": "J-Steve Pham",
+          "license": "Pexels License"
+        },
+        {
+          "key": "night_traffic",
+          "url": "https://www.pexels.com/download/video/29185546/",
+          "source_page": "https://www.pexels.com/video/bustling-night-traffic-in-vibrant-city-center-29185546/",
+          "author": "Media Dung",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "city_intersection",
+          "start": 0.1,
+          "seconds": 2.5
+        },
+        {
+          "source": "night_traffic",
+          "start": 0.2,
+          "seconds": 2.5
+        },
+        {
+          "source": "city_intersection",
+          "start": 2.6,
+          "seconds": 2.5
+        },
+        {
+          "source": "night_traffic",
+          "start": 2.8,
+          "seconds": 2.5
+        },
+        {
+          "source": "city_intersection",
+          "start": 4.9,
+          "seconds": 2.5
+        },
+        {
+          "source": "night_traffic",
+          "start": 5.1,
+          "seconds": 2.5
+        },
+        {
+          "source": "city_intersection",
+          "start": 1.5,
+          "seconds": 2.5
+        },
+        {
+          "source": "night_traffic",
+          "start": 1.6,
+          "seconds": 2.5
+        }
+      ],
+      "editorial": {
+        "environment": "asian-urban-night-intersections",
+        "bike": "urban-motorcycle-commuter-bikes",
+        "people": "nighttime-city-commuter-groups",
+        "story": "urban-night-visibility-and-traffic",
+        "visual": "headlights-and-city-intersections"
+      },
+      "tags": [
+        "мото",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ НОЧНОЙ ГОРОД? ЛАЙК!",
+        "description": "Поставь лайк, если любишь атмосферу ночного города."
+      }
     }
   ]
 }
