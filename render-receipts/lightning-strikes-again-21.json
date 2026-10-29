@@ -1,9 +1,13 @@
 {
   "id": "lightning-strikes-again-21",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40817496015",
   "attempt_count": 2,
   "preview_fingerprint": "71b5cd2bc43ae71d017a923ebaf50ced625116e2635ea6cb0656a5f7462ebfb7",
   "previous_run_id": "40816503562",
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 0.979,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 0.979
 }
