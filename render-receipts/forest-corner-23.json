@@ -1,13 +1,9 @@
 {
   "id": "forest-corner-23",
-  "state": "preview_ready",
-  "run_id": "40919944816",
-  "attempt_count": 1,
-  "preview_fingerprint": "9f71bcf9bca424190d7eb98c1e1e57a8b7009a2c9393f519d484d81dac7ad3ed",
-  "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": false,
-  "voice_qa_coverage": 0.943,
-  "mixed_audio_qa_passed": false,
-  "mixed_audio_qa_coverage": 0.914
+  "state": "reserved",
+  "run_id": "40921127604",
+  "attempt_count": 2,
+  "preview_fingerprint": "81ff5a123e9221a19a020a3816a4aa21513a160d887c5255c7c257062e975dee",
+  "previous_run_id": "40919944816",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
