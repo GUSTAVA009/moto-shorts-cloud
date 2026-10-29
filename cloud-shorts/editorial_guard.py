@@ -10,6 +10,7 @@ import json
 from pathlib import Path
 import re
 from urllib.parse import urlparse
+from channel_focus import assert_motorcycle_episode
 
 # Source footage used in the already published first YouTube video.
 # Never use it again in any of the new production previews.
@@ -57,6 +58,8 @@ def validate_catalog(data):
         if slug in used_slugs:
             raise ValueError("Episode ID already exists: " + slug)
         used_slugs.add(slug)
+        if ep.get("auto_preview") is True or ep.get("auto_publish") is True:
+            assert_motorcycle_episode(ep)
 
         for field, seen in (("title", used_titles), ("narration", used_narrations)):
             value = re.sub(r"\s+", " ", str(ep.get(field, "")).strip()).casefold()
