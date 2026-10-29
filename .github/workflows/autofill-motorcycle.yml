@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - 'cloud-shorts/autofill_catalog.py'
+      - 'cloud-shorts/moto_autocreate.py'
+      - 'cloud-shorts/moto_assets.py'
+      - 'cloud-shorts/test_moto_autocreate.py'
+      - 'cloud-shorts/test_moto_assets.py'
       - 'cloud-shorts/seed_backlog.json'
       - 'cloud-shorts/test_autofill_catalog.py'
       - '.github/workflows/autofill-motorcycle.yml'
@@ -38,9 +42,15 @@ jobs:
       - name: Validate curated evergreen motorcycle scripts and licenses
         run: |
           python3 -m unittest discover -s cloud-shorts -p 'test_autofill_catalog.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_moto_assets.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_moto_autocreate.py' -v
       - name: Add one unseen researched story when queue becomes low
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GUSTAVA_SCRIPT_MODEL: ${{ vars.GUSTAVA_SCRIPT_MODEL }}
         run: python3 cloud-shorts/autofill_catalog.py
