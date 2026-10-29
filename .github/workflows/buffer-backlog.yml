@@ -43,7 +43,7 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python3 cloud-shorts/find_pending_buffer.py --output "$GITHUB_OUTPUT"
       - name: Download the exact QA-verified MP4
-        if: steps.pick.outputs.has_job == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED != 'false'
+        if: steps.pick.outputs.has_job == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED != 'false' && vars.PUBLICATION_CHANNEL_CONFIRMED == 'true'
         uses: actions/download-artifact@v4
         with:
           name: ${{ steps.pick.outputs.artifact_name }}
@@ -52,7 +52,7 @@ jobs:
           github-token: ${{ github.token }}
           path: staged
       - name: Publish only through Buffer (no blind retry)
-        if: steps.pick.outputs.has_job == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED != 'false'
+        if: steps.pick.outputs.has_job == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED != 'false' && vars.PUBLICATION_CHANNEL_CONFIRMED == 'true'
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -73,6 +73,9 @@ jobs:
             --metadata "staged/$EPISODE/publication.json" \
             --voice-qa "staged/$EPISODE/voice_qa.json" \
             --mixed-qa "staged/$EPISODE/mixed_audio_qa.json"
+      - name: Report missing channel confirmation before any public action
+        if: steps.pick.outputs.has_job == 'true' && vars.PUBLICATION_CHANNEL_CONFIRMED != 'true'
+        run: echo 'PUBLICATION_HELD: confirm the intended YouTube destination before Buffer uploads anything.' >> "$GITHUB_STEP_SUMMARY"
       - name: Report no eligible original MP4
         if: steps.pick.outputs.has_job != 'true'
         run: |
