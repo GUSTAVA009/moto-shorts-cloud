@@ -5,7 +5,10 @@ import find_pending_publication as q
 
 class BacklogTests(unittest.TestCase):
     def test_only_new_unpublished_qa_passed_artifacts(self):
-        catalog={"episodes":[{"id":"a-new-01","auto_publish":True,"voice_engine":"kokoro_ru_dima"},
+        catalog={"episodes":[{"id":"a-new-01","auto_publish":True,"voice_engine":"kokoro_ru_dima",
+                             "title":"Мотоцикл на трассе",
+                             "narration":"Мотоцикл проходит поворот.",
+                             "editorial":{"bike":"offroad-trail-motorcycle"}},
                              {"id":"old-ep-02","auto_publish":False}]}
         receipts=[{"id":"a-new-01","state":"preview_ready","voice_qa_passed":True,"mixed_audio_qa_passed":True,"run_id":"42"},
                   {"id":"old-ep-02","state":"preview_ready","voice_qa_passed":True,"mixed_audio_qa_passed":True,"run_id":"51"}]
@@ -22,7 +25,10 @@ class BacklogTests(unittest.TestCase):
         self.assertIsNone(q.select(catalog,receipts,set(),assets))
 
     def test_absent_qa_receipt_or_expired_artifact_refused(self):
-        catalog={"episodes":[{"id":"a-new-01","auto_publish":True,"voice_engine":"kokoro_ru_dima"}]}
+        catalog={"episodes":[{"id":"a-new-01","auto_publish":True,"voice_engine":"kokoro_ru_dima",
+                             "title":"Мотоцикл на трассе",
+                             "narration":"Мотоцикл проходит поворот.",
+                             "editorial":{"bike":"offroad-trail-motorcycle"}}]}
         rs=[{"id":"a-new-01","state":"preview_ready","run_id":"42"}]
         assets=[{"name":"daily-preview-a-new-01-42","expired":False}]
         self.assertIsNone(q.select(catalog,rs,set(),assets))
