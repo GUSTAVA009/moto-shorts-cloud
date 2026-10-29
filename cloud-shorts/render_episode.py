@@ -22,6 +22,7 @@ from tts_voice import render as make_voice
 from silero_voice import render as make_silero_voice, MODEL_ID as SILERO_MODEL_ID, SPEAKER as SILERO_SPEAKER
 from kokoro_voice import render as make_kokoro_voice, MODEL_CARD as KOKORO_MODEL_CARD
 from editorial_guard import validate_catalog
+from moto_assets import validated_media, verified_commons
 from channel_focus import assert_motorcycle_episode
 from engagement_cta import validate_cta, overlay_filters, build_description
 
@@ -63,26 +64,8 @@ def clean_description(text):
 
 
 def checked_source(item):
-    """Validate expected Pexels host and matching video ID (no arbitrary URLs)."""
-    page = urllib.parse.urlparse(item["source_page"])
-    if page.scheme != "https" or page.hostname != "www.pexels.com":
-        raise ValueError("Provenance page must be https://www.pexels.com/video/...")
-    match = re.search(r"-(\d{5,10})/?$", page.path)
-    if not match or not page.path.startswith("/video/"):
-        raise ValueError("Provenance page has no Pexels video ID")
-    vid = match.group(1)
-    url = urllib.parse.urlparse(item["url"])
-    if url.scheme != "https" or url.username or url.password or url.port:
-        raise ValueError("Unsupported source URL")
-    if url.hostname == "videos.pexels.com":
-        if not url.path.startswith("/video-files/" + vid + "/") or not url.path.endswith(".mp4"):
-            raise ValueError("Source CDN ID or extension mismatch")
-    elif url.hostname == "www.pexels.com":
-        if url.path != "/download/video/" + vid + "/":
-            raise ValueError("Source download URL must match provenance video ID")
-    else:
-        raise ValueError("External hosts are forbidden for video downloads")
-    return vid
+    """Never render an unlicensed, unauthenticated or unsupported source."""
+    return validated_media(item)
 
 
 def validate_episode(ep):
@@ -124,7 +107,7 @@ def validate_episode(ep):
             raise ValueError("Duplicate source footage")
         ids.add(video_id)
         keys.add(media["key"])
-        if media.get("license") != "Pexels License" or not media.get("author"):
+        if media.get("license") not in ("Pexels License", "CC0 1.0") or not media.get("author"):
             raise ValueError("Source provenance and free license must be recorded")
     shots = ep.get("shots", [])
     if len(shots) < 4 or len(shots) > 16:
@@ -332,6 +315,8 @@ def render(ep, output_dir):
     sources = {}
     for src in ep["footage"]:
         video_id = checked_source(src)
+        if video_id.startswith("commons-"):
+            verified_commons(src)
         target = work / (video_id + ".mp4")
         download(src, target)
         sources[src["key"]] = target
