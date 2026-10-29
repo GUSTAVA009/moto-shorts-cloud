@@ -1,4 +1,4 @@
-name: GUSTAVA - Continuous Cross-Niche Verified Story Research
+name: GUSTAVA - Continuous Motorcycle Story Research
 on:
   workflow_dispatch:
   push:
@@ -21,7 +21,7 @@ jobs:
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
-      - name: Gather balanced science, nature, engineering, space, history and motorcycle leads
+      - name: Gather original motorcycle, enduro, racing and maintenance story leads
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -31,7 +31,7 @@ jobs:
       - name: Archive non-publishable research leads for independent scripts
         uses: actions/upload-artifact@v4
         with:
-          name: multi-topic-original-story-leads-${{ github.run_id }}
+          name: motorcycle-original-story-leads-${{ github.run_id }}
           path: cloud-shorts/dist/story-ideas.json
           if-no-files-found: error
           retention-days: 30
