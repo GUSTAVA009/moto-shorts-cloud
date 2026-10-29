@@ -462,6 +462,16 @@
       "episode": "night-traffic-27",
       "source": "https://www.pexels.com/video/cars-scooters-and-motorcycles-on-street-13177125/",
       "status": "reserved-or-rendered"
+    },
+    "10839355": {
+      "episode": "jump-track-28",
+      "source": "https://www.pexels.com/video/slow-motion-of-rider-on-motocross-track-10839355/",
+      "status": "reserved-or-rendered"
+    },
+    "12975439": {
+      "episode": "jump-track-28",
+      "source": "https://www.pexels.com/video/off-road-motorcycle-racing-12975439/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -653,6 +663,13 @@
       "people": "nighttime-city-commuter-groups",
       "story": "urban-night-visibility-and-traffic",
       "visual": "headlights-and-city-intersections"
+    },
+    "jump-track-28": {
+      "environment": "professional-motocross-jump-tracks",
+      "bike": "competition-dirt-race-motorcycles",
+      "people": "separate-pro-track-racers",
+      "story": "race-track-jump-visual-timing",
+      "visual": "airborne-bikes-on-prepared-tracks"
     }
   }
 }
