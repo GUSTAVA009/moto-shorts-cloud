@@ -44,7 +44,7 @@ def publication_allowed(episode, meta, qa, video):
         raise ValueError("Final MP4 does not match its independent mixed-audio QA proof")
     if len(meta["title"]) > 100 or any(s in meta["description"].lower() for s in ("https://", "www.")):
         raise ValueError("Illegal title or external links in description")
-    if not episode.get("footage") or any(s.get("license") != "Pexels License"
+    if not episode.get("footage") or any(s.get("license") not in ("Pexels License", "CC0 1.0")
                                       for s in episode["footage"]):
         raise ValueError("Unverified commercial footage rights")
     series = episode.get("episode_series")
