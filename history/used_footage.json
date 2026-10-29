@@ -407,6 +407,16 @@
       "episode": "forest-corner-23",
       "source": "https://www.pexels.com/video/enduro-rider-on-a-scenic-forest-trail-35021631/",
       "status": "reserved-or-rendered"
+    },
+    "5803089": {
+      "episode": "forest-corner-23",
+      "source": "https://www.pexels.com/video/areial-footage-of-two-motorcyclists-in-the-woods-5803089/",
+      "status": "reserved-or-rendered"
+    },
+    "5803091": {
+      "episode": "forest-corner-23",
+      "source": "https://www.pexels.com/video/two-men-riding-a-dirt-bike-5803091/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -565,11 +575,11 @@
       "visual": "kinetic-ice-glass-and-aerial-sea-ice"
     },
     "forest-corner-23": {
-      "environment": "shaded-forest-bends",
-      "bike": "trail-moto-crossbike",
-      "people": "two-independent-forest-riders",
-      "story": "blind-bend-surface-awareness",
-      "visual": "green-woodland-paths-and-motion"
+      "environment": "active-woodland-forest-rides",
+      "bike": "dirt-motocross-motorcycles",
+      "people": "independent-trail-motorcyclists-in-forest",
+      "story": "blind-bend-ride-and-terrain-awareness",
+      "visual": "moving-forest-riders-and-real-trail-obstacles"
     }
   }
 }
