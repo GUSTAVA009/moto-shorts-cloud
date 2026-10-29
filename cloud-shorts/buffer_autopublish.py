@@ -41,6 +41,8 @@ def buffer(query, variables=None):
 
 
 def verify_channel():
+    if os.getenv('YOUTUBE_EXPECTED_CHANNEL_ID', YOUTUBE) != YOUTUBE:
+        raise RuntimeError('Expected YouTube channel does not match Buffer channel')
     q = 'query { channel(input:{id:"' + CHANNEL + '"}) {id name service serviceId isQueuePaused isDisconnected} }'
     c = buffer(q).get("channel") or {}
     if (c.get("id") != CHANNEL or c.get("service") != "youtube" or
