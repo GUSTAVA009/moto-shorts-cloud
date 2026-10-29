@@ -15,7 +15,8 @@ class PublisherShellTests(unittest.TestCase):
         workflow = source(".github/workflows/buffer-backlog.yml")
         self.assertIn("buffer_autopublish.py", workflow)
         self.assertRegex(workflow, r'--voice-qa[^\n]*\\\s*\n\s*--mixed-qa')
-        self.assertIn("vars.BUFFER_AUTO_PUBLISH_ENABLED == 'true'", workflow)
+        self.assertIn("vars.BUFFER_AUTO_PUBLISH_ENABLED != 'false'", workflow)
+        self.assertIn("BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED || 'true' }}", workflow)
 
     def test_daily_generation_never_directly_posts(self):
         workflow = source(".github/workflows/daily-preview.yml").casefold()
