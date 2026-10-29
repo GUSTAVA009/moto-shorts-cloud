@@ -34,6 +34,7 @@ jobs:
           payload={"text":"INTERNAL AUTOMATION TEST - draft only, do not publish",
                    "channelId":channel,"schedulingType":"automatic",
                    "mode":"addToQueue","saveToDraft":True,"aiAssisted":True,
+                   "metadata":{"youtube":{"title":"AUTOMATION TEST - DO NOT PUBLISH","categoryId":"28","isAiGenerated":True,"madeForKids":False,"privacy":"private"}},
                    "assets":[{"video":{"url":url}}]}
           response=call(q,{"input":payload}).get("createPost") or {}
           post=response.get("post")
