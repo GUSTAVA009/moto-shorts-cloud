@@ -233,7 +233,7 @@ def assemble_clips(ep, sources, work, target_seconds):
             "new footage or corrected shot offsets required"
         )
     playlist = work / "playlist.txt"
-    playlist.write_text("".join("file '%s'\\n" % p.name for p in segments), encoding="utf-8")
+    playlist.write_text("".join("file '%s'\n" % p.name for p in segments), encoding="utf-8")
     silent = work / "assembled.mp4"
     run([
         "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
