@@ -1,9 +1,13 @@
 {
   "id": "highland-tour-26",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40929064606",
   "attempt_count": 1,
   "preview_fingerprint": "90c9e085f847293ebc4a21cf2fa5423a67a7a5b35b54b5b4875678ed3ec73f43",
   "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": false,
+  "voice_qa_coverage": 0.946,
+  "mixed_audio_qa_passed": false,
+  "mixed_audio_qa_coverage": 0.946
 }
