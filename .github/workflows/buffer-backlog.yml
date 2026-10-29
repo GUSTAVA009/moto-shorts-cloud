@@ -75,7 +75,8 @@ jobs:
             --mixed-qa "staged/$EPISODE/mixed_audio_qa.json"
       - name: Report missing channel confirmation before any public action
         if: steps.pick.outputs.has_job == 'true' && vars.PUBLICATION_CHANNEL_CONFIRMED != 'true'
-        run: echo 'PUBLICATION_HELD: confirm the intended YouTube destination before Buffer uploads anything.' >> "$GITHUB_STEP_SUMMARY"
+        run: |
+          echo 'PUBLICATION_HELD: confirm the intended YouTube destination before Buffer uploads anything.' >> "$GITHUB_STEP_SUMMARY"
       - name: Report no eligible original MP4
         if: steps.pick.outputs.has_job != 'true'
         run: |
