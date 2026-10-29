@@ -10,7 +10,7 @@ class BacklogTests(unittest.TestCase):
                              "narration":"Мотоцикл проходит поворот.",
                              "editorial":{"bike":"offroad-trail-motorcycle"}},
                              {"id":"old-ep-02","auto_publish":False}]}
-        receipts=[{"id":"a-new-01","state":"preview_ready","voice_qa_passed":True,"mixed_audio_qa_passed":True,"voice_profile":"gustava_male_deep_v1","male_voice_verified":True,"run_id":"42"},
+        receipts=[{"id":"a-new-01","state":"preview_ready","voice_qa_passed":True,"mixed_audio_qa_passed":True,"voice_profile":"gustava_male_deep_v2","male_voice_verified":True,"run_id":"42"},
                   {"id":"old-ep-02","state":"preview_ready","voice_qa_passed":True,"mixed_audio_qa_passed":True,"run_id":"51"}]
         assets=[{"name":"daily-preview-a-new-01-42","expired":False},
                 {"name":"daily-preview-old-ep-02-51","expired":False}]
