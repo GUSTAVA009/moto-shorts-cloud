@@ -2,7 +2,8 @@ name: GUSTAVA - Retry-Safe Verified MP4 Publishing
 on:
   workflow_dispatch:
   schedule:
-    - cron: "33 */3 * * *"
+    # UTC; 04:33 UTC = 07:33 MSK. Repeat every 3h only while quota exists.
+    - cron: "33 1,4,7,10,13,16,19,22 * * *"
 
 permissions:
   contents: write
@@ -14,10 +15,11 @@ concurrency:
 
 jobs:
   catch-up:
-    # Safety hold: prevent consuming the last Publora monthly slots while migrating.
-    # Existing externally scheduled Publora posts are not affected.
-    # Requires a separate explicit PUBLORA_CATCHUP_ENABLED=true to resume.
-    if: ${{ vars.PUBLORA_AUTO_PUBLISH_ENABLED == 'true' && vars.PUBLORA_CATCHUP_ENABLED == 'true' }}
+    # Owner authorized end-to-end publishing. Fail-closed selector only
+    # permits explicitly auto_publish=true, licensed ORIGINAL Kokoro-RU male
+    # episodes with a persistent completed ASR/MP4 render receipt.
+    # Quota preflight prevents consuming unavailable Starter slots.
+    if: ${{ vars.PUBLORA_AUTO_PUBLISH_ENABLED == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
