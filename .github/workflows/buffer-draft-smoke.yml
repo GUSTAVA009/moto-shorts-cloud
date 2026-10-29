@@ -1,0 +1,52 @@
+name: GUSTAVA - Buffer Media Draft Smoke Test
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/buffer-draft-smoke.yml]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+    steps:
+      - name: Verify GitHub Release MP4 is accepted by Buffer as a DRAFT, never publish
+        run: |
+          python3 - <<'PY'
+          import json,os,urllib.request,urllib.error
+          url="https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/buffer-media-proof-20261029/buffer-media-proof.mp4"
+          channel="6ae238b32f1f5ed648ff9011"
+          key=os.environ["BUFFER_API_KEY"]
+          def call(query,variables):
+              req=urllib.request.Request("https://api.buffer.com",method="POST",data=json.dumps({"query":query,"variables":variables}).encode(),headers={"Content-Type":"application/json","Authorization":"Bearer "+key})
+              with urllib.request.urlopen(req,timeout=50) as r: result=json.load(r)
+              if result.get("errors"):raise RuntimeError("Buffer GraphQL rejected the test")
+              return result["data"]
+          q="""mutation($input: CreatePostInput!) {
+            createPost(input:$input) {
+              ... on PostActionSuccess { post { id status assets { source } } }
+              ... on MutationError { message }
+            }
+          }"""
+          payload={"text":"INTERNAL AUTOMATION TEST - draft only, do not publish",
+                   "channelId":channel,"schedulingType":"automatic",
+                   "mode":"addToQueue","saveToDraft":True,"aiAssisted":True,
+                   "assets":[{"video":{"url":url}}]}
+          response=call(q,{"input":payload}).get("createPost") or {}
+          post=response.get("post")
+          if not post:
+              print("BUFFER_DRAFT_MEDIA_FAILED",str(response.get("message","unknown"))[:180])
+              raise SystemExit(1)
+          print("BUFFER_VIDEO_DRAFT_CREATED",bool(post.get("id")),"STATUS",post.get("status"))
+          dq="""mutation($input: DeletePostInput!) {
+            deletePost(input:$input) { ... on DeletePostSuccess { id } ... on MutationError { message } }
+          }"""
+          deleted=call(dq,{"input":{"id":post["id"]}}).get("deletePost") or {}
+          if deleted.get("id")!=post["id"]:
+              print("DRAFT_CLEANUP_NEEDS_ATTENTION",post["id"])
+              raise SystemExit(1)
+          print("BUFFER_DRAFT_DELETED_NO_PUBLICATION",True)
+          PY
