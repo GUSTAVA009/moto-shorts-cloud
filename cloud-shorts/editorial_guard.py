@@ -11,6 +11,7 @@ from pathlib import Path
 import re
 from urllib.parse import urlparse
 from channel_focus import assert_motorcycle_episode
+from moto_assets import source_id as media_source_id, validated_media
 
 # Source footage used in the already published first YouTube video.
 # Never use it again in any of the new production previews.
@@ -21,14 +22,8 @@ ID_RE = re.compile(r"-(\d{5,10})/?$")
 
 
 def source_id(footage: dict) -> str:
-    page = str(footage.get("source_page", ""))
-    url = urlparse(page)
-    if url.scheme != "https" or url.hostname != "www.pexels.com":
-        raise ValueError("Video source is not a verified Pexels page")
-    match = ID_RE.search(url.path)
-    if not match:
-        raise ValueError("Source has no Pexels video ID")
-    return match.group(1)
+    """Licensed video identity across Pexels and content-addressed Commons CC0."""
+    return media_source_id(footage)
 
 
 def editorial_subject(profile):
@@ -106,12 +101,13 @@ def validate_catalog(data):
         authors = set()
         for video in sources:
             video_id = source_id(video)
+            validated_media(video)
             if video_id in used_source_ids:
                 raise ValueError("STOCK_REUSE_FORBIDDEN: " + video_id
                                  + " was used in " + used_source_ids[video_id])
             used_source_ids[video_id] = slug
             authors.add(str(video.get("author", "")).strip().casefold())
-            if video.get("license") != "Pexels License":
+            if video.get("license") not in ("Pexels License", "CC0 1.0"):
                 raise ValueError("No verified commercial-use footage license for " + slug)
         # Existing historical episodes cannot be revised, but new episodes must
         # use two or more credited creators, not a series of shots of one actor.
