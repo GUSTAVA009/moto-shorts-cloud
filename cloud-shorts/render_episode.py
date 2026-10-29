@@ -8,6 +8,7 @@ uploads to YouTube from this renderer.
 from __future__ import annotations
 import argparse
 import hashlib
+import os
 import json
 from pathlib import Path
 import re
@@ -338,7 +339,8 @@ def render(ep, output_dir):
     wav = work / "new_narration.wav"
     engine = ep.get("voice_engine", "piper_ru")
     if engine == "kokoro_ru_dima":
-        voice_duration = make_kokoro_voice(ep["narration"], wav, work / "kokoro_model")
+        retry_speed = float(os.environ.get("GUSTAVA_TTS_SPEED", "1.0"))
+        voice_duration = make_kokoro_voice(ep["narration"], wav, work / "kokoro_model", speed=retry_speed)
         engine_label = "Kokoro-RU / dima (OpenRAIL, CPU Russian male narrator)"
     elif engine == "silero_cis_base_mit":
         voice_duration = make_silero_voice(ep["narration"], wav, work / "voice_model")
@@ -380,12 +382,15 @@ def render(ep, output_dir):
     captions = draw_captions(ep, work, total)
 
     output = output_dir / (slug + ".mp4")
+    mix_gain = float(os.environ.get("GUSTAVA_MUSIC_GAIN", "0.34"))
+    if not 0.12 <= mix_gain <= 0.34:
+        raise ValueError("Unsafe music level requested")
     filter_graph = (
         "[0:v]" + captions + "[v];"
         "[1:a]aresample=48000,highpass=f=85,lowpass=f=8900,"
         "volume=1.20,adelay=160|160,apad,atrim=duration=%.3f,"
         "asetpts=PTS-STARTPTS,aformat=channel_layouts=stereo,asplit=2[voice_duck][voice_mix];" % total
-        + "[2:a]aresample=48000,volume=0.34,"
+        + f"[2:a]aresample=48000,volume={mix_gain:.2f},"
         "afade=t=in:st=0:d=0.18,afade=t=out:st=%.3f:d=0.4,"
         "atrim=duration=%.3f,asetpts=PTS-STARTPTS,"
         "aformat=channel_layouts=stereo,haas=side_gain=0.55[bed];" % (max(0.1, total - 0.4), total)
