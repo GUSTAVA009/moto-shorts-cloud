@@ -33,7 +33,7 @@ class FailedPreviewRepairTests(unittest.TestCase):
     def test_bounded_phonetic_rewrite_preserves_meaning(self):
         new = r.simple_rewrite("Райдер на мотоцикле едет в лесу.",
                                "Райдер но мотоцикли едет в лесу.")
-        self.assertEqual(new, "Райдер на своём байке едет в лесу.")
+        self.assertEqual(new, "Райдер на байке едет в лесу.")
 
     def test_never_copy_fake_asr_word_as_new_script(self):
         self.assertIsNone(r.simple_rewrite("Чистый голос звучит мягко.",
@@ -51,7 +51,7 @@ class FailedPreviewRepairTests(unittest.TestCase):
         new = r.repair_episode(c, self.ep_id, raw, mixed, receipt)
         self.assertIsNotNone(new)
         ep = next(e for e in new["episodes"] if e["id"] == self.ep_id)
-        self.assertIn("на своём байке", ep["narration"])
+        self.assertIn("на байке", ep["narration"])
         self.assertTrue(ep["voice_revision_requested"])
 
     def test_no_repair_of_good_or_unknown_outcome(self):
