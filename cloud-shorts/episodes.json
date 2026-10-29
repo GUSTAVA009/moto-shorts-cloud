@@ -2418,6 +2418,135 @@
       "auto_preview": true,
       "auto_publish": false,
       "voice_revision_requested": true
+    },
+    {
+      "id": "why-ice-floats-22",
+      "auto_preview": true,
+      "auto_publish": true,
+      "research_pillar": "science",
+      "voice_engine": "kokoro_ru_dima",
+      "max_duration_seconds": 33.5,
+      "title": "Почему лёд НЕ тонет? ❄️ Неожиданный ответ #shorts",
+      "narration": "Лёд не тонет. Почему? Когда вода замерзает, молекулы образуют структуру с большим расстоянием между ними. Лёд становится менее плотным, чем жидкая вода, и всплывает. Поэтому льдины держатся на поверхности. А ты знал, что вода ведёт себя так необычно?",
+      "description": "Почему лёд плавает, хотя почти все твёрдые вещества тяжелее соответствующих жидкостей? Разбираем плотность и структуру замёрзшей воды. Кадры из разных мест иллюстрируют физику, а не один эксперимент.\n\n#лёд #физика #наука #shorts",
+      "caption_start": "ПОЧЕМУ ЛЁД НЕ ТОНЕТ?",
+      "caption_middle": "ВСЁ ДЕЛО В ПЛОТНОСТИ",
+      "caption_end": "УДИВИТЕЛЬНО, ПРАВДА?",
+      "story_steps": [
+        {
+          "at": 10,
+          "text": "ЛЁД МЕНЕЕ ПЛОТНЫЙ"
+        }
+      ],
+      "music_style": "night-drive",
+      "music_bpm": 108,
+      "tags": [
+        "физика",
+        "лёд",
+        "наука",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ ФИЗИКА? ЛАЙК!",
+        "description": "Если любишь понятные объяснения обычных вещей, поддержи выпуск лайком."
+      },
+      "editorial": {
+        "environment": "cold-water-glass-and-moving-ice-sea",
+        "subject": "ice-water-density-crystal-structure",
+        "people": "science-visual-observers-without-actors",
+        "story": "ice-buoyancy-from-molecular-spacing",
+        "visual": "kinetic-ice-glass-and-aerial-sea-ice"
+      },
+      "editorial_references": [
+        "https://www.usgs.gov/water-science-school/science/water-density",
+        "https://cordis.europa.eu/article/id/454697-why-does-ice-float"
+      ],
+      "footage": [
+        {
+          "key": "cube_splash",
+          "url": "https://www.pexels.com/download/video/8678465/",
+          "source_page": "https://www.pexels.com/video/ice-cubes-dropped-on-a-glass-of-water-8678465/",
+          "author": "Timur Weber",
+          "license": "Pexels License"
+        },
+        {
+          "key": "ice_water_glass",
+          "url": "https://www.pexels.com/download/video/4440016/",
+          "source_page": "https://www.pexels.com/video/dropping-ice-cubes-on-glass-of-water-4440016/",
+          "author": "Stacey Koenitz",
+          "license": "Pexels License"
+        },
+        {
+          "key": "floating_ice",
+          "url": "https://www.pexels.com/download/video/36449711/",
+          "source_page": "https://www.pexels.com/video/aerial-view-of-floating-ice-on-water-surface-36449711/",
+          "author": "Efrem Efre",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "cube_splash",
+          "start": 0.3,
+          "seconds": 2.2
+        },
+        {
+          "source": "ice_water_glass",
+          "start": 0.5,
+          "seconds": 2.1
+        },
+        {
+          "source": "floating_ice",
+          "start": 0.4,
+          "seconds": 2.3
+        },
+        {
+          "source": "cube_splash",
+          "start": 3,
+          "seconds": 2.1
+        },
+        {
+          "source": "floating_ice",
+          "start": 3,
+          "seconds": 2.3
+        },
+        {
+          "source": "ice_water_glass",
+          "start": 3,
+          "seconds": 2.2
+        },
+        {
+          "source": "cube_splash",
+          "start": 6.1,
+          "seconds": 2.2
+        },
+        {
+          "source": "floating_ice",
+          "start": 6.3,
+          "seconds": 2.3
+        },
+        {
+          "source": "ice_water_glass",
+          "start": 5,
+          "seconds": 2.1
+        },
+        {
+          "source": "cube_splash",
+          "start": 9,
+          "seconds": 2.1
+        },
+        {
+          "source": "floating_ice",
+          "start": 9.5,
+          "seconds": 2.2
+        },
+        {
+          "source": "ice_water_glass",
+          "start": 1.1,
+          "seconds": 2.2
+        }
+      ]
     }
   ]
 }
