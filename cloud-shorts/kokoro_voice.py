@@ -7,6 +7,7 @@ person recording: do not present synthetic speech as a named human actor.
 """
 from __future__ import annotations
 from pathlib import Path
+from voice_style import apply as deepen_male_voice, PROFILE_ID as MALE_STYLE
 import os
 import re
 import sys
@@ -102,7 +103,11 @@ def render(text, output, model_dir=None, speed=1.0):
         raise RuntimeError("Narration outside Shorts duration: %.2fs" % duration)
     if np.max(np.abs(audio)) < .01:
         raise RuntimeError("Narration is effectively silent")
-    sf.write(str(output),audio,24000,subtype="PCM_16")
-    print("KOKORO_RU_MALE_READY",round(duration,2),
-          "seconds",SPEAKER,"speed",speed,"license=OpenRAIL",flush=True)
-    return duration
+    sf.write(str(output), audio, 24000, subtype="PCM_16")
+    # Always apply one AND ONLY ONE low-male voice style after raw synthesis.
+    # Never add a second narration layer or pan voices across speakers.
+    deep_duration = deepen_male_voice(output)
+    print("KOKORO_RU_DEEP_MALE_READY", round(deep_duration, 2),
+          "seconds", SPEAKER, "profile", MALE_STYLE,
+          "speed", speed, "license=OpenRAIL", flush=True)
+    return deep_duration
