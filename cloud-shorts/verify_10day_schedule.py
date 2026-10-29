@@ -2,12 +2,11 @@
 """Read-only reality check of exact ten-a-day posting slots in Buffer."""
 from datetime import datetime, timezone
 import json
-from buffer_autopublish import verify_channel, recently_sent, CHANNEL
+from buffer_autopublish import verify_channel, CHANNEL
 from ten_daily_slots import choose_slot, LOCAL_TIMES, TARGET_PER_DAY
 
 def main():
-    queue = verify_channel()
-    recent = recently_sent()
+    queue, recent = verify_channel(include_sent=True)
     next_due_at = choose_slot(queue + recent)
     print("GUSTAVA_BUFFER_10_PER_DAY_READY",
           json.dumps({"channel_id": CHANNEL, "target_slots": TARGET_PER_DAY,
