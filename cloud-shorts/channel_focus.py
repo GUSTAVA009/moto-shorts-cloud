@@ -46,7 +46,8 @@ def is_motorcycle_episode(episode):
         and MOTO_SUBJECT.search(subject)
     ):
         return False
-    text = " ".join(str(episode.get(field) or "") for field in ("title", "narration"))
+    fields = ("title", "narration", "description") if bike else ("title", "narration")
+    text = " ".join(str(episode.get(field) or "") for field in fields)
     return bool(MOTO_TEXT.search(text))
 
 
