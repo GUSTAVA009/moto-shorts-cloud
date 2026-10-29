@@ -26,7 +26,7 @@ class BufferPublisherTests(unittest.TestCase):
         self.voice = {"episode_id": self.ep["id"], "passed": True,
                       "status": "passed", "lexical_coverage": .99,
                       "ending_coverage": 1.0, "final_word_present": True,
-                      "voice_profile": "gustava_male_deep_v1", "male_voice_verified": True}
+                      "voice_profile": "gustava_male_deep_v2", "male_voice_verified": True}
         self.mix = {"episode_id": self.ep["id"], "source": "FINAL_MIXED_MP4",
                     "passed": True, "status": "passed",
                     "lexical_coverage": .99, "ending_coverage": 1.0,
