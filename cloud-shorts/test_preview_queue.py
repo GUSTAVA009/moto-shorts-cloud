@@ -45,6 +45,21 @@ class TestPreviewQueue(unittest.TestCase):
         bad["attempt_count"] = 3
         self.assertFalse(pq.eligible_retry(episode, bad, "revised-script"))
 
+    def test_user_requested_deep_male_voice_may_repair_unpublished_bright_preview(self):
+        ep = {"id": "moto-old-bright-voice", "auto_publish": True,
+              "voice_engine": "kokoro_ru_dima",
+              "voice_profile": "gustava_male_deep_v1",
+              "voice_revision_requested": True}
+        previous = {"id": ep["id"], "state": "preview_ready",
+                    "attempt_count": 2, "preview_fingerprint": "old-bright",
+                    "voice_qa_passed": True, "mixed_audio_qa_passed": True}
+        self.assertTrue(pq.eligible_retry(ep, previous, "new-deep"))
+        previous["attempt_count"] = 4
+        self.assertFalse(pq.eligible_retry(ep, previous, "new-deep"))
+        previous["attempt_count"] = 2
+        previous["voice_profile"] = "gustava_male_deep_v1"
+        self.assertFalse(pq.eligible_retry(ep, previous, "new-deep"))
+
     def test_successful_audio_preview_is_never_remade(self):
         ep = {"id": "motorcycle-serial-02"}
         record = {"id": ep["id"], "state": "preview_ready",
