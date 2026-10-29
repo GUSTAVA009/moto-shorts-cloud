@@ -16,6 +16,9 @@ class BufferPublisherTests(unittest.TestCase):
         self.video.write_bytes(b"X" * 200_000)
         self.ep = {"id": "new-original-22", "auto_publish": True,
                    "voice_engine": "kokoro_ru_dima",
+                   "title": "Мотоцикл на трассе",
+                   "narration": "Мотоцикл проходит крутой поворот.",
+                   "editorial": {"bike": "offroad-trail-motorcycle"},
                    "footage": [{"license": "Pexels License"}]}
         self.meta = {"episode_id": self.ep["id"],
                      "title": "Оригинальный ролик о мотоциклах",
