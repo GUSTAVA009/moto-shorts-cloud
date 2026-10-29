@@ -1,0 +1,9 @@
+{
+  "id": "lightning-strikes-again-21",
+  "state": "reserved",
+  "run_id": "40816503562",
+  "attempt_count": 1,
+  "preview_fingerprint": "ac9031302d9ef27f9f44d20afcd24be8c8969c432fbe9d59bc227cc7a1ff8fb3",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
