@@ -361,9 +361,9 @@ def render(ep, output_dir):
     filter_graph = (
         "[0:v]" + captions + "[v];"
         "[1:a]aresample=48000,highpass=f=85,lowpass=f=8900,"
-        "volume=1.15,adelay=160|160,apad,atrim=duration=%.3f,"
+        "volume=1.20,adelay=160|160,apad,atrim=duration=%.3f,"
         "asetpts=PTS-STARTPTS,asplit=2[voice_duck][voice_mix];" % total
-        + "[2:a]aresample=48000,volume=0.46,"
+        + "[2:a]aresample=48000,volume=0.34,"
         "afade=t=in:st=0:d=0.18,afade=t=out:st=%.3f:d=0.4,"
         "atrim=duration=%.3f,asetpts=PTS-STARTPTS[bed];" % (max(0.1, total - 0.4), total)
         + "[bed][voice_duck]sidechaincompress=threshold=0.022:"
