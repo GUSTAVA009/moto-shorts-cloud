@@ -1,0 +1,33 @@
+name: GUSTAVA - Honest 10 Shorts Per Day Dashboard
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/daily-capacity.yml'
+      - 'cloud-shorts/daily_capacity_report.py'
+      - 'cloud-shorts/test_daily_capacity_report.py'
+  schedule:
+    - cron: "12 1,5,9,13,17,21 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      YOUTUBE_EXPECTED_CHANNEL_ID: UCS0QCodPcFBTjMt4ioEWOUw
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify daily capacity report logic
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_daily_capacity_report.py' -v
+      - name: Count actual sent Shorts, pending originals and source/API blockers
+        run: python3 cloud-shorts/daily_capacity_report.py
