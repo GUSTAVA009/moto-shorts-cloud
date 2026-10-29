@@ -1,13 +1,9 @@
 {
   "id": "night-traffic-27",
-  "state": "preview_ready",
-  "run_id": "40930563840",
-  "attempt_count": 2,
-  "preview_fingerprint": "ee68d2223ce0e7b8cb8203c2c0784521d61fcb083b5a9621569d650219df6ab8",
-  "previous_run_id": "40929639066",
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": false,
-  "voice_qa_coverage": 0.946,
-  "mixed_audio_qa_passed": false,
-  "mixed_audio_qa_coverage": 0.946
+  "state": "reserved",
+  "run_id": "40931251296",
+  "attempt_count": 3,
+  "preview_fingerprint": "e79e8aefea5cea8e739e0baffc09f2ec01acba6c62b152ff984fabda005b7da7",
+  "previous_run_id": "40930563840",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
