@@ -42,6 +42,8 @@ def main():
     }"""
     result = buffer(mutation, {"input": {"id": POST_ID, "mode": "shareNow"}}).get("editPost") or {}
     posted = result.get("post") or {}
+    if result.get("message"):
+        raise RuntimeError("Buffer refused shareNow: " + str(result["message"])[:180])
     if posted.get("id") != POST_ID or posted.get("channelId") != CHANNEL:
         raise RuntimeError("Buffer editPost result uncertain; never retry automatically")
     print("BUFFER_PRIORITY_RELEASE_REQUEST_ACCEPTED",
