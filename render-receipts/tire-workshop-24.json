@@ -1,0 +1,9 @@
+{
+  "id": "tire-workshop-24",
+  "state": "reserved",
+  "run_id": "40923664467",
+  "attempt_count": 1,
+  "preview_fingerprint": "b22d73790d5f37bdf2759f46b8742d5199c48de52d2011b5b94b6e2466d508be",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
