@@ -417,6 +417,16 @@
       "episode": "forest-corner-23",
       "source": "https://www.pexels.com/video/two-men-riding-a-dirt-bike-5803091/",
       "status": "reserved-or-rendered"
+    },
+    "5700508": {
+      "episode": "tire-workshop-24",
+      "source": "https://www.pexels.com/video/faceless-man-repairing-a-tire-5700508/",
+      "status": "reserved-or-rendered"
+    },
+    "36127778": {
+      "episode": "tire-workshop-24",
+      "source": "https://www.pexels.com/video/motorcycle-tire-replacement-outdoors-36127778/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -580,6 +590,13 @@
       "people": "independent-trail-motorcyclists-in-forest",
       "story": "blind-bend-ride-and-terrain-awareness",
       "visual": "moving-forest-riders-and-real-trail-obstacles"
+    },
+    "tire-workshop-24": {
+      "environment": "tire-repair-workshop-and-driveway",
+      "bike": "motorcycle-wheel-maintenance",
+      "people": "two-independent-tire-repair-workers",
+      "story": "tire-wear-pretrip-inspection",
+      "visual": "wheel-rubber-and-mechanical-tools"
     }
   }
 }
