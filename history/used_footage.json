@@ -367,6 +367,21 @@
       "episode": "hydraulic-press-explained-20",
       "source": "https://www.pexels.com/video/sheet-metal-bending-process-in-industrial-setting-40261631/",
       "status": "reserved-or-rendered"
+    },
+    "4755568": {
+      "episode": "lightning-strikes-again-21",
+      "source": "https://www.pexels.com/video/lightning-storm-at-the-city-4755568/",
+      "status": "reserved-or-rendered"
+    },
+    "11025478": {
+      "episode": "lightning-strikes-again-21",
+      "source": "https://www.pexels.com/video/thunderstorm-at-night-with-lightning-strikes-11025478/",
+      "status": "reserved-or-rendered"
+    },
+    "10599522": {
+      "episode": "lightning-strikes-again-21",
+      "source": "https://www.pexels.com/video/storm-in-city-at-night-10599522/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -509,6 +524,13 @@
       "people": "factory-operators-and-metalworking-technicians",
       "story": "how-a-flat-sheet-is-bent-by-industrial-press",
       "visual": "sheet-metal-press-hydraulic-force-dies"
+    },
+    "lightning-strikes-again-21": {
+      "environment": "city-storm-clouds-and-electric-night",
+      "subject": "lightning-striking-objects-repeatedly",
+      "people": "weather-observers-and-urban-residents",
+      "story": "lightning-never-strikes-twice-myth-investigation",
+      "visual": "real-night-thunderbolts-and-city-skylines"
     }
   }
 }
