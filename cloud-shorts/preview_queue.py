@@ -157,7 +157,15 @@ def eligible_retry(episode, receipt, new_fingerprint):
         return False
     if (receipt.get("voice_qa_passed") is True
             and receipt.get("mixed_audio_qa_passed") is True):
-        return bool(episode.get("episode_series", {}).get("historical_reconstruction"))
+        # Allow one bounded correction of a truly revised, NEVER-PUBLISHED
+        # non-serial preview if an explicit, named voice revision was requested.
+        # The fingerprint must change and the logical episode cannot already
+        # be permitted for public auto-release.
+        return bool(
+            episode.get("episode_series", {}).get("historical_reconstruction")
+            or (episode.get("voice_revision_requested") is True
+                and episode.get("auto_publish") is not True)
+        )
     return True
 
 
