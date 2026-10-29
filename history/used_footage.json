@@ -437,6 +437,16 @@
       "episode": "trail-choices-25",
       "source": "https://www.pexels.com/video/off-road-motorbike-adventure-through-mountain-trail-28750463/",
       "status": "reserved-or-rendered"
+    },
+    "5053058": {
+      "episode": "highland-tour-26",
+      "source": "https://www.pexels.com/video/aerial-shot-of-motorcycle-cruising-on-mountains-5053058/",
+      "status": "reserved-or-rendered"
+    },
+    "9472118": {
+      "episode": "highland-tour-26",
+      "source": "https://www.pexels.com/video/aerial-footage-of-a-person-riding-a-motorcycle-at-the-desert-9472118/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -614,6 +624,13 @@
       "people": "independent-mountain-trail-groups",
       "story": "compare-open-hill-routes",
       "visual": "mountain-drone-trail-dust"
+    },
+    "highland-tour-26": {
+      "environment": "highland-versus-arid-roadtrip",
+      "bike": "touring-moto-adventure-bikes",
+      "people": "independent-scenic-road-travelers",
+      "story": "green-vs-arid-motorcycle-trips",
+      "visual": "two-contrasting-scenic-road-aerials"
     }
   }
 }
