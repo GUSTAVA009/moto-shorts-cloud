@@ -1,0 +1,36 @@
+name: GUSTAVA - Keep Fresh Motorcycle Shorts Queued
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'cloud-shorts/autofill_catalog.py'
+      - 'cloud-shorts/seed_backlog.json'
+      - 'cloud-shorts/test_autofill_catalog.py'
+      - '.github/workflows/autofill-motorcycle.yml'
+  schedule:
+    # UTC. Refill ahead of the regular 04:05, 10:05, 16:05 preview runs.
+    - cron: "13 00,06,12,18 * * *"
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: gustava-motorcycle-autofill
+  cancel-in-progress: false
+
+jobs:
+  replenish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate curated evergreen motorcycle scripts and licenses
+        run: |
+          python3 -m unittest discover -s cloud-shorts -p 'test_autofill_catalog.py' -v
+      - name: Add one unseen researched story when queue becomes low
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 cloud-shorts/autofill_catalog.py
