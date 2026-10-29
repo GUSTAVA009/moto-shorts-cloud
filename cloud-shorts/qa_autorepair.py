@@ -46,9 +46,25 @@ def load_report(path):
 
 
 def run_command(args, env=None):
-    result = subprocess.run(args, env=env, check=False, timeout=1200)
+    result = subprocess.run(args, env=env, check=False, timeout=1200,
+                            capture_output=True, text=True)
+    if result.stdout:
+        print(result.stdout[-5000:], flush=True)
+    if result.stderr:
+        print(result.stderr[-2500:], file=sys.stderr, flush=True)
     if result.returncode != 0:
-        raise RuntimeError("QA repair subprocess exited " + str(result.returncode))
+        tail = (result.stderr or result.stdout or "")[-380:]
+        raise RuntimeError("QA_REPAIR_SUBPROCESS_FAILED: " + tail)
+
+
+def source_failure(error):
+    """Only explicitly identified broken/motionless licensed clips may be replaced."""
+    msg = str(error).casefold()
+    return any(term in msg for term in (
+        "not_enough_moving_licensed_scenes", "too much video data",
+        "source video download was empty", "source video download",
+        "http error 404", "http error 403", "source lacks video",
+    ))
 
 
 def evaluate(episode_id, work, dist, speed, gain):
@@ -80,8 +96,9 @@ def repair(episode_id, profiles=PROFILES, runner=evaluate):
             voice, mixed = runner(episode_id, work, dist, speed, gain)
         except (RuntimeError, subprocess.TimeoutExpired, OSError) as exc:
             audit.append({"attempt": attempt, "status": "technical_error",
-                          "reason": type(exc).__name__, "speech_speed": speed,
-                          "music_gain": gain})
+                          "reason": type(exc).__name__,
+                          "source_failure": source_failure(exc),
+                          "speech_speed": speed, "music_gain": gain})
             # A broken/downloaded source requires different rights-cleared
             # footage; repeating the same network request blindly is unsafe.
             print("QA_REPAIR_TECHNICAL_ERROR", attempt, type(exc).__name__, flush=True)
