@@ -1,9 +1,13 @@
 {
   "id": "why-ice-floats-22",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40875509094",
   "attempt_count": 1,
   "preview_fingerprint": "81c32897a61750410d2f664c1d4fd2de4e78e887dd5ee23e1e8b168bad99d7e5",
   "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": false,
+  "voice_qa_coverage": 0.947,
+  "mixed_audio_qa_passed": false,
+  "mixed_audio_qa_coverage": 0.947
 }
