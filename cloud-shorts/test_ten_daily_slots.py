@@ -9,7 +9,7 @@ from ten_daily_slots import choose_slot, LOCAL_TIMES, TARGET_PER_DAY
 class NinetyMinuteSlotsTests(unittest.TestCase):
     def test_ten_distinct_slots_every_day(self):
         self.assertEqual(len(LOCAL_TIMES), 16)
-        self.assertEqual(len(set(LOCAL_TIMES)), 10)
+        self.assertEqual(len(set(LOCAL_TIMES)), 16)
         self.assertEqual(TARGET_PER_DAY, 16)
 
 
