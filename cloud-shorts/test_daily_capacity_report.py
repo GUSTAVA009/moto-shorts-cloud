@@ -21,7 +21,7 @@ class CapacityReportTests(unittest.TestCase):
         self.assertEqual(report["scheduled_for_today"], 1)
         self.assertEqual(report["new_unique_scripts_ready_to_render"], 1)
         self.assertIn("BELOW_TEN_SCHEDULED_OR_SENT_TODAY", report["hard_blockers"])
-        self.assertIn("NO_ORIGINAL_STORY_MODEL_AND_CURATED_BACKLOG_EXHAUSTED",
+        self.assertIn("PEXELS_API_KEY_NOT_CONFIGURED: CC0 fallback limited",
                       report["hard_blockers"])
 
     def test_status_is_not_falsely_green_without_credentials(self):
