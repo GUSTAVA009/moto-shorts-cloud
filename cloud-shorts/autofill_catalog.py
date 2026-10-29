@@ -91,7 +91,9 @@ def main():
                 "STORY_SUPPLY_BLOCKED: curated archive exhausted and original "
                 "model key missing (OPENAI_API_KEY or OPENROUTER_API_KEY)"
             ) from exc
-        selected = create_one(catalog)
+        import preview_queue as ledger
+        history = ledger.decode_history(ledger.api(ledger.HISTORY_PATH))
+        selected = create_one(catalog, permanently_used=set(history["used"]))
         selection = (dict(catalog, episodes=catalog["episodes"] + [selected]),
                      selected["id"])
     if selection is None:
