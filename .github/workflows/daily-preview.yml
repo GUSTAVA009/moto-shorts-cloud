@@ -42,6 +42,7 @@ jobs:
           python3 -m unittest discover -s cloud-shorts -p 'test_render_episode.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_motion_gate.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_visual_revision.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_ten_daily_slots.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_editorial_guard.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_preview_queue.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_engagement_cta.py' -v
