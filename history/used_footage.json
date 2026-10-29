@@ -472,6 +472,16 @@
       "episode": "jump-track-28",
       "source": "https://www.pexels.com/video/off-road-motorcycle-racing-12975439/",
       "status": "reserved-or-rendered"
+    },
+    "6435399": {
+      "episode": "snow-trail-29",
+      "source": "https://www.pexels.com/video/motocross-in-the-winter-6435399/",
+      "status": "reserved-or-rendered"
+    },
+    "10513338": {
+      "episode": "snow-trail-29",
+      "source": "https://www.pexels.com/video/driving-enduro-motorbikes-in-snow-10513338/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -670,6 +680,13 @@
       "people": "separate-pro-track-racers",
       "story": "race-track-jump-visual-timing",
       "visual": "airborne-bikes-on-prepared-tracks"
+    },
+    "snow-trail-29": {
+      "environment": "frozen-snow-forest-and-hill-trail",
+      "bike": "winter-offroad-motorcycles",
+      "people": "two-independent-snow-rider-groups",
+      "story": "snow-surface-ride-preparation",
+      "visual": "snowy-trails-and-bike-tracks"
     }
   }
 }
