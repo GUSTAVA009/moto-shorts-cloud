@@ -2,7 +2,7 @@ name: Shorts Factory - Three Unique Cloud Previews Daily
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/render_episode.py', 'cloud-shorts/test_motion_gate.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/asr_fallback.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/kokoro_voice.py', 'cloud-shorts/mixed_audio_qa.py', 'cloud-shorts/publication_safety.py', 'cloud-shorts/channel_focus.py']
+    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/render_episode.py', 'cloud-shorts/qa_autorepair.py', 'cloud-shorts/test_motion_gate.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/asr_fallback.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/kokoro_voice.py', 'cloud-shorts/mixed_audio_qa.py', 'cloud-shorts/publication_safety.py', 'cloud-shorts/channel_focus.py']
   schedule:
     # 10 production attempts/day; times UTC, 07:10 to 22:10 Moscow.
     # Each picks ONE original, not a copy of a previously released Short.
@@ -40,6 +40,7 @@ jobs:
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
           python3 -m unittest discover -s cloud-shorts -p 'test_render_episode.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_qa_autorepair.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_motion_gate.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_visual_revision.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_ten_daily_slots.py' -v
@@ -55,39 +56,23 @@ jobs:
           # Keep preinstalled CUDA dependencies off a CPU-only cloud runner.
           python3 -m pip install --disable-pip-version-check torch --index-url https://download.pytorch.org/whl/cpu
           python3 -m pip install --disable-pip-version-check piper-tts==1.8.0 silero==0.5.5 kokoro==0.9.4 ruaccent==1.5.8.3 phonemizer==3.4.0 misaki==0.9.4 soundfile==0.14.0 huggingface_hub
-      - name: Produce next unique Shorts preview in GitHub Cloud
+      - name: Install independent Russian ASR (pinned decoder)
         if: steps.pick.outputs.has_job == 'true'
-        env:
-          EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
-          python3 cloud-shorts/render_episode.py --episode "$EPISODE"
-          ffprobe -v error -show_entries stream=codec_type,width,height \
-            -show_entries format=duration -of json "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4"
-      - name: Independent Russian speech QA (missing words and endings)
-        if: steps.pick.outputs.has_job == 'true'
-        env:
-          EPISODE: ${{ steps.pick.outputs.episode }}
-        run: |
-          # faster-whisper 1.2.1 passes metadata_errors, removed by PyAV 19.
-          # Pin the verified decoder API so the primary Russian ASR actually works.
           python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1 av==18.1.0 openai-whisper
           python3 - <<'PY'
           import av
-          print('PYAV_PINNED_FOR_FAST_WHISPER', av.__version__)
           assert av.__version__.startswith('18.1.')
+          print('PYAV_PINNED_FOR_FAST_WHISPER', av.__version__)
           PY
-          python3 cloud-shorts/voice_qa.py \
-            --episode "$EPISODE" \
-            --wav "cloud-shorts/work/$EPISODE/new_narration.wav" \
-            --out "cloud-shorts/dist/new/$EPISODE/voice_qa.json"
-      - name: Verify original Russian words remain clear after MP4 music mixing
+      - name: Render and automatically repair bad narration or voice masking (maximum three QA attempts)
         if: steps.pick.outputs.has_job == 'true'
         env:
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
-          python3 cloud-shorts/mixed_audio_qa.py --episode "$EPISODE" \
-            --mp4 "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4" \
-            --out "cloud-shorts/dist/new/$EPISODE/mixed_audio_qa.json"
+          python3 cloud-shorts/qa_autorepair.py --episode "$EPISODE"
+          ffprobe -v error -show_entries stream=codec_type,width,height \
+            -show_entries format=duration -of json "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4"
       - name: Store MP4, cover, metadata and internal licence records
         if: steps.pick.outputs.has_job == 'true'
         uses: actions/upload-artifact@v4
