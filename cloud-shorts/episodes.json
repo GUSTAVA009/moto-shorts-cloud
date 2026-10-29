@@ -2973,9 +2973,9 @@
         },
         {
           "key": "night_traffic",
-          "url": "https://www.pexels.com/download/video/29185546/",
-          "source_page": "https://www.pexels.com/video/bustling-night-traffic-in-vibrant-city-center-29185546/",
-          "author": "Media Dung",
+          "url": "https://www.pexels.com/download/video/13177125/",
+          "source_page": "https://www.pexels.com/video/cars-scooters-and-motorcycles-on-street-13177125/",
+          "author": "Bùi Hoàng Long",
           "license": "Pexels License"
         }
       ],
@@ -3036,7 +3036,10 @@
         "kind": "like",
         "overlay": "НРАВИТСЯ НОЧНОЙ ГОРОД? ЛАЙК!",
         "description": "Поставь лайк, если любишь атмосферу ночного города."
-      }
+      },
+      "source_revision_requested": true,
+      "source_revision_reason": "oversized_source_replaced",
+      "source_revision_note": "First night clip 128MB was fine; second 4K 91-second source exceeded 350MB. New 1080p 19-second licensed night street source has motorcycles."
     },
     {
       "id": "jump-track-28",
