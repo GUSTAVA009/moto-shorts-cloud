@@ -3037,6 +3037,98 @@
         "overlay": "НРАВИТСЯ НОЧНОЙ ГОРОД? ЛАЙК!",
         "description": "Поставь лайк, если любишь атмосферу ночного города."
       }
+    },
+    {
+      "id": "jump-track-28",
+      "auto_preview": true,
+      "auto_publish": true,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "kokoro_ru_dima",
+      "title": "Мотокросс: почему прыжок выглядит таким быстрым? 🏁 #shorts",
+      "narration": "На гоночной трассе все решают секунды. Мотоцикл взлетает с трамплина, а зритель видит только короткий миг. За красивым прыжком стоят тренировки и подготовленная трасса. Эти кадры сняты на разных площадках. Любишь смотреть мотокросс?",
+      "description": "Прыжки и настоящие мотокроссовые трассы. Спортсмены выступают на подготовленных площадках. 🏁\n\n#мото #мотокросс #гонки #shorts",
+      "caption_start": "МИГ ДО ПРЫЖКА",
+      "caption_middle": "ВЫЛЕТ С ТРАМПЛИНА",
+      "caption_end": "НАПИШИ: КАК ТЕБЕ ПРЫЖОК?",
+      "max_duration_seconds": 33,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 134,
+      "footage": [
+        {
+          "key": "slow_moto_jump",
+          "url": "https://www.pexels.com/download/video/10839355/",
+          "source_page": "https://www.pexels.com/video/slow-motion-of-rider-on-motocross-track-10839355/",
+          "author": "Midtrack -",
+          "license": "Pexels License"
+        },
+        {
+          "key": "jump_track",
+          "url": "https://www.pexels.com/download/video/12975439/",
+          "source_page": "https://www.pexels.com/video/off-road-motorcycle-racing-12975439/",
+          "author": "Tom Fisk",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "slow_moto_jump",
+          "start": 0.1,
+          "seconds": 2.5
+        },
+        {
+          "source": "jump_track",
+          "start": 0.2,
+          "seconds": 2.5
+        },
+        {
+          "source": "slow_moto_jump",
+          "start": 2.6,
+          "seconds": 2.5
+        },
+        {
+          "source": "jump_track",
+          "start": 2.8,
+          "seconds": 2.5
+        },
+        {
+          "source": "slow_moto_jump",
+          "start": 4.9,
+          "seconds": 2.5
+        },
+        {
+          "source": "jump_track",
+          "start": 5.1,
+          "seconds": 2.5
+        },
+        {
+          "source": "slow_moto_jump",
+          "start": 1.5,
+          "seconds": 2.5
+        },
+        {
+          "source": "jump_track",
+          "start": 1.6,
+          "seconds": 2.5
+        }
+      ],
+      "editorial": {
+        "environment": "professional-motocross-jump-tracks",
+        "bike": "competition-dirt-race-motorcycles",
+        "people": "separate-pro-track-racers",
+        "story": "race-track-jump-visual-timing",
+        "visual": "airborne-bikes-on-prepared-tracks"
+      },
+      "tags": [
+        "мото",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ: ВИДЕЛ ТАКОЙ ПРЫЖОК?",
+        "description": "Расскажи в комментариях, был ли ты на мотокроссе."
+      }
     }
   ]
 }
