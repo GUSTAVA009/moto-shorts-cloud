@@ -2,6 +2,8 @@
   "episode": "highland-tour-26",
   "sha256": "310b5108ad0676020df1ba752c1e88bc9c65d088a3eb93fe4474420d4a1b1e64",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-highland-tour-26-310b5108ad06/highland-tour-26.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae38fac49b3849a24cbf5f7",
+  "due_at": "2026-10-29T19:40:00.000Z"
 }
