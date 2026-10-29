@@ -6,7 +6,7 @@ import unittest
 from unittest.mock import call, patch
 
 import buffer_autopublish as b
-from publora_autopublish import file_sha256
+from publication_safety import file_sha256
 
 
 class BufferPublisherTests(unittest.TestCase):
