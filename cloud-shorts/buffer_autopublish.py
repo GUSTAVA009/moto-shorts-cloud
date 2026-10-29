@@ -13,10 +13,12 @@ import re
 import subprocess
 import urllib.request
 import urllib.error
+from datetime import datetime, timedelta, timezone
 
 import preview_queue as ledger
 from publication_safety import publication_allowed, file_sha256
 from channel_focus import is_motorcycle_episode
+from ten_daily_slots import choose_slot
 
 CHANNEL = "6ae238b32f1f5ed648ff9011"
 ORG = "6ae237b760e9c8dd49173dc8"
@@ -49,7 +51,7 @@ def verify_channel():
         c.get("serviceId") != YOUTUBE or c.get("isQueuePaused") is not False or
         c.get("isDisconnected") is not False):
         raise RuntimeError("Incorrect or unavailable YouTube channel")
-    q = ('query {posts(first:25,input:{organizationId:"' + ORG +
+    q = ('query {posts(first:100,input:{organizationId:"' + ORG +
          '",filter:{status:[scheduled],channelIds:["' + CHANNEL +
          '"]}}) {edges {node {id text dueAt}} pageInfo {hasNextPage}}}')
     p = buffer(q).get("posts") or {}
@@ -57,6 +59,20 @@ def verify_channel():
         raise RuntimeError("Buffer queue full or pagination unresolved")
     items = [x["node"] for x in p.get("edges") or []]
     return items
+
+
+
+def recently_sent():
+    """Count posts already published today against the ten-per-day target."""
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=2)).isoformat().replace("+00:00", "Z")
+    q = ('query {posts(first:100,input:{organizationId:"' + ORG +
+         '",filter:{status:[sent],channelIds:["' + CHANNEL +
+         '"],startDate:"' + cutoff +
+         '"}}) {edges {node {id dueAt}} pageInfo {hasNextPage}}}')
+    data = buffer(q).get("posts") or {}
+    if (data.get("pageInfo") or {}).get("hasNextPage"):
+        raise RuntimeError("Recent sent-post inventory incomplete; refuse an extra upload")
+    return [x["node"] for x in data.get("edges", [])]
 
 
 def validate_video(video):
@@ -131,10 +147,12 @@ def publish(episode, video, metadata, voice, mixed):
     publication_allowed(episode, metadata, voice, video)
     validate_video(video)
     posts = verify_channel()
-    if len(posts) >= 8:
-        return {"skipped": "Buffer queue near capacity; retry later"}
+    if len(posts) >= 25:
+        return {"skipped": "Buffer queue near capacity (25 pending); retry later"}
     if any(p.get("text", "").strip() == metadata["description"].strip() for p in posts):
         raise RuntimeError("Potential identical scheduled post in Buffer")
+    due_at = choose_slot(posts + recently_sent(),
+                         timezone_name=os.getenv("GUSTAVA_POST_TIMEZONE", "Europe/Moscow"))
     sha = file_sha256(video)
     url = release_url(episode["id"], video, sha)
     state = {"episode": episode["id"], "sha256": sha, "media_url": url,
@@ -145,7 +163,7 @@ def publish(episode, video, metadata, voice, mixed):
     category = "2" if re.search(r"мото|байк|гонк", title + " " + desc, re.I) else "28"
     payload = {
         "channelId": CHANNEL, "text": desc, "schedulingType": "automatic",
-        "mode": "addToQueue", "aiAssisted": True,
+        "mode": "customScheduled", "dueAt": due_at, "aiAssisted": True,
         "metadata": {"youtube": {"title": title, "categoryId": category,
                      "madeForKids": False, "privacy": "public",
                      "isAiGenerated": True}},
