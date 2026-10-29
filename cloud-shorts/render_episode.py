@@ -21,6 +21,7 @@ from tts_voice import render as make_voice
 from silero_voice import render as make_silero_voice, MODEL_ID as SILERO_MODEL_ID, SPEAKER as SILERO_SPEAKER
 from kokoro_voice import render as make_kokoro_voice, MODEL_CARD as KOKORO_MODEL_CARD
 from editorial_guard import validate_catalog
+from channel_focus import assert_motorcycle_episode
 from engagement_cta import validate_cta, overlay_filters, build_description
 
 HERE = Path(__file__).resolve().parent
@@ -87,6 +88,8 @@ def validate_episode(ep):
     slug = ep.get("id", "")
     if not ID.fullmatch(slug):
         raise ValueError("Invalid episode ID")
+    if ep.get("auto_preview") is True or ep.get("auto_publish") is True:
+        assert_motorcycle_episode(ep)
     for field in ("title", "narration", "description", "caption_start", "caption_middle", "caption_end"):
         value = str(ep.get(field, "")).strip()
         if not value or any(term in value.casefold() for term in BAN):
