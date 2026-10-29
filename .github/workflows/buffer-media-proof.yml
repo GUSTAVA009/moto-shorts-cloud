@@ -16,6 +16,8 @@ jobs:
       - name: Build fresh synthetic MP4 for a private integration test (no user media)
         shell: bash
         run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg >/dev/null
           ffmpeg -hide_banner -loglevel error -y -f lavfi -i 'testsrc2=size=360x640:rate=30:duration=4' -f lavfi -i 'sine=frequency=350:sample_rate=48000:duration=4' -map 0:v:0 -map 1:a:0 -c:v libx264 -preset veryfast -pix_fmt yuv420p -c:a aac -b:a 80k -movflags +faststart -t 4 buffer-media-proof.mp4
           ffprobe -v error -show_entries format=duration,size -of default=noprint_wrappers=1 buffer-media-proof.mp4
       - name: Publish only the synthetic MP4 to a stable GitHub Releases URL
