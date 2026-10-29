@@ -185,6 +185,17 @@ def choose(catalog, output):
                      if ep.get("research_pillar") in ("engineering", "nature", "science",
                                                       "history", "space", "surprising_facts")
                      and records[ep["id"]][0] is None), None)
+    # An explicit, unpublished narration repair has priority over historical
+    # retries. It cannot target a published video, only a revised preview.
+    if selected is None:
+        for item in listed:
+            if item.get("voice_revision_requested") is not True:
+                continue
+            _, receipt = records[item["id"]]
+            if eligible_retry(item, receipt, preview_fingerprint(item)):
+                if api("publication-receipts/" + item["id"] + ".json") is None:
+                    selected = item
+                    break
     # Historical serial continuity: repair part one before beginning part two,
     # but do not let repeated serial retries indefinitely block topic experiments.
     if selected is None:
