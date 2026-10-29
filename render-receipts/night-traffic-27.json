@@ -1,9 +1,13 @@
 {
   "id": "night-traffic-27",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40931251296",
   "attempt_count": 3,
   "preview_fingerprint": "e79e8aefea5cea8e739e0baffc09f2ec01acba6c62b152ff984fabda005b7da7",
   "previous_run_id": "40930563840",
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 0.972,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 1.0
 }
