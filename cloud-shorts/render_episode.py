@@ -362,10 +362,11 @@ def render(ep, output_dir):
         "[0:v]" + captions + "[v];"
         "[1:a]aresample=48000,highpass=f=85,lowpass=f=8900,"
         "volume=1.20,adelay=160|160,apad,atrim=duration=%.3f,"
-        "asetpts=PTS-STARTPTS,asplit=2[voice_duck][voice_mix];" % total
+        "asetpts=PTS-STARTPTS,aformat=channel_layouts=stereo,asplit=2[voice_duck][voice_mix];" % total
         + "[2:a]aresample=48000,volume=0.34,"
         "afade=t=in:st=0:d=0.18,afade=t=out:st=%.3f:d=0.4,"
-        "atrim=duration=%.3f,asetpts=PTS-STARTPTS[bed];" % (max(0.1, total - 0.4), total)
+        "atrim=duration=%.3f,asetpts=PTS-STARTPTS,"
+        "aformat=channel_layouts=stereo,haas=side_gain=0.55[bed];" % (max(0.1, total - 0.4), total)
         + "[bed][voice_duck]sidechaincompress=threshold=0.022:"
         "ratio=7:attack=8:release=240[ducked];"
         "[ducked][voice_mix]amix=inputs=2:duration=first:normalize=0,"
@@ -378,7 +379,7 @@ def render(ep, output_dir):
         "-map", "[v]", "-map", "[a]",
         "-c:v", "libx264", "-preset", "veryfast", "-crf", "22",
         "-pix_fmt", "yuv420p", "-r", "30",
-        "-c:a", "aac", "-b:a", "160k", "-ar", "48000",
+        "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-ac", "2",
         "-movflags", "+faststart", "-t", f"{total:.3f}", output,
     ], 270)
     duration, streams = probe(output)
