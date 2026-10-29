@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/priority-first-now.yml'
+      - 'cloud-shorts/priority_first_now.py'
   workflow_dispatch:
 
 permissions:
