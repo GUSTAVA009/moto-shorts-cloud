@@ -24,6 +24,7 @@ class EditorialGuardTests(unittest.TestCase):
         data = copy.deepcopy(self.data)
         ep = data["episodes"][-1]
         ep["footage"][0]["source_page"] = "https://www.pexels.com/video/person-riding-a-motocross-5803637/"
+        ep["footage"][0]["url"] = "https://www.pexels.com/download/video/5803637/"
         with self.assertRaisesRegex(ValueError, "STOCK_REUSE_FORBIDDEN"):
             g.validate_catalog(data)
 
@@ -31,6 +32,7 @@ class EditorialGuardTests(unittest.TestCase):
         data = copy.deepcopy(self.data)
         old = data["episodes"][0]["footage"][0]
         data["episodes"][-1]["footage"][0]["source_page"] = old["source_page"]
+        data["episodes"][-1]["footage"][0]["url"] = old["url"]
         with self.assertRaisesRegex(ValueError, "STOCK_REUSE_FORBIDDEN"):
             g.validate_catalog(data)
 
