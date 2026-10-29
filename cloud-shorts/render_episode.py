@@ -175,13 +175,30 @@ def download(item, dst):
     print("FOOTAGE_DOWNLOADED", item["key"], dst.stat().st_size, flush=True)
 
 
+def motion_verified(path, threshold_seconds=1.25):
+    """Refuse real frozen source shots, rather than fooling final freeze QA with cuts."""
+    check = subprocess.run(
+        ["ffmpeg", "-hide_banner", "-i", str(path), "-an",
+         "-vf", "freezedetect=n=-45dB:d=%.2f" % threshold_seconds,
+         "-f", "null", "-"],
+        capture_output=True, text=True, timeout=40,
+    )
+    if check.returncode:
+        raise RuntimeError("Could not run independent per-shot motion QA")
+    return "freeze_start:" not in check.stderr
+
+
 def assemble_clips(ep, sources, work, target_seconds):
     remaining = target_seconds
     segments = []
     shots = ep["shots"]
-    scene_count = 0
-    while remaining > 0.30 and scene_count < 18:
-        shot = shots[scene_count % len(shots)]
+    accepted_sources = set()
+    tried = 0
+    # Try alternate shots when a licensed source has a truly frozen section.
+    # Repeated stills are NOT silently allowed as multiple short cuts.
+    while remaining > 0.30 and tried < 48 and len(segments) < 18:
+        shot = shots[tried % len(shots)]
+        tried += 1
         src = sources[shot["source"]]
         src_duration, streams = probe(src)
         if not any(s["codec_type"] == "video" for s in streams):
@@ -189,31 +206,34 @@ def assemble_clips(ep, sources, work, target_seconds):
         start = float(shot["start"])
         seconds = min(float(shot["seconds"]), remaining, src_duration - start - 0.1)
         if seconds < 0.9:
-            # Some Pexels previews are only a few seconds long. Reframe inside
-            # their real runtime rather than requesting nonexistent frames.
             start = max(0.0, src_duration - min(2.5, remaining) - 0.2)
             seconds = min(float(shot["seconds"]), remaining, src_duration - start - 0.1)
-        if seconds < 0.8 and remaining > 0.8:
-            raise RuntimeError("Source too short for any valid cut: " + shot["source"])
         if seconds < 0.28:
-            break  # avoid exporting a near-empty last segment
-        out = work / ("scene_%02d.mp4" % scene_count)
+            continue
+        out = work / ("scene_%02d.mp4" % tried)
         run([
             "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
-            "-ss", f"{start:.3f}", "-i", src,
-            "-t", f"{seconds:.3f}",
+            "-ss", f"{start:.3f}", "-i", src, "-t", f"{seconds:.3f}",
             "-vf", "fps=30,scale=720:1280:force_original_aspect_ratio=increase:"
                    "flags=lanczos,crop=720:1280,setsar=1,format=yuv420p",
             "-an", "-c:v", "libx264", "-crf", "23", "-preset", "veryfast",
             "-r", "30", "-pix_fmt", "yuv420p", out,
         ], 180)
+        if seconds > 1.35 and not motion_verified(out):
+            out.unlink(missing_ok=True)
+            print("FROZEN_SOURCE_SHOT_REJECTED", shot["source"],
+                  "offset", round(start, 2), flush=True)
+            continue
         segments.append(out)
+        accepted_sources.add(shot["source"])
         remaining -= seconds
-        scene_count += 1
-    if remaining > 0.35:
-        raise RuntimeError("Not enough video scenes for narration")
+    if remaining > 0.35 or len(accepted_sources) < 2:
+        raise RuntimeError(
+            "NOT_ENOUGH_MOVING_LICENSED_SCENES: video release blocked, "
+            "new footage or corrected shot offsets required"
+        )
     playlist = work / "playlist.txt"
-    playlist.write_text("".join("file '%s'\n" % p.name for p in segments), encoding="utf-8")
+    playlist.write_text("".join("file '%s'\\n" % p.name for p in segments), encoding="utf-8")
     silent = work / "assembled.mp4"
     run([
         "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
@@ -221,7 +241,9 @@ def assemble_clips(ep, sources, work, target_seconds):
         "-an", "-c", "copy", silent,
     ], 120)
     total, _ = probe(silent)
-    print("SCENES_ASSEMBLED", len(segments), "seconds", round(total, 2), flush=True)
+    print("SCENES_ASSEMBLED", len(segments), "unique_sources", len(accepted_sources),
+          "discarded_still_shots", tried - len(segments),
+          "seconds", round(total, 2), flush=True)
     return silent, total
 
 
