@@ -73,8 +73,8 @@ jobs:
           python3 cloud-shorts/qa_autorepair.py --episode "$EPISODE"
           ffprobe -v error -show_entries stream=codec_type,width,height \
             -show_entries format=duration -of json "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4"
-      - name: Store MP4, cover, metadata and internal licence records
-        if: steps.pick.outputs.has_job == 'true'
+      - name: Store MP4, final ASR and repair diagnostic even on technical failure
+        if: ${{ always() && steps.pick.outputs.has_job == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: daily-preview-${{ steps.pick.outputs.episode }}-${{ github.run_id }}
