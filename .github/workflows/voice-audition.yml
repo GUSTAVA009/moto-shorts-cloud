@@ -18,14 +18,15 @@ jobs:
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
-      - name: Test natural low male audio processing and proof
-        run: |
-          python3 -m unittest discover -s cloud-shorts -p 'test_voice_style.py' -v
-          ffmpeg -hide_banner -filters | grep rubberband
-      - name: Install licensed Russian male Kokoro synthesizer
+      - name: Install FFmpeg + high-quality pitch-shifting support
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq --no-install-recommends ffmpeg espeak-ng libespeak-ng1
+          ffmpeg -hide_banner -filters | grep rubberband
+      - name: Test natural low male audio processing and proof
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_voice_style.py' -v
+      - name: Install licensed Russian male Kokoro synthesizer
+        run: |
           python3 -m pip install --disable-pip-version-check torch --index-url https://download.pytorch.org/whl/cpu
           python3 -m pip install --disable-pip-version-check kokoro==0.9.4 ruaccent==1.5.8.3 phonemizer==3.4.0 misaki==0.9.4 soundfile==0.14.0 huggingface_hub
       - name: Generate real Russian male audition WAV without music or publishing
