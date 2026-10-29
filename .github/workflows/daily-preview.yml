@@ -2,7 +2,10 @@ name: Shorts Factory - Three Unique Cloud Previews Daily
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/render_episode.py', 'cloud-shorts/qa_autorepair.py', 'cloud-shorts/test_motion_gate.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/asr_fallback.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/kokoro_voice.py', 'cloud-shorts/mixed_audio_qa.py', 'cloud-shorts/publication_safety.py', 'cloud-shorts/channel_focus.py']
+    # Prevent source-catalog changes and repair commits from spawning
+    # multiple pending builds that cancel one another. New episodes are
+    # instead dispatched exactly once by the supplier/repair bots.
+    paths: ['.github/workflows/daily-preview.yml']
   schedule:
     # 10 production attempts/day; times UTC, 07:10 to 22:10 Moscow.
     # Each picks ONE original, not a copy of a previously released Short.
