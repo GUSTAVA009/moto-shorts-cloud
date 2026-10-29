@@ -88,7 +88,7 @@ jobs:
         run: |
           python3 cloud-shorts/preview_queue.py finish --episode "$EPISODE" --qa-report "cloud-shorts/dist/new/$EPISODE/voice_qa.json" --mixed-qa-report "cloud-shorts/dist/new/$EPISODE/mixed_audio_qa.json"
       - name: Publish NEW MP4 through Publora only after Russian QA and account opt-in
-        if: steps.pick.outputs.has_job == 'true'
+        if: steps.pick.outputs.has_job == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED != 'true'
         env:
           EPISODE: ${{ steps.pick.outputs.episode }}
           GITHUB_TOKEN: ${{ github.token }}
