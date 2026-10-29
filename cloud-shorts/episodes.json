@@ -2412,7 +2412,7 @@
       ],
       "cta": {
         "kind": "comment",
-        "overlay": "А ТЫ ВЕРИЛ В ЭТОТ МИФ?",
+        "overlay": "НАПИШИ, ВЕРИЛ В ЭТОТ МИФ?",
         "description": "Что ещё о молниях тебя удивляет?"
       },
       "auto_preview": true,
