@@ -103,6 +103,7 @@ def assert_new_sources(episode, history):
 RENDER_DEPENDENCIES = (
     "render_episode.py", "tts_voice.py", "silero_voice.py",
     "soundtrack.py", "kokoro_voice.py", "voice_qa.py", "mixed_audio_qa.py",
+    "asr_fallback.py",
 )
 MAX_ATTEMPTS = 3
 MAX_DOCUMENTARY_ATTEMPTS = 5  # extra licensed visual corrections, unpublished only
