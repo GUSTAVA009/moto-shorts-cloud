@@ -3134,6 +3134,98 @@
         "overlay": "НАПИШИ: ВИДЕЛ ТАКОЙ ПРЫЖОК?",
         "description": "Расскажи в комментариях, был ли ты на мотокроссе."
       }
+    },
+    {
+      "id": "snow-trail-29",
+      "auto_preview": true,
+      "auto_publish": true,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "kokoro_ru_dima",
+      "title": "Мотоцикл и снег: привычная тропа изменилась! ❄️ #shorts",
+      "narration": "Снег полностью меняет знакомую дорогу. На мотоцикле даже небольшой подъем выглядит иначе, когда вокруг белые склоны. Поэтому зимний маршрут требует особой осторожности и правильной подготовки. Два разных райдера едут по снегу. Ты бы выбрал такую поездку?",
+      "description": "Снежные мотомаршруты, разные райдеры и зимние пейзажи. Береги себя на сложном покрытии. ❄️\n\n#мото #зима #путешествия #shorts",
+      "caption_start": "ЗНАКОМАЯ ТРОПА СТАЛА ИНОЙ",
+      "caption_middle": "СНЕГ МЕНЯЕТ ПОКРЫТИЕ",
+      "caption_end": "ПОЕХАЛ БЫ ЗИМОЙ?",
+      "max_duration_seconds": 33,
+      "opening_trim_seconds": 0.1,
+      "music_style": "desert-cinematic",
+      "music_bpm": 116,
+      "footage": [
+        {
+          "key": "winter_forest",
+          "url": "https://www.pexels.com/download/video/6435399/",
+          "source_page": "https://www.pexels.com/video/motocross-in-the-winter-6435399/",
+          "author": "Andrew Kota",
+          "license": "Pexels License"
+        },
+        {
+          "key": "snow_mountains",
+          "url": "https://www.pexels.com/download/video/10513338/",
+          "source_page": "https://www.pexels.com/video/driving-enduro-motorbikes-in-snow-10513338/",
+          "author": "danil",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "winter_forest",
+          "start": 0.1,
+          "seconds": 2.5
+        },
+        {
+          "source": "snow_mountains",
+          "start": 0.2,
+          "seconds": 2.5
+        },
+        {
+          "source": "winter_forest",
+          "start": 2.6,
+          "seconds": 2.5
+        },
+        {
+          "source": "snow_mountains",
+          "start": 2.8,
+          "seconds": 2.5
+        },
+        {
+          "source": "winter_forest",
+          "start": 4.9,
+          "seconds": 2.5
+        },
+        {
+          "source": "snow_mountains",
+          "start": 5.1,
+          "seconds": 2.5
+        },
+        {
+          "source": "winter_forest",
+          "start": 1.5,
+          "seconds": 2.5
+        },
+        {
+          "source": "snow_mountains",
+          "start": 1.6,
+          "seconds": 2.5
+        }
+      ],
+      "editorial": {
+        "environment": "frozen-snow-forest-and-hill-trail",
+        "bike": "winter-offroad-motorcycles",
+        "people": "two-independent-snow-rider-groups",
+        "story": "snow-surface-ride-preparation",
+        "visual": "snowy-trails-and-bike-tracks"
+      },
+      "tags": [
+        "мото",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ТОМУ КТО ЛЮБИТ ЗИМУ",
+        "description": "Отправь знакомому, который любит зимние поездки."
+      }
     }
   ]
 }
