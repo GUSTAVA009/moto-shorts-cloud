@@ -16,6 +16,7 @@ import urllib.error
 
 import preview_queue as ledger
 from publora_autopublish import publication_allowed, file_sha256
+from channel_focus import is_motorcycle_episode
 
 CHANNEL = "6ae238b32f1f5ed648ff9011"
 ORG = "6ae237b760e9c8dd49173dc8"
@@ -117,6 +118,8 @@ def release_url(episode, video, sha):
 def publish(episode, video, metadata, voice, mixed):
     if os.getenv("BUFFER_AUTO_PUBLISH_ENABLED") != "true":
         return {"skipped": "Buffer auto-publication disabled"}
+    if not is_motorcycle_episode(episode):
+        return {"skipped": "CHANNEL_TOPIC_BLOCKED: episode is unrelated to GUSTAVA Enduro"}
     if episode.get("auto_publish") is not True or episode.get("voice_engine") != "kokoro_ru_dima":
         return {"skipped": "Episode or narrator not approved for automatic publication"}
     rec = "buffer-publication-receipts/" + episode["id"] + ".json"
