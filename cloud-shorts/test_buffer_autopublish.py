@@ -67,7 +67,7 @@ class BufferPublisherTests(unittest.TestCase):
         with patch.dict(os.environ, {"BUFFER_AUTO_PUBLISH_ENABLED": "true"}):
             with patch.object(b.ledger, "api", return_value=None):
                 with patch.object(b, "validate_video", return_value=None):
-                    with patch.object(b, "verify_channel", return_value=[{}] * 25):
+                    with patch.object(b, "verify_channel", return_value=([{}] * 10, [])):
                         with patch.object(b, "release_url", side_effect=AssertionError("No release")):
                             result = b.publish(self.ep, self.video, self.meta, self.voice, self.mix)
         self.assertIn("near capacity", result["skipped"])
@@ -77,20 +77,20 @@ class BufferPublisherTests(unittest.TestCase):
             with patch.object(b.ledger, "api", return_value=None):
                 with patch.object(b.ledger, "store") as store:
                     with patch.object(b, "validate_video", return_value=None):
-                        with patch.object(b, "verify_channel", return_value=[]):
+                        with patch.object(b, "verify_channel", return_value=([], [])):
                             with patch.object(b, "release_url", return_value="https://example.com/new.mp4"):
                                 with patch.object(b, "buffer", return_value={"createPost": {"message": "invalid"}}) as req:
                                     with self.assertRaisesRegex(RuntimeError, "rejected or uncertain"):
                                         b.publish(self.ep, self.video, self.meta, self.voice, self.mix)
         self.assertEqual(store.call_count, 1)
-        self.assertEqual(req.call_count, 2)  # read sent posts; write exactly once
+        self.assertEqual(req.call_count, 1)  # one actual write, no blind retry
 
     def test_valid_post_uses_correct_channel_and_youtube_metadata(self):
         with patch.dict(os.environ, {"BUFFER_AUTO_PUBLISH_ENABLED": "true"}):
             with patch.object(b.ledger, "api", side_effect=[None, None, {"sha": "receiptsha"}]):
                 with patch.object(b.ledger, "store") as store:
                     with patch.object(b, "validate_video", return_value=None):
-                        with patch.object(b, "verify_channel", return_value=[]):
+                        with patch.object(b, "verify_channel", return_value=([], [])):
                             with patch.object(b, "release_url", return_value="https://example.com/ready.mp4"):
                                 with patch.object(b, "buffer", return_value={
                                     "createPost": {"post": {"id": "post1", "channelId": b.CHANNEL,
