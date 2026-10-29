@@ -19,6 +19,7 @@ import urllib.error
 import urllib.request
 
 import preview_queue as ledger
+from channel_focus import assert_motorcycle_episode
 
 API = "https://api.publora.com/api/v1"
 EXPECTED_CHANNEL = "youtube-UCS0QCodPcFBTjMt4ioEWOUw"
@@ -41,6 +42,7 @@ def receipt_path(episode):
 def publication_allowed(episode, meta, qa, video):
     if not episode.get("auto_publish") is True:
         raise ValueError("This episode was not explicitly queued for automatic release")
+    assert_motorcycle_episode(episode)
     if meta.get("episode_id") != episode["id"] or qa.get("episode_id") != episode["id"]:
         raise ValueError("Metadata/ASR episode mismatch; do not upload")
     if qa.get("passed") is not True or qa.get("status") != "passed":
