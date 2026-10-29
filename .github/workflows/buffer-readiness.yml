@@ -1,0 +1,76 @@
+name: GUSTAVA - Buffer Connection and Schedule Audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/buffer-readiness.yml
+
+permissions:
+  contents: read
+
+jobs:
+  buffer-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      CHANNEL_ID: "6ae238b32f1f5ed648ff9011"
+      ORG_ID: "6ae237b760e9c8dd49173dc8"
+    steps:
+      - name: Check Buffer YouTube link, posting schedule and queued posts (read only)
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, urllib.error
+          from pathlib import Path
+          key = os.environ.get("BUFFER_API_KEY", "")
+          cid = os.environ["CHANNEL_ID"]
+          oid = os.environ["ORG_ID"]
+          summary = ["## Buffer YouTube publishing readiness", "",
+                     "This audit is strictly read-only: no upload, post or queue mutation."]
+          def check(query):
+              request = urllib.request.Request("https://api.buffer.com",
+                  data=json.dumps({"query": query}).encode("utf-8"), method="POST",
+                  headers={"Authorization":"Bearer "+key,
+                           "Content-Type":"application/json"})
+              with urllib.request.urlopen(request, timeout=25) as response:
+                  result=json.load(response)
+              if result.get("errors"):
+                  raise RuntimeError("Buffer GraphQL query was rejected")
+              return result.get("data", {})
+          try:
+              if len(key)<30:
+                  raise RuntimeError("BUFFER_API_KEY is missing")
+              data=check('query { channel(input:{id:"'+cid+
+                  '"}) {id name service serviceId timezone isDisconnected isQueuePaused postingSchedule {day paused times}} }')
+              ch=data.get("channel") or {}
+              valid=(ch.get("id")==cid and ch.get("service")=="youtube" and
+                     ch.get("serviceId")=="UCS0QCodPcFBTjMt4ioEWOUw" and
+                     ch.get("isDisconnected") is False and
+                     ch.get("isQueuePaused") is False)
+              slots=sum(len(day.get("times",[])) for day in ch.get("postingSchedule",[])
+                        if not day.get("paused"))
+              summary += ["- YouTube channel match: "+("YES" if valid else "NO"),
+                          "- Channel: "+str(ch.get("name","missing")),
+                          "- Timezone: "+str(ch.get("timezone","missing")),
+                          "- Active weekly publication slots: "+str(slots)]
+              query='query { posts(first:30,input:{organizationId:"'+oid+'",filter:{status:[scheduled],channelIds:["'+cid+'"]}}) { edges { node { id dueAt } } pageInfo { hasNextPage } } }'
+              posts=check(query).get("posts") or {}
+              scheduled=[x["node"] for x in posts.get("edges",[])]
+              summary.append("- Scheduled YouTube posts: "+str(len(scheduled)))
+              if slots==0: summary.append("- BLOCKER: Channel has zero active posting slots")
+              if not valid: summary.append("- BLOCKER: Channel mismatch, paused or disconnected")
+              if scheduled:
+                  summary.append("- Next scheduled UTC: "+str(min(x["dueAt"] for x in scheduled if x.get("dueAt"))))
+              if not scheduled: summary.append("- BLOCKER: Publishing queue is empty")
+              ok=valid and slots>0
+          except Exception as exc:
+              ok=False
+              summary += ["- Audit result: FAILED", "- Reason: "+type(exc).__name__]
+          Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text("\n".join(summary)+"\n",encoding="utf-8")
+          for line in summary:
+              print(line)
+          if not ok:
+              raise SystemExit(1)
+          PY
