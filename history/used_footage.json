@@ -382,6 +382,21 @@
       "episode": "lightning-strikes-again-21",
       "source": "https://www.pexels.com/video/storm-in-city-at-night-10599522/",
       "status": "reserved-or-rendered"
+    },
+    "8678465": {
+      "episode": "why-ice-floats-22",
+      "source": "https://www.pexels.com/video/ice-cubes-dropped-on-a-glass-of-water-8678465/",
+      "status": "reserved-or-rendered"
+    },
+    "4440016": {
+      "episode": "why-ice-floats-22",
+      "source": "https://www.pexels.com/video/dropping-ice-cubes-on-glass-of-water-4440016/",
+      "status": "reserved-or-rendered"
+    },
+    "36449711": {
+      "episode": "why-ice-floats-22",
+      "source": "https://www.pexels.com/video/aerial-view-of-floating-ice-on-water-surface-36449711/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -531,6 +546,13 @@
       "people": "weather-observers-and-urban-residents",
       "story": "lightning-never-strikes-twice-myth-investigation",
       "visual": "real-night-thunderbolts-and-city-skylines"
+    },
+    "why-ice-floats-22": {
+      "environment": "cold-water-glass-and-moving-ice-sea",
+      "subject": "ice-water-density-crystal-structure",
+      "people": "science-visual-observers-without-actors",
+      "story": "ice-buoyancy-from-molecular-spacing",
+      "visual": "kinetic-ice-glass-and-aerial-sea-ice"
     }
   }
 }
