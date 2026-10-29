@@ -2,7 +2,7 @@
 """Publish one reviewed Shorts MP4 into the configured Buffer YouTube queue.
 
 GitHub Actions needs BUFFER_API_KEY, GITHUB_TOKEN, GITHUB_REPOSITORY and
-BUFFER_AUTO_PUBLISH_ENABLED=true. Existing Publora/Buffer receipts prevent
+BUFFER_AUTO_PUBLISH_ENABLED=true. Existing historical/Buffer receipts prevent
 duplicate submissions. An uncertain Buffer response never triggers a retry.
 """
 import argparse
@@ -15,7 +15,7 @@ import urllib.request
 import urllib.error
 
 import preview_queue as ledger
-from publora_autopublish import publication_allowed, file_sha256
+from publication_safety import publication_allowed, file_sha256
 from channel_focus import is_motorcycle_episode
 
 CHANNEL = "6ae238b32f1f5ed648ff9011"
