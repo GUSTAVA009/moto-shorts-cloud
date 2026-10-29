@@ -1,0 +1,43 @@
+name: GUSTAVA - Repair Failed Unpublished Narration Automatically
+on:
+  workflow_run:
+    workflows: ['Shorts Factory - Three Unique Cloud Previews Daily']
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: gustava-bounded-unpublished-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    if: >-
+      ${{ github.event_name == 'workflow_run' &&
+          github.event.workflow_run.conclusion == 'failure' &&
+          github.event.workflow_run.head_branch == 'main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      FAILED_PREVIEW_RUN_ID: ${{ github.event.workflow_run.id }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test fail-closed narration repair and deduplication
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_repair_failed_preview.py' -v
+      - name: Retrieve exact failed ASR reports (never reuse other runs)
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          pattern: daily-preview-*
+          run-id: ${{ github.event.workflow_run.id }}
+          repository: ${{ github.repository }}
+          github-token: ${{ github.token }}
+          path: staged
+          merge-multiple: true
+      - name: Rewrite a single ambiguous phrase and rerender once if proven safe
+        run: python3 cloud-shorts/repair_failed_preview.py staged
