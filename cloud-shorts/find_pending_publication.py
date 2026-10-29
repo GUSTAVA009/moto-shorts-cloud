@@ -33,7 +33,11 @@ def gh(path):
 
 
 def select(catalog, receipt_entries, published, artifacts):
-    allowed={ep["id"] for ep in catalog["episodes"] if ep.get("auto_publish") is True}
+    # Retired Piper/Silero voices must NEVER re-enter the public backlog.
+    # Only newly reviewed native-Russian male Kokoro originals are eligible.
+    allowed={ep["id"] for ep in catalog["episodes"]
+             if ep.get("auto_publish") is True
+             and ep.get("voice_engine") == "kokoro_ru_dima"}
     available={x["name"] for x in artifacts if not x.get("expired")}
     choices=[]
     for obj in receipt_entries:
