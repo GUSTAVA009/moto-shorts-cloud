@@ -40,6 +40,7 @@ class EpisodeTests(unittest.TestCase):
         item = {
             "url": "https://www.pexels.com/download/video/5803097/",
             "source_page": "https://www.pexels.com/video/forest-5803097/",
+            "author": "Verified contributor", "license": "Pexels License",
         }
         self.assertEqual(r.checked_source(item), "5803097")
 
