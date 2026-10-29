@@ -7,6 +7,8 @@ on:
       - .github/workflows/buffer-readiness.yml
       - .github/workflows/buffer-backlog.yml
       - cloud-shorts/buffer_autopublish.py
+      - cloud-shorts/verify_10day_schedule.py
+      - cloud-shorts/ten_daily_slots.py
       - cloud-shorts/publication_safety.py
 
 permissions:
@@ -21,6 +23,11 @@ jobs:
       CHANNEL_ID: "6ae238b32f1f5ed648ff9011"
       ORG_ID: "6ae237b760e9c8dd49173dc8"
     steps:
+      - uses: actions/checkout@v4
+      - name: Verify exact 10 daily custom Buffer times without posting
+        env:
+          YOUTUBE_EXPECTED_CHANNEL_ID: UCS0QCodPcFBTjMt4ioEWOUw
+        run: python3 cloud-shorts/verify_10day_schedule.py
       - name: Check Buffer YouTube link, posting schedule and queued posts (read only)
         shell: bash
         run: |
