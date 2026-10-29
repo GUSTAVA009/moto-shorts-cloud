@@ -317,9 +317,19 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
     media = choose_sources(found, used)
     if len(media) < 2:
         raise RuntimeError("NO_NEW_LICENSED_MOTO_CLIPS: cannot invent footage")
-    prose = prose_factory(theme, media,
-                          [x["title"] for x in catalog["episodes"]])
-    return assemble_episode(catalog, theme, media, prose, len(catalog["episodes"]))
+    problem = None
+    for attempt in range(3):
+        try:
+            prose = prose_factory(theme, media,
+                                  [x["title"] for x in catalog["episodes"]])
+            return assemble_episode(catalog, theme, media, prose,
+                                    len(catalog["episodes"]))
+        except (ValueError, KeyError, TypeError) as exc:
+            # Do not lower originality or license checks. Boundedly request
+            # a different independent script if its structure is invalid.
+            problem = type(exc).__name__
+            print("ORIGINAL_SCRIPT_QA_RETRY", attempt + 1, problem, flush=True)
+    raise RuntimeError("ORIGINAL_SCRIPT_QA_FAILED_AFTER_3_TRIES: " + str(problem))
 
 
 def main():
