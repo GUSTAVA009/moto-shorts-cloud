@@ -103,7 +103,7 @@ def assert_new_sources(episode, history):
 RENDER_DEPENDENCIES = (
     "render_episode.py", "tts_voice.py", "silero_voice.py",
     "soundtrack.py", "kokoro_voice.py", "voice_qa.py", "mixed_audio_qa.py",
-    "asr_fallback.py",
+    "asr_fallback.py", "qa_autorepair.py", "moto_assets.py",
 )
 MAX_ATTEMPTS = 3
 MAX_VISUAL_REPAIR_ATTEMPTS = 4  # one confirmed frozen-footage correction before any upload
@@ -183,7 +183,9 @@ def eligible_abandoned_source_retry(episode, receipt, new_fingerprint, old_concl
         return False
     if episode.get("source_revision_requested") is not True:
         return False
-    if episode.get("source_revision_reason") != "oversized_source_replaced":
+    if episode.get("source_revision_reason") not in (
+            "oversized_source_replaced", "unavailable_source_replaced",
+            "frozen_source_replaced"):
         return False
     if int(receipt.get("attempt_count", 1)) >= MAX_ATTEMPTS:
         return False
