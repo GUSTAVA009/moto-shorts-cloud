@@ -18,8 +18,8 @@ jobs:
     timeout-minutes: 6
     env:
       BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-      BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED }}
-      YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+      BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED || 'true' }}
+      YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID || 'UCS0QCodPcFBTjMt4ioEWOUw' }}
     steps:
       - uses: actions/checkout@v4
       - name: Validate offline editorial, mixed audio and duplicate-protection gates
