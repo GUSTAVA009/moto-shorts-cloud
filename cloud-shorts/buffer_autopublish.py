@@ -61,7 +61,7 @@ def verify_channel():
 
 def validate_video(video):
     p = subprocess.run(["ffprobe", "-v", "error", "-count_frames", "-show_entries",
-        "format=duration:stream=codec_type,width,height,duration,nb_read_frames,avg_frame_rate",
+        "format=duration:stream=codec_type,width,height,duration,nb_read_frames,avg_frame_rate,channels",
         "-of", "json", str(video)], capture_output=True, text=True, timeout=55, check=True)
     data = json.loads(p.stdout)
     v = next((x for x in data.get("streams", []) if x.get("codec_type") == "video"), {})
@@ -70,11 +70,11 @@ def validate_video(video):
     rate = v.get("avg_frame_rate", "0/1").split("/")
     fps = float(rate[0]) / max(1.0, float(rate[1]))
     frames = int(v.get("nb_read_frames") or 0)
-    if (not 7 <= seconds <= 180 or not a or
+    if (not 7 <= seconds <= 180 or not a or int(a.get('channels') or 0) != 2 or
         v.get("width", 0) >= v.get("height", 0) or
         fps < 23.9 or frames < seconds * fps * .96 or
         abs(float(v.get("duration") or 0) - seconds) > .5):
-        raise RuntimeError("MP4 length, audio, vertical frame or codec QA failed")
+        raise RuntimeError("MP4 length, centered stereo narration/music, vertical frame or codec QA failed")
     frozen = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(video), "-an",
         "-vf", "freezedetect=n=-45dB:d=2.2", "-f", "null", "-"],
         capture_output=True, text=True, timeout=100, check=True)
