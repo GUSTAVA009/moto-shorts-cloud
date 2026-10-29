@@ -159,7 +159,7 @@ def publish(episode, video, metadata, voice, mixed):
     validate_video(video)
     posts, sent_posts = verify_channel(include_sent=True)
     if len(posts) >= 10:
-        return {"skipped": "Buffer queue at 10 pending posts (Free plan safety cap); retry after the next release"}
+        return {"skipped": "Buffer queue near capacity (10 queued, Free plan maximum); retry after the next publication"}
     if any(p.get("text", "").strip() == metadata["description"].strip() for p in posts):
         raise RuntimeError("Potential identical scheduled post in Buffer")
     due_at = choose_slot(posts + sent_posts,
