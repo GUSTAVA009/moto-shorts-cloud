@@ -15,6 +15,7 @@ import base64
 
 import preview_queue as ledger
 import publora_autopublish as publisher
+from channel_focus import is_motorcycle_episode
 
 
 def gh(path):
@@ -37,7 +38,8 @@ def select(catalog, receipt_entries, published, artifacts):
     # Only newly reviewed native-Russian male Kokoro originals are eligible.
     allowed={ep["id"] for ep in catalog["episodes"]
              if ep.get("auto_publish") is True
-             and ep.get("voice_engine") == "kokoro_ru_dima"}
+             and ep.get("voice_engine") == "kokoro_ru_dima"
+             and is_motorcycle_episode(ep)}
     available={x["name"] for x in artifacts if not x.get("expired")}
     choices=[]
     for obj in receipt_entries:
