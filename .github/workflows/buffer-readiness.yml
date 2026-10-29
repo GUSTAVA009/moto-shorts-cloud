@@ -62,6 +62,17 @@ jobs:
               posts=check(query).get("posts") or {}
               scheduled=[x["node"] for x in posts.get("edges",[])]
               summary.append("- Scheduled YouTube posts: "+str(len(scheduled)))
+              for short, post_id in [
+                  ("forest-corner-23", "6ae385c3b3aaeefe231f44cb"),
+                  ("tire-workshop-24", "6ae38883a23f0986fe0a2b1c")]:
+                  info=check('query { post(input:{id:"'+post_id+
+                             '"}) { id channelId status dueAt sentAt externalLink } }').get("post") or {}
+                  if info.get("channelId")!=cid:
+                      raise RuntimeError("Pinned YouTube destination not matched for "+short)
+                  summary.append("- "+short+": "+str(info.get("status"))+
+                                 " | dueAt UTC: "+str(info.get("dueAt"))+
+                                 " | sentAt: "+str(info.get("sentAt"))+
+                                 " | YouTube: "+str(info.get("externalLink")))
               if slots==0: summary.append("- BLOCKER: Channel has zero active posting slots")
               if not valid: summary.append("- BLOCKER: Channel mismatch, paused or disconnected")
               if scheduled:
