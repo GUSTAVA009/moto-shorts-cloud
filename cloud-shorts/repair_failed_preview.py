@@ -18,14 +18,14 @@ import sys
 import preview_queue as ledger
 from editorial_guard import validate_catalog
 from render_episode import validate_episode
-from voice_qa import tokens
+from voice_qa import tokens, match_ratio
 from autofill_catalog import github
 
 CATALOG = "cloud-shorts/episodes.json"
 MAX_REVISION_ATTEMPTS = 3
 SAFE_REWRITES = (
     ("с осмотра", "с простой проверки"),
-    ("на мотоцикле", "на своём байке"),
+    ("на мотоцикле", "на байке"),
     ("выбирай темп", "подбирай скорость"),
     ("выбери темп", "подбери скорость"),
     ("дождевой дороге", "мокрой дороге"),
@@ -43,11 +43,16 @@ def simple_rewrite(expected, heard):
     A recognized wrong word is NEVER treated as the ground truth. We change a
     phrase only if at least one expected token is absent from the old ASR.
     """
-    heard_set = set(tokens(heard))
+    expected_tokens, heard_tokens = tokens(expected), tokens(heard)
+    if match_ratio(expected_tokens, heard_tokens) < .60:
+        return None  # Incomplete ASR transcription is not evidence of a bad phrase.
+    heard_set = set(heard_tokens)
     for old, new in SAFE_REWRITES:
         if old in expected.casefold() and not set(tokens(old)).issubset(heard_set):
-            updated = re.sub(re.escape(old), new, expected, count=1, flags=re.I)
-            if updated != expected and 55 <= len(updated) <= MAX_LEN:
+            def preserve_capital(match):
+                return new[0].upper() + new[1:] if match.group(0)[0].isupper() else new
+            updated = re.sub(re.escape(old), preserve_capital, expected, count=1, flags=re.I)
+            if updated != expected and 25 <= len(updated) <= MAX_LEN:
                 return updated
     return None
 
