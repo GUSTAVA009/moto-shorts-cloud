@@ -2,7 +2,7 @@ name: Shorts Factory - Three Unique Cloud Previews Daily
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/kokoro_voice.py', 'cloud-shorts/mixed_audio_qa.py', 'cloud-shorts/publora_autopublish.py']
+    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/asr_fallback.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/kokoro_voice.py', 'cloud-shorts/mixed_audio_qa.py', 'cloud-shorts/publora_autopublish.py']
   schedule:
     # All times UTC. 04:05 UTC = 07:05 Moscow (UTC+3).
     - cron: "05 04 * * *"
@@ -57,7 +57,7 @@ jobs:
         env:
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
-          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1
+          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1 openai-whisper
           python3 cloud-shorts/voice_qa.py \
             --episode "$EPISODE" \
             --wav "cloud-shorts/work/$EPISODE/new_narration.wav" \
@@ -143,7 +143,22 @@ jobs:
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
           if [ "$HAS_JOB" = "true" ]; then
-            echo "Unique MP4 preview ready for $EPISODE. Confirm publication separately in Publora; public upload is subject to voice QA, opt-in and plan quota." >> "$GITHUB_STEP_SUMMARY"
+            # Never label a failed ASR run as a successful production.
+            python3 - "$EPISODE" <<'PY'
+          import json,sys
+          from pathlib import Path
+          episode=sys.argv[1]
+          base=Path("cloud-shorts/dist/new")/episode
+          raw=json.loads((base/"voice_qa.json").read_text(encoding="utf8"))
+          mix=json.loads((base/"mixed_audio_qa.json").read_text(encoding="utf8"))
+          if not (raw.get("passed") is True and mix.get("passed") is True
+                  and raw.get("lexical_coverage",0)>=.97
+                  and mix.get("lexical_coverage",0)>=.97):
+              print("VOICE_QA_RELEASE_BLOCKED: MP4 artifact exists for internal inspection; 0 videos published")
+              raise SystemExit(1)
+          print("PREVIEW_ARTIFACT_QA_PASSED",episode)
+          PY
+            echo "Unique original MP4 preview with accurate native Russian speech ready for $EPISODE; public publication still requires approved episode + configured publisher." >> "$GITHUB_STEP_SUMMARY"
           else
             echo "::error::QUEUE_EMPTY — 0 videos generated because episode catalog has no new verified story."
             echo "QUEUE_EMPTY: zero new videos generated. Add new unique rights-cleared scripts and footage; do not report as publishing success." >> "$GITHUB_STEP_SUMMARY"
