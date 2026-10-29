@@ -67,7 +67,7 @@ class BufferPublisherTests(unittest.TestCase):
         with patch.dict(os.environ, {"BUFFER_AUTO_PUBLISH_ENABLED": "true"}):
             with patch.object(b.ledger, "api", return_value=None):
                 with patch.object(b, "validate_video", return_value=None):
-                    with patch.object(b, "verify_channel", return_value=[{}] * 8):
+                    with patch.object(b, "verify_channel", return_value=[{}] * 25):
                         with patch.object(b, "release_url", side_effect=AssertionError("No release")):
                             result = b.publish(self.ep, self.video, self.meta, self.voice, self.mix)
         self.assertIn("near capacity", result["skipped"])
@@ -83,7 +83,7 @@ class BufferPublisherTests(unittest.TestCase):
                                     with self.assertRaisesRegex(RuntimeError, "rejected or uncertain"):
                                         b.publish(self.ep, self.video, self.meta, self.voice, self.mix)
         self.assertEqual(store.call_count, 1)
-        self.assertEqual(req.call_count, 1)
+        self.assertEqual(req.call_count, 2)  # read sent posts; write exactly once
 
     def test_valid_post_uses_correct_channel_and_youtube_metadata(self):
         with patch.dict(os.environ, {"BUFFER_AUTO_PUBLISH_ENABLED": "true"}):
@@ -103,6 +103,8 @@ class BufferPublisherTests(unittest.TestCase):
         self.assertEqual(posted["metadata"]["youtube"]["categoryId"], "2")
         self.assertTrue(posted["assets"][0]["video"]["url"].startswith("https://"))
         self.assertFalse(posted.get("saveToDraft", False))
+        self.assertEqual(posted["mode"], "customScheduled")
+        self.assertTrue(posted["dueAt"].endswith("Z"))
 
 
 if __name__ == "__main__":
