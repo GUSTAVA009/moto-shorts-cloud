@@ -1,6 +1,9 @@
 name: GUSTAVA - Buffer Connection and Schedule Audit
 on:
   workflow_dispatch:
+  schedule:
+    # Audit queued versus actually sent YouTube posts every 4h, without posting.
+    - cron: "07 0,4,8,12,16,20 * * *"
   push:
     branches: [main]
     paths:
