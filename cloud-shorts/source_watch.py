@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Diverse, original story RESEARCH leads; not an automatic article-to-video scraper.
+"""Motorcycle-specific RESEARCH leads; not an automatic article-to-video scraper.
 
 Headlines/links are for internal verification. Never republish the headline,
 website images, video, article or original narration without permission.
@@ -22,14 +22,10 @@ import preview_queue as ledger
 FEEDS = [
     ("https://www.rideapart.com/rss/news/all/", "motorcycle"),
     ("https://thethrottlehand.com/feed.xml", "motorcycle"),
-    ("https://www.sciencedaily.com/rss/top/science.xml", "science"),
-    ("https://www.sciencedaily.com/rss/top/technology.xml", "engineering"),
-    ("https://www.sciencedaily.com/rss/top/environment.xml", "nature"),
-    ("https://www.sciencedaily.com/rss/top/society.xml", "history"),
-    ("https://www.sciencedaily.com/rss/strange_offbeat.xml", "surprising_facts"),
-    ("https://www.jpl.nasa.gov/feeds/news/", "space"),
-    ("https://cneos.jpl.nasa.gov/feed/news.xml", "space"),
 ]
+# Other archived research helpers remain for historical experiments, but the
+# scheduled collector never gathers non-motorcycle ideas for GUSTAVA Enduro.
+
 ALLOWED_HOSTS = {
     "rideapart.com", "www.rideapart.com",
     "thethrottlehand.com", "www.thethrottlehand.com",
