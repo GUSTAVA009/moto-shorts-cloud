@@ -55,7 +55,7 @@ def verify_channel(include_sent=False):
          'sentPosts: posts(first:100,input:{organizationId:"' + ORG +
          '",filter:{status:[sent],channelIds:["' + CHANNEL +
          '"],startDate:"' + cutoff +
-         '"}}) {edges {node {id dueAt}} pageInfo {hasNextPage}} }')
+         '"}}) {edges {node {id dueAt sentAt}} pageInfo {hasNextPage}} }')
     data = buffer(q)
     channel = data.get("channel") or {}
     if (channel.get("id") != CHANNEL or channel.get("service") != "youtube" or
