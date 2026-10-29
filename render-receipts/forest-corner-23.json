@@ -1,9 +1,13 @@
 {
   "id": "forest-corner-23",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40923198258",
   "attempt_count": 4,
   "preview_fingerprint": "3a3d36fa69eb243bfd63d5d7d487ca9760dbcd4c9b10519c028d0ddab3ebf483",
   "previous_run_id": "40921516631",
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 1.0,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 1.0
 }
