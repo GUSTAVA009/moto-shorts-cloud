@@ -2,6 +2,8 @@
   "episode": "night-traffic-27",
   "sha256": "99d9eeef3577b8585bf8579b721097decfe340672df6d815cf183e9cee95b805",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-night-traffic-27-99d9eeef3577/night-traffic-27.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae3919018a6132aaf6b7e6e",
+  "due_at": "2026-10-30T07:00:00.000Z"
 }
