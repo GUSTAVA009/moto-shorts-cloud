@@ -19,6 +19,7 @@ import urllib.request
 from soundtrack import generate as make_music
 from tts_voice import render as make_voice
 from silero_voice import render as make_silero_voice, MODEL_ID as SILERO_MODEL_ID, SPEAKER as SILERO_SPEAKER
+from kokoro_voice import render as make_kokoro_voice, MODEL_CARD as KOKORO_MODEL_CARD
 from editorial_guard import validate_catalog
 from engagement_cta import validate_cta, overlay_filters, build_description
 
@@ -311,7 +312,10 @@ def render(ep, output_dir):
 
     wav = work / "new_narration.wav"
     engine = ep.get("voice_engine", "piper_ru")
-    if engine == "silero_cis_base_mit":
+    if engine == "kokoro_ru_dima":
+        voice_duration = make_kokoro_voice(ep["narration"], wav, work / "kokoro_model")
+        engine_label = "Kokoro-RU / dima (OpenRAIL, CPU Russian male narrator)"
+    elif engine == "silero_cis_base_mit":
         voice_duration = make_silero_voice(ep["narration"], wav, work / "voice_model")
         engine_label = "Silero " + SILERO_MODEL_ID + " / " + SILERO_SPEAKER + " (MIT)"
     elif engine == "piper_ru":
@@ -409,8 +413,9 @@ def render(ep, output_dir):
         "episode": slug,
         "license_sources": ep["footage"],
         "editorial_references": ep.get("editorial_references", []),
-        "voice_model_card": "https://huggingface.co/rhasspy/piper-voices/blob/main/"
-                            "ru/ru_RU/dmitri/medium/MODEL_CARD",
+        "voice_model_card": (KOKORO_MODEL_CARD if engine == "kokoro_ru_dima"
+            else "https://github.com/snakers4/silero-models" if engine == "silero_cis_base_mit"
+            else "https://huggingface.co/rhasspy/piper-voices/blob/main/ru/ru_RU/denis/medium/MODEL_CARD"),
     }
     (output_dir / "license_sources.json").write_text(
         json.dumps(receipt, ensure_ascii=False, indent=2), encoding="utf8"
