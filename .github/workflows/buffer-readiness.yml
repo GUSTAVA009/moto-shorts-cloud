@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - .github/workflows/buffer-readiness.yml
+      - .github/workflows/buffer-backlog.yml
+      - cloud-shorts/buffer_autopublish.py
+      - cloud-shorts/publication_safety.py
 
 permissions:
   contents: read
