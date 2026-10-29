@@ -100,7 +100,18 @@ def main(base):
     base = Path(base)
     reports = list(base.glob("*/voice_qa.json"))
     technical = list(base.glob("*/repair_history.json"))
-    if len(reports) == 1:
+    diagnostic = (json.loads(technical[0].read_text(encoding="utf8"))
+                  if len(technical) == 1 else {})
+    errors = diagnostic.get("attempts") or []
+    technical_source_failure = bool(
+        errors and errors[-1].get("status") == "technical_error"
+        and errors[-1].get("source_failure") is True
+    )
+    if technical_source_failure:
+        ep_id = technical[0].parent.name
+        diag = diagnostic
+        mode = "source"
+    elif len(reports) == 1:
         ep_id = reports[0].parent.name
         mixed_file = reports[0].with_name("mixed_audio_qa.json")
         if not mixed_file.is_file():
@@ -109,10 +120,6 @@ def main(base):
         raw = json.loads(reports[0].read_text(encoding="utf8"))
         mix = json.loads(mixed_file.read_text(encoding="utf8"))
         mode = "voice"
-    elif not reports and len(technical) == 1:
-        ep_id = technical[0].parent.name
-        diag = json.loads(technical[0].read_text(encoding="utf8"))
-        mode = "source"
     else:
         print("REPAIR_SKIPPED: no single verifiable failure artifact", flush=True)
         return 0
