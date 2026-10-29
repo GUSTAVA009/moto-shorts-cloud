@@ -1,9 +1,13 @@
 {
   "id": "elspeth-beard-s1-e02",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40817110877",
   "attempt_count": 5,
   "preview_fingerprint": "32d83f98e786068b8b83d27f9f85f2f586376f4b867bda8285abde4e3da41500",
   "previous_run_id": "40816321159",
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": false,
+  "voice_qa_coverage": 0.885,
+  "mixed_audio_qa_passed": false,
+  "mixed_audio_qa_coverage": 0.885
 }
