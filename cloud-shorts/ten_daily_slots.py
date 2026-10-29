@@ -1,4 +1,4 @@
-"""Ten daily release windows for verified original GUSTAVA Enduro Shorts.
+"""Sixteen evenly spaced daily release windows for verified original GUSTAVA Enduro Shorts.
 
 Buffer's public GraphQL API supports per-post customScheduled/dueAt; it does
 not expose the legacy recurring posting-schedule editor. We choose exact
@@ -9,10 +9,10 @@ from __future__ import annotations
 from datetime import datetime, timedelta, timezone, time
 from zoneinfo import ZoneInfo
 
-TARGET_PER_DAY = 10
+TARGET_PER_DAY = 16
 TZ_NAME = "Europe/Moscow"
-LOCAL_TIMES = ((8, 25), (10, 0), (11, 35), (13, 10), (14, 45),
-               (16, 20), (17, 55), (19, 30), (21, 5), (22, 40))
+LOCAL_TIMES = tuple(((30 + 90 * index) // 60 % 24,
+                     (30 + 90 * index) % 60) for index in range(TARGET_PER_DAY))
 MIN_LEAD_MINUTES = 8
 MIN_SPACING_MINUTES = 45
 
