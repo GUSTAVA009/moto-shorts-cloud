@@ -2,11 +2,12 @@ name: Shorts Factory - Three Unique Cloud Previews Daily
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/mixed_audio_qa.py', 'cloud-shorts/publora_autopublish.py']
+    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/kokoro_voice.py', 'cloud-shorts/mixed_audio_qa.py', 'cloud-shorts/publora_autopublish.py']
   schedule:
-    - cron: "17 07 * * *"
-    - cron: "17 12 * * *"
-    - cron: "17 18 * * *"
+    # All times UTC. 04:05 UTC = 07:05 Moscow (UTC+3).
+    - cron: "05 04 * * *"
+    - cron: "05 10 * * *"
+    - cron: "05 16 * * *"
   workflow_dispatch:
 
 permissions:
@@ -20,7 +21,7 @@ concurrency:
 jobs:
   daily-draft:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 55
     steps:
       - uses: actions/checkout@v4
       - name: Check content queue and reserve next episode
@@ -39,8 +40,10 @@ jobs:
       - name: Install free audio/video engines
         if: steps.pick.outputs.has_job == 'true'
         run: |
-          sudo apt-get install -y -o Dpkg::Use-Pty=0 --no-install-recommends ffmpeg fonts-dejavu-core
-          python3 -m pip install --disable-pip-version-check piper-tts==1.8.0 silero==0.5.5
+          sudo apt-get install -y -o Dpkg::Use-Pty=0 --no-install-recommends ffmpeg fonts-dejavu-core espeak-ng libespeak-ng1
+          # Keep preinstalled CUDA dependencies off a CPU-only cloud runner.
+          python3 -m pip install --disable-pip-version-check torch --index-url https://download.pytorch.org/whl/cpu
+          python3 -m pip install --disable-pip-version-check piper-tts==1.8.0 silero==0.5.5 kokoro==0.9.4 ruaccent==1.5.8.3 phonemizer==3.4.0 misaki==0.9.4 soundfile==0.14.0 huggingface_hub
       - name: Produce next unique Shorts preview in GitHub Cloud
         if: steps.pick.outputs.has_job == 'true'
         env:
@@ -54,7 +57,7 @@ jobs:
         env:
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
-          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1 av==18.1.0 || true
+          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1
           python3 cloud-shorts/voice_qa.py \
             --episode "$EPISODE" \
             --wav "cloud-shorts/work/$EPISODE/new_narration.wav" \
@@ -93,10 +96,30 @@ jobs:
           PUBLORA_API_KEY: ${{ secrets.PUBLORA_API_KEY }}
           PUBLORA_AUTO_PUBLISH_ENABLED: ${{ vars.PUBLORA_AUTO_PUBLISH_ENABLED }}
         run: |
-          # Safety hold after unintelligible 2026-10-28 aviation narration; preview creation continues.
-          # Remove only after verified natural Russian voice and final MP4 review.
-          if [ "true" = "true" ]; then
-            echo "VOICE_QUALITY_PUBLICATION_HOLD: New automatic YouTube uploads paused until verified free local TTS and video pipeline." >> "$GITHUB_STEP_SUMMARY"
+          # Automatic publishing requires explicit episode approval and high-quality
+          # voice recognition from BOTH original WAV and final MP4.
+          if ! python3 - "$EPISODE" <<'PY'
+          import json,sys
+          from pathlib import Path
+          ep_id=sys.argv[1]
+          catalog=json.loads(Path("cloud-shorts/episodes.json").read_text(encoding="utf8"))
+          ep=next((x for x in catalog["episodes"] if x["id"]==ep_id),None)
+          base=Path("cloud-shorts/dist/new")/ep_id
+          raw=json.loads((base/"voice_qa.json").read_text(encoding="utf8"))
+          mix=json.loads((base/"mixed_audio_qa.json").read_text(encoding="utf8"))
+          approved=bool(ep and ep.get("auto_publish") is True)
+          accurate=(raw.get("lexical_coverage",0)>=.97 and mix.get("lexical_coverage",0)>=.97
+                    and raw.get("final_word_present") is True and mix.get("final_word_present") is True)
+          if not approved:
+              print("PREVIEW_ONLY_NOT_APPROVED_FOR_PUBLIC_RELEASE")
+              raise SystemExit(3)
+          if not accurate:
+              print("VOICE_QA_97_PERCENT_OR_ENDING_FAILED")
+              raise SystemExit(2)
+          print("AUTOPUBLISH_QA_APPROVED",ep_id)
+          PY
+          then
+            echo "PUBLIC_RELEASE_BLOCKED: reviewer approval or 97% original+mixed ASR not met; preview artifact preserved." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           if [ "$PUBLORA_AUTO_PUBLISH_ENABLED" != "true" ] || [ -z "$PUBLORA_API_KEY" ]; then
@@ -122,5 +145,7 @@ jobs:
           if [ "$HAS_JOB" = "true" ]; then
             echo "Unique MP4 preview ready for $EPISODE. Confirm publication separately in Publora; public upload is subject to voice QA, opt-in and plan quota." >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "No new approved episodes in the queue; did not produce duplicates." >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::QUEUE_EMPTY — 0 videos generated because episode catalog has no new verified story."
+            echo "QUEUE_EMPTY: zero new videos generated. Add new unique rights-cleared scripts and footage; do not report as publishing success." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
           fi
