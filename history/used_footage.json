@@ -447,6 +447,16 @@
       "episode": "highland-tour-26",
       "source": "https://www.pexels.com/video/aerial-footage-of-a-person-riding-a-motorcycle-at-the-desert-9472118/",
       "status": "reserved-or-rendered"
+    },
+    "36077846": {
+      "episode": "night-traffic-27",
+      "source": "https://www.pexels.com/video/motorbikes-navigate-busy-city-intersection-at-night-36077846/",
+      "status": "reserved-or-rendered"
+    },
+    "29185546": {
+      "episode": "night-traffic-27",
+      "source": "https://www.pexels.com/video/bustling-night-traffic-in-vibrant-city-center-29185546/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -631,6 +641,13 @@
       "people": "independent-scenic-road-travelers",
       "story": "green-vs-arid-motorcycle-trips",
       "visual": "two-contrasting-scenic-road-aerials"
+    },
+    "night-traffic-27": {
+      "environment": "asian-urban-night-intersections",
+      "bike": "urban-motorcycle-commuter-bikes",
+      "people": "nighttime-city-commuter-groups",
+      "story": "urban-night-visibility-and-traffic",
+      "visual": "headlights-and-city-intersections"
     }
   }
 }
