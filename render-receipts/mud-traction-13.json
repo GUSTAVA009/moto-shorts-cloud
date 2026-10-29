@@ -1,13 +1,9 @@
 {
   "id": "mud-traction-13",
-  "state": "preview_ready",
-  "run_id": "40632367035",
-  "attempt_count": 2,
-  "preview_fingerprint": "6d61e4b64394ad5a3675d5c377ae6ace98b963365b137d9101fba6f19ab34950",
-  "previous_run_id": "40618348435",
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": false,
-  "voice_qa_coverage": 0.818,
-  "mixed_audio_qa_passed": false,
-  "mixed_audio_qa_coverage": 0.795
+  "state": "reserved",
+  "run_id": "40875339549",
+  "attempt_count": 3,
+  "preview_fingerprint": "097a3c46344b18d6bc1540968628fedd0da184204d2d66b65cdd055dee24b393",
+  "previous_run_id": "40632367035",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
