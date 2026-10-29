@@ -9,8 +9,17 @@ on:
       - 'cloud-shorts/test_autofill_catalog.py'
       - '.github/workflows/autofill-motorcycle.yml'
   schedule:
-    # UTC. Refill ahead of the regular 04:05, 10:05, 16:05 preview runs.
-    - cron: "13 00,06,12,18 * * *"
+    # UTC: replenish 10 minutes before each of the 10 daily preview slots.
+    - cron: "00 04 * * *"
+    - cron: "40 05 * * *"
+    - cron: "20 07 * * *"
+    - cron: "00 09 * * *"
+    - cron: "40 10 * * *"
+    - cron: "20 12 * * *"
+    - cron: "00 14 * * *"
+    - cron: "40 15 * * *"
+    - cron: "20 17 * * *"
+    - cron: "00 19 * * *"
 
 permissions:
   contents: write
@@ -33,4 +42,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: python3 cloud-shorts/autofill_catalog.py
