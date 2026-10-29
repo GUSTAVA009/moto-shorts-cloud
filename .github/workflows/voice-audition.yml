@@ -1,0 +1,62 @@
+name: GUSTAVA - Deep Male Russian Voice Audition (No Publishing)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/voice-audition.yml'
+      - 'cloud-shorts/voice_style.py'
+      - 'cloud-shorts/kokoro_voice.py'
+      - 'cloud-shorts/test_voice_style.py'
+
+permissions:
+  contents: read
+
+jobs:
+  audition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test natural low male audio processing and proof
+        run: |
+          python3 -m unittest discover -s cloud-shorts -p 'test_voice_style.py' -v
+          ffmpeg -hide_banner -filters | grep rubberband
+      - name: Install licensed Russian male Kokoro synthesizer
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends ffmpeg espeak-ng libespeak-ng1
+          python3 -m pip install --disable-pip-version-check torch --index-url https://download.pytorch.org/whl/cpu
+          python3 -m pip install --disable-pip-version-check kokoro==0.9.4 ruaccent==1.5.8.3 phonemizer==3.4.0 misaki==0.9.4 soundfile==0.14.0 huggingface_hub
+      - name: Generate real Russian male audition WAV without music or publishing
+        run: |
+          python3 - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, "cloud-shorts")
+          from kokoro_voice import render
+          from voice_style import validate_report, PROFILE_ID
+          folder = Path("audition")
+          folder.mkdir(exist_ok=True)
+          text = ("Когда двигатель оживает, начинается настоящая история. "
+                  "Впереди лесная трасса, камни и крутые повороты. "
+                  "Мотоцикл ждёт своего райдера. Поехали!")
+          wav = folder / "GUSTAVA_DEEP_MALE_V1.wav"
+          seconds = render(text, wav, folder / "kokoro_model", speed=.98)
+          profile = validate_report(wav)
+          assert profile["profile_id"] == PROFILE_ID
+          (folder / "TEXT_RU.txt").write_text(text, encoding="utf8")
+          print("VOICE_AUDITION_CREATED", wav, "seconds", seconds,
+                "profile", profile["profile_id"])
+          PY
+          ffprobe -v error -show_entries stream=sample_rate,channels,codec_name -show_entries format=duration -of json audition/GUSTAVA_DEEP_MALE_V1.wav
+      - name: Save audible male narrator preview (not published to channel)
+        uses: actions/upload-artifact@v4
+        with:
+          name: GUSTAVA-DEEP-MALE-NARRATOR-AUDITION
+          path: |
+            audition/GUSTAVA_DEEP_MALE_V1.wav
+            audition/GUSTAVA_DEEP_MALE_V1.profile.json
+            audition/TEXT_RU.txt
+          retention-days: 14
+          if-no-files-found: error
