@@ -13,17 +13,9 @@ on:
       - 'cloud-shorts/test_autofill_catalog.py'
       - '.github/workflows/autofill-motorcycle.yml'
   schedule:
-    # UTC: replenish 10 minutes before each of the 10 daily preview slots.
-    - cron: "00 04 * * *"
-    - cron: "40 05 * * *"
-    - cron: "20 07 * * *"
-    - cron: "00 09 * * *"
-    - cron: "40 10 * * *"
-    - cron: "20 12 * * *"
-    - cron: "00 14 * * *"
-    - cron: "40 15 * * *"
-    - cron: "20 17 * * *"
-    - cron: "00 19 * * *"
+    # Replenish 10 minutes before each production attempt, 90 minutes apart.
+    - cron: "35 0,3,6,9,12,15,18,21 * * *"
+    - cron: "05 2,5,8,11,14,17,20,23 * * *"
 
 permissions:
   contents: write
