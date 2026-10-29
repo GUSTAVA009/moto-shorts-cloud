@@ -2017,8 +2017,9 @@
         "overlay": "НАПИШИ, ЗАМЕЧАЛ ТАКОЕ?",
         "description": "Ты задумывался об этом во время полёта?"
       },
-      "auto_preview": true,
-      "auto_publish": true
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_fit": "off_topic_archived"
     },
     {
       "id": "octopus-camouflage-19",
@@ -2146,8 +2147,9 @@
         "overlay": "ОТПРАВЬ ТОМУ, КТО НЕ ВЕРИТ",
         "description": "Покажи необычную способность осьминога другу."
       },
-      "auto_preview": true,
-      "auto_publish": true
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_fit": "off_topic_archived"
     },
     {
       "id": "hydraulic-press-explained-20",
@@ -2275,8 +2277,9 @@
         "overlay": "ПОДПИШИСЬ НА НОВЫЕ ФАКТЫ",
         "description": "Подпишись на новые разборы необычной техники."
       },
-      "auto_preview": true,
-      "auto_publish": true
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_fit": "off_topic_archived"
     },
     {
       "id": "lightning-strikes-again-21",
@@ -2415,14 +2418,15 @@
         "overlay": "НАПИШИ, ВЕРИЛ В ЭТОТ МИФ?",
         "description": "Что ещё о молниях тебя удивляет?"
       },
-      "auto_preview": true,
+      "auto_preview": false,
       "auto_publish": false,
-      "voice_revision_requested": true
+      "voice_revision_requested": true,
+      "channel_fit": "off_topic_archived"
     },
     {
       "id": "why-ice-floats-22",
-      "auto_preview": true,
-      "auto_publish": true,
+      "auto_preview": false,
+      "auto_publish": false,
       "research_pillar": "science",
       "voice_engine": "kokoro_ru_dima",
       "max_duration_seconds": 33.5,
@@ -2546,7 +2550,8 @@
           "start": 1.1,
           "seconds": 2.2
         }
-      ]
+      ],
+      "channel_fit": "off_topic_archived"
     }
   ]
 }
