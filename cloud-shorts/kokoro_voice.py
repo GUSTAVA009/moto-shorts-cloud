@@ -33,13 +33,16 @@ def validate_text(text: str) -> str:
     return text
 
 
-def render(text, output, model_dir=None):
+def render(text, output, model_dir=None, speed=1.0):
     """Render full phrase with bounded sentence breaks, 24 kHz WAV.
 
     Downloads pinned upstream voice model and bundled Russian espeak dictionary
     into a *private* local/cache directory; never embeds AI model in Git repo.
     """
     text=validate_text(text)
+    speed=float(speed)
+    if not .92 <= speed <= 1.08:
+        raise ValueError("Unapproved synthetic speech speed")
     os.environ.setdefault("HF_HUB_DISABLE_XET","1")
     os.environ.setdefault("HF_HUB_DOWNLOAD_TIMEOUT","60")
     os.environ.setdefault("HF_HUB_ETAG_TIMEOUT","30")
@@ -85,7 +88,7 @@ def render(text, output, model_dir=None):
         if oov or len(phonemes)<4 or len(phonemes)>510:
             raise RuntimeError("Russian phonemes too long or invalid")
         with torch.inference_mode():
-            output_audio=model(phonemes,pack[len(phonemes)-1],1.0,return_output=True).audio
+            output_audio=model(phonemes,pack[len(phonemes)-1],speed,return_output=True).audio
         data=output_audio.detach().cpu().numpy().astype("float32")
         if not len(data) or not np.isfinite(data).all():
             raise RuntimeError("Speech model returned invalid audio")
@@ -101,5 +104,5 @@ def render(text, output, model_dir=None):
         raise RuntimeError("Narration is effectively silent")
     sf.write(str(output),audio,24000,subtype="PCM_16")
     print("KOKORO_RU_MALE_READY",round(duration,2),
-          "seconds",SPEAKER,"license=OpenRAIL",flush=True)
+          "seconds",SPEAKER,"speed",speed,"license=OpenRAIL",flush=True)
     return duration
