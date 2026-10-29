@@ -30,7 +30,7 @@ def media_audio_present(video):
     return duration
 
 
-def check(episode, video, model="base"):
+def check(episode, video, model="small"):
     from asr_fallback import transcribe
     duration = media_audio_present(video)
     recognized, asr_engine = transcribe(video,model)
