@@ -60,4 +60,5 @@ jobs:
             --mixed-qa "staged/$EPISODE/mixed_audio_qa.json"
       - name: Report no eligible original MP4
         if: steps.pick.outputs.has_job != 'true'
-        run: echo 'BUFFER_WAITING_FOR_VERIFIED_ORIGINAL: no unpublished approved video was selected.' >> "$GITHUB_STEP_SUMMARY"
+        run: |
+          echo 'BUFFER_WAITING_FOR_VERIFIED_ORIGINAL: no unpublished approved video was selected.' >> "$GITHUB_STEP_SUMMARY"
