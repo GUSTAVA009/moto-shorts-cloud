@@ -22,17 +22,17 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
               pexels=False):
     tz = ZoneInfo("Europe/Moscow")
     today = now.astimezone(tz).date()
-    def today_only(rows):
+    def today_only(rows, timestamp_field="dueAt"):
         results = []
         for p in rows:
-            raw = p.get("dueAt")
+            raw = p.get(timestamp_field) or p.get("dueAt")
             if not raw:
                 continue
             when = datetime.fromisoformat(raw.replace("Z", "+00:00"))
             if when.astimezone(tz).date() == today:
                 results.append(p)
         return results
-    sent_today = today_only(sent)
+    sent_today = today_only(sent, timestamp_field="sentAt")
     scheduled_today = today_only(scheduled)
     new = [e for e in catalog["episodes"] if e.get("auto_preview") is True
            and e["id"] not in saved_ids]
