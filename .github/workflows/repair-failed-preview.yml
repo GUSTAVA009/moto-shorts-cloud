@@ -25,10 +25,13 @@ jobs:
       GITHUB_TOKEN: ${{ github.token }}
       GITHUB_REPOSITORY: ${{ github.repository }}
       FAILED_PREVIEW_RUN_ID: ${{ github.event.workflow_run.id }}
+      PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - name: Test fail-closed narration repair and deduplication
-        run: python3 -m unittest discover -s cloud-shorts -p 'test_repair_failed_preview.py' -v
+        run: |
+          python3 -m unittest discover -s cloud-shorts -p 'test_repair_failed_preview.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_source_repair.py' -v
       - name: Retrieve exact failed ASR reports (never reuse other runs)
         uses: actions/download-artifact@v4
         continue-on-error: true
@@ -39,5 +42,5 @@ jobs:
           github-token: ${{ github.token }}
           path: staged
           merge-multiple: true
-      - name: Rewrite a single ambiguous phrase and rerender once if proven safe
+      - name: Rephrase only diagnosed Russian errors or replace licensed footage when a source fails
         run: python3 cloud-shorts/repair_failed_preview.py staged
