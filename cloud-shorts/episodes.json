@@ -2277,6 +2277,146 @@
       },
       "auto_preview": true,
       "auto_publish": true
+    },
+    {
+      "id": "lightning-strikes-again-21",
+      "research_pillar": "science",
+      "title": "Молния НЕ бьёт дважды в одно место? ⛈️ #shorts",
+      "narration": "Молния не бьёт дважды в одно место? Это миф. Высокая башня может получать удары снова и снова. Во время грозы разряд проходит между облаком и землёй. Высокие объекты чаще оказываются на его пути. Поэтому прятаться под одиноким деревом опасно. А ты верил в этот миф?",
+      "description": "Молния действительно может несколько раз ударить в одно и то же место — особенно в высокие сооружения. Настоящие кадры грозы из разных мест использованы для объяснения явления, а не как съёмка одного удара.\n\n#молния #наука #гроза #интересныефакты #shorts",
+      "caption_start": "МОЛНИЯ БЬЁТ ДВАЖДЫ?",
+      "caption_middle": "ЭТО МИФ!",
+      "caption_end": "А ТЫ ВЕРИЛ?",
+      "max_duration_seconds": 33,
+      "opening_trim_seconds": 0.1,
+      "music_style": "desert-cinematic",
+      "music_bpm": 116,
+      "voice_engine": "kokoro_ru_dima",
+      "footage": [
+        {
+          "key": "city_lightning",
+          "url": "https://www.pexels.com/download/video/4755568/",
+          "source_page": "https://www.pexels.com/video/lightning-storm-at-the-city-4755568/",
+          "author": "Ahmet Akpolat",
+          "license": "Pexels License"
+        },
+        {
+          "key": "night_lightning",
+          "url": "https://www.pexels.com/download/video/11025478/",
+          "source_page": "https://www.pexels.com/video/thunderstorm-at-night-with-lightning-strikes-11025478/",
+          "author": "Guidance Pillar Production",
+          "license": "Pexels License"
+        },
+        {
+          "key": "urban_storm",
+          "url": "https://www.pexels.com/download/video/10599522/",
+          "source_page": "https://www.pexels.com/video/storm-in-city-at-night-10599522/",
+          "author": "Amit",
+          "license": "Pexels License"
+        }
+      ],
+      "shots": [
+        {
+          "source": "city_lightning",
+          "start": 0,
+          "seconds": 2.5
+        },
+        {
+          "source": "night_lightning",
+          "start": 0.5,
+          "seconds": 2.4
+        },
+        {
+          "source": "urban_storm",
+          "start": 0,
+          "seconds": 2.2
+        },
+        {
+          "source": "city_lightning",
+          "start": 4.3,
+          "seconds": 2.4
+        },
+        {
+          "source": "night_lightning",
+          "start": 5.2,
+          "seconds": 2.4
+        },
+        {
+          "source": "urban_storm",
+          "start": 2.7,
+          "seconds": 2.3
+        },
+        {
+          "source": "night_lightning",
+          "start": 11.5,
+          "seconds": 2.4
+        },
+        {
+          "source": "city_lightning",
+          "start": 9.1,
+          "seconds": 2.5
+        },
+        {
+          "source": "night_lightning",
+          "start": 16.4,
+          "seconds": 2.6
+        },
+        {
+          "source": "city_lightning",
+          "start": 13.7,
+          "seconds": 2.4
+        },
+        {
+          "source": "night_lightning",
+          "start": 21.3,
+          "seconds": 2.5
+        },
+        {
+          "source": "city_lightning",
+          "start": 18.4,
+          "seconds": 2.5
+        }
+      ],
+      "story_steps": [
+        {
+          "at": 4.5,
+          "text": "МИФ ИЛИ ПРАВДА?"
+        },
+        {
+          "at": 10.2,
+          "text": "УДАРЫ В ВЫСОКИЕ БАШНИ"
+        },
+        {
+          "at": 17.3,
+          "text": "НЕ ПРЯЧЬСЯ ПОД ДЕРЕВОМ"
+        }
+      ],
+      "editorial": {
+        "environment": "city-storm-clouds-and-electric-night",
+        "subject": "lightning-striking-objects-repeatedly",
+        "people": "weather-observers-and-urban-residents",
+        "story": "lightning-never-strikes-twice-myth-investigation",
+        "visual": "real-night-thunderbolts-and-city-skylines"
+      },
+      "editorial_references": [
+        "https://www.noaa.gov/stories/5-striking-facts-versus-myths-about-lightning-you-should-know",
+        "https://www.nssl.noaa.gov/education/svrwx101/lightning/faq/",
+        "https://www.weather.gov/safety/lightning-myths"
+      ],
+      "tags": [
+        "молния",
+        "гроза",
+        "наука",
+        "интересныефакты",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "А ТЫ ВЕРИЛ В ЭТОТ МИФ?",
+        "description": "Что ещё о молниях тебя удивляет?"
+      },
+      "auto_preview": true,
+      "auto_publish": false
     }
   ]
 }
