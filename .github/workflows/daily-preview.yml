@@ -2,7 +2,7 @@ name: Shorts Factory - Three Unique Cloud Previews Daily
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/asr_fallback.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/kokoro_voice.py', 'cloud-shorts/mixed_audio_qa.py', 'cloud-shorts/publora_autopublish.py']
+    paths: ['.github/workflows/daily-preview.yml', 'cloud-shorts/preview_queue.py', 'cloud-shorts/test_preview_queue.py', 'cloud-shorts/episodes.json', 'cloud-shorts/voice_qa.py', 'cloud-shorts/asr_fallback.py', 'cloud-shorts/silero_voice.py', 'cloud-shorts/kokoro_voice.py', 'cloud-shorts/mixed_audio_qa.py', 'cloud-shorts/publication_safety.py', 'cloud-shorts/channel_focus.py']
   schedule:
     # All times UTC. 04:05 UTC = 07:05 Moscow (UTC+3).
     - cron: "05 04 * * *"
@@ -87,55 +87,6 @@ jobs:
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
           python3 cloud-shorts/preview_queue.py finish --episode "$EPISODE" --qa-report "cloud-shorts/dist/new/$EPISODE/voice_qa.json" --mixed-qa-report "cloud-shorts/dist/new/$EPISODE/mixed_audio_qa.json"
-      - name: Publish NEW MP4 through Publora only after Russian QA and account opt-in
-        if: steps.pick.outputs.has_job == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED == 'false'
-        env:
-          EPISODE: ${{ steps.pick.outputs.episode }}
-          GITHUB_TOKEN: ${{ github.token }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
-          PUBLORA_API_KEY: ${{ secrets.PUBLORA_API_KEY }}
-          PUBLORA_AUTO_PUBLISH_ENABLED: ${{ vars.PUBLORA_AUTO_PUBLISH_ENABLED }}
-        run: |
-          # Automatic publishing requires explicit episode approval and high-quality
-          # voice recognition from BOTH original WAV and final MP4.
-          if ! python3 - "$EPISODE" <<'PY'
-          import json,sys
-          from pathlib import Path
-          ep_id=sys.argv[1]
-          catalog=json.loads(Path("cloud-shorts/episodes.json").read_text(encoding="utf8"))
-          ep=next((x for x in catalog["episodes"] if x["id"]==ep_id),None)
-          base=Path("cloud-shorts/dist/new")/ep_id
-          raw=json.loads((base/"voice_qa.json").read_text(encoding="utf8"))
-          mix=json.loads((base/"mixed_audio_qa.json").read_text(encoding="utf8"))
-          approved=bool(ep and ep.get("auto_publish") is True)
-          accurate=(raw.get("lexical_coverage",0)>=.97 and mix.get("lexical_coverage",0)>=.97
-                    and raw.get("final_word_present") is True and mix.get("final_word_present") is True)
-          if not approved:
-              print("PREVIEW_ONLY_NOT_APPROVED_FOR_PUBLIC_RELEASE")
-              raise SystemExit(3)
-          if not accurate:
-              print("VOICE_QA_97_PERCENT_OR_ENDING_FAILED")
-              raise SystemExit(2)
-          print("AUTOPUBLISH_QA_APPROVED",ep_id)
-          PY
-          then
-            echo "PUBLIC_RELEASE_BLOCKED: reviewer approval or 97% original+mixed ASR not met; preview artifact preserved." >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-          if [ "$PUBLORA_AUTO_PUBLISH_ENABLED" != "true" ] || [ -z "$PUBLORA_API_KEY" ]; then
-            echo "AUTO_PUBLISH_NOT_CONFIGURED: No upload; set verified Publora key and repo variable." >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-          if [ ! -s "cloud-shorts/dist/new/$EPISODE/voice_qa.json" ]; then
-            echo "VOICE_QA_MISSING: public upload blocked" >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-          python3 cloud-shorts/publora_autopublish.py \
-            --episode "$EPISODE" \
-            --video "cloud-shorts/dist/new/$EPISODE/$EPISODE.mp4" \
-            --metadata "cloud-shorts/dist/new/$EPISODE/publication.json" \
-            --voice-qa "cloud-shorts/dist/new/$EPISODE/voice_qa.json" \
-            --mixed-qa "cloud-shorts/dist/new/$EPISODE/mixed_audio_qa.json"
       - name: Record status
         if: always()
         env:
