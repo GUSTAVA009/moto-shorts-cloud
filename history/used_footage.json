@@ -482,6 +482,16 @@
       "episode": "snow-trail-29",
       "source": "https://www.pexels.com/video/driving-enduro-motorbikes-in-snow-10513338/",
       "status": "reserved-or-rendered"
+    },
+    "40167910": {
+      "episode": "sunset-ride-30",
+      "source": "https://www.pexels.com/video/motorcyclist-at-sunset-on-scenic-hilltop-40167910/",
+      "status": "reserved-or-rendered"
+    },
+    "36834937": {
+      "episode": "sunset-ride-30",
+      "source": "https://www.pexels.com/video/motorcycle-ride-on-scenic-country-road-36834937/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -687,6 +697,13 @@
       "people": "two-independent-snow-rider-groups",
       "story": "snow-surface-ride-preparation",
       "visual": "snowy-trails-and-bike-tracks"
+    },
+    "sunset-ride-30": {
+      "environment": "sunset-hilltop-and-rural-motorway",
+      "bike": "sunset-touring-motorcycles",
+      "people": "unrelated-roadtrip-solo-travelers",
+      "story": "sunset-rest-stop-journey-reflection",
+      "visual": "warm-sunlight-bikes-and-hills"
     }
   }
 }
