@@ -48,6 +48,8 @@ class FailedPreviewRepairTests(unittest.TestCase):
     def test_approved_unpublished_one_sentence_repaired(self):
         raw, mixed, receipt = self.reports()
         c = self.episode()
+        source = next(e for e in c["episodes"] if e["id"] == self.ep_id)["narration"]
+        raw["recognized_text"] = source.replace("на мотоцикле", "но мотоцикли")
         new = r.repair_episode(c, self.ep_id, raw, mixed, receipt)
         self.assertIsNotNone(new)
         ep = next(e for e in new["episodes"] if e["id"] == self.ep_id)
