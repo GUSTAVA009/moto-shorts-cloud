@@ -19,7 +19,7 @@ jobs:
     # permits explicitly auto_publish=true, licensed ORIGINAL Kokoro-RU male
     # episodes with a persistent completed ASR/MP4 render receipt.
     # Quota preflight prevents consuming unavailable Starter slots.
-    if: ${{ vars.PUBLORA_AUTO_PUBLISH_ENABLED == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED != 'true' }}
+    if: ${{ vars.PUBLORA_AUTO_PUBLISH_ENABLED == 'true' && vars.PUBLISH_TRANSPORT == 'publora' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
