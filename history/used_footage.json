@@ -727,6 +727,16 @@
       "episode": "gustava-20-f03-20261030",
       "source": "https://www.pexels.com/video/adding-2-stroke-oil-in-motorcycle-during-service-28197087/",
       "status": "reserved-or-rendered"
+    },
+    "36365069": {
+      "episode": "gustava-20-s03-20261030",
+      "source": "https://www.pexels.com/video/woman-navigates-motorcycle-through-muddy-terrain-36365069/",
+      "status": "reserved-or-rendered"
+    },
+    "29488248": {
+      "episode": "gustava-20-s03-20261030",
+      "source": "https://www.pexels.com/video/dynamic-off-road-dirt-bike-adventure-in-desert-29488248/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1072,6 +1082,13 @@
       "story": "brake-check-vs-oil-service",
       "visual": "brake-check-then-oil",
       "bike": "maintenance-motorbike"
+    },
+    "gustava-20-s03-20261030": {
+      "environment": "mud-rider-and-desert-course",
+      "people": "female-mud-rider-and-desert-athlete",
+      "story": "mud-section-versus-desert-run",
+      "visual": "mud-obstacles-and-sand-run",
+      "bike": "offroad-two-surface-bike"
     }
   }
 }
