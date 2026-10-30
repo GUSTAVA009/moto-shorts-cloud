@@ -1,0 +1,38 @@
+name: GUSTAVA - Real V6 Russian Narration Script Intelligibility Probe
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/v6-voice-phrase-probe.yml'
+      - 'cloud-shorts/voice_quality_probe.py'
+      - 'cloud-shorts/test_voice_quality_probe.py'
+
+permissions:
+  contents: read
+
+jobs:
+  phrase-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify no voice-quality gate can be bypassed
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_voice_quality_probe.py' -v
+      - name: Install native licensed Russian male voice and independent ASR
+        run: |
+          sudo apt-get install -y -qq --no-install-recommends ffmpeg
+          python3 -m pip install --disable-pip-version-check torch --index-url https://download.pytorch.org/whl/cpu
+          python3 -m pip install --disable-pip-version-check silero==0.5.5 numpy soundfile faster-whisper==1.2.1 av==18.1.0
+      - name: Test five revised Russian scripts with genuine male bass-baritone V6
+        run: python3 cloud-shorts/voice_quality_probe.py
+      - name: Preserve ASR transcripts and MP3 examples for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: GUSTAVA-V6-RUSSIAN-PRONUNCIATION-TESTS
+          path: |
+            cloud-shorts/dist/voice_probes_v6/results.json
+            cloud-shorts/dist/voice_probes_v6/*.mp3
+          retention-days: 14
+          if-no-files-found: warn
