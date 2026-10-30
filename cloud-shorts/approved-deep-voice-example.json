@@ -6,7 +6,8 @@
   "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/59b382df-d33f-45d2-943d-22f1db747299.mp3",
   "transcript_sha256": "ba652867a87178420049e591fae83fc70eb14860ae9e15c886d1a81bc33682e6",
   "transcript": "Почему горная дорога выглядит простой сверху, но сложнее в седле? За каждым поворотом может меняться обзор, а на подъёме важны плавные движения и запас дистанции. Красивый маршрут не про скорость, а про контроль. А ты поехал бы по такой дороге?",
-  "status": "provider_confirmed_preview_not_yet_qa_passed",
+  "status": "provider_audio_mp3_verified;_asr_awaiting",
   "commercial_use": "attribution_required_on_free_provider_plan; paid plan may waive",
-  "publication_status": "not_authorized_until_source_QA_and_appropriate_license"
+  "publication_status": "not_authorized_until_source_QA_and_appropriate_license",
+  "source_audio_sha256": "1d675bb2401134704c4397a909fc34da65f7e5a548088091eaadfd3345ac486c"
 }
