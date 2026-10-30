@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/correct-youtube-ai-disclosures.yml'
+      - 'cloud-shorts/remove_false_ai_disclosures.py'
+      - 'cloud-shorts/test_remove_false_ai_disclosures.py'
 permissions:
   contents: read
 
