@@ -204,6 +204,30 @@ def eligible_abandoned_source_retry(episode, receipt, new_fingerprint, old_concl
     return old_conclusion in ("failure", "cancelled", "timed_out")
 
 
+def eligible_abandoned_audio_config_retry(episode, receipt, new_fingerprint, old_conclusion):
+    """Recover one exact unpublished failed job after a genuine DSP config fix.
+
+    This cannot grant a second YouTube upload and only accepts an explicitly
+    named audio-repair reason. The previous GitHub run must be verified closed.
+    """
+    if not isinstance(receipt, dict) or receipt.get("id") != episode.get("id"):
+        return False
+    if receipt.get("state") != "reserved":
+        return False
+    if episode.get("technical_revision_requested") is not True:
+        return False
+    if episode.get("technical_revision_reason") != "safe_music_gain_range_fixed":
+        return False
+    if not (episode.get("auto_preview") is True and episode.get("auto_publish") is True):
+        return False
+    attempts = receipt.get("attempt_count", 1)
+    if type(attempts) is not int or not 1 <= attempts < MAX_ATTEMPTS:
+        return False
+    if receipt.get("preview_fingerprint") == new_fingerprint:
+        return False
+    return old_conclusion in ("failure", "cancelled", "timed_out")
+
+
 def failed_action_conclusion(run_id):
     """Fail closed unless GitHub confirms the prior render job terminated."""
     token = os.environ.get("GITHUB_TOKEN", "").strip()
@@ -255,12 +279,12 @@ def choose(catalog, output):
                 if unpublished(item["id"]):
                     selected = item
                     break
-    # A failed download may leave a permanent 'reserved' receipt. Recover
-    # only after the source or audited download strategy changed and GitHub confirms the
-    # previous render actually failed. Never allow a parallel or public retry.
+    # Recover a failed, unpublished source download OR a tightly audited
+    # safe audio-configuration repair. Never allow public/parallel retries.
     if selected is None:
         for item in listed:
-            if item.get("source_revision_requested") is not True:
+            if not (item.get("source_revision_requested") is True or
+                    item.get("technical_revision_requested") is True):
                 continue
             _, receipt = records[item["id"]]
             if not receipt or receipt.get("state") != "reserved":
@@ -271,7 +295,8 @@ def choose(catalog, output):
             if receipt.get("preview_fingerprint") == new_fp:
                 continue
             outcome = failed_action_conclusion(receipt.get("run_id"))
-            if eligible_abandoned_source_retry(item, receipt, new_fp, outcome):
+            if (eligible_abandoned_source_retry(item, receipt, new_fp, outcome) or
+                    eligible_abandoned_audio_config_retry(item, receipt, new_fp, outcome)):
                 selected = item
                 break
     # Historical serial continuity: repair part one before beginning part two,

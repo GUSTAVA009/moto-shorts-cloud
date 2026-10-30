@@ -56,6 +56,14 @@ def probe(path):
     return float(data["format"]["duration"]), data.get("streams", [])
 
 
+def validated_music_gain(gain):
+    """Quiet music may be necessary for speech; clipping or silencing isn't."""
+    level = float(gain)
+    if not 0.06 <= level <= 0.34:
+        raise ValueError("Unsafe music level requested")
+    return level
+
+
 def clean_description(text):
     return "\n".join(
         ln for ln in str(text).splitlines()
@@ -447,9 +455,7 @@ def render(ep, output_dir):
     captions = draw_captions(ep, work, total)
 
     output = output_dir / (slug + ".mp4")
-    mix_gain = float(os.environ.get("GUSTAVA_MUSIC_GAIN", "0.18"))
-    if not 0.12 <= mix_gain <= 0.34:
-        raise ValueError("Unsafe music level requested")
+    mix_gain = validated_music_gain(os.environ.get("GUSTAVA_MUSIC_GAIN", "0.18"))
     filter_graph = (
         "[0:v]" + captions + "[v];"
         "[1:a]aresample=48000,highpass=f=85,lowpass=f=8900,"

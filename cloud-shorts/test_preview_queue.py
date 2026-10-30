@@ -111,6 +111,25 @@ class TestPreviewQueue(unittest.TestCase):
         receipt["state"]="preview_ready"
         self.assertFalse(pq.eligible_abandoned_source_retry(item,receipt,"new-stream-code","failure"))
 
+    def test_music_gain_fix_retries_only_verified_failed_unpublished_reservation(self):
+        ep={"id":"moto-motocross-a5697d86523a",
+            "auto_preview":True,"auto_publish":True,
+            "technical_revision_requested":True,
+            "technical_revision_reason":"safe_music_gain_range_fixed"}
+        r={"id":ep["id"],"state":"reserved","attempt_count":2,
+           "preview_fingerprint":"faulty-gain"}
+        self.assertTrue(pq.eligible_abandoned_audio_config_retry(ep,r,"fixed-gain","failure"))
+        self.assertFalse(pq.eligible_abandoned_audio_config_retry(ep,r,"fixed-gain","in_progress"))
+        self.assertFalse(pq.eligible_abandoned_audio_config_retry(ep,r,"faulty-gain","failure"))
+        ep["technical_revision_reason"]="unknown-reason"
+        self.assertFalse(pq.eligible_abandoned_audio_config_retry(ep,r,"fixed-gain","failure"))
+        ep["technical_revision_reason"]="safe_music_gain_range_fixed"
+        r["attempt_count"]=3
+        self.assertFalse(pq.eligible_abandoned_audio_config_retry(ep,r,"fixed-gain","failure"))
+        r["attempt_count"]=2
+        r["state"]="preview_ready"
+        self.assertFalse(pq.eligible_abandoned_audio_config_retry(ep,r,"fixed-gain","failure"))
+
     def test_missing_or_corrupt_registry_fails_closed(self):
         with self.assertRaises(RuntimeError):
             pq.decode_history(None)

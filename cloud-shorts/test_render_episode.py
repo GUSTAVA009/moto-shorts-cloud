@@ -115,6 +115,13 @@ class EpisodeTests(unittest.TestCase):
         self.assertTrue(13<=needed<15)
         self.assertLess(needed,float(e["footage"][0]["duration"]))
 
+    def test_safe_quiet_music_preserves_speech(self):
+        for gain in (0.06, 0.08, 0.10, 0.12, 0.18, 0.34):
+            self.assertAlmostEqual(r.validated_music_gain(gain), gain)
+        for bad in (0, -0.1, 0.35, 1.0, float("nan")):
+            with self.assertRaisesRegex(ValueError, "Unsafe music level"):
+                r.validated_music_gain(bad)
+
     def test_voiceover_text_guard(self):
         with patch.object(t, "safe_download") as download:
             with self.assertRaises(ValueError):
