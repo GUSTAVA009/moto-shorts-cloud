@@ -4609,6 +4609,125 @@
       "visual_review_failed": true,
       "visual_review_reason": "Owner rejected actual screenshot 2026-10-30: first 7 seconds visually near-identical helmet, no filmed size/strap/vision checks, 3 unrelated people/helmets. No release even if motion and ASR QA passed.",
       "visual_reviewed_at": "2026-10-30"
+    },
+    {
+      "id": "moto-riding-ritual-deep-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "Три момента, которые поймёт каждый мотоциклист 🏍️ #shorts",
+      "narration": "Щёлк — визор закрылся. В этот момент весь мир отступает. Остаются только дорога, мотоцикл и ты. А когда снимаешь шлем после поездки, понимаешь: хочется ещё. У тебя тоже так?",
+      "description": "Есть моменты, которые узнает каждый мотоциклист: визор перед стартом, дорога и улыбка после поездки. Три разных райдера, три живых момента.\n\n#мото #мотоциклы #shorts",
+      "caption_start": "ЩЁЛК. ВИЗОР ЗАКРЫТ",
+      "caption_middle": "ТОЛЬКО ТЫ И ДОРОГА",
+      "caption_end": "У ТЕБЯ ТОЖЕ ТАК?",
+      "max_duration_seconds": 25,
+      "opening_trim_seconds": 0,
+      "music_style": "night-drive",
+      "music_bpm": 112,
+      "footage": [
+        {
+          "key": "clip_0",
+          "topics": [
+            "helmet",
+            "visor",
+            "preparation"
+          ],
+          "url": "https://www.pexels.com/download/video/9607103/",
+          "source_page": "https://www.pexels.com/video/woman-closing-the-visor-of-her-helmet-9607103/",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 12,
+          "source_title": "Woman Closing the Visor of her Helmet"
+        },
+        {
+          "key": "clip_1",
+          "topics": [
+            "motorcycle",
+            "travel",
+            "visor"
+          ],
+          "url": "https://www.pexels.com/download/video/4608281/",
+          "source_page": "https://www.pexels.com/video/man-wearing-a-helmet-while-traveling-on-a-motorbike-4608281/",
+          "author": "8 K",
+          "license": "Pexels License",
+          "duration": 29,
+          "source_title": "Man Wearing A Helmet While Traveling On A Motorbike"
+        },
+        {
+          "key": "clip_2",
+          "topics": [
+            "helmet",
+            "rider",
+            "finish"
+          ],
+          "url": "https://www.pexels.com/download/video/5803211/",
+          "source_page": "https://www.pexels.com/video/man-removing-his-helmet-and-smiling-5803211/",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "duration": 16,
+          "source_title": "Man Removing his Helmet and Smiling"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 6.2
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 8
+        },
+        {
+          "source": "clip_2",
+          "start": 0,
+          "seconds": 7
+        }
+      ],
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "visor_close",
+          "spoken_anchor": "Щёлк — визор закрылся"
+        },
+        {
+          "source": "clip_1",
+          "action": "riding",
+          "spoken_anchor": "Остаются только дорога"
+        },
+        {
+          "source": "clip_2",
+          "action": "helmet_removal",
+          "spoken_anchor": "А когда снимаешь шлем"
+        }
+      ],
+      "editorial": {
+        "environment": "urban-road-finish-ritual-20261030",
+        "bike": "traveling-motorcycle",
+        "people": "three-independent-riders-ritual",
+        "story": "start-road-finish-ritual-20261030",
+        "visual": "visor-road-helmetoff-three-20261030"
+      },
+      "editorial_format": "emotional motorcycle visual narrative, no claimed helmet-safety tutorial",
+      "tags": [
+        "мото",
+        "байкер",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ОТВЕТ",
+        "description": "Напиши в комментариях, какой момент поездки любишь больше всего."
+      },
+      "source_selection": "Three unique license-checked official Pexels action clips picked BEFORE the narration; each spoken beat refers to the corresponding visible action.",
+      "generation_provenance": "GUSTAVA scene-first editorial, licensed visual narrative, genuine Create Audio Voice deep",
+      "editorial_review_note": "REVIEW ONLY. Do not auto publish until actual shot-by-shot visual coherence is approved."
     }
   ]
 }
