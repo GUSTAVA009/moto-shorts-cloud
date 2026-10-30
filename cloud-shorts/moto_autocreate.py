@@ -319,7 +319,7 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
         "music_bpm": 106 + (seed_index * 11) % 37,
         "editorial_format": prose.get("_editorial_format", "мотонаблюдение"),
         "footage": sources, "shots": cuts,
-        "visual_director_version": 2,
+        "visual_director_version": 3,
         "editorial": {
             "environment": theme[2] + "-" + short_hash[:5],
             "bike": theme[3],

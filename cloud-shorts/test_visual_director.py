@@ -74,6 +74,59 @@ class VisualDirectionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"VISUAL_QA_REJECTED"):
                 verified_visual_artifact(x,mp4)
 
+
+    def test_real_user_rejected_screenshot_fails_claim_coverage(self):
+        x={
+            "id":"moto-helmet-fit-deep-20261030",
+            "auto_preview":True,"auto_publish":False,
+            "visual_director_version":3,
+            "title":"МОТОШЛЕМ: 3 проверки перед выездом",
+            "narration":("Посмотри на шлем. Он должен плотно сидеть и не мешать обзору. "
+                         "Перед поездкой проверь размер и застегни ремешок."),
+            "footage":[
+                video("a","close-up-shot-of-a-man-wearing-goggles-and-helmet"),
+                video("b","man-wearing-a-helmet"),
+                video("c","man-riding-a-motorcycle-with-helmet")],
+            "shots":[{"source":"a","start":0,"seconds":7.6},
+                     {"source":"b","start":0,"seconds":4.2},
+                     {"source":"c","start":0,"seconds":11.5}],
+        }
+        from visual_director import verify_story_subject
+        with self.assertRaisesRegex(ValueError,"VISUAL_ACTION_STORYBOARD_MISSING"):
+            verify_story_subject(x)
+        x["visual_beats"]=[
+            {"action":"helmet_fit","source":"b"},
+            {"action":"helmet_view","source":"a"},
+            {"action":"helmet_strap","source":"c"}]
+        with self.assertRaisesRegex(ValueError,"VISUAL_ACTION_MISMATCH"):
+            verify_story_subject(x)
+
+    def test_v3_passive_helmet_closeup_cannot_fill_seven_seconds(self):
+        from visual_director import scene_duration_limit
+        e={"visual_director_version":3}
+        self.assertLessEqual(scene_duration_limit(
+            e,video("a","close-up-shot-of-a-man-wearing-helmet")),3.0)
+        self.assertGreater(scene_duration_limit(
+            e,video("b","biker-riding-motorcycle")),3.3)
+
+    def test_guide_requires_real_visual_approval_for_auto_publish(self):
+        from visual_director import verify_action_storyboard
+        x={"id":"moto-helmet-new","auto_publish":True,
+           "visual_director_version":3,
+           "title":"Мотошлем: проверь посадку и ремешок",
+           "narration":"Проверь посадку шлема, затем застегни ремешок.",
+           "footage":[video("fit","person-adjusting-motorcycle-helmet"),
+                      video("strap","rider-fastening-helmet-chin-strap")],
+           "shots":[{"source":"fit","start":0,"seconds":4},
+                    {"source":"strap","start":0,"seconds":4}],
+           "visual_beats":[{"action":"helmet_fit","source":"fit"},
+                           {"action":"helmet_strap","source":"strap"}]}
+        with self.assertRaisesRegex(ValueError,"VISUAL_REVIEW_REQUIRED"):
+            verify_action_storyboard(x)
+        x["visual_asset_revision"]="abc123"
+        x["visual_review"]={"status":"human_approved","asset_revision":"abc123"}
+        self.assertEqual(verify_action_storyboard(x),["helmet_fit","helmet_strap"])
+
     def test_object_mismatch_on_other_safety_guides(self):
         f=[video("a","road-motorcycle"),video("b","riding-in-town")]
         x=ep(f,title="Как проверить тормоза?")

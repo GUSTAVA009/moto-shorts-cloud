@@ -37,6 +37,94 @@ OBJECTS = {
 MIN_SCENE_SECONDS = 3.3
 MAX_SCENE_SECONDS = 12.0
 
+# A noun in the title is NOT evidence of the described action. An instructional
+# helmet Short needs actual sources of FITTING, FASTENING and VISOR operation.
+# These keywords must occur in the provider page slug, not a fabricated tag
+# or model-authored "source_title". They are only a preflight; the final action
+# still needs review of actual video frames before the release is approved.
+HELMET_CLAIMS = (
+    ("helmet_fit", re.compile(r"размер|посадк|плотно|болта|давит|сидит", re.I),
+     re.compile(r"adjust|fitt?ing|try(?:ing)?-on|putting-on|"
+                r"подгон|пример", re.I)),
+    ("helmet_strap", re.compile(r"ремеш|застег|подбород", re.I),
+     re.compile(r"strap|buckle|fasten|chin-strap|ремеш|застег", re.I)),
+    ("helmet_view", re.compile(r"обзор|визор|поле.{0,6}зрени", re.I),
+     re.compile(r"visor|view-through|opening-the-visor|closing-the-visor|"
+                r"визор|обзор", re.I)),
+)
+PASSIVE_PORTRAIT = re.compile(
+    r"(close-up|portrait|posing|wearing|looking|helmet-on-a-handlebar)", re.I
+)
+VISIBLE_ACTION = re.compile(
+    r"(adjust|fitt?ing|fasten|strap|buckle|putting-on|taking-off|"
+    r"riding|race|repair|ride|closing|opening|checking|working|install)", re.I
+)
+
+
+def instructional_claims(episode):
+    """Action codes and their original order in the actual Russian narration."""
+    if main_subject(episode) != "helmet":
+        return []
+    narration = str(episode.get("narration") or "")
+    found = [(m.start(), code) for code,pattern,_ in HELMET_CLAIMS
+             if (m := pattern.search(narration))]
+    return [code for _,code in sorted(found)]
+
+
+def provider_slug(source):
+    """Treat only the independent provider URL as a preflight caption."""
+    return urlparse(str(source.get("source_page") or "")).path.lower()
+
+
+def verify_action_storyboard(episode):
+    """No tutorial release based solely on a nice helmet close-up."""
+    actions=instructional_claims(episode)
+    if len(actions)<2:
+        return []
+    source_map={s["key"]:s for s in episode.get("footage") or []}
+    # Newly generated v3 instructions require an explicit shot per spoken step.
+    beats=episode.get("visual_beats")
+    if not isinstance(beats,list) or [b.get("action") for b in beats]!=actions:
+        raise ValueError(
+            "VISUAL_ACTION_STORYBOARD_MISSING: tutorial needs precisely "
+            "ordered filmed steps "+", ".join(actions)
+        )
+    used=set()
+    for beat in beats:
+        key=beat.get("source")
+        action=beat["action"]
+        source=source_map.get(key)
+        matcher=next(pat for code,_,pat in HELMET_CLAIMS if code==action)
+        if (not source or key in used or not matcher.search(provider_slug(source))):
+            raise ValueError("VISUAL_ACTION_MISMATCH: "+action+
+                             " lacks distinct provider footage of that action")
+        used.add(key)
+    # Metadata alone cannot verify an unbuckled strap or safe fit. An actual
+    # visual review is explicitly required before auto-publication.
+    if episode.get("auto_publish") is True:
+        evidence=episode.get("visual_review") or {}
+        if (evidence.get("status")!="human_approved"
+                or evidence.get("asset_revision")!=episode.get("visual_asset_revision")):
+            raise ValueError(
+                "VISUAL_REVIEW_REQUIRED: metadata cannot prove helmet fastening "
+                "or fit; a video-frame reviewer must approve exact assets."
+            )
+    return actions
+
+
+def scene_duration_limit(episode, source):
+    """New stories cannot hold a passive portrait for seven seconds."""
+    if int(episode.get("visual_director_version") or 0)<3:
+        return MAX_SCENE_SECONDS
+    slug=provider_slug(source)
+    if PASSIVE_PORTRAIT.search(slug) and not VISIBLE_ACTION.search(slug):
+        return 3.0
+    if VISIBLE_ACTION.search(slug) and not re.search(r"riding|race|ride",slug):
+        return 5.2
+    return 7.0
+
+
+
 
 def main_subject(episode):
     title = str(episode.get("title", ""))
@@ -74,6 +162,9 @@ def verify_story_subject(episode):
     sources = {src.get("key") for src in episode.get("footage", ())}
     if len(sources) < 2 or any(shot.get("source") not in sources for shot in shots):
         raise ValueError("VISUAL_STORY_UNVERIFIED: missing actual video source")
+    if (episode.get("auto_publish") is True
+            or int(episode.get("visual_director_version") or 0)>=3):
+        verify_action_storyboard(episode)
     return {"subject": subject, "evidence_sources": matches,
             "source_count": len(sources)}
 
@@ -91,21 +182,27 @@ def directed_plan(episode, source_durations, seconds):
             first[key]=float(shot.get("start", 0.))
     if len(first)<2:
         raise RuntimeError("VISUAL_SCENE_SHORTAGE: need 2 independent moving scenes")
-    # Evidence first: if you say "helmet", the helmet must appear immediately.
+    # Tutorials follow the story's actual spoken actions, not shuffled source IDs.
+    # For travel/cinematic footage the established authored shot order remains.
     evidence_set=set(evidence["evidence_sources"])
     order=list(first)
-    if evidence_set:
+    claims=instructional_claims(episode)
+    if int(episode.get("visual_director_version") or 0)>=3 and len(claims)>=2:
+        order=[beat["source"] for beat in episode["visual_beats"]]
+    elif evidence_set:
         order.sort(key=lambda key: (key not in evidence_set, list(first).index(key)))
     # Prefer up to 3 scenes, rather than endless sub-two-second cuts.
-    n=min(3,len(order),int(target//MIN_SCENE_SECONDS))
+    n=min((5 if int(episode.get("visual_director_version") or 0)>=3 else 3),
+          len(order),int(target//MIN_SCENE_SECONDS))
     if n<2:
         raise RuntimeError("VISUAL_SCENE_SHORTAGE: cannot plan 2 readable scenes")
     order=order[:n]
+    src_by_key={s["key"]:s for s in episode["footage"]}
     caps=[]
     for key in order:
         duration=float(source_durations[key])
         available=max(0.,duration-first[key]-.18)
-        caps.append(min(MAX_SCENE_SECONDS,available))
+        caps.append(min(scene_duration_limit(episode,src_by_key[key]),available))
     if sum(caps)<target-.12 or any(cap<MIN_SCENE_SECONDS for cap in caps):
         raise RuntimeError("VISUAL_DURATION_SHORTAGE: need more suitable licensed source footage")
     portions=[min(target/n,cap) for cap in caps]
@@ -117,13 +214,19 @@ def directed_plan(episode, source_durations, seconds):
         if remaining<=.025:
             break
     if remaining>.12 or any(x<MIN_SCENE_SECONDS for x in portions):
-        raise RuntimeError("VISUAL_SCENE_SHORTAGE: one readable block would be too short")
+        raise RuntimeError(
+            "VISUAL_SCENE_SHORTAGE: need more action-specific footage; "
+            "never pad with repeated or seven-second static helmets"
+        )
     plan=[{"source":key,"start":round(first[key],3),"seconds":round(length,3)}
           for key,length in zip(order,portions)]
     if len({x["source"] for x in plan})!=len(plan):
         raise AssertionError("Directing produced a repeated source")
     if evidence_set and plan[0]["source"] not in evidence_set:
         raise AssertionError("Topic subject not visible at the opening")
+    if int(episode.get("visual_director_version") or 0)>=3 and len(claims)>=2:
+        if [p["source"] for p in plan]!=[b["source"] for b in episode["visual_beats"]]:
+            raise RuntimeError("VISUAL_ACTION_ORDER_MISMATCH: every spoken step needs its shot")
     return plan
 
 
