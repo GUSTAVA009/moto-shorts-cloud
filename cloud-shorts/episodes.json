@@ -5043,7 +5043,16 @@
       },
       "source_selection": "Three original Pexels creators. Public official source titles verified independently; all three exact original clip IDs unused in episode catalog. Inspect actual MP4 frames before release.",
       "generation_provenance": "Original new GUSTAVA DEEP recorded via authorized Create Audio Voice, scene-first; no reused video and no misleading same-event assertion.",
-      "editorial_review_note": "PREVIEW ONLY until actual mp4 frame-and-audio inspection. No YouTube upload while auto_publish=false."
+      "editorial_review_note": "PREVIEW ONLY until actual mp4 frame-and-audio inspection. No YouTube upload while auto_publish=false.",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/2971e6ff-013b-42cb-972f-d3413ea587a0.mp3",
+        "transcript_sha256": "68221d229f1313cdcaba518db25ac4fc5b0e218d11f336a2c2abe7cc5015bd7f",
+        "source_audio_sha256": "f14b3c7078ac638cb36cfeca1f358f4ac302cd54da8d02b2d1dc7cc082f30959",
+        "context_id": "a97cd6f656ec46fe9b619e297663c987",
+        "licence_mode": "public_provider_attribution"
+      }
     }
   ]
 }
