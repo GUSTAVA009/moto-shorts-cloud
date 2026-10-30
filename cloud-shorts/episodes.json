@@ -4165,6 +4165,152 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_reserve_v2",
       "story_reserve_id": "r2-helmet-0010"
+    },
+    {
+      "id": "moto-dirt-1159b9930b70",
+      "auto_preview": true,
+      "auto_publish": true,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "silero_mit_bass_baritone",
+      "voice_profile": "gustava_native_bass_baritone_v6",
+      "title": "Грунтовая трасса: покрытие, первый взгляд, внимание — что заметил? #shorts",
+      "narration": "Мотоцикл и езда по грунту. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — покрытие. Обстановка вокруг заслуживает не меньшего внимания, чем техника. Какая деталь показалась тебе самой интересной?",
+      "description": "Самостоятельная мототема: покрытие. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
+      "caption_start": "ГРУНТОВАЯ ТРАССА",
+      "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
+      "caption_end": "А ТВОЙ ВЫБОР?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 132,
+      "editorial_format": "мотонаблюдение",
+      "footage": [
+        {
+          "topics": [
+            "motocross",
+            "racing",
+            "dirt"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/9168106/",
+          "source_page": "https://www.pexels.com/video/people-riding-dirt-bike-9168106/",
+          "author": "Tom Fisk",
+          "license": "Pexels License",
+          "duration": 35,
+          "source_title": "people riding dirt bike"
+        },
+        {
+          "topics": [
+            "motocross",
+            "racing",
+            "dirt"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/32554208/",
+          "source_page": "https://www.pexels.com/video/exciting-motorcycle-race-on-outdoor-track-32554208/",
+          "author": "Harvey Tan Villarino",
+          "license": "Pexels License",
+          "duration": 12,
+          "source_title": "exciting motorcycle race on outdoor track"
+        },
+        {
+          "topics": [
+            "motocross",
+            "racing",
+            "dirt"
+          ],
+          "key": "clip_2",
+          "url": "https://www.pexels.com/download/video/9607281/",
+          "source_page": "https://www.pexels.com/video/a-female-motorcyclist-doing-stunts-in-the-city-9607281/",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 13,
+          "source_title": "a female motorcyclist doing stunts in the city"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 6.45,
+          "seconds": 2.15
+        }
+      ],
+      "editorial": {
+        "environment": "muddy-trail-road-1159b",
+        "bike": "offroad-dirtbike",
+        "people": "trail-groups-1159b",
+        "story": "muddy-terrain-1159b",
+        "visual": "three-clips-1159b"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "offline_editorial_reserve_v2",
+      "story_reserve_id": "r2-dirt-0011"
     }
   ]
 }
