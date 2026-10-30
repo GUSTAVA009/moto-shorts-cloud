@@ -3759,10 +3759,10 @@
       "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
-      "voice_engine": "silero_mit_bass_baritone",
-      "voice_profile": "gustava_native_bass_baritone_v6",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
       "title": "Горный маршрут: подъём, первый взгляд, внимание — твоя версия? #shorts",
-      "narration": "Мотоцикл и горная дорога. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — подъём. Обстановка вокруг заслуживает не меньшего внимания, чем техника. Какой подход тебе кажется разумнее?",
+      "narration": "Почему горная дорога выглядит простой сверху, но сложнее в седле? За каждым поворотом может меняться обзор, а на подъёме важны плавные движения и запас дистанции. Красивый маршрут не про скорость, а про контроль. А ты поехал бы по такой дороге?",
       "description": "Самостоятельная мототема: подъём. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
       "caption_start": "ГОРНЫЙ МАРШРУТ",
       "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
@@ -3815,17 +3815,17 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_2",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
@@ -3893,7 +3893,19 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_reserve_v2",
-      "story_reserve_id": "r2-mountain-0018"
+      "story_reserve_id": "r2-mountain-0018",
+      "voice_revision_requested": true,
+      "voice_revision_note": "Original Silero narrator was rejected by owner. Only full approved AI Doc Maker Create Audio Voice voice_id=deep, with independent Russian ASR and paid/attribution licensing, may be released.",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/59b382df-d33f-45d2-943d-22f1db747299.mp3",
+        "transcript_sha256": "ba652867a87178420049e591fae83fc70eb14860ae9e15c886d1a81bc33682e6",
+        "source_audio_sha256": "1d675bb2401134704c4397a909fc34da65f7e5a548088091eaadfd3345ac486c",
+        "context_id": "0396c88d4ed645b4970b2e49155482bd",
+        "licence_mode": "public_provider_attribution"
+      },
+      "voice_revision_priority": true
     },
     {
       "id": "moto-rain-1bec694cca6c",
@@ -3901,8 +3913,8 @@
       "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
-      "voice_engine": "silero_mit_bass_baritone",
-      "voice_profile": "gustava_native_bass_baritone_v6",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
       "title": "Дождливая дорога: сцепление, первый взгляд, внимание — как считаешь? #shorts",
       "narration": "Мотоцикл и дождливая поездка. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — сцепление. Обстановка вокруг заслуживает не меньшего внимания, чем техника. Как бы ты объяснил этот выбор другу?",
       "description": "Самостоятельная мототема: сцепление. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
@@ -3957,17 +3969,17 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_2",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
@@ -4035,7 +4047,9 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_reserve_v2",
-      "story_reserve_id": "r2-rain-0019"
+      "story_reserve_id": "r2-rain-0019",
+      "voice_revision_requested": true,
+      "voice_revision_note": "Original Silero narrator was rejected by owner. Only full approved AI Doc Maker Create Audio Voice voice_id=deep, with independent Russian ASR and paid/attribution licensing, may be released."
     },
     {
       "id": "moto-helmet-f2452c64bf21",
@@ -4043,8 +4057,8 @@
       "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
-      "voice_engine": "silero_mit_bass_baritone",
-      "voice_profile": "gustava_native_bass_baritone_v6",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
       "title": "Экипировка: шлем, первый взгляд, внимание — твой выбор? #shorts",
       "narration": "Мотоцикл и выбор экипировки. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — шлем. Обстановка вокруг заслуживает не меньшего внимания, чем техника. А на что ты обратил бы внимание в первую очередь?",
       "description": "Самостоятельная мототема: шлем. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
@@ -4086,12 +4100,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
@@ -4164,7 +4178,9 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_reserve_v2",
-      "story_reserve_id": "r2-helmet-0010"
+      "story_reserve_id": "r2-helmet-0010",
+      "voice_revision_requested": true,
+      "voice_revision_note": "Original Silero narrator was rejected by owner. Only full approved AI Doc Maker Create Audio Voice voice_id=deep, with independent Russian ASR and paid/attribution licensing, may be released."
     },
     {
       "id": "moto-dirt-1159b9930b70",
@@ -4172,8 +4188,8 @@
       "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
-      "voice_engine": "silero_mit_bass_baritone",
-      "voice_profile": "gustava_native_bass_baritone_v6",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
       "title": "Грунтовая трасса: покрытие, первый взгляд, внимание — что заметил? #shorts",
       "narration": "Мотоцикл и езда по грунту. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — покрытие. Обстановка вокруг заслуживает не меньшего внимания, чем техника. Какая деталь показалась тебе самой интересной?",
       "description": "Самостоятельная мототема: покрытие. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
@@ -4232,17 +4248,17 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_2",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
@@ -4310,7 +4326,9 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_reserve_v2",
-      "story_reserve_id": "r2-dirt-0011"
+      "story_reserve_id": "r2-dirt-0011",
+      "voice_revision_requested": true,
+      "voice_revision_note": "Original Silero narrator was rejected by owner. Only full approved AI Doc Maker Create Audio Voice voice_id=deep, with independent Russian ASR and paid/attribution licensing, may be released."
     },
     {
       "id": "moto-vintage-2d2f50634e54",
@@ -4375,17 +4393,17 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_2",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
