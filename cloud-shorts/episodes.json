@@ -4686,8 +4686,8 @@
         },
         {
           "source": "clip_2",
-          "start": 0,
-          "seconds": 7
+          "start": 2.7,
+          "seconds": 4.8
         }
       ],
       "scene_script_anchors": [
@@ -4712,7 +4712,7 @@
         "bike": "traveling-motorcycle",
         "people": "three-independent-riders-ritual",
         "story": "start-road-finish-ritual-20261030",
-        "visual": "visor-road-helmetoff-three-20261030"
+        "visual": "visor-road-helmet-removal-action-retimed"
       },
       "editorial_format": "emotional motorcycle visual narrative, no claimed helmet-safety tutorial",
       "tags": [
@@ -4736,7 +4736,10 @@
         "source_audio_sha256": "5f0c278aed9b281115810870e70e8216cac5f81ebe926fbb691180b8f3bf1b5b",
         "context_id": "ecf490d9a01547bc965f1efdcb2e23c0",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_revision_requested": true,
+      "visual_revision_reason": "owner_rejected_end_clip_no_helmet_removal",
+      "visual_revision_note": "First source action and road verified on actual render 41031003830. The final 0-4s segment only shows a rider adjusting chinstrap, not taking off helmet. Cut instead from original 2.7s into removal action. Preview-only until actual contact sheet confirms removal."
     }
   ]
 }

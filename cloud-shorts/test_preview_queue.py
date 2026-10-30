@@ -73,6 +73,19 @@ class TestPreviewQueue(unittest.TestCase):
         ep["visual_revision_reason"]="unapproved-visual-reason"
         self.assertFalse(pq.eligible_retry(ep,receipt,"new-static-scene"))
 
+    def test_end_scene_only_adjusts_strap_can_retry_unpublished_preview(self):
+        ep={"id":"moto-riding-ritual-deep-20261030",
+            "auto_publish":False,
+            "visual_revision_requested":True,
+            "visual_revision_reason":"owner_rejected_end_clip_no_helmet_removal"}
+        rec={"id":ep["id"],"state":"preview_ready","attempt_count":1,
+             "preview_fingerprint":"early-action",
+             "voice_qa_passed":True,"mixed_audio_qa_passed":True}
+        self.assertTrue(pq.eligible_retry(ep,rec,"retimed-real-removal"))
+        self.assertFalse(pq.eligible_retry(ep,rec,"early-action"))
+        ep["visual_revision_reason"]="unreviewed"
+        self.assertFalse(pq.eligible_retry(ep,rec,"retimed-real-removal"))
+
     def test_successful_audio_preview_is_never_remade(self):
         ep = {"id": "motorcycle-serial-02"}
         record = {"id": ep["id"], "state": "preview_ready",
