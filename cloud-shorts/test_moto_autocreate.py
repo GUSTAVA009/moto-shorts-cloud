@@ -70,7 +70,7 @@ class NewMotoSourceTests(unittest.TestCase):
         self.assertNotEqual(a["title"], b["title"])
         self.assertTrue(125 <= len(a["narration"]) <= 300)
         self.assertTrue(a["narration"].startswith("Мотоцикл"))
-        self.assertEqual(a["_generation_source"], "offline_editorial_reserve_v2")
+        self.assertEqual(a["_generation_source"], "offline_editorial_reserve_v3")
 
     def test_verified_public_pexels_pool_stays_unique(self):
         bank = json.loads((Path(__file__).resolve().parent / "verified_pexels_pool.json").read_text("utf8"))
@@ -90,7 +90,7 @@ class NewMotoSourceTests(unittest.TestCase):
             result = s.original_story(s.THEMES[0], [], [],
                   client=("https://model.example", "example-token", "test-model"),
                   fetch=lambda *args: (_ for _ in ()).throw(OSError("Provider unavailable")))
-        self.assertEqual(result["_generation_source"], "offline_editorial_reserve_v2")
+        self.assertEqual(result["_generation_source"], "offline_editorial_reserve_v3")
 
     def test_active_rolling_batch_script_can_be_used_for_new_episode(self):
         from unittest.mock import patch
