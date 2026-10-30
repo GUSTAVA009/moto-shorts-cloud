@@ -224,7 +224,13 @@ def original_story(theme, sources, previous_titles, client=None, fetch=http_json
               for x in sources]
     instruction = (
         "Напиши ОДИН оригинальный русскоязычный сценарий для GUSTAVA Enduro Shorts. "
-        "Строго мототема, 18-25 секунд. Описания файлов лишь контекст, не доказательство "
+        "Строго мототема, 18-25 секунд. Структура: 0-2 с — цепляющий честный хук "
+        "или неожиданный полезный вопрос; 2-14 с — один конкретный пример/наблюдение; "
+        "14-22 с — понятный вывод и один вопрос зрителю. Не начинай с шаблона "
+        "'Мотоцикл и ...' и не заполняй текст общими фразами вроде 'следи за дорогой'. "
+        "В каждом ролике должна быть новая ценность: микро-гайд, мастерская, сравнение, "
+        "безопасная ошибка, лёгкий юмор или необычная реальная мотодеталь. "
+        "Описания файлов лишь контекст, не доказательство "
         "того, что событие действительно произошло. Это НЕ одна история с общими героями: "
         "показаны независимые клипы. Никаких вымышленных аварий, дат, имён, рекордов, "
         "травм, неподтверждённых технических фактов и опасных инструкций. "
@@ -236,12 +242,17 @@ def original_story(theme, sources, previous_titles, client=None, fetch=http_json
         "Title <= 100 символов, narration 125-300 символов, по-русски, "
         "первое предложение содержит слово мотоцикл/байк/мотокросс; "
         "подписи <= 31 символ. Добавь #shorts в заголовок и описание.")
+    # Rotate treatments while staying grounded in licensed footage.
+    formats = ("мини-гайд", "мастерская", "ироничное наблюдение",
+               "история без выдуманных событий", "разбор ошибки", "сравнение")
+    content_format = formats[len(previous_titles) % len(formats)]
     data = {
         "model": model, "temperature": .9, "response_format": {"type": "json_object"},
         "messages": [
             {"role": "system", "content": instruction},
             {"role": "user", "content": json.dumps({
-                "creative_pillar": theme[0], "search_situation": theme[1],
+                "creative_pillar": theme[0], "creative_format": content_format,
+                "search_situation": theme[1],
                 "independent_licensed_video_contexts": topics,
                 "avoid_titles": previous_titles[-12:],
             }, ensure_ascii=False)},
@@ -271,6 +282,7 @@ def original_story(theme, sources, previous_titles, client=None, fetch=http_json
         raise ValueError("AI created unverified numerical claim")
     if len(obj["title"]) > 100 or any(len(obj[k]) > 31 for k in required[3:]):
         raise ValueError("Unusable Shorts caption/title size")
+    obj["_editorial_format"] = content_format
     return obj
 
 
@@ -305,6 +317,7 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
                         else "night-drive" if theme[0] in ("city", "sunset")
                         else "action"),
         "music_bpm": 106 + (seed_index * 11) % 37,
+        "editorial_format": prose.get("_editorial_format", "мотонаблюдение"),
         "footage": sources, "shots": cuts,
         "editorial": {
             "environment": theme[2] + "-" + short_hash[:5],
