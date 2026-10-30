@@ -11,6 +11,7 @@ on:
     # Bounded Pexels excerpt repair is active: verify first real bass-voice MP4.
     # Keyless story catalog refreshed; trigger one real publishability test.
     # 16 non-overlapping production attempts per day, 90 minutes apart (UTC).
+    # Production continuity check: next eligible V6 episode after successful forest release.
     # This is a target, not a promise: every MP4 still needs licensed sources and >=97% speech QA.
     - cron: "45 0,3,6,9,12,15,18,21 * * *"
     - cron: "15 2,5,8,11,14,17,20,23 * * *"
