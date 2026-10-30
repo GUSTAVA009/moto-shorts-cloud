@@ -587,6 +587,16 @@
       "episode": "moto-dirt-1159b9930b70",
       "source": "https://www.pexels.com/video/a-female-motorcyclist-doing-stunts-in-the-city-9607281/",
       "status": "reserved-or-rendered"
+    },
+    "5806206": {
+      "episode": "moto-helmet-fit-deep-20261030",
+      "source": "https://www.pexels.com/video/close-up-shot-of-a-man-wearing-goggles-and-helmet-5806206/",
+      "status": "reserved-or-rendered"
+    },
+    "5283463": {
+      "episode": "moto-helmet-fit-deep-20261030",
+      "source": "https://www.pexels.com/video/man-riding-a-motorcycle-with-helmet-running-at-high-speed-5283463/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -848,6 +858,13 @@
       "people": "trail-groups-1159b",
       "story": "muddy-terrain-1159b",
       "visual": "three-clips-1159b"
+    },
+    "moto-helmet-fit-deep-20261030": {
+      "environment": "helmet-closeup-20261030",
+      "bike": "helmet-safety-motorcycle",
+      "people": "helmet-riders-20261030",
+      "story": "helmet-fitting-guide-20261030",
+      "visual": "helmet-closeup-then-road"
     }
   }
 }
