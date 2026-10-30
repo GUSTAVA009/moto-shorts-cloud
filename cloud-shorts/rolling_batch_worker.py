@@ -76,7 +76,13 @@ def main():
     if refill:
         github("POST","actions/workflows/autofill-motorcycle.yml/dispatches",{"ref":"main"})
         print("ROLLING_TEN_AUTOFILL_DISPATCHED",flush=True)
-    if "promote_next_ten" in events:
+    if refill and len(scheduled) < MIN_BUFFER_SCHEDULED:
+        # When stock is queued in episodes.json but Buffer is running empty,
+        # a new supplier run alone can be a no-op. Explicitly nudge the
+        # guarded renderer and sender; both implement receipt deduplication.
+        github("POST","actions/workflows/daily-preview.yml/dispatches",{"ref":"main"})
+        print("ROLLING_TEN_URGENT_PREVIEW_DISPATCHED",flush=True)
+    if "promote_next_ten" in events or (refill and len(scheduled) < MIN_BUFFER_SCHEDULED):
         github("POST","actions/workflows/buffer-backlog.yml/dispatches",{"ref":"main"})
         print("ROLLING_TEN_VERIFIED_PUBLISHER_DISPATCHED",flush=True)
     if os.getenv("GITHUB_STEP_SUMMARY"):
