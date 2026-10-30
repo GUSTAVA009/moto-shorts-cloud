@@ -1,4 +1,4 @@
-name: GUSTAVA - Natural Male Russian Voice Audition (No Publishing)
+name: GUSTAVA - Three Clean Bass-Baritone V5 Voice Auditions
 on:
   workflow_dispatch:
   push:
@@ -23,41 +23,56 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq --no-install-recommends ffmpeg espeak-ng libespeak-ng1
           ffmpeg -hide_banner -filters | grep rubberband
-      - name: Test natural natural male audio processing and proof
+      - name: Test three clean bass-baritone presets and digital quality proof
         run: python3 -m unittest discover -s cloud-shorts -p 'test_voice_style.py' -v
       - name: Install licensed Russian male Kokoro synthesizer
         run: |
           python3 -m pip install --disable-pip-version-check torch --index-url https://download.pytorch.org/whl/cpu
           python3 -m pip install --disable-pip-version-check kokoro==0.9.4 ruaccent==1.5.8.3 phonemizer==3.4.0 misaki==0.9.4 soundfile==0.14.0 huggingface_hub
-      - name: Generate softer natural Russian male audition WAV without music or publishing
+      - name: Synthesize one raw Russian male performance and 3 independent v5 audition registers
         run: |
           python3 - <<'PY'
-          import sys
+          import sys,shutil,subprocess
           from pathlib import Path
-          sys.path.insert(0, "cloud-shorts")
+          sys.path.insert(0,"cloud-shorts")
           from kokoro_voice import render
-          from voice_style import validate_report, PROFILE_ID
-          folder = Path("audition")
+          from voice_style import apply,validate_report,VOICE_PRESETS
+          folder=Path("audition")
           folder.mkdir(exist_ok=True)
-          text = ("Когда двигатель оживает, начинается настоящая история. "
-                  "Впереди лесная трасса, камни и крутые повороты. "
-                  "Мотоцикл ждёт своего райдера. Поехали!")
-          wav = folder / "GUSTAVA_NATURAL_MALE_V4.wav"
-          seconds = render(text, wav, folder / "kokoro_model", speed=.98)
-          profile = validate_report(wav)
-          assert profile["profile_id"] == PROFILE_ID
-          (folder / "TEXT_RU.txt").write_text(text, encoding="utf8")
-          print("VOICE_AUDITION_CREATED", wav, "seconds", seconds,
-                "profile", profile["profile_id"])
+          text=("Вечером город затихает, но дорога продолжает жить. "
+                "Мотоцикл проходит поворот уверенно и спокойно. "
+                "Каждое слово должно звучать чётко. "
+                "Настоящая сила голоса — в спокойствии и уверенности.")
+          raw=folder/"_original_dima_do_not_publish.wav"
+          render(text,raw,folder/"kokoro_model",speed=1.03,apply_style=False)
+          lines=["Все три WAV получены из ОДНОЙ исходной записи без двойной обработки.",text]
+          for variant,(pid,pitch) in VOICE_PRESETS.items():
+              voice=folder/("GUSTAVA_"+variant.upper()+"_V5.wav")
+              shutil.copyfile(raw,voice)
+              seconds=apply(voice,preset=variant)
+              proof=validate_report(voice,expected_profile=pid)
+              subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y",
+                  "-i",str(voice),"-c:a","libmp3lame","-q:a","3",
+                  str(folder/("GUSTAVA_"+variant.upper()+"_V5.mp3"))],
+                  check=True,timeout=60)
+              assert proof["saturation"] is False
+              lines.append(f"{variant}: pitch={pitch}; seconds={seconds:.2f}; "+
+                           f"RMS={proof['audio']['rms_dbfs']} dBFS")
+              print("BASS_BARITONE_V5_AUDITION",variant,seconds,pitch,flush=True)
+          raw.unlink(missing_ok=True)
+          (folder/"READ_ME_RU.txt").write_text("\n".join(lines)+"\n",encoding="utf8")
           PY
-          ffprobe -v error -show_entries stream=sample_rate,channels,codec_name -show_entries format=duration -of json audition/GUSTAVA_NATURAL_MALE_V4.wav
-      - name: Save audible male narrator preview (not published to channel)
+          ffprobe -v error -show_entries stream=sample_rate,channels,codec_name \
+            -of json audition/GUSTAVA_BASS_BARITONE_V5.wav
+      - name: Archive three clean Russian studio auditions (never publish)
         uses: actions/upload-artifact@v4
         with:
-          name: GUSTAVA-NATURAL-MALE-V4-AUDITION
+          name: GUSTAVA-BASS-BARITONE-V5-THREE-AUDITIONS
           path: |
-            audition/GUSTAVA_NATURAL_MALE_V4.wav
-            audition/GUSTAVA_NATURAL_MALE_V4.profile.json
-            audition/TEXT_RU.txt
+            audition/*V5.wav
+            audition/*V5.mp3
+            audition/*V5.profile.json
+            audition/READ_ME_RU.txt
           retention-days: 14
           if-no-files-found: error
+

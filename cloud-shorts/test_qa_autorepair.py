@@ -47,7 +47,7 @@ class VoiceAutorepairTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             with patch.object(qa, "HERE", Path(tmp)):
                 self.assertEqual(qa.repair("test-motorcycle-short", runner=runner), 0)
-        self.assertEqual(called, [(1.0, .34), (.95, .22)])
+        self.assertEqual(called, [(1.05, .14), (1.00, .18)])
 
     def test_all_failed_but_qa_artifact_saved_for_review(self):
         def runner(episode, work, dist, speed, gain):

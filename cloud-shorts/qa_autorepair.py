@@ -16,7 +16,7 @@ import sys
 HERE = Path(__file__).resolve().parent
 # Narrator remains centered in stereo; lowering background only can never
 # fix a missing spoken consonant but does improve final mixed intelligibility.
-PROFILES = ((1.00, .34), (.95, .22), (1.05, .14))
+PROFILES = ((1.05, .14), (1.00, .18), (.97, .12))
 MIN_COVERAGE = .97
 
 

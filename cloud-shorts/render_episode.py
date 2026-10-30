@@ -367,13 +367,13 @@ def render(ep, output_dir):
     captions = draw_captions(ep, work, total)
 
     output = output_dir / (slug + ".mp4")
-    mix_gain = float(os.environ.get("GUSTAVA_MUSIC_GAIN", "0.34"))
+    mix_gain = float(os.environ.get("GUSTAVA_MUSIC_GAIN", "0.18"))
     if not 0.12 <= mix_gain <= 0.34:
         raise ValueError("Unsafe music level requested")
     filter_graph = (
         "[0:v]" + captions + "[v];"
         "[1:a]aresample=48000,highpass=f=85,lowpass=f=8900,"
-        "volume=1.20,adelay=160|160,apad,atrim=duration=%.3f,"
+        "volume=1.00,adelay=160|160,apad,atrim=duration=%.3f,"
         "asetpts=PTS-STARTPTS,aformat=channel_layouts=stereo,asplit=2[voice_duck][voice_mix];" % total
         + f"[2:a]aresample=48000,volume={mix_gain:.2f},"
         "afade=t=in:st=0:d=0.18,afade=t=out:st=%.3f:d=0.4,"

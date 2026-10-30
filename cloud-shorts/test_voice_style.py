@@ -48,14 +48,29 @@ class DeepMaleNarrationTests(unittest.TestCase):
 
     def test_profile_constants_are_not_female_voices(self):
         self.assertEqual(vs.SPEAKER, "dima")
-        self.assertEqual(vs.PROFILE_ID, "gustava_male_natural_v4")
-        self.assertEqual(vs.PITCH, .94)
-        self.assertGreater(vs.PITCH, .91)
-        self.assertLess(vs.PITCH, .97)
+        self.assertEqual(vs.PROFILE_ID, "gustava_male_bass_baritone_v5")
+        self.assertEqual(vs.PITCH, .87)
+        self.assertGreater(vs.PITCH, .84)
+        self.assertLess(vs.PITCH, .90)
         self.assertIn("formant=preserved", vs.FILTER)
         self.assertIn("acompressor=", vs.FILTER)
         self.assertNotIn("asoftclip=", vs.FILTER)
         self.assertNotIn("pan=", vs.FILTER)
+
+    def test_clean_presets_have_distinct_source_pitch_without_saturation(self):
+        self.assertEqual(len(vs.VOICE_PRESETS), 3)
+        for name,(pid,pitch) in vs.VOICE_PRESETS.items():
+            chain=vs.filter_for(pitch)
+            self.assertIn("formant=preserved",chain)
+            self.assertNotIn("asoftclip",chain)
+            self.assertNotIn("haas",chain)
+            self.assertNotIn("pan=",chain)
+            self.assertIn("loudnorm=",chain)
+            self.assertIn("alimiter=",chain)
+        self.assertGreater(vs.VOICE_PRESETS["baritone"][1],
+                           vs.VOICE_PRESETS["bass_baritone"][1])
+        self.assertGreater(vs.VOICE_PRESETS["bass_baritone"][1],
+                           vs.VOICE_PRESETS["deep_bass"][1])
 
     def test_missing_profile_must_block_release(self):
         with self.assertRaisesRegex(ValueError, "missing"):
@@ -79,8 +94,8 @@ class DeepMaleNarrationTests(unittest.TestCase):
         self.assertAlmostEqual(duration, 4.2, delta=.25)
         self.assertNotEqual(vs.sha256(self.wav), before_hash)
         actual_pitch = zero_crossing_pitch(self.wav)
-        self.assertGreater(actual_pitch, before_pitch * .91)
-        self.assertLess(actual_pitch, before_pitch * .98)
+        self.assertGreater(actual_pitch, before_pitch * .83)
+        self.assertLess(actual_pitch, before_pitch * .91)
         report = vs.validate_report(self.wav)
         self.assertEqual(report["profile_id"], vs.PROFILE_ID)
         self.assertEqual(report["processed_wav_sha256"], vs.sha256(self.wav))

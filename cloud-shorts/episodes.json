@@ -3322,9 +3322,9 @@
         "overlay": "ПОДПИШИСЬ НА МОТОМАРШРУТЫ",
         "description": "Подпишись, если ценишь красивые виды в дороге."
       },
-      "voice_profile": "gustava_male_natural_v4",
+      "voice_profile": "gustava_male_bass_baritone_v5",
       "voice_revision_requested": true,
-      "voice_revision_note": "Owner reports harsh/gravelly voice; unpublished rerender with natural preserved-formant v4. Do not reupload already posted video."
+      "voice_revision_note": "Owner rejected v4; release only after full independent ASR and clean bass-baritone v5. No old audio reuse."
     },
     {
       "id": "moto-forest-4bd53e13fec4",
@@ -3333,7 +3333,7 @@
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "kokoro_ru_dima",
-      "voice_profile": "gustava_male_natural_v4",
+      "voice_profile": "gustava_male_bass_baritone_v5",
       "title": "Мотоцикл: лесная тропа — на что смотреть #shorts",
       "narration": "Мотоцикл и лесная тропа: у каждого кадра свой характер. Выбор маршрута начинается не с скорости, а с понятного плана и оценки окружающей обстановки. А ты выбрал бы спокойную поездку или трассу?",
       "description": "Новые кадры на тему «лесная тропа».\n\n#shorts",
@@ -3454,7 +3454,7 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_matrix_v1",
       "voice_revision_requested": true,
-      "voice_revision_note": "Owner reports harsh/gravelly voice; unpublished rerender with natural preserved-formant v4. Do not reupload already posted video."
+      "voice_revision_note": "Owner rejected v4; release only after full independent ASR and clean bass-baritone v5. No old audio reuse."
     }
   ]
 }

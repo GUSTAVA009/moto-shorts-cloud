@@ -34,7 +34,7 @@ def validate_text(text: str) -> str:
     return text
 
 
-def render(text, output, model_dir=None, speed=1.0):
+def render(text, output, model_dir=None, speed=1.0, apply_style=True):
     """Render full phrase with bounded sentence breaks, 24 kHz WAV.
 
     Downloads pinned upstream voice model and bundled Russian espeak dictionary
@@ -106,8 +106,12 @@ def render(text, output, model_dir=None, speed=1.0):
     sf.write(str(output), audio, 24000, subtype="PCM_16")
     # Always apply one AND ONLY ONE low-male voice style after raw synthesis.
     # Never add a second narration layer or pan voices across speakers.
+    if not apply_style:
+        # Raw reference is for a three-way comparative audition ONLY.
+        print("KOKORO_RU_RAW_STUDIO_REFERENCE",round(duration,2),"seconds",flush=True)
+        return duration
     deep_duration = deepen_male_voice(output)
-    print("KOKORO_RU_DEEP_MALE_READY", round(deep_duration, 2),
+    print("KOKORO_RU_BASS_BARITONE_READY", round(deep_duration, 2),
           "seconds", SPEAKER, "profile", MALE_STYLE,
           "speed", speed, "license=OpenRAIL", flush=True)
     return deep_duration
