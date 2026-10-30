@@ -4892,7 +4892,16 @@
       },
       "source_selection": "Distinct-author internal verified Pexels pool; visual review pending",
       "generation_provenance": "Original scene-first narration comparing independently filmed mountain and forest routes",
-      "editorial_review_note": "PREVIEW ONLY. Source activity and continuity need frame inspection before Buffer."
+      "editorial_review_note": "PREVIEW ONLY. Source activity and continuity need frame inspection before Buffer.",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/4c2c9073-1aaf-4583-a573-85a7e258b86d.mp3",
+        "transcript_sha256": "33f41361db9e61b88aa0555259ed652fa2823ffdd7d83cdb2b98cee4a802105d",
+        "source_audio_sha256": "a58aaf77055f0b178b25b259c27459800fa060cc76f1bc64a811b514c076625c",
+        "context_id": "d799b98f7de742f9bc9360819fc90194",
+        "licence_mode": "public_provider_attribution"
+      }
     }
   ]
 }
