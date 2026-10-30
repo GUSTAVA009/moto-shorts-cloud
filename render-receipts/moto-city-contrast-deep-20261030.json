@@ -1,10 +1,16 @@
 {
   "id": "moto-city-contrast-deep-20261030",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "41046270508",
   "attempt_count": 2,
   "preview_fingerprint": "fe4df8fe7993ccadfd7fb54777c45592c3c9885a6d218cd37805f55eae8fb894",
   "deep_source_sha256": "66ff7f4f8fac93a09ea617698622dd1c10933a2478efdbffc5c9b651346a3763",
   "previous_run_id": "41045277757",
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 1.0,
+  "voice_profile": "gustava_create_audio_deep_v1",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 1.0
 }
