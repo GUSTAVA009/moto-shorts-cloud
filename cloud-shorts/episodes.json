@@ -4727,7 +4727,16 @@
       },
       "source_selection": "Three unique license-checked official Pexels action clips picked BEFORE the narration; each spoken beat refers to the corresponding visible action.",
       "generation_provenance": "Scene-first original GUSTAVA DEEP, revision 2 fixes independent ASR misheard syllables",
-      "editorial_review_note": "REVIEW ONLY. Do not auto publish until actual shot-by-shot visual coherence is approved."
+      "editorial_review_note": "REVIEW ONLY. Do not auto publish until actual shot-by-shot visual coherence is approved.",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/e4375b9f-9070-401e-bd55-b71b4cea4d38.mp3",
+        "transcript_sha256": "0151f1ba247b86e95afc0a772c4a8321c520e8a7fa64b9ecbbf0c57589d345bc",
+        "source_audio_sha256": "5f0c278aed9b281115810870e70e8216cac5f81ebe926fbb691180b8f3bf1b5b",
+        "context_id": "ecf490d9a01547bc965f1efdcb2e23c0",
+        "licence_mode": "public_provider_attribution"
+      }
     }
   ]
 }
