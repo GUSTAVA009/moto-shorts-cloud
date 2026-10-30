@@ -24,7 +24,7 @@ class CatalogAutofillTests(unittest.TestCase):
         for ep in self.bank["episodes"]:
             self.assertTrue(ep.get("auto_preview") is True)
             self.assertTrue(ep.get("auto_publish") is True)
-            self.assertEqual(ep.get("voice_engine"), "silero_mit_bass_baritone")
+            self.assertEqual(ep.get("voice_engine"), "aidocmaker_deep")
             self.assertEqual(validate_episode(ep), ep["id"])
             if ep["id"] not in existing:
                 catalog["episodes"].append(ep)

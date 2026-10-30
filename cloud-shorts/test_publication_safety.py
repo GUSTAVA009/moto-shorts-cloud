@@ -1,5 +1,7 @@
 """Vendor-independent publication QA tests: no network, no posting."""
 import tempfile
+import hashlib
+from deep_voice import PUBLIC_ATTRIBUTION
 from pathlib import Path
 import unittest
 
@@ -13,24 +15,29 @@ class PublicationQualityTests(unittest.TestCase):
         self.video.write_bytes(b"M" * 500001)
         self.episode = {
             "id": "motocross-original-23", "auto_publish": True,
-            "voice_engine": "silero_mit_bass_baritone",
+            "voice_engine": "aidocmaker_deep",
             "title": "Мотокросс: крутой подъём",
             "narration": "Райдер на мотоцикле преодолевает препятствия.",
             "editorial": {"bike": "offroad-motorcycle"},
             "footage": [{"license": "Pexels License"}],
         }
+        self.episode["deep_audio"] = {"provider":"aidocmaker.com", "voice_id":"deep",
+          "preview_url":"https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/59b382df-d33f-45d2-943d-22f1db747299.mp3",
+          "transcript_sha256":hashlib.sha256(self.episode["narration"].encode()).hexdigest(),
+          "source_audio_sha256":"a"*64}
         self.meta = {
             "episode_id": self.episode["id"],
             "title": self.episode["title"],
-            "description": "Новые мотосцены, оригинальная озвучка.",
+            "description": "Новые мотосцены, оригинальная озвучка.\n\n" + PUBLIC_ATTRIBUTION,
         }
         self.qa = {
             "episode_id": self.episode["id"],
             "passed": True, "status": "passed",
             "lexical_coverage": .99, "ending_coverage": .99,
             "final_word_present": True, "male_voice_verified": True,
-            "voice_profile": "gustava_native_bass_baritone_v6",
-            "voice_speaker": "ru_alexandr", "voice_source_license": "MIT",
+            "voice_profile": "gustava_create_audio_deep_v1",
+            "voice_speaker": "deep", "voice_provider": "aidocmaker.com",
+            "voice_source_audio_sha256": "a"*64,
             "mixed_audio": {
                 "episode_id": self.episode["id"],
                 "source": "FINAL_MIXED_MP4", "passed": True,
@@ -48,7 +55,7 @@ class PublicationQualityTests(unittest.TestCase):
 
     def test_old_voice_profile_never_passes_publication(self):
         self.qa.pop("male_voice_verified")
-        with self.assertRaisesRegex(ValueError, "NATIVE_BASS_BARITONE_REQUIRED"):
+        with self.assertRaisesRegex(ValueError, "ONLY_APPROVED_CREATE_AUDIO_DEEP"):
             p.publication_allowed(self.episode, self.meta, self.qa, self.video)
 
     def test_missing_words_blocked(self):

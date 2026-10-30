@@ -41,7 +41,6 @@ def select(catalog, receipt_entries, published, artifacts):
     allowed={ep["id"] for ep in catalog["episodes"]
              if ep.get("auto_publish") is True
              and ep.get("voice_engine") == REQUIRED_MALE_ENGINE
-             and deep_audio_ready(ep)
              and is_motorcycle_episode(ep)}
     available={x["name"] for x in artifacts if not x.get("expired")}
     choices=[]

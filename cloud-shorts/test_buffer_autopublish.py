@@ -1,5 +1,7 @@
 """Offline regression tests for the Buffer distribution safety gates."""
 import os
+import hashlib
+from deep_voice import PUBLIC_ATTRIBUTION
 from pathlib import Path
 import tempfile
 import unittest
@@ -15,19 +17,24 @@ class BufferPublisherTests(unittest.TestCase):
         self.video = Path(self.tmp.name) / "new-original-22.mp4"
         self.video.write_bytes(b"X" * 200_000)
         self.ep = {"id": "new-original-22", "auto_publish": True,
-                   "voice_engine": "silero_mit_bass_baritone",
+                   "voice_engine": "aidocmaker_deep",
                    "title": "Мотоцикл на трассе",
                    "narration": "Мотоцикл проходит крутой поворот.",
                    "editorial": {"bike": "offroad-trail-motorcycle"},
                    "footage": [{"license": "Pexels License"}]}
+        self.ep["deep_audio"] = {"provider":"aidocmaker.com", "voice_id":"deep",
+          "preview_url":"https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/59b382df-d33f-45d2-943d-22f1db747299.mp3",
+          "transcript_sha256":hashlib.sha256(self.ep["narration"].encode()).hexdigest(),
+          "source_audio_sha256":"a"*64}
         self.meta = {"episode_id": self.ep["id"],
                      "title": "Оригинальный ролик о мотоциклах",
-                     "description": "Русский новый сценарий и оригинальный монтаж."}
+                     "description": "Русский новый сценарий и оригинальный монтаж.\n\n" + PUBLIC_ATTRIBUTION}
         self.voice = {"episode_id": self.ep["id"], "passed": True,
                       "status": "passed", "lexical_coverage": .99,
                       "ending_coverage": 1.0, "final_word_present": True,
-                      "voice_profile": "gustava_native_bass_baritone_v6", "male_voice_verified": True,
-            "voice_speaker": "ru_alexandr", "voice_source_license": "MIT"}
+                      "voice_profile": "gustava_create_audio_deep_v1", "male_voice_verified": True,
+            "voice_speaker": "deep", "voice_provider":"aidocmaker.com",
+            "voice_source_audio_sha256":"a"*64}
         self.mix = {"episode_id": self.ep["id"], "source": "FINAL_MIXED_MP4",
                     "passed": True, "status": "passed",
                     "lexical_coverage": .99, "ending_coverage": 1.0,

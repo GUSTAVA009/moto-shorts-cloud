@@ -7,13 +7,13 @@ class BufferBacklogTests(unittest.TestCase):
     def setUp(self):
         self.catalog = {"episodes": [
             {"id": "new-original-22", "auto_publish": True,
-             "voice_engine": "silero_mit_bass_baritone",
+             "voice_engine": "aidocmaker_deep",
              "title": "Мотоцикл на сложном подъёме",
              "narration": "Мотоцикл преодолевает поворот на грунтовой трассе.",
              "editorial": {"bike": "offroad-trail-motorcycle"}}]}
         self.receipts = [{"id": "new-original-22", "state": "preview_ready",
                           "voice_qa_passed": True,
-                          "mixed_audio_qa_passed": True, "voice_profile": "gustava_native_bass_baritone_v6",
+                          "mixed_audio_qa_passed": True, "voice_profile": "gustava_create_audio_deep_v1",
                           "male_voice_verified": True, "run_id": "12345"}]
         self.artifacts = [{"name": "daily-preview-new-original-22-12345",
                            "expired": False}]
