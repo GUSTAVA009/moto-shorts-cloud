@@ -13,6 +13,7 @@ from zoneinfo import ZoneInfo
 from autofill_catalog import github
 from buffer_autopublish import verify_channel
 from ten_daily_slots import LOCAL_TIMES
+from story_reserve import RESERVE_CAPACITY, remaining as reserve_remaining
 
 HERE = Path(__file__).resolve().parent
 TARGET = 10
@@ -48,6 +49,9 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
     # Script prompts can be composed locally; licensed moving footage cannot.
     if not pexels and unused_public_clips < 2 and not waiting:
         deficits.append("LICENSED_VIDEO_SUPPLY_LOW: public reserve exhausted; Commons may be limited")
+    reserve_left = reserve_remaining(e.get("story_reserve_id") for e in catalog["episodes"])
+    if reserve_left < 10000:
+        deficits.append("EDITORIAL_STORY_RESERVE_LOW: expand template axes")
     if len(sent_today) + len(scheduled_today) < TARGET:
         deficits.append("BELOW_TEN_SCHEDULED_OR_SENT_TODAY")
     return {
@@ -60,6 +64,9 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
         "accepted_buffer_receipts_all_time": len(dispatched_ids),
         "original_script_model_available": model,
         "keyless_editorial_script_reserve": True,
+        "script_reserve_capacity": RESERVE_CAPACITY,
+        "script_reserve_remaining": reserve_left,
+        "script_reserve_type": "on_demand_narrative_variants_not_ready_mp4",
         "unconsumed_curated_pexels_clips": unused_public_clips,
         "pexels_search_key_available": pexels,
         "alternate_cc0_library": "limited, license verified live",
@@ -102,6 +109,9 @@ def main():
             f"| Ключ Pexels | {'YES' if pexels else 'NO (public reserve)'} |",
             f"| Неиспользованных проверенных публичных видео | {state['unconsumed_curated_pexels_clips']} |",
             "| Генерация сценариев без API-ключа | YES (offline editorial reserve) |",
+            f"| Адресуемых вариантов сценариев | {state['script_reserve_capacity']:,} |",
+            f"| Неиспользованных вариантов сценариев | {state['script_reserve_remaining']:,} |",
+            "| Примечание | Сценарные варианты не равны готовым MP4 или лицензированным кадрам |",
             "",
             "### Ограничения",
         ] + ["- " + x for x in state["hard_blockers"]] + [

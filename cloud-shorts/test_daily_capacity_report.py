@@ -22,6 +22,8 @@ class CapacityReportTests(unittest.TestCase):
         self.assertEqual(report["new_unique_scripts_ready_to_render"], 1)
         self.assertIn("BELOW_TEN_SCHEDULED_OR_SENT_TODAY", report["hard_blockers"])
         self.assertTrue(report["keyless_editorial_script_reserve"])
+        self.assertEqual(report["script_reserve_capacity"], 150000)
+        self.assertEqual(report["script_reserve_remaining"], 150000)
         self.assertGreaterEqual(report["unconsumed_curated_pexels_clips"], 0)
 
     def test_status_is_not_falsely_green_without_credentials(self):

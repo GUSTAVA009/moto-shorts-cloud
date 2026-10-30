@@ -26,6 +26,7 @@ from render_episode import validate_episode
 from voice_style import PROFILE_ID as MALE_PROFILE
 from engagement_cta import CTA_KINDS
 from autofill_catalog import github
+from story_reserve import choose as choose_reserved_story, RESERVE_CAPACITY
 
 ROOT = Path(__file__).resolve().parent
 CATALOG = "cloud-shorts/episodes.json"
@@ -192,85 +193,9 @@ def story_model_client():
     return None
 
 
-# Keyless editorial reserve: never claim a made-up accident or documentary event.
-# Distinct source clips are independent visual illustrations of a motorcycling topic.
-OFFLINE_TOPICS = {
-    "forest": ("лесная тропа", "ЛЕСНАЯ ДОРОГА"),
-    "motocross": ("трасса для мотокросса", "МОТОКРОСС"),
-    "repair": ("уход за мотоциклом", "МОТОМАСТЕРСКАЯ"),
-    "mountain": ("дорога среди гор", "ГОРНАЯ ДОРОГА"),
-    "rain": ("дорога под дождём", "ДОЖДЛИВЫЙ МАРШРУТ"),
-    "desert": ("песчаный путь", "ПЕСЧАНАЯ ДОРОГА"),
-    "city": ("движение в городе", "ГОРОДСКОЙ МАРШРУТ"),
-    "vintage": ("работа с классическим мотоциклом", "КЛАССИКА"),
-    "roadtrip": ("дальняя поездка", "МОТОПУТЕШЕСТВИЕ"),
-    "training": ("тренировка на трассе", "ТРЕНИРОВКА"),
-    "helmet": ("подготовка перед поездкой", "ПЕРЕД ПОЕЗДКОЙ"),
-    "dirt": ("грунтовая трасса", "ГРУНТОВАЯ ДОРОГА"),
-    "sunset": ("вечерняя дорога", "ВЕЧЕРНИЙ МАРШРУТ"),
-    "snow": ("дорога в холодную погоду", "ХОЛОДНАЯ ДОРОГА"),
-    "racing": ("гонка на мотоциклах", "МОТОГОНКА"),
-}
-OFFLINE_HOOKS = (
-    "что замечаешь первым", "красота без спешки", "в чём характер маршрута",
-    "другая сторона дороги", "важные мелочи", "на что смотреть",
-    "атмосфера движения", "зачем нужен план", "какой выбор ближе",
-    "путь и внимание", "что делает поездку особенной", "что видно по кадрам",
-)
-OFFLINE_OBSERVATIONS = (
-    "Перед поездкой полезно оценить покрытие и видимость. Красивый кадр не отменяет внимательности.",
-    "По отдельным кадрам нельзя судить обо всём маршруте. Важно замечать обстановку и не спешить.",
-    "Детали часто важнее громких слов: состояние техники, обзор дороги и спокойное решение.",
-    "Техника и маршрут могут быть разными, но внимательность и подготовка пригодятся в любой поездке.",
-    "У каждой дороги своя атмосфера. Смена ракурса помогает заметить то, что обычно остаётся за кадром.",
-    "Смотреть на поездку приятно, но реальный маршрут требует собственной оценки дорожных условий.",
-    "Не каждый момент на видео рассказывает всю историю. Разумнее смотреть на детали и общую обстановку.",
-    "Выбор маршрута начинается не с скорости, а с понятного плана и оценки окружающей обстановки.",
-)
-OFFLINE_ENDINGS = (
-    "А какой момент зацепил тебя сильнее?",
-    "Какой маршрут тебе ближе?",
-    "Что ты обычно замечаешь на таких кадрах?",
-    "А ты выбрал бы спокойную поездку или трассу?",
-    "Что важнее для тебя: маршрут или настроение?",
-    "Какая деталь здесь интереснее всего?",
-    "Ты бы отправился по такой дороге?",
-    "Какой сюжет про мотоциклы снять следующим?",
-)
-
-
+# v2: keyless, addressable, 150,000-slot editorial reserve.
 def offline_original_story(theme, sources, previous_titles):
-    """Compose an original factual-safety-checked Russian script without an API key.
-
-    This is a finite combinatorial editorial reserve, not AI inference. Never
-    recycle a title and never pretend independent licensed shots depict
-    an authenticated incident. Actual source uniqueness is checked separately.
-    """
-    topic, caption = OFFLINE_TOPICS[theme[0]]
-    media_key = "|".join(source_id(s) for s in sources)
-    start = int(hashlib.sha256((media_key + str(len(previous_titles))).encode("utf8")).hexdigest()[:8], 16)
-    previous = {str(title).casefold() for title in previous_titles}
-    for step in range(len(OFFLINE_HOOKS) * len(OFFLINE_OBSERVATIONS) * len(OFFLINE_ENDINGS)):
-        n = start + step
-        hook = OFFLINE_HOOKS[n % len(OFFLINE_HOOKS)]
-        observation = OFFLINE_OBSERVATIONS[(n // len(OFFLINE_HOOKS)) % len(OFFLINE_OBSERVATIONS)]
-        ending = OFFLINE_ENDINGS[(n // (len(OFFLINE_HOOKS) * len(OFFLINE_OBSERVATIONS))) % len(OFFLINE_ENDINGS)]
-        title = f"Мотоцикл: {topic} — {hook} #shorts"
-        if title.casefold() in previous:
-            continue
-        narration = (f"Мотоцикл и {topic}: у каждого кадра свой характер. "
-                     f"{observation} {ending}")
-        if not 125 <= len(narration) <= 300:
-            continue
-        return {
-            "title": title, "narration": narration,
-            "description": f"Новые кадры на тему «{topic}».\n\n#shorts",
-            "caption_start": caption,
-            "caption_middle": "СМОТРИ НА ДЕТАЛИ",
-            "caption_end": "А ТВОЙ ВЫБОР?",
-            "_generation_source": "offline_editorial_matrix_v1",
-        }
-    raise RuntimeError("OFFLINE_STORY_TOPICS_EXHAUSTED: no new distinct approved titles")
+    return choose_reserved_story(theme[0], sources, previous_titles)
 
 
 def curated_pexels_results(theme, used_ids=()):
@@ -391,6 +316,7 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
         "cta": {"kind": cta_kind, "overlay": overlay, "description": sentence},
         "source_selection": "Independent official video APIs, no clip reuse",
         "generation_provenance": prose.get("_generation_source", "Original authoring by model from broad licensed scene context"),
+        **({"story_reserve_id": prose["_reserve_id"]} if prose.get("_reserve_id") else {}),
     }
     # Existing editorial uniqueness and Russian QA still apply independently.
     validate_episode(ep)
