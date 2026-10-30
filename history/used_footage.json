@@ -677,6 +677,16 @@
       "episode": "gustava-20-e01-20261030",
       "source": "https://www.pexels.com/video/a-man-fixing-the-motorcycle-7170231/",
       "status": "reserved-or-rendered"
+    },
+    "39848200": {
+      "episode": "gustava-20-p01-20261030",
+      "source": "https://www.pexels.com/video/exciting-motorcycle-stunt-jump-with-riders-39848200/",
+      "status": "reserved-or-rendered"
+    },
+    "9607284": {
+      "episode": "gustava-20-p01-20261030",
+      "source": "https://www.pexels.com/video/man-doing-stunts-on-a-motorcycle-9607284/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -987,6 +997,13 @@
       "story": "wheel-versus-engine-repair",
       "visual": "two-different-bike-repairs",
       "bike": "urban-servicing-bike"
+    },
+    "gustava-20-p01-20261030": {
+      "environment": "fmx-live-show-and-city-stunt",
+      "people": "airborne-performers-and-city-rider",
+      "story": "show-jump-versus-street-stunt",
+      "visual": "airborne-and-urban-trick",
+      "bike": "fmx-freestyle-bike"
     }
   }
 }
