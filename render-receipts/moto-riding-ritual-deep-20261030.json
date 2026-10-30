@@ -1,15 +1,9 @@
 {
   "id": "moto-riding-ritual-deep-20261030",
-  "state": "preview_ready",
-  "run_id": "41031003830",
-  "attempt_count": 1,
-  "preview_fingerprint": "0cc8d5298739d3b8fc7e31d9fdf768fdd053c09aaa87be137a6680aa418aa35b",
-  "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": true,
-  "voice_qa_coverage": 1.0,
-  "voice_profile": "gustava_create_audio_deep_v1",
-  "male_voice_verified": true,
-  "mixed_audio_qa_passed": true,
-  "mixed_audio_qa_coverage": 1.0
+  "state": "reserved",
+  "run_id": "41031636044",
+  "attempt_count": 2,
+  "preview_fingerprint": "34f1c0083ed9d8499365c1d829ca494719993c5b956ee49fd63385ad269dd9f9",
+  "previous_run_id": "41031003830",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
