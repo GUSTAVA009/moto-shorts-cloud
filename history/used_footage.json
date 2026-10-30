@@ -657,6 +657,16 @@
       "episode": "moto-moto-life-three-scenes-deep-20261030",
       "source": "https://www.pexels.com/video/a-man-performing-stunts-with-his-motorbike-9607278/",
       "status": "reserved-or-rendered"
+    },
+    "7170228": {
+      "episode": "gustava-20-s01-20261030",
+      "source": "https://www.pexels.com/video/man-fixing-motorbike-7170228/",
+      "status": "reserved-or-rendered"
+    },
+    "8551366": {
+      "episode": "gustava-20-s01-20261030",
+      "source": "https://www.pexels.com/video/men-holding-mechanic-tools-8551366/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -953,6 +963,13 @@
       "people": "three-independent-motorcycle-creators",
       "story": "showroom-garage-urban-action-contrast",
       "visual": "three-independent-actions-highfive-talk-wheelie"
+    },
+    "gustava-20-s01-20261030": {
+      "environment": "classic-workshop-and-toolroom",
+      "people": "classic-mechanic-and-tool-users",
+      "story": "classic-repair-versus-tool-choice",
+      "visual": "repair-vs-tool-selection",
+      "bike": "vintage-repair-bike"
     }
   }
 }
