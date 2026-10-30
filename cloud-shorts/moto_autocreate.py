@@ -21,6 +21,7 @@ import urllib.parse
 import urllib.request
 
 from editorial_guard import validate_catalog, source_id
+from editorial_novelty import require_novel_visual_story
 from moto_assets import validated_media, build_commons_candidate
 from render_episode import validate_episode
 from visual_director import verify_story_subject, source_evidence, OBJECTS
@@ -297,6 +298,7 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
     slug = "moto-" + theme[0] + "-" + short_hash
     cta_kind, overlay, sentence = CTA_CYCLE[seed_index % len(CTA_CYCLE)]
     sources = [dict(x, key="clip_" + str(i)) for i, x in enumerate(media)]
+    require_novel_visual_story({"footage": sources}, catalog["episodes"])
     # Actual editorial progression. The renderer redistributes real runtime
     # across the distinct sources; it never cycles footage in 2.15-s loops.
     cuts = [
@@ -393,6 +395,12 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
                 print("VISUAL_STOCK_MISSING_HELMET",flush=True)
                 continue
         if len(media) >= 2:
+            try:
+                require_novel_visual_story({"footage": media}, catalog["episodes"])
+            except ValueError as exc:
+                print("VISUAL_FORMULA_REJECTED_BEFORE_SCRIPT", theme[0],
+                      str(exc)[:180], flush=True)
+                continue
             chosen = (theme, media)
             break
     if not chosen:
