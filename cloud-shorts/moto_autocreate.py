@@ -264,7 +264,7 @@ def offline_original_story(theme, sources, previous_titles):
             continue
         return {
             "title": title, "narration": narration,
-            "description": f"Новые кадры на тему «{topic}». Напиши, что понравилось больше. #shorts",
+            "description": f"Новые кадры на тему «{topic}».\n\n#shorts",
             "caption_start": caption,
             "caption_middle": "СМОТРИ НА ДЕТАЛИ",
             "caption_end": "А ТВОЙ ВЫБОР?",
