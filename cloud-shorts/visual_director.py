@@ -174,6 +174,14 @@ def scene_duration_limit(episode, source):
         return 3.5
     if VISIBLE_ACTION.search(slug) and not re.search(r"riding|race|ride|travel",slug):
         return 6.0
+    if re.search(r"riding|race|ride|travel", slug):
+        # Exception for a *documented real moving ride*, never a passive
+        # portrait or stationary helmet. Two original long scenes should
+        # cover the narrator without padding, repetition or speed-up.
+        cap = float(episode.get("active_ride_scene_seconds", 8.0))
+        if not 8.0 <= cap <= 10.0:
+            raise ValueError("Unsafe requested moving scene length")
+        return cap
     return 8.0
 
 
