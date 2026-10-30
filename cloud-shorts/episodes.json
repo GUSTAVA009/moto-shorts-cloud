@@ -3894,6 +3894,148 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_reserve_v2",
       "story_reserve_id": "r2-mountain-0018"
+    },
+    {
+      "id": "moto-rain-1bec694cca6c",
+      "auto_preview": true,
+      "auto_publish": true,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "silero_mit_bass_baritone",
+      "voice_profile": "gustava_native_bass_baritone_v6",
+      "title": "Дождливая дорога: сцепление, первый взгляд, внимание — как считаешь? #shorts",
+      "narration": "Мотоцикл и дождливая поездка. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — сцепление. Обстановка вокруг заслуживает не меньшего внимания, чем техника. Как бы ты объяснил этот выбор другу?",
+      "description": "Самостоятельная мототема: сцепление. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
+      "caption_start": "ДОЖДЛИВАЯ ДОРОГА",
+      "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
+      "caption_end": "А ТВОЙ ВЫБОР?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 110,
+      "footage": [
+        {
+          "topics": [
+            "city",
+            "rain"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/15596316/",
+          "source_page": "https://www.pexels.com/video/a-rainy-night-in-a-city-street-with-motorcycles-parked-on-the-side-15596316/",
+          "author": "khanhhoangminh",
+          "license": "Pexels License",
+          "duration": 17,
+          "source_title": "a rainy night in a city street with motorcycles parked on the side"
+        },
+        {
+          "topics": [
+            "city",
+            "rain"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/34679320/",
+          "source_page": "https://www.pexels.com/video/nighttime-city-street-with-moving-vehicles-34679320/",
+          "author": "Evgenij Mikhailov",
+          "license": "Pexels License",
+          "duration": 22,
+          "source_title": "nighttime city street with moving vehicles"
+        },
+        {
+          "topics": [
+            "city",
+            "rain"
+          ],
+          "key": "clip_2",
+          "url": "https://www.pexels.com/download/video/36077835/",
+          "source_page": "https://www.pexels.com/video/nighttime-urban-street-with-motorbikes-36077835/",
+          "author": "J-Steve Pham",
+          "license": "Pexels License",
+          "duration": 11,
+          "source_title": "nighttime urban street with motorbikes"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 6.45,
+          "seconds": 2.15
+        }
+      ],
+      "editorial": {
+        "environment": "wet-asphalt-road-1bec6",
+        "bike": "street-motorbike",
+        "people": "road-commuters-1bec6",
+        "story": "rainy-motorcycle-road-1bec6",
+        "visual": "three-clips-1bec6"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Поделись роликом с другом, который любит мотоциклы."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "offline_editorial_reserve_v2",
+      "story_reserve_id": "r2-rain-0019"
     }
   ]
 }
