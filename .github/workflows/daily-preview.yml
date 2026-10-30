@@ -186,6 +186,66 @@ jobs:
                   raise RuntimeError("GitHub did not accept Buffer dispatch")
           print("BUFFER_VERIFIED_DISPATCH_CONFIRMED",os.environ["EPISODE"],flush=True)
           PY
+      - name: Refill the verified preview reserve after each successful MP4
+        if: ${{ success() && steps.pick.outputs.has_job == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import base64, json, os, urllib.request
+          repo=os.environ["GITHUB_REPOSITORY"]
+          token=os.environ["GH_TOKEN"]
+          if repo != "GUSTAVA009/moto-shorts-cloud" or not token:
+              raise SystemExit("Verified production refiller missing authorized scope")
+          def get(path):
+              req=urllib.request.Request(
+                  "https://api.github.com/repos/"+repo+"/"+path,
+                  headers={"Authorization":"Bearer "+token,
+                           "Accept":"application/vnd.github+json",
+                           "User-Agent":"gustava-verified-preview-refill"})
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  return json.load(response)
+          raw=get("contents/cloud-shorts/episodes.json?ref=main")
+          catalog=json.loads(base64.b64decode(raw["content"]))
+          tree=get("git/trees/render-ledger?recursive=1")
+          if tree.get("truncated"):
+              raise RuntimeError("Refill aborted: incomplete permanent receipt ledger")
+          reserved={x["path"].split("/")[-1][:-5] for x in tree["tree"]
+                    if x["path"].startswith("render-receipts/")
+                    and x["path"].endswith(".json")}
+          import sys
+          sys.path.insert(0,"cloud-shorts")
+          from deep_voice import ready
+          from editorial_novelty import is_repeated_visual_formula
+          waiting=[
+              ep["id"] for ep in catalog["episodes"]
+              if ep.get("auto_preview") is True
+              and ep.get("auto_publish") is False
+              and ep.get("id") not in reserved
+              and ep.get("editorial_rejected") is not True
+              and ep.get("visual_review_failed") is not True
+              and not is_repeated_visual_formula(ep,catalog["episodes"])
+              and ready(ep)
+          ]
+          if not waiting:
+              print("VERIFIED_DEEP_RESERVE_DRAINED: no unattended DEEP synthesis "
+                    "available; no substitute voice and no fictional MP4",flush=True)
+              raise SystemExit(0)
+          body=json.dumps({"ref":"main"}).encode()
+          req=urllib.request.Request(
+              "https://api.github.com/repos/"+repo+
+              "/actions/workflows/daily-preview.yml/dispatches",
+              data=body, method="POST",
+              headers={"Authorization":"Bearer "+token,
+                       "Accept":"application/vnd.github+json",
+                       "User-Agent":"gustava-verified-preview-refill"})
+          with urllib.request.urlopen(req,timeout=30) as response:
+              if response.status != 204:
+                  raise RuntimeError("GitHub refused next private render dispatch")
+          print("VERIFIED_DEEP_REFILL_DISPATCHED",waiting[0],
+                "remaining_exact_mp3_ready",len(waiting),flush=True)
+          PY
       - name: Replenish next original DEEP preview from verified unrendered stock
         if: ${{ always() && !cancelled() && steps.pick.outputs.has_job == 'true' }}
         env:
