@@ -2,6 +2,8 @@
   "episode": "jump-track-28",
   "sha256": "59d392799c7929612b643973f64a458de4d3ece2628789f25d943dffa8b0c2e7",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-jump-track-28-59d392799c79/jump-track-28.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae401186385db216a1e42db",
+  "due_at": "2026-10-30T03:30:00.000Z"
 }
