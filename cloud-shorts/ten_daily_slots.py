@@ -9,7 +9,8 @@ from __future__ import annotations
 from datetime import datetime, timedelta, timezone, time
 from zoneinfo import ZoneInfo
 
-TARGET_PER_DAY = 16
+TARGET_PER_DAY = 16  # flexible 90-minute posting WINDOWS, not 16 releases
+MAX_POSTS_PER_DAY = 10  # hard owner requested daily release ceiling
 TZ_NAME = "Europe/Moscow"
 LOCAL_TIMES = tuple(((30 + 90 * index) // 60 % 24,
                      (30 + 90 * index) % 60) for index in range(TARGET_PER_DAY))
@@ -45,7 +46,7 @@ def choose_slot(posts, now=None, timezone_name=TZ_NAME):
     for day in range(21):
         target_day = start + timedelta(days=day)
         day_posts = [p for p in seen if p.astimezone(tz).date() == target_day]
-        if len(day_posts) >= TARGET_PER_DAY:
+        if len(day_posts) >= MAX_POSTS_PER_DAY:
             continue
         for hour, minute in LOCAL_TIMES:
             local = datetime.combine(target_day, time(hour=hour, minute=minute), tzinfo=tz)

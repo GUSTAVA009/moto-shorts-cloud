@@ -3,7 +3,7 @@ import unittest
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
-from ten_daily_slots import choose_slot, LOCAL_TIMES, TARGET_PER_DAY
+from ten_daily_slots import choose_slot, LOCAL_TIMES, TARGET_PER_DAY, MAX_POSTS_PER_DAY
 
 
 class NinetyMinuteSlotsTests(unittest.TestCase):
@@ -11,6 +11,19 @@ class NinetyMinuteSlotsTests(unittest.TestCase):
         self.assertEqual(len(LOCAL_TIMES), 16)
         self.assertEqual(len(set(LOCAL_TIMES)), 16)
         self.assertEqual(TARGET_PER_DAY, 16)
+        self.assertEqual(MAX_POSTS_PER_DAY, 10)
+
+    def test_ten_posts_are_the_ceiling_even_with_six_unused_time_windows(self):
+        from datetime import date, time
+        tz = ZoneInfo("Europe/Moscow")
+        existing = [
+            datetime.combine(date(2026, 10, 30), time(h,m), tz).astimezone(timezone.utc)
+            for h,m in LOCAL_TIMES[:10]
+        ]
+        self.assertEqual(
+            choose_slot(existing, datetime(2026, 10, 30, 3, tzinfo=timezone.utc)),
+            "2026-10-30T21:30:00Z"
+        )
 
 
     def test_exact_ninety_minutes_including_midnight(self):
