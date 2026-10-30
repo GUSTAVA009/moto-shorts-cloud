@@ -23,6 +23,7 @@ import urllib.request
 from editorial_guard import validate_catalog, source_id
 from moto_assets import validated_media, build_commons_candidate
 from render_episode import validate_episode
+from voice_style import PROFILE_ID as MALE_PROFILE
 from engagement_cta import CTA_KINDS
 from autofill_catalog import github
 
@@ -268,7 +269,7 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
         "id": slug, "auto_preview": True, "auto_publish": True,
         "channel_niche": "motorcycle", "research_pillar": "motorcycle",
         "voice_engine": "kokoro_ru_dima",
-        "voice_profile": "gustava_male_deep_v1",
+        "voice_profile": MALE_PROFILE,
         **{k: prose[k] for k in ("title", "narration", "description",
             "caption_start", "caption_middle", "caption_end")},
         "max_duration_seconds": 34, "opening_trim_seconds": 0.1,

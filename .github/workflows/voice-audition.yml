@@ -42,7 +42,7 @@ jobs:
           text = ("Когда двигатель оживает, начинается настоящая история. "
                   "Впереди лесная трасса, камни и крутые повороты. "
                   "Мотоцикл ждёт своего райдера. Поехали!")
-          wav = folder / "GUSTAVA_DEEP_MALE_V1.wav"
+          wav = folder / "GUSTAVA_DEEP_MALE_V3.wav"
           seconds = render(text, wav, folder / "kokoro_model", speed=.98)
           profile = validate_report(wav)
           assert profile["profile_id"] == PROFILE_ID
@@ -50,13 +50,13 @@ jobs:
           print("VOICE_AUDITION_CREATED", wav, "seconds", seconds,
                 "profile", profile["profile_id"])
           PY
-          ffprobe -v error -show_entries stream=sample_rate,channels,codec_name -show_entries format=duration -of json audition/GUSTAVA_DEEP_MALE_V1.wav
+          ffprobe -v error -show_entries stream=sample_rate,channels,codec_name -show_entries format=duration -of json audition/GUSTAVA_DEEP_MALE_V3.wav
       - name: Save audible male narrator preview (not published to channel)
         uses: actions/upload-artifact@v4
         with:
-          name: GUSTAVA-DEEP-MALE-NARRATOR-AUDITION
+          name: GUSTAVA-DEEP-MALE-V3-AUDITION
           path: |
-            audition/GUSTAVA_DEEP_MALE_V1.wav
+            audition/GUSTAVA_DEEP_MALE_V3.wav
             audition/GUSTAVA_DEEP_MALE_V1.profile.json
             audition/TEXT_RU.txt
           retention-days: 14

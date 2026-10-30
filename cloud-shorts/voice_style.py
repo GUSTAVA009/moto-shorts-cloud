@@ -2,9 +2,9 @@
 """Natural, low male narration profile for GUSTAVA motorcycle Shorts.
 
 The source remains the consented Russian Kokoro male actor Dima. We lower
-pitch by approximately 3.4 semitones and let formants shift with it (more chest resonance),
-without introducing another voice layer or altering reading speed. Moderate
-EQ adds presence; no synthetic growls, clipping or fake 'stereo' vocals.
+pitch by approximately 4.3 semitones and let formants shift with it (more chest resonance),
+without introducing another voice layer or altering reading speed. A subtle low-mid lift and soft saturation add a restrained gravelly edge;
+no synthetic growls, hard clipping or fake 'stereo' vocals.
 
 The result is 24 kHz, mono PCM for the existing centered stereo music mix.
 The acoustics of a male voice cannot be certified by DSP metadata alone:
@@ -22,22 +22,22 @@ import subprocess
 import tempfile
 import wave
 
-PROFILE_ID = "gustava_male_deep_v2"
+PROFILE_ID = "gustava_male_deep_v3"
 SPEAKER = "dima"
 MODEL = "zaakirio/kokoro-ru"
-PITCH = 0.82
+PITCH = 0.78
 SAMPLE_RATE = 24000
 MIN_SECONDS = 3.0
 MAX_SECONDS = 35.0
 
 FILTER = (
-    "rubberband=pitch=0.82:formant=shifted:transients=crisp:"
+    "rubberband=pitch=0.78:formant=shifted:transients=crisp:"
     "window=standard:pitchq=quality,"
-    "highpass=f=65,"
-    "equalizer=f=170:t=q:w=1.1:g=2.5,"
-    "equalizer=f=3100:t=q:w=1.2:g=1.0,"
-    "acompressor=threshold=0.18:ratio=1.7:attack=12:release=90:makeup=1.08,"
-    "asoftclip=type=tanh:threshold=0.92,"
+    "highpass=f=63,"
+    "equalizer=f=165:t=q:w=1.1:g=3.3,"
+    "equalizer=f=3000:t=q:w=1.2:g=1.5,"
+    "acompressor=threshold=0.17:ratio=2.0:attack=12:release=110:makeup=1.10,"
+    "asoftclip=type=tanh:threshold=0.88,"
     "alimiter=limit=0.93"
 )
 
@@ -126,7 +126,7 @@ def apply(wav, ffmpeg="ffmpeg"):
             "profile_id": PROFILE_ID, "speaker": SPEAKER,
             "source_model": MODEL, "pitch": PITCH,
             "formants": "shifted", "synthesized_voice_only": True,
-            "timbre_processing": "light_compression_soft_saturation_v2",
+            "timbre_processing": "warm_chest_soft_saturation_v3",
             "quality_passed": True, "processed_wav_sha256": sha256(wav),
             "audio": after,
             "disclaimer": "Pitch/tone DSP is not a human assessment of perceived timbre.",

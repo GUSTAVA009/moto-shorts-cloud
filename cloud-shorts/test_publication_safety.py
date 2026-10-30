@@ -29,7 +29,7 @@ class PublicationQualityTests(unittest.TestCase):
             "passed": True, "status": "passed",
             "lexical_coverage": .99, "ending_coverage": .99,
             "final_word_present": True, "male_voice_verified": True,
-            "voice_profile": "gustava_male_deep_v2",
+            "voice_profile": "gustava_male_deep_v3",
             "mixed_audio": {
                 "episode_id": self.episode["id"],
                 "source": "FINAL_MIXED_MP4", "passed": True,
