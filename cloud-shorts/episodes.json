@@ -3603,6 +3603,148 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_reserve_v2",
       "story_reserve_id": "r2-motocross-0016"
+    },
+    {
+      "id": "moto-repair-39610c24bde8",
+      "auto_preview": true,
+      "auto_publish": true,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "silero_mit_bass_baritone",
+      "voice_profile": "gustava_native_bass_baritone_v6",
+      "title": "Мастерская: шины, первый взгляд, внимание — почему так? #shorts",
+      "narration": "Мотоцикл и работа в мастерской. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — шины. Обстановка вокруг заслуживает не меньшего внимания, чем техника. А ты видишь эту ситуацию по-другому?",
+      "description": "Самостоятельная мототема: шины. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
+      "caption_start": "МАСТЕРСКАЯ",
+      "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
+      "caption_end": "А ТВОЙ ВЫБОР?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "garage-groove",
+      "music_bpm": 125,
+      "footage": [
+        {
+          "topics": [
+            "helmet",
+            "repair"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/9030220/",
+          "source_page": "https://www.pexels.com/video/a-close-up-of-a-motorcycle-s-speedometer-and-speed-warning-9030220/",
+          "author": "Vincuk Konan",
+          "license": "Pexels License",
+          "duration": 16,
+          "source_title": "a close up of a motorcycle s speedometer and speed warning"
+        },
+        {
+          "topics": [
+            "repair",
+            "vintage"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/36704977/",
+          "source_page": "https://www.pexels.com/video/mechanic-hands-adjusting-motorcycle-wheel-precision-36704977/",
+          "author": "Erkan Avanoğlu",
+          "license": "Pexels License",
+          "duration": 20,
+          "source_title": "mechanic hands adjusting motorcycle wheel precision"
+        },
+        {
+          "topics": [
+            "repair",
+            "vintage"
+          ],
+          "key": "clip_2",
+          "url": "https://www.pexels.com/download/video/5199298/",
+          "source_page": "https://www.pexels.com/video/man-adjusting-bolt-of-his-motorcycle-5199298/",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "duration": 52,
+          "source_title": "man adjusting bolt of his motorcycle"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 6.45,
+          "seconds": 2.15
+        }
+      ],
+      "editorial": {
+        "environment": "garage-workshop-39610",
+        "bike": "workshop-bike",
+        "people": "garage-mechanics-39610",
+        "story": "mechanic-bike-servicing-39610",
+        "visual": "three-clips-39610"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "offline_editorial_reserve_v2",
+      "story_reserve_id": "r2-repair-0017"
     }
   ]
 }
