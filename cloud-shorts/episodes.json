@@ -4620,7 +4620,7 @@
       "voice_profile": "gustava_create_audio_deep_v1",
       "visual_director_version": 3,
       "title": "Три момента, которые поймёт каждый мотоциклист 🏍️ #shorts",
-      "narration": "Щёлк — визор закрылся. В этот момент весь мир отступает. Остаются только дорога, мотоцикл и ты. А когда снимаешь шлем после поездки, понимаешь: хочется ещё. У тебя тоже так?",
+      "narration": "Визор закрылся. И весь остальной мир будто замер. Остаются только дорога, двигатель и ты. А когда снимаешь шлем после поездки, понимаешь: хочется ещё. У тебя тоже так?",
       "description": "Есть моменты, которые узнает каждый мотоциклист: визор перед стартом, дорога и улыбка после поездки. Три разных райдера, три живых момента.\n\n#мото #мотоциклы #shorts",
       "caption_start": "ЩЁЛК. ВИЗОР ЗАКРЫТ",
       "caption_middle": "ТОЛЬКО ТЫ И ДОРОГА",
@@ -4694,7 +4694,7 @@
         {
           "source": "clip_0",
           "action": "visor_close",
-          "spoken_anchor": "Щёлк — визор закрылся"
+          "spoken_anchor": "Визор закрылся"
         },
         {
           "source": "clip_1",
@@ -4726,7 +4726,7 @@
         "description": "Отправь другу, который тоже узнает эти моменты."
       },
       "source_selection": "Three unique license-checked official Pexels action clips picked BEFORE the narration; each spoken beat refers to the corresponding visible action.",
-      "generation_provenance": "GUSTAVA scene-first editorial, licensed visual narrative, genuine Create Audio Voice deep",
+      "generation_provenance": "Scene-first original GUSTAVA DEEP, revision 2 fixes independent ASR misheard syllables",
       "editorial_review_note": "REVIEW ONLY. Do not auto publish until actual shot-by-shot visual coherence is approved."
     }
   ]
