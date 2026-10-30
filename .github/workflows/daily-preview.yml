@@ -5,7 +5,11 @@ on:
     # Prevent source-catalog changes and repair commits from spawning
     # multiple pending builds that cancel one another. New episodes are
     # instead dispatched exactly once by the supplier/repair bots.
-    paths: ['.github/workflows/daily-preview.yml']
+    # A guarded queue-selection repair starts exactly one pending preview;
+    # the permanent render ledger blocks duplicates and published episodes.
+    paths:
+      - '.github/workflows/daily-preview.yml'
+      - 'cloud-shorts/preview_queue.py'
   schedule:
     # Review-only cut revision: final helmet-removal scene should begin after the strap adjustment.
     # Revalidate scene-first Deep voice chapter anchors after the ASR-corrected word "Остаётся".
@@ -126,6 +130,11 @@ jobs:
           from pathlib import Path
           episode=sys.argv[1]
           base=Path("cloud-shorts/dist/new")/episode
+          missing=[n for n in ("voice_qa.json","mixed_audio_qa.json","visual_qa.json")
+                   if not (base/n).is_file()]
+          if missing:
+              raise SystemExit("PREVIEW_BUILD_INCOMPLETE: missing QA reports "+
+                               ", ".join(missing)+"; video NOT published")
           raw=json.loads((base/"voice_qa.json").read_text(encoding="utf8"))
           mix=json.loads((base/"mixed_audio_qa.json").read_text(encoding="utf8"))
           visual=json.loads((base/"visual_qa.json").read_text(encoding="utf8"))
