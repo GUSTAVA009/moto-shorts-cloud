@@ -1,0 +1,30 @@
+name: GUSTAVA - Audit Real Buffer Post States Against Receipts
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/buffer-inventory-audit.yml'
+      - 'cloud-shorts/buffer_inventory_audit.py'
+      - 'cloud-shorts/test_buffer_inventory_audit.py'
+  schedule:
+    # Read-only once per day to respect provider request quotas.
+    - cron: "22 9 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run no-network reconciliation tests
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_buffer_inventory_audit.py' -v
+      - name: Read existing Buffer posts and compare historical queued receipts
+        run: python3 cloud-shorts/buffer_inventory_audit.py
