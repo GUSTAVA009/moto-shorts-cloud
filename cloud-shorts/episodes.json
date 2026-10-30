@@ -5057,6 +5057,1726 @@
       "visual_review_note": "Observed actual 19.10s H.264 MP4, source GitHub run 41055691838, SHA-256 95eb41adee30a1135196a4f5e49b5fd6376891dad12750e1c436ab2860905e81. Independently visually inspected frame contact sheet at 0.35,1.5,3,4.5,5.9,6.6,8,10,11.8,13,15,17,18.8 seconds: high-five inside motorcycle showroom, distinct garage motorcycle conversation, final urban wheelie/stunt. All original provider sources used once, three unrelated scenes; no depicted same event. No freeze >2.2s. Actual mixed ASR 0.976, final three words present, stereo -19.1 LUFS, true peak -2.3 dBTP. Approved only this preview; do not extrapolate approval to other episodes.",
       "release_source_run_id": "41055691838",
       "auto_publish_reason": "Owner explicitly requested new original MP4 to be added to Buffer; actual 2026-10-30 render viewed and editorially checked."
+    },
+    {
+      "id": "gustava-20-f01-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️ #shorts",
+      "narration": "Один райдер готовит перчатки к холодному выезду, другой достаёт шлем из гаража. Разные люди, одна привычка: готовиться заранее. А ты что надеваешь первым?",
+      "description": "Мотофакт в кадре: ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/6435393/",
+          "source_page": "https://www.pexels.com/video/a-motorcyclist-putting-on-gloves-6435393/",
+          "source_title": "a motorcyclist putting on gloves",
+          "author": "Andrew Kota",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/28209492/",
+          "source_page": "https://www.pexels.com/video/motorbike-rider-picking-up-helmet-from-bike-28209492/",
+          "source_title": "motorbike rider picking up helmet from bike",
+          "author": "Themba Mtegha",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "cold-gear-and-garage",
+        "people": "winter-rider-and-garage-rider",
+        "story": "gloves-then-helmet",
+        "visual": "two-gear-preparation-actions",
+        "bike": "winter-motorcycle"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored facts: gloves-then-helmet",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "facts",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Напиши в комментариях, какой момент тебе ближе."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "facts",
+      "priority_rank": 1,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-s01-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "СТАРЫЙ БАЙК И ИНСТРУМЕНТЫ: мотожизнь 🔧 #shorts",
+      "narration": "Один мастер чинит классический мотоцикл. В другой мастерской люди выбирают инструменты. Разные истории о любви к железу. А ты чинишь байк самостоятельно?",
+      "description": "Независимые моменты мотожизни: СТАРЫЙ БАЙК И ИНСТРУМЕНТЫ: мотожизнь 🔧. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "СТАРЫЙ БАЙК И ИНСТРУМЕНТЫ: мотожизнь 🔧",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "night-drive",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/7170228/",
+          "source_page": "https://www.pexels.com/video/man-fixing-motorbike-7170228/",
+          "source_title": "man fixing motorbike",
+          "author": "ArtHouse Studio",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "stories",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/8551366/",
+          "source_page": "https://www.pexels.com/video/men-holding-mechanic-tools-8551366/",
+          "source_title": "men holding mechanic tools",
+          "author": "Kindel Media",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "stories",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "classic-workshop-and-toolroom",
+        "people": "classic-mechanic-and-tool-users",
+        "story": "classic-repair-versus-tool-choice",
+        "visual": "repair-vs-tool-selection",
+        "bike": "vintage-repair-bike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored stories: classic-repair-versus-tool-choice",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "stories",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие истории о мотоциклах."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "stories",
+      "priority_rank": 2,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-e01-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "КОЛЕСО И МОТОР: две разные работы 🔧 #shorts",
+      "narration": "Один механик чинит колесо мотоцикла прямо на улице. Другой разбирается с двигателем в гараже. Два разных ремонта. Какой навык ты бы освоил первым?",
+      "description": "Сравнение двух реальных действий: КОЛЕСО И МОТОР: две разные работы 🔧. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "КОЛЕСО И МОТОР: две разные работы 🔧",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/9606874/",
+          "source_page": "https://www.pexels.com/video/person-fixing-a-motorcycle-9606874/",
+          "source_title": "person fixing a motorcycle",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "experiments",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/7170231/",
+          "source_page": "https://www.pexels.com/video/a-man-fixing-the-motorcycle-7170231/",
+          "source_title": "a man fixing the motorcycle",
+          "author": "ArtHouse Studio",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "experiments",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "street-wheel-and-engine-garage",
+        "people": "urban-worker-and-shop-mechanic",
+        "story": "wheel-versus-engine-repair",
+        "visual": "two-different-bike-repairs",
+        "bike": "urban-servicing-bike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored experiments: wheel-versus-engine-repair",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "experiments",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ? ЛАЙК!",
+        "description": "Поставь лайк, если понравилась эта мотоистория."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "experiments",
+      "priority_rank": 3,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-p01-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ДВА МОТОТРЮКА: шоу или город? 🔥 #shorts",
+      "narration": "На шоу участники прыгают высоко над площадкой, а другой райдер выполняет трюк прямо в городе. Это не одна сцена. Что зрелищнее для тебя?",
+      "description": "Два независимых зрелищных эпизода: ДВА МОТОТРЮКА: шоу или город? 🔥. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ДВА МОТОТРЮКА: шоу или город? 🔥",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "action",
+      "music_bpm": 134,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/39848200/",
+          "source_page": "https://www.pexels.com/video/exciting-motorcycle-stunt-jump-with-riders-39848200/",
+          "source_title": "exciting motorcycle stunt jump with riders",
+          "author": "Joolsmagools",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "spectacle",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/9607284/",
+          "source_page": "https://www.pexels.com/video/man-doing-stunts-on-a-motorcycle-9607284/",
+          "source_title": "man doing stunts on a motorcycle",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "spectacle",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "fmx-live-show-and-city-stunt",
+        "people": "airborne-performers-and-city-rider",
+        "story": "show-jump-versus-street-stunt",
+        "visual": "airborne-and-urban-trick",
+        "bike": "fmx-freestyle-bike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored spectacle: show-jump-versus-street-stunt",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "spectacle",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ПОДЕЛИСЬ С ДРУГОМ",
+        "description": "Поделись этим видео с другом, которому интересны мотоциклы."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "spectacle",
+      "priority_rank": 4,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-f02-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ПОЧЕМУ КОНУСЫ? Мотоуправление в деле 🏍️ #shorts",
+      "narration": "На парковке райдеры проходят конусы, а на другом полигоне тренируются на препятствиях. Два разных упражнения на точность. Что попробовал бы первым?",
+      "description": "Мотофакт в кадре: ПОЧЕМУ КОНУСЫ? Мотоуправление в деле 🏍️. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ПОЧЕМУ КОНУСЫ? Мотоуправление в деле 🏍️",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/8275232/",
+          "source_page": "https://www.pexels.com/video/bikers-driving-around-traffic-cones-in-an-empty-parking-lot-8275232/",
+          "source_title": "bikers driving around traffic cones in an empty parking lot",
+          "author": "Jose Valdivia",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/30767687/",
+          "source_page": "https://www.pexels.com/video/motorbikers-training-on-outdoor-course-30767687/",
+          "source_title": "motorbikers training on outdoor course",
+          "author": "Harvey Tan Villarino",
+          "license": "Pexels License",
+          "duration": 7,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 6.75
+        }
+      ],
+      "editorial": {
+        "environment": "parking-lot-and-field-course",
+        "people": "parking-trainees-and-field-riders",
+        "story": "cone-drill-versus-obstacle-training",
+        "visual": "cones-and-outdoor-course",
+        "bike": "training-motorbike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored facts: cone-drill-versus-obstacle-training",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "facts",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Напиши в комментариях, какой момент тебе ближе."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "facts",
+      "priority_rank": 5,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-s02-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ПЕРВЫЙ ВЫЕЗД: улыбка или скорость? 🏍️ #shorts",
+      "narration": "Девушка с улыбкой надевает шлем, а на другой съёмке райдер уже едет по открытой дороге. Это не одна поездка. Что ближе твоему настроению?",
+      "description": "Независимые моменты мотожизни: ПЕРВЫЙ ВЫЕЗД: улыбка или скорость? 🏍️. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ПЕРВЫЙ ВЫЕЗД: улыбка или скорость? 🏍️",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "night-drive",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/12405928/",
+          "source_page": "https://www.pexels.com/video/a-smiling-young-woman-putting-on-a-helmet-12405928/",
+          "source_title": "a smiling young woman putting on a helmet",
+          "author": "RDNE Stock project",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "stories",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/33109039/",
+          "source_page": "https://www.pexels.com/video/motorcyclist-riding-sport-bike-on-open-highway-33109039/",
+          "source_title": "motorcyclist riding sport bike on open highway",
+          "author": "Hasan basri Yentekün",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "stories",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "scooter-helmet-and-open-highway",
+        "people": "scooter-woman-and-road-sport-rider",
+        "story": "cheerful-helmet-preparation-vs-ride",
+        "visual": "helmet-smile-and-road-riding",
+        "bike": "scooter-and-sportbike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored stories: cheerful-helmet-preparation-vs-ride",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "stories",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие истории о мотоциклах."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "stories",
+      "priority_rank": 6,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-e02-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "КЛАССИКА И СБОРКА ДВИГАТЕЛЯ: что сложнее? 🔧 #shorts",
+      "narration": "Сначала мастер возится со старым мотоциклом. Потом другой специалист собирает детали двигателя. Это две разные съёмки. Какую работу ты смог бы повторить?",
+      "description": "Сравнение двух реальных действий: КЛАССИКА И СБОРКА ДВИГАТЕЛЯ: что сложнее? 🔧. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "КЛАССИКА И СБОРКА ДВИГАТЕЛЯ: что сложнее? 🔧",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/7170227/",
+          "source_page": "https://www.pexels.com/video/a-man-tinkering-a-motorcycle-7170227/",
+          "source_title": "a man tinkering a motorcycle",
+          "author": "ArtHouse Studio",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "experiments",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/34948761/",
+          "source_page": "https://www.pexels.com/video/efficient-motorcycle-engine-assembly-in-workshop-34948761/",
+          "source_title": "efficient motorcycle engine assembly in workshop",
+          "author": "Emrul Kausar Emon",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "experiments",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "classic-workshop-and-engine-bench",
+        "people": "classic-mechanic-and-engine-builder",
+        "story": "old-motorbike-versus-engine-assembly",
+        "visual": "classic-motorbike-and-parts",
+        "bike": "classic-engine-bike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored experiments: old-motorbike-versus-engine-assembly",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "experiments",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ? ЛАЙК!",
+        "description": "Поставь лайк, если понравилась эта мотоистория."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "experiments",
+      "priority_rank": 7,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-f03-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ТОРМОЗ И МАСЛО: что проверяют в гараже? 🔧 #shorts",
+      "narration": "В одном гараже мастер проверяет ручной тормоз. На другой съёмке обслуживают мотор. Разные мотоциклы и задачи. Ты сам обслуживаешь байк?",
+      "description": "Мотофакт в кадре: ТОРМОЗ И МАСЛО: что проверяют в гараже? 🔧. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ТОРМОЗ И МАСЛО: что проверяют в гараже? 🔧",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/7170229/",
+          "source_page": "https://www.pexels.com/video/a-man-trying-the-hand-brake-of-a-motorcycle-7170229/",
+          "source_title": "a man trying the hand brake of a motorcycle",
+          "author": "ArtHouse Studio",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/28197087/",
+          "source_page": "https://www.pexels.com/video/adding-2-stroke-oil-in-motorcycle-during-service-28197087/",
+          "source_title": "adding 2 stroke oil in motorcycle during service",
+          "author": "Themba Mtegha",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "brake-garage-and-oil-service",
+        "people": "brake-mechanic-and-oil-service-worker",
+        "story": "brake-check-vs-oil-service",
+        "visual": "brake-check-then-oil",
+        "bike": "maintenance-motorbike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored facts: brake-check-vs-oil-service",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "facts",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ПОДЕЛИСЬ С ДРУГОМ",
+        "description": "Поделись этим видео с другом, которому интересны мотоциклы."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "facts",
+      "priority_rank": 8,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-s03-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ЖЕНЩИНА В ГРЯЗИ И РАЙДЕР В ПУСТЫНЕ 🏍️ #shorts",
+      "narration": "Девушка преодолевает грязный участок, а другой райдер несётся по песчаной трассе. Разные люди, разный грунт. Где тебе было бы интереснее попробовать силы?",
+      "description": "Независимые моменты мотожизни: ЖЕНЩИНА В ГРЯЗИ И РАЙДЕР В ПУСТЫНЕ 🏍️. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ЖЕНЩИНА В ГРЯЗИ И РАЙДЕР В ПУСТЫНЕ 🏍️",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "night-drive",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/36365069/",
+          "source_page": "https://www.pexels.com/video/woman-navigates-motorcycle-through-muddy-terrain-36365069/",
+          "source_title": "woman navigates motorcycle through muddy terrain",
+          "author": "Harvey Tan Villarino",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "stories",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/29488248/",
+          "source_page": "https://www.pexels.com/video/dynamic-off-road-dirt-bike-adventure-in-desert-29488248/",
+          "source_title": "dynamic off road dirt bike adventure in desert",
+          "author": "Habeeb Sujan",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "stories",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "mud-rider-and-desert-course",
+        "people": "female-mud-rider-and-desert-athlete",
+        "story": "mud-section-versus-desert-run",
+        "visual": "mud-obstacles-and-sand-run",
+        "bike": "offroad-two-surface-bike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored stories: mud-section-versus-desert-run",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "stories",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Напиши в комментариях, какой момент тебе ближе."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "stories",
+      "priority_rank": 9,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-e03-20261030",
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ЭКИПИРОВКА И ПОВОРОТ: с чего учиться? 🏍️ #shorts",
+      "narration": "На одном полигоне райдеры учатся проходить повороты. На другом кадре спортсменка в шлеме готовится к трассе. Что важнее в начале: защита или практика?",
+      "description": "Сравнение двух реальных действий: ЭКИПИРОВКА И ПОВОРОТ: с чего учиться? 🏍️. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ЭКИПИРОВКА И ПОВОРОТ: с чего учиться? 🏍️",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/10221923/",
+          "source_page": "https://www.pexels.com/video/motorcycle-driving-course-10221923/",
+          "source_title": "motorcycle driving course",
+          "author": "Jose Valdivia",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "experiments",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/5803515/",
+          "source_page": "https://www.pexels.com/video/motorcyclist-helmet-5803515/",
+          "source_title": "motorcyclist helmet",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "experiments",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "rider-lesson-and-motocross-paddock",
+        "people": "learner-rider-and-helmet-racer",
+        "story": "handling-course-vs-helmet-prep",
+        "visual": "training-turn-then-helmet-rider",
+        "bike": "training-race-motorcycle"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored experiments: handling-course-vs-helmet-prep",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "experiments",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие истории о мотоциклах."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "experiments",
+      "priority_rank": 10,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-p02-20261030",
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "МОТОКРОСС: прыжок и напряжение гонки 🏁 #shorts",
+      "narration": "На одной трассе райдер взлетает после трамплина. В другой гонке спортсмены проходят участок под взглядами зрителей. Какой момент смотришь не моргая?",
+      "description": "Два независимых зрелищных эпизода: МОТОКРОСС: прыжок и напряжение гонки 🏁. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "МОТОКРОСС: прыжок и напряжение гонки 🏁",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "action",
+      "music_bpm": 134,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/32401566/",
+          "source_page": "https://www.pexels.com/video/thrilling-dirt-bike-jump-on-outdoor-track-32401566/",
+          "source_title": "thrilling dirt bike jump on outdoor track",
+          "author": "Harvey Tan Villarino",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "spectacle",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/12295788/",
+          "source_page": "https://www.pexels.com/video/athlete-on-motocross-motorcycle-12295788/",
+          "source_title": "athlete on motocross motorcycle",
+          "author": "Guidance Pillar Production",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "spectacle",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "jump-track-and-competition",
+        "people": "jump-rider-and-race-athletes",
+        "story": "ramp-jump-versus-race",
+        "visual": "takeoff-then-active-race",
+        "bike": "jumping-dirtbike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored spectacle: ramp-jump-versus-race",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "spectacle",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ? ЛАЙК!",
+        "description": "Поставь лайк, если понравилась эта мотоистория."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "spectacle",
+      "priority_rank": 11,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-f04-20261030",
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ДВИГАТЕЛЬ: один мастер или команда? 🔧 #shorts",
+      "narration": "Сначала двое осматривают двигатель возле гаража. Затем в другой мастерской ремонтируют мотоцикл целой командой. Какой ремонт ты бы хотел увидеть поближе?",
+      "description": "Мотофакт в кадре: ДВИГАТЕЛЬ: один мастер или команда? 🔧. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ДВИГАТЕЛЬ: один мастер или команда? 🔧",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/8551400/",
+          "source_page": "https://www.pexels.com/video/men-checking-the-motorbike-engine-8551400/",
+          "source_title": "men checking the motorbike engine",
+          "author": "Kindel Media",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/34959739/",
+          "source_page": "https://www.pexels.com/video/mechanics-in-workshop-repairing-motorcycle-34959739/",
+          "source_title": "mechanics in workshop repairing motorcycle",
+          "author": "Nishant Aneja",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "outdoor-engine-and-busy-workshop",
+        "people": "two-owners-and-many-mechanics",
+        "story": "two-people-engine-check-vs-multiworker-repair",
+        "visual": "engine-inspection-then-repair",
+        "bike": "garage-engine-bike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored facts: two-people-engine-check-vs-multiworker-repair",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "facts",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ПОДЕЛИСЬ С ДРУГОМ",
+        "description": "Поделись этим видео с другом, которому интересны мотоциклы."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "facts",
+      "priority_rank": 12,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-s04-20261030",
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "МОТОСЕРВИС: что происходит за дверью? 🔧 #shorts",
+      "narration": "На одном видео у входа в мотосервис кипит жизнь. В другой мастерской механики заняты ремонтом. Это разные места. Ты предпочитаешь сервис или собственный гараж?",
+      "description": "Независимые моменты мотожизни: МОТОСЕРВИС: что происходит за дверью? 🔧. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "МОТОСЕРВИС: что происходит за дверью? 🔧",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "night-drive",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/38893306/",
+          "source_page": "https://www.pexels.com/video/busy-motorcycle-repair-shop-entrance-scene-38893306/",
+          "source_title": "busy motorcycle repair shop entrance scene",
+          "author": "Jonathan Ellis",
+          "license": "Pexels License",
+          "duration": 6,
+          "topics": [
+            "stories",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/34953288/",
+          "source_page": "https://www.pexels.com/video/industrial-motorcycle-workshop-with-mechanics-34953288/",
+          "source_title": "industrial motorcycle workshop with mechanics",
+          "author": "Nishant Aneja",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "stories",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 5.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "shop-entrance-and-industrial-service",
+        "people": "passersby-and-workshop-staff",
+        "story": "busy-repairshop-door-vs-inside-repair",
+        "visual": "exterior-door-then-shop-floor",
+        "bike": "service-shop-motorcycles"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored stories: busy-repairshop-door-vs-inside-repair",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "stories",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Напиши в комментариях, какой момент тебе ближе."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "stories",
+      "priority_rank": 13,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-e04-20261030",
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ТОННЕЛЬ И ГОРОД: где сложнее управлять? 🏍️ #shorts",
+      "narration": "Один райдер мчится через тоннель, другой едет по обычным городским улицам. Это разные маршруты. Где ты внимательнее следишь за обстановкой?",
+      "description": "Сравнение двух реальных действий: ТОННЕЛЬ И ГОРОД: где сложнее управлять? 🏍️. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ТОННЕЛЬ И ГОРОД: где сложнее управлять? 🏍️",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/29290602/",
+          "source_page": "https://www.pexels.com/video/dynamic-motorcycle-ride-through-urban-tunnel-29290602/",
+          "source_title": "dynamic motorcycle ride through urban tunnel",
+          "author": "Hasan basri Yentekün",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "experiments",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/4443924/",
+          "source_page": "https://www.pexels.com/video/person-riding-a-motorcycle-in-the-streets-4443924/",
+          "source_title": "person riding a motorcycle in the streets",
+          "author": "K",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "experiments",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "urban-tunnel-and-city-streets",
+        "people": "tunnel-commuter-and-street-rider",
+        "story": "tunnel-riding-vs-regular-city",
+        "visual": "tunnel-pov-then-city-pov",
+        "bike": "street-commuter-bike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored experiments: tunnel-riding-vs-regular-city",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "experiments",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие истории о мотоциклах."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "experiments",
+      "priority_rank": 14,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-f05-20261030",
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ШЛЕМ ПЕРЕД СТАРТОМ: что замечаешь? 🏍️ #shorts",
+      "narration": "Один байкер надевает шлем перед поездкой, другой готовит мотоцикл к выезду. Два независимых кадра. Что ты проверяешь прямо перед стартом?",
+      "description": "Мотофакт в кадре: ШЛЕМ ПЕРЕД СТАРТОМ: что замечаешь? 🏍️. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ШЛЕМ ПЕРЕД СТАРТОМ: что замечаешь? 🏍️",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/9606648/",
+          "source_page": "https://www.pexels.com/video/man-wearing-black-shirt-wearing-his-helmet-9606648/",
+          "source_title": "man wearing black shirt wearing his helmet",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/4922587/",
+          "source_page": "https://www.pexels.com/video/a-man-riding-his-motorcycle-4922587/",
+          "source_title": "a man riding his motorcycle",
+          "author": "Pavel Danilyuk",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "helmet-preparation-and-bike-start",
+        "people": "helmeted-rider-and-urban-starter",
+        "story": "putting-helmet-vs-starting-motorcycle",
+        "visual": "helmet-on-then-bike-start",
+        "bike": "city-riding-motorcycle"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored facts: putting-helmet-vs-starting-motorcycle",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "facts",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ? ЛАЙК!",
+        "description": "Поставь лайк, если понравилась эта мотоистория."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "facts",
+      "priority_rank": 15,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-s05-20261030",
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "РЕМОНТ НА УЛИЦЕ: два мастера и два байка 🔧 #shorts",
+      "narration": "Один мастер ремонтирует мотоцикл на городской улице. Другой занимается мотором в совершенно другом месте. А ты доверишь байк незнакомому мастеру?",
+      "description": "Независимые моменты мотожизни: РЕМОНТ НА УЛИЦЕ: два мастера и два байка 🔧. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "РЕМОНТ НА УЛИЦЕ: два мастера и два байка 🔧",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "night-drive",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/9607092/",
+          "source_page": "https://www.pexels.com/video/man-repairing-a-motorcycle-9607092/",
+          "source_title": "man repairing a motorcycle",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "stories",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/5199344/",
+          "source_page": "https://www.pexels.com/video/a-man-repairing-a-motorcycle-5199344/",
+          "source_title": "a man repairing a motorcycle",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "stories",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "city-bike-fix-and-outdoor-mechanic",
+        "people": "urban-tech-and-remote-worker",
+        "story": "street-repair-vs-different-city-repair",
+        "visual": "urban-repair-then-closeup",
+        "bike": "urban-repair-bike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored stories: street-repair-vs-different-city-repair",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "stories",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ПОДЕЛИСЬ С ДРУГОМ",
+        "description": "Поделись этим видео с другом, которому интересны мотоциклы."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "stories",
+      "priority_rank": 16,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-e05-20261030",
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ПЕСОК И ПРЕПЯТСТВИЯ: два испытания мото 🏍️ #shorts",
+      "narration": "Один мотоциклист едет по сухому песку, другие проходят полосу препятствий. Две разные съёмки. Что для тебя сложнее: рыхлый грунт или точность?",
+      "description": "Сравнение двух реальных действий: ПЕСОК И ПРЕПЯТСТВИЯ: два испытания мото 🏍️. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ПЕСОК И ПРЕПЯТСТВИЯ: два испытания мото 🏍️",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/29439166/",
+          "source_page": "https://www.pexels.com/video/desert-dirt-biking-adventure-in-action-29439166/",
+          "source_title": "desert dirt biking adventure in action",
+          "author": "Habeeb Sujan",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "experiments",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/30767777/",
+          "source_page": "https://www.pexels.com/video/off-road-motorcycle-obstacle-course-adventure-30767777/",
+          "source_title": "off road motorcycle obstacle course adventure",
+          "author": "Harvey Tan Villarino",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "experiments",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "dry-desert-and-offroad-obstacle",
+        "people": "desert-rider-and-course-riders",
+        "story": "sand-riding-vs-skill-obstacles",
+        "visual": "desert-dirt-vs-obstacle",
+        "bike": "dirt-obstacle-bike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored experiments: sand-riding-vs-skill-obstacles",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "experiments",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Напиши в комментариях, какой момент тебе ближе."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "experiments",
+      "priority_rank": 17,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-f06-20261030",
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "СТАРТ И ПОБЕДА: что громче? 🏁 #shorts",
+      "narration": "На первой трассе мотоциклисты выстраиваются перед стартом. На другой гонщик отмечает победу трюком. Это разные соревнования. Какой момент цепляет тебя сильнее?",
+      "description": "Мотофакт в кадре: СТАРТ И ПОБЕДА: что громче? 🏁. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "СТАРТ И ПОБЕДА: что громче? 🏁",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/11273550/",
+          "source_page": "https://www.pexels.com/video/motrocycle-riders-starting-11273550/",
+          "source_title": "motrocycle riders starting",
+          "author": "Gildo Cancelli",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/30355055/",
+          "source_page": "https://www.pexels.com/video/dynamic-motorcycle-racing-victory-celebration-30355055/",
+          "source_title": "dynamic motorcycle racing victory celebration",
+          "author": "Harvey Tan Villarino",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "race-staging-and-victory-track",
+        "people": "starting-grid-riders-and-winning-racer",
+        "story": "grid-start-vs-separate-victory",
+        "visual": "start-line-then-celebration",
+        "bike": "race-track-motorcycles"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored facts: grid-start-vs-separate-victory",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "facts",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие истории о мотоциклах."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "facts",
+      "priority_rank": 18,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-p03-20261030",
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ПРЫЖОК В СЛОУ-МО И НОЧНАЯ ГОНКА 🏁 #shorts",
+      "narration": "На первом видео прыжок мотокросса показан в замедлении, на втором — ночная гонка на другом треке. Какой ракурс захватывает тебя сильнее?",
+      "description": "Два независимых зрелищных эпизода: ПРЫЖОК В СЛОУ-МО И НОЧНАЯ ГОНКА 🏁. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ПРЫЖОК В СЛОУ-МО И НОЧНАЯ ГОНКА 🏁",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "action",
+      "music_bpm": 134,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/12294780/",
+          "source_page": "https://www.pexels.com/video/slow-motion-of-motocross-competition-12294780/",
+          "source_title": "slow motion of motocross competition",
+          "author": "Guidance Pillar Production",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "spectacle",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/3345138/",
+          "source_page": "https://www.pexels.com/video/a-motocross-race-in-an-enclosed-off-road-circuits-3345138/",
+          "source_title": "a motocross race in an enclosed off road circuits",
+          "author": "Richard Thrift",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "spectacle",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "slow-motion-course-and-night-speedway",
+        "people": "jump-athlete-and-speedway-riders",
+        "story": "slow-motion-day-jump-vs-night-race",
+        "visual": "day-jump-and-night-race",
+        "bike": "speedway-racing-bike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored spectacle: slow-motion-day-jump-vs-night-race",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "spectacle",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ? ЛАЙК!",
+        "description": "Поставь лайк, если понравилась эта мотоистория."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "spectacle",
+      "priority_rank": 19,
+      "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-20-f07-20261030",
+      "auto_preview": false,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "ЗАПРАВКА И СВЕТОФОР: две паузы райдера 🏍️ #shorts",
+      "narration": "Один мотоцикл остановился у заправки, другой райдер ждёт на ночном перекрёстке. Это разные поездки. Какая остановка знакома тебе больше?",
+      "description": "Мотофакт в кадре: ЗАПРАВКА И СВЕТОФОР: две паузы райдера 🏍️. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "ЗАПРАВКА И СВЕТОФОР: две паузы райдера 🏍️",
+      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
+      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "max_duration_seconds": 19.5,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 104,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/16567388/",
+          "source_page": "https://www.pexels.com/video/a-motorcycle-is-parked-at-a-gas-station-16567388/",
+          "source_title": "a motorcycle is parked at a gas station",
+          "author": "paashuu",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/4922668/",
+          "source_page": "https://www.pexels.com/video/a-man-riding-a-motorcycle-at-night-4922668/",
+          "source_title": "a man riding a motorcycle at night",
+          "author": "Pavel Danilyuk",
+          "license": "Pexels License",
+          "duration": 8,
+          "topics": [
+            "facts",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 7.75
+        }
+      ],
+      "editorial": {
+        "environment": "gas-station-and-night-intersection",
+        "people": "parked-cruiser-and-night-commuter",
+        "story": "station-stop-vs-night-redlight",
+        "visual": "sunlit-station-then-night-light",
+        "bike": "cruiser-and-city-motorbike"
+      },
+      "editorial_format": "2026-10-30 evidence-anchored facts: station-stop-vs-night-redlight",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "facts",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ПОДЕЛИСЬ С ДРУГОМ",
+        "description": "Поделись этим видео с другом, которому интересны мотоциклы."
+      },
+      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
+      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "production_batch": "gustava-20-20261030",
+      "mix_category": "facts",
+      "priority_rank": 20,
+      "editorial_review_status": "awaiting_frame_review"
     }
   ]
 }

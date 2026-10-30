@@ -1,0 +1,1089 @@
+{
+  "version": 1,
+  "channel": "GUSTAVA Enduro",
+  "channel_id": "UCS0QCodPcFBTjMt4ioEWOUw",
+  "batch_id": "gustava-20-20261030",
+  "target_total": 20,
+  "working_mix": {
+    "facts": 7,
+    "stories": 5,
+    "experiments": 5,
+    "spectacle": 3
+  },
+  "mix_source": "Previously discussed 35/25/25/15 test allocation (not measured viral probabilities)",
+  "priority_strategy": "Editorial interleave; after release reorder only on observed 24h/72h engaged views, stayed-to-watch, percent viewed, subscribers per 1000, shares and comments; no invented scores",
+  "buffer_capacity_note": "Free supports max 10 scheduled posts per channel; no more than 10 live at once, remaining in approved renderer reserve and automatically refill",
+  "voice_engine": "aidocmaker_deep",
+  "voice_id": "deep",
+  "source_usage_policy": "40 distinct Pexels source IDs, all checked against active catalog before staging; must reverify provider license, source duration, exact visual action; do not claim that distinct stock clips capture one historical event",
+  "mandatory_qa": "Independent Russian ASR >=0.97 both source and mixed MP4, last word intact, original source hash and author license, 720x1280 moving image, no freeze, no repeated shots, human visual review",
+  "entries": [
+    {
+      "id": "gustava-20-f01-20261030",
+      "code": "f01",
+      "category": "facts",
+      "priority": 1,
+      "title": "ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️ #shorts",
+      "narration": "Один райдер готовит перчатки к холодному выезду, другой достаёт шлем из гаража. Разные люди, одна привычка: готовиться заранее. А ты что надеваешь первым?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "a motorcyclist putting on gloves"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "motorbike rider picking up helmet from bike"
+        }
+      ],
+      "sources": [
+        {
+          "id": "6435393",
+          "slug": "a-motorcyclist-putting-on-gloves",
+          "author": "Andrew Kota",
+          "source_page": "https://www.pexels.com/video/a-motorcyclist-putting-on-gloves-6435393/",
+          "url": "https://www.pexels.com/download/video/6435393/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "28209492",
+          "slug": "motorbike-rider-picking-up-helmet-from-bike",
+          "author": "Themba Mtegha",
+          "source_page": "https://www.pexels.com/video/motorbike-rider-picking-up-helmet-from-bike-28209492/",
+          "url": "https://www.pexels.com/download/video/28209492/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "ready_unverified",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      },
+      "voice_id": "deep",
+      "context_id": "8787d70809aa4958ad2dd842d9f1226e",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/e921b95d-0cf2-4fa6-a4c4-64f5d29d2c79.mp3"
+    },
+    {
+      "id": "gustava-20-s01-20261030",
+      "code": "s01",
+      "category": "stories",
+      "priority": 2,
+      "title": "СТАРЫЙ БАЙК И ИНСТРУМЕНТЫ: мотожизнь 🔧 #shorts",
+      "narration": "Один мастер чинит классический мотоцикл. В другой мастерской люди выбирают инструменты. Разные истории о любви к железу. А ты чинишь байк самостоятельно?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "man fixing motorbike"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "men holding mechanic tools"
+        }
+      ],
+      "sources": [
+        {
+          "id": "7170228",
+          "slug": "man-fixing-motorbike",
+          "author": "ArtHouse Studio",
+          "source_page": "https://www.pexels.com/video/man-fixing-motorbike-7170228/",
+          "url": "https://www.pexels.com/download/video/7170228/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "8551366",
+          "slug": "men-holding-mechanic-tools",
+          "author": "Kindel Media",
+          "source_page": "https://www.pexels.com/video/men-holding-mechanic-tools-8551366/",
+          "url": "https://www.pexels.com/download/video/8551366/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "ready_unverified",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      },
+      "voice_id": "deep",
+      "context_id": "eb2b4be786b04a6a8394723e4bbd5fb8",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/b82c28c0-ec13-4b18-b5be-6baee01f3db0.mp3"
+    },
+    {
+      "id": "gustava-20-e01-20261030",
+      "code": "e01",
+      "category": "experiments",
+      "priority": 3,
+      "title": "КОЛЕСО И МОТОР: две разные работы 🔧 #shorts",
+      "narration": "Один механик чинит колесо мотоцикла прямо на улице. Другой разбирается с двигателем в гараже. Два разных ремонта. Какой навык ты бы освоил первым?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "person fixing a motorcycle"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "a man fixing the motorcycle"
+        }
+      ],
+      "sources": [
+        {
+          "id": "9606874",
+          "slug": "person-fixing-a-motorcycle",
+          "author": "Anastasia Shuraeva",
+          "source_page": "https://www.pexels.com/video/person-fixing-a-motorcycle-9606874/",
+          "url": "https://www.pexels.com/download/video/9606874/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "7170231",
+          "slug": "a-man-fixing-the-motorcycle",
+          "author": "ArtHouse Studio",
+          "source_page": "https://www.pexels.com/video/a-man-fixing-the-motorcycle-7170231/",
+          "url": "https://www.pexels.com/download/video/7170231/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "ready_unverified",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      },
+      "voice_id": "deep",
+      "context_id": "e622107c1de348d5b9a0e2f0bf35e911",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/efa95487-5744-479f-bdc9-e3d3026f013a.mp3"
+    },
+    {
+      "id": "gustava-20-p01-20261030",
+      "code": "p01",
+      "category": "spectacle",
+      "priority": 4,
+      "title": "ДВА МОТОТРЮКА: шоу или город? 🔥 #shorts",
+      "narration": "На шоу участники прыгают высоко над площадкой, а другой райдер выполняет трюк прямо в городе. Это не одна сцена. Что зрелищнее для тебя?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "exciting motorcycle stunt jump with riders"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "man doing stunts on a motorcycle"
+        }
+      ],
+      "sources": [
+        {
+          "id": "39848200",
+          "slug": "exciting-motorcycle-stunt-jump-with-riders",
+          "author": "Joolsmagools",
+          "source_page": "https://www.pexels.com/video/exciting-motorcycle-stunt-jump-with-riders-39848200/",
+          "url": "https://www.pexels.com/download/video/39848200/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "9607284",
+          "slug": "man-doing-stunts-on-a-motorcycle",
+          "author": "Anastasia Shuraeva",
+          "source_page": "https://www.pexels.com/video/man-doing-stunts-on-a-motorcycle-9607284/",
+          "url": "https://www.pexels.com/download/video/9607284/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "ready_unverified",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      },
+      "voice_id": "deep",
+      "context_id": "d7519055981a415f8e41cad39e3dddb7",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/e0f3a5ff-12df-4420-beb6-45d333f36cd7.mp3"
+    },
+    {
+      "id": "gustava-20-f02-20261030",
+      "code": "f02",
+      "category": "facts",
+      "priority": 5,
+      "title": "ПОЧЕМУ КОНУСЫ? Мотоуправление в деле 🏍️ #shorts",
+      "narration": "На парковке райдеры проходят конусы, а на другом полигоне тренируются на препятствиях. Два разных упражнения на точность. Что попробовал бы первым?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "bikers driving around traffic cones in an empty parking lot"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "motorbikers training on outdoor course"
+        }
+      ],
+      "sources": [
+        {
+          "id": "8275232",
+          "slug": "bikers-driving-around-traffic-cones-in-an-empty-parking-lot",
+          "author": "Jose Valdivia",
+          "source_page": "https://www.pexels.com/video/bikers-driving-around-traffic-cones-in-an-empty-parking-lot-8275232/",
+          "url": "https://www.pexels.com/download/video/8275232/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "30767687",
+          "slug": "motorbikers-training-on-outdoor-course",
+          "author": "Harvey Tan Villarino",
+          "source_page": "https://www.pexels.com/video/motorbikers-training-on-outdoor-course-30767687/",
+          "url": "https://www.pexels.com/download/video/30767687/",
+          "license": "Pexels License",
+          "duration": 7,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "ready_unverified",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      },
+      "voice_id": "deep",
+      "context_id": "0715ce6d46e84fa688135dceb3dfe56a",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/30d68595-26d7-4ff2-af7a-b34dd0e8e481.mp3"
+    },
+    {
+      "id": "gustava-20-s02-20261030",
+      "code": "s02",
+      "category": "stories",
+      "priority": 6,
+      "title": "ПЕРВЫЙ ВЫЕЗД: улыбка или скорость? 🏍️ #shorts",
+      "narration": "Девушка с улыбкой надевает шлем, а на другой съёмке райдер уже едет по открытой дороге. Это не одна поездка. Что ближе твоему настроению?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "a smiling young woman putting on a helmet"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "motorcyclist riding sport bike on open highway"
+        }
+      ],
+      "sources": [
+        {
+          "id": "12405928",
+          "slug": "a-smiling-young-woman-putting-on-a-helmet",
+          "author": "RDNE Stock project",
+          "source_page": "https://www.pexels.com/video/a-smiling-young-woman-putting-on-a-helmet-12405928/",
+          "url": "https://www.pexels.com/download/video/12405928/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "33109039",
+          "slug": "motorcyclist-riding-sport-bike-on-open-highway",
+          "author": "Hasan basri Yentekün",
+          "source_page": "https://www.pexels.com/video/motorcyclist-riding-sport-bike-on-open-highway-33109039/",
+          "url": "https://www.pexels.com/download/video/33109039/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "ready_unverified",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      },
+      "voice_id": "deep",
+      "context_id": "d9c629b5b4f6443080c307dcbb1e7b9c",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/54b6e6d1-6027-4afd-af50-d5476232d8d6.mp3"
+    },
+    {
+      "id": "gustava-20-e02-20261030",
+      "code": "e02",
+      "category": "experiments",
+      "priority": 7,
+      "title": "КЛАССИКА И СБОРКА ДВИГАТЕЛЯ: что сложнее? 🔧 #shorts",
+      "narration": "Сначала мастер возится со старым мотоциклом. Потом другой специалист собирает детали двигателя. Это две разные съёмки. Какую работу ты смог бы повторить?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "a man tinkering a motorcycle"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "efficient motorcycle engine assembly in workshop"
+        }
+      ],
+      "sources": [
+        {
+          "id": "7170227",
+          "slug": "a-man-tinkering-a-motorcycle",
+          "author": "ArtHouse Studio",
+          "source_page": "https://www.pexels.com/video/a-man-tinkering-a-motorcycle-7170227/",
+          "url": "https://www.pexels.com/download/video/7170227/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "34948761",
+          "slug": "efficient-motorcycle-engine-assembly-in-workshop",
+          "author": "Emrul Kausar Emon",
+          "source_page": "https://www.pexels.com/video/efficient-motorcycle-engine-assembly-in-workshop-34948761/",
+          "url": "https://www.pexels.com/download/video/34948761/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "ready_unverified",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      },
+      "voice_id": "deep",
+      "context_id": "562e2b62a2b14da78ad8b29a9f3ab928",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/9f0bcca7-ac7f-4d5e-8e8d-b4863da97f57.mp3"
+    },
+    {
+      "id": "gustava-20-f03-20261030",
+      "code": "f03",
+      "category": "facts",
+      "priority": 8,
+      "title": "ТОРМОЗ И МАСЛО: что проверяют в гараже? 🔧 #shorts",
+      "narration": "В одном гараже мастер проверяет ручной тормоз. На другой съёмке обслуживают мотор. Разные мотоциклы и задачи. Ты сам обслуживаешь байк?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "a man trying the hand brake of a motorcycle"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "adding 2 stroke oil in motorcycle during service"
+        }
+      ],
+      "sources": [
+        {
+          "id": "7170229",
+          "slug": "a-man-trying-the-hand-brake-of-a-motorcycle",
+          "author": "ArtHouse Studio",
+          "source_page": "https://www.pexels.com/video/a-man-trying-the-hand-brake-of-a-motorcycle-7170229/",
+          "url": "https://www.pexels.com/download/video/7170229/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "28197087",
+          "slug": "adding-2-stroke-oil-in-motorcycle-during-service",
+          "author": "Themba Mtegha",
+          "source_page": "https://www.pexels.com/video/adding-2-stroke-oil-in-motorcycle-during-service-28197087/",
+          "url": "https://www.pexels.com/download/video/28197087/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "ready_unverified",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      },
+      "voice_id": "deep",
+      "context_id": "41da04d7db174b9794e126ebeb1f3b79",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/b9e2f8cb-917f-48df-a00b-138dfc02cbbf.mp3"
+    },
+    {
+      "id": "gustava-20-s03-20261030",
+      "code": "s03",
+      "category": "stories",
+      "priority": 9,
+      "title": "ЖЕНЩИНА В ГРЯЗИ И РАЙДЕР В ПУСТЫНЕ 🏍️ #shorts",
+      "narration": "Девушка преодолевает грязный участок, а другой райдер несётся по песчаной трассе. Разные люди, разный грунт. Где тебе было бы интереснее попробовать силы?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "woman navigates motorcycle through muddy terrain"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "dynamic off road dirt bike adventure in desert"
+        }
+      ],
+      "sources": [
+        {
+          "id": "36365069",
+          "slug": "woman-navigates-motorcycle-through-muddy-terrain",
+          "author": "Harvey Tan Villarino",
+          "source_page": "https://www.pexels.com/video/woman-navigates-motorcycle-through-muddy-terrain-36365069/",
+          "url": "https://www.pexels.com/download/video/36365069/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "29488248",
+          "slug": "dynamic-off-road-dirt-bike-adventure-in-desert",
+          "author": "Habeeb Sujan",
+          "source_page": "https://www.pexels.com/video/dynamic-off-road-dirt-bike-adventure-in-desert-29488248/",
+          "url": "https://www.pexels.com/download/video/29488248/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "ready_unverified",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      },
+      "voice_id": "deep",
+      "context_id": "ae230ce5880e4f908936eaa0505956a1",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/ec8c29ff-97c4-4895-b742-24d4bf93e2b0.mp3"
+    },
+    {
+      "id": "gustava-20-e03-20261030",
+      "code": "e03",
+      "category": "experiments",
+      "priority": 10,
+      "title": "ЭКИПИРОВКА И ПОВОРОТ: с чего учиться? 🏍️ #shorts",
+      "narration": "На одном полигоне райдеры учатся проходить повороты. На другом кадре спортсменка в шлеме готовится к трассе. Что важнее в начале: защита или практика?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "motorcycle driving course"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "motorcyclist helmet"
+        }
+      ],
+      "sources": [
+        {
+          "id": "10221923",
+          "slug": "motorcycle-driving-course",
+          "author": "Jose Valdivia",
+          "source_page": "https://www.pexels.com/video/motorcycle-driving-course-10221923/",
+          "url": "https://www.pexels.com/download/video/10221923/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "5803515",
+          "slug": "motorcyclist-helmet",
+          "author": "cottonbro studio",
+          "source_page": "https://www.pexels.com/video/motorcyclist-helmet-5803515/",
+          "url": "https://www.pexels.com/download/video/5803515/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "not_generated",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      }
+    },
+    {
+      "id": "gustava-20-p02-20261030",
+      "code": "p02",
+      "category": "spectacle",
+      "priority": 11,
+      "title": "МОТОКРОСС: прыжок и напряжение гонки 🏁 #shorts",
+      "narration": "На одной трассе райдер взлетает после трамплина. В другой гонке спортсмены проходят участок под взглядами зрителей. Какой момент смотришь не моргая?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "thrilling dirt bike jump on outdoor track"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "athlete on motocross motorcycle"
+        }
+      ],
+      "sources": [
+        {
+          "id": "32401566",
+          "slug": "thrilling-dirt-bike-jump-on-outdoor-track",
+          "author": "Harvey Tan Villarino",
+          "source_page": "https://www.pexels.com/video/thrilling-dirt-bike-jump-on-outdoor-track-32401566/",
+          "url": "https://www.pexels.com/download/video/32401566/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "12295788",
+          "slug": "athlete-on-motocross-motorcycle",
+          "author": "Guidance Pillar Production",
+          "source_page": "https://www.pexels.com/video/athlete-on-motocross-motorcycle-12295788/",
+          "url": "https://www.pexels.com/download/video/12295788/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "not_generated",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      }
+    },
+    {
+      "id": "gustava-20-f04-20261030",
+      "code": "f04",
+      "category": "facts",
+      "priority": 12,
+      "title": "ДВИГАТЕЛЬ: один мастер или команда? 🔧 #shorts",
+      "narration": "Сначала двое осматривают двигатель возле гаража. Затем в другой мастерской ремонтируют мотоцикл целой командой. Какой ремонт ты бы хотел увидеть поближе?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "men checking the motorbike engine"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "mechanics in workshop repairing motorcycle"
+        }
+      ],
+      "sources": [
+        {
+          "id": "8551400",
+          "slug": "men-checking-the-motorbike-engine",
+          "author": "Kindel Media",
+          "source_page": "https://www.pexels.com/video/men-checking-the-motorbike-engine-8551400/",
+          "url": "https://www.pexels.com/download/video/8551400/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "34959739",
+          "slug": "mechanics-in-workshop-repairing-motorcycle",
+          "author": "Nishant Aneja",
+          "source_page": "https://www.pexels.com/video/mechanics-in-workshop-repairing-motorcycle-34959739/",
+          "url": "https://www.pexels.com/download/video/34959739/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "not_generated",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      }
+    },
+    {
+      "id": "gustava-20-s04-20261030",
+      "code": "s04",
+      "category": "stories",
+      "priority": 13,
+      "title": "МОТОСЕРВИС: что происходит за дверью? 🔧 #shorts",
+      "narration": "На одном видео у входа в мотосервис кипит жизнь. В другой мастерской механики заняты ремонтом. Это разные места. Ты предпочитаешь сервис или собственный гараж?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "busy motorcycle repair shop entrance scene"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "industrial motorcycle workshop with mechanics"
+        }
+      ],
+      "sources": [
+        {
+          "id": "38893306",
+          "slug": "busy-motorcycle-repair-shop-entrance-scene",
+          "author": "Jonathan Ellis",
+          "source_page": "https://www.pexels.com/video/busy-motorcycle-repair-shop-entrance-scene-38893306/",
+          "url": "https://www.pexels.com/download/video/38893306/",
+          "license": "Pexels License",
+          "duration": 6,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "34953288",
+          "slug": "industrial-motorcycle-workshop-with-mechanics",
+          "author": "Nishant Aneja",
+          "source_page": "https://www.pexels.com/video/industrial-motorcycle-workshop-with-mechanics-34953288/",
+          "url": "https://www.pexels.com/download/video/34953288/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "not_generated",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      }
+    },
+    {
+      "id": "gustava-20-e04-20261030",
+      "code": "e04",
+      "category": "experiments",
+      "priority": 14,
+      "title": "ТОННЕЛЬ И ГОРОД: где сложнее управлять? 🏍️ #shorts",
+      "narration": "Один райдер мчится через тоннель, другой едет по обычным городским улицам. Это разные маршруты. Где ты внимательнее следишь за обстановкой?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "dynamic motorcycle ride through urban tunnel"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "person riding a motorcycle in the streets"
+        }
+      ],
+      "sources": [
+        {
+          "id": "29290602",
+          "slug": "dynamic-motorcycle-ride-through-urban-tunnel",
+          "author": "Hasan basri Yentekün",
+          "source_page": "https://www.pexels.com/video/dynamic-motorcycle-ride-through-urban-tunnel-29290602/",
+          "url": "https://www.pexels.com/download/video/29290602/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "4443924",
+          "slug": "person-riding-a-motorcycle-in-the-streets",
+          "author": "K",
+          "source_page": "https://www.pexels.com/video/person-riding-a-motorcycle-in-the-streets-4443924/",
+          "url": "https://www.pexels.com/download/video/4443924/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "not_generated",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      }
+    },
+    {
+      "id": "gustava-20-f05-20261030",
+      "code": "f05",
+      "category": "facts",
+      "priority": 15,
+      "title": "ШЛЕМ ПЕРЕД СТАРТОМ: что замечаешь? 🏍️ #shorts",
+      "narration": "Один байкер надевает шлем перед поездкой, другой готовит мотоцикл к выезду. Два независимых кадра. Что ты проверяешь прямо перед стартом?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "man wearing black shirt wearing his helmet"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "a man riding his motorcycle"
+        }
+      ],
+      "sources": [
+        {
+          "id": "9606648",
+          "slug": "man-wearing-black-shirt-wearing-his-helmet",
+          "author": "Anastasia Shuraeva",
+          "source_page": "https://www.pexels.com/video/man-wearing-black-shirt-wearing-his-helmet-9606648/",
+          "url": "https://www.pexels.com/download/video/9606648/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "4922587",
+          "slug": "a-man-riding-his-motorcycle",
+          "author": "Pavel Danilyuk",
+          "source_page": "https://www.pexels.com/video/a-man-riding-his-motorcycle-4922587/",
+          "url": "https://www.pexels.com/download/video/4922587/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "not_generated",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      }
+    },
+    {
+      "id": "gustava-20-s05-20261030",
+      "code": "s05",
+      "category": "stories",
+      "priority": 16,
+      "title": "РЕМОНТ НА УЛИЦЕ: два мастера и два байка 🔧 #shorts",
+      "narration": "Один мастер ремонтирует мотоцикл на городской улице. Другой занимается мотором в совершенно другом месте. А ты доверишь байк незнакомому мастеру?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "man repairing a motorcycle"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "a man repairing a motorcycle"
+        }
+      ],
+      "sources": [
+        {
+          "id": "9607092",
+          "slug": "man-repairing-a-motorcycle",
+          "author": "Anastasia Shuraeva",
+          "source_page": "https://www.pexels.com/video/man-repairing-a-motorcycle-9607092/",
+          "url": "https://www.pexels.com/download/video/9607092/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "5199344",
+          "slug": "a-man-repairing-a-motorcycle",
+          "author": "cottonbro studio",
+          "source_page": "https://www.pexels.com/video/a-man-repairing-a-motorcycle-5199344/",
+          "url": "https://www.pexels.com/download/video/5199344/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "not_generated",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      }
+    },
+    {
+      "id": "gustava-20-e05-20261030",
+      "code": "e05",
+      "category": "experiments",
+      "priority": 17,
+      "title": "ПЕСОК И ПРЕПЯТСТВИЯ: два испытания мото 🏍️ #shorts",
+      "narration": "Один мотоциклист едет по сухому песку, другие проходят полосу препятствий. Две разные съёмки. Что для тебя сложнее: рыхлый грунт или точность?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "desert dirt biking adventure in action"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "off road motorcycle obstacle course adventure"
+        }
+      ],
+      "sources": [
+        {
+          "id": "29439166",
+          "slug": "desert-dirt-biking-adventure-in-action",
+          "author": "Habeeb Sujan",
+          "source_page": "https://www.pexels.com/video/desert-dirt-biking-adventure-in-action-29439166/",
+          "url": "https://www.pexels.com/download/video/29439166/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "30767777",
+          "slug": "off-road-motorcycle-obstacle-course-adventure",
+          "author": "Harvey Tan Villarino",
+          "source_page": "https://www.pexels.com/video/off-road-motorcycle-obstacle-course-adventure-30767777/",
+          "url": "https://www.pexels.com/download/video/30767777/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "not_generated",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      }
+    },
+    {
+      "id": "gustava-20-f06-20261030",
+      "code": "f06",
+      "category": "facts",
+      "priority": 18,
+      "title": "СТАРТ И ПОБЕДА: что громче? 🏁 #shorts",
+      "narration": "На первой трассе мотоциклисты выстраиваются перед стартом. На другой гонщик отмечает победу трюком. Это разные соревнования. Какой момент цепляет тебя сильнее?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "motrocycle riders starting"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "dynamic motorcycle racing victory celebration"
+        }
+      ],
+      "sources": [
+        {
+          "id": "11273550",
+          "slug": "motrocycle-riders-starting",
+          "author": "Gildo Cancelli",
+          "source_page": "https://www.pexels.com/video/motrocycle-riders-starting-11273550/",
+          "url": "https://www.pexels.com/download/video/11273550/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "30355055",
+          "slug": "dynamic-motorcycle-racing-victory-celebration",
+          "author": "Harvey Tan Villarino",
+          "source_page": "https://www.pexels.com/video/dynamic-motorcycle-racing-victory-celebration-30355055/",
+          "url": "https://www.pexels.com/download/video/30355055/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "not_generated",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      }
+    },
+    {
+      "id": "gustava-20-p03-20261030",
+      "code": "p03",
+      "category": "spectacle",
+      "priority": 19,
+      "title": "ПРЫЖОК В СЛОУ-МО И НОЧНАЯ ГОНКА 🏁 #shorts",
+      "narration": "На первом видео прыжок мотокросса показан в замедлении, на втором — ночная гонка на другом треке. Какой ракурс захватывает тебя сильнее?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "slow motion of motocross competition"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "a motocross race in an enclosed off road circuits"
+        }
+      ],
+      "sources": [
+        {
+          "id": "12294780",
+          "slug": "slow-motion-of-motocross-competition",
+          "author": "Guidance Pillar Production",
+          "source_page": "https://www.pexels.com/video/slow-motion-of-motocross-competition-12294780/",
+          "url": "https://www.pexels.com/download/video/12294780/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "3345138",
+          "slug": "a-motocross-race-in-an-enclosed-off-road-circuits",
+          "author": "Richard Thrift",
+          "source_page": "https://www.pexels.com/video/a-motocross-race-in-an-enclosed-off-road-circuits-3345138/",
+          "url": "https://www.pexels.com/download/video/3345138/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "not_generated",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      }
+    },
+    {
+      "id": "gustava-20-f07-20261030",
+      "code": "f07",
+      "category": "facts",
+      "priority": 20,
+      "title": "ЗАПРАВКА И СВЕТОФОР: две паузы райдера 🏍️ #shorts",
+      "narration": "Один мотоцикл остановился у заправки, другой райдер ждёт на ночном перекрёстке. Это разные поездки. Какая остановка знакома тебе больше?",
+      "visual_beats": [
+        {
+          "source": "clip_0",
+          "visible_action": "a motorcycle is parked at a gas station"
+        },
+        {
+          "source": "clip_1",
+          "visible_action": "a man riding a motorcycle at night"
+        }
+      ],
+      "sources": [
+        {
+          "id": "16567388",
+          "slug": "a-motorcycle-is-parked-at-a-gas-station",
+          "author": "paashuu",
+          "source_page": "https://www.pexels.com/video/a-motorcycle-is-parked-at-a-gas-station-16567388/",
+          "url": "https://www.pexels.com/download/video/16567388/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        },
+        {
+          "id": "4922668",
+          "slug": "a-man-riding-a-motorcycle-at-night",
+          "author": "Pavel Danilyuk",
+          "source_page": "https://www.pexels.com/video/a-man-riding-a-motorcycle-at-night-4922668/",
+          "url": "https://www.pexels.com/download/video/4922668/",
+          "license": "Pexels License",
+          "duration": 8,
+          "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
+        }
+      ],
+      "voice_status": "not_generated",
+      "auto_preview": false,
+      "auto_publish": false,
+      "editorial_status": "awaiting_real_video_qa",
+      "analytics": {
+        "engaged_views": null,
+        "stayed_to_watch": null,
+        "average_percentage_viewed": null,
+        "subscribers_per_1000_engaged": null,
+        "shares": null,
+        "comments": null
+      }
+    }
+  ]
+}
