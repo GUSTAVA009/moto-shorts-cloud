@@ -562,6 +562,16 @@
       "episode": "moto-rain-1bec694cca6c",
       "source": "https://www.pexels.com/video/nighttime-urban-street-with-motorbikes-36077835/",
       "status": "reserved-or-rendered"
+    },
+    "5207165": {
+      "episode": "moto-helmet-f2452c64bf21",
+      "source": "https://www.pexels.com/video/person-riding-his-motorcycle-5207165/",
+      "status": "reserved-or-rendered"
+    },
+    "9606878": {
+      "episode": "moto-helmet-f2452c64bf21",
+      "source": "https://www.pexels.com/video/close-up-shot-of-a-man-on-a-motorcycle-9606878/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -809,6 +819,13 @@
       "people": "road-commuters-1bec6",
       "story": "rainy-motorcycle-road-1bec6",
       "visual": "three-clips-1bec6"
+    },
+    "moto-helmet-f2452c64bf21": {
+      "environment": "riding-gear-workshop-f2452",
+      "bike": "motorbike-safety-gear",
+      "people": "gear-specialists-f2452",
+      "story": "helmet-gear-choice-f2452",
+      "visual": "three-clips-f2452"
     }
   }
 }
