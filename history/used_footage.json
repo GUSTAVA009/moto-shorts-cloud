@@ -597,6 +597,11 @@
       "episode": "moto-helmet-fit-deep-20261030",
       "source": "https://www.pexels.com/video/man-riding-a-motorcycle-with-helmet-running-at-high-speed-5283463/",
       "status": "reserved-or-rendered"
+    },
+    "9606651": {
+      "episode": "moto-helmet-fit-deep-20261030",
+      "source": "https://www.pexels.com/video/man-wearing-a-helmet-9606651/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -864,7 +869,7 @@
       "bike": "helmet-safety-motorcycle",
       "people": "helmet-riders-20261030",
       "story": "helmet-fitting-guide-20261030",
-      "visual": "helmet-closeup-then-road"
+      "visual": "helmet-closeup-then-helmet-adjustment"
     }
   }
 }
