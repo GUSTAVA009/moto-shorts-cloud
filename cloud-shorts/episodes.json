@@ -4721,9 +4721,9 @@
         "shorts"
       ],
       "cta": {
-        "kind": "comment",
-        "overlay": "НАПИШИ СВОЙ ОТВЕТ",
-        "description": "Напиши в комментариях, какой момент поездки любишь больше всего."
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Отправь другу, который тоже узнает эти моменты."
       },
       "source_selection": "Three unique license-checked official Pexels action clips picked BEFORE the narration; each spoken beat refers to the corresponding visible action.",
       "generation_provenance": "GUSTAVA scene-first editorial, licensed visual narrative, genuine Create Audio Voice deep",
