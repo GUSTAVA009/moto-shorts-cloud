@@ -4311,6 +4311,149 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_reserve_v2",
       "story_reserve_id": "r2-dirt-0011"
+    },
+    {
+      "id": "moto-vintage-2d2f50634e54",
+      "auto_preview": true,
+      "auto_publish": true,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "title": "Классический байк: мастерство, честный взгляд, план — почему так? #shorts",
+      "narration": "Мотоцикл с историей: его детали заслуживают внимания. Полезно отличать видимые факты от собственных догадок. Важная часть темы — мастерство. Понятный план помогает лучше оценить собственные возможности. А ты видишь эту ситуацию по-другому?",
+      "description": "Самостоятельная мототема: мастерство. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
+      "caption_start": "ВНИМАНИЕ: МАСТЕРСТВО",
+      "caption_middle": "НА ЧТО ОБРАТИТЬ ВНИМАНИЕ",
+      "caption_end": "А ТЫ КАК СЧИТАЕШЬ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "garage-groove",
+      "music_bpm": 106,
+      "editorial_format": "вопрос",
+      "footage": [
+        {
+          "topics": [
+            "repair",
+            "vintage"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/35623340/",
+          "source_page": "https://www.pexels.com/video/dynamic-motorcycle-workshop-with-fitness-focus-35623340/",
+          "author": "JULLIAN PRODUCTION",
+          "license": "Pexels License",
+          "duration": 24,
+          "source_title": "dynamic motorcycle workshop with fitness focus"
+        },
+        {
+          "topics": [
+            "repair",
+            "vintage"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/30075959/",
+          "source_page": "https://www.pexels.com/video/motorcycle-engine-assembly-in-a-modern-factory-30075959/",
+          "author": "Emrul Kausar Emon",
+          "license": "Pexels License",
+          "duration": 13,
+          "source_title": "motorcycle engine assembly in a modern factory"
+        },
+        {
+          "topics": [
+            "repair",
+            "vintage"
+          ],
+          "key": "clip_2",
+          "url": "https://www.pexels.com/download/video/34308331/",
+          "source_page": "https://www.pexels.com/video/loading-motorcycle-onto-trailer-in-outdoor-garage-34308331/",
+          "author": "Tom Jurman",
+          "license": "Pexels License",
+          "duration": 47,
+          "source_title": "loading motorcycle onto trailer in outdoor garage"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 6.45,
+          "seconds": 2.15
+        }
+      ],
+      "editorial": {
+        "environment": "vintage-workshop-2d2f5",
+        "bike": "classic-motorcycle",
+        "people": "classic-restorers-2d2f5",
+        "story": "vintage-bike-work-2d2f5",
+        "visual": "three-clips-2d2f5"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие мотопутешествия."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "offline_editorial_reserve_v3",
+      "story_reserve_id": "r2-vintage-4307"
     }
   ]
 }
