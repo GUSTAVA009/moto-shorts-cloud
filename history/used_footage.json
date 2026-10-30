@@ -492,6 +492,16 @@
       "episode": "sunset-ride-30",
       "source": "https://www.pexels.com/video/motorcycle-ride-on-scenic-country-road-36834937/",
       "status": "reserved-or-rendered"
+    },
+    "33987059": {
+      "episode": "moto-forest-4bd53e13fec4",
+      "source": "https://www.pexels.com/video/serene-motorcycle-ride-through-scenic-forest-road-33987059/",
+      "status": "reserved-or-rendered"
+    },
+    "32918034": {
+      "episode": "moto-forest-4bd53e13fec4",
+      "source": "https://www.pexels.com/video/scenic-motorcycle-ride-through-forested-highway-32918034/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -704,6 +714,13 @@
       "people": "unrelated-roadtrip-solo-travelers",
       "story": "sunset-rest-stop-journey-reflection",
       "visual": "warm-sunlight-bikes-and-hills"
+    },
+    "moto-forest-4bd53e13fec4": {
+      "environment": "forest-trail-4bd53",
+      "bike": "forest-trailbike",
+      "people": "woods-rider-4bd53",
+      "story": "forest-path-and-riding-4bd53",
+      "visual": "three-clips-4bd53"
     }
   }
 }
