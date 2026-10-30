@@ -1,9 +1,15 @@
 {
   "id": "moto-rain-1bec694cca6c",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "41014541497",
   "attempt_count": 1,
   "preview_fingerprint": "6e8c964bd10a2285aba11472cbd7e06c1367b67dc50022123ad63c60980ebb4b",
   "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": false,
+  "voice_qa_coverage": 0.71,
+  "voice_profile": "gustava_native_bass_baritone_v6",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": false,
+  "mixed_audio_qa_coverage": 0.742
 }
