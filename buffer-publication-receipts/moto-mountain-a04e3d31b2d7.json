@@ -2,6 +2,8 @@
   "episode": "moto-mountain-a04e3d31b2d7",
   "sha256": "d7bffe115e06691d0dc07bdb462774bece9168b8100ba82f7fcf77471dfdfdfd",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-moto-mountain-a04e3d31b2d7-d7bffe115e06/moto-mountain-a04e3d31b2d7.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae44765a83a7fb63c9e0587",
+  "due_at": "2026-10-30T08:00:00.000Z"
 }
