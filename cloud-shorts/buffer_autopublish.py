@@ -185,8 +185,8 @@ def should_disclose_generated_content(episode):
               "ai_disclosure_required")
     if any(episode.get(key) is True for key in forced):
         return True
-    if (episode.get("voice_engine") != "silero_mit_bass_baritone"
-            or episode.get("episode_series", {}).get("historical_reconstruction")
+    if (episode.get("voice_engine") not in ("silero_mit_bass_baritone", "kokoro_ru_dima")
+            or (episode.get("episode_series") or {}).get("historical_reconstruction")
             or not episode.get("footage")
             or any(source.get("license") not in ("Pexels License", "CC0 1.0")
                    for source in episode["footage"])):
