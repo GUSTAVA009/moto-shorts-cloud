@@ -4924,7 +4924,7 @@
     {
       "id": "moto-moto-life-three-scenes-deep-20261030",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
@@ -5043,7 +5043,7 @@
       },
       "source_selection": "Three original Pexels creators. Public official source titles verified independently; all three exact original clip IDs unused in episode catalog. Inspect actual MP4 frames before release.",
       "generation_provenance": "Original new GUSTAVA DEEP recorded via authorized Create Audio Voice, scene-first; no reused video and no misleading same-event assertion.",
-      "editorial_review_note": "PREVIEW ONLY until actual mp4 frame-and-audio inspection. No YouTube upload while auto_publish=false.",
+      "editorial_review_note": "FULL VIDEO VIEWED/FRAME CHECK 2026-10-30: distinct showroom high-five, garage bike conversation, city motorcycle stunt. Accepted for auto-scheduling only through proof-verified Buffer publisher. No re-render or substitutions.",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -5052,7 +5052,11 @@
         "source_audio_sha256": "f14b3c7078ac638cb36cfeca1f358f4ac302cd54da8d02b2d1dc7cc082f30959",
         "context_id": "a97cd6f656ec46fe9b619e297663c987",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_revision_status": "assistant_checked_passed",
+      "visual_review_note": "Observed actual 19.10s H.264 MP4, source GitHub run 41055691838, SHA-256 95eb41adee30a1135196a4f5e49b5fd6376891dad12750e1c436ab2860905e81. Independently visually inspected frame contact sheet at 0.35,1.5,3,4.5,5.9,6.6,8,10,11.8,13,15,17,18.8 seconds: high-five inside motorcycle showroom, distinct garage motorcycle conversation, final urban wheelie/stunt. All original provider sources used once, three unrelated scenes; no depicted same event. No freeze >2.2s. Actual mixed ASR 0.976, final three words present, stereo -19.1 LUFS, true peak -2.3 dBTP. Approved only this preview; do not extrapolate approval to other episodes.",
+      "release_source_run_id": "41055691838",
+      "auto_publish_reason": "Owner explicitly requested new original MP4 to be added to Buffer; actual 2026-10-30 render viewed and editorially checked."
     }
   ]
 }
