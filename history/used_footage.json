@@ -502,6 +502,21 @@
       "episode": "moto-forest-4bd53e13fec4",
       "source": "https://www.pexels.com/video/scenic-motorcycle-ride-through-forested-highway-32918034/",
       "status": "reserved-or-rendered"
+    },
+    "12941383": {
+      "episode": "moto-motocross-a5697d86523a",
+      "source": "https://www.pexels.com/video/motocross-race-on-dirt-track-12941383/",
+      "status": "reserved-or-rendered"
+    },
+    "5806214": {
+      "episode": "moto-motocross-a5697d86523a",
+      "source": "https://www.pexels.com/video/motocross-riders-5806214/",
+      "status": "reserved-or-rendered"
+    },
+    "36365243": {
+      "episode": "moto-motocross-a5697d86523a",
+      "source": "https://www.pexels.com/video/motorcycle-adventure-on-rainy-obstacle-course-36365243/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -721,6 +736,13 @@
       "people": "woods-rider-4bd53",
       "story": "forest-path-and-riding-4bd53",
       "visual": "three-clips-4bd53"
+    },
+    "moto-motocross-a5697d86523a": {
+      "environment": "race-track-a5697",
+      "bike": "motocross-bike",
+      "people": "track-racers-a5697",
+      "story": "rider-at-prepared-track-a5697",
+      "visual": "three-clips-a5697"
     }
   }
 }
