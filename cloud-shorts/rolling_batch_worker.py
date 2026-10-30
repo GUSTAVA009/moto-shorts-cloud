@@ -12,7 +12,7 @@ import preview_queue as ledger
 from rolling_batches import STATE_PATH, reconcile, progress
 
 MIN_REFILL_COOLDOWN_MINUTES = 45
-MIN_BUFFER_SCHEDULED = 3
+MIN_BUFFER_SCHEDULED = 7
 
 def read_state(entry):
     if not entry:

@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 import unittest
 
 from daily_capacity_report import summarize
+from rolling_batches import reconcile
 
 
 class CapacityReportTests(unittest.TestCase):
@@ -25,6 +26,15 @@ class CapacityReportTests(unittest.TestCase):
         self.assertEqual(report["script_reserve_capacity"], 150000)
         self.assertEqual(report["script_reserve_remaining"], 150000)
         self.assertGreaterEqual(report["unconsumed_curated_pexels_clips"], 0)
+
+    def test_report_shows_verified_rolling_ten_not_scheduled_posts(self):
+        batch, _ = reconcile(None, [])
+        today = datetime(2026, 10, 30, tzinfo=timezone.utc)
+        report = summarize({"episodes":[]}, set(), set(), [{"id":"scheduled"}]*10, [],
+                           today, rolling_state=batch)
+        self.assertEqual(report["rolling_ten"]["current_pack_progress"], 0)
+        self.assertEqual(report["rolling_ten"]["buffer_scheduled_posts"], 10)
+        self.assertEqual(report["rolling_ten"]["active_script_drafts_ready"], 10)
 
     def test_status_is_not_falsely_green_without_credentials(self):
         catalog = {"episodes":[]}

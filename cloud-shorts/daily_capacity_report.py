@@ -14,13 +14,14 @@ from autofill_catalog import github
 from buffer_autopublish import verify_channel
 from ten_daily_slots import LOCAL_TIMES
 from story_reserve import RESERVE_CAPACITY, remaining as reserve_remaining
+from rolling_batches import progress as rolling_progress, STATE_PATH as ROLLING_PATH
 
 HERE = Path(__file__).resolve().parent
 TARGET = 10
 
 
 def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=False,
-              pexels=False):
+              pexels=False, rolling_state=None):
     tz = ZoneInfo("Europe/Moscow")
     today = now.astimezone(tz).date()
     def today_only(rows, timestamp_field="dueAt"):
@@ -54,7 +55,9 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
         deficits.append("EDITORIAL_STORY_RESERVE_LOW: expand template axes")
     if len(sent_today) + len(scheduled_today) < TARGET:
         deficits.append("BELOW_TEN_SCHEDULED_OR_SENT_TODAY")
+    rolling = rolling_progress(rolling_state, len(scheduled)) if rolling_state else None
     return {
+        "rolling_ten": rolling,
         "date_moscow": str(today), "daily_target": TARGET,
         "published_today_reported_by_buffer": len(sent_today),
         "scheduled_for_today": len(scheduled_today),
@@ -90,7 +93,15 @@ def main():
     queued, sent = verify_channel(include_sent=True)
     model = bool(os.getenv("OPENAI_API_KEY") or os.getenv("OPENROUTER_API_KEY"))
     pexels = bool(os.getenv("PEXELS_API_KEY"))
-    state = summarize(catalog, saved, dispatched, queued, sent, now, model, pexels)
+    import base64
+    import preview_queue as ledger
+    checkpoint = ledger.api(ROLLING_PATH)
+    rolling_state = None
+    if checkpoint:
+        rolling_state = json.loads(base64.b64decode(
+            "".join(checkpoint["content"].split()), validate=True))
+    state = summarize(catalog, saved, dispatched, queued, sent, now,
+                      model, pexels, rolling_state)
     print("GUSTAVA_TEN_A_DAY_STATUS", json.dumps(state, ensure_ascii=False))
     path = os.getenv("GITHUB_STEP_SUMMARY")
     if path:
@@ -112,6 +123,9 @@ def main():
             f"| Адресуемых вариантов сценариев | {state['script_reserve_capacity']:,} |",
             f"| Неиспользованных вариантов сценариев | {state['script_reserve_remaining']:,} |",
             "| Примечание | Сценарные варианты не равны готовым MP4 или лицензированным кадрам |",
+            f"| Подтверждено Buffer status=sent с запуска контроля | {state['rolling_ten']['verified_buffer_sent_count_since_bootstrap'] if state['rolling_ten'] else 'не инициализировано'} |",
+            f"| Прогресс текущей десятки | {state['rolling_ten']['current_pack_progress'] if state['rolling_ten'] else '—'}/10 |",
+            f"| Следующая десятка сценариев подготовлена | {state['rolling_ten']['next_script_drafts_ready'] if state['rolling_ten'] else 0}/10 |",
             "",
             "### Ограничения",
         ] + ["- " + x for x in state["hard_blockers"]] + [

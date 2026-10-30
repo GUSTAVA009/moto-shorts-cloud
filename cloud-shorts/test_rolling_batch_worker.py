@@ -10,6 +10,7 @@ class RollingBatchWorkerTests(unittest.TestCase):
         state,_=b.reconcile(None,[])
         state["last_replenish_request_at"]=(now-timedelta(hours=2)).isoformat()
         self.assertFalse(w.should_replenish(state,[],10,now))
+        self.assertTrue(w.should_replenish(state,[],6,now))
         self.assertTrue(w.should_replenish(state,[],0,now))
 
     def test_9th_and_10th_start_refill_even_with_full_queue(self):
