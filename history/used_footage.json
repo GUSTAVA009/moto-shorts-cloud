@@ -632,6 +632,16 @@
       "episode": "moto-routes-contrast-deep-20261030",
       "source": "https://www.pexels.com/video/motorcycle-ride-through-scenic-autumn-forest-34311538/",
       "status": "reserved-or-rendered"
+    },
+    "36067565": {
+      "episode": "moto-city-contrast-deep-20261030",
+      "source": "https://www.pexels.com/video/urban-street-ride-on-motorcycle-in-busy-city-36067565/",
+      "status": "reserved-or-rendered"
+    },
+    "35613949": {
+      "episode": "moto-city-contrast-deep-20261030",
+      "source": "https://www.pexels.com/video/sunrise-commute-motorcycle-ride-in-bustling-city-35613949/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -914,6 +924,13 @@
       "people": "three-different-route-riders",
       "story": "mountain-versus-forest-ride-comparison",
       "visual": "three-independently-filmed-routes-20261030"
+    },
+    "moto-city-contrast-deep-20261030": {
+      "environment": "urban-commute-contrast-20261030",
+      "bike": "urban-commuting-motorcycle",
+      "people": "two-unrelated-commuters-20261030",
+      "story": "busy-versus-morning-city-route",
+      "visual": "two-different-city-motorcycle-rides"
     }
   }
 }
