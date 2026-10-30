@@ -1,0 +1,10 @@
+{
+  "id": "gustava-20-s02-20261030",
+  "state": "reserved",
+  "run_id": "41065714569",
+  "attempt_count": 1,
+  "preview_fingerprint": "f5faa379d95552f8c1c05033b639910641be49b0a8b6ec08a58f9fd3fd511f6a",
+  "deep_source_sha256": "925f22ae719d8b570b2d8ca578b0dd03581b7c6822d4846db62434dd0191b5da",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
