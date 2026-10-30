@@ -114,16 +114,16 @@ def main():
         summary = os.getenv("GITHUB_STEP_SUMMARY")
         if summary:
             Path(summary).open("a", encoding="utf8").write(
-                "\\n## Buffer production blocked\\n\\n"
-                + "Unavailable reason: " + reason["cause"] + "\\n\\n"
+                "\n## Buffer production blocked\n\n"
+                + "Unavailable reason: " + reason["cause"] + "\n\n"
                 + "Unrendered original DEEP audio available: "
-                + str(reason["unrendered_real_deep_ready"]) + "\\n\\n"
+                + str(reason["unrendered_real_deep_ready"]) + "\n\n"
                 + "Scripts with no actual DEEP MP3: "
-                + str(reason["unrendered_scripts_no_original_deep"]) + "\\n\\n"
+                + str(reason["unrendered_scripts_no_original_deep"]) + "\n\n"
                 + "QA MP4s still private: "
-                + ", ".join(reason["private_preview_ids"]) + "\\n\\n"
+                + ", ".join(reason["private_preview_ids"]) + "\n\n"
                 + "Visually repeated/rejected: "
-                + ", ".join(reason["rejected_or_repeated_visual_ids"]) + "\\n"
+                + ", ".join(reason["rejected_or_repeated_visual_ids"]) + "\n"
             )
 
 
