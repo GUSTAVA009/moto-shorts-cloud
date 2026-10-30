@@ -60,6 +60,19 @@ class TestPreviewQueue(unittest.TestCase):
         previous["voice_profile"] = "gustava_create_audio_deep_v1"
         self.assertFalse(pq.eligible_retry(ep, previous, "new-deep"))
 
+    def test_owner_rejected_static_preview_can_revise_unpublished_visuals(self):
+        ep={"id":"moto-helmet-fit-deep-20261030","auto_publish":False,
+            "visual_revision_requested":True,
+            "visual_revision_reason":"owner_rejected_static_helmet_coverage"}
+        receipt={"id":ep["id"],"state":"preview_ready","attempt_count":1,
+                 "preview_fingerprint":"static-scene",
+                 "voice_qa_passed":True,"mixed_audio_qa_passed":True}
+        self.assertTrue(pq.eligible_retry(ep,receipt,"adjusting-helmet-shot"))
+        receipt["preview_fingerprint"]="adjusting-helmet-shot"
+        self.assertFalse(pq.eligible_retry(ep,receipt,"adjusting-helmet-shot"))
+        ep["visual_revision_reason"]="unapproved-visual-reason"
+        self.assertFalse(pq.eligible_retry(ep,receipt,"new-static-scene"))
+
     def test_successful_audio_preview_is_never_remade(self):
         ep = {"id": "motorcycle-serial-02"}
         record = {"id": ep["id"], "state": "preview_ready",

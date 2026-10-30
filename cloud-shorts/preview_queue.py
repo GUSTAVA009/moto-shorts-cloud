@@ -152,7 +152,9 @@ def eligible_retry(episode, receipt, new_fingerprint):
         return False
     attempts = int(receipt.get("attempt_count", 1))
     visual_repair = (episode.get("visual_revision_requested") is True
-                     and episode.get("visual_revision_reason") == "source_freeze_confirmed")
+                     and episode.get("visual_revision_reason") in (
+                         "source_freeze_confirmed",
+                         "owner_rejected_static_helmet_coverage"))
     male_voice_repair = (
         episode.get("voice_engine") == REQUIRED_MALE_ENGINE
         and episode.get("voice_revision_requested") is True
