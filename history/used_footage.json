@@ -517,6 +517,21 @@
       "episode": "moto-motocross-a5697d86523a",
       "source": "https://www.pexels.com/video/motorcycle-adventure-on-rainy-obstacle-course-36365243/",
       "status": "reserved-or-rendered"
+    },
+    "9030220": {
+      "episode": "moto-repair-39610c24bde8",
+      "source": "https://www.pexels.com/video/a-close-up-of-a-motorcycle-s-speedometer-and-speed-warning-9030220/",
+      "status": "reserved-or-rendered"
+    },
+    "36704977": {
+      "episode": "moto-repair-39610c24bde8",
+      "source": "https://www.pexels.com/video/mechanic-hands-adjusting-motorcycle-wheel-precision-36704977/",
+      "status": "reserved-or-rendered"
+    },
+    "5199298": {
+      "episode": "moto-repair-39610c24bde8",
+      "source": "https://www.pexels.com/video/man-adjusting-bolt-of-his-motorcycle-5199298/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -743,6 +758,13 @@
       "people": "track-racers-a5697",
       "story": "rider-at-prepared-track-a5697",
       "visual": "three-clips-a5697"
+    },
+    "moto-repair-39610c24bde8": {
+      "environment": "garage-workshop-39610",
+      "bike": "workshop-bike",
+      "people": "garage-mechanics-39610",
+      "story": "mechanic-bike-servicing-39610",
+      "visual": "three-clips-39610"
     }
   }
 }
