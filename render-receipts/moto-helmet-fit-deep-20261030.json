@@ -1,9 +1,9 @@
 {
   "id": "moto-helmet-fit-deep-20261030",
   "state": "reserved",
-  "run_id": "41026998816",
-  "attempt_count": 2,
-  "preview_fingerprint": "c7d5c88146297616013d2b0e32e829196ff11be7d0d543acfd53c89b742f0e6c",
-  "previous_run_id": "41026454326",
+  "run_id": "41027387877",
+  "attempt_count": 3,
+  "preview_fingerprint": "f4b90c8047c1777969ab453a79d9382f081b32b5a0767252a9d75fc42fa4de6c",
+  "previous_run_id": "41026998816",
   "notes": "Revised preview only; never retry a public or uncertain upload."
 }
