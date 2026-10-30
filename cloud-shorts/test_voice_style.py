@@ -48,13 +48,13 @@ class DeepMaleNarrationTests(unittest.TestCase):
 
     def test_profile_constants_are_not_female_voices(self):
         self.assertEqual(vs.SPEAKER, "dima")
-        self.assertEqual(vs.PROFILE_ID, "gustava_male_deep_v3")
-        self.assertEqual(vs.PITCH, .78)
-        self.assertGreater(vs.PITCH, .74)
-        self.assertLess(vs.PITCH, .81)
-        self.assertIn("formant=shifted", vs.FILTER)
+        self.assertEqual(vs.PROFILE_ID, "gustava_male_natural_v4")
+        self.assertEqual(vs.PITCH, .94)
+        self.assertGreater(vs.PITCH, .91)
+        self.assertLess(vs.PITCH, .97)
+        self.assertIn("formant=preserved", vs.FILTER)
         self.assertIn("acompressor=", vs.FILTER)
-        self.assertIn("asoftclip=", vs.FILTER)
+        self.assertNotIn("asoftclip=", vs.FILTER)
         self.assertNotIn("pan=", vs.FILTER)
 
     def test_missing_profile_must_block_release(self):
@@ -79,8 +79,8 @@ class DeepMaleNarrationTests(unittest.TestCase):
         self.assertAlmostEqual(duration, 4.2, delta=.25)
         self.assertNotEqual(vs.sha256(self.wav), before_hash)
         actual_pitch = zero_crossing_pitch(self.wav)
-        self.assertGreater(actual_pitch, before_pitch * .74)
-        self.assertLess(actual_pitch, before_pitch * .82)
+        self.assertGreater(actual_pitch, before_pitch * .91)
+        self.assertLess(actual_pitch, before_pitch * .98)
         report = vs.validate_report(self.wav)
         self.assertEqual(report["profile_id"], vs.PROFILE_ID)
         self.assertEqual(report["processed_wav_sha256"], vs.sha256(self.wav))

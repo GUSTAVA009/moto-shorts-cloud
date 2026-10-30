@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
-"""Natural, low male narration profile for GUSTAVA motorcycle Shorts.
+"""Natural, clean male narration for GUSTAVA motorcycle Shorts (v4).
 
-The source remains the consented Russian Kokoro male actor Dima. We lower
-pitch by approximately 4.3 semitones and let formants shift with it (more chest resonance),
-without introducing another voice layer or altering reading speed. A subtle low-mid lift and soft saturation add a restrained gravelly edge;
-no synthetic growls, hard clipping or fake 'stereo' vocals.
-
-The result is 24 kHz, mono PCM for the existing centered stereo music mix.
-The acoustics of a male voice cannot be certified by DSP metadata alone:
-blind ear-test approval is still recommended.
+Maintain the licensed Kokoro-RU Dima speaker and near-original vocal timbre.
+The retired harsh v3 lowered pitch 4+ semitones, shifted formants and added
+saturation; v4 drops about ONE semitone, preserves formants, reduces low-mid
+mud and keeps all speech centered. No synthetic rasp, extra voice layers,
+stereo panning or hard clipping. Human listening remains essential.
 """
 from __future__ import annotations
 
@@ -22,23 +19,22 @@ import subprocess
 import tempfile
 import wave
 
-PROFILE_ID = "gustava_male_deep_v3"
+PROFILE_ID = "gustava_male_natural_v4"
 SPEAKER = "dima"
 MODEL = "zaakirio/kokoro-ru"
-PITCH = 0.78
+PITCH = 0.94
 SAMPLE_RATE = 24000
 MIN_SECONDS = 3.0
 MAX_SECONDS = 35.0
 
 FILTER = (
-    "rubberband=pitch=0.78:formant=shifted:transients=crisp:"
-    "window=standard:pitchq=quality,"
-    "highpass=f=63,"
-    "equalizer=f=165:t=q:w=1.1:g=3.3,"
-    "equalizer=f=3000:t=q:w=1.2:g=1.5,"
-    "acompressor=threshold=0.17:ratio=2.0:attack=12:release=110:makeup=1.10,"
-    "asoftclip=type=tanh:threshold=0.88,"
-    "alimiter=limit=0.93"
+    "rubberband=pitch=0.94:formant=preserved:transients=smooth:"
+    "window=long:pitchq=quality,"
+    "highpass=f=75,"
+    "equalizer=f=170:t=q:w=1.0:g=-0.8,"
+    "equalizer=f=3000:t=q:w=1.2:g=0.8,"
+    "acompressor=threshold=0.20:ratio=1.5:attack=24:release=150:makeup=1.04,"
+    "alimiter=limit=0.95"
 )
 
 
@@ -125,15 +121,15 @@ def apply(wav, ffmpeg="ffmpeg"):
         proof = {
             "profile_id": PROFILE_ID, "speaker": SPEAKER,
             "source_model": MODEL, "pitch": PITCH,
-            "formants": "shifted", "synthesized_voice_only": True,
-            "timbre_processing": "warm_chest_soft_saturation_v3",
+            "formants": "preserved", "synthesized_voice_only": True,
+            "timbre_processing": "clean_preserved_formants_v4",
             "quality_passed": True, "processed_wav_sha256": sha256(wav),
             "audio": after,
             "disclaimer": "Pitch/tone DSP is not a human assessment of perceived timbre.",
         }
         report.write_text(json.dumps(proof, ensure_ascii=False, indent=2)+"\n", encoding="utf8")
         validate_report(wav)
-        print("GUSTAVA_DEEP_MALE_NARRATOR_READY", PROFILE_ID,
+        print("GUSTAVA_NATURAL_MALE_NARRATOR_READY", PROFILE_ID,
               "pitch", PITCH, "rms_dbfs", after["rms_dbfs"], flush=True)
         return after["duration_seconds"]
     finally:

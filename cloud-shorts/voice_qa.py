@@ -38,13 +38,20 @@ _NUMBERS = {
 }
 
 
+# Single verified Russian/Latin loanword spelling equivalence observed in
+# exact MP4 ASR: audio said «мотокросс», Whisper printed "motocross".
+# DO NOT transliterate arbitrary Latin text: that would mask real omissions.
+_ASR_SPELLING_EQUIVALENTS = {"motocross": "мотокросс"}
+
+
 def tokens(text):
     normalized = str(text).casefold().replace("ё", "е")
     # "восьмидесятых" and the ASR transcription "80-х" mean the same decade,
     # not a fabricated or mispronounced number.
     normalized = re.sub(r"\bвосьмидесятых\b", "80", normalized)
     normalized = re.sub(r"\b80[-–][хx]\b", "80", normalized)
-    raw = re.findall(r"[а-яa-z0-9]+", normalized)
+    raw = [_ASR_SPELLING_EQUIVALENTS.get(t, t)
+           for t in re.findall(r"[а-яa-z0-9]+", normalized)]
     out = []
     i = 0
     while i < len(raw):

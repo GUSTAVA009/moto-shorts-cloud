@@ -13,6 +13,25 @@ class VoiceQATests(unittest.TestCase):
         self.assertTrue(result["passed"])
         self.assertEqual(result["lexical_coverage"], 1.0)
 
+    def test_motocross_latin_asr_spelling_is_not_a_swallowed_word(self):
+        reference = ("На гоночной трассе всё решают секунды. Мотоцикл едет быстро. "
+                     "Эти кадры сняты на разных площадках. Любишь смотреть мотокросс?")
+        heard = reference.replace("мотокросс?", "motocross?")
+        report = q.score(reference, heard)
+        self.assertEqual(q.tokens("мотокросс"), q.tokens("motocross"))
+        self.assertTrue(report["passed"])
+        self.assertEqual(report["lexical_coverage"], 1.0)
+        self.assertTrue(report["final_word_present"])
+        self.assertEqual(report["ending_coverage"], 1.0)
+
+    def test_real_missing_motocross_tail_remains_blocked(self):
+        reference = ("На гоночной трассе всё решают секунды. Мотоцикл едет быстро. "
+                     "Эти кадры сняты на разных площадках. Любишь смотреть мотокросс?")
+        without_tail = reference.replace("мотокросс?", "")
+        self.assertFalse(q.score(reference, without_tail)["passed"])
+        self.assertFalse(q.score(reference, without_tail)["final_word_present"])
+        self.assertFalse(q.score(reference, reference.replace("мотокросс", "supercross"))["passed"])
+
     def test_swallowed_tail_is_blocked(self):
         s = "Перед поездкой проверь колёса, тормоза и свет. Затем выбирай безопасный маршрут домой."
         t = "Перед поездкой проверь колёса тормоза и свет. Затем выбирай безопасный"
