@@ -572,6 +572,21 @@
       "episode": "moto-helmet-f2452c64bf21",
       "source": "https://www.pexels.com/video/close-up-shot-of-a-man-on-a-motorcycle-9606878/",
       "status": "reserved-or-rendered"
+    },
+    "9168106": {
+      "episode": "moto-dirt-1159b9930b70",
+      "source": "https://www.pexels.com/video/people-riding-dirt-bike-9168106/",
+      "status": "reserved-or-rendered"
+    },
+    "32554208": {
+      "episode": "moto-dirt-1159b9930b70",
+      "source": "https://www.pexels.com/video/exciting-motorcycle-race-on-outdoor-track-32554208/",
+      "status": "reserved-or-rendered"
+    },
+    "9607281": {
+      "episode": "moto-dirt-1159b9930b70",
+      "source": "https://www.pexels.com/video/a-female-motorcyclist-doing-stunts-in-the-city-9607281/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -826,6 +841,13 @@
       "people": "gear-specialists-f2452",
       "story": "helmet-gear-choice-f2452",
       "visual": "three-clips-f2452"
+    },
+    "moto-dirt-1159b9930b70": {
+      "environment": "muddy-trail-road-1159b",
+      "bike": "offroad-dirtbike",
+      "people": "trail-groups-1159b",
+      "story": "muddy-terrain-1159b",
+      "visual": "three-clips-1159b"
     }
   }
 }
