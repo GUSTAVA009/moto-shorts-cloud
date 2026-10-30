@@ -4036,6 +4036,135 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_reserve_v2",
       "story_reserve_id": "r2-rain-0019"
+    },
+    {
+      "id": "moto-helmet-f2452c64bf21",
+      "auto_preview": true,
+      "auto_publish": true,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "silero_mit_bass_baritone",
+      "voice_profile": "gustava_native_bass_baritone_v6",
+      "title": "Экипировка: шлем, первый взгляд, внимание — твой выбор? #shorts",
+      "narration": "Мотоцикл и выбор экипировки. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — шлем. Обстановка вокруг заслуживает не меньшего внимания, чем техника. А на что ты обратил бы внимание в первую очередь?",
+      "description": "Самостоятельная мототема: шлем. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
+      "caption_start": "ЭКИПИРОВКА",
+      "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
+      "caption_end": "А ТВОЙ ВЫБОР?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 121,
+      "footage": [
+        {
+          "topics": [
+            "city",
+            "helmet"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5207165/",
+          "source_page": "https://www.pexels.com/video/person-riding-his-motorcycle-5207165/",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "duration": 14,
+          "source_title": "person riding his motorcycle"
+        },
+        {
+          "topics": [
+            "city",
+            "helmet"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/9606878/",
+          "source_page": "https://www.pexels.com/video/close-up-shot-of-a-man-on-a-motorcycle-9606878/",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 19,
+          "source_title": "close up shot of a man on a motorcycle"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 8.6,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 8.6,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 10.75,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 10.75,
+          "seconds": 2.15
+        }
+      ],
+      "editorial": {
+        "environment": "riding-gear-workshop-f2452",
+        "bike": "motorbike-safety-gear",
+        "people": "gear-specialists-f2452",
+        "story": "helmet-gear-choice-f2452",
+        "visual": "three-clips-f2452"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "offline_editorial_reserve_v2",
+      "story_reserve_id": "r2-helmet-0010"
     }
   ]
 }
