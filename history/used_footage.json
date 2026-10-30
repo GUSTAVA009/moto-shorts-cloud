@@ -717,6 +717,16 @@
       "episode": "gustava-20-e02-20261030",
       "source": "https://www.pexels.com/video/efficient-motorcycle-engine-assembly-in-workshop-34948761/",
       "status": "reserved-or-rendered"
+    },
+    "7170229": {
+      "episode": "gustava-20-f03-20261030",
+      "source": "https://www.pexels.com/video/a-man-trying-the-hand-brake-of-a-motorcycle-7170229/",
+      "status": "reserved-or-rendered"
+    },
+    "28197087": {
+      "episode": "gustava-20-f03-20261030",
+      "source": "https://www.pexels.com/video/adding-2-stroke-oil-in-motorcycle-during-service-28197087/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1055,6 +1065,13 @@
       "story": "old-motorbike-versus-engine-assembly",
       "visual": "classic-motorbike-and-parts",
       "bike": "classic-engine-bike"
+    },
+    "gustava-20-f03-20261030": {
+      "environment": "brake-garage-and-oil-service",
+      "people": "brake-mechanic-and-oil-service-worker",
+      "story": "brake-check-vs-oil-service",
+      "visual": "brake-check-then-oil",
+      "bike": "maintenance-motorbike"
     }
   }
 }
