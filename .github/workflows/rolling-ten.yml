@@ -5,7 +5,10 @@ on:
     workflows: ['GUSTAVA - Verified Shorts to Buffer Queue']
     types: [completed]
   schedule:
-    - cron: "*/15 * * * *"
+    # Match 90-minute production cadence; 15-minute polling would exceed
+    # a 1,000-requests-per-30-days API quota on some Buffer plans.
+    - cron: "25 0,3,6,9,12,15,18,21 * * *"
+    - cron: "55 1,4,7,10,13,16,19,22 * * *"
   push:
     branches: [main]
     paths:

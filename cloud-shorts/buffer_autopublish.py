@@ -46,7 +46,7 @@ def verify_channel(include_sent=False, include_errors=False):
     """Verify pinned YouTube destination, queue and recent sent posts in ONE API call."""
     if os.getenv("YOUTUBE_EXPECTED_CHANNEL_ID", YOUTUBE) != YOUTUBE:
         raise RuntimeError("Expected YouTube channel does not match Buffer channel")
-    cutoff = (datetime.now(timezone.utc) - timedelta(days=2)).isoformat().replace("+00:00", "Z")
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=5)).isoformat().replace("+00:00", "Z")
     q = ('query { channel(input:{id:"' + CHANNEL +
          '"}) {id name service serviceId isQueuePaused isDisconnected} '
          'scheduledPosts: posts(first:100,input:{organizationId:"' + ORG +
@@ -54,8 +54,8 @@ def verify_channel(include_sent=False, include_errors=False):
          '"]}}) {edges {node {id text dueAt}} pageInfo {hasNextPage}} '
          'sentPosts: posts(first:100,input:{organizationId:"' + ORG +
          '",filter:{status:[sent],channelIds:["' + CHANNEL +
-         '"],startDate:"' + cutoff +
-         '"}}) {edges {node {id dueAt sentAt}} pageInfo {hasNextPage}} }')
+         '"],dueAt:{start:"' + cutoff +
+         '"}}}) {edges {node {id dueAt sentAt}} pageInfo {hasNextPage}} }')
     if include_errors:
         # Read-only diagnostics: a missing YouTube publication can be in
         # Buffer's documented 'error' or still-'sending' status rather
@@ -63,12 +63,12 @@ def verify_channel(include_sent=False, include_errors=False):
         extra = (
             ' errorPosts: posts(first:100,input:{organizationId:"' + ORG +
             '",filter:{status:[error],channelIds:["' + CHANNEL +
-            '"],startDate:"' + cutoff +
-            '"}}) {edges {node {id status dueAt}} pageInfo {hasNextPage}}'
+            '"],dueAt:{start:"' + cutoff +
+            '"}}}) {edges {node {id status dueAt}} pageInfo {hasNextPage}}'
             ' sendingPosts: posts(first:100,input:{organizationId:"' + ORG +
             '",filter:{status:[sending],channelIds:["' + CHANNEL +
-            '"],startDate:"' + cutoff +
-            '"}}) {edges {node {id status dueAt}} pageInfo {hasNextPage}}'
+            '"],dueAt:{start:"' + cutoff +
+            '"}}}) {edges {node {id status dueAt}} pageInfo {hasNextPage}}'
         )
         q = q.rsplit("}", 1)[0] + extra + " }"
     data = buffer(q)
@@ -101,11 +101,11 @@ def verify_channel(include_sent=False, include_errors=False):
 
 def recently_sent():
     """Count posts already published today against the ten-per-day target."""
-    cutoff = (datetime.now(timezone.utc) - timedelta(days=2)).isoformat().replace("+00:00", "Z")
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=5)).isoformat().replace("+00:00", "Z")
     q = ('query {posts(first:100,input:{organizationId:"' + ORG +
          '",filter:{status:[sent],channelIds:["' + CHANNEL +
-         '"],startDate:"' + cutoff +
-         '"}}) {edges {node {id dueAt}} pageInfo {hasNextPage}}}')
+         '"],dueAt:{start:"' + cutoff +
+         '"}}}) {edges {node {id dueAt}} pageInfo {hasNextPage}}}')
     data = buffer(q).get("posts") or {}
     if (data.get("pageInfo") or {}).get("hasNextPage"):
         raise RuntimeError("Recent sent-post inventory incomplete; refuse an extra upload")

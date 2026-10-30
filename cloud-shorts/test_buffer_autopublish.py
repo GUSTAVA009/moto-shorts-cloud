@@ -100,6 +100,8 @@ class BufferPublisherTests(unittest.TestCase):
         self.assertEqual(errors[0]["id"],"failed-post")
         self.assertIn("status:[error]",req.call_args.args[0])
         self.assertIn("status:[sending]",req.call_args.args[0])
+        self.assertIn("dueAt:{start:",req.call_args.args[0])
+        self.assertNotIn("startDate:",req.call_args.args[0])
 
     def test_valid_post_uses_correct_channel_and_youtube_metadata(self):
         with patch.dict(os.environ, {"BUFFER_AUTO_PUBLISH_ENABLED": "true"}):
