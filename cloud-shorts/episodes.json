@@ -3618,7 +3618,7 @@
       "voice_engine": "silero_mit_bass_baritone",
       "voice_profile": "gustava_native_bass_baritone_v6",
       "title": "Мастерская: шины, первый взгляд, внимание — почему так? #shorts",
-      "narration": "Мотоцикл и работа в мастерской. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — шины. Обстановка вокруг заслуживает не меньшего внимания, чем техника. А ты видишь эту ситуацию по-другому?",
+      "narration": "В мастерской всегда найдётся важная работа. Перед поездкой нужно осмотреть колёса, проверить тормоза и оценить состояние цепи. На дороге каждая деталь имеет значение. А ты тоже так делаешь?",
       "description": "Самостоятельная мототема: шины. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
       "caption_start": "МАСТЕРСКАЯ",
       "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
@@ -3749,7 +3749,9 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_reserve_v2",
-      "story_reserve_id": "r2-repair-0017"
+      "story_reserve_id": "r2-repair-0017",
+      "voice_revision_requested": true,
+      "voice_revision_note": "V6 native ru_alexandr garage text repair_b obtained exact 100% ASR coverage in GitHub job 41006321579. Rerender unpublished earlier QA failure. Final MP4 and mixed-audio ASR unchanged; no release without full gate."
     }
   ]
 }
