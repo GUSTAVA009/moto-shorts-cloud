@@ -23,8 +23,8 @@ import urllib.request
 from editorial_guard import validate_catalog, source_id
 from moto_assets import validated_media, build_commons_candidate
 from render_episode import validate_episode
-from native_bass_voice import PROFILE_ID as MALE_PROFILE,
-    VOICE_ENGINE as NATIVE_BASS_ENGINE
+from native_bass_voice import (PROFILE_ID as MALE_PROFILE,
+    VOICE_ENGINE as NATIVE_BASS_ENGINE)
 from engagement_cta import CTA_KINDS
 from autofill_catalog import github
 from story_reserve import choose as choose_reserved_story, RESERVE_CAPACITY
