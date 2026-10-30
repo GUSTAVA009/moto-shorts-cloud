@@ -1,15 +1,9 @@
 {
   "id": "moto-mountain-a04e3d31b2d7",
-  "state": "preview_ready",
-  "run_id": "41006624465",
-  "attempt_count": 1,
-  "preview_fingerprint": "d6f7fb8229f4d73640df4bc5bb771a5b44a25302f82070979ed13387036d9a12",
-  "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": false,
-  "voice_qa_coverage": 0.724,
-  "voice_profile": "gustava_native_bass_baritone_v6",
-  "male_voice_verified": true,
-  "mixed_audio_qa_passed": false,
-  "mixed_audio_qa_coverage": 0.793
+  "state": "reserved",
+  "run_id": "41020085281",
+  "attempt_count": 2,
+  "preview_fingerprint": "0845ce8dfeed689c8a3654ee329dde137de2d37fa838f1f5b3cf807ad0707ca6",
+  "previous_run_id": "41006624465",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
