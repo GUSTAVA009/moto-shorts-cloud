@@ -12,6 +12,8 @@ from zoneinfo import ZoneInfo
 
 from autofill_catalog import github
 from buffer_autopublish import verify_channel
+from deep_voice import ready as deep_ready, VOICE_ENGINE as DEEP_ENGINE
+from visual_director import verify_story_subject
 from ten_daily_slots import LOCAL_TIMES
 from story_reserve import RESERVE_CAPACITY, remaining as reserve_remaining
 from rolling_batches import progress as rolling_progress, STATE_PATH as ROLLING_PATH
@@ -38,6 +40,19 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
     scheduled_today = today_only(scheduled)
     new = [e for e in catalog["episodes"] if e.get("auto_preview") is True
            and e["id"] not in saved_ids]
+    # Script count is NOT production capacity. A new episode needs the real
+    # voice_id=deep asset and subject-matching footage, not just a scenario.
+    real_deep_ready = [e for e in new if deep_ready(e)]
+    visually_eligible = []
+    visually_rejected = []
+    for e in real_deep_ready:
+        try:
+            verify_story_subject(e)
+            visually_eligible.append(e)
+        except ValueError:
+            visually_rejected.append(e)
+    waiting_deep_audio = [e for e in new if e.get("voice_engine")==DEEP_ENGINE
+                          and not deep_ready(e)]
     bank = json.loads((HERE / "seed_backlog.json").read_text("utf8"))
     named = {e["id"] for e in catalog["episodes"]}
     waiting = [e["id"] for e in bank["episodes"] if e["id"] not in named]
@@ -61,6 +76,17 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
         deficits.append("EDITORIAL_STORY_RESERVE_LOW: expand template axes")
     if len(sent_today) + len(scheduled_today) < TARGET:
         deficits.append("BELOW_TEN_SCHEDULED_OR_SENT_TODAY")
+    if len(visually_eligible) < max(0,TARGET-len(sent_today)-len(scheduled_today)):
+        deficits.append("NOT_ENOUGH_VERIFIED_DEEP_PLUS_VISUAL_STOCK_FOR_TEN")
+    if waiting_deep_audio:
+        deficits.append("DEEP_AUDIO_STOCK_MISSING: "+str(len(waiting_deep_audio)))
+    if visually_rejected:
+        deficits.append("VISUAL_TOPIC_MISMATCH: "+str(len(visually_rejected)))
+    # No verified public API exists for unattended AI Doc Maker Deep TTS.
+    # ChatGPT scheduled task has been created, but actual execution and
+    # provider quota must be confirmed separately; never imply it ran.
+    if len(sent_today)<TARGET:
+        deficits.append("TEN_PUBLISHED_TODAY_NOT_CONFIRMED")
     rolling = rolling_progress(rolling_state, len(scheduled)) if rolling_state else None
     return {
         "rolling_ten": rolling,
@@ -73,6 +99,12 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
         "buffer_delivery_error_post_ids": [p.get("id") for p in errored_posts],
         "buffer_sending_post_ids": [p.get("id") for p in sending_posts],
         "new_unique_scripts_ready_to_render": len(new),
+        "new_true_deep_audio_assets_ready": len(real_deep_ready),
+        "new_deep_visuals_and_voice_both_verified": len(visually_eligible),
+        "new_deep_voice_assets_missing": len(waiting_deep_audio),
+        "new_deep_visual_subject_rejections": len(visually_rejected),
+        "true_ten_sent_today_confirmed": len(sent_today)>=TARGET,
+        "autonomous_deep_tts_api_confirmed": False,
         "curated_unused_script_reserve": len(waiting),
         "accepted_buffer_receipts_all_time": len(dispatched_ids),
         "original_script_model_available": model,
@@ -127,6 +159,12 @@ def main():
             f"| Buffer: ошибка отправки в YouTube | {state['buffer_delivery_error_count']} |",
             f"| Buffer: зависшие отправки | {state['buffer_sending_count']} |",
             f"| Новых сценариев без render receipt | {state['new_unique_scripts_ready_to_render']} |",
+            f"| Подтверждённых DEEP MP3, ещё не отрендеренных | {state['new_true_deep_audio_assets_ready']} |",
+            f"| Deep + тематически подходящее видео | {state['new_deep_visuals_and_voice_both_verified']} |",
+            f"| Не хватает оригинальных DEEP-записей | {state['new_deep_voice_assets_missing']} |",
+            f"| Отклонено за несоответствие сюжета кадрам | {state['new_deep_visual_subject_rejections']} |",
+            f"| 10 действительно опубликованных за день | {'ДА' if state['true_ten_sent_today_confirmed'] else 'НЕТ'} |",
+            f"| Подтверждён официальный API DEEP | НЕТ (автоматизация ChatGPT требует проверки) |",
             f"| Осталось оригиналов из резервного каталога | {state['curated_unused_script_reserve']} |",
             f"| Ключ модели для новых сценариев | {'YES' if model else 'NO'} |",
             f"| Ключ Pexels | {'YES' if pexels else 'NO (public reserve)'} |",
