@@ -3468,7 +3468,7 @@
       "voice_engine": "silero_mit_bass_baritone",
       "voice_profile": "gustava_native_bass_baritone_v6",
       "title": "Мотокросс: траектория, первый взгляд, внимание — что дальше? #shorts",
-      "narration": "Мотоцикл и мотокросс. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — траектория. Обстановка вокруг заслуживает не меньшего внимания, чем техника. О какой мототеме рассказать в следующей истории?",
+      "narration": "На гоночной трассе всё происходит очень быстро. Перед поворотом райдер выбирает линию движения. Важно смотреть на дорогу и держать ровный темп. Каждый участок трассы требует внимания. А тебе нравятся такие гонки?",
       "description": "Самостоятельная мототема: траектория. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
       "caption_start": "МОТОКРОСС",
       "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
@@ -3602,7 +3602,12 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_reserve_v2",
-      "story_reserve_id": "r2-motocross-0016"
+      "story_reserve_id": "r2-motocross-0016",
+      "technical_revision_requested": true,
+      "technical_revision_reason": "safe_music_gain_range_fixed",
+      "technical_revision_note": "Run 41005799921 failed on second retry due to previously disallowed 0.08 gain. Audio gain range corrected and tested. Owner requested continuing production; this unpublished episode may retry only after verified failed Actions conclusion.",
+      "voice_revision_requested": true,
+      "voice_revision_note": "Native licensed ru_alexandr V6 preflight validated track_a at 100% Russian ASR in run 41005984733. Full new WAV and final MP4 ASR still required; no bypass."
     },
     {
       "id": "moto-repair-39610c24bde8",
