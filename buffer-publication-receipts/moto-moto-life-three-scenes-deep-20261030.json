@@ -2,6 +2,8 @@
   "episode": "moto-moto-life-three-scenes-deep-20261030",
   "sha256": "95eb41adee30a1135196a4f5e49b5fd6376891dad12750e1c436ab2860905e81",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-moto-moto-life-three-scenes-deep-20261030-95eb41adee30/moto-moto-life-three-scenes-deep-20261030.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae48f8f3dc61ec0c2ff53ea",
+  "due_at": "2026-10-30T14:00:00.000Z"
 }
