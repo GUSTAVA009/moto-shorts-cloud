@@ -77,7 +77,29 @@ jobs:
             --metadata "staged/$EPISODE/publication.json" \
             --voice-qa "staged/$EPISODE/voice_qa.json" \
             --mixed-qa "staged/$EPISODE/mixed_audio_qa.json"
-      - name: Report no eligible original MP4
+      - name: Audit empty Buffer queue and alert instead of returning false success
         if: steps.pick.outputs.has_job != 'true'
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID || 'UCS0QCodPcFBTjMt4ioEWOUw' }}
         run: |
-          echo 'BUFFER_WAITING_FOR_VERIFIED_ORIGINAL: no unpublished approved video was selected.' >> "$GITHUB_STEP_SUMMARY"
+          python3 - <<'PY'
+          import os
+          import sys
+          sys.path.insert(0, "cloud-shorts")
+          from buffer_autopublish import verify_channel
+          queued, sent = verify_channel(include_sent=True)
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf8") as out:
+              out.write("\n## Verified Buffer channel\n")
+              out.write("Queued posts: " + str(len(queued)) + "\n")
+              out.write("No new editorially approved DEEP MP4 selected.\n")
+          if queued:
+              print("BUFFER_QUEUE_NONEMPTY_BUT_NO_NEW_APPROVED_MP4",
+                    len(queued), flush=True)
+          else:
+              print("::error::BUFFER_QUEUE_EMPTY: zero scheduled posts and zero "
+                    "editorially approved original DEEP MP4 to deliver. "
+                    "The 10/day autopilot is BLOCKED, not successful.",
+                    flush=True)
+              raise SystemExit(1)
+          PY
