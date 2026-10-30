@@ -325,13 +325,23 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
 
 
 def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_results,
-               prose_factory=original_story, permanently_used=()):
+               prose_factory=original_story, permanently_used=(), prepared_scripts=()):
     # IDs from removed failed/revised footage are still reserved forever.
     used = set(permanently_used) | {
         source_id(x) for ep in catalog["episodes"] for x in ep["footage"]
     }
     first = choose_theme(catalog["episodes"])
     themes = [first] + [theme for theme in THEMES if theme != first]
+    consumed_reserve = {e.get("story_reserve_id") for e in catalog["episodes"]}
+    prepared = [s for s in prepared_scripts
+                if s.get("_reserve_id") and s["_reserve_id"] not in consumed_reserve]
+    prepared_topics = {s.get("theme") for s in prepared}
+    # Prefer staged batch themes when stock is available, but never repeat
+    # the previous video's motorcycle category simply to consume the bank.
+    if prepared:
+        last_bike = catalog["episodes"][-1]["editorial"]["bike"] if catalog["episodes"] else None
+        themes.sort(key=lambda t: (t[0] not in prepared_topics,
+                                   t[3] == last_bike))
     # Keep looking across independent motorcycle themes when one stock
     # category is exhausted. Never reuse any video from another production.
     chosen = None
@@ -358,8 +368,14 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
     problem = None
     for attempt in range(3):
         try:
-            prose = prose_factory(theme, media,
-                                  [x["title"] for x in catalog["episodes"]])
+            staged = next((s for s in prepared if s.get("theme") == theme[0]), None)
+            if staged:
+                # This is a SCRIPT DRAFT only. Source rights, episode
+                # uniqueness and final ASR/video QA are still mandatory.
+                prose = staged
+            else:
+                prose = prose_factory(theme, media,
+                                      [x["title"] for x in catalog["episodes"]])
             return assemble_episode(catalog, theme, media, prose,
                                     len(catalog["episodes"]))
         except (ValueError, KeyError, TypeError) as exc:

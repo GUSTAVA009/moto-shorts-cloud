@@ -19,19 +19,22 @@ import urllib.request
 from editorial_guard import validate_catalog, source_id
 from render_episode import validate_episode
 
+TARGET_PENDING_EPISODES = 10
+MAX_ADD_PER_RUN = 2
+
 ROOT = Path(__file__).resolve().parent
 CATALOG_PATH = "cloud-shorts/episodes.json"
 SEEDS = ROOT / "seed_backlog.json"
 
 
-def candidate(catalog, seed_bank, reserved_ids):
-    """Pick only if fewer than two ready-to-render, genuinely new stories remain."""
+def candidate(catalog, seed_bank, reserved_ids, target=2):
+    """Pick a rights-cleared episode while the target has not been met."""
     if seed_bank.get("version") != 1:
         raise ValueError("Invalid curated story bank version")
     episodes = catalog["episodes"]
     pending = sum(x.get("auto_preview") is True and x["id"] not in reserved_ids
                   for x in episodes)
-    if pending >= 2:
+    if pending >= target:
         return None
     used = {x["id"] for x in episodes}
     used_media = {source_id(video) for x in episodes for video in x["footage"]}
@@ -68,9 +71,23 @@ def github(method, path, payload=None):
         return json.loads(raw) if raw else {}
 
 
+def pending_originals(catalog, reserved):
+    return sum(e.get("auto_preview") is True and e["id"] not in reserved
+               for e in catalog["episodes"])
+
+
+def prepared_active_scripts(catalog, entry):
+    """Load the active 10-script batch only after its tenth Buffer sent event."""
+    if not entry:
+        return []
+    import base64
+    from rolling_batches import selected_scripts
+    state = json.loads(base64.b64decode("".join(entry["content"].split()), validate=True))
+    return selected_scripts(state, catalog)
+
+
 def main():
-    # Race-safe inventory fetched only at the start of this single-worker job.
-    # Create one original at a time, protected by GitHub SHA compare-and-swap.
+    # GitHub SHA compare-and-swap protects against concurrent catalog writers.
     data = github("GET", "contents/" + CATALOG_PATH + "?ref=main")
     catalog = json.loads(base64.b64decode(data["content"]))
     tree = github("GET", "git/trees/render-ledger?recursive=1")
@@ -80,42 +97,64 @@ def main():
                 if x["path"].startswith("render-receipts/")
                 and x["path"].endswith(".json")}
     seeds = json.loads(SEEDS.read_text(encoding="utf8"))
-    try:
-        selection = candidate(catalog, seeds, reserved)
-    except RuntimeError as exc:
-        if "CURATED_STORY_BANK_EXHAUSTED" not in str(exc):
-            raise
-        from moto_autocreate import create_one
-        # Keyless script matrix + separately vetted stock; unavailable model
-        # credentials may not stop original story creation.
-        import preview_queue as ledger
-        history = ledger.decode_history(ledger.api(ledger.HISTORY_PATH))
-        selected = create_one(catalog, permanently_used=set(history["used"]))
-        selection = (dict(catalog, episodes=catalog["episodes"] + [selected]),
-                     selected["id"])
-    if selection is None:
-        print("BACKLOG_HEALTHY: queued originals still available")
+    added = []
+    # Never spend time/materials on unused videos if ten originals
+    # are already awaiting rendering.
+    if pending_originals(catalog, reserved) >= TARGET_PENDING_EPISODES:
+        print("STORY_BACKLOG_HEALTHY", pending_originals(catalog,reserved),
+              "unrendered original episodes")
         return 0
-    catalog, slug = selection
+
+    import preview_queue as ledger
+    history = ledger.decode_history(ledger.api(ledger.HISTORY_PATH))
+    batch_entry = ledger.api("automation/rolling-ten.json")
+    prepared = prepared_active_scripts(catalog, batch_entry)
+    for index in range(MAX_ADD_PER_RUN):
+        try:
+            selection = candidate(catalog, seeds, reserved,
+                                  target=TARGET_PENDING_EPISODES)
+        except RuntimeError as exc:
+            if "CURATED_STORY_BANK_EXHAUSTED" not in str(exc):
+                raise
+            from moto_autocreate import create_one
+            try:
+                selected = create_one(
+                    catalog, permanently_used=set(history["used"]),
+                    prepared_scripts=prepared)
+            except (RuntimeError, ValueError, OSError) as failure:
+                # Preserve any successfully authored stories instead of
+                # losing the batch because one stock provider failed.
+                if not added:
+                    raise
+                print("PARTIAL_STORY_BACKLOG_SOURCE_BLOCKED", type(failure).__name__,
+                      str(failure)[:180], flush=True)
+                break
+            selection = (dict(catalog, episodes=catalog["episodes"]+[selected]),
+                         selected["id"])
+        if selection is None:
+            break
+        catalog, slug = selection
+        added.append(slug)
+    if not added:
+        print("BACKLOG_HEALTHY: no new original is needed")
+        return 0
+
     content = base64.b64encode((json.dumps(catalog, ensure_ascii=False, indent=2)
                                 + "\n").encode("utf8")).decode("ascii")
-    # A version mismatch yields HTTP 409; never overwrite a competing writer.
     github("PUT", "contents/" + CATALOG_PATH, {
-        "message": "Schedule next verified original motorcycle Short " + slug,
-        "branch": "main",
-        "sha": data["sha"],
-        "content": content,
+        "message": "Stock rolling ten originals: " + ", ".join(added),
+        "branch": "main", "sha": data["sha"], "content": content
     })
-    print("NEW_STORY_ADDED", slug, flush=True)
-    # GitHub blocks GITHUB_TOKEN-created push triggers. A scheduled refill
-    # already precedes the regular renderer by 10 minutes, so don't dispatch
-    # a second identical render run. Manual/push refills may dispatch once.
+    print("NEW_STORIES_ADDED", len(added), added,
+          "unrendered_backlog", pending_originals(catalog, reserved), flush=True)
+    # GITHUB_TOKEN commits intentionally do not activate push workflows.
+    # Dispatch exactly one safe renderer. Further attempts run by schedule.
     if os.getenv("GITHUB_EVENT_NAME") == "schedule":
-        print("STORY_READY_FOR_NEXT_SCHEDULED_PREVIEW", slug, flush=True)
+        print("STORY_READY_FOR_NEXT_SCHEDULED_PREVIEW", added[0], flush=True)
     else:
         github("POST", "actions/workflows/daily-preview.yml/dispatches",
                {"ref": "main"})
-        print("DAILY_PREVIEW_DISPATCHED", slug, flush=True)
+        print("DAILY_PREVIEW_DISPATCHED", added[0], flush=True)
     return 0
 
 

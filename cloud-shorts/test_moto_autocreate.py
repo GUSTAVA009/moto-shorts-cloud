@@ -92,6 +92,29 @@ class NewMotoSourceTests(unittest.TestCase):
                   fetch=lambda *args: (_ for _ in ()).throw(OSError("Provider unavailable")))
         self.assertEqual(result["_generation_source"], "offline_editorial_reserve_v2")
 
+    def test_active_rolling_batch_script_can_be_used_for_new_episode(self):
+        from unittest.mock import patch
+        import story_reserve
+        planned = story_reserve.at(10_000)
+        planned["theme"] = "motocross"
+        media = s.pexels_results(s.THEMES[1], 1, "demo",
+                fetch=lambda a,b: {"videos": [
+                    fixture(90000001, "Alice Rider"),
+                    fixture(90000002, "Bob Mechanic"),
+                    fixture(90000004, "Daria Rider")]})
+        with patch.dict("os.environ", {"PEXELS_API_KEY": ""}):
+            with patch.object(s, "curated_pexels_results", return_value=media), \
+                 patch.object(s, "commons_results", return_value=[]):
+                ep = s.create_one(self.catalog,
+                                  source_fetch=lambda *args: [],
+                                  commons_fetch=lambda *args: [],
+                                  prose_factory=lambda *args: (_ for _ in ()).throw(
+                                      AssertionError("Active reserve draft should win")),
+                                  prepared_scripts=[planned])
+        self.assertEqual(ep["story_reserve_id"], planned["_reserve_id"])
+        self.assertEqual(ep["narration"], planned["narration"])
+        self.assertEqual(ep["title"], planned["title"])
+
     def test_reject_model_fabricating_numbers(self):
         result = story()
         result["narration"] += " Максимальная скорость 230 километров в час."

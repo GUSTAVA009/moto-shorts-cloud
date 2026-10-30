@@ -57,6 +57,15 @@ class CatalogAutofillTests(unittest.TestCase):
         self.assertEqual(next_slug, self.remaining[1]["id"])
         self.assertNotEqual(slug, next_slug)
 
+    def test_ten_target_still_requests_original_when_two_wait(self):
+        self.assertIsNone(af.candidate(self.catalog, self.bank, set()))
+        # Existing stock can be exhausted, but a higher rolling target
+        # must explicitly report the source requirement.
+        with self.assertRaisesRegex(RuntimeError, "EXHAUSTED"):
+            af.candidate(self.catalog, self.bank,
+                         {e["id"] for e in self.catalog["episodes"] if e.get("auto_preview")},
+                         target=10)
+
     def test_empty_bank_must_not_forge_new_footage(self):
         active = {ep["id"] for ep in self.catalog["episodes"]
                   if ep.get("auto_preview") is True}

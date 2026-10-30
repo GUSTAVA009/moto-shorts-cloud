@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - 'cloud-shorts/autofill_catalog.py'
+      - 'cloud-shorts/rolling_batches.py'
+      - 'cloud-shorts/rolling_batch_worker.py'
+      - 'cloud-shorts/test_rolling_batches.py'
       - 'cloud-shorts/moto_autocreate.py'
       - 'cloud-shorts/moto_assets.py'
       - 'cloud-shorts/test_moto_autocreate.py'
@@ -28,7 +31,7 @@ concurrency:
 jobs:
   replenish:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - name: Validate curated evergreen motorcycle scripts and licenses
@@ -36,7 +39,7 @@ jobs:
           python3 -m unittest discover -s cloud-shorts -p 'test_autofill_catalog.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_moto_assets.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_moto_autocreate.py' -v
-      - name: Add one unseen researched story when queue becomes low
+      - name: Keep rolling 10 original scripts supplied, with max two materialized per run
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
