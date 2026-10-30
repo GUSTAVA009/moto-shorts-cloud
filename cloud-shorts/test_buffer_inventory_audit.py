@@ -14,6 +14,15 @@ class BufferPostInventoryTests(unittest.TestCase):
         self.assertEqual(x["missing_count"],1)
         self.assertEqual(x["missing_receipted_posts"][0]["post_id"],"cc")
 
+    def test_real_publisher_success_triggers_independent_live_queue_audit(self):
+        from pathlib import Path
+        workflow = (Path(__file__).parent.parent /
+                    ".github/workflows/buffer-inventory-audit.yml").read_text("utf8")
+        self.assertIn("workflows: ['GUSTAVA - Verified Shorts to Buffer Queue']", workflow)
+        self.assertIn("github.event.workflow_run.conclusion == 'success'", workflow)
+        self.assertIn("python3 cloud-shorts/buffer_inventory_audit.py", workflow)
+        self.assertNotIn("createPost", workflow)
+
     def test_graphql_inventory_uses_only_reads_and_checks_all_pages(self):
         response={"posts":{"edges":[{"node":{"id":"x","status":"needs_approval"}}],
                            "pageInfo":{"hasNextPage":False}}}
