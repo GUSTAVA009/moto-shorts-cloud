@@ -1,15 +1,9 @@
 {
   "id": "moto-helmet-f2452c64bf21",
-  "state": "preview_ready",
-  "run_id": "41014972930",
-  "attempt_count": 1,
-  "preview_fingerprint": "38070a59b285076bc26ae5bceabffa1bab42a7690f1718b78963645d3bdf77e7",
-  "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": false,
-  "voice_qa_coverage": 0.706,
-  "voice_profile": "gustava_native_bass_baritone_v6",
-  "male_voice_verified": true,
-  "mixed_audio_qa_passed": false,
-  "mixed_audio_qa_coverage": 0.765
+  "state": "reserved",
+  "run_id": "41022768443",
+  "attempt_count": 2,
+  "preview_fingerprint": "33a141dcdfc5d6af0bce4a694a9f0072c96801babd2152ffce5689fd50215d03",
+  "previous_run_id": "41014972930",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
