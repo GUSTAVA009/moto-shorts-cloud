@@ -1,15 +1,9 @@
 {
   "id": "sunset-ride-30",
-  "state": "preview_ready",
-  "run_id": "40992007890",
-  "attempt_count": 3,
-  "preview_fingerprint": "40a3c78dc2aecc45428d96b9c046902404b48690a45846797b385ef250fd3dc6",
-  "previous_run_id": "40971925577",
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": false,
-  "voice_qa_coverage": 0.941,
-  "voice_profile": "gustava_male_natural_v4",
-  "male_voice_verified": true,
-  "mixed_audio_qa_passed": false,
-  "mixed_audio_qa_coverage": 0.941
+  "state": "reserved",
+  "run_id": "40992578623",
+  "attempt_count": 4,
+  "preview_fingerprint": "90f0fcfd07013bcfca841fe5291e5ff3db433e25dab13cc921c73e4337db93c6",
+  "previous_run_id": "40992007890",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
