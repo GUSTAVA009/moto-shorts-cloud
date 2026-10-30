@@ -1,0 +1,29 @@
+name: GUSTAVA - Stop Scheduled Rejected Narrators, Keep Published Videos
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/stop-rejected-queued-voices.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gustava-buffer-verified-publishing
+  cancel-in-progress: false
+
+jobs:
+  stop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Confirm only exact future scheduled old-voice posts can be cancelled
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_stop_rejected_queued_voices.py' -v
+      - name: Cancel still scheduled posts whose owner rejected narrator
+        run: python3 cloud-shorts/stop_rejected_queued_voices.py
