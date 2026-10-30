@@ -3458,6 +3458,151 @@
       "source_revision_requested": true,
       "source_revision_reason": "oversized_source_bounded_stream",
       "source_revision_note": "Previous GitHub Actions run 40993235269 failed on a >350MB original Pexels file. Retry only the unpublished episode after bounded-source streaming implementation, then recheck licensed footage, motion and Russian bass-baritone ASR."
+    },
+    {
+      "id": "moto-motocross-a5697d86523a",
+      "auto_preview": true,
+      "auto_publish": true,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "silero_mit_bass_baritone",
+      "voice_profile": "gustava_native_bass_baritone_v6",
+      "title": "Мотокросс: траектория, первый взгляд, внимание — что дальше? #shorts",
+      "narration": "Мотоцикл и мотокросс. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — траектория. Обстановка вокруг заслуживает не меньшего внимания, чем техника. О какой мототеме рассказать в следующей истории?",
+      "description": "Самостоятельная мототема: траектория. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
+      "caption_start": "МОТОКРОСС",
+      "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
+      "caption_end": "А ТВОЙ ВЫБОР?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "race-breakbeat",
+      "music_bpm": 114,
+      "footage": [
+        {
+          "topics": [
+            "motocross",
+            "racing",
+            "dirt"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/12941383/",
+          "source_page": "https://www.pexels.com/video/motocross-race-on-dirt-track-12941383/",
+          "author": "Tom Fisk",
+          "license": "Pexels License",
+          "duration": 25,
+          "source_title": "motocross race on dirt track"
+        },
+        {
+          "topics": [
+            "motocross",
+            "racing",
+            "dirt"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/5806214/",
+          "source_page": "https://www.pexels.com/video/motocross-riders-5806214/",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "duration": 19,
+          "source_title": "motocross riders"
+        },
+        {
+          "topics": [
+            "motocross",
+            "racing",
+            "dirt"
+          ],
+          "key": "clip_2",
+          "url": "https://www.pexels.com/download/video/36365243/",
+          "source_page": "https://www.pexels.com/video/motorcycle-adventure-on-rainy-obstacle-course-36365243/",
+          "author": "Harvey Tan Villarino",
+          "license": "Pexels License",
+          "duration": 16,
+          "source_title": "motorcycle adventure on rainy obstacle course"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 6.45,
+          "seconds": 2.15
+        }
+      ],
+      "editorial": {
+        "environment": "race-track-a5697",
+        "bike": "motocross-bike",
+        "people": "track-racers-a5697",
+        "story": "rider-at-prepared-track-a5697",
+        "visual": "three-clips-a5697"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "offline_editorial_reserve_v2",
+      "story_reserve_id": "r2-motocross-0016"
     }
   ]
 }
