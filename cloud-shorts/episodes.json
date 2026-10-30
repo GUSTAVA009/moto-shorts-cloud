@@ -4053,8 +4053,8 @@
     },
     {
       "id": "moto-helmet-f2452c64bf21",
-      "auto_preview": true,
-      "auto_publish": true,
+      "auto_preview": false,
+      "auto_publish": false,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
@@ -4189,7 +4189,10 @@
         "source_audio_sha256": "56154c99421d658ff362c8a7f5675e1e063f173b76d06a7e334b16c0c8172097",
         "context_id": "399a5c98f1f640e09279931a91b48881",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_review_failed": true,
+      "visual_review_reason": "Owner rejected: voice describes helmet but not shown; previous Buffer post cancelled.",
+      "visual_reviewed_at": "2026-10-30"
     },
     {
       "id": "moto-dirt-1159b9930b70",
@@ -4493,7 +4496,7 @@
     },
     {
       "id": "moto-helmet-fit-deep-20261030",
-      "auto_preview": true,
+      "auto_preview": false,
       "auto_publish": false,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
@@ -4602,7 +4605,10 @@
       "visual_revision_note": "Review actual first verified helmet render: two unrelated poses remain too static. Replaced second video with Pexels 9606651 showing helmet adjustment. Owner specifically asked for logical visual development. This is unpublished, preview-only.",
       "source_revision_requested": true,
       "source_revision_reason": "short_helmet_adjustment_rebalanced",
-      "source_revision_note": "A preview on GitHub run 41026998816 failed because the helmet adjustment video was shorter than its requested 11-second excerpt. Use a bounded 4.4s cut plus a third long moving helmet scene. Only retry after confirmed failed run, never auto-publish before human visual review."
+      "source_revision_note": "A preview on GitHub run 41026998816 failed because the helmet adjustment video was shorter than its requested 11-second excerpt. Use a bounded 4.4s cut plus a third long moving helmet scene. Only retry after confirmed failed run, never auto-publish before human visual review.",
+      "visual_review_failed": true,
+      "visual_review_reason": "Owner rejected actual screenshot 2026-10-30: first 7 seconds visually near-identical helmet, no filmed size/strap/vision checks, 3 unrelated people/helmets. No release even if motion and ASR QA passed.",
+      "visual_reviewed_at": "2026-10-30"
     }
   ]
 }
