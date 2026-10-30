@@ -1,9 +1,15 @@
 {
   "id": "moto-repair-39610c24bde8",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "41002797208",
   "attempt_count": 1,
   "preview_fingerprint": "c8f31176ffef5e4bc1b2cae8e54c57579f481cbef1e4878dd1623809bf8587a5",
   "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": false,
+  "voice_qa_coverage": 0.688,
+  "voice_profile": "gustava_native_bass_baritone_v6",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": false,
+  "mixed_audio_qa_coverage": 0.844
 }
