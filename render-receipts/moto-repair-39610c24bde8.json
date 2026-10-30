@@ -1,0 +1,9 @@
+{
+  "id": "moto-repair-39610c24bde8",
+  "state": "reserved",
+  "run_id": "41002797208",
+  "attempt_count": 1,
+  "preview_fingerprint": "c8f31176ffef5e4bc1b2cae8e54c57579f481cbef1e4878dd1623809bf8587a5",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
