@@ -617,6 +617,21 @@
       "episode": "moto-riding-ritual-deep-20261030",
       "source": "https://www.pexels.com/video/man-removing-his-helmet-and-smiling-5803211/",
       "status": "reserved-or-rendered"
+    },
+    "32659150": {
+      "episode": "moto-routes-contrast-deep-20261030",
+      "source": "https://www.pexels.com/video/epic-motorcycle-road-trip-through-ladakh-mountains-32659150/",
+      "status": "reserved-or-rendered"
+    },
+    "5053054": {
+      "episode": "moto-routes-contrast-deep-20261030",
+      "source": "https://www.pexels.com/video/motorcycle-touring-on-mountains-5053054/",
+      "status": "reserved-or-rendered"
+    },
+    "34311538": {
+      "episode": "moto-routes-contrast-deep-20261030",
+      "source": "https://www.pexels.com/video/motorcycle-ride-through-scenic-autumn-forest-34311538/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -892,6 +907,13 @@
       "people": "three-independent-riders-ritual",
       "story": "start-road-finish-ritual-20261030",
       "visual": "visor-road-helmet-removal-action-retimed"
+    },
+    "moto-routes-contrast-deep-20261030": {
+      "environment": "mountains-and-autumn-forest-20261030",
+      "bike": "adventure-touring-motorcycle",
+      "people": "three-different-route-riders",
+      "story": "mountain-versus-forest-ride-comparison",
+      "visual": "three-independently-filmed-routes-20261030"
     }
   }
 }
