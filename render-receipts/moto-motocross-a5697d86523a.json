@@ -1,9 +1,15 @@
 {
   "id": "moto-motocross-a5697d86523a",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "41006286371",
   "attempt_count": 3,
   "preview_fingerprint": "02d76050bc0310d6d66867b2c36cde6af0c7a587859e8a76ac44cbd60f8105c4",
   "previous_run_id": "41005799921",
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 1.0,
+  "voice_profile": "gustava_native_bass_baritone_v6",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 1.0
 }
