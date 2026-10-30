@@ -176,16 +176,28 @@ def eligible_retry(episode, receipt, new_fingerprint):
         return False
     if (receipt.get("voice_qa_passed") is True
             and receipt.get("mixed_audio_qa_passed") is True):
-        # Allow one bounded correction of a truly revised, NEVER-PUBLISHED
-        # non-serial preview if an explicit, named voice revision was requested.
-        # The fingerprint must change and the logical episode cannot already
-        # be permitted for public auto-release.
+        # An unrelated code change (mastering, metadata, dependencies) is
+        # NOT permission to remake an already passing Deep video. A completed
+        # DEEP preview can be re-recorded only with a *different, audited*
+        # provider MP3 hash pinned to the same episode, or when correcting
+        # explicitly documented visual failures. Receipts predating the proof
+        # field fail closed rather than guessing.
+        source = (episode.get("deep_audio") or {}).get("source_audio_sha256")
+        previous_source = receipt.get("deep_source_sha256")
+        genuine_new_deep = (
+            episode.get("voice_revision_requested") is True
+            and episode.get("auto_publish") is not True
+            and episode.get("voice_engine") == REQUIRED_MALE_ENGINE
+            and isinstance(source, str) and bool(re.fullmatch(r"[0-9a-f]{64}", source))
+            and isinstance(previous_source, str)
+            and bool(re.fullmatch(r"[0-9a-f]{64}", previous_source))
+            and source != previous_source
+        )
         return bool(
             episode.get("episode_series", {}).get("historical_reconstruction")
             or visual_repair
             or male_voice_repair
-            or (episode.get("voice_revision_requested") is True
-                and episode.get("auto_publish") is not True)
+            or genuine_new_deep
         )
     return True
 
@@ -358,6 +370,7 @@ def choose(catalog, output):
         "id": slug, "state": "reserved", "run_id": run_id,
         "attempt_count": attempt,
         "preview_fingerprint": preview_fingerprint(item),
+        "deep_source_sha256": (item.get("deep_audio") or {}).get("source_audio_sha256"),
         "previous_run_id": old_receipt.get("run_id") if old_receipt else None,
         "notes": "Revised preview only; never retry a public or uncertain upload."
     }
