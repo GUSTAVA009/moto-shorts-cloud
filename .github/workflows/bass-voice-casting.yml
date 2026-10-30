@@ -1,0 +1,38 @@
+name: GUSTAVA - 7 Real Russian Male Voice Casting (No Upload)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/bass-voice-casting.yml'
+      - 'cloud-shorts/bass_casting.py'
+      - 'cloud-shorts/test_bass_casting.py'
+
+permissions:
+  contents: read
+
+jobs:
+  cast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate voice model and acoustic measurement
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_bass_casting.py' -v
+      - name: Install CPU-only licensed TTS and audio tools
+        run: |
+          sudo apt-get install -y -qq --no-install-recommends ffmpeg
+          python3 -m pip install --disable-pip-version-check torch --index-url https://download.pytorch.org/whl/cpu
+          python3 -m pip install --disable-pip-version-check silero==0.5.5 numpy
+      - name: Compare seven genuinely different male Russian actors
+        run: python3 cloud-shorts/bass_casting.py
+      - name: Store listening previews; does not publish or change channel
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: GUSTAVA-MALE-CASTING-7-RU-VOICES
+          path: |
+            cloud-shorts/dist/new-bass-casting/*.mp3
+            cloud-shorts/dist/new-bass-casting/voice_comparison.json
+          retention-days: 21
+          if-no-files-found: warn
