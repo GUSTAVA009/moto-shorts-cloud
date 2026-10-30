@@ -547,6 +547,21 @@
       "episode": "moto-mountain-a04e3d31b2d7",
       "source": "https://www.pexels.com/video/motorcycle-ride-on-scenic-rural-road-35261797/",
       "status": "reserved-or-rendered"
+    },
+    "15596316": {
+      "episode": "moto-rain-1bec694cca6c",
+      "source": "https://www.pexels.com/video/a-rainy-night-in-a-city-street-with-motorcycles-parked-on-the-side-15596316/",
+      "status": "reserved-or-rendered"
+    },
+    "34679320": {
+      "episode": "moto-rain-1bec694cca6c",
+      "source": "https://www.pexels.com/video/nighttime-city-street-with-moving-vehicles-34679320/",
+      "status": "reserved-or-rendered"
+    },
+    "36077835": {
+      "episode": "moto-rain-1bec694cca6c",
+      "source": "https://www.pexels.com/video/nighttime-urban-street-with-motorbikes-36077835/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -787,6 +802,13 @@
       "people": "mountain-travelers-a04e3",
       "story": "mountain-journey-a04e3",
       "visual": "three-clips-a04e3"
+    },
+    "moto-rain-1bec694cca6c": {
+      "environment": "wet-asphalt-road-1bec6",
+      "bike": "street-motorbike",
+      "people": "road-commuters-1bec6",
+      "story": "rainy-motorcycle-road-1bec6",
+      "visual": "three-clips-1bec6"
     }
   }
 }
