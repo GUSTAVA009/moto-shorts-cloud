@@ -2,6 +2,8 @@
   "episode": "moto-dirt-1159b9930b70",
   "sha256": "8bacfed9e8457e2a185e81d023713efcb9e5f0677ba9784813649d173dc40c14",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-moto-dirt-1159b9930b70-8bacfed9e845/moto-dirt-1159b9930b70.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae45312d518fcaf80a63b57",
+  "due_at": "2026-10-30T11:00:00.000Z"
 }
