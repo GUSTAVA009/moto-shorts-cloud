@@ -2,6 +2,8 @@
 import json
 from pathlib import Path
 import unittest
+import tempfile
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import render_episode as r
@@ -68,6 +70,50 @@ class EpisodeTests(unittest.TestCase):
     def test_description_no_links_even_if_untrusted(self):
         self.assertEqual(r.clean_description("Привет\nhttps://example.org/a\n#shorts"),
                          "Привет\n#shorts")
+
+    def test_large_pexels_source_is_streamed_not_downloaded_whole(self):
+        item = {"key":"clip_0","url":"https://www.pexels.com/download/video/33987059/",
+                "source_page":"https://www.pexels.com/video/forest-motorcycle-33987059/",
+                "license":"Pexels License","author":"Original Creator","duration":36}
+        calls = []
+        def ffmpeg_stub(cmd, **kwargs):
+            calls.append(cmd)
+            Path(cmd[-1]).write_bytes(b"\x00" * 500_000)
+            return SimpleNamespace(returncode=0,stderr="")
+        with tempfile.TemporaryDirectory() as tmp:
+            dst=Path(tmp)/"pexels.mp4"
+            with patch.object(r.subprocess,"run",side_effect=ffmpeg_stub), \
+                 patch.object(r,"probe",return_value=(14.0,[{"codec_type":"video"}])), \
+                 patch.object(r.urllib.request,"urlopen",side_effect=AssertionError("Never load 4K source fully")):
+                r.download(item,dst,required_seconds=13.5)
+            self.assertEqual(dst.stat().st_size,500_000)
+        self.assertEqual(len(calls),1)
+        self.assertIn("-t",calls[0])
+        self.assertEqual(calls[0][calls[0].index("-t")+1],"13.50")
+        self.assertEqual(calls[0][calls[0].index("-i")+1],item["url"])
+
+    def test_bounded_download_rejects_incomplete_or_fake_clips(self):
+        item = {"key":"clip_1","url":"https://www.pexels.com/download/video/32918034/",
+                "source_page":"https://www.pexels.com/video/forest-motorcycle-32918034/",
+                "license":"Pexels License","author":"Verified Creator","duration":67}
+        def ffmpeg_stub(cmd,**kwargs):
+            Path(cmd[-1]).write_bytes(b"a"*500_000)
+            return SimpleNamespace(returncode=0,stderr="")
+        with tempfile.TemporaryDirectory() as tmp:
+            dst=Path(tmp)/"not-ready.mp4"
+            with patch.object(r.subprocess,"run",side_effect=ffmpeg_stub), \
+                 patch.object(r,"probe",return_value=(8.0,[{"codec_type":"video"}])):
+                with self.assertRaisesRegex(RuntimeError,"missing required scene time"):
+                    r.download(item,dst,required_seconds=13.0)
+            self.assertFalse(dst.exists())
+            self.assertFalse((Path(tmp)/"not-ready.source.tmp.mp4").exists())
+
+    def test_source_length_is_bounded_to_shot_requirements(self):
+        catalog=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
+        e=next(x for x in catalog["episodes"] if x["id"]=="moto-forest-4bd53e13fec4")
+        needed=r.required_source_seconds(e,"clip_0")
+        self.assertTrue(13<=needed<15)
+        self.assertLess(needed,float(e["footage"][0]["duration"]))
 
     def test_voiceover_text_guard(self):
         with patch.object(t, "safe_download") as download:

@@ -140,19 +140,93 @@ def load_episode(path, slug):
     raise ValueError("Unknown episode: " + slug)
 
 
-def download(item, dst):
+MAX_FULL_SOURCE_BYTES = 350_000_000
+MAX_SHORT_SOURCE_BYTES = 90_000_000
+SOURCE_STREAM_TIMEOUT = 160
+
+
+def required_source_seconds(episode, source_key):
+    """Bound a real source clip to the frames actually needed by this Short."""
+    windows = [
+        float(shot["start"]) + float(shot["seconds"])
+        for shot in episode["shots"] if shot["source"] == source_key
+    ]
+    if not windows:
+        raise ValueError("No visual shot uses licensed source " + source_key)
+    declared_duration = float(
+        next(x["duration"] for x in episode["footage"] if x["key"] == source_key)
+    )
+    return round(min(max(windows) + 0.7, declared_duration), 2)
+
+
+def stream_pexels_excerpt(item, destination, required_seconds, ffmpeg="ffmpeg"):
+    """Read only required seconds of a validated Pexels source over HTTPS.
+
+    Never fetch its giant 4K source in full, never invent a file, and keep
+    ordinary movement/freeze and license validation on the output.
+    """
+    checked_source(item)
+    if urllib.parse.urlsplit(item["url"]).hostname not in (
+            "www.pexels.com", "videos.pexels.com"):
+        raise ValueError("Bounded stream only permitted from approved Pexels host")
+    duration = float(required_seconds)
+    if not 2.0 <= duration <= 40.0:
+        raise ValueError("Unsafe requested source excerpt duration")
+    cmd = [
+        ffmpeg, "-hide_banner", "-nostdin", "-loglevel", "error", "-y",
+        "-user_agent", "Mozilla/5.0 GUSTAVA-Motorcycle-Shorts/1.0",
+        "-i", item["url"], "-map", "0:v:0", "-an",
+        "-t", f"{duration:.2f}",
+        "-vf", "fps=30,scale=1280:1280:force_original_aspect_ratio=decrease:force_divisible_by=2",
+        "-c:v", "libx264", "-preset", "veryfast", "-crf", "25",
+        "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+        "-f", "mp4", str(destination)
+    ]
+    try:
+        result = subprocess.run(cmd, text=True, capture_output=True,
+                                timeout=SOURCE_STREAM_TIMEOUT, check=False)
+    except subprocess.TimeoutExpired as exc:
+        raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: bounded Pexels excerpt timeout") from exc
+    if result.returncode or not destination.is_file():
+        raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: bounded Pexels excerpt: "
+                           + (result.stderr or "")[-550:])
+    size = destination.stat().st_size
+    if not 250_000 <= size <= MAX_SHORT_SOURCE_BYTES:
+        raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: bounded excerpt outside 0.25-90MB")
+    duration_read, tracks = probe(destination)
+    if not any(t.get("codec_type") == "video" for t in tracks):
+        raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: excerpt has no video")
+    if duration_read < duration - 0.75:
+        raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: excerpt missing required scene time")
+    print("LICENSED_PEXELS_SHORT_EXCERPT", item["key"], round(duration_read, 2),
+          "seconds", size, "bytes", flush=True)
+
+
+def download(item, dst, required_seconds=None):
+    checked_source(item)
     if dst.is_file() and dst.stat().st_size > 250_000:
         return
-    request = urllib.request.Request(item["url"], headers={"User-Agent": "Mozilla/5.0"})
-    tmp = dst.with_suffix(".download")
+    tmp = dst.with_name(dst.stem + ".source.tmp.mp4")
+    urlhost = urllib.parse.urlsplit(item["url"]).hostname
     try:
-        with urllib.request.urlopen(request, timeout=150) as inp, tmp.open("wb") as out:
-            while chunk := inp.read(1048576):
-                out.write(chunk)
-                if out.tell() > 350_000_000:
-                    raise RuntimeError("Too much video data from a single source")
-        if tmp.stat().st_size < 250_000:
-            raise RuntimeError("Source video download was empty or too small")
+        if urlhost in ("www.pexels.com", "videos.pexels.com"):
+            if required_seconds is None:
+                raise ValueError("Pexels clip duration must be bounded by episode shot list")
+            # The download/video/<id> endpoint may return a >350MB 4K file.
+            # FFmpeg seeks/decodes the short source segment remotely and saves
+            # an independently QA-checked, low-bandwidth local 720/1280p MP4.
+            stream_pexels_excerpt(item, tmp, required_seconds)
+        else:
+            # Wikimedia Commons CC0 paths are size-audited before admission.
+            request = urllib.request.Request(item["url"],
+                                             headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(request, timeout=150) as inp, tmp.open("wb") as out:
+                while chunk := inp.read(1048576):
+                    out.write(chunk)
+                    if out.tell() > MAX_FULL_SOURCE_BYTES:
+                        raise RuntimeError("Too much video data from a single source")
+            if tmp.stat().st_size < 250_000:
+                raise RuntimeError("Source video download was empty or too small")
         tmp.replace(dst)
     except Exception:
         tmp.unlink(missing_ok=True)
@@ -319,7 +393,7 @@ def render(ep, output_dir):
         if video_id.startswith("commons-"):
             verified_commons(src)
         target = work / (video_id + ".mp4")
-        download(src, target)
+        download(src, target, required_seconds=required_source_seconds(ep, src["key"]))
         sources[src["key"]] = target
 
     wav = work / "new_narration.wav"

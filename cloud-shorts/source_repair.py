@@ -10,7 +10,8 @@ import re
 
 from editorial_guard import source_id, validate_catalog
 from render_episode import validate_episode
-from moto_autocreate import (THEMES, pexels_results, commons_results, choose_sources)
+from moto_autocreate import (THEMES, pexels_results, commons_results,
+                             curated_pexels_results, choose_sources)
 
 TOPIC_HINTS = (
     (("лес", "wood", "forest"), "forest"),
@@ -40,6 +41,9 @@ def discover_new_sources(theme, used_ids, pexels_key):
             found.extend(pexels_results(theme, page, pexels_key))
             if len(choose_sources(found, used_ids)) >= 2:
                 break
+    if len(choose_sources(found, used_ids)) < 2:
+        # Public Pexels sources are license-and-author checked; no API key.
+        found.extend(curated_pexels_results(theme, used_ids))
     if len(choose_sources(found, used_ids)) < 2:
         found.extend(commons_results(theme))
     return choose_sources(found, used_ids)

@@ -96,6 +96,21 @@ class TestPreviewQueue(unittest.TestCase):
         self.assertNotEqual(a, b)
         self.assertEqual(len(a), 64)
 
+    def test_bounded_stream_source_retry_only_after_confirmed_failed_run(self):
+        item={"id":"moto-forest-4bd53e13fec4",
+              "source_revision_requested":True,
+              "source_revision_reason":"oversized_source_bounded_stream"}
+        receipt={"id":item["id"],"state":"reserved","attempt_count":1,
+                 "preview_fingerprint":"old-oversized-source"}
+        self.assertTrue(pq.eligible_abandoned_source_retry(item,receipt,"new-stream-code","failure"))
+        self.assertFalse(pq.eligible_abandoned_source_retry(item,receipt,"new-stream-code","in_progress"))
+        self.assertFalse(pq.eligible_abandoned_source_retry(item,receipt,"old-oversized-source","failure"))
+        receipt["attempt_count"]=3
+        self.assertFalse(pq.eligible_abandoned_source_retry(item,receipt,"new-stream-code","failure"))
+        receipt["attempt_count"]=1
+        receipt["state"]="preview_ready"
+        self.assertFalse(pq.eligible_abandoned_source_retry(item,receipt,"new-stream-code","failure"))
+
     def test_missing_or_corrupt_registry_fails_closed(self):
         with self.assertRaises(RuntimeError):
             pq.decode_history(None)

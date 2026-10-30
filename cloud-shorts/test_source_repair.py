@@ -3,6 +3,7 @@ import copy
 import json
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 import source_repair as s
 import moto_autocreate as gen
@@ -47,6 +48,15 @@ class FailedFootageTests(unittest.TestCase):
         result = s.source_repair(self.catalog, self.id, self.receipt(), self.diag(),
                                  self.media(), permanently_used={"90000111"})
         self.assertIsNone(result)
+
+    def test_source_discovery_uses_curated_stock_without_pexels_key(self):
+        two=self.media()
+        with patch.object(s,"curated_pexels_results",return_value=two) as bank, \
+             patch.object(s,"commons_results",side_effect=AssertionError("Commons not needed")):
+            discovered=s.discover_new_sources(gen.THEMES[0],set(),"")
+        self.assertEqual(len(discovered),2)
+        bank.assert_called_once()
+        self.assertNotEqual(discovered[0]["author"],discovered[1]["author"])
 
     def test_no_repair_of_other_failure_types_or_unverified_state(self):
         for status in ("preview_ready", "queued", "draft"):

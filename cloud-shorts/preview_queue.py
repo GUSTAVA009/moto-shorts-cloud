@@ -195,7 +195,7 @@ def eligible_abandoned_source_retry(episode, receipt, new_fingerprint, old_concl
         return False
     if episode.get("source_revision_reason") not in (
             "oversized_source_replaced", "unavailable_source_replaced",
-            "frozen_source_replaced"):
+            "frozen_source_replaced", "oversized_source_bounded_stream"):
         return False
     if int(receipt.get("attempt_count", 1)) >= MAX_ATTEMPTS:
         return False
@@ -256,7 +256,7 @@ def choose(catalog, output):
                     selected = item
                     break
     # A failed download may leave a permanent 'reserved' receipt. Recover
-    # only after the media source has been REPLACED and GitHub confirms the
+    # only after the source or audited download strategy changed and GitHub confirms the
     # previous render actually failed. Never allow a parallel or public retry.
     if selected is None:
         for item in listed:

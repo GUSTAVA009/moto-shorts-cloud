@@ -3454,7 +3454,10 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_matrix_v1",
       "voice_revision_requested": true,
-      "voice_revision_note": "Owner rejected previous narrator; new authentic low male MIT actor only."
+      "voice_revision_note": "Owner rejected previous narrator; new authentic low male MIT actor only.",
+      "source_revision_requested": true,
+      "source_revision_reason": "oversized_source_bounded_stream",
+      "source_revision_note": "Previous GitHub Actions run 40993235269 failed on a >350MB original Pexels file. Retry only the unpublished episode after bounded-source streaming implementation, then recheck licensed footage, motion and Russian bass-baritone ASR."
     }
   ]
 }
