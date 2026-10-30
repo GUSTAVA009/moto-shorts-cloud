@@ -70,6 +70,11 @@ SCENE_ACTION_SLUGS = {
                          r"ride|motorcycle-on-road|racing", re.I),
     "helmet_removal": re.compile(r"removing-(?:his-|her-|their-)?helmet|"
                                  r"taking-off-(?:the-)?helmet", re.I),
+    # Observed titles belong to distinct licensed videos, not to one event.
+    # Source slug must name the action instead of trusting a manually added tag.
+    "showroom_high_five": re.compile(r"high-five-at-a-motorcycle-showroom", re.I),
+    "garage_motorcycle_talk": re.compile(r"talking-about-motorcycle", re.I),
+    "motorbike_stunt": re.compile(r"performing-stunts-with-his-motorbike", re.I),
 }
 
 

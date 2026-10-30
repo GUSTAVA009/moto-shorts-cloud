@@ -4920,6 +4920,130 @@
       "visual_review_failed": true,
       "editorial_rejected": true,
       "editorial_rejection_reason": "owner_confirmed_repetitive_mountain_forest_scenic_montage_20261030"
+    },
+    {
+      "id": "moto-moto-life-three-scenes-deep-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "Три стороны мотожизни: что ближе тебе? 🏍️ #shorts",
+      "narration": "Что в мотоциклах цепляет сильнее всего? В салоне двое радуются сделке. У гаража другие обсуждают байк. А в городе райдер выполняет трюк. Это три разных момента, а не история одного человека. Что ближе тебе: первый выбор, разговоры о технике или красивое мастерство?",
+      "description": "Три независимые сцены о мотоциклах: мотосалон, разговор у гаража и городской трюк. Разные люди и разные места; не запись одного события.\n\n#мото #мотожизнь #shorts",
+      "caption_start": "ЧТО ЦЕПЛЯЕТ В МОТО?",
+      "caption_middle": "САЛОН • ГАРАЖ • ТРЮК",
+      "caption_end": "ЧТО БЛИЖЕ ТЕБЕ?",
+      "max_duration_seconds": 25.5,
+      "opening_trim_seconds": 0,
+      "music_style": "action",
+      "music_bpm": 118,
+      "footage": [
+        {
+          "key": "clip_0",
+          "topics": [
+            "showroom",
+            "people",
+            "motorcycle",
+            "purchase"
+          ],
+          "url": "https://www.pexels.com/download/video/5450253/",
+          "source_page": "https://www.pexels.com/video/men-doing-high-five-at-a-motorcycle-showroom-5450253/",
+          "author": "Gustavo Fring",
+          "license": "Pexels License",
+          "duration": 12,
+          "source_title": "Men Doing High Five at a Motorcycle Showroom"
+        },
+        {
+          "key": "clip_1",
+          "topics": [
+            "garage",
+            "people",
+            "motorcycle",
+            "conversation"
+          ],
+          "url": "https://www.pexels.com/download/video/8551066/",
+          "source_page": "https://www.pexels.com/video/men-talking-about-motorcycle-8551066/",
+          "author": "Kindel Media",
+          "license": "Pexels License",
+          "duration": 13,
+          "source_title": "Men Talking About Motorcycle"
+        },
+        {
+          "key": "clip_2",
+          "topics": [
+            "urban",
+            "stunts",
+            "motorbike",
+            "rider"
+          ],
+          "url": "https://www.pexels.com/download/video/9607278/",
+          "source_page": "https://www.pexels.com/video/a-man-performing-stunts-with-his-motorbike-9607278/",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 24,
+          "source_title": "A Man Performing Stunts with his Motorbike"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 8
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 8
+        },
+        {
+          "source": "clip_2",
+          "start": 0,
+          "seconds": 8
+        }
+      ],
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "showroom_high_five",
+          "spoken_anchor": "В салоне двое радуются сделке"
+        },
+        {
+          "source": "clip_1",
+          "action": "garage_motorcycle_talk",
+          "spoken_anchor": "У гаража другие обсуждают байк"
+        },
+        {
+          "source": "clip_2",
+          "action": "motorbike_stunt",
+          "spoken_anchor": "А в городе райдер выполняет трюк"
+        }
+      ],
+      "editorial": {
+        "environment": "showroom-garage-urban-stunt-20261030",
+        "bike": "mixed-motorbikes-lifestyle-and-stunt",
+        "people": "three-independent-motorcycle-creators",
+        "story": "showroom-garage-urban-action-contrast",
+        "visual": "three-independent-actions-highfive-talk-wheelie"
+      },
+      "editorial_format": "three visually distinct authentic motorcycle moments with source-specific action anchors",
+      "tags": [
+        "мото",
+        "мотоцикл",
+        "байк",
+        "мотожизнь",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Напиши в комментариях, какой из трёх моментов тебе ближе."
+      },
+      "source_selection": "Three original Pexels creators. Public official source titles verified independently; all three exact original clip IDs unused in episode catalog. Inspect actual MP4 frames before release.",
+      "generation_provenance": "Original new GUSTAVA DEEP recorded via authorized Create Audio Voice, scene-first; no reused video and no misleading same-event assertion.",
+      "editorial_review_note": "PREVIEW ONLY until actual mp4 frame-and-audio inspection. No YouTube upload while auto_publish=false."
     }
   ]
 }
