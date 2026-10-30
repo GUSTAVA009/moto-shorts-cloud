@@ -124,14 +124,14 @@ def validate_episode(ep):
         if media.get("license") not in ("Pexels License", "CC0 1.0") or not media.get("author"):
             raise ValueError("Source provenance and free license must be recorded")
     shots = ep.get("shots", [])
-    if len(shots) < 4 or len(shots) > 16:
-        raise ValueError("Need 4-16 shots")
+    if len(shots) < 2 or len(shots) > 16:
+        raise ValueError("Need 2-16 source shots")
     total = 0.0
     for shot in shots:
         if shot.get("source") not in keys:
             raise ValueError("Unknown footage key")
         start, seconds = float(shot["start"]), float(shot["seconds"])
-        if not (0 <= start <= 500 and 1 <= seconds <= 6):
+        if not (0 <= start <= 500 and 1 <= seconds <= 12):
             raise ValueError("Invalid scene offset/duration")
         total += seconds
     if total < 12:
