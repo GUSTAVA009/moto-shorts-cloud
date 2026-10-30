@@ -4794,7 +4794,16 @@
       "generation_provenance": "Original scene-first narration, separate non-consecutive stock clips",
       "editorial_review_note": "PREVIEW ONLY: first two Deep recordings failed independent Russian ASR (0.906, ~0.970). Third independently generated original voice pending independent ASR >= 0.97 and visual review.",
       "voice_revision_requested": true,
-      "voice_revision_note": "Simple clear sentences for naturally spoken Russian, no changing approved Deep voice or QA threshold."
+      "voice_revision_note": "Simple clear sentences for naturally spoken Russian, no changing approved Deep voice or QA threshold.",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/8d7d24f3-105c-4be4-9bb9-d49cba29574b.mp3",
+        "transcript_sha256": "dac8b827c4d4711493bfe33610217248771b776d3d72de36ee03be6c0a1d62f1",
+        "source_audio_sha256": "66ff7f4f8fac93a09ea617698622dd1c10933a2478efdbffc5c9b651346a3763",
+        "context_id": "9856e51a87aa43329fa2e35204bea3fe",
+        "licence_mode": "public_provider_attribution"
+      }
     },
     {
       "id": "moto-routes-contrast-deep-20261030",
