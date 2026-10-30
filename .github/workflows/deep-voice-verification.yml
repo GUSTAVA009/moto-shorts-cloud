@@ -1,0 +1,75 @@
+name: GUSTAVA - Verify Chosen DEEP Create Audio Voice (No Publish)
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/deep-voice-verification.yml'
+      - 'cloud-shorts/deep_voice.py'
+      - 'cloud-shorts/test_deep_voice.py'
+      - 'cloud-shorts/approved-deep-voice-example.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install FFmpeg and independent Russian ASR
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends ffmpeg
+          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1
+      - name: Verify identity rules; no seven voices or local fallback
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_deep_voice.py' -v
+      - name: Download and audit the real chosen DEEP audio (read-only, never publish)
+        run: |
+          python3 - <<'PY'
+          import sys, json, urllib.request, hashlib
+          from pathlib import Path
+          sys.path.insert(0,"cloud-shorts")
+          from deep_voice import approved_asset, pcm_stats, PROFILE_ID
+          from asr_fallback import transcribe
+          from voice_qa import score
+          import subprocess
+          meta=json.loads(Path("cloud-shorts/approved-deep-voice-example.json").read_text(encoding="utf8"))
+          url=approved_asset(meta,meta["transcript"])
+          request=urllib.request.Request(url,headers={"User-Agent":"GUSTAVA-Deep-Verification/1.0"})
+          with urllib.request.urlopen(request,timeout=40) as r:
+              content=r.read(6_000_001)
+              assert r.status==200 and len(content)<=6_000_000
+          output=Path("deep-verification")
+          output.mkdir(exist_ok=True)
+          mp3=output/"approved_deep.mp3"
+          mp3.write_bytes(content)
+          digest=hashlib.sha256(content).hexdigest()
+          subprocess.run(["ffmpeg","-hide_banner","-nostdin","-loglevel","error","-y",
+              "-i",str(mp3),"-ar","24000","-ac","1","-c:a","pcm_s16le",
+              str(output/"approved_deep.wav")],check=True,timeout=90)
+          audio=pcm_stats(output/"approved_deep.wav")
+          heard,engine=transcribe(output/"approved_deep.wav",model="small")
+          qa=score(meta["transcript"],heard)
+          result={"source_audio_sha256":digest,"voice_id":"deep","voice_profile":PROFILE_ID,
+                  "source":"official Create Audio Voice result, not Silero",
+                  "duration_seconds":audio["duration_seconds"],
+                  "asr_engine":engine,"recognized_text":heard,"qa":qa}
+          (output/"verification.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
+          print("DEEP_AUDIO_SOURCE_SHA256",digest,flush=True)
+          print("DEEP_VOICE_ASR_QA",json.dumps(result,ensure_ascii=False),flush=True)
+          if not qa["passed"]:
+              raise RuntimeError("Real DEEP audio incomplete/unclear: do not render or publish")
+          print("GUSTAVA_APPROVED_DEEP_AUDIO_VERIFIED",PROFILE_ID,flush=True)
+          PY
+      - name: Save Deep preview and provenance for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: GUSTAVA-REAL-DEEP-PROVIDER-AUDIO-QA
+          path: |
+            deep-verification/approved_deep.mp3
+            deep-verification/verification.json
+          retention-days: 10
+          if-no-files-found: warn

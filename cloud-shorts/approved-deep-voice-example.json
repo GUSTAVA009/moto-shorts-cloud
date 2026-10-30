@@ -1,0 +1,12 @@
+{
+  "episode_id": "moto-mountain-a04e3d31b2d7",
+  "provider": "aidocmaker.com",
+  "voice_id": "deep",
+  "context_id": "0396c88d4ed645b4970b2e49155482bd",
+  "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/59b382df-d33f-45d2-943d-22f1db747299.mp3",
+  "transcript_sha256": "ba652867a87178420049e591fae83fc70eb14860ae9e15c886d1a81bc33682e6",
+  "transcript": "Почему горная дорога выглядит простой сверху, но сложнее в седле? За каждым поворотом может меняться обзор, а на подъёме важны плавные движения и запас дистанции. Красивый маршрут не про скорость, а про контроль. А ты поехал бы по такой дороге?",
+  "status": "provider_confirmed_preview_not_yet_qa_passed",
+  "commercial_use": "attribution_required_on_free_provider_plan; paid plan may waive",
+  "publication_status": "not_authorized_until_source_QA_and_appropriate_license"
+}
