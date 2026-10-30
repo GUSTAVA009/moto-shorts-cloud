@@ -37,6 +37,8 @@ jobs:
         run: |
           python3 -m unittest discover -s cloud-shorts -p 'test_render_episode.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_voice_style.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_voice_qa.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_deep_male_release.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_qa_autorepair.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_motion_gate.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_visual_revision.py' -v
