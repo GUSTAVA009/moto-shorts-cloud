@@ -18,6 +18,7 @@ import urllib.parse
 import urllib.request
 
 from soundtrack import generate as make_music
+from audio_accents import create as make_audio_accents, cover_times
 from tts_voice import render as make_voice
 from silero_voice import render as make_silero_voice, MODEL_ID as SILERO_MODEL_ID, SPEAKER as SILERO_SPEAKER
 from native_bass_voice import render as make_native_bass_voice, VOICE_ENGINE as NATIVE_BASS_ENGINE, SPEAKER as NATIVE_BASS_SPEAKER
@@ -452,6 +453,9 @@ def render(ep, output_dir):
     music_seed = int(hashlib.sha256(slug.encode("utf8")).hexdigest()[:8], 16)
     make_music(soundtrack, total, bpm=int(ep.get("music_bpm", 128)),
                style=music_style, seed=music_seed)
+    accents = work / "original_audio_accents.wav"
+    cue_report = make_audio_accents(accents,total,style=music_style,seed=music_seed)
+    print("ORIGINAL_SOUND_DESIGN_READY", cue_report, flush=True)
     captions = draw_captions(ep, work, total)
 
     output = output_dir / (slug + ".mp4")
@@ -465,14 +469,17 @@ def render(ep, output_dir):
         "afade=t=in:st=0:d=0.18,afade=t=out:st=%.3f:d=0.4,"
         "atrim=duration=%.3f,asetpts=PTS-STARTPTS,"
         "aformat=channel_layouts=stereo,haas=side_gain=0.55[bed];" % (max(0.1, total - 0.4), total)
-        + "[bed][voice_duck]sidechaincompress=threshold=0.022:"
+        + "[3:a]aresample=48000,volume=0.22,"
+          "aformat=channel_layouts=stereo,atrim=duration=%.3f[fx];" % total
+        + "[bed][fx]amix=inputs=2:duration=first:normalize=0[soundbed];"
+        + "[soundbed][voice_duck]sidechaincompress=threshold=0.022:"
         "ratio=7:attack=8:release=240[ducked];"
         "[ducked][voice_mix]amix=inputs=2:duration=first:normalize=0,"
         "alimiter=limit=0.92[a]"
     )
     run([
         "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
-        "-i", silent, "-i", wav, "-i", soundtrack,
+        "-i", silent, "-i", wav, "-i", soundtrack, "-i", accents,
         "-filter_complex", filter_graph,
         "-map", "[v]", "-map", "[a]",
         "-c:v", "libx264", "-preset", "veryfast", "-crf", "22",
@@ -488,11 +495,20 @@ def render(ep, output_dir):
         raise RuntimeError("Final MP4 must be 720x1280 vertical")
     if not any(s["codec_type"] == "audio" for s in streams):
         raise RuntimeError("Final video missing narration/music audio")
-    run([
-        "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
-        "-ss", "0.8", "-i", output,
-        "-frames:v", "1", output_dir / "thumbnail.jpg"
-    ], 35)
+    # Covers must be extracted from this exact rendered episode, never
+    # scraped from another creator or made to depict unrelated events.
+    times = cover_times(total)
+    for index, at in enumerate(times, start=1):
+        name = "thumbnail.jpg" if index == 1 else "thumbnail_candidate_%d.jpg" % index
+        run(["ffmpeg","-hide_banner","-nostdin","-loglevel","error","-y",
+             "-ss",f"{at:.2f}","-i",output,"-frames:v","1",
+             output_dir/name],35)
+    (output_dir/"thumbnail_candidates.json").write_text(
+        json.dumps({"episode_id":slug,"frame_times":times,
+                    "source":"OWN_NEW_RENDERED_VIDEO",
+                    "selection":"YouTube Studio -> Edit Short -> Thumbnail / Choose from video",
+                    "note":"Choosing/uploading a custom Shorts thumbnail requires account support."},
+                   ensure_ascii=False,indent=2)+"\n",encoding="utf8")
     publication = {
         "title": ep["title"],
         "description": clean_description(build_description(ep)),
@@ -501,7 +517,7 @@ def render(ep, output_dir):
         "youtube_published": False,
         "duration_seconds": round(duration, 2),
         "voice_engine": engine_label,
-        "audio_source": "Fresh synthesized narration and original procedural music",
+        "audio_source": "Fresh synthesized narration, original procedural music and original SFX",
         "music_style": music_style,
         "editorial_profile": ep.get("editorial"),
         "episode_id": slug,
