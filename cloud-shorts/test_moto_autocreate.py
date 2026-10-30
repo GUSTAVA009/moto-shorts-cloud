@@ -102,10 +102,13 @@ class NewMotoSourceTests(unittest.TestCase):
                     fixture(90000001, "Alice Rider"),
                     fixture(90000002, "Bob Mechanic"),
                     fixture(90000004, "Daria Rider")]})
+        relevant = (dict(self.catalog, episodes=self.catalog["episodes"][:-1])
+                    if self.catalog["episodes"][-1]["editorial"]["bike"] == s.THEMES[1][3]
+                    else self.catalog)
         with patch.dict("os.environ", {"PEXELS_API_KEY": ""}):
             with patch.object(s, "curated_pexels_results", return_value=media), \
                  patch.object(s, "commons_results", return_value=[]):
-                ep = s.create_one(self.catalog,
+                ep = s.create_one(relevant,
                                   source_fetch=lambda *args: [],
                                   commons_fetch=lambda *args: [],
                                   prose_factory=lambda *args: (_ for _ in ()).throw(
@@ -114,6 +117,26 @@ class NewMotoSourceTests(unittest.TestCase):
         self.assertEqual(ep["story_reserve_id"], planned["_reserve_id"])
         self.assertEqual(ep["narration"], planned["narration"])
         self.assertEqual(ep["title"], planned["title"])
+
+    def test_supplier_never_repeats_last_motorcycle_type(self):
+        from unittest.mock import patch
+        catalog = dict(self.catalog)
+        last = dict(catalog["episodes"][-1])
+        last["editorial"] = dict(last["editorial"], bike=s.THEMES[1][3])
+        catalog["episodes"] = list(catalog["episodes"][:-1]) + [last]
+        planned = s.offline_original_story(s.THEMES[1], [], [])
+        planned["theme"] = "motocross"
+        media = s.pexels_results(s.THEMES[1], 1, "test",
+                fetch=lambda a,b: {"videos":[
+                    fixture(90000001, "Alice Rider"),
+                    fixture(90000002, "Bob Mechanic")]})
+        with patch.dict("os.environ", {"PEXELS_API_KEY": ""}):
+            with patch.object(s, "curated_pexels_results",
+                 side_effect=lambda theme,used: media if theme[0]=="motocross" else []):
+                with self.assertRaisesRegex(RuntimeError, "NO_NEW_LICENSED_MOTO_CLIPS"):
+                    s.create_one(catalog, source_fetch=lambda *a: [],
+                                 commons_fetch=lambda *a: [],
+                                 prepared_scripts=[planned])
 
     def test_reject_model_fabricating_numbers(self):
         result = story()

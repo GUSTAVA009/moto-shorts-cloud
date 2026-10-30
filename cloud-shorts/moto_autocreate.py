@@ -347,7 +347,12 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
     # category is exhausted. Never reuse any video from another production.
     chosen = None
     key = os.getenv("PEXELS_API_KEY", "")
+    last_bike = catalog["episodes"][-1]["editorial"]["bike"] if catalog["episodes"] else None
     for theme in themes:
+        # Retain a staged subject for later instead of repeating the last
+        # motorcycle type and failing the same editorial QA three times.
+        if theme[3] == last_bike:
+            continue
         found = []
         if key:
             for page in (1, 2, 3):
