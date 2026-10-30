@@ -6,6 +6,7 @@ on:
     paths:
       - "cloud-shorts/episodes.json"
       - "cloud-shorts/render_episode.py"
+      - "cloud-shorts/visual_director.py"
       - "cloud-shorts/tts_voice.py"
       - "cloud-shorts/silero_voice.py"
       - "cloud-shorts/mixed_audio_qa.py"

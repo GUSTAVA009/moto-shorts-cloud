@@ -23,6 +23,7 @@ EPISODES = Path(__file__).with_name("episodes.json")
 HISTORY_PATH = "history/used_footage.json"
 
 from editorial_guard import source_id, validate_catalog
+from visual_director import verify_story_subject
 from deep_voice import (PROFILE_ID as REQUIRED_MALE_PROFILE,
                         VOICE_ENGINE as REQUIRED_MALE_ENGINE,
                         ready as deep_audio_ready)
@@ -253,9 +254,17 @@ def choose(catalog, output):
     validate_catalog(data)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    listed = [ep for ep in data["episodes"] if ep.get("auto_preview") is True
-              and deep_audio_ready(ep)]
-    print("GUSTAVA_DEEP_VOICE_READY_EPISODES",len(listed),flush=True)
+    listed = []
+    for ep in data["episodes"]:
+        if ep.get("auto_preview") is not True or not deep_audio_ready(ep):
+            continue
+        try:
+            verify_story_subject(ep)
+        except ValueError as exc:
+            print("VISUAL_STORY_REJECTED_BEFORE_RESERVATION",ep["id"],str(exc)[:300],flush=True)
+            continue
+        listed.append(ep)
+    print("GUSTAVA_DEEP_AND_VISUAL_READY_EPISODES",len(listed),flush=True)
     def unpublished(slug):
         # Legacy uploads and Buffer reservations both block rerenders.
         return (api("publication-receipts/" + slug + ".json") is None

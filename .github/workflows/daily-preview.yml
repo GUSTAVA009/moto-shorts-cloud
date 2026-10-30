@@ -46,6 +46,7 @@ jobs:
           python3 -m unittest discover -s cloud-shorts -p 'test_voice_style.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_native_bass_voice.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_deep_voice.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_visual_director.py' -v
           python3 - <<'PY'
           import sys
           sys.path.insert(0, 'cloud-shorts')
@@ -123,6 +124,12 @@ jobs:
           base=Path("cloud-shorts/dist/new")/episode
           raw=json.loads((base/"voice_qa.json").read_text(encoding="utf8"))
           mix=json.loads((base/"mixed_audio_qa.json").read_text(encoding="utf8"))
+          visual=json.loads((base/"visual_qa.json").read_text(encoding="utf8"))
+          sequence=visual.get("source_sequence") or []
+          if not (visual.get("version")==2 and visual.get("passed") is True
+                  and visual.get("episode")==episode and 2<=len(sequence)<=3
+                  and len(set(sequence))==len(sequence)):
+              raise SystemExit("VISUAL_EDITORIAL_QA_RELEASE_BLOCKED")
           if not (raw.get("passed") is True and mix.get("passed") is True
                   and raw.get("lexical_coverage",0)>=.97
                   and mix.get("lexical_coverage",0)>=.97):

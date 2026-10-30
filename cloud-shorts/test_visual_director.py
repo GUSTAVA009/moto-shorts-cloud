@@ -50,6 +50,30 @@ class VisualDirectionTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError,"VISUAL_DURATION_SHORTAGE"):
             directed_plan(x,{"a":9,"b":9},21)
 
+    def test_publisher_visual_proof_prevents_faked_scenes(self):
+        import tempfile, json
+        from pathlib import Path
+        from visual_director import verified_visual_artifact
+        f=[video("a","man-putting-on-motorcycle-helmet",20),
+           video("b","motorcycle-riding-city",20)]
+        x=ep(f)
+        x["visual_director_version"]=2
+        with tempfile.TemporaryDirectory() as td:
+            mp4=Path(td)/"result.mp4"
+            with self.assertRaisesRegex(ValueError,"VISUAL_QA_MISSING"):
+                verified_visual_artifact(x,mp4)
+            good=directed_plan(x,{"a":20,"b":20},16)
+            proof={"version":2,"passed":True,"episode":x["id"],
+                   "subject":"helmet","sequence":good,
+                   "source_sequence":[p["source"] for p in good],
+                   "source_reused_in_short":False}
+            (Path(td)/"visual_qa.json").write_text(json.dumps(proof),encoding="utf8")
+            self.assertTrue(verified_visual_artifact(x,mp4)["passed"])
+            proof["source_sequence"]=["a","b","a"]
+            (Path(td)/"visual_qa.json").write_text(json.dumps(proof),encoding="utf8")
+            with self.assertRaisesRegex(ValueError,"VISUAL_QA_REJECTED"):
+                verified_visual_artifact(x,mp4)
+
     def test_object_mismatch_on_other_safety_guides(self):
         f=[video("a","road-motorcycle"),video("b","riding-in-town")]
         x=ep(f,title="Как проверить тормоза?")
