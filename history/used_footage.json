@@ -687,6 +687,16 @@
       "episode": "gustava-20-p01-20261030",
       "source": "https://www.pexels.com/video/man-doing-stunts-on-a-motorcycle-9607284/",
       "status": "reserved-or-rendered"
+    },
+    "8275232": {
+      "episode": "gustava-20-f02-20261030",
+      "source": "https://www.pexels.com/video/bikers-driving-around-traffic-cones-in-an-empty-parking-lot-8275232/",
+      "status": "reserved-or-rendered"
+    },
+    "30767687": {
+      "episode": "gustava-20-f02-20261030",
+      "source": "https://www.pexels.com/video/motorbikers-training-on-outdoor-course-30767687/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1004,6 +1014,13 @@
       "story": "show-jump-versus-street-stunt",
       "visual": "airborne-and-urban-trick",
       "bike": "fmx-freestyle-bike"
+    },
+    "gustava-20-f02-20261030": {
+      "environment": "parking-lot-and-field-course",
+      "people": "parking-trainees-and-field-riders",
+      "story": "cone-drill-versus-obstacle-training",
+      "visual": "cones-and-outdoor-course",
+      "bike": "training-motorbike"
     }
   }
 }
