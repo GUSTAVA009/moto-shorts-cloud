@@ -483,7 +483,7 @@ def render(ep, output_dir):
         + "[soundbed][voice_duck]sidechaincompress=threshold=0.022:"
         "ratio=7:attack=8:release=240[ducked];"
         "[ducked][voice_mix]amix=inputs=2:duration=first:normalize=0,"
-        "alimiter=limit=0.92[a]"
+        "volume=6dB,alimiter=limit=0.92[a]"
     )
     run([
         "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
