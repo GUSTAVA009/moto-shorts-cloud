@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "verified_sent_count": 0,
+  "seen_buffer_sent_ids": {},
+  "active_batch": null,
+  "pending_batch": null,
+  "next_cursor": 0,
+  "last_polled_at": null,
+  "last_replenish_request_at": null,
+  "notes": "Count tracks Buffer status=sent since monitoring/bootstrap, not lifetime YouTube views."
+}
