@@ -4490,6 +4490,86 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_reserve_v3",
       "story_reserve_id": "r2-vintage-4307"
+    },
+    {
+      "id": "moto-helmet-fit-deep-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "title": "МОТОШЛЕМ: 3 проверки перед выездом 🪖 #shorts",
+      "narration": "Посмотри на шлем. Важна не только форма: он должен плотно сидеть и не мешать обзору. Перед поездкой проверь размер, застегни ремешок и убедись, что шлем не болтается. Внешний вид подождёт. А ты проверяешь посадку перед каждым выездом?",
+      "description": "Мотошлем — не просто деталь стиля. Посадка, ремешок и свободный обзор важны перед поездкой. В кадре — реальные мотоциклетные шлемы, снятые разными авторами.\n\n#мото #мотошлем #shorts",
+      "caption_start": "ПОСМОТРИ НА ШЛЕМ",
+      "caption_middle": "РАЗМЕР • РЕМЕШОК • ОБЗОР",
+      "caption_end": "А ТЫ ПРОВЕРЯЕШЬ?",
+      "max_duration_seconds": 22,
+      "opening_trim_seconds": 0,
+      "music_style": "action",
+      "music_bpm": 120,
+      "visual_director_version": 2,
+      "footage": [
+        {
+          "topics": [
+            "helmet",
+            "motocross"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5806206/",
+          "source_page": "https://www.pexels.com/video/close-up-shot-of-a-man-wearing-goggles-and-helmet-5806206/",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "duration": 8,
+          "source_title": "Close-up Shot of a Man Wearing Goggles and Helmet"
+        },
+        {
+          "topics": [
+            "helmet",
+            "roadtrip"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/5283463/",
+          "source_page": "https://www.pexels.com/video/man-riding-a-motorcycle-with-helmet-running-at-high-speed-5283463/",
+          "author": "K",
+          "license": "Pexels License",
+          "duration": 21,
+          "source_title": "Man Riding A Motorcycle With Helmet Running At High Speed"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 7.6
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 11.5
+        }
+      ],
+      "editorial": {
+        "environment": "helmet-closeup-20261030",
+        "bike": "helmet-safety-motorcycle",
+        "people": "helmet-riders-20261030",
+        "story": "helmet-fitting-guide-20261030",
+        "visual": "helmet-closeup-then-road"
+      },
+      "tags": [
+        "мото",
+        "мотошлем",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ОТВЕТ",
+        "description": "Напиши в комментариях, что проверяешь первым делом."
+      },
+      "source_selection": "Manually verified official Pexels pages with helmet visibly central, unique contributors",
+      "generation_provenance": "Original human-directed motorcycle safety guide, genuine Deep voice",
+      "editorial_review_note": "CONTROLLED PREVIEW: visual topic must be verified on rendered MP4; do not publish without video inspection."
     }
   ]
 }
