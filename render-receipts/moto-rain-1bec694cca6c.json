@@ -1,15 +1,9 @@
 {
   "id": "moto-rain-1bec694cca6c",
-  "state": "preview_ready",
-  "run_id": "41043082470",
-  "attempt_count": 2,
-  "preview_fingerprint": "012b6618f650e74eedc6e04d41c4e59d686606edb35c2e3e912ea85fd24c94cc",
-  "previous_run_id": "41014541497",
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": true,
-  "voice_qa_coverage": 0.976,
-  "voice_profile": "gustava_create_audio_deep_v1",
-  "male_voice_verified": true,
-  "mixed_audio_qa_passed": true,
-  "mixed_audio_qa_coverage": 0.976
+  "state": "reserved",
+  "run_id": "41044921730",
+  "attempt_count": 3,
+  "preview_fingerprint": "21662247e220c4a0fdd136c857ca5f247c3b8ccf5966df928651c6f3520f20cb",
+  "previous_run_id": "41043082470",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
