@@ -18,6 +18,14 @@ class PublisherShellTests(unittest.TestCase):
         self.assertIn("vars.BUFFER_AUTO_PUBLISH_ENABLED != 'false'", workflow)
         self.assertIn("BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED || 'true' }}", workflow)
 
+    def test_approved_catalog_change_wakes_buffer_sender(self):
+        # A normal catalog PR merge must not leave an editorially approved
+        # private MP4 stranded until the next arbitrary cron window.
+        workflow = source(".github/workflows/buffer-backlog.yml")
+        self.assertIn("- 'cloud-shorts/episodes.json'", workflow)
+        self.assertIn("Select one original, QA-passed, never-published video", workflow)
+        self.assertIn("find_pending_buffer.py", workflow)
+
     def test_daily_generation_never_directly_posts(self):
         workflow = source(".github/workflows/daily-preview.yml").casefold()
         self.assertNotIn("publora", workflow)

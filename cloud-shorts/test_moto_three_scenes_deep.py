@@ -23,7 +23,9 @@ class OriginalThreeScenesTests(unittest.TestCase):
         self.assertGreaterEqual(validate_catalog(CATALOG)["episodes"], 43)
         self.assertEqual(validate_episode(episode()), SLUG)
         self.assertEqual(episode()["voice_engine"], VOICE_ENGINE)
-        self.assertFalse(episode()["auto_publish"])
+        self.assertTrue(episode()["auto_publish"])
+        self.assertEqual(episode()["visual_revision_status"], "assistant_checked_passed")
+        self.assertEqual(episode()["release_source_run_id"], "41055691838")
 
     def test_three_separate_provider_identified_actions_not_repeated_stock(self):
         ep = episode()
