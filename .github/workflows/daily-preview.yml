@@ -186,3 +186,35 @@ jobs:
                   raise RuntimeError("GitHub did not accept Buffer dispatch")
           print("BUFFER_VERIFIED_DISPATCH_CONFIRMED",os.environ["EPISODE"],flush=True)
           PY
+      - name: Replenish next original DEEP preview from verified unrendered stock
+        if: ${{ always() && !cancelled() && steps.pick.outputs.has_job == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import base64, json, os, sys
+          from pathlib import Path
+          sys.path.insert(0, "cloud-shorts")
+          from autofill_catalog import github
+          from preview_batch_supply import pending_verified_previews
+          raw=github("GET", "contents/cloud-shorts/episodes.json?ref=main")
+          catalog=json.loads(base64.b64decode(raw["content"]))
+          tree=github("GET", "git/trees/render-ledger?recursive=1")
+          if tree.get("truncated"):
+              raise SystemExit("BATCH_SUPPLY_LEDGER_TRUNCATED: cannot safely dispatch")
+          reserved={Path(row["path"]).stem for row in tree["tree"]
+                    if row["path"].startswith("render-receipts/")
+                    and row["path"].endswith(".json")}
+          pending=pending_verified_previews(catalog,reserved)
+          print("REAL_DEEP_PENDING_RENDER_INVENTORY",
+                json.dumps({"count":len(pending),"ids":pending[:12]}),flush=True)
+          if pending:
+              github("POST","actions/workflows/daily-preview.yml/dispatches",
+                     {"ref":"main"})
+              print("NEXT_ORIGINAL_DEEP_RENDER_DISPATCHED",pending[0],flush=True)
+          else:
+              print("DEEP_RENDER_RESERVE_EXHAUSTED: only unvoiced drafts remain; "
+                    "no unauthorized narrator substitution",flush=True)
+          PY
+
