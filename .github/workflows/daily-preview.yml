@@ -7,6 +7,7 @@ on:
     # instead dispatched exactly once by the supplier/repair bots.
     paths: ['.github/workflows/daily-preview.yml']
   schedule:
+    # 100%-ASR-tested V6 baritone script selected; render against true final mix.
     # Bounded Pexels excerpt repair is active: verify first real bass-voice MP4.
     # Keyless story catalog refreshed; trigger one real publishability test.
     # 16 non-overlapping production attempts per day, 90 minutes apart (UTC).
