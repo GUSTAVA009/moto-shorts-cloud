@@ -3335,7 +3335,7 @@
       "voice_engine": "silero_mit_bass_baritone",
       "voice_profile": "gustava_native_bass_baritone_v6",
       "title": "Мотоцикл: лесная тропа — на что смотреть #shorts",
-      "narration": "Мотоцикл и лесная тропа: у каждого кадра свой характер. Выбор маршрута начинается не с скорости, а с понятного плана и оценки окружающей обстановки. А ты выбрал бы спокойную поездку или трассу?",
+      "narration": "Впереди лесная дорога и новый поворот. В дороге лучше смотреть вперёд и не спешить. Красивый маршрут требует внимания к деталям. Важно видеть покрытие и держать безопасную дистанцию. Тебе нравятся такие поездки?",
       "description": "Новые кадры на тему «лесная тропа».\n\n#shorts",
       "caption_start": "ЛЕСНАЯ ДОРОГА",
       "caption_middle": "СМОТРИ НА ДЕТАЛИ",
@@ -3454,7 +3454,7 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "offline_editorial_matrix_v1",
       "voice_revision_requested": true,
-      "voice_revision_note": "Owner rejected previous narrator; new authentic low male MIT actor only.",
+      "voice_revision_note": "Native ru_alexandr V6 text preflight: full 1.000 ASR coverage on run 41002870141, variant g_clear_road. Do not weaken original or final MP4 voice QA; source remains validated.",
       "source_revision_requested": true,
       "source_revision_reason": "oversized_source_bounded_stream",
       "source_revision_note": "Previous GitHub Actions run 40993235269 failed on a >350MB original Pexels file. Retry only the unpublished episode after bounded-source streaming implementation, then recheck licensed footage, motion and Russian bass-baritone ASR."
@@ -3524,17 +3524,17 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_2",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
@@ -3666,17 +3666,17 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
           "source": "clip_2",
-          "start": 0.0,
+          "start": 0,
           "seconds": 2.15
         },
         {
