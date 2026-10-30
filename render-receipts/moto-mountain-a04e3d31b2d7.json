@@ -1,9 +1,15 @@
 {
   "id": "moto-mountain-a04e3d31b2d7",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "41020085281",
   "attempt_count": 2,
   "preview_fingerprint": "0845ce8dfeed689c8a3654ee329dde137de2d37fa838f1f5b3cf807ad0707ca6",
   "previous_run_id": "41006624465",
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 1.0,
+  "voice_profile": "gustava_create_audio_deep_v1",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 1.0
 }
