@@ -1,0 +1,31 @@
+name: GUSTAVA - Correct Nonrequired YouTube AI Disclosure on Scheduled Real Footage
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/correct-youtube-ai-disclosures.yml'
+permissions:
+  contents: read
+
+concurrency:
+  group: gustava-buffer-verified-publishing
+  cancel-in-progress: false
+
+jobs:
+  correct:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unit test scope, permissions, exact channel, scheduling and unchanged media
+        run: |
+          python3 -m compileall -q cloud-shorts
+          python3 -m unittest discover -s cloud-shorts -p 'test_remove_false_ai_disclosures.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_buffer_autopublish.py' -v
+      - name: Change only nonrequired AI-generated flag for our queued real-stock Shorts
+        run: python3 cloud-shorts/remove_false_ai_disclosures.py
