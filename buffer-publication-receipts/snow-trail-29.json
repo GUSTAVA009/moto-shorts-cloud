@@ -2,8 +2,9 @@
   "episode": "snow-trail-29",
   "sha256": "fe0c2be3732879e68139939f178491ccd0b4af8b0522558de9ae2edcf0aaa1e9",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-snow-trail-29-fe0c2be37328/snow-trail-29.mp4",
-  "state": "queued",
+  "state": "cancelled_rejected_old_voice_owner_chose_deep",
   "warning": "Never retry unknown Buffer createPost",
   "buffer_post_id": "6ae3965b18a6132aaf6ce3c3",
-  "due_at": "2026-10-30T08:35:00.000Z"
+  "due_at": "2026-10-30T08:35:00.000Z",
+  "cancelled_reason": "Owner rejected old narrator and approved AI Doc Maker deep only"
 }
