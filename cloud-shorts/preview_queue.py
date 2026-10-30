@@ -246,6 +246,41 @@ def eligible_abandoned_audio_config_retry(episode, receipt, new_fingerprint, old
     return old_conclusion in ("failure", "cancelled", "timed_out")
 
 
+def eligible_abandoned_visual_duration_retry(episode, receipt, new_fingerprint, old_conclusion):
+    """One bounded retry for confirmed visual-duration failure on original Deep.
+
+    Never relax ASR, repeat footage, or authorize public release as a side effect.
+    """
+    if not isinstance(receipt, dict) or receipt.get("id") != episode.get("id"):
+        return False
+    if receipt.get("state") != "reserved" or old_conclusion not in (
+            "failure", "cancelled", "timed_out"):
+        return False
+    if (episode.get("visual_duration_revision_requested") is not True
+            or episode.get("visual_duration_revision_reason") !=
+                "two_active_moving_scenes_not_long_enough"):
+        return False
+    if (episode.get("auto_preview") is not True
+            or episode.get("auto_publish") is not False
+            or episode.get("voice_engine") != REQUIRED_MALE_ENGINE
+            or int(episode.get("visual_director_version") or 0) != 3):
+        return False
+    source_keys = {x.get("key") for x in episode.get("footage") or []}
+    shots = episode.get("shots") or []
+    if (len(source_keys) != 2 or len(shots) != 2
+            or {x.get("source") for x in shots} != source_keys):
+        return False
+    try:
+        cap = float(episode.get("active_ride_scene_seconds"))
+    except (TypeError, ValueError):
+        return False
+    if not 9.0 <= cap <= 10.0:
+        return False
+    attempts = receipt.get("attempt_count", 1)
+    return (type(attempts) is int and 1 <= attempts < MAX_ATTEMPTS
+            and receipt.get("preview_fingerprint") != new_fingerprint)
+
+
 def failed_action_conclusion(run_id):
     """Fail closed unless GitHub confirms the prior render job terminated."""
     token = os.environ.get("GITHUB_TOKEN", "").strip()
@@ -311,8 +346,9 @@ def choose(catalog, output):
     # safe audio-configuration repair. Never allow public/parallel retries.
     if selected is None:
         for item in listed:
-            if not (item.get("source_revision_requested") is True or
-                    item.get("technical_revision_requested") is True):
+            if not (item.get("source_revision_requested") is True
+                    or item.get("technical_revision_requested") is True
+                    or item.get("visual_duration_revision_requested") is True):
                 continue
             _, receipt = records[item["id"]]
             if not receipt or receipt.get("state") != "reserved":
@@ -323,8 +359,10 @@ def choose(catalog, output):
             if receipt.get("preview_fingerprint") == new_fp:
                 continue
             outcome = failed_action_conclusion(receipt.get("run_id"))
-            if (eligible_abandoned_source_retry(item, receipt, new_fp, outcome) or
-                    eligible_abandoned_audio_config_retry(item, receipt, new_fp, outcome)):
+            if (eligible_abandoned_source_retry(item, receipt, new_fp, outcome)
+                    or eligible_abandoned_audio_config_retry(item, receipt, new_fp, outcome)
+                    or eligible_abandoned_visual_duration_retry(
+                        item, receipt, new_fp, outcome)):
                 selected = item
                 break
     # Historical serial continuity: repair part one before beginning part two,
