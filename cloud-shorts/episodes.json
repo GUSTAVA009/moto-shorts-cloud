@@ -4811,7 +4811,7 @@
     },
     {
       "id": "moto-routes-contrast-deep-20261030",
-      "auto_preview": true,
+      "auto_preview": false,
       "auto_publish": false,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
@@ -4907,7 +4907,7 @@
       },
       "source_selection": "Distinct-author internal verified Pexels pool; visual review pending",
       "generation_provenance": "Original scene-first narration comparing independently filmed mountain and forest routes",
-      "editorial_review_note": "PREVIEW ONLY. Source activity and continuity need frame inspection before Buffer.",
+      "editorial_review_note": "OWNER REJECTED 2026-10-30: same mountain/forest visual narrative as previous channel videos. Preserve archival QA only; never queue this MP4 for Buffer or YouTube. Do not recycle/crop these frames as a new video.",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -4916,7 +4916,10 @@
         "source_audio_sha256": "a58aaf77055f0b178b25b259c27459800fa060cc76f1bc64a811b514c076625c",
         "context_id": "d799b98f7de742f9bc9360819fc90194",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_review_failed": true,
+      "editorial_rejected": true,
+      "editorial_rejection_reason": "owner_confirmed_repetitive_mountain_forest_scenic_montage_20261030"
     }
   ]
 }
