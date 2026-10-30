@@ -387,7 +387,7 @@
           "clip_duration_policy": "planned conservative cut; verify actual video duration via ffprobe"
         }
       ],
-      "voice_status": "not_generated",
+      "voice_status": "ready_unverified",
       "auto_preview": false,
       "auto_publish": false,
       "editorial_status": "awaiting_real_video_qa",
@@ -398,7 +398,10 @@
         "subscribers_per_1000_engaged": null,
         "shares": null,
         "comments": null
-      }
+      },
+      "voice_id": "deep",
+      "context_id": "562e2b62a2b14da78ad8b29a9f3ab928",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/9f0bcca7-ac7f-4d5e-8e8d-b4863da97f57.mp3"
     },
     {
       "id": "gustava-20-f03-20261030",
