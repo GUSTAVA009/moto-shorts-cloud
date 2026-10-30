@@ -1,15 +1,9 @@
 {
   "id": "moto-forest-4bd53e13fec4",
-  "state": "preview_ready",
-  "run_id": "41002009458",
-  "attempt_count": 2,
-  "preview_fingerprint": "a3c437a9354f9c5f5969bec1a61966af7caab8abbba2470bcd3d939515b2f7c3",
-  "previous_run_id": "40993235269",
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": false,
-  "voice_qa_coverage": 0.806,
-  "voice_profile": "gustava_native_bass_baritone_v6",
-  "male_voice_verified": true,
-  "mixed_audio_qa_passed": false,
-  "mixed_audio_qa_coverage": 0.839
+  "state": "reserved",
+  "run_id": "41003143277",
+  "attempt_count": 3,
+  "preview_fingerprint": "3e56b24572ba3d342904fc394a572cf0ded05c19b6b36d8886af3b5804e94d3b",
+  "previous_run_id": "41002009458",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
