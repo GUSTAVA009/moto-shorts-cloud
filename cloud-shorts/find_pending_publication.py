@@ -15,6 +15,7 @@ import base64
 
 import preview_queue as ledger
 from channel_focus import is_motorcycle_episode
+from editorial_novelty import is_repeated_visual_formula
 from deep_voice import (PROFILE_ID as REQUIRED_MALE_PROFILE,
                         VOICE_ENGINE as REQUIRED_MALE_ENGINE,
                         ready as deep_audio_ready)
@@ -40,6 +41,8 @@ def select(catalog, receipt_entries, published, artifacts):
     # Only newly reviewed native-Russian male Kokoro originals are eligible.
     allowed={ep["id"] for ep in catalog["episodes"]
              if ep.get("auto_publish") is True
+             and ep.get("editorial_rejected") is not True
+             and not is_repeated_visual_formula(ep, catalog["episodes"])
              and ep.get("voice_engine") == REQUIRED_MALE_ENGINE
              and ep.get("visual_review_failed") is not True
              and ep.get("visual_revision_requested") is not True

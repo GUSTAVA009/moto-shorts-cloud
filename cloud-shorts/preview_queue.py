@@ -23,6 +23,7 @@ EPISODES = Path(__file__).with_name("episodes.json")
 HISTORY_PATH = "history/used_footage.json"
 
 from editorial_guard import source_id, validate_catalog
+from editorial_novelty import is_repeated_visual_formula
 from visual_director import verify_story_subject
 from deep_voice import (PROFILE_ID as REQUIRED_MALE_PROFILE,
                         VOICE_ENGINE as REQUIRED_MALE_ENGINE,
@@ -308,6 +309,10 @@ def choose(catalog, output):
     listed = []
     for ep in data["episodes"]:
         if ep.get("auto_preview") is not True or not deep_audio_ready(ep):
+            continue
+        if (ep.get("editorial_rejected") is True
+                or is_repeated_visual_formula(ep, data["episodes"])):
+            print("REPETITIVE_VIDEO_BLOCKED", ep["id"], flush=True)
             continue
         try:
             verify_story_subject(ep)

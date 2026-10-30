@@ -63,6 +63,25 @@ class BufferBacklogTests(unittest.TestCase):
         self.assertIsNone(f.select_for_buffer(
             self.catalog, self.receipts, self.artifacts, []))
 
+    def test_empty_buffer_explains_unapproved_video_not_mysterious_success(self):
+        first = dict(self.catalog["episodes"][0], auto_publish=False)
+        second = dict(first, id="repeat-scenic", editorial_rejected=True,
+                      visual_review_failed=True)
+        waiting = dict(first, id="text-only", auto_preview=True,
+                       voice_engine="aidocmaker_deep")
+        state = f.explain_unavailable(
+            {"episodes":[first,second,waiting]},
+            [self.receipts[0]],
+            self.artifacts,
+            ["render-receipts/new-original-22.json"],
+        )
+        self.assertEqual(state["verified_mp4_previews"], 1)
+        self.assertEqual(state["approved_for_automatic_release"], 0)
+        self.assertEqual(state["unrendered_scripts_no_original_deep"], 1)
+        self.assertIn("new-original-22", state["private_preview_ids"])
+        self.assertIn("repeat-scenic", state["rejected_or_repeated_visual_ids"])
+        self.assertFalse(state["autonomous_deep_tts_connected"])
+
 
 if __name__ == "__main__":
     unittest.main()
