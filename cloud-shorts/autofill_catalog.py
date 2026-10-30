@@ -18,6 +18,7 @@ import urllib.request
 
 from editorial_guard import validate_catalog, source_id
 from render_episode import validate_episode
+from production_readiness import inventory, production_unavailable
 
 TARGET_PENDING_EPISODES = 10
 MAX_ADD_PER_RUN = 2
@@ -101,8 +102,16 @@ def main():
     # Never spend time/materials on unused videos if ten originals
     # are already awaiting rendering.
     if pending_originals(catalog, reserved) >= TARGET_PENDING_EPISODES:
-        print("STORY_BACKLOG_HEALTHY", pending_originals(catalog,reserved),
-              "unrendered original episodes")
+        state = inventory(catalog, reserved)
+        print("PRODUCTION_INVENTORY", json.dumps(state, ensure_ascii=False), flush=True)
+        if production_unavailable(state):
+            raise RuntimeError(
+                "AUTONOMOUS_DEEP_TTS_MISSING: script-only backlog is not MP4 "
+                "production stock; exact voice_id=deep needs independently "
+                "authorized unattended provider synthesis and pinned ASR")
+        print("SCRIPT_CAPACITY_HEALTHY_BUT_ONLY",
+              state["unrendered_verified_deep_originals"],
+              "real DEEP audio originals ready for renderer", flush=True)
         return 0
 
     import preview_queue as ledger
@@ -136,7 +145,14 @@ def main():
         catalog, slug = selection
         added.append(slug)
     if not added:
-        print("BACKLOG_HEALTHY: no new original is needed")
+        state = inventory(catalog, reserved)
+        print("PRODUCTION_INVENTORY", json.dumps(state, ensure_ascii=False), flush=True)
+        if production_unavailable(state):
+            raise RuntimeError(
+                "AUTONOMOUS_DEEP_TTS_MISSING: no new, hash-pinned DEEP audio "
+                "to render; a script reserve is not an autonomous Shorts farm")
+        print("NO_MORE_SCRIPTS_REQUIRED_RIGHT_NOW: verified DEEP previews",
+              state["unrendered_verified_deep_originals"], flush=True)
         return 0
 
     content = base64.b64encode((json.dumps(catalog, ensure_ascii=False, indent=2)
@@ -145,8 +161,16 @@ def main():
         "message": "Stock rolling ten originals: " + ", ".join(added),
         "branch": "main", "sha": data["sha"], "content": content
     })
+    state = inventory(catalog, reserved)
     print("NEW_STORIES_ADDED", len(added), added,
           "unrendered_backlog", pending_originals(catalog, reserved), flush=True)
+    print("PRODUCTION_INVENTORY", json.dumps(state, ensure_ascii=False), flush=True)
+    if production_unavailable(state):
+        # Persist distinct scripts, but NEVER run a doomed renderer with no
+        # genuine GUSTAVA DEEP, and never claim another Short was generated.
+        raise RuntimeError(
+            "NEW_SCRIPTS_AWAITING_ORIGINAL_DEEP: provider voice_id=deep "
+            "has no unattended API connection; 0 new MP4 were generated")
     # GITHUB_TOKEN commits intentionally do not activate push workflows.
     # Dispatch exactly one safe renderer. Further attempts run by schedule.
     if os.getenv("GITHUB_EVENT_NAME") == "schedule":
