@@ -602,6 +602,21 @@
       "episode": "moto-helmet-fit-deep-20261030",
       "source": "https://www.pexels.com/video/man-wearing-a-helmet-9606651/",
       "status": "reserved-or-rendered"
+    },
+    "9607103": {
+      "episode": "moto-riding-ritual-deep-20261030",
+      "source": "https://www.pexels.com/video/woman-closing-the-visor-of-her-helmet-9607103/",
+      "status": "reserved-or-rendered"
+    },
+    "4608281": {
+      "episode": "moto-riding-ritual-deep-20261030",
+      "source": "https://www.pexels.com/video/man-wearing-a-helmet-while-traveling-on-a-motorbike-4608281/",
+      "status": "reserved-or-rendered"
+    },
+    "5803211": {
+      "episode": "moto-riding-ritual-deep-20261030",
+      "source": "https://www.pexels.com/video/man-removing-his-helmet-and-smiling-5803211/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -870,6 +885,13 @@
       "people": "helmet-riders-20261030",
       "story": "helmet-fitting-guide-20261030",
       "visual": "helmet-closeup-adjustment-riding-three-scenes"
+    },
+    "moto-riding-ritual-deep-20261030": {
+      "environment": "urban-road-finish-ritual-20261030",
+      "bike": "traveling-motorcycle",
+      "people": "three-independent-riders-ritual",
+      "story": "start-road-finish-ritual-20261030",
+      "visual": "visor-road-helmetoff-three-20261030"
     }
   }
 }
