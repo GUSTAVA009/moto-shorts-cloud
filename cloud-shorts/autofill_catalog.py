@@ -19,6 +19,7 @@ import urllib.request
 from editorial_guard import validate_catalog, source_id
 from render_episode import validate_episode
 from production_readiness import inventory, production_unavailable
+from editorial_novelty import require_novel_visual_story
 
 TARGET_PENDING_EPISODES = 10
 MAX_ADD_PER_RUN = 2
@@ -43,6 +44,7 @@ def candidate(catalog, seed_bank, reserved_ids, target=2):
         if scene["id"] in used:
             continue
         validate_episode(scene)
+        require_novel_visual_story(scene, episodes)
         if any(source_id(media) in used_media for media in scene["footage"]):
             raise ValueError("Seed footage already used; manual research needed")
         new_catalog = dict(catalog, episodes=episodes + [scene])
