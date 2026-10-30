@@ -1,15 +1,9 @@
 {
   "id": "moto-helmet-fit-deep-20261030",
-  "state": "preview_ready",
-  "run_id": "41026454326",
-  "attempt_count": 1,
-  "preview_fingerprint": "b0a04d2736adcdc5bc45206b87fc375a5737f1c94ad025f5daa4f8b7d33c0a0e",
-  "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": true,
-  "voice_qa_coverage": 1.0,
-  "voice_profile": "gustava_create_audio_deep_v1",
-  "male_voice_verified": true,
-  "mixed_audio_qa_passed": true,
-  "mixed_audio_qa_coverage": 1.0
+  "state": "reserved",
+  "run_id": "41026998816",
+  "attempt_count": 2,
+  "preview_fingerprint": "c7d5c88146297616013d2b0e32e829196ff11be7d0d543acfd53c89b742f0e6c",
+  "previous_run_id": "41026454326",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
