@@ -10,12 +10,25 @@ class BacklogTests(unittest.TestCase):
                              "narration":"Мотоцикл проходит поворот.",
                              "editorial":{"bike":"offroad-trail-motorcycle"}},
                              {"id":"old-ep-02","auto_publish":False}]}
-        receipts=[{"id":"a-new-01","state":"preview_ready","voice_qa_passed":True,"mixed_audio_qa_passed":True,"voice_profile":"gustava_male_deep_v2","male_voice_verified":True,"run_id":"42"},
+        receipts=[{"id":"a-new-01","state":"preview_ready","voice_qa_passed":True,"mixed_audio_qa_passed":True,"voice_profile":"gustava_male_deep_v3","male_voice_verified":True,"run_id":"42"},
                   {"id":"old-ep-02","state":"preview_ready","voice_qa_passed":True,"mixed_audio_qa_passed":True,"run_id":"51"}]
         assets=[{"name":"daily-preview-a-new-01-42","expired":False},
                 {"name":"daily-preview-old-ep-02-51","expired":False}]
         self.assertEqual(q.select(catalog,receipts,set(),assets),(42,"a-new-01","daily-preview-a-new-01-42"))
         self.assertIsNone(q.select(catalog,receipts,{"a-new-01"},assets))
+
+    def test_old_v2_voice_profile_no_longer_valid(self):
+        catalog={"episodes":[{"id":"a-new-01","auto_publish":True,
+                              "voice_engine":"kokoro_ru_dima",
+                              "title":"Мотоцикл на трассе",
+                              "narration":"Мотоцикл проходит поворот.",
+                              "editorial":{"bike":"offroad-trail-motorcycle"}}]}
+        receipts=[{"id":"a-new-01","state":"preview_ready",
+                   "voice_qa_passed":True,"mixed_audio_qa_passed":True,
+                   "voice_profile":"gustava_male_deep_v2",
+                   "male_voice_verified":True,"run_id":"42"}]
+        artifacts=[{"name":"daily-preview-a-new-01-42","expired":False}]
+        self.assertIsNone(q.select(catalog,receipts,set(),artifacts))
 
     def test_old_bright_male_profile_never_auto_releases(self):
         catalog={"episodes":[{"id":"bright-voice","auto_publish":True,"voice_engine":"kokoro_ru_dima",
