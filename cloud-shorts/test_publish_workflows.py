@@ -25,6 +25,15 @@ class PublisherShellTests(unittest.TestCase):
         self.assertNotIn("publishnow", workflow)
         self.assertIn("upload-artifact@v4", workflow)
 
+    def test_passed_mp4_dispatches_verified_sender_without_deep_workflow_chain(self):
+        preview = source(".github/workflows/daily-preview.yml")
+        self.assertIn("actions: write", preview)
+        self.assertIn("success() && steps.pick.outputs.has_job == 'true'", preview)
+        self.assertIn("/actions/workflows/buffer-backlog.yml/dispatches", preview)
+        self.assertIn('"ref":"main"', preview)
+        self.assertIn("BUFFER_VERIFIED_DISPATCH_CONFIRMED", preview)
+        self.assertNotIn("buffer_autopublish.py --episode", preview)
+
     def test_no_legacy_scheduled_publisher(self):
         self.assertFalse((ROOT / ".github/workflows/publora-backlog.yml").exists())
         active = (ROOT / ".github/workflows").glob("*.yml")

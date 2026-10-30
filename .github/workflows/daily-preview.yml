@@ -21,7 +21,7 @@ on:
 
 permissions:
   contents: write
-  actions: read
+  actions: write
 
 concurrency:
   group: moto-shorts-unique-preview-queue
@@ -133,3 +133,32 @@ jobs:
             echo "QUEUE_EMPTY: zero new videos generated. Add new unique rights-cleared scripts and footage; do not report as publishing success." >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
+
+      - name: Dispatch idempotent Buffer publisher only after genuine passing MP4
+        if: ${{ success() && steps.pick.outputs.has_job == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          EPISODE: ${{ steps.pick.outputs.episode }}
+        run: |
+          python3 - <<'PY'
+          import json,os,urllib.request
+          repo=os.environ["GITHUB_REPOSITORY"]
+          if repo != "GUSTAVA009/moto-shorts-cloud":
+              raise SystemExit("Wrong repository for Buffer dispatch")
+          token=os.environ["GH_TOKEN"]
+          if not token:
+              raise SystemExit("Cannot dispatch publisher without GitHub token")
+          req=urllib.request.Request(
+              "https://api.github.com/repos/"+repo+
+              "/actions/workflows/buffer-backlog.yml/dispatches",
+              data=json.dumps({"ref":"main"}).encode("utf8"),
+              headers={"Authorization":"Bearer "+token,
+                       "Accept":"application/vnd.github+json",
+                       "User-Agent":"gustava-verified-mp4-publisher"},
+              method="POST")
+          with urllib.request.urlopen(req,timeout=35) as response:
+              if response.status != 204:
+                  raise RuntimeError("GitHub did not accept Buffer dispatch")
+          print("BUFFER_VERIFIED_DISPATCH_CONFIRMED",os.environ["EPISODE"],flush=True)
+          PY
