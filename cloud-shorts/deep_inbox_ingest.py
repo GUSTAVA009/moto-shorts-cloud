@@ -66,6 +66,39 @@ def assess(record, episode, folder):
                 "asr_engine":engine,"lexical_coverage":qa["lexical_coverage"],
                 "passed":True}
 
+
+def inspect_candidates(items, episodes, folder, assessor=assess):
+    """One unclear recording may not block other independently approved Deep.
+
+    Any untrusted provider, unexpected source failure, or catalog error remains
+    fatal. Never relax lexical ASR or misrepresent a rejected audio as ready.
+    """
+    changes, rejected = [], []
+    for item in items:
+        ep=episodes.get(item["episode_id"])
+        if ep is None:
+            raise ValueError("Unknown queued episode")
+        assert_candidate(item,ep)  # Always verify identity before any skipping.
+        if ep.get("deep_audio"):
+            if not ready(ep):
+                raise ValueError("Existing unready Deep: do not overwrite")
+            print("DEEP_ALREADY_PINNED",ep["id"],flush=True)
+            continue
+        try:
+            asset, proof=assessor(item,ep,folder)
+        except RuntimeError as exc:
+            if not str(exc).startswith("DEEP_ASR_REJECTED:"):
+                raise
+            rejected.append({"episode":ep["id"],"reason":str(exc)[:620]})
+            print("DEEP_INBOX_ASR_BLOCKED",ep["id"],str(exc)[:620],flush=True)
+            continue
+        fresh=dict(ep,narration=item["narration"],
+                   title=item.get("title") or ep["title"],
+                   voice_profile=PROFILE_ID,deep_audio=asset)
+        validate_episode(fresh)
+        changes.append((ep["id"],fresh,proof))
+    return changes,rejected
+
 def main():
     if os.environ.get("GITHUB_REPOSITORY")!="GUSTAVA009/moto-shorts-cloud":
         raise RuntimeError("Repository mismatch")
@@ -83,23 +116,13 @@ def main():
     completed=[]
     with tempfile.TemporaryDirectory() as folder:
         # Verify *all* first, so one bad voice cannot partly update the catalog.
-        changes=[]
-        for item in items:
-            ep=episodes.get(item["episode_id"])
-            if ep is None:
-                raise ValueError("Unknown queued episode")
-            if ep.get("deep_audio"):
-                if not ready(ep):
-                    raise ValueError("Existing unready Deep: do not overwrite")
-                print("DEEP_ALREADY_PINNED",ep["id"],flush=True)
-                continue
-            asset, proof=assess(item,ep,folder)
-            fresh=dict(ep,narration=item["narration"],
-                       title=item.get("title") or ep["title"],
-                       voice_profile=PROFILE_ID,deep_audio=asset)
-            validate_episode(fresh)
-            changes.append((ep["id"],fresh,proof))
+        changes,rejected=inspect_candidates(items,episodes,folder)
+        if rejected:
+            print("DEEP_INBOX_REJECTED_COUNT",len(rejected),
+                  "These clips are NOT approved for publication.",flush=True)
         if not changes:
+            if rejected:
+                raise RuntimeError("DEEP_INBOX_NO_PASSING_AUDIO: all unpinned candidates rejected")
             print("DEEP_INBOX_NO_NEW_AUDIO")
             return 0
         for key,new,proof in changes:
