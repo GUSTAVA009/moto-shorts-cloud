@@ -1,0 +1,26 @@
+name: GUSTAVA - Cancel Misleading Scheduled Helmet (Owner Rejected)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cancel-misleading-helmet.yml'
+permissions:
+  contents: write
+concurrency:
+  group: gustava-buffer-verified-publishing
+  cancel-in-progress: false
+jobs:
+  cancel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify exact user-rejected episode, post ID, and scheduled-only rule
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_cancel_misleading_helmet.py' -v
+      - name: Cancel exact rejected future post only if live Buffer permits
+        run: python3 cloud-shorts/cancel_misleading_helmet.py
