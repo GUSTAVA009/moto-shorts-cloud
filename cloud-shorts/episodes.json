@@ -4920,6 +4920,95 @@
       "visual_review_failed": true,
       "editorial_rejected": true,
       "editorial_rejection_reason": "owner_confirmed_repetitive_mountain_forest_scenic_montage_20261030"
+    },
+    {
+      "id": "moto-moto-life-three-scenes-deep-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "Три стороны мотожизни: что ближе тебе? 🏍️ #shorts",
+      "narration": "Что в мотоциклах цепляет сильнее всего? В салоне двое радуются сделке. У гаража другие обсуждают байк. А в городе райдер выполняет трюк. Это три разных момента, а не история одного человека. Что ближе тебе: первый выбор, разговоры о технике или красивое мастерство?",
+      "description": "Что объединяет покупку мотоцикла, разговор у гаража и городской трюк? Три самостоятельных момента с разными людьми, а не съёмка одной истории. Трюк выполнен райдером; не повторяйте его на дорогах общего пользования.\n\n#мото #мотожизнь #мотоциклы #shorts",
+      "caption_start": "ЧТО ЦЕПЛЯЕТ В МОТО?",
+      "caption_middle": "ПОКУПКА • ОБЩЕНИЕ • МАСТЕРСТВО",
+      "caption_end": "ЧТО БЛИЖЕ ТЕБЕ?",
+      "max_duration_seconds": 25,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 110,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5450253/",
+          "source_page": "https://www.pexels.com/video/men-doing-high-five-at-a-motorcycle-showroom-5450253/",
+          "author": "Gustavo Fring",
+          "license": "Pexels License",
+          "duration": 12,
+          "source_title": "Men Doing High Five at a Motorcycle Showroom"
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/8551066/",
+          "source_page": "https://www.pexels.com/video/men-talking-about-motorcycle-8551066/",
+          "author": "Kindel Media",
+          "license": "Pexels License",
+          "duration": 13,
+          "source_title": "Men Talking About Motorcycle"
+        },
+        {
+          "key": "clip_2",
+          "url": "https://www.pexels.com/download/video/9607278/",
+          "source_page": "https://www.pexels.com/video/a-man-performing-stunts-with-his-motorbike-9607278/",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 24,
+          "source_title": "A Man Performing Stunts with his Motorbike"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 8
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 8
+        },
+        {
+          "source": "clip_2",
+          "start": 0,
+          "seconds": 8
+        }
+      ],
+      "editorial": {
+        "environment": "showroom-garage-urban-stunt",
+        "bike": "motorcycle-culture-three-settings",
+        "people": "different-showroom-garage-stunt-riders",
+        "story": "three-different-sides-of-motorcycling",
+        "visual": "high-five-bike-discussion-city-stunt"
+      },
+      "editorial_format": "factually honest three-independent-scene motorcycle culture story",
+      "tags": [
+        "мото",
+        "мотожизнь",
+        "мотоциклы",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "ПОКУПКА, ГАРАЖ ИЛИ ТРЮК?",
+        "description": "Расскажи, какая из трёх сторон мотожизни тебе ближе."
+      },
+      "source_selection": "2026-10-30 verified 3 new Pexels clip IDs, distinct authors and commercial-use Pexels License; source IDs checked against main catalog and render-ledger history. No claim of one event.",
+      "generation_provenance": "Exact preexisting user-approved Create Audio Voice deep clip; no duplicate TTS call, original Russian transcript retained unchanged.",
+      "editorial_review_note": "PR / PREVIEW ONLY. Do not publish. On merge, GitHub deep-inbox-ingest must independently download and pin MP3 SHA, pass Russian ASR >=0.97, then rendering must verify real visual actions, music rights and final mix. Attribution to AI Doc Maker must remain until paid commercial waiver is proven.",
+      "deep_audio_pending_context_id": "a97cd6f656ec46fe9b619e297663c987"
     }
   ]
 }
