@@ -1,6 +1,13 @@
 ## Regression: native licensed bass baritone replaces rejected Kokoro vocal for new Shorts.
 name: Shorts Factory - Fast Code and Episode Checks
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'cloud-shorts/episodes.json'
+      - 'cloud-shorts/deep-voice-inbox.json'
+      - 'cloud-shorts/test_*.py'
+      - '.github/workflows/validate-pipeline.yml'
   push:
     branches: [main]
     paths:
