@@ -1,9 +1,9 @@
 {
   "id": "moto-motocross-a5697d86523a",
   "state": "reserved",
-  "run_id": "41005799921",
-  "attempt_count": 2,
-  "preview_fingerprint": "f1e1405e40b8732e53c7e4aff3dff5fa9d717ca458883fbb871353f80cb228e7",
-  "previous_run_id": "41002476474",
+  "run_id": "41006286371",
+  "attempt_count": 3,
+  "preview_fingerprint": "02d76050bc0310d6d66867b2c36cde6af0c7a587859e8a76ac44cbd60f8105c4",
+  "previous_run_id": "41005799921",
   "notes": "Revised preview only; never retry a public or uncertain upload."
 }
