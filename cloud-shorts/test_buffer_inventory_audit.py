@@ -8,7 +8,8 @@ class BufferPostInventoryTests(unittest.TestCase):
           {"episode":"b","buffer_post_id":"bb","state":"queued","due_at":"2026-10-29T19:00Z"},
           {"episode":"c","buffer_post_id":"cc","state":"queued","due_at":"2026-10-29T20:00Z"}
         ]
-        posts=[{"id":"aa","status":"sent"},{"id":"bb","status":"error"}]
+        posts=[{"id":"aa","status":"sent","dueAt":"2026-10-29T18:00Z"},
+               {"id":"bb","status":"error","dueAt":"2026-10-29T19:00Z"}]
         x=a.check_receipts(receipts,posts)
         self.assertEqual(x["receipt_posts_by_buffer_status"],{"sent":1,"error":1})
         self.assertEqual(x["missing_count"],1)
