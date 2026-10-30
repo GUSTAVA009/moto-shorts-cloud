@@ -697,6 +697,16 @@
       "episode": "gustava-20-f02-20261030",
       "source": "https://www.pexels.com/video/motorbikers-training-on-outdoor-course-30767687/",
       "status": "reserved-or-rendered"
+    },
+    "12405928": {
+      "episode": "gustava-20-s02-20261030",
+      "source": "https://www.pexels.com/video/a-smiling-young-woman-putting-on-a-helmet-12405928/",
+      "status": "reserved-or-rendered"
+    },
+    "33109039": {
+      "episode": "gustava-20-s02-20261030",
+      "source": "https://www.pexels.com/video/motorcyclist-riding-sport-bike-on-open-highway-33109039/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1021,6 +1031,13 @@
       "story": "cone-drill-versus-obstacle-training",
       "visual": "cones-and-outdoor-course",
       "bike": "training-motorbike"
+    },
+    "gustava-20-s02-20261030": {
+      "environment": "scooter-helmet-and-open-highway",
+      "people": "scooter-woman-and-road-sport-rider",
+      "story": "cheerful-helmet-preparation-vs-ride",
+      "visual": "helmet-smile-and-road-riding",
+      "bike": "scooter-and-sportbike"
     }
   }
 }
