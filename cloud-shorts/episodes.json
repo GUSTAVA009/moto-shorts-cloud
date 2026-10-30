@@ -4711,6 +4711,188 @@
       "visual_review_note": "Real rendered MP4 GitHub Actions run 41031636044. Verified at 0.4-3.5s real visor closure, 4.3-7.9s moving reflected road, 8.4-11.8s rider lifts helmet off head. Speech and final mix ASR lexical coverage 1.0. Not user-approved for publication.",
       "auto_publish_reason": "Owner requested unattended Buffer delivery of QA-verified Shorts on 2026-10-30; final MP4 reviewed, no previously rejected videos released",
       "release_source_run_id": "41031636044"
+    },
+    {
+      "id": "moto-city-contrast-deep-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "Город на мотоцикле: утро или поток машин? 🏍️ #shorts",
+      "narration": "В городе мотоцикл кажется самым свободным транспортом. Но сравни два кадра: плотный поток и утренний маршрут. Разный свет, разная обстановка — и везде важны обзор и дистанция. А где ты предпочёл бы ездить?",
+      "description": "Два независимых городских маршрута на мотоциклах: плотное движение и утренний свет. Сравнение обстановки, а не запись одного события.\n\n#мото #город #shorts",
+      "caption_start": "ГОРОД НА МОТОЦИКЛЕ",
+      "caption_middle": "УТРО ИЛИ ПЛОТНЫЙ ПОТОК?",
+      "caption_end": "ГДЕ ТЫ БЫ ПОЕХАЛ?",
+      "max_duration_seconds": 20,
+      "opening_trim_seconds": 0,
+      "music_style": "night-drive",
+      "music_bpm": 112,
+      "footage": [
+        {
+          "topics": [
+            "city",
+            "roadtrip"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/36067565/",
+          "source_page": "https://www.pexels.com/video/urban-street-ride-on-motorcycle-in-busy-city-36067565/",
+          "author": "Airam Dato-on",
+          "license": "Pexels License",
+          "duration": 25,
+          "source_title": "urban street ride on motorcycle in busy city"
+        },
+        {
+          "topics": [
+            "city",
+            "roadtrip"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/35613949/",
+          "source_page": "https://www.pexels.com/video/sunrise-commute-motorcycle-ride-in-bustling-city-35613949/",
+          "author": "Shital Khadgi",
+          "license": "Pexels License",
+          "duration": 29,
+          "source_title": "sunrise commute motorcycle ride in bustling city"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 8
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 8
+        }
+      ],
+      "editorial": {
+        "environment": "urban-commute-contrast-20261030",
+        "bike": "urban-commuting-motorcycle",
+        "people": "two-unrelated-commuters-20261030",
+        "story": "busy-versus-morning-city-route",
+        "visual": "two-different-city-motorcycle-rides"
+      },
+      "editorial_format": "original two-scene urban-riding comparison",
+      "tags": [
+        "мото",
+        "мотоциклы",
+        "город",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь реальные истории о мотоциклах."
+      },
+      "source_selection": "Distinct-author internal verified Pexels pool; visual review pending",
+      "generation_provenance": "Original scene-first narration, separate non-consecutive stock clips",
+      "editorial_review_note": "PREVIEW ONLY. Actual frames and pace must pass visual QA before Buffer."
+    },
+    {
+      "id": "moto-routes-contrast-deep-20261030",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "Горы или осенний лес? Выбери дорогу 🏍️ #shorts",
+      "narration": "Горы или осенний лес — где ты хотел бы ехать на мотоцикле? Сначала два разных горных маршрута, затем дорога среди деревьев. На видео красиво, но каждый поворот открывает новую обстановку. Не гонись за скоростью, выбирай свой ритм. Какой маршрут твой?",
+      "description": "Три независимых маршрута на мотоцикле: горные дороги и осенний лес. Кадры иллюстрируют разные места, не одну поездку.\n\n#мото #путешествие #shorts",
+      "caption_start": "ГОРЫ ИЛИ ОСЕННИЙ ЛЕС?",
+      "caption_middle": "ТРИ РАЗНЫХ МАРШРУТА",
+      "caption_end": "КУДА ТЫ ПОЕХАЛ БЫ?",
+      "max_duration_seconds": 26,
+      "opening_trim_seconds": 0,
+      "music_style": "action",
+      "music_bpm": 108,
+      "footage": [
+        {
+          "topics": [
+            "mountain",
+            "roadtrip"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/32659150/",
+          "source_page": "https://www.pexels.com/video/epic-motorcycle-road-trip-through-ladakh-mountains-32659150/",
+          "author": "Ex Route Adventures",
+          "license": "Pexels License",
+          "duration": 28,
+          "source_title": "epic motorcycle road trip through ladakh mountains"
+        },
+        {
+          "topics": [
+            "mountain",
+            "roadtrip"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/5053054/",
+          "source_page": "https://www.pexels.com/video/motorcycle-touring-on-mountains-5053054/",
+          "author": "Pavel Danilyuk",
+          "license": "Pexels License",
+          "duration": 28,
+          "source_title": "motorcycle touring on mountains"
+        },
+        {
+          "topics": [
+            "forest",
+            "roadtrip"
+          ],
+          "key": "clip_2",
+          "url": "https://www.pexels.com/download/video/34311538/",
+          "source_page": "https://www.pexels.com/video/motorcycle-ride-through-scenic-autumn-forest-34311538/",
+          "author": "Tom Jurman",
+          "license": "Pexels License",
+          "duration": 117,
+          "source_title": "motorcycle ride through scenic autumn forest"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 8
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 8
+        },
+        {
+          "source": "clip_2",
+          "start": 0,
+          "seconds": 8
+        }
+      ],
+      "editorial": {
+        "environment": "mountains-and-autumn-forest-20261030",
+        "bike": "adventure-touring-motorcycle",
+        "people": "three-different-route-riders",
+        "story": "mountain-versus-forest-ride-comparison",
+        "visual": "three-independently-filmed-routes-20261030"
+      },
+      "editorial_format": "original three-scene route comparison",
+      "tags": [
+        "мото",
+        "туринг",
+        "путешествия",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МАРШРУТ? ЛАЙК!",
+        "description": "Поставь лайк, если хочешь больше необычных мотомаршрутов."
+      },
+      "source_selection": "Distinct-author internal verified Pexels pool; visual review pending",
+      "generation_provenance": "Original scene-first narration comparing independently filmed mountain and forest routes",
+      "editorial_review_note": "PREVIEW ONLY. Source activity and continuity need frame inspection before Buffer."
     }
   ]
 }
