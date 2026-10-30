@@ -8,6 +8,9 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/buffer-backlog.yml'
+      # Editor-approved release is the moment a private, QA-passed preview
+      # becomes eligible to enter the real Buffer schedule.
+      - 'cloud-shorts/episodes.json'
       - 'cloud-shorts/buffer_autopublish.py'
       - 'cloud-shorts/publication_safety.py'
       - 'cloud-shorts/find_pending_buffer.py'
