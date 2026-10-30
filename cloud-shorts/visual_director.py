@@ -7,6 +7,7 @@ as helmet footage. Scenes show each source once rather than ping-pong edits.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -76,6 +77,20 @@ def provider_slug(source):
     return urlparse(str(source.get("source_page") or "")).path.lower()
 
 
+def visual_asset_fingerprint(episode):
+    """Bind a human review to precise script, scene URLs, and action plan."""
+    data={
+        "narration":episode.get("narration"),
+        "footage":[{field:s.get(field) for field in ("key","source_page","url")}
+                   for s in episode.get("footage") or []],
+        "shots":episode.get("shots") or [],
+        "visual_beats":episode.get("visual_beats") or [],
+    }
+    return hashlib.sha256(json.dumps(
+        data,ensure_ascii=False,sort_keys=True,separators=(",",":")
+    ).encode("utf8")).hexdigest()
+
+
 def verify_action_storyboard(episode):
     """No tutorial release based solely on a nice helmet close-up."""
     actions=instructional_claims(episode)
@@ -104,7 +119,7 @@ def verify_action_storyboard(episode):
     if episode.get("auto_publish") is True:
         evidence=episode.get("visual_review") or {}
         if (evidence.get("status")!="human_approved"
-                or evidence.get("asset_revision")!=episode.get("visual_asset_revision")):
+                or evidence.get("asset_fingerprint")!=visual_asset_fingerprint(episode)):
             raise ValueError(
                 "VISUAL_REVIEW_REQUIRED: metadata cannot prove helmet fastening "
                 "or fit; a video-frame reviewer must approve exact assets."
@@ -118,7 +133,7 @@ def scene_duration_limit(episode, source):
         return MAX_SCENE_SECONDS
     slug=provider_slug(source)
     if PASSIVE_PORTRAIT.search(slug) and not VISIBLE_ACTION.search(slug):
-        return 3.0
+        return 3.5
     if VISIBLE_ACTION.search(slug) and not re.search(r"riding|race|ride",slug):
         return 5.2
     return 7.0
@@ -250,9 +265,11 @@ def verified_visual_artifact(episode, mp4_path):
     seq=obj.get("source_sequence") or []
     plan=obj.get("sequence") or []
     known={x["key"] for x in episode["footage"]}
-    if (obj.get("version")!=2 or obj.get("passed") is not True
+    expected_version=(3 if int(episode.get("visual_director_version") or 0)>=3 else 2)
+    max_scenes=(5 if expected_version==3 else 3)
+    if (obj.get("version")!=expected_version or obj.get("passed") is not True
             or obj.get("episode")!=episode["id"]
-            or not 2<=len(seq)<=3
+            or not 2<=len(seq)<=max_scenes
             or len(set(seq))!=len(seq)
             or set(seq)-known or len(plan)!=len(seq)
             or [p.get("source") for p in plan]!=seq

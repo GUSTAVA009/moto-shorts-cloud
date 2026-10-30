@@ -128,8 +128,9 @@ jobs:
           mix=json.loads((base/"mixed_audio_qa.json").read_text(encoding="utf8"))
           visual=json.loads((base/"visual_qa.json").read_text(encoding="utf8"))
           sequence=visual.get("source_sequence") or []
-          if not (visual.get("version")==2 and visual.get("passed") is True
-                  and visual.get("episode")==episode and 2<=len(sequence)<=3
+          if not (visual.get("version") in (2,3) and visual.get("passed") is True
+                  and visual.get("episode")==episode and 2<=len(sequence)<=5
+                  and (len(sequence)<=3 or visual["version"]==3)
                   and len(set(sequence))==len(sequence)):
               raise SystemExit("VISUAL_EDITORIAL_QA_RELEASE_BLOCKED")
           if not (raw.get("passed") is True and mix.get("passed") is True

@@ -105,7 +105,7 @@ class VisualDirectionTests(unittest.TestCase):
         from visual_director import scene_duration_limit
         e={"visual_director_version":3}
         self.assertLessEqual(scene_duration_limit(
-            e,video("a","close-up-shot-of-a-man-wearing-helmet")),3.0)
+            e,video("a","close-up-shot-of-a-man-wearing-helmet")),3.5)
         self.assertGreater(scene_duration_limit(
             e,video("b","biker-riding-motorcycle")),3.3)
 
@@ -123,9 +123,14 @@ class VisualDirectionTests(unittest.TestCase):
                            {"action":"helmet_strap","source":"strap"}]}
         with self.assertRaisesRegex(ValueError,"VISUAL_REVIEW_REQUIRED"):
             verify_action_storyboard(x)
-        x["visual_asset_revision"]="abc123"
-        x["visual_review"]={"status":"human_approved","asset_revision":"abc123"}
+        from visual_director import visual_asset_fingerprint
+        x["visual_review"]={
+            "status":"human_approved",
+            "asset_fingerprint":visual_asset_fingerprint(x)}
         self.assertEqual(verify_action_storyboard(x),["helmet_fit","helmet_strap"])
+        x["shots"][0]["start"]=1.0
+        with self.assertRaisesRegex(ValueError,"VISUAL_REVIEW_REQUIRED"):
+            verify_action_storyboard(x)
 
     def test_object_mismatch_on_other_safety_guides(self):
         f=[video("a","road-motorcycle"),video("b","riding-in-town")]

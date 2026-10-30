@@ -300,7 +300,8 @@ def assemble_clips(ep, sources, work, target_seconds):
     if abs(total-target_seconds)>.36:
         raise RuntimeError("VISUAL_RUNTIME_MISMATCH: wrong finished scene duration")
     qa={
-        "version":2,"passed":True,"episode":ep["id"],
+        "version":(3 if int(ep.get("visual_director_version") or 0)>=3 else 2),
+        "passed":True,"episode":ep["id"],
         "subject":verify_story_subject(ep)["subject"],
         "source_sequence":[p["source"] for p in plan],
         "sequence":plan,"source_reused_in_short":False,
