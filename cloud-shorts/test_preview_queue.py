@@ -143,6 +143,18 @@ class TestPreviewQueue(unittest.TestCase):
         r["state"]="preview_ready"
         self.assertFalse(pq.eligible_abandoned_audio_config_retry(ep,r,"fixed-gain","failure"))
 
+    def test_short_helmet_source_can_retry_only_after_confirmed_failure(self):
+        ep={"id":"moto-helmet-fit-deep-20261030",
+            "source_revision_requested":True,
+            "source_revision_reason":"short_helmet_adjustment_rebalanced"}
+        receipt={"id":ep["id"],"state":"reserved","attempt_count":2,
+                 "preview_fingerprint":"oversized-clip"}
+        self.assertTrue(pq.eligible_abandoned_source_retry(ep,receipt,"new-three-scenes","failure"))
+        self.assertFalse(pq.eligible_abandoned_source_retry(ep,receipt,"new-three-scenes","in_progress"))
+        self.assertFalse(pq.eligible_abandoned_source_retry(ep,receipt,"oversized-clip","failure"))
+        receipt["state"]="preview_ready"
+        self.assertFalse(pq.eligible_abandoned_source_retry(ep,receipt,"new-three-scenes","failure"))
+
     def test_missing_or_corrupt_registry_fails_closed(self):
         with self.assertRaises(RuntimeError):
             pq.decode_history(None)

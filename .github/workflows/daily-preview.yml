@@ -7,6 +7,7 @@ on:
     # instead dispatched exactly once by the supplier/repair bots.
     paths: ['.github/workflows/daily-preview.yml']
   schedule:
+    # Three scene visual review: close helmet, 4.4s adjustment, riding helmet; retry only verified failed clip.
     # Visual-review-only helmet pilot: second scene now shows an actual helmet adjustment.
     # Approved real DEEP voice recordings for helmet and dirt are pinned: run ASR-gated render, never fall back to Silero.
     # Bounded Pexels excerpt repair is active: verify first real bass-voice MP4.

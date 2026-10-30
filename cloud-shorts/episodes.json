@@ -4534,8 +4534,21 @@
           "source_page": "https://www.pexels.com/video/man-wearing-a-helmet-9606651/",
           "author": "Anastasia Shuraeva",
           "license": "Pexels License",
-          "duration": 15.2,
+          "duration": 4.4,
           "source_title": "Biker adjusts their motorcycle helmet beside urban skyscrapers"
+        },
+        {
+          "topics": [
+            "helmet",
+            "roadtrip"
+          ],
+          "key": "clip_2",
+          "url": "https://www.pexels.com/download/video/5283463/",
+          "source_page": "https://www.pexels.com/video/man-riding-a-motorcycle-with-helmet-running-at-high-speed-5283463/",
+          "author": "K",
+          "license": "Pexels License",
+          "duration": 21,
+          "source_title": "Man Riding A Motorcycle With Helmet Running At High Speed"
         }
       ],
       "shots": [
@@ -4547,7 +4560,12 @@
         {
           "source": "clip_1",
           "start": 0,
-          "seconds": 11
+          "seconds": 4.2
+        },
+        {
+          "source": "clip_2",
+          "start": 0,
+          "seconds": 11.5
         }
       ],
       "editorial": {
@@ -4555,7 +4573,7 @@
         "bike": "helmet-safety-motorcycle",
         "people": "helmet-riders-20261030",
         "story": "helmet-fitting-guide-20261030",
-        "visual": "helmet-closeup-then-helmet-adjustment"
+        "visual": "helmet-closeup-adjustment-riding-three-scenes"
       },
       "tags": [
         "мото",
@@ -4567,7 +4585,7 @@
         "overlay": "НАПИШИ СВОЙ ОТВЕТ",
         "description": "Напиши в комментариях, что проверяешь первым делом."
       },
-      "source_selection": "Official Pexels evidence shows a real racing helmet close-up and a biker adjusting a real helmet; human-review-only control episode",
+      "source_selection": "Three independent Pexels creators: helmet close-up, actual helmet adjustment, riding in a helmet; controlled original 3-scene edit",
       "generation_provenance": "Original human-directed motorcycle safety guide, genuine Deep voice",
       "editorial_review_note": "CONTROLLED PREVIEW: visual topic must be verified on rendered MP4; do not publish without video inspection.",
       "deep_audio": {
@@ -4581,7 +4599,10 @@
       },
       "visual_revision_requested": true,
       "visual_revision_reason": "owner_rejected_static_helmet_coverage",
-      "visual_revision_note": "Review actual first verified helmet render: two unrelated poses remain too static. Replaced second video with Pexels 9606651 showing helmet adjustment. Owner specifically asked for logical visual development. This is unpublished, preview-only."
+      "visual_revision_note": "Review actual first verified helmet render: two unrelated poses remain too static. Replaced second video with Pexels 9606651 showing helmet adjustment. Owner specifically asked for logical visual development. This is unpublished, preview-only.",
+      "source_revision_requested": true,
+      "source_revision_reason": "short_helmet_adjustment_rebalanced",
+      "source_revision_note": "A preview on GitHub run 41026998816 failed because the helmet adjustment video was shorter than its requested 11-second excerpt. Use a bounded 4.4s cut plus a third long moving helmet scene. Only retry after confirmed failed run, never auto-publish before human visual review."
     }
   ]
 }
