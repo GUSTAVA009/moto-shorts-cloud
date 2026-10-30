@@ -532,6 +532,21 @@
       "episode": "moto-repair-39610c24bde8",
       "source": "https://www.pexels.com/video/man-adjusting-bolt-of-his-motorcycle-5199298/",
       "status": "reserved-or-rendered"
+    },
+    "37451401": {
+      "episode": "moto-mountain-a04e3d31b2d7",
+      "source": "https://www.pexels.com/video/scenic-mountain-road-motorcycle-journey-37451401/",
+      "status": "reserved-or-rendered"
+    },
+    "35132133": {
+      "episode": "moto-mountain-a04e3d31b2d7",
+      "source": "https://www.pexels.com/video/scenic-motorcycle-ride-in-ladakh-mountains-35132133/",
+      "status": "reserved-or-rendered"
+    },
+    "35261797": {
+      "episode": "moto-mountain-a04e3d31b2d7",
+      "source": "https://www.pexels.com/video/motorcycle-ride-on-scenic-rural-road-35261797/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -765,6 +780,13 @@
       "people": "garage-mechanics-39610",
       "story": "mechanic-bike-servicing-39610",
       "visual": "three-clips-39610"
+    },
+    "moto-mountain-a04e3d31b2d7": {
+      "environment": "rocky-mountain-road-a04e3",
+      "bike": "adventure-tourer",
+      "people": "mountain-travelers-a04e3",
+      "story": "mountain-journey-a04e3",
+      "visual": "three-clips-a04e3"
     }
   }
 }
