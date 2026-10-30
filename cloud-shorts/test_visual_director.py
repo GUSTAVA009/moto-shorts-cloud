@@ -132,6 +132,26 @@ class VisualDirectionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"VISUAL_REVIEW_REQUIRED"):
             verify_action_storyboard(x)
 
+
+    def test_three_story_chapters_verified_against_page_slugs(self):
+        from visual_director import verify_scene_script_anchors
+        ep={
+            "title":"Три момента мотоциклиста",
+            "narration":"Закрываешь визор. На дороге забываешь обо всём. После поездки снимаешь шлем.",
+            "footage":[video("a","woman-closing-the-visor-of-her-helmet"),
+                       video("b","man-wearing-a-helmet-while-traveling-on-a-motorbike"),
+                       video("c","man-removing-his-helmet-and-smiling")],
+            "scene_script_anchors":[
+                {"source":"a","action":"visor_close","spoken_anchor":"Закрываешь визор"},
+                {"source":"b","action":"riding","spoken_anchor":"На дороге"},
+                {"source":"c","action":"helmet_removal","spoken_anchor":"После поездки снимаешь шлем"},
+            ],
+        }
+        self.assertEqual(verify_scene_script_anchors(ep),["a","b","c"])
+        ep["scene_script_anchors"][1]["source"]="c"
+        with self.assertRaisesRegex(ValueError,"VISUAL_BEATS_OFF_SCRIPT"):
+            verify_scene_script_anchors(ep)
+
     def test_object_mismatch_on_other_safety_guides(self):
         f=[video("a","road-motorcycle"),video("b","riding-in-town")]
         x=ep(f,title="Как проверить тормоза?")

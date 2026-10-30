@@ -58,9 +58,47 @@ PASSIVE_PORTRAIT = re.compile(
 )
 VISIBLE_ACTION = re.compile(
     r"(adjust|fitt?ing|fasten|strap|buckle|putting-on|taking-off|"
-    r"riding|race|repair|ride|closing|opening|checking|working|install)", re.I
+    r"riding|race|repair|ride|travel(?:ing|ling)?|remov|closing|opening|checking|working|install)", re.I
 )
 
+
+
+SCENE_ACTION_SLUGS = {
+    "visor_close": re.compile(r"closing-(?:the-)?visor|visor-closing|"
+                              r"lowering-(?:the-)?visor", re.I),
+    "riding": re.compile(r"travel(?:ing|ling)?-on-a-motorbike|riding|"
+                         r"ride|motorcycle-on-road|racing", re.I),
+    "helmet_removal": re.compile(r"removing-(?:his-|her-|their-)?helmet|"
+                                 r"taking-off-(?:the-)?helmet", re.I),
+}
+
+
+def verify_scene_script_anchors(episode):
+    """Optional exact proof of scripted chapter order and action metadata."""
+    beats=episode.get("scene_script_anchors")
+    if beats is None:
+        return None
+    if not isinstance(beats,list) or not (2<=len(beats)<=5):
+        raise ValueError("VISUAL_BEATS_INVALID: expected 2-5 distinct chapters")
+    narration=str(episode.get("narration") or "").casefold()
+    sources={s["key"]:s for s in episode.get("footage") or []}
+    used=set()
+    prior=-1
+    for b in beats:
+        key=b.get("source")
+        action=b.get("action")
+        anchor=str(b.get("spoken_anchor") or "").casefold()
+        matcher=SCENE_ACTION_SLUGS.get(action)
+        at=narration.find(anchor)
+        if (key not in sources or key in used or not matcher or len(anchor)<8
+                or at<=prior or not matcher.search(provider_slug(sources[key]))):
+            raise ValueError(
+                "VISUAL_BEATS_OFF_SCRIPT: shot must show the actual narrated "
+                "action at its first distinct scripted occurrence"
+            )
+        prior=at
+        used.add(key)
+    return [b["source"] for b in beats]
 
 def instructional_claims(episode):
     """Action codes and their original order in the actual Russian narration."""
@@ -134,7 +172,7 @@ def scene_duration_limit(episode, source):
     slug=provider_slug(source)
     if PASSIVE_PORTRAIT.search(slug) and not VISIBLE_ACTION.search(slug):
         return 3.5
-    if VISIBLE_ACTION.search(slug) and not re.search(r"riding|race|ride",slug):
+    if VISIBLE_ACTION.search(slug) and not re.search(r"riding|race|ride|travel",slug):
         return 5.2
     return 7.0
 
@@ -180,6 +218,7 @@ def verify_story_subject(episode):
     if (episode.get("auto_publish") is True
             or int(episode.get("visual_director_version") or 0)>=3):
         verify_action_storyboard(episode)
+        verify_scene_script_anchors(episode)
     return {"subject": subject, "evidence_sources": matches,
             "source_count": len(sources)}
 
@@ -204,6 +243,8 @@ def directed_plan(episode, source_durations, seconds):
     claims=instructional_claims(episode)
     if int(episode.get("visual_director_version") or 0)>=3 and len(claims)>=2:
         order=[beat["source"] for beat in episode["visual_beats"]]
+    elif int(episode.get("visual_director_version") or 0)>=3 and episode.get("scene_script_anchors"):
+        order=verify_scene_script_anchors(episode)
     elif evidence_set:
         order.sort(key=lambda key: (key not in evidence_set, list(first).index(key)))
     # Prefer up to 3 scenes, rather than endless sub-two-second cuts.
