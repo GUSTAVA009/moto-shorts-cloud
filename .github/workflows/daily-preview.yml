@@ -7,6 +7,7 @@ on:
     # instead dispatched exactly once by the supplier/repair bots.
     paths: ['.github/workflows/daily-preview.yml']
   schedule:
+    # Keyless story catalog refreshed; trigger one real publishability test.
     # 16 non-overlapping production attempts per day, 90 minutes apart (UTC).
     # This is a target, not a promise: every MP4 still needs licensed sources and >=97% speech QA.
     - cron: "45 0,3,6,9,12,15,18,21 * * *"
