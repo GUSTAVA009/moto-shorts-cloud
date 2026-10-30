@@ -1,0 +1,37 @@
+name: GUSTAVA - Two Real Male Bass-Baritone Speaker Auditions
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'cloud-shorts/silero_baritone_audition.py'
+      - '.github/workflows/voice-bass-alt-audition.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify safe MIT-licensed male model selection
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_silero_baritone_audition.py' -v
+      - name: Install licensed Russian Silero voice engine and FFmpeg
+        run: |
+          sudo apt-get install -y -qq --no-install-recommends ffmpeg
+          python3 -m pip install --disable-pip-version-check torch --index-url https://download.pytorch.org/whl/cpu
+          python3 -m pip install --disable-pip-version-check silero==0.5.5 numpy soundfile
+      - name: Synthesize two genuine male actor voices in clean mono
+        run: python3 cloud-shorts/silero_baritone_audition.py
+      - name: Store original clean speaker alternatives, never auto-publish
+        uses: actions/upload-artifact@v4
+        with:
+          name: GUSTAVA-TWO-REAL-MALE-VOICES-ALT
+          path: |
+            silero_audition/*.mp3
+            silero_audition/*.wav
+            silero_audition/README.txt
+          retention-days: 14
+          if-no-files-found: error
