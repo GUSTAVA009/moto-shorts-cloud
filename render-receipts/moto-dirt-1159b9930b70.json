@@ -1,9 +1,15 @@
 {
   "id": "moto-dirt-1159b9930b70",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "41025209696",
   "attempt_count": 2,
   "preview_fingerprint": "9221134f528b6d6bb6934640b30ab4f8fc152c66aa8956e9fc8551de3fa665ef",
   "previous_run_id": "41016436603",
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 1.0,
+  "voice_profile": "gustava_create_audio_deep_v1",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 1.0
 }
