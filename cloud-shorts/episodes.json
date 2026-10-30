@@ -4007,7 +4007,16 @@
       "voice_revision_note": "Replace failed retired V6 voice with the exact authorized AI Doc Maker Create Audio Voice deep recording; independently validate source SHA, Russian ASR, final mix and motion.",
       "visual_director_version": 3,
       "editorial_format": "scene-first honest night-rain question, separate illustrative sources",
-      "editorial_review_note": "PREVIEW ONLY: inspect actual scene content and frame timing; no public release until visual signoff"
+      "editorial_review_note": "PREVIEW ONLY: inspect actual scene content and frame timing; no public release until visual signoff",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/4f52fcd7-cf38-4eac-973e-b426c1344d98.mp3",
+        "transcript_sha256": "429da1e47163781fe3d84854681f83c40080a836f274ecf9a75475816fe5feba",
+        "source_audio_sha256": "9656204cb64bdd7814f791398d00d19a06db73ef6cc65899096df5749404a5c4",
+        "context_id": "5734547327a8488093a263c90dd438f0",
+        "licence_mode": "public_provider_attribution"
+      }
     },
     {
       "id": "moto-helmet-f2452c64bf21",
