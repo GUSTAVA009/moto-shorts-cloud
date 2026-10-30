@@ -13,7 +13,7 @@ class PublicationQualityTests(unittest.TestCase):
         self.video.write_bytes(b"M" * 500001)
         self.episode = {
             "id": "motocross-original-23", "auto_publish": True,
-            "voice_engine": "kokoro_ru_dima",
+            "voice_engine": "silero_mit_bass_baritone",
             "title": "Мотокросс: крутой подъём",
             "narration": "Райдер на мотоцикле преодолевает препятствия.",
             "editorial": {"bike": "offroad-motorcycle"},
@@ -29,7 +29,8 @@ class PublicationQualityTests(unittest.TestCase):
             "passed": True, "status": "passed",
             "lexical_coverage": .99, "ending_coverage": .99,
             "final_word_present": True, "male_voice_verified": True,
-            "voice_profile": "gustava_male_bass_baritone_v5",
+            "voice_profile": "gustava_native_bass_baritone_v6",
+            "voice_speaker": "ru_alexandr", "voice_source_license": "MIT",
             "mixed_audio": {
                 "episode_id": self.episode["id"],
                 "source": "FINAL_MIXED_MP4", "passed": True,
@@ -47,7 +48,7 @@ class PublicationQualityTests(unittest.TestCase):
 
     def test_old_voice_profile_never_passes_publication(self):
         self.qa.pop("male_voice_verified")
-        with self.assertRaisesRegex(ValueError, "DEEP_MALE_VOICE_REQUIRED"):
+        with self.assertRaisesRegex(ValueError, "NATIVE_BASS_BARITONE_REQUIRED"):
             p.publication_allowed(self.episode, self.meta, self.qa, self.video)
 
     def test_missing_words_blocked(self):

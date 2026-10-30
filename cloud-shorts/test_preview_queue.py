@@ -47,8 +47,8 @@ class TestPreviewQueue(unittest.TestCase):
 
     def test_user_requested_deep_male_voice_may_repair_unpublished_bright_preview(self):
         ep = {"id": "moto-old-bright-voice", "auto_publish": True,
-              "voice_engine": "kokoro_ru_dima",
-              "voice_profile": "gustava_male_bass_baritone_v5",
+              "voice_engine": "silero_mit_bass_baritone",
+              "voice_profile": "gustava_native_bass_baritone_v6",
               "voice_revision_requested": True}
         previous = {"id": ep["id"], "state": "preview_ready",
                     "attempt_count": 2, "preview_fingerprint": "old-bright",
@@ -57,7 +57,7 @@ class TestPreviewQueue(unittest.TestCase):
         previous["attempt_count"] = 4
         self.assertFalse(pq.eligible_retry(ep, previous, "new-deep"))
         previous["attempt_count"] = 2
-        previous["voice_profile"] = "gustava_male_bass_baritone_v5"
+        previous["voice_profile"] = "gustava_native_bass_baritone_v6"
         self.assertFalse(pq.eligible_retry(ep, previous, "new-deep"))
 
     def test_successful_audio_preview_is_never_remade(self):
