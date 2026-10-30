@@ -1,9 +1,15 @@
 {
   "id": "moto-routes-contrast-deep-20261030",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "41043998358",
   "attempt_count": 1,
   "preview_fingerprint": "6ab500a8270c0ed319b7f641c406aef2ee2fc0b31a6302db1ceddd69379b1a28",
   "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 1.0,
+  "voice_profile": "gustava_create_audio_deep_v1",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 1.0
 }
