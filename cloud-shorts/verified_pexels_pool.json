@@ -1,0 +1,442 @@
+{
+  "version": 1,
+  "description": "Individually researched public Pexels video pages, author and free license checked Oct 30 2026; availability and actual motion checked at render time",
+  "sources": [
+    {
+      "topics": [
+        "forest",
+        "roadtrip"
+      ],
+      "key": "curated_33987059",
+      "url": "https://www.pexels.com/download/video/33987059/",
+      "source_page": "https://www.pexels.com/video/serene-motorcycle-ride-through-scenic-forest-road-33987059/",
+      "author": "Vero Lova",
+      "license": "Pexels License",
+      "duration": 36,
+      "source_title": "serene motorcycle ride through scenic forest road"
+    },
+    {
+      "topics": [
+        "forest",
+        "roadtrip"
+      ],
+      "key": "curated_32918034",
+      "url": "https://www.pexels.com/download/video/32918034/",
+      "source_page": "https://www.pexels.com/video/scenic-motorcycle-ride-through-forested-highway-32918034/",
+      "author": "Tom Jurman",
+      "license": "Pexels License",
+      "duration": 67,
+      "source_title": "scenic motorcycle ride through forested highway"
+    },
+    {
+      "topics": [
+        "forest",
+        "training"
+      ],
+      "key": "curated_35021631",
+      "url": "https://www.pexels.com/download/video/35021631/",
+      "source_page": "https://www.pexels.com/video/enduro-rider-on-a-scenic-forest-trail-35021631/",
+      "author": "Tom Jurman",
+      "license": "Pexels License",
+      "duration": 10,
+      "source_title": "enduro rider on a scenic forest trail"
+    },
+    {
+      "topics": [
+        "forest",
+        "roadtrip"
+      ],
+      "key": "curated_34311538",
+      "url": "https://www.pexels.com/download/video/34311538/",
+      "source_page": "https://www.pexels.com/video/motorcycle-ride-through-scenic-autumn-forest-34311538/",
+      "author": "Tom Jurman",
+      "license": "Pexels License",
+      "duration": 117,
+      "source_title": "motorcycle ride through scenic autumn forest"
+    },
+    {
+      "topics": [
+        "mountain",
+        "roadtrip"
+      ],
+      "key": "curated_37451401",
+      "url": "https://www.pexels.com/download/video/37451401/",
+      "source_page": "https://www.pexels.com/video/scenic-mountain-road-motorcycle-journey-37451401/",
+      "author": "Ahmet Mert",
+      "license": "Pexels License",
+      "duration": 19,
+      "source_title": "scenic mountain road motorcycle journey"
+    },
+    {
+      "topics": [
+        "mountain",
+        "roadtrip"
+      ],
+      "key": "curated_35132133",
+      "url": "https://www.pexels.com/download/video/35132133/",
+      "source_page": "https://www.pexels.com/video/scenic-motorcycle-ride-in-ladakh-mountains-35132133/",
+      "author": "Mahbub Haasan",
+      "license": "Pexels License",
+      "duration": 19,
+      "source_title": "scenic motorcycle ride in ladakh mountains"
+    },
+    {
+      "topics": [
+        "mountain",
+        "roadtrip"
+      ],
+      "key": "curated_35261797",
+      "url": "https://www.pexels.com/download/video/35261797/",
+      "source_page": "https://www.pexels.com/video/motorcycle-ride-on-scenic-rural-road-35261797/",
+      "author": "Shital Khadgi",
+      "license": "Pexels License",
+      "duration": 21,
+      "source_title": "motorcycle ride on scenic rural road"
+    },
+    {
+      "topics": [
+        "mountain",
+        "roadtrip"
+      ],
+      "key": "curated_4608281",
+      "url": "https://www.pexels.com/download/video/4608281/",
+      "source_page": "https://www.pexels.com/video/man-wearing-a-helmet-while-traveling-on-a-motorbike-4608281/",
+      "author": "K",
+      "license": "Pexels License",
+      "duration": 29,
+      "source_title": "man wearing a helmet while traveling on a motorbike"
+    },
+    {
+      "topics": [
+        "mountain",
+        "roadtrip"
+      ],
+      "key": "curated_32659150",
+      "url": "https://www.pexels.com/download/video/32659150/",
+      "source_page": "https://www.pexels.com/video/epic-motorcycle-road-trip-through-ladakh-mountains-32659150/",
+      "author": "Ex Route Adventures",
+      "license": "Pexels License",
+      "duration": 28,
+      "source_title": "epic motorcycle road trip through ladakh mountains"
+    },
+    {
+      "topics": [
+        "mountain",
+        "roadtrip"
+      ],
+      "key": "curated_5053054",
+      "url": "https://www.pexels.com/download/video/5053054/",
+      "source_page": "https://www.pexels.com/video/motorcycle-touring-on-mountains-5053054/",
+      "author": "Pavel Danilyuk",
+      "license": "Pexels License",
+      "duration": 28,
+      "source_title": "motorcycle touring on mountains"
+    },
+    {
+      "topics": [
+        "city",
+        "rain"
+      ],
+      "key": "curated_15596316",
+      "url": "https://www.pexels.com/download/video/15596316/",
+      "source_page": "https://www.pexels.com/video/a-rainy-night-in-a-city-street-with-motorcycles-parked-on-the-side-15596316/",
+      "author": "khanhhoangminh",
+      "license": "Pexels License",
+      "duration": 17,
+      "source_title": "a rainy night in a city street with motorcycles parked on the side"
+    },
+    {
+      "topics": [
+        "city",
+        "rain"
+      ],
+      "key": "curated_34679320",
+      "url": "https://www.pexels.com/download/video/34679320/",
+      "source_page": "https://www.pexels.com/video/nighttime-city-street-with-moving-vehicles-34679320/",
+      "author": "Evgenij Mikhailov",
+      "license": "Pexels License",
+      "duration": 22,
+      "source_title": "nighttime city street with moving vehicles"
+    },
+    {
+      "topics": [
+        "city",
+        "roadtrip"
+      ],
+      "key": "curated_36067565",
+      "url": "https://www.pexels.com/download/video/36067565/",
+      "source_page": "https://www.pexels.com/video/urban-street-ride-on-motorcycle-in-busy-city-36067565/",
+      "author": "Airam Dato-on",
+      "license": "Pexels License",
+      "duration": 25,
+      "source_title": "urban street ride on motorcycle in busy city"
+    },
+    {
+      "topics": [
+        "city",
+        "roadtrip"
+      ],
+      "key": "curated_35613949",
+      "url": "https://www.pexels.com/download/video/35613949/",
+      "source_page": "https://www.pexels.com/video/sunrise-commute-motorcycle-ride-in-bustling-city-35613949/",
+      "author": "Shital Khadgi",
+      "license": "Pexels License",
+      "duration": 29,
+      "source_title": "sunrise commute motorcycle ride in bustling city"
+    },
+    {
+      "topics": [
+        "city",
+        "rain"
+      ],
+      "key": "curated_36077835",
+      "url": "https://www.pexels.com/download/video/36077835/",
+      "source_page": "https://www.pexels.com/video/nighttime-urban-street-with-motorbikes-36077835/",
+      "author": "J-Steve Pham",
+      "license": "Pexels License",
+      "duration": 11,
+      "source_title": "nighttime urban street with motorbikes"
+    },
+    {
+      "topics": [
+        "city",
+        "helmet"
+      ],
+      "key": "curated_5207165",
+      "url": "https://www.pexels.com/download/video/5207165/",
+      "source_page": "https://www.pexels.com/video/person-riding-his-motorcycle-5207165/",
+      "author": "cottonbro studio",
+      "license": "Pexels License",
+      "duration": 14,
+      "source_title": "person riding his motorcycle"
+    },
+    {
+      "topics": [
+        "city",
+        "helmet"
+      ],
+      "key": "curated_9606878",
+      "url": "https://www.pexels.com/download/video/9606878/",
+      "source_page": "https://www.pexels.com/video/close-up-shot-of-a-man-on-a-motorcycle-9606878/",
+      "author": "Anastasia Shuraeva",
+      "license": "Pexels License",
+      "duration": 19,
+      "source_title": "close up shot of a man on a motorcycle"
+    },
+    {
+      "topics": [
+        "helmet",
+        "city"
+      ],
+      "key": "curated_9606651",
+      "url": "https://www.pexels.com/download/video/9606651/",
+      "source_page": "https://www.pexels.com/video/man-wearing-a-helmet-9606651/",
+      "author": "Anastasia Shuraeva",
+      "license": "Pexels License",
+      "duration": 10,
+      "source_title": "man wearing a helmet"
+    },
+    {
+      "topics": [
+        "helmet",
+        "repair"
+      ],
+      "key": "curated_9030220",
+      "url": "https://www.pexels.com/download/video/9030220/",
+      "source_page": "https://www.pexels.com/video/a-close-up-of-a-motorcycle-s-speedometer-and-speed-warning-9030220/",
+      "author": "Vincuk Konan",
+      "license": "Pexels License",
+      "duration": 16,
+      "source_title": "a close up of a motorcycle s speedometer and speed warning"
+    },
+    {
+      "topics": [
+        "repair",
+        "vintage"
+      ],
+      "key": "curated_36704977",
+      "url": "https://www.pexels.com/download/video/36704977/",
+      "source_page": "https://www.pexels.com/video/mechanic-hands-adjusting-motorcycle-wheel-precision-36704977/",
+      "author": "Erkan Avanoğlu",
+      "license": "Pexels License",
+      "duration": 20,
+      "source_title": "mechanic hands adjusting motorcycle wheel precision"
+    },
+    {
+      "topics": [
+        "repair",
+        "vintage"
+      ],
+      "key": "curated_5199298",
+      "url": "https://www.pexels.com/download/video/5199298/",
+      "source_page": "https://www.pexels.com/video/man-adjusting-bolt-of-his-motorcycle-5199298/",
+      "author": "cottonbro studio",
+      "license": "Pexels License",
+      "duration": 52,
+      "source_title": "man adjusting bolt of his motorcycle"
+    },
+    {
+      "topics": [
+        "repair",
+        "vintage"
+      ],
+      "key": "curated_35623340",
+      "url": "https://www.pexels.com/download/video/35623340/",
+      "source_page": "https://www.pexels.com/video/dynamic-motorcycle-workshop-with-fitness-focus-35623340/",
+      "author": "JULLIAN PRODUCTION",
+      "license": "Pexels License",
+      "duration": 24,
+      "source_title": "dynamic motorcycle workshop with fitness focus"
+    },
+    {
+      "topics": [
+        "repair",
+        "vintage"
+      ],
+      "key": "curated_30075959",
+      "url": "https://www.pexels.com/download/video/30075959/",
+      "source_page": "https://www.pexels.com/video/motorcycle-engine-assembly-in-a-modern-factory-30075959/",
+      "author": "Emrul Kausar Emon",
+      "license": "Pexels License",
+      "duration": 13,
+      "source_title": "motorcycle engine assembly in a modern factory"
+    },
+    {
+      "topics": [
+        "repair",
+        "vintage"
+      ],
+      "key": "curated_34308331",
+      "url": "https://www.pexels.com/download/video/34308331/",
+      "source_page": "https://www.pexels.com/video/loading-motorcycle-onto-trailer-in-outdoor-garage-34308331/",
+      "author": "Tom Jurman",
+      "license": "Pexels License",
+      "duration": 47,
+      "source_title": "loading motorcycle onto trailer in outdoor garage"
+    },
+    {
+      "topics": [
+        "repair",
+        "vintage"
+      ],
+      "key": "curated_8551366",
+      "url": "https://www.pexels.com/download/video/8551366/",
+      "source_page": "https://www.pexels.com/video/men-holding-mechanic-tools-8551366/",
+      "author": "Kindel Media",
+      "license": "Pexels License",
+      "duration": 9,
+      "source_title": "men holding mechanic tools"
+    },
+    {
+      "topics": [
+        "repair",
+        "vintage"
+      ],
+      "key": "curated_4922587",
+      "url": "https://www.pexels.com/download/video/4922587/",
+      "source_page": "https://www.pexels.com/video/a-man-riding-his-motorcycle-4922587/",
+      "author": "Pavel Danilyuk",
+      "license": "Pexels License",
+      "duration": 21,
+      "source_title": "a man riding his motorcycle"
+    },
+    {
+      "topics": [
+        "motocross",
+        "racing",
+        "dirt"
+      ],
+      "key": "curated_12941383",
+      "url": "https://www.pexels.com/download/video/12941383/",
+      "source_page": "https://www.pexels.com/video/motocross-race-on-dirt-track-12941383/",
+      "author": "Tom Fisk",
+      "license": "Pexels License",
+      "duration": 25,
+      "source_title": "motocross race on dirt track"
+    },
+    {
+      "topics": [
+        "motocross",
+        "racing",
+        "dirt"
+      ],
+      "key": "curated_9168106",
+      "url": "https://www.pexels.com/download/video/9168106/",
+      "source_page": "https://www.pexels.com/video/people-riding-dirt-bike-9168106/",
+      "author": "Tom Fisk",
+      "license": "Pexels License",
+      "duration": 35,
+      "source_title": "people riding dirt bike"
+    },
+    {
+      "topics": [
+        "motocross",
+        "racing",
+        "dirt"
+      ],
+      "key": "curated_5806214",
+      "url": "https://www.pexels.com/download/video/5806214/",
+      "source_page": "https://www.pexels.com/video/motocross-riders-5806214/",
+      "author": "cottonbro studio",
+      "license": "Pexels License",
+      "duration": 19,
+      "source_title": "motocross riders"
+    },
+    {
+      "topics": [
+        "motocross",
+        "racing",
+        "dirt"
+      ],
+      "key": "curated_36365243",
+      "url": "https://www.pexels.com/download/video/36365243/",
+      "source_page": "https://www.pexels.com/video/motorcycle-adventure-on-rainy-obstacle-course-36365243/",
+      "author": "Harvey Tan Villarino",
+      "license": "Pexels License",
+      "duration": 16,
+      "source_title": "motorcycle adventure on rainy obstacle course"
+    },
+    {
+      "topics": [
+        "motocross",
+        "racing",
+        "dirt"
+      ],
+      "key": "curated_32554208",
+      "url": "https://www.pexels.com/download/video/32554208/",
+      "source_page": "https://www.pexels.com/video/exciting-motorcycle-race-on-outdoor-track-32554208/",
+      "author": "Harvey Tan Villarino",
+      "license": "Pexels License",
+      "duration": 12,
+      "source_title": "exciting motorcycle race on outdoor track"
+    },
+    {
+      "topics": [
+        "motocross",
+        "racing",
+        "dirt"
+      ],
+      "key": "curated_9607281",
+      "url": "https://www.pexels.com/download/video/9607281/",
+      "source_page": "https://www.pexels.com/video/a-female-motorcyclist-doing-stunts-in-the-city-9607281/",
+      "author": "Anastasia Shuraeva",
+      "license": "Pexels License",
+      "duration": 13,
+      "source_title": "a female motorcyclist doing stunts in the city"
+    },
+    {
+      "topics": [
+        "motocross",
+        "racing",
+        "dirt"
+      ],
+      "key": "curated_9607284",
+      "url": "https://www.pexels.com/download/video/9607284/",
+      "source_page": "https://www.pexels.com/video/man-doing-stunts-on-a-motorcycle-9607284/",
+      "author": "Anastasia Shuraeva",
+      "license": "Pexels License",
+      "duration": 20,
+      "source_title": "man doing stunts on a motorcycle"
+    }
+  ]
+}

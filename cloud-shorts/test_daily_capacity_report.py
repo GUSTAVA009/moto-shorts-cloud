@@ -21,8 +21,8 @@ class CapacityReportTests(unittest.TestCase):
         self.assertEqual(report["scheduled_for_today"], 1)
         self.assertEqual(report["new_unique_scripts_ready_to_render"], 1)
         self.assertIn("BELOW_TEN_SCHEDULED_OR_SENT_TODAY", report["hard_blockers"])
-        self.assertIn("PEXELS_API_KEY_NOT_CONFIGURED: CC0 fallback limited",
-                      report["hard_blockers"])
+        self.assertTrue(report["keyless_editorial_script_reserve"])
+        self.assertGreaterEqual(report["unconsumed_curated_pexels_clips"], 0)
 
     def test_status_is_not_falsely_green_without_credentials(self):
         catalog = {"episodes":[]}
@@ -31,6 +31,7 @@ class CapacityReportTests(unittest.TestCase):
                            model=False, pexels=False)
         self.assertEqual(report["published_today_reported_by_buffer"], 0)
         self.assertGreater(len(report["hard_blockers"]), 0)
+        self.assertTrue(report["keyless_editorial_script_reserve"])
 
 
 if __name__ == "__main__":

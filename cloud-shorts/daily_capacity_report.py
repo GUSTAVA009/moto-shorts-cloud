@@ -40,10 +40,14 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
     named = {e["id"] for e in catalog["episodes"]}
     waiting = [e["id"] for e in bank["episodes"] if e["id"] not in named]
     deficits = []
-    if not model and not waiting:
-        deficits.append("NO_ORIGINAL_STORY_MODEL_AND_CURATED_BACKLOG_EXHAUSTED")
-    if not pexels:
-        deficits.append("PEXELS_API_KEY_NOT_CONFIGURED: CC0 fallback limited")
+    pool = json.loads((HERE / "verified_pexels_pool.json").read_text("utf8"))
+    used_footage = {src["source_page"] for ep in catalog["episodes"]
+                    for src in ep.get("footage", []) if "source_page" in src}
+    unused_public_clips = sum(src["source_page"] not in used_footage
+                              for src in pool["sources"])
+    # Script prompts can be composed locally; licensed moving footage cannot.
+    if not pexels and unused_public_clips < 2 and not waiting:
+        deficits.append("LICENSED_VIDEO_SUPPLY_LOW: public reserve exhausted; Commons may be limited")
     if len(sent_today) + len(scheduled_today) < TARGET:
         deficits.append("BELOW_TEN_SCHEDULED_OR_SENT_TODAY")
     return {
@@ -55,6 +59,8 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
         "curated_unused_script_reserve": len(waiting),
         "accepted_buffer_receipts_all_time": len(dispatched_ids),
         "original_script_model_available": model,
+        "keyless_editorial_script_reserve": True,
+        "unconsumed_curated_pexels_clips": unused_public_clips,
         "pexels_search_key_available": pexels,
         "alternate_cc0_library": "limited, license verified live",
         "posting_windows_moscow": ["%02d:%02d" % x for x in LOCAL_TIMES],
@@ -93,7 +99,9 @@ def main():
             f"| Новых сценариев без render receipt | {state['new_unique_scripts_ready_to_render']} |",
             f"| Осталось оригиналов из резервного каталога | {state['curated_unused_script_reserve']} |",
             f"| Ключ модели для новых сценариев | {'YES' if model else 'NO'} |",
-            f"| Ключ Pexels | {'YES' if pexels else 'NO'} |",
+            f"| Ключ Pexels | {'YES' if pexels else 'NO (public reserve)'} |",
+            f"| Неиспользованных проверенных публичных видео | {state['unconsumed_curated_pexels_clips']} |",
+            "| Генерация сценариев без API-ключа | YES (offline editorial reserve) |",
             "",
             "### Ограничения",
         ] + ["- " + x for x in state["hard_blockers"]] + [

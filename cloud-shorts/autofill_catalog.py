@@ -85,12 +85,9 @@ def main():
     except RuntimeError as exc:
         if "CURATED_STORY_BANK_EXHAUSTED" not in str(exc):
             raise
-        from moto_autocreate import create_one, story_model_client
-        if not story_model_client():
-            raise RuntimeError(
-                "STORY_SUPPLY_BLOCKED: curated archive exhausted and original "
-                "model key missing (OPENAI_API_KEY or OPENROUTER_API_KEY)"
-            ) from exc
+        from moto_autocreate import create_one
+        # Keyless script matrix + separately vetted stock; unavailable model
+        # credentials may not stop original story creation.
         import preview_queue as ledger
         history = ledger.decode_history(ledger.api(ledger.HISTORY_PATH))
         selected = create_one(catalog, permanently_used=set(history["used"]))

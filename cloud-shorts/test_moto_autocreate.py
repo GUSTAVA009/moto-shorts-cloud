@@ -62,11 +62,35 @@ class NewMotoSourceTests(unittest.TestCase):
         self.assertEqual(s.pexels_results(s.THEMES[0], 1, ""), [])
         self.assertEqual(s.choose_sources([], set()), [])
 
-    def test_generative_script_requires_real_model_credentials(self):
+    def test_offline_story_reserve_without_model_credentials(self):
         from unittest.mock import patch
         with patch.dict("os.environ", {"OPENAI_API_KEY": "", "OPENROUTER_API_KEY": ""}):
-            with self.assertRaisesRegex(RuntimeError, "MODEL_MISSING"):
-                s.original_story(s.THEMES[0], [], [])
+            a = s.original_story(s.THEMES[0], [], [])
+            b = s.original_story(s.THEMES[0], [], [a["title"]])
+        self.assertNotEqual(a["title"], b["title"])
+        self.assertTrue(125 <= len(a["narration"]) <= 300)
+        self.assertTrue(a["narration"].startswith("Мотоцикл"))
+        self.assertEqual(a["_generation_source"], "offline_editorial_matrix_v1")
+
+    def test_verified_public_pexels_pool_stays_unique(self):
+        bank = json.loads((Path(__file__).resolve().parent / "verified_pexels_pool.json").read_text("utf8"))
+        from moto_assets import validated_media, source_id
+        sources = bank["sources"]
+        self.assertGreaterEqual(len(sources), 20)
+        ids = [source_id(x) for x in sources]
+        self.assertEqual(len(ids), len(set(ids)))
+        for entry in sources:
+            self.assertEqual(validated_media(entry), source_id(entry))
+        self.assertTrue(s.curated_pexels_results(s.THEMES[0]))
+        self.assertFalse(s.curated_pexels_results(s.THEMES[0], set(ids)))
+
+    def test_offline_fallback_when_inference_service_fails(self):
+        from unittest.mock import patch
+        with patch.dict("os.environ", {"OPENAI_API_KEY": "", "OPENROUTER_API_KEY": ""}):
+            result = s.original_story(s.THEMES[0], [], [],
+                  client=("https://model.example", "example-token", "test-model"),
+                  fetch=lambda *args: (_ for _ in ()).throw(OSError("Provider unavailable")))
+        self.assertEqual(result["_generation_source"], "offline_editorial_matrix_v1")
 
     def test_reject_model_fabricating_numbers(self):
         result = story()
