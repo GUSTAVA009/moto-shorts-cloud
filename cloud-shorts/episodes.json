@@ -3752,6 +3752,148 @@
       "story_reserve_id": "r2-repair-0017",
       "voice_revision_requested": true,
       "voice_revision_note": "V6 native ru_alexandr garage text repair_b obtained exact 100% ASR coverage in GitHub job 41006321579. Rerender unpublished earlier QA failure. Final MP4 and mixed-audio ASR unchanged; no release without full gate."
+    },
+    {
+      "id": "moto-mountain-a04e3d31b2d7",
+      "auto_preview": true,
+      "auto_publish": true,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "silero_mit_bass_baritone",
+      "voice_profile": "gustava_native_bass_baritone_v6",
+      "title": "Горный маршрут: подъём, первый взгляд, внимание — твоя версия? #shorts",
+      "narration": "Мотоцикл и горная дорога. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — подъём. Обстановка вокруг заслуживает не меньшего внимания, чем техника. Какой подход тебе кажется разумнее?",
+      "description": "Самостоятельная мототема: подъём. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
+      "caption_start": "ГОРНЫЙ МАРШРУТ",
+      "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
+      "caption_end": "А ТВОЙ ВЫБОР?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 136,
+      "footage": [
+        {
+          "topics": [
+            "mountain",
+            "roadtrip"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/37451401/",
+          "source_page": "https://www.pexels.com/video/scenic-mountain-road-motorcycle-journey-37451401/",
+          "author": "Ahmet Mert",
+          "license": "Pexels License",
+          "duration": 19,
+          "source_title": "scenic mountain road motorcycle journey"
+        },
+        {
+          "topics": [
+            "mountain",
+            "roadtrip"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/35132133/",
+          "source_page": "https://www.pexels.com/video/scenic-motorcycle-ride-in-ladakh-mountains-35132133/",
+          "author": "Mahbub Haasan",
+          "license": "Pexels License",
+          "duration": 19,
+          "source_title": "scenic motorcycle ride in ladakh mountains"
+        },
+        {
+          "topics": [
+            "mountain",
+            "roadtrip"
+          ],
+          "key": "clip_2",
+          "url": "https://www.pexels.com/download/video/35261797/",
+          "source_page": "https://www.pexels.com/video/motorcycle-ride-on-scenic-rural-road-35261797/",
+          "author": "Shital Khadgi",
+          "license": "Pexels License",
+          "duration": 21,
+          "source_title": "motorcycle ride on scenic rural road"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_2",
+          "start": 6.45,
+          "seconds": 2.15
+        }
+      ],
+      "editorial": {
+        "environment": "rocky-mountain-road-a04e3",
+        "bike": "adventure-tourer",
+        "people": "mountain-travelers-a04e3",
+        "story": "mountain-journey-a04e3",
+        "visual": "three-clips-a04e3"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие мотопутешествия."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "offline_editorial_reserve_v2",
+      "story_reserve_id": "r2-mountain-0018"
     }
   ]
 }
