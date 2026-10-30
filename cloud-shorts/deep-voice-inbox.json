@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "generated_via": "AI Voice Generator ChatGPT Create Audio Voice",
+  "voice_id": "deep",
+  "records": [
+    {
+      "episode_id": "moto-rain-1bec694cca6c",
+      "context_id": "0401259d35ce437eab3722f26212418e",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/9c7659a8-7eee-4cb3-b086-d96a3890f8f9.mp3",
+      "provider": "aidocmaker.com",
+      "voice_id": "deep",
+      "title": "Дождь на мотоцикле: первые минуты коварны 🌧️ #shorts",
+      "narration": "Дождь начался прямо в пути? Первые минуты особенно коварны: вода смешивается с грязью на асфальте. Перед поворотом сбавь скорость плавно, держи дистанцию и избегай резких движений. А ты ездил на мотоцикле под дождём?"
+    },
+    {
+      "episode_id": "moto-helmet-f2452c64bf21",
+      "context_id": "399a5c98f1f640e09279931a91b48881",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/5a29d27e-fe43-49d7-80b8-17a70314b3ae.mp3",
+      "provider": "aidocmaker.com",
+      "voice_id": "deep",
+      "title": "Шлем на мотоцикле: красивая форма не главное 🪖 #shorts",
+      "narration": "Шлем выглядит круто, но это ещё не значит, что он сидит правильно. Если шлем болтается или сильно давит, стоит проверить размер и посадку. Застегни ремешок и убедись, что обзор свободный. А ты проверяешь свой шлем перед поездкой?"
+    },
+    {
+      "episode_id": "moto-dirt-1159b9930b70",
+      "context_id": "2b0f3bff5bb14bd1866f67d6335c7c84",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/71c986e1-2095-4b8e-9936-3192f545c09c.mp3",
+      "provider": "aidocmaker.com",
+      "voice_id": "deep",
+      "title": "Песок или гравий: где сложнее ехать? 🏍️ #shorts",
+      "narration": "Песок или гравий — где сложнее удержать мотоцикл? На рыхлой поверхности колесо ведёт себя иначе, а резкие движения только мешают. Смотри вперёд, выбирай траекторию и работай газом плавно. Какой грунт тебе даётся тяжелее?"
+    }
+  ]
+}
