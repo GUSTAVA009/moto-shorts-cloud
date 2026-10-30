@@ -86,6 +86,21 @@ class BufferPublisherTests(unittest.TestCase):
         self.assertEqual(store.call_count, 1)
         self.assertEqual(req.call_count, 1)  # one actual write, no blind retry
 
+    def test_verify_channel_includes_real_buffer_error_status(self):
+        valid = {"channel":{"id":b.CHANNEL,"service":"youtube","serviceId":b.YOUTUBE,
+                             "isQueuePaused":False,"isDisconnected":False},
+                 "scheduledPosts":{"edges":[],"pageInfo":{"hasNextPage":False}},
+                 "sentPosts":{"edges":[],"pageInfo":{"hasNextPage":False}},
+                 "errorPosts":{"edges":[{"node":{"id":"failed-post","status":"error"}}],
+                               "pageInfo":{"hasNextPage":False}},
+                 "sendingPosts":{"edges":[],"pageInfo":{"hasNextPage":False}}}
+        with patch.object(b,"buffer",return_value=valid) as req:
+            queue,sent,errors,sending=b.verify_channel(include_sent=True,include_errors=True)
+        self.assertEqual((queue,sent,sending),([],[],[]))
+        self.assertEqual(errors[0]["id"],"failed-post")
+        self.assertIn("status:[error]",req.call_args.args[0])
+        self.assertIn("status:[sending]",req.call_args.args[0])
+
     def test_valid_post_uses_correct_channel_and_youtube_metadata(self):
         with patch.dict(os.environ, {"BUFFER_AUTO_PUBLISH_ENABLED": "true"}):
             with patch.object(b.ledger, "api", side_effect=[None, None, {"sha": "receiptsha"}]):

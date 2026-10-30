@@ -42,7 +42,7 @@ def buffer(query, variables=None):
     return data.get("data") or {}
 
 
-def verify_channel(include_sent=False):
+def verify_channel(include_sent=False, include_errors=False):
     """Verify pinned YouTube destination, queue and recent sent posts in ONE API call."""
     if os.getenv("YOUTUBE_EXPECTED_CHANNEL_ID", YOUTUBE) != YOUTUBE:
         raise RuntimeError("Expected YouTube channel does not match Buffer channel")
@@ -56,6 +56,21 @@ def verify_channel(include_sent=False):
          '",filter:{status:[sent],channelIds:["' + CHANNEL +
          '"],startDate:"' + cutoff +
          '"}}) {edges {node {id dueAt sentAt}} pageInfo {hasNextPage}} }')
+    if include_errors:
+        # Read-only diagnostics: a missing YouTube publication can be in
+        # Buffer's documented 'error' or still-'sending' status rather
+        # than either 'scheduled' or 'sent'.
+        extra = (
+            ' errorPosts: posts(first:100,input:{organizationId:"' + ORG +
+            '",filter:{status:[error],channelIds:["' + CHANNEL +
+            '"],startDate:"' + cutoff +
+            '"}}) {edges {node {id status dueAt}} pageInfo {hasNextPage}}'
+            ' sendingPosts: posts(first:100,input:{organizationId:"' + ORG +
+            '",filter:{status:[sending],channelIds:["' + CHANNEL +
+            '"],startDate:"' + cutoff +
+            '"}}) {edges {node {id status dueAt}} pageInfo {hasNextPage}}'
+        )
+        q = q.rsplit("}", 1)[0] + extra + " }"
     data = buffer(q)
     channel = data.get("channel") or {}
     if (channel.get("id") != CHANNEL or channel.get("service") != "youtube" or
@@ -70,6 +85,17 @@ def verify_channel(include_sent=False):
         raise RuntimeError("Buffer inventory incomplete; cannot risk exceeding posting limits")
     posts = [x["node"] for x in scheduled.get("edges") or []]
     sent_posts = [x["node"] for x in sent.get("edges") or []]
+    if include_errors:
+        errors = data.get("errorPosts") or {}
+        sending = data.get("sendingPosts") or {}
+        if ((errors.get("pageInfo") or {}).get("hasNextPage") or
+                (sending.get("pageInfo") or {}).get("hasNextPage")):
+            raise RuntimeError("Buffer error/sending history incomplete; no false delivery status")
+        error_posts = [x["node"] for x in errors.get("edges") or []]
+        sending_posts = [x["node"] for x in sending.get("edges") or []]
+        if include_sent:
+            return posts, sent_posts, error_posts, sending_posts
+        return posts, error_posts, sending_posts
     return (posts, sent_posts) if include_sent else posts
 
 

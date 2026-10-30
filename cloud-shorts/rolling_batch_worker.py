@@ -53,7 +53,11 @@ def needs_persist(before, after, events, now):
 def main():
     if os.getenv("GITHUB_REPOSITORY") != "GUSTAVA009/moto-shorts-cloud":
         raise RuntimeError("Wrong repository for rolling ten")
-    scheduled, sent = verify_channel(include_sent=True)
+    scheduled, sent, errors, sending = verify_channel(include_sent=True, include_errors=True)
+    if errors:
+        print('::warning::BUFFER_DELIVERY_ERRORS: ' + str(len(errors)) + ' failed uploads; do not double-submit', flush=True)
+    if sending:
+        print('::warning::BUFFER_STUCK_SENDING: ' + str(len(sending)) + ' pending uploads; no blind retries', flush=True)
     entry = ledger.api(STATE_PATH)
     before = read_state(entry)
     catalog_entry = github("GET", "contents/cloud-shorts/episodes.json?ref=main")
@@ -71,6 +75,7 @@ def main():
                      "Rolling ten verified sent checkpoint: "+(", ".join(events) or "poll"),
                      old_sha=entry["sha"] if entry else None)
     summary = {"events":events, "dispatch_replenishment":refill,
+               "buffer_delivery_errors":len(errors), "buffer_still_sending":len(sending),
                **progress(state, len(scheduled))}
     print("ROLLING_TEN_STATUS",json.dumps(summary,ensure_ascii=False),flush=True)
     if refill:

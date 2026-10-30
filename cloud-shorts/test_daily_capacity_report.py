@@ -36,6 +36,16 @@ class CapacityReportTests(unittest.TestCase):
         self.assertEqual(report["rolling_ten"]["buffer_scheduled_posts"], 10)
         self.assertEqual(report["rolling_ten"]["active_script_drafts_ready"], 10)
 
+    def test_buffer_delivery_errors_are_not_counted_as_sent(self):
+        now = datetime(2026, 10, 30, tzinfo=timezone.utc)
+        report = summarize({"episodes":[]}, set(), set(), [], [], now,
+             errored_posts=[{"id":"post-failed-youtube"}],
+             sending_posts=[{"id":"post-not-finished"}])
+        self.assertEqual(report["published_today_reported_by_buffer"], 0)
+        self.assertEqual(report["buffer_delivery_error_count"], 1)
+        self.assertEqual(report["buffer_sending_count"], 1)
+        self.assertIn("BUFFER_YOUTUBE_DELIVERY_ERRORS: 1", report["hard_blockers"])
+
     def test_status_is_not_falsely_green_without_credentials(self):
         catalog = {"episodes":[]}
         report = summarize(catalog, set(), set(), [], [],
