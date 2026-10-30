@@ -40,6 +40,13 @@ class DeepInboxTests(unittest.TestCase):
         self.assertEqual([x["episode"] for x in blocked],["moto-rain-0"])
         self.assertTrue(all(x[2]["passed"] for x in changes))
 
+    def test_successful_new_deep_must_trigger_renderer_on_push_too(self):
+        from pathlib import Path
+        source=Path(__file__).with_name("deep_inbox_ingest.py").read_text(encoding="utf8")
+        self.assertIn('range(min(len(completed),2))',source)
+        self.assertIn('actions/workflows/daily-preview.yml/dispatches',source)
+        self.assertNotIn('if os.getenv("GITHUB_EVENT_NAME")=="workflow_dispatch"',source)
+
     def test_unexpected_provider_error_must_abort_intake(self):
         from unittest.mock import patch
         import deep_inbox_ingest as di

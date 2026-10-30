@@ -137,9 +137,14 @@ def main():
             "content":base64.b64encode(content).decode("ascii")})
     for obj in completed:
         print("APPROVED_VERIFIED_DEEP_EPISODE",json.dumps(obj,ensure_ascii=False),flush=True)
-    if os.getenv("GITHUB_EVENT_NAME")=="workflow_dispatch":
+    # The workflow's GitHub-token catalog commit cannot activate push
+    # workflows. Explicitly start up to two serial preview runs, one for
+    # each accepted, text-hash-pinned DEEP voice. Queue concurrency and the
+    # permanent ledger enforce one render per episode; a failed dispatch is
+    # reported rather than silently claiming that production started.
+    for _ in range(min(len(completed),2)):
         github("POST","actions/workflows/daily-preview.yml/dispatches",{"ref":"main"})
-        print("DEEP_PREVIEW_DISPATCHED",flush=True)
+    print("DEEP_PREVIEW_DISPATCHED",min(len(completed),2),flush=True)
     return 0
 
 if __name__=="__main__":
