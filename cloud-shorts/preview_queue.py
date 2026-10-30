@@ -23,7 +23,8 @@ EPISODES = Path(__file__).with_name("episodes.json")
 HISTORY_PATH = "history/used_footage.json"
 
 from editorial_guard import source_id, validate_catalog
-from voice_style import PROFILE_ID as REQUIRED_MALE_PROFILE
+from native_bass_voice import PROFILE_ID as REQUIRED_MALE_PROFILE,
+    VOICE_ENGINE as REQUIRED_MALE_ENGINE
 
 
 def api(path, method="GET", data=None):
@@ -151,7 +152,7 @@ def eligible_retry(episode, receipt, new_fingerprint):
     visual_repair = (episode.get("visual_revision_requested") is True
                      and episode.get("visual_revision_reason") == "source_freeze_confirmed")
     male_voice_repair = (
-        episode.get("voice_engine") == "kokoro_ru_dima"
+        episode.get("voice_engine") == REQUIRED_MALE_ENGINE
         and episode.get("voice_revision_requested") is True
         and episode.get("voice_profile") == REQUIRED_MALE_PROFILE
         and receipt.get("voice_profile") != REQUIRED_MALE_PROFILE

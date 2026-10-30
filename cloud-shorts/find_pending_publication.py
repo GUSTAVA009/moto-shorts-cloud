@@ -15,7 +15,8 @@ import base64
 
 import preview_queue as ledger
 from channel_focus import is_motorcycle_episode
-from voice_style import PROFILE_ID as REQUIRED_MALE_PROFILE
+from native_bass_voice import (PROFILE_ID as REQUIRED_MALE_PROFILE,
+    VOICE_ENGINE as REQUIRED_MALE_ENGINE)
 
 
 def gh(path):
@@ -38,7 +39,7 @@ def select(catalog, receipt_entries, published, artifacts):
     # Only newly reviewed native-Russian male Kokoro originals are eligible.
     allowed={ep["id"] for ep in catalog["episodes"]
              if ep.get("auto_publish") is True
-             and ep.get("voice_engine") == "kokoro_ru_dima"
+             and ep.get("voice_engine") == REQUIRED_MALE_ENGINE
              and is_motorcycle_episode(ep)}
     available={x["name"] for x in artifacts if not x.get("expired")}
     choices=[]

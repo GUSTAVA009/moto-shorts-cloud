@@ -23,7 +23,8 @@ import urllib.request
 from editorial_guard import validate_catalog, source_id
 from moto_assets import validated_media, build_commons_candidate
 from render_episode import validate_episode
-from voice_style import PROFILE_ID as MALE_PROFILE
+from native_bass_voice import PROFILE_ID as MALE_PROFILE,
+    VOICE_ENGINE as NATIVE_BASS_ENGINE
 from engagement_cta import CTA_KINDS
 from autofill_catalog import github
 from story_reserve import choose as choose_reserved_story, RESERVE_CAPACITY
@@ -294,7 +295,7 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
     ep = {
         "id": slug, "auto_preview": True, "auto_publish": True,
         "channel_niche": "motorcycle", "research_pillar": "motorcycle",
-        "voice_engine": "kokoro_ru_dima",
+        "voice_engine": NATIVE_BASS_ENGINE,
         "voice_profile": MALE_PROFILE,
         **{k: prose[k] for k in ("title", "narration", "description",
             "caption_start", "caption_middle", "caption_end")},

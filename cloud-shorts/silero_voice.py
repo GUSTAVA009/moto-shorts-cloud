@@ -11,26 +11,27 @@ import re
 import wave
 
 MODEL_ID = "v5_cis_base_nostress"
-SPEAKER = "ru_zhadyra"
+SPEAKER = "ru_zhadyra"  # Retired original legacy voice; not permitted for new uploads
+ALLOWED_SPEAKERS = (SPEAKER, "ru_alexandr", "ru_eduard")
 SAMPLE_RATE = 24000
 LICENSE_NAME = "MIT"
 UPSTREAM = "https://github.com/snakers4/silero-models"
 
 
 def validate_voice(model_name=MODEL_ID, speaker=SPEAKER):
-    if model_name != MODEL_ID or speaker != SPEAKER:
+    if model_name != MODEL_ID or speaker not in ALLOWED_SPEAKERS:
         raise ValueError("Only the audited MIT-licensed CIS Base voice is allowed")
     return True
 
 
-def render(text, output, model_dir=None):
+def render(text, output, model_dir=None, speaker=SPEAKER):
     """Generate one complete sentence-connected narration without word splitting.
 
     This model's native full-phrase inference tested with independent Whisper
     gave markedly higher coverage than the old Piper variant. Unlike Piper,
     per-clause splitting would make prosody and joins less natural.
     """
-    validate_voice()
+    validate_voice(speaker=speaker)
     text = str(text).strip()
     if not (25 <= len(text) <= 350):
         raise ValueError("Invalid Russian narration length")
@@ -44,9 +45,9 @@ def render(text, output, model_dir=None):
     output.parent.mkdir(parents=True, exist_ok=True)
     model, _ = silero_tts(language="ru", speaker=MODEL_ID)
     model.to(torch.device("cpu"))
-    if SPEAKER not in set(model.speakers):
+    if speaker not in set(model.speakers):
         raise RuntimeError("Expected MIT-licensed Russian speaker missing")
-    data = model.apply_tts(text=text, speaker=SPEAKER, sample_rate=SAMPLE_RATE)
+    data = model.apply_tts(text=text, speaker=speaker, sample_rate=SAMPLE_RATE)
     arr = data.detach().cpu().numpy() if hasattr(data, "detach") else np.asarray(data)
     arr = np.asarray(arr, dtype=np.float32).reshape(-1)
     if not arr.size or not np.isfinite(arr).all():
@@ -66,7 +67,7 @@ def render(text, output, model_dir=None):
         dest.setframerate(SAMPLE_RATE)
         dest.writeframes(pcm)
     print("SILERO_MIT_RUSSIAN_VOICE_READY", round(duration, 2),
-          "speaker", SPEAKER, "license", LICENSE_NAME, flush=True)
+          "speaker", speaker, "license", LICENSE_NAME, flush=True)
     return duration
 
 

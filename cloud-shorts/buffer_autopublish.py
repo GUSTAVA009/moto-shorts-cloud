@@ -175,7 +175,7 @@ def publish(episode, video, metadata, voice, mixed):
         return {"skipped": "Buffer auto-publication disabled"}
     if not is_motorcycle_episode(episode):
         return {"skipped": "CHANNEL_TOPIC_BLOCKED: episode is unrelated to GUSTAVA Enduro"}
-    if episode.get("auto_publish") is not True or episode.get("voice_engine") != "kokoro_ru_dima":
+    if episode.get("auto_publish") is not True or episode.get("voice_engine") != "silero_mit_bass_baritone":
         return {"skipped": "Episode or narrator not approved for automatic publication"}
     rec = "buffer-publication-receipts/" + episode["id"] + ".json"
     if ledger.api(rec) or ledger.api("publication-receipts/" + episode["id"] + ".json"):

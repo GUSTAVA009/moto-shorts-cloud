@@ -16,6 +16,9 @@ import sys
 import wave
 
 from voice_style import PROFILE_ID as MALE_PROFILE, validate_report as validate_male_style
+from native_bass_voice import (PROFILE_ID as NATIVE_BASS_PROFILE,
+    VOICE_ENGINE as NATIVE_BASS_ENGINE,
+    validate_report as validate_native_bass_report)
 
 
 # ASR commonly writes "тысяча девятьсот восемьдесят второго" as "1982".
@@ -132,7 +135,21 @@ def check(episode, wav, model="small"):
         "engine": asr_engine,
         "model": model,
     })
-    if episode.get("voice_engine") == "kokoro_ru_dima":
+    if episode.get("voice_engine") == NATIVE_BASS_ENGINE:
+        try:
+            profile=validate_native_bass_report(audio_path)
+            result["male_voice_verified"]=True
+            result["voice_profile"]=NATIVE_BASS_PROFILE
+            result["voice_profile_pitch"]=1.0
+            result["voice_speaker"]=profile["speaker"]
+            result["voice_source_license"]=profile["license"]
+        except (ValueError,OSError,TypeError,KeyError,json.JSONDecodeError) as exc:
+            result["male_voice_verified"]=False
+            result["voice_profile"]=None
+            result["passed"]=False
+            result["status"]="manual_review_required"
+            result["reason"]="NATIVE_BASS_PROFILE_MISSING_OR_INVALID: "+type(exc).__name__
+    elif episode.get("voice_engine") == "kokoro_ru_dima":
         # Source WAV SHA must match the exact approved low-male narrator.
         # A previous bright-voiced Dima preview is NOT eligible for Buffer.
         try:
