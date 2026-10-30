@@ -37,6 +37,13 @@ jobs:
         run: |
           python3 -m unittest discover -s cloud-shorts -p 'test_render_episode.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_voice_style.py' -v
+          python3 - <<'PY'
+          import sys
+          sys.path.insert(0, 'cloud-shorts')
+          from voice_style import PROFILE_ID, PITCH
+          assert PROFILE_ID == 'gustava_male_bass_baritone_v5' and PITCH == .87
+          print('PRODUCTION_CLEAN_BASS_BARITONE_V5', PROFILE_ID, 'pitch', PITCH)
+          PY
           python3 -m unittest discover -s cloud-shorts -p 'test_voice_qa.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_deep_male_release.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_qa_autorepair.py' -v
