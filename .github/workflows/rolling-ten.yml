@@ -1,0 +1,42 @@
+name: GUSTAVA - Rolling 10 Confirmed Shorts and Next 10 Script Reserve
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['GUSTAVA - Verified Shorts to Buffer Queue']
+    types: [completed]
+  schedule:
+    - cron: "*/15 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/rolling-ten.yml'
+      - 'cloud-shorts/rolling_batches.py'
+      - 'cloud-shorts/rolling_batch_worker.py'
+      - 'cloud-shorts/test_rolling_batches.py'
+      - 'cloud-shorts/test_rolling_batch_worker.py'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: gustava-rolling-ten-buffer-sent-audit
+  cancel-in-progress: false
+
+jobs:
+  roll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID || 'UCS0QCodPcFBTjMt4ioEWOUw' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify ninth/tenth milestones without sending any posts
+        run: |
+          python3 -m unittest discover -s cloud-shorts -p 'test_rolling_batches.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_rolling_batch_worker.py' -v
+      - name: Check real Buffer sent statuses and prepare or promote ten scripts
+        run: python3 cloud-shorts/rolling_batch_worker.py
