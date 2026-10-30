@@ -3910,18 +3910,18 @@
     {
       "id": "moto-rain-1bec694cca6c",
       "auto_preview": true,
-      "auto_publish": true,
+      "auto_publish": false,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
       "voice_profile": "gustava_create_audio_deep_v1",
-      "title": "Дождливая дорога: сцепление, первый взгляд, внимание — как считаешь? #shorts",
-      "narration": "Мотоцикл и дождливая поездка. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — сцепление. Обстановка вокруг заслуживает не меньшего внимания, чем техника. Как бы ты объяснил этот выбор другу?",
-      "description": "Самостоятельная мототема: сцепление. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
-      "caption_start": "ДОЖДЛИВАЯ ДОРОГА",
-      "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
-      "caption_end": "А ТВОЙ ВЫБОР?",
-      "max_duration_seconds": 34,
+      "title": "Ночной дождь: поехал бы на мотоцикле? 🌧️ #shorts",
+      "narration": "Ты бы выехал на мотоцикле, когда ночной город залило дождём? Сначала — байки у мокрой обочины. Потом — поток машин, отражения фар и совсем другой ритм дороги. Красиво на видео, но видимость хуже, а тормозной путь может вырасти. Ты бы поехал сейчас или переждал?",
+      "description": "Ночной дождь меняет привычные городские дороги: мокрый асфальт, отражения фар и ограниченная видимость. Три независимые сцены, не запись одной поездки.\n\n#мото #shorts",
+      "caption_start": "НОЧНОЙ ДОЖДЬ. ПОЕХАЛ БЫ?",
+      "caption_middle": "МОКРАЯ ДОРОГА И ФАРЫ",
+      "caption_end": "ПОЕХАЛ ИЛИ ПЕРЕЖДАЛ?",
+      "max_duration_seconds": 25,
       "opening_trim_seconds": 0.1,
       "music_style": "action",
       "music_bpm": 110,
@@ -3970,62 +3970,17 @@
         {
           "source": "clip_0",
           "start": 0,
-          "seconds": 2.15
+          "seconds": 7.5
         },
         {
           "source": "clip_1",
           "start": 0,
-          "seconds": 2.15
+          "seconds": 7.5
         },
         {
           "source": "clip_2",
           "start": 0,
-          "seconds": 2.15
-        },
-        {
-          "source": "clip_0",
-          "start": 2.15,
-          "seconds": 2.15
-        },
-        {
-          "source": "clip_1",
-          "start": 2.15,
-          "seconds": 2.15
-        },
-        {
-          "source": "clip_2",
-          "start": 2.15,
-          "seconds": 2.15
-        },
-        {
-          "source": "clip_0",
-          "start": 4.3,
-          "seconds": 2.15
-        },
-        {
-          "source": "clip_1",
-          "start": 4.3,
-          "seconds": 2.15
-        },
-        {
-          "source": "clip_2",
-          "start": 4.3,
-          "seconds": 2.15
-        },
-        {
-          "source": "clip_0",
-          "start": 6.45,
-          "seconds": 2.15
-        },
-        {
-          "source": "clip_1",
-          "start": 6.45,
-          "seconds": 2.15
-        },
-        {
-          "source": "clip_2",
-          "start": 6.45,
-          "seconds": 2.15
+          "seconds": 7.5
         }
       ],
       "editorial": {
@@ -4049,7 +4004,10 @@
       "generation_provenance": "offline_editorial_reserve_v2",
       "story_reserve_id": "r2-rain-0019",
       "voice_revision_requested": true,
-      "voice_revision_note": "Original Silero narrator was rejected by owner. Only full approved AI Doc Maker Create Audio Voice voice_id=deep, with independent Russian ASR and paid/attribution licensing, may be released."
+      "voice_revision_note": "Replace failed retired V6 voice with the exact authorized AI Doc Maker Create Audio Voice deep recording; independently validate source SHA, Russian ASR, final mix and motion.",
+      "visual_director_version": 3,
+      "editorial_format": "scene-first honest night-rain question, separate illustrative sources",
+      "editorial_review_note": "PREVIEW ONLY: inspect actual scene content and frame timing; no public release until visual signoff"
     },
     {
       "id": "moto-helmet-f2452c64bf21",
