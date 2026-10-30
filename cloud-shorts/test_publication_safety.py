@@ -85,6 +85,15 @@ class PublicationQualityTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "rights"):
             p.publication_allowed(self.episode, self.meta, self.qa, self.video)
 
+    def test_owner_rejected_and_unreviewed_scene_first_video_blocked(self):
+        self.episode["visual_review_failed"]=True
+        with self.assertRaisesRegex(ValueError,"OWNER_REJECTED_VISUALS"):
+            p.publication_allowed(self.episode,self.meta,self.qa,self.video)
+        self.episode.pop("visual_review_failed")
+        self.episode["visual_director_version"]=3
+        with self.assertRaisesRegex(ValueError,"SCENE_FIRST_REVIEW_REQUIRED"):
+            p.publication_allowed(self.episode,self.meta,self.qa,self.video)
+
     def test_unapproved_video_blocked(self):
         self.episode["auto_publish"] = False
         with self.assertRaisesRegex(ValueError, "explicitly"):

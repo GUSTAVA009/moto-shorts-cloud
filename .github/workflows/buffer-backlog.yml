@@ -70,6 +70,7 @@ jobs:
           test -s "staged/$EPISODE/$EPISODE.mp4"
           test -s "staged/$EPISODE/voice_qa.json"
           test -s "staged/$EPISODE/mixed_audio_qa.json"
+          test -s "staged/$EPISODE/visual_qa.json"
           test -s "staged/$EPISODE/publication.json"
           python3 cloud-shorts/buffer_autopublish.py --episode "$EPISODE" \
             --video "staged/$EPISODE/$EPISODE.mp4" \

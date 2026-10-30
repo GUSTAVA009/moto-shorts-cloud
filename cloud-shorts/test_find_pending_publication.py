@@ -17,6 +17,29 @@ class BacklogTests(unittest.TestCase):
         self.assertEqual(q.select(catalog,receipts,set(),assets),(42,"a-new-01","daily-preview-a-new-01-42"))
         self.assertIsNone(q.select(catalog,receipts,{"a-new-01"},assets))
 
+    def test_rejected_and_unreviewed_v3_never_selected(self):
+        ep={"id":"scene-first-01","auto_publish":True,
+            "voice_engine":"aidocmaker_deep","visual_director_version":3,
+            "visual_revision_status":"assistant_checked_passed",
+            "scene_script_anchors":[{"source":"clip_0","action":"riding","spoken_anchor":"мотоцикл"}],
+            "title":"Мотоцикл едет по дороге",
+            "narration":"Мотоцикл едет по дороге.",
+            "editorial":{"bike":"touring-motorcycle"}}
+        catalog={"episodes":[ep]}
+        r=[{"id":ep["id"],"state":"preview_ready","voice_qa_passed":True,
+            "mixed_audio_qa_passed":True,"voice_profile":"gustava_create_audio_deep_v1",
+            "male_voice_verified":True,"run_id":"100"}]
+        arts=[{"name":"daily-preview-scene-first-01-100","expired":False}]
+        self.assertEqual(q.select(catalog,r,set(),arts),(100,ep["id"],arts[0]["name"]))
+        ep["visual_review_failed"]=True
+        self.assertIsNone(q.select(catalog,r,set(),arts))
+        del ep["visual_review_failed"]
+        ep["visual_revision_status"]="assistant_checked_passed_pending_owner"
+        self.assertIsNone(q.select(catalog,r,set(),arts))
+        ep["visual_revision_status"]="assistant_checked_passed"
+        ep["visual_revision_requested"]=True
+        self.assertIsNone(q.select(catalog,r,set(),arts))
+
     def test_previous_gravelly_v3_voice_is_rejected(self):
         catalog = {"episodes": [{"id":"a-new-01","auto_publish":True,
             "voice_engine":"aidocmaker_deep","title":"Мотоцикл","narration":"Мотоцикл.",

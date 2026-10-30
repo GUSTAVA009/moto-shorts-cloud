@@ -26,6 +26,12 @@ def file_sha256(path):
 def publication_allowed(episode, meta, qa, video):
     if not episode.get("auto_publish") is True:
         raise ValueError("This episode was not explicitly queued for automatic release")
+    if episode.get("visual_review_failed") is True or episode.get("visual_revision_requested") is True:
+        raise ValueError("OWNER_REJECTED_VISUALS: reject unfinished or rejected visual material")
+    if int(episode.get("visual_director_version") or 0) >= 3:
+        if (episode.get("visual_revision_status") != "assistant_checked_passed"
+                or not episode.get("scene_script_anchors")):
+            raise ValueError("SCENE_FIRST_REVIEW_REQUIRED: actual shots must be reviewed for release")
     # New director-v2 releases MUST provide visual QA proof. Legacy test
     # fixtures and already-approved historic renders keep their prior proof.
     # The actual renderer and queued selector independently reject new

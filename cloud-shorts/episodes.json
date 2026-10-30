@@ -4613,7 +4613,7 @@
     {
       "id": "moto-riding-ritual-deep-20261030",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
@@ -4740,8 +4740,10 @@
       "visual_revision_requested": false,
       "visual_revision_reason": "owner_rejected_end_clip_no_helmet_removal",
       "visual_revision_note": "First source action and road verified on actual render 41031003830. The final 0-4s segment only shows a rider adjusting chinstrap, not taking off helmet. Cut instead from original 2.7s into removal action. Preview-only until actual contact sheet confirms removal.",
-      "visual_revision_status": "assistant_checked_passed_pending_owner",
-      "visual_review_note": "Real rendered MP4 GitHub Actions run 41031636044. Verified at 0.4-3.5s real visor closure, 4.3-7.9s moving reflected road, 8.4-11.8s rider lifts helmet off head. Speech and final mix ASR lexical coverage 1.0. Not user-approved for publication."
+      "visual_revision_status": "assistant_checked_passed",
+      "visual_review_note": "Real rendered MP4 GitHub Actions run 41031636044. Verified at 0.4-3.5s real visor closure, 4.3-7.9s moving reflected road, 8.4-11.8s rider lifts helmet off head. Speech and final mix ASR lexical coverage 1.0. Not user-approved for publication.",
+      "auto_publish_reason": "Owner requested unattended Buffer delivery of QA-verified Shorts on 2026-10-30; final MP4 reviewed, no previously rejected videos released",
+      "release_source_run_id": "41031636044"
     }
   ]
 }
