@@ -173,8 +173,8 @@ def scene_duration_limit(episode, source):
     if PASSIVE_PORTRAIT.search(slug) and not VISIBLE_ACTION.search(slug):
         return 3.5
     if VISIBLE_ACTION.search(slug) and not re.search(r"riding|race|ride|travel",slug):
-        return 5.2
-    return 7.0
+        return 6.0
+    return 8.0
 
 
 
