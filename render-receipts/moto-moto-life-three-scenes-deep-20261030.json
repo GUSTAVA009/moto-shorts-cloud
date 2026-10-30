@@ -1,0 +1,10 @@
+{
+  "id": "moto-moto-life-three-scenes-deep-20261030",
+  "state": "reserved",
+  "run_id": "41055691838",
+  "attempt_count": 1,
+  "preview_fingerprint": "64f41cc3f7676865be873a829ed68df90c220f06aa666eb0348e13825f078c81",
+  "deep_source_sha256": "f14b3c7078ac638cb36cfeca1f358f4ac302cd54da8d02b2d1dc7cc082f30959",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
