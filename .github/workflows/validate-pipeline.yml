@@ -7,6 +7,7 @@ on:
       - 'cloud-shorts/episodes.json'
       - 'cloud-shorts/deep-voice-inbox.json'
       - 'cloud-shorts/test_*.py'
+      - '.github/workflows/daily-preview.yml'
       - '.github/workflows/validate-pipeline.yml'
   push:
     branches: [main]
@@ -42,6 +43,7 @@ on:
       - "cloud-shorts/sprint90.py"
       - "cloud-shorts/growth_baseline.json"
       - "cloud-shorts/test_*.py"
+      - ".github/workflows/daily-preview.yml"
       - ".github/workflows/validate-pipeline.yml"
   workflow_dispatch:
 
