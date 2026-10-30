@@ -4059,8 +4059,8 @@
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
       "voice_profile": "gustava_create_audio_deep_v1",
-      "title": "Экипировка: шлем, первый взгляд, внимание — твой выбор? #shorts",
-      "narration": "Мотоцикл и выбор экипировки. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — шлем. Обстановка вокруг заслуживает не меньшего внимания, чем техника. А на что ты обратил бы внимание в первую очередь?",
+      "title": "Шлем на мотоцикле: красивая форма не главное 🪖 #shorts",
+      "narration": "Шлем выглядит круто, но это ещё не значит, что он сидит правильно. Если шлем болтается или сильно давит, стоит проверить размер и посадку. Застегни ремешок и убедись, что обзор свободный. А ты проверяешь свой шлем перед поездкой?",
       "description": "Самостоятельная мототема: шлем. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
       "caption_start": "ЭКИПИРОВКА",
       "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
@@ -4180,7 +4180,16 @@
       "generation_provenance": "offline_editorial_reserve_v2",
       "story_reserve_id": "r2-helmet-0010",
       "voice_revision_requested": true,
-      "voice_revision_note": "Original Silero narrator was rejected by owner. Only full approved AI Doc Maker Create Audio Voice voice_id=deep, with independent Russian ASR and paid/attribution licensing, may be released."
+      "voice_revision_note": "Original Silero narrator was rejected by owner. Only full approved AI Doc Maker Create Audio Voice voice_id=deep, with independent Russian ASR and paid/attribution licensing, may be released.",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/5a29d27e-fe43-49d7-80b8-17a70314b3ae.mp3",
+        "transcript_sha256": "d09715c71520dc29b76db25df1c8ee69431a803788da460272218ec277f2146e",
+        "source_audio_sha256": "56154c99421d658ff362c8a7f5675e1e063f173b76d06a7e334b16c0c8172097",
+        "context_id": "399a5c98f1f640e09279931a91b48881",
+        "licence_mode": "public_provider_attribution"
+      }
     },
     {
       "id": "moto-dirt-1159b9930b70",
@@ -4190,8 +4199,8 @@
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
       "voice_profile": "gustava_create_audio_deep_v1",
-      "title": "Грунтовая трасса: покрытие, первый взгляд, внимание — что заметил? #shorts",
-      "narration": "Мотоцикл и езда по грунту. Первое впечатление привлекает внимание, но не раскрывает всего контекста. Отдельная тема — покрытие. Обстановка вокруг заслуживает не меньшего внимания, чем техника. Какая деталь показалась тебе самой интересной?",
+      "title": "Песок или гравий: где сложнее ехать? 🏍️ #shorts",
+      "narration": "Песок или гравий — где сложнее удержать мотоцикл? На рыхлой поверхности колесо ведёт себя иначе, а резкие движения только мешают. Смотри вперёд, выбирай траекторию и работай газом плавно. Какой грунт тебе даётся тяжелее?",
       "description": "Самостоятельная мототема: покрытие. Кадры иллюстративные, а не запись одного подтверждённого события.\n\n#shorts",
       "caption_start": "ГРУНТОВАЯ ТРАССА",
       "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
@@ -4328,7 +4337,16 @@
       "generation_provenance": "offline_editorial_reserve_v2",
       "story_reserve_id": "r2-dirt-0011",
       "voice_revision_requested": true,
-      "voice_revision_note": "Original Silero narrator was rejected by owner. Only full approved AI Doc Maker Create Audio Voice voice_id=deep, with independent Russian ASR and paid/attribution licensing, may be released."
+      "voice_revision_note": "Original Silero narrator was rejected by owner. Only full approved AI Doc Maker Create Audio Voice voice_id=deep, with independent Russian ASR and paid/attribution licensing, may be released.",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/71c986e1-2095-4b8e-9936-3192f545c09c.mp3",
+        "transcript_sha256": "146e754e899f999611e23f2cf376805d8e63432567913ac834bd5795a5481d20",
+        "source_audio_sha256": "f8592e91010c331513c605f80a026d2765c7f03b83d59f9452aea130b8b3d5d9",
+        "context_id": "2b0f3bff5bb14bd1866f67d6335c7c84",
+        "licence_mode": "public_provider_attribution"
+      }
     },
     {
       "id": "moto-vintage-2d2f50634e54",
