@@ -1,4 +1,6 @@
 import unittest
+import importlib.util
+HAS_NUMPY = importlib.util.find_spec('numpy') is not None
 from bass_casting import MALE_CANDIDATES, MODEL, LICENSE, median_pitch
 
 class BassCastingTests(unittest.TestCase):
@@ -9,10 +11,12 @@ class BassCastingTests(unittest.TestCase):
         self.assertEqual(len(MALE_CANDIDATES),len(set(MALE_CANDIDATES)))
         self.assertTrue(all(s.startswith("ru_") for s in MALE_CANDIDATES))
 
+    @unittest.skipUnless(HAS_NUMPY, 'production-only NumPy acoustic integration')
     def test_pitch_requires_voiced_signal(self):
         import numpy as np
         self.assertIsNone(median_pitch(np.zeros(24000,dtype="float32")))
 
+    @unittest.skipUnless(HAS_NUMPY, 'production-only NumPy acoustic integration')
     def test_fft_pitch_on_synthetic_male_voice(self):
         import numpy as np
         t=np.arange(24000*3)/24000.
