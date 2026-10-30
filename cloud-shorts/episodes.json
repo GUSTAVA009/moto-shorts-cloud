@@ -3324,6 +3324,134 @@
       "voice_profile": "gustava_male_deep_v3",
       "voice_revision_requested": true,
       "voice_revision_note": "User requested lower, fuller, natural male narrator. Bounded re-render of unpublished episode; previous bright timbre is superseded. No posted version may be duplicated."
+    },
+    {
+      "id": "moto-forest-4bd53e13fec4",
+      "auto_preview": true,
+      "auto_publish": true,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "kokoro_ru_dima",
+      "voice_profile": "gustava_male_deep_v3",
+      "title": "Мотоцикл: лесная тропа — на что смотреть #shorts",
+      "narration": "Мотоцикл и лесная тропа: у каждого кадра свой характер. Выбор маршрута начинается не с скорости, а с понятного плана и оценки окружающей обстановки. А ты выбрал бы спокойную поездку или трассу?",
+      "description": "Новые кадры на тему «лесная тропа». Напиши, что понравилось больше. #shorts",
+      "caption_start": "ЛЕСНАЯ ДОРОГА",
+      "caption_middle": "СМОТРИ НА ДЕТАЛИ",
+      "caption_end": "А ТВОЙ ВЫБОР?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 140,
+      "footage": [
+        {
+          "topics": [
+            "forest",
+            "roadtrip"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/33987059/",
+          "source_page": "https://www.pexels.com/video/serene-motorcycle-ride-through-scenic-forest-road-33987059/",
+          "author": "Vero Lova",
+          "license": "Pexels License",
+          "duration": 36,
+          "source_title": "serene motorcycle ride through scenic forest road"
+        },
+        {
+          "topics": [
+            "forest",
+            "roadtrip"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/32918034/",
+          "source_page": "https://www.pexels.com/video/scenic-motorcycle-ride-through-forested-highway-32918034/",
+          "author": "Tom Jurman",
+          "license": "Pexels License",
+          "duration": 67,
+          "source_title": "scenic motorcycle ride through forested highway"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 2.15,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 4.3,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 6.45,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 8.6,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 8.6,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_0",
+          "start": 10.75,
+          "seconds": 2.15
+        },
+        {
+          "source": "clip_1",
+          "start": 10.75,
+          "seconds": 2.15
+        }
+      ],
+      "editorial": {
+        "environment": "forest-trail-4bd53",
+        "bike": "forest-trailbike",
+        "people": "woods-rider-4bd53",
+        "story": "forest-path-and-riding-4bd53",
+        "visual": "three-clips-4bd53"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Поделись роликом с другом, который любит мотоциклы."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "offline_editorial_matrix_v1"
     }
   ]
 }
