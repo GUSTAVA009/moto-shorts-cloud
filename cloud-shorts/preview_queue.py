@@ -23,8 +23,8 @@ EPISODES = Path(__file__).with_name("episodes.json")
 HISTORY_PATH = "history/used_footage.json"
 
 from editorial_guard import source_id, validate_catalog
-from native_bass_voice import PROFILE_ID as REQUIRED_MALE_PROFILE,
-    VOICE_ENGINE as REQUIRED_MALE_ENGINE
+from native_bass_voice import (PROFILE_ID as REQUIRED_MALE_PROFILE,
+    VOICE_ENGINE as REQUIRED_MALE_ENGINE)
 
 
 def api(path, method="GET", data=None):
