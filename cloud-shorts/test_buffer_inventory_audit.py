@@ -13,6 +13,8 @@ class BufferPostInventoryTests(unittest.TestCase):
         self.assertEqual(x["receipt_posts_by_buffer_status"],{"sent":1,"error":1})
         self.assertEqual(x["missing_count"],1)
         self.assertEqual(x["missing_receipted_posts"][0]["post_id"],"cc")
+        self.assertEqual(x["latest_matching_receipts"][0]["post_id"], "bb")
+        self.assertEqual(x["latest_matching_receipts"][0]["live_status"], "error")
 
     def test_real_publisher_success_triggers_independent_live_queue_audit(self):
         from pathlib import Path
