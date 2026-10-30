@@ -176,16 +176,28 @@ def eligible_retry(episode, receipt, new_fingerprint):
         return False
     if (receipt.get("voice_qa_passed") is True
             and receipt.get("mixed_audio_qa_passed") is True):
-        # Allow one bounded correction of a truly revised, NEVER-PUBLISHED
-        # non-serial preview if an explicit, named voice revision was requested.
-        # The fingerprint must change and the logical episode cannot already
-        # be permitted for public auto-release.
+        # An unrelated code change (mastering, metadata, dependencies) is
+        # NOT permission to remake an already passing Deep video. A completed
+        # DEEP preview can be re-recorded only with a *different, audited*
+        # provider MP3 hash pinned to the same episode, or when correcting
+        # explicitly documented visual failures. Receipts predating the proof
+        # field fail closed rather than guessing.
+        source = (episode.get("deep_audio") or {}).get("source_audio_sha256")
+        previous_source = receipt.get("deep_source_sha256")
+        genuine_new_deep = (
+            episode.get("voice_revision_requested") is True
+            and episode.get("auto_publish") is not True
+            and episode.get("voice_engine") == REQUIRED_MALE_ENGINE
+            and isinstance(source, str) and bool(re.fullmatch(r"[0-9a-f]{64}", source))
+            and isinstance(previous_source, str)
+            and bool(re.fullmatch(r"[0-9a-f]{64}", previous_source))
+            and source != previous_source
+        )
         return bool(
             episode.get("episode_series", {}).get("historical_reconstruction")
             or visual_repair
             or male_voice_repair
-            or (episode.get("voice_revision_requested") is True
-                and episode.get("auto_publish") is not True)
+            or genuine_new_deep
         )
     return True
 
@@ -232,6 +244,41 @@ def eligible_abandoned_audio_config_retry(episode, receipt, new_fingerprint, old
     if receipt.get("preview_fingerprint") == new_fingerprint:
         return False
     return old_conclusion in ("failure", "cancelled", "timed_out")
+
+
+def eligible_abandoned_visual_duration_retry(episode, receipt, new_fingerprint, old_conclusion):
+    """One bounded retry for confirmed visual-duration failure on original Deep.
+
+    Never relax ASR, repeat footage, or authorize public release as a side effect.
+    """
+    if not isinstance(receipt, dict) or receipt.get("id") != episode.get("id"):
+        return False
+    if receipt.get("state") != "reserved" or old_conclusion not in (
+            "failure", "cancelled", "timed_out"):
+        return False
+    if (episode.get("visual_duration_revision_requested") is not True
+            or episode.get("visual_duration_revision_reason") !=
+                "two_active_moving_scenes_not_long_enough"):
+        return False
+    if (episode.get("auto_preview") is not True
+            or episode.get("auto_publish") is not False
+            or episode.get("voice_engine") != REQUIRED_MALE_ENGINE
+            or int(episode.get("visual_director_version") or 0) != 3):
+        return False
+    source_keys = {x.get("key") for x in episode.get("footage") or []}
+    shots = episode.get("shots") or []
+    if (len(source_keys) != 2 or len(shots) != 2
+            or {x.get("source") for x in shots} != source_keys):
+        return False
+    try:
+        cap = float(episode.get("active_ride_scene_seconds"))
+    except (TypeError, ValueError):
+        return False
+    if not 9.0 <= cap <= 10.0:
+        return False
+    attempts = receipt.get("attempt_count", 1)
+    return (type(attempts) is int and 1 <= attempts < MAX_ATTEMPTS
+            and receipt.get("preview_fingerprint") != new_fingerprint)
 
 
 def failed_action_conclusion(run_id):
@@ -299,8 +346,9 @@ def choose(catalog, output):
     # safe audio-configuration repair. Never allow public/parallel retries.
     if selected is None:
         for item in listed:
-            if not (item.get("source_revision_requested") is True or
-                    item.get("technical_revision_requested") is True):
+            if not (item.get("source_revision_requested") is True
+                    or item.get("technical_revision_requested") is True
+                    or item.get("visual_duration_revision_requested") is True):
                 continue
             _, receipt = records[item["id"]]
             if not receipt or receipt.get("state") != "reserved":
@@ -311,8 +359,10 @@ def choose(catalog, output):
             if receipt.get("preview_fingerprint") == new_fp:
                 continue
             outcome = failed_action_conclusion(receipt.get("run_id"))
-            if (eligible_abandoned_source_retry(item, receipt, new_fp, outcome) or
-                    eligible_abandoned_audio_config_retry(item, receipt, new_fp, outcome)):
+            if (eligible_abandoned_source_retry(item, receipt, new_fp, outcome)
+                    or eligible_abandoned_audio_config_retry(item, receipt, new_fp, outcome)
+                    or eligible_abandoned_visual_duration_retry(
+                        item, receipt, new_fp, outcome)):
                 selected = item
                 break
     # Historical serial continuity: repair part one before beginning part two,
@@ -358,6 +408,7 @@ def choose(catalog, output):
         "id": slug, "state": "reserved", "run_id": run_id,
         "attempt_count": attempt,
         "preview_fingerprint": preview_fingerprint(item),
+        "deep_source_sha256": (item.get("deep_audio") or {}).get("source_audio_sha256"),
         "previous_run_id": old_receipt.get("run_id") if old_receipt else None,
         "notes": "Revised preview only; never retry a public or uncertain upload."
     }
