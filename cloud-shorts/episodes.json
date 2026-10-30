@@ -4722,7 +4722,7 @@
       "voice_profile": "gustava_create_audio_deep_v1",
       "visual_director_version": 3,
       "title": "Город на мотоцикле: утро или поток машин? 🏍️ #shorts",
-      "narration": "В городе мотоцикл кажется самым свободным транспортом. Но сравни два кадра: плотный поток и утренний маршрут. Разный свет, разная обстановка — и везде важны обзор и дистанция. А где ты предпочёл бы ездить?",
+      "narration": "В городе мотоцикл кажется самым свободным транспортом. Но сравни два кадра: плотный поток и утренний маршрут. Разный свет, разная обстановка. Всегда смотри по сторонам и держи дистанцию. А где ты предпочёл бы ездить?",
       "description": "Два независимых городских маршрута на мотоциклах: плотное движение и утренний свет. Сравнение обстановки, а не запись одного события.\n\n#мото #город #shorts",
       "caption_start": "ГОРОД НА МОТОЦИКЛЕ",
       "caption_middle": "УТРО ИЛИ ПЛОТНЫЙ ПОТОК?",
@@ -4792,7 +4792,9 @@
       },
       "source_selection": "Distinct-author internal verified Pexels pool; visual review pending",
       "generation_provenance": "Original scene-first narration, separate non-consecutive stock clips",
-      "editorial_review_note": "PREVIEW ONLY. Actual frames and pace must pass visual QA before Buffer."
+      "editorial_review_note": "PREVIEW ONLY. The first genuine Deep recording failed independent ASR 0.906; replacement narration is pending independent verification. Source frames still require review.",
+      "voice_revision_requested": true,
+      "voice_revision_note": "Shorten a misheard phrase; no TTS voice substitution or lowered ASR threshold."
     },
     {
       "id": "moto-routes-contrast-deep-20261030",
