@@ -7,6 +7,8 @@ as helmet footage. Scenes show each source once rather than ping-pong edits.
 """
 from __future__ import annotations
 
+import json
+from pathlib import Path
 import re
 from urllib.parse import urlparse
 
@@ -123,3 +125,38 @@ def directed_plan(episode, source_durations, seconds):
     if evidence_set and plan[0]["source"] not in evidence_set:
         raise AssertionError("Topic subject not visible at the opening")
     return plan
+
+
+def verified_visual_artifact(episode, mp4_path):
+    """Read renderer's QA proof before publishing any new director-v2 episode.
+
+    For historical unmodified releases keep legacy compatibility but still
+    reject an object guide whose footage is unrelated to its main subject.
+    """
+    evidence=verify_story_subject(episode)
+    path=Path(mp4_path).parent/"visual_qa.json"
+    required=episode.get("visual_director_version",0) >= 2
+    if not path.is_file():
+        if required:
+            raise ValueError("VISUAL_QA_MISSING: new publication requires genuine visual plan proof")
+        return {"legacy":True,"passed":False}
+    try:
+        obj=json.loads(path.read_text(encoding="utf8"))
+    except (OSError,ValueError,TypeError) as exc:
+        raise ValueError("VISUAL_QA_CORRUPT") from exc
+    seq=obj.get("source_sequence") or []
+    plan=obj.get("sequence") or []
+    known={x["key"] for x in episode["footage"]}
+    if (obj.get("version")!=2 or obj.get("passed") is not True
+            or obj.get("episode")!=episode["id"]
+            or not 2<=len(seq)<=3
+            or len(set(seq))!=len(seq)
+            or set(seq)-known or len(plan)!=len(seq)
+            or [p.get("source") for p in plan]!=seq
+            or any(float(p.get("seconds",0))<MIN_SCENE_SECONDS for p in plan)
+            or obj.get("source_reused_in_short") is not False):
+        raise ValueError("VISUAL_QA_REJECTED: repeated/missing/corrupt visual chapters")
+    if evidence["subject"] is not None:
+        if obj.get("subject")!=evidence["subject"] or seq[0] not in evidence["evidence_sources"]:
+            raise ValueError("VISUAL_TOPIC_MISMATCH: story object not shown first")
+    return obj
