@@ -30,6 +30,7 @@ def check_receipts(receipts, posts):
     inventory = {post["id"]: post for post in posts if post.get("id")}
     states = {}
     missing = []
+    matched = []
     for r in receipts:
         post_id = r.get("buffer_post_id")
         if not post_id:
@@ -41,12 +42,17 @@ def check_receipts(receipts, posts):
         else:
             status = row.get("status")
             states[status] = states.get(status, 0) + 1
+            matched.append({"episode": r.get("episode"), "post_id": post_id,
+                            "live_status": status, "due_at": row.get("dueAt"),
+                            "sent_at": row.get("sentAt")})
     return {
         "receipted_posts":sum(bool(r.get("buffer_post_id")) for r in receipts),
         "visible_posts":len(posts),
         "receipt_posts_by_buffer_status":states,
         "missing_receipted_posts":missing,
         "missing_count":len(missing),
+        "latest_matching_receipts": sorted(
+            matched, key=lambda x: str(x.get("due_at") or ""), reverse=True)[:8],
         "note":"Missing from API does not prove deletion or success; no automatic retry is permitted."
     }
 

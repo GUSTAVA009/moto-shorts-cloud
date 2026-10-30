@@ -1,6 +1,11 @@
 name: GUSTAVA - Audit Real Buffer Post States Against Receipts
 on:
   workflow_dispatch:
+  # Read-only confirmation after each real Buffer delivery, not merely after
+  # GitHub reports a successful MP4 render or empty queue.
+  workflow_run:
+    workflows: ['GUSTAVA - Verified Shorts to Buffer Queue']
+    types: [completed]
   push:
     branches: [main]
     paths:
@@ -16,6 +21,7 @@ permissions:
 
 jobs:
   audit:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 6
     env:
