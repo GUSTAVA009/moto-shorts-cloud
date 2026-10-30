@@ -4569,7 +4569,16 @@
       },
       "source_selection": "Manually verified official Pexels pages with helmet visibly central, unique contributors",
       "generation_provenance": "Original human-directed motorcycle safety guide, genuine Deep voice",
-      "editorial_review_note": "CONTROLLED PREVIEW: visual topic must be verified on rendered MP4; do not publish without video inspection."
+      "editorial_review_note": "CONTROLLED PREVIEW: visual topic must be verified on rendered MP4; do not publish without video inspection.",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/46171d32-4928-495f-ae7c-23a34a926508.mp3",
+        "transcript_sha256": "5b01f668ad14399dc65249d057561eee416c6b280083ce5a7e45f19c0a3726ad",
+        "source_audio_sha256": "efba5ce075036666f7d85070f93b99a3233ae59e9c14a382b4c291c5e6dc6d0b",
+        "context_id": "72e236d73bca4c529b90bd0151aea399",
+        "licence_mode": "public_provider_attribution"
+      }
     }
   ]
 }
