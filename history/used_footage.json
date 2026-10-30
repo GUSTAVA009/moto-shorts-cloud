@@ -667,6 +667,16 @@
       "episode": "gustava-20-s01-20261030",
       "source": "https://www.pexels.com/video/men-holding-mechanic-tools-8551366/",
       "status": "reserved-or-rendered"
+    },
+    "9606874": {
+      "episode": "gustava-20-e01-20261030",
+      "source": "https://www.pexels.com/video/person-fixing-a-motorcycle-9606874/",
+      "status": "reserved-or-rendered"
+    },
+    "7170231": {
+      "episode": "gustava-20-e01-20261030",
+      "source": "https://www.pexels.com/video/a-man-fixing-the-motorcycle-7170231/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -970,6 +980,13 @@
       "story": "classic-repair-versus-tool-choice",
       "visual": "repair-vs-tool-selection",
       "bike": "vintage-repair-bike"
+    },
+    "gustava-20-e01-20261030": {
+      "environment": "street-wheel-and-engine-garage",
+      "people": "urban-worker-and-shop-mechanic",
+      "story": "wheel-versus-engine-repair",
+      "visual": "two-different-bike-repairs",
+      "bike": "urban-servicing-bike"
     }
   }
 }
