@@ -170,6 +170,33 @@ def release_url(episode, video, sha):
     return url
 
 
+def should_disclose_generated_content(episode):
+    """Classify material synthetic YouTube content, not ordinary AI assistance.
+
+    This specific motorcycle pipeline uses real licensed stock footage, a
+    generic (not impersonated) voiceover and deterministic DSP soundtrack.
+    Scripts/voice production assistance alone does NOT automatically mean
+    photorealistic altered events. Unknown/ambiguous formats fail closed.
+    Always disclose actual realistic synthetic imagery, impersonation,
+    AI-generated music as the video focus or materially faked real events.
+    """
+    forced = ("realistic_synthetic_visuals", "altered_real_event",
+              "impersonates_real_person", "ai_generated_music_main_focus",
+              "ai_disclosure_required")
+    if any(episode.get(key) is True for key in forced):
+        return True
+    if (episode.get("voice_engine") != "silero_mit_bass_baritone"
+            or episode.get("episode_series", {}).get("historical_reconstruction")
+            or not episode.get("footage")
+            or any(source.get("license") not in ("Pexels License", "CC0 1.0")
+                   for source in episode["footage"])):
+        return True
+    # The video's moving pictures are genuine licensed stock; script drafting,
+    # a generic synthetic narrator and algorithmic non-AI background soundtrack
+    # do not amount to materially faked photorealistic content.
+    return False
+
+
 def publish(episode, video, metadata, voice, mixed):
     if os.getenv("BUFFER_AUTO_PUBLISH_ENABLED") != "true":
         return {"skipped": "Buffer auto-publication disabled"}
@@ -203,7 +230,7 @@ def publish(episode, video, metadata, voice, mixed):
         "mode": "customScheduled", "dueAt": due_at, "aiAssisted": True,
         "metadata": {"youtube": {"title": title, "categoryId": category,
                      "madeForKids": False, "privacy": "public",
-                     "isAiGenerated": True}},
+                     "isAiGenerated": should_disclose_generated_content(episode)}},
         "assets": [{"video": {"url": url}}]
     }
     q = """mutation($input:CreatePostInput!){

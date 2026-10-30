@@ -104,6 +104,21 @@ class BufferPublisherTests(unittest.TestCase):
         self.assertIn("dueAt:{start:",req.call_args.args[0])
         self.assertNotIn("startDate:",req.call_args.args[0])
 
+    def test_youtube_disclosure_only_when_material_realistic_ai_is_present(self):
+        # Generic narration + licensed real footage + deterministic music
+        # should not force YouTube's visible AI content marker.
+        self.assertIs(b.should_disclose_generated_content(self.ep), False)
+        for key in ("realistic_synthetic_visuals", "altered_real_event",
+                    "impersonates_real_person", "ai_generated_music_main_focus",
+                    "ai_disclosure_required"):
+            e = dict(self.ep, **{key: True})
+            with self.subTest(key=key):
+                self.assertIs(b.should_disclose_generated_content(e), True)
+        unknown = dict(self.ep, voice_engine="unknown_new_video_model")
+        self.assertIs(b.should_disclose_generated_content(unknown), True)
+        no_provenance = dict(self.ep, footage=[{"license": "unknown"}])
+        self.assertIs(b.should_disclose_generated_content(no_provenance), True)
+
     def test_valid_post_uses_correct_channel_and_youtube_metadata(self):
         with patch.dict(os.environ, {"BUFFER_AUTO_PUBLISH_ENABLED": "true"}):
             with patch.object(b.ledger, "api", side_effect=[None, None, {"sha": "receiptsha"}]):
@@ -120,6 +135,8 @@ class BufferPublisherTests(unittest.TestCase):
         posted = req.call_args.args[1]["input"]
         self.assertEqual(posted["channelId"], b.CHANNEL)
         self.assertEqual(posted["metadata"]["youtube"]["categoryId"], "2")
+        self.assertIs(posted["metadata"]["youtube"]["isAiGenerated"], False)
+        self.assertIs(posted["aiAssisted"], True)  # honest AI scripting assistance
         self.assertTrue(posted["assets"][0]["video"]["url"].startswith("https://"))
         self.assertFalse(posted.get("saveToDraft", False))
         self.assertEqual(posted["mode"], "customScheduled")
