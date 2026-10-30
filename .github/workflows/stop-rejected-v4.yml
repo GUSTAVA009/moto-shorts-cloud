@@ -1,0 +1,29 @@
+name: GUSTAVA - Stop Rejected V4 Voice Post (One Shot)
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/stop-rejected-v4.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gustava-rejected-v4-cancel-one-queued-post
+  cancel-in-progress: false
+
+jobs:
+  stop-rejected-v4:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate cancellation safety first
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_stop_rejected_v4.py' -v
+      - name: Delete only scheduled rejected-v4 audio post; never any sent post
+        run: python3 cloud-shorts/stop_rejected_v4.py
