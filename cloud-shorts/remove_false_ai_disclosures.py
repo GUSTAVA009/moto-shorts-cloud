@@ -25,8 +25,10 @@ REPO = "GUSTAVA009/moto-shorts-cloud"
 
 POST_FIELDS = (
     "id channelId status dueAt text "
-    "assets {id} "
-    "metadata {... on YoutubePostMetadata {isAiGenerated title}}"
+    "assets {id type source} "
+    "metadata {... on YoutubePostMetadata {"
+    "isAiGenerated title category {categoryId} "
+    "madeForKids privacy license embeddable notifySubscribers}}"
 )
 
 
@@ -86,9 +88,38 @@ def eligible(post, receipt, episode, now):
 
 
 def patch_ai_disclosure(post, fetch=buffer):
-    """Send ONLY YouTube disclosure bit, never change assets/text/title/slot."""
-    payload = {"id": post["id"],
-               "metadata": {"youtube": {"isAiGenerated": False}}}
+    """Edit one post without changing its contents or schedule.
+
+    Buffer validates the *entire* post on an edit. Live API rejected a
+    metadata-only mutation as 'missing text, media, title' in run 41009770736,
+    despite documentation saying omission should preserve those fields.
+    Carry forward those same fields from live POST data, verifying every bit.
+    """
+    metadata = post.get("metadata") or {}
+    original_assets = post.get("assets") or []
+    category = (metadata.get("category") or {}).get("categoryId")
+    if not (post.get("text") and metadata.get("title") and category in (
+        "1","2","10","15","17","19","20","22","23","24","25","26","27","28","29")):
+        raise RuntimeError("Incomplete YouTube text/title/category; no mutation allowed")
+    if len(original_assets) != 1:
+        raise RuntimeError("Unexpected multiple/missing video assets; no mutation allowed")
+    video = original_assets[0]
+    source = video.get("source")
+    if video.get("type") != "video" or not isinstance(source, str) or not source.startswith("https://"):
+        raise RuntimeError("Live video asset source invalid; no mutation allowed")
+    youtube = {
+        "isAiGenerated": False,
+        "title": metadata["title"],
+        "categoryId": category,
+    }
+    for key in ("madeForKids","privacy","license","embeddable","notifySubscribers"):
+        if metadata.get(key) is not None:
+            youtube[key] = metadata[key]
+    payload = {
+        "id": post["id"], "text": post["text"],
+        "assets": [{"video":{"url":source}}],
+        "metadata": {"youtube": youtube},
+    }
     query = (
         "mutation($input:EditPostInput!){editPost(input:$input){"
         "... on PostActionSuccess{post{"+POST_FIELDS+"}}"
@@ -98,14 +129,19 @@ def patch_ai_disclosure(post, fetch=buffer):
     result = (fetch(query, {"input": payload}) or {}).get("editPost") or {}
     after = result.get("post")
     if not isinstance(after, dict):
-        raise RuntimeError("Buffer edit failed or uncertain: "+str(result.get("message","unknown"))[:120])
-    for k in ("id","channelId","status","dueAt","text","assets"):
-        if after.get(k) != post.get(k):
-            raise RuntimeError("Buffer edit unexpectedly changed "+k+"; audit required")
-    if (after.get("metadata") or {}).get("isAiGenerated") is not False:
+        raise RuntimeError("Buffer edit rejected or uncertain: "+str(result.get("message","unknown"))[:600])
+    for key in ("id","channelId","status","dueAt","text"):
+        if after.get(key) != post.get(key):
+            raise RuntimeError("Buffer edit unexpectedly changed "+key+"; audit required")
+    got_assets = after.get("assets") or []
+    if len(got_assets) != 1 or got_assets[0].get("source") != source or got_assets[0].get("type") != "video":
+        raise RuntimeError("Buffer edit unexpectedly changed video source; audit required")
+    actual_meta = after.get("metadata") or {}
+    if actual_meta.get("isAiGenerated") is not False:
         raise RuntimeError("Buffer did not confirm false AI-generated marker")
-    if (after.get("metadata") or {}).get("title") != (post.get("metadata") or {}).get("title"):
-        raise RuntimeError("Buffer edit changed Youtube title; audit required")
+    for key in ("title","category","madeForKids","privacy","license","embeddable","notifySubscribers"):
+        if actual_meta.get(key) != metadata.get(key):
+            raise RuntimeError("Buffer edit unexpectedly changed Youtube metadata."+key)
     return after
 
 

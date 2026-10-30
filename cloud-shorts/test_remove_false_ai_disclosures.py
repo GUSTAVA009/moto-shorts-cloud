@@ -16,8 +16,11 @@ def ep():
             "footage":[{"license":"Pexels License"}]}
 def post():
     return {"id":"buffer-1","channelId":CHANNEL,"status":"scheduled",
-            "dueAt":DUE,"text":"Это описание","assets":[{"id":"media-1"}],
-            "metadata":{"isAiGenerated":True,"title":"Мотоцикл"}}
+            "dueAt":DUE,"text":"Это описание","assets":[{"id":"media-1","type":"video","source":"https://github.com/verified/video.mp4"}],
+            "metadata":{"isAiGenerated":True,"title":"Мотоцикл",
+                        "category":{"categoryId":"2"},"madeForKids":False,
+                        "privacy":"public","license":"youtube",
+                        "embeddable":True,"notifySubscribers":True}}
 def receipt():
     return {"buffer_post_id":"buffer-1","episode":"forest-test",
             "state":"queued","due_at":DUE}
@@ -44,18 +47,20 @@ class AiLabelRepairTests(unittest.TestCase):
         calls=[]
         def fetch(query,values):
             calls.append((query,values))
-            updated=dict(orig,metadata={"isAiGenerated":False,"title":"Мотоцикл"})
+            updated=dict(orig,metadata=dict(orig["metadata"],isAiGenerated=False))
             return {"editPost":{"post":updated}}
         result=fix.patch_ai_disclosure(orig,fetch)
         self.assertFalse(result["metadata"]["isAiGenerated"])
-        self.assertEqual(calls[0][1],{
-            "input":{"id":"buffer-1","metadata":{"youtube":{"isAiGenerated":False}}}
-        })
-        self.assertNotIn("aiAssisted",calls[0][1]["input"])
-        self.assertNotIn("dueAt",calls[0][1]["input"])
-        self.assertNotIn("assets",calls[0][1]["input"])
-        self.assertNotIn("text",calls[0][1]["input"])
-        self.assertNotIn("title",calls[0][1]["input"]["metadata"]["youtube"])
+        payload = calls[0][1]["input"]
+        self.assertEqual(payload["id"],"buffer-1")
+        self.assertEqual(payload["text"],orig["text"])
+        self.assertEqual(payload["assets"],[{"video":{"url":orig["assets"][0]["source"]}}])
+        self.assertIs(payload["metadata"]["youtube"]["isAiGenerated"],False)
+        self.assertEqual(payload["metadata"]["youtube"]["title"],"Мотоцикл")
+        self.assertEqual(payload["metadata"]["youtube"]["categoryId"],"2")
+        self.assertNotIn("aiAssisted",payload)
+        self.assertNotIn("dueAt",payload)
+        self.assertNotIn("mode",payload)
 
     def test_malformed_response_fails_closed(self):
         with self.assertRaises(RuntimeError):
