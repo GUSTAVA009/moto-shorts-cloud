@@ -60,5 +60,61 @@ class DeepPreviewDedupTests(unittest.TestCase):
         self.assertFalse(q.eligible_retry(ep, self.receipt(), "changed-code"))
 
 
+
+class ConfirmedCityDurationRetryTests(unittest.TestCase):
+    def episode(self):
+        from pathlib import Path
+        import json
+        catalog = json.loads((Path(__file__).parent / "episodes.json").read_text("utf8"))
+        return next(e for e in catalog["episodes"]
+                    if e["id"] == "moto-city-contrast-deep-20261030")
+
+    def reservation(self):
+        return {
+            "id": "moto-city-contrast-deep-20261030",
+            "state": "reserved",
+            "run_id": "41045277757",
+            "attempt_count": 1,
+            "preview_fingerprint": "prior-failed-duration",
+        }
+
+    def test_confirmed_failed_private_preview_can_retry_once(self):
+        ep = self.episode()
+        r = self.reservation()
+        self.assertTrue(q.eligible_abandoned_visual_duration_retry(
+            ep, r, "fixed-real-moving-scenes", "failure"))
+        self.assertFalse(q.eligible_abandoned_visual_duration_retry(
+            ep, r, "fixed-real-moving-scenes", "in_progress"))
+        self.assertFalse(q.eligible_abandoned_visual_duration_retry(
+            ep, r, "prior-failed-duration", "failure"))
+        ep["auto_publish"] = True
+        self.assertFalse(q.eligible_abandoned_visual_duration_retry(
+            ep, r, "fixed-real-moving-scenes", "failure"))
+
+    def test_no_blind_second_retry_on_unknown_failure(self):
+        ep = self.episode()
+        receipt = self.reservation()
+        receipt["attempt_count"] = q.MAX_ATTEMPTS
+        self.assertFalse(q.eligible_abandoned_visual_duration_retry(
+            ep, receipt, "new-video", "failure"))
+        receipt["attempt_count"] = 1
+        ep["visual_duration_revision_reason"] = "unknown"
+        self.assertFalse(q.eligible_abandoned_visual_duration_retry(
+            ep, receipt, "new-video", "failure"))
+
+    def test_two_actual_ride_scenes_cover_approved_voice_without_padding(self):
+        from visual_director import directed_plan, scene_duration_limit
+        ep = self.episode()
+        lengths = {s["key"]: float(s["duration"]) for s in ep["footage"]}
+        plan = directed_plan(ep, lengths, 15.84 + 1.25)
+        self.assertEqual(len(plan), 2)
+        self.assertEqual(len({x["source"] for x in plan}), 2)
+        self.assertGreaterEqual(sum(x["seconds"] for x in plan), 16.97)
+        self.assertTrue(all(3.3 <= x["seconds"] <= 9.5 for x in plan))
+        self.assertEqual(scene_duration_limit(ep, ep["footage"][0]), 9.5)
+        wrong = dict(ep, active_ride_scene_seconds=8.0)
+        with self.assertRaisesRegex(RuntimeError, "VISUAL_DURATION_SHORTAGE"):
+            directed_plan(wrong, lengths, 15.84 + 1.25)
+
 if __name__ == "__main__":
     unittest.main()
