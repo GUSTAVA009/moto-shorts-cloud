@@ -1,0 +1,35 @@
+name: GUSTAVA - Accept Verified DEEP Inbox Narrations
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/deep-inbox-ingest.yml'
+      - 'cloud-shorts/deep-voice-inbox.json'
+      - 'cloud-shorts/deep_inbox_ingest.py'
+      - 'cloud-shorts/test_deep_inbox_ingest.py'
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: gustava-deep-inbox-import
+  cancel-in-progress: false
+jobs:
+  verify-and-pin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 23
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unit-check exact Deep provenance and metadata scope
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_deep_inbox_ingest.py' -v
+      - name: Install independent Russian ASR
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends ffmpeg
+          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1 av==18.1.0
+      - name: Validate each provider MP3, full words, hash and commit eligible Deep episodes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: python3 cloud-shorts/deep_inbox_ingest.py
