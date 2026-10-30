@@ -1,9 +1,15 @@
 {
   "id": "jump-track-28",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "40991345752",
   "attempt_count": 4,
   "preview_fingerprint": "8c1450c7dbf0924c456640e522dc56677e2fc73faaef63d40a99a135fe7a2bb7",
   "previous_run_id": "40988981318",
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 1.0,
+  "voice_profile": "gustava_male_natural_v4",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 1.0
 }
