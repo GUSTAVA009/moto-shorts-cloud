@@ -155,7 +155,9 @@ class NewMotoSourceTests(unittest.TestCase):
         ep = s.assemble_episode(self.catalog, theme, media[:3],
                                 story(), len(self.catalog["episodes"]))
         self.assertTrue(ep["auto_publish"])
-        self.assertEqual(len(ep["shots"]), 12)
+        self.assertEqual(len(ep["shots"]), len(ep["footage"]))
+        self.assertEqual(len({s["source"] for s in ep["shots"]}),len(ep["shots"]))
+        self.assertTrue(all(s["seconds"]>=4 for s in ep["shots"]))
         self.assertEqual(len(ep["footage"]), 3)
         self.assertEqual(len(set(x["source_page"] for x in ep["footage"])), 3)
         self.assertTrue(ep["narration"].startswith("Мотоцикл"))

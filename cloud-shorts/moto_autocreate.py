@@ -23,6 +23,7 @@ import urllib.request
 from editorial_guard import validate_catalog, source_id
 from moto_assets import validated_media, build_commons_candidate
 from render_episode import validate_episode
+from visual_director import verify_story_subject, source_evidence, OBJECTS
 from deep_voice import (PROFILE_ID as MALE_PROFILE,
                         VOICE_ENGINE as NATIVE_BASS_ENGINE)
 from engagement_cta import CTA_KINDS
@@ -296,14 +297,13 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
     slug = "moto-" + theme[0] + "-" + short_hash
     cta_kind, overlay, sentence = CTA_CYCLE[seed_index % len(CTA_CYCLE)]
     sources = [dict(x, key="clip_" + str(i)) for i, x in enumerate(media)]
-    cuts = []
-    for idx in range(12):
-        source = sources[idx % len(sources)]
-        duration = min(int(source.get("duration") or 14), 120)
-        offset = (idx // len(sources)) * 2.15
-        if offset >= duration - 2.2:
-            offset = max(0.0, duration - 2.8)
-        cuts.append({"source": source["key"], "start": round(offset, 2), "seconds": 2.15})
+    # Actual editorial progression. The renderer redistributes real runtime
+    # across the distinct sources; it never cycles footage in 2.15-s loops.
+    cuts = [
+        {"source": source["key"], "start": 0.,
+         "seconds": round(min(11.5,float(source.get("duration") or 14)-.25),2)}
+        for source in sources
+    ]
     ep = {
         "id": slug, "auto_preview": True, "auto_publish": True,
         "channel_niche": "motorcycle", "research_pillar": "motorcycle",
@@ -332,6 +332,8 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
         "generation_provenance": prose.get("_generation_source", "Original authoring by model from broad licensed scene context"),
         **({"story_reserve_id": prose["_reserve_id"]} if prose.get("_reserve_id") else {}),
     }
+    # Prohibit voiceover-topic mismatches before committing a new episode.
+    verify_story_subject(ep)
     # Existing editorial uniqueness and Russian QA still apply independently.
     validate_episode(ep)
     validate_catalog({"episodes": catalog["episodes"] + [ep]})
@@ -377,7 +379,18 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
             found.extend(curated_pexels_results(theme, used))
         if len(choose_sources(found, used)) < 2:
             found.extend(commons_fetch(theme))
+        # Helmet stock must ACTUALLY contain a helmet in the provider title.
+        # A generic motorcycle clip tagged "helmet" is not evidence.
+        if theme[0] == "helmet":
+            matcher = OBJECTS["helmet"][1]
+            found.sort(key=lambda clip: (
+                not bool(matcher.search(source_evidence(clip))),
+                str(clip.get("source_title", ""))))
         media = choose_sources(found, used)
+        if theme[0] == "helmet":
+            if not any(OBJECTS["helmet"][1].search(source_evidence(x)) for x in media):
+                print("VISUAL_STOCK_MISSING_HELMET",flush=True)
+                continue
         if len(media) >= 2:
             chosen = (theme, media)
             break

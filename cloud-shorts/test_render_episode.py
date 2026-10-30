@@ -20,7 +20,7 @@ class EpisodeTests(unittest.TestCase):
             self.assertNotIn(slug, slugs)
             slugs.add(slug)
             self.assertNotIn("https://", ep["description"])
-            self.assertGreater(len(ep["shots"]), 3)
+            self.assertGreater(len(ep["shots"]), 1)
 
     def test_external_video_urls_rejected(self):
         item = {

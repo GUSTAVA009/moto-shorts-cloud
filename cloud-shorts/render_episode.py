@@ -19,6 +19,7 @@ import urllib.request
 
 from soundtrack import generate as make_music
 from audio_accents import create as make_audio_accents, cover_times
+from visual_director import verify_story_subject, directed_plan
 from tts_voice import render as make_voice
 from silero_voice import render as make_silero_voice, MODEL_ID as SILERO_MODEL_ID, SPEAKER as SILERO_SPEAKER
 from native_bass_voice import render as make_native_bass_voice, VOICE_ENGINE as NATIVE_BASS_ENGINE, SPEAKER as NATIVE_BASS_SPEAKER
@@ -260,62 +261,57 @@ def motion_verified(path, threshold_seconds=1.25):
 
 
 def assemble_clips(ep, sources, work, target_seconds):
-    remaining = target_seconds
-    segments = []
-    shots = ep["shots"]
-    accepted_sources = set()
-    tried = 0
-    # Try alternate shots when a licensed source has a truly frozen section.
-    # Repeated stills are NOT silently allowed as multiple short cuts.
-    while remaining > 0.30 and tried < 48 and len(segments) < 18:
-        shot = shots[tried % len(shots)]
-        tried += 1
-        src = sources[shot["source"]]
-        src_duration, streams = probe(src)
-        if not any(s["codec_type"] == "video" for s in streams):
-            raise RuntimeError("Downloaded source lacks video")
-        start = float(shot["start"])
-        seconds = min(float(shot["seconds"]), remaining, src_duration - start - 0.1)
-        if seconds < 0.9:
-            start = max(0.0, src_duration - min(2.5, remaining) - 0.2)
-            seconds = min(float(shot["seconds"]), remaining, src_duration - start - 0.1)
-        if seconds < 0.28:
-            continue
-        out = work / ("scene_%02d.mp4" % tried)
+    """One shot per real source. No recycled A/B/A/B cuts or sub-3s flashes."""
+    durations={}
+    for src in ep["footage"]:
+        key=src["key"]
+        d,streams=probe(sources[key])
+        if not any(x.get("codec_type")=="video" for x in streams):
+            raise RuntimeError("VISUAL_SOURCE_WITHOUT_VIDEO")
+        durations[key]=d
+    plan=directed_plan(ep,durations,target_seconds)
+    segments=[]
+    for idx,shot in enumerate(plan,1):
+        src=sources[shot["source"]]
+        out=work/("scene_%02d.mp4"%idx)
         run([
-            "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
-            "-ss", f"{start:.3f}", "-i", src, "-t", f"{seconds:.3f}",
-            "-vf", "fps=30,scale=720:1280:force_original_aspect_ratio=increase:"
-                   "flags=lanczos,crop=720:1280,setsar=1,format=yuv420p",
-            "-an", "-c:v", "libx264", "-crf", "23", "-preset", "veryfast",
-            "-r", "30", "-pix_fmt", "yuv420p", out,
-        ], 180)
-        if seconds > 1.35 and not motion_verified(out):
+            "ffmpeg","-hide_banner","-loglevel","error","-y",
+            "-ss","%.3f"%shot["start"],"-i",src,
+            "-t","%.3f"%shot["seconds"],
+            "-vf","fps=30,scale=720:1280:force_original_aspect_ratio=increase:"
+                  "flags=lanczos,crop=720:1280,setsar=1,format=yuv420p",
+            "-an","-c:v","libx264","-crf","23","-preset","veryfast",
+            "-r","30","-pix_fmt","yuv420p",out,
+        ],180)
+        if not motion_verified(out):
             out.unlink(missing_ok=True)
-            print("FROZEN_SOURCE_SHOT_REJECTED", shot["source"],
-                  "offset", round(start, 2), flush=True)
-            continue
+            raise RuntimeError(
+                "VISUAL_FROZEN_SEGMENT: source "+shot["source"]+
+                " is too static. Find another scene, never conceal by fast cuts."
+            )
         segments.append(out)
-        accepted_sources.add(shot["source"])
-        remaining -= seconds
-    if remaining > 0.35 or len(accepted_sources) < 2:
-        raise RuntimeError(
-            "NOT_ENOUGH_MOVING_LICENSED_SCENES: video release blocked, "
-            "new footage or corrected shot offsets required"
-        )
-    playlist = work / "playlist.txt"
-    playlist.write_text("".join("file '%s'\n" % p.name for p in segments), encoding="utf-8")
-    silent = work / "assembled.mp4"
-    run([
-        "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
-        "-f", "concat", "-safe", "0", "-i", playlist,
-        "-an", "-c", "copy", silent,
-    ], 120)
-    total, _ = probe(silent)
-    print("SCENES_ASSEMBLED", len(segments), "unique_sources", len(accepted_sources),
-          "discarded_still_shots", tried - len(segments),
-          "seconds", round(total, 2), flush=True)
-    return silent, total
+    playlist=work/"playlist.txt"
+    playlist.write_text("".join("file '%s'\n"%p.name for p in segments),encoding="utf8")
+    silent=work/"assembled.mp4"
+    run(["ffmpeg","-hide_banner","-loglevel","error","-y",
+         "-f","concat","-safe","0","-i",playlist,
+         "-an","-c","copy",silent],120)
+    total,_=probe(silent)
+    if abs(total-target_seconds)>.36:
+        raise RuntimeError("VISUAL_RUNTIME_MISMATCH: wrong finished scene duration")
+    qa={
+        "version":2,"passed":True,"episode":ep["id"],
+        "subject":verify_story_subject(ep)["subject"],
+        "source_sequence":[p["source"] for p in plan],
+        "sequence":plan,"source_reused_in_short":False,
+        "subject_visible_at_start_by_source_metadata":True,
+        "note":"Provider source-title matching is only an automated preflight, not a substitute for actually viewing scenes.",
+    }
+    (work/"visual_qa.json").write_text(
+        json.dumps(qa,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
+    print("DIRECTED_SCENES_ASSEMBLED",len(segments),
+          "NO_PINGPONG",True,"duration",round(total,2),flush=True)
+    return silent,total
 
 
 def fitted_story_beats(ep, total):
@@ -396,6 +392,10 @@ def draw_captions(ep, work, total):
 
 def render(ep, output_dir):
     slug = validate_episode(ep)
+    # Reject helmet/repair guides without any clearly matching actual source.
+    # Checking unrelated "topics" tags was the cause of the failed helmet Short.
+    subject_report = verify_story_subject(ep)
+    print("VISUAL_SUBJECT_PREFLIGHT", subject_report, flush=True)
     work = HERE / "work" / slug
     work.mkdir(parents=True, exist_ok=True)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -435,6 +435,7 @@ def render(ep, output_dir):
     if voice_duration > requested - 0.75:
         raise RuntimeError("Voice too long for video, shorten the original narration")
     silent, total = assemble_clips(ep, sources, work, requested)
+    (output_dir/"visual_qa.json").write_bytes((work/"visual_qa.json").read_bytes())
     # Cut blank establishing footage BEFORE the speech, music, and captions
     # are mixed. Start with visible action rather than an empty hill/track.
     opening_trim = float(ep.get("opening_trim_seconds", 0.0))
