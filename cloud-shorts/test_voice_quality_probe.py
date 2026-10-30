@@ -3,7 +3,9 @@ from voice_quality_probe import PHRASES,best_candidate
 
 class ProbeSafetyTests(unittest.TestCase):
     def test_candidates_are_unbranded_safe_and_not_reused(self):
-        self.assertGreaterEqual(len(PHRASES),4)
+        self.assertGreaterEqual(len(PHRASES),8)
+        self.assertEqual(sum(x.startswith('track_') for x in PHRASES),4)
+        self.assertEqual(sum(x.startswith('repair_') for x in PHRASES),4)
         self.assertEqual(len(set(PHRASES.values())),len(PHRASES))
         for text in PHRASES.values():
             self.assertTrue(120<=len(text)<=350)
