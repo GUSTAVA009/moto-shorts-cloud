@@ -7,8 +7,10 @@ import hashlib
 from pathlib import Path
 
 from channel_focus import assert_motorcycle_episode
-from native_bass_voice import (PROFILE_ID as REQUIRED_MALE_PROFILE,
-    VOICE_ENGINE as REQUIRED_MALE_ENGINE)
+from deep_voice import (VOICE_ENGINE as REQUIRED_MALE_ENGINE,
+                        PROFILE_ID as REQUIRED_MALE_PROFILE,
+                        PUBLIC_ATTRIBUTION as DEEP_ATTRIBUTION,
+                        ready as deep_audio_ready)
 
 
 def file_sha256(path):
@@ -26,13 +28,15 @@ def publication_allowed(episode, meta, qa, video):
     assert_motorcycle_episode(episode)
     if meta.get("episode_id") != episode["id"] or qa.get("episode_id") != episode["id"]:
         raise ValueError("Metadata/ASR episode mismatch; do not upload")
-    if episode.get("voice_engine") != REQUIRED_MALE_ENGINE:
-        raise ValueError("REJECTED_OLD_NARRATOR: only native MIT bass-baritone v6 may auto-publish")
+    if not deep_audio_ready(episode):
+        raise ValueError("ONLY_APPROVED_CREATE_AUDIO_DEEP: old voices or missing audio blocked")
     if (qa.get("male_voice_verified") is not True
             or qa.get("voice_profile") != REQUIRED_MALE_PROFILE
-            or qa.get("voice_speaker") != "ru_alexandr"
-            or qa.get("voice_source_license") != "MIT"):
-        raise ValueError("NATIVE_BASS_BARITONE_REQUIRED: verified deep clean male narrator missing")
+            or qa.get("voice_speaker") != "deep"
+            or qa.get("voice_provider") != "aidocmaker.com"
+            or qa.get("voice_source_audio_sha256") !=
+               episode["deep_audio"]["source_audio_sha256"]):
+        raise ValueError("ONLY_APPROVED_CREATE_AUDIO_DEEP: genuine voice source not verified")
     if qa.get("passed") is not True or qa.get("status") != "passed":
         raise ValueError("Russian voice QA incomplete: no automatic release")
     if (qa.get("lexical_coverage", 0) < .97 or qa.get("ending_coverage", 0) < .95
@@ -51,8 +55,12 @@ def publication_allowed(episode, meta, qa, video):
         raise ValueError("Invalid upload metadata")
     if mix.get("mp4_sha256") != file_sha256(video):
         raise ValueError("Final MP4 does not match its independent mixed-audio QA proof")
-    if len(meta["title"]) > 100 or any(s in meta["description"].lower() for s in ("https://", "www.")):
-        raise ValueError("Illegal title or external links in description")
+    description = meta["description"]
+    if len(meta["title"]) > 100 or DEEP_ATTRIBUTION not in description:
+        raise ValueError("Missing required AI Doc Maker credit or invalid title")
+    safe_description = description.replace(DEEP_ATTRIBUTION, "")
+    if any(s in safe_description.lower() for s in ("https://", "www.")):
+        raise ValueError("Unauthorized external links in description")
     if not episode.get("footage") or any(s.get("license") not in ("Pexels License", "CC0 1.0")
                                       for s in episode["footage"]):
         raise ValueError("Unverified commercial footage rights")

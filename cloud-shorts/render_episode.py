@@ -22,6 +22,9 @@ from audio_accents import create as make_audio_accents, cover_times
 from tts_voice import render as make_voice
 from silero_voice import render as make_silero_voice, MODEL_ID as SILERO_MODEL_ID, SPEAKER as SILERO_SPEAKER
 from native_bass_voice import render as make_native_bass_voice, VOICE_ENGINE as NATIVE_BASS_ENGINE, SPEAKER as NATIVE_BASS_SPEAKER
+from deep_voice import (render as make_real_deep_voice,
+                        VOICE_ENGINE as DEEP_ENGINE,
+                        PUBLIC_ATTRIBUTION as DEEP_ATTRIBUTION)
 from kokoro_voice import render as make_kokoro_voice, MODEL_CARD as KOKORO_MODEL_CARD
 from editorial_guard import validate_catalog
 from moto_assets import validated_media, verified_commons
@@ -407,7 +410,10 @@ def render(ep, output_dir):
 
     wav = work / "new_narration.wav"
     engine = ep.get("voice_engine", "piper_ru")
-    if engine == "kokoro_ru_dima":
+    if engine == DEEP_ENGINE:
+        voice_duration = make_real_deep_voice(ep, wav)
+        engine_label = "AI Doc Maker Create Audio Voice / deep (original approved preset)"
+    elif engine == "kokoro_ru_dima":
         retry_speed = float(os.environ.get("GUSTAVA_TTS_SPEED", "1.0"))
         voice_duration = make_kokoro_voice(ep["narration"], wav, work / "kokoro_model", speed=retry_speed)
         engine_label = "Kokoro-RU / dima (OpenRAIL, CPU Russian male narrator)"
@@ -511,13 +517,16 @@ def render(ep, output_dir):
                    ensure_ascii=False,indent=2)+"\n",encoding="utf8")
     publication = {
         "title": ep["title"],
-        "description": clean_description(build_description(ep)),
+        "description": (clean_description(build_description(ep))
+                        + ("\n\n" + DEEP_ATTRIBUTION if engine == DEEP_ENGINE else "")),
         "tags": ep.get("tags", ["мото", "shorts"]),
         "status": "REVIEW_REQUIRED",
         "youtube_published": False,
         "duration_seconds": round(duration, 2),
         "voice_engine": engine_label,
-        "audio_source": "Fresh synthesized narration, original procedural music and original SFX",
+        "audio_source": ("Exact approved AI Doc Maker deep recording, original music and SFX"
+                         if engine == DEEP_ENGINE else
+                         "Fresh synthesized narration, original procedural music and original SFX"),
         "music_style": music_style,
         "editorial_profile": ep.get("editorial"),
         "episode_id": slug,
@@ -531,7 +540,8 @@ def render(ep, output_dir):
         "episode": slug,
         "license_sources": ep["footage"],
         "editorial_references": ep.get("editorial_references", []),
-        "voice_model_card": (KOKORO_MODEL_CARD if engine == "kokoro_ru_dima"
+        "voice_model_card": ("https://www.aidocmaker.com/" if engine == DEEP_ENGINE
+            else KOKORO_MODEL_CARD if engine == "kokoro_ru_dima"
             else "https://github.com/snakers4/silero-models" if engine in ("silero_cis_base_mit", NATIVE_BASS_ENGINE)
             else "https://huggingface.co/rhasspy/piper-voices/blob/main/ru/ru_RU/denis/medium/MODEL_CARD"),
     }

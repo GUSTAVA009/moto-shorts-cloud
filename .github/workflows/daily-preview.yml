@@ -43,14 +43,15 @@ jobs:
           python3 -m unittest discover -s cloud-shorts -p 'test_render_episode.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_voice_style.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_native_bass_voice.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_deep_voice.py' -v
           python3 - <<'PY'
           import sys
           sys.path.insert(0, 'cloud-shorts')
-          from native_bass_voice import PROFILE_ID, VOICE_ENGINE, SPEAKER, LICENSE_NAME
-          assert PROFILE_ID == 'gustava_native_bass_baritone_v6'
-          assert VOICE_ENGINE == 'silero_mit_bass_baritone'
-          assert SPEAKER == 'ru_alexandr' and LICENSE_NAME == 'MIT'
-          print('PRODUCTION_NATIVE_BASS_BARITONE_V6', PROFILE_ID, SPEAKER)
+          from deep_voice import PROFILE_ID, VOICE_ENGINE, VOICE_ID
+          assert PROFILE_ID == 'gustava_create_audio_deep_v1'
+          assert VOICE_ENGINE == 'aidocmaker_deep'
+          assert VOICE_ID == 'deep'
+          print('PRODUCTION_GUSTAVA_REAL_CREATE_AUDIO_DEEP_ONLY', PROFILE_ID)
           PY
           python3 -m unittest discover -s cloud-shorts -p 'test_voice_qa.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_deep_male_release.py' -v

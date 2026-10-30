@@ -48,6 +48,25 @@ def approved_asset(asset, transcript):
     return url.geturl()
 
 
+def ready(episode):
+    """No automatic render without one exact pre-generated, hash-pinned DEEP file."""
+    if episode.get("voice_engine") != VOICE_ENGINE:
+        return False
+    asset = episode.get("deep_audio")
+    try:
+        approved_asset(asset, episode["narration"])
+    except (KeyError, ValueError, TypeError):
+        return False
+    return bool(re.fullmatch(r"[0-9a-f]{64}", asset.get("source_audio_sha256") or ""))
+
+
+# Free-tier public uses must carry this provider's published attribution.
+# Keep it while commercial subscription status is unverified.
+PUBLIC_ATTRIBUTION = (
+    "Voiceover Generated with AIDOCMAKER.COM: https://www.aidocmaker.com"
+)
+
+
 def provenance_path(wav):
     return Path(wav).with_suffix(".profile.json")
 

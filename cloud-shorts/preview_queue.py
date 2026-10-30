@@ -23,8 +23,9 @@ EPISODES = Path(__file__).with_name("episodes.json")
 HISTORY_PATH = "history/used_footage.json"
 
 from editorial_guard import source_id, validate_catalog
-from native_bass_voice import (PROFILE_ID as REQUIRED_MALE_PROFILE,
-    VOICE_ENGINE as REQUIRED_MALE_ENGINE)
+from deep_voice import (PROFILE_ID as REQUIRED_MALE_PROFILE,
+                        VOICE_ENGINE as REQUIRED_MALE_ENGINE,
+                        ready as deep_audio_ready)
 
 
 def api(path, method="GET", data=None):
@@ -105,7 +106,7 @@ def assert_new_sources(episode, history):
 RENDER_DEPENDENCIES = (
     "render_episode.py", "tts_voice.py", "silero_voice.py",
     "soundtrack.py", "kokoro_voice.py", "voice_qa.py", "mixed_audio_qa.py",
-    "asr_fallback.py", "qa_autorepair.py", "moto_assets.py", "voice_style.py", "native_bass_voice.py", "silero_voice.py",
+    "asr_fallback.py", "qa_autorepair.py", "moto_assets.py", "voice_style.py", "native_bass_voice.py", "silero_voice.py", "deep_voice.py",
 )
 MAX_ATTEMPTS = 3
 MAX_VISUAL_REPAIR_ATTEMPTS = 4  # one confirmed frozen-footage correction before any upload
@@ -252,7 +253,9 @@ def choose(catalog, output):
     validate_catalog(data)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    listed = [ep for ep in data["episodes"] if ep.get("auto_preview") is True]
+    listed = [ep for ep in data["episodes"] if ep.get("auto_preview") is True
+              and deep_audio_ready(ep)]
+    print("GUSTAVA_DEEP_VOICE_READY_EPISODES",len(listed),flush=True)
     def unpublished(slug):
         # Legacy uploads and Buffer reservations both block rerenders.
         return (api("publication-receipts/" + slug + ".json") is None

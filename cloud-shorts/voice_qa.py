@@ -19,6 +19,9 @@ from voice_style import PROFILE_ID as MALE_PROFILE, validate_report as validate_
 from native_bass_voice import (PROFILE_ID as NATIVE_BASS_PROFILE,
     VOICE_ENGINE as NATIVE_BASS_ENGINE,
     validate_report as validate_native_bass_report)
+from deep_voice import (VOICE_ENGINE as DEEP_ENGINE,
+                        PROFILE_ID as DEEP_PROFILE,
+                        verify_profile as verify_deep_profile)
 
 
 # ASR commonly writes "тысяча девятьсот восемьдесят второго" as "1982".
@@ -135,7 +138,22 @@ def check(episode, wav, model="small"):
         "engine": asr_engine,
         "model": model,
     })
-    if episode.get("voice_engine") == NATIVE_BASS_ENGINE:
+    if episode.get("voice_engine") == DEEP_ENGINE:
+        try:
+            report = verify_deep_profile(audio_path, episode)
+            result["male_voice_verified"] = True
+            result["voice_profile"] = DEEP_PROFILE
+            result["voice_speaker"] = "deep"
+            result["voice_provider"] = "aidocmaker.com"
+            result["voice_source_license"] = "AI Doc Maker attribution"
+            result["voice_source_audio_sha256"] = report["source_audio_sha256"]
+        except (ValueError, OSError, TypeError, KeyError, json.JSONDecodeError) as exc:
+            result["male_voice_verified"] = False
+            result["voice_profile"] = None
+            result["passed"] = False
+            result["status"] = "manual_review_required"
+            result["reason"] = "REAL_DEEP_VOICE_SOURCE_NOT_VERIFIED: " + type(exc).__name__
+    elif episode.get("voice_engine") == NATIVE_BASS_ENGINE:
         try:
             profile=validate_native_bass_report(audio_path)
             result["male_voice_verified"]=True

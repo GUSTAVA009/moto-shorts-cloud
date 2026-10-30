@@ -185,7 +185,7 @@ def should_disclose_generated_content(episode):
               "ai_disclosure_required")
     if any(episode.get(key) is True for key in forced):
         return True
-    if (episode.get("voice_engine") not in ("silero_mit_bass_baritone", "kokoro_ru_dima")
+    if (episode.get("voice_engine") not in ("aidocmaker_deep", "silero_mit_bass_baritone", "kokoro_ru_dima")
             or (episode.get("episode_series") or {}).get("historical_reconstruction")
             or not episode.get("footage")
             or any(source.get("license") not in ("Pexels License", "CC0 1.0")
@@ -202,7 +202,7 @@ def publish(episode, video, metadata, voice, mixed):
         return {"skipped": "Buffer auto-publication disabled"}
     if not is_motorcycle_episode(episode):
         return {"skipped": "CHANNEL_TOPIC_BLOCKED: episode is unrelated to GUSTAVA Enduro"}
-    if episode.get("auto_publish") is not True or episode.get("voice_engine") != "silero_mit_bass_baritone":
+    if episode.get("auto_publish") is not True or episode.get("voice_engine") != "aidocmaker_deep":
         return {"skipped": "Episode or narrator not approved for automatic publication"}
     rec = "buffer-publication-receipts/" + episode["id"] + ".json"
     if ledger.api(rec) or ledger.api("publication-receipts/" + episode["id"] + ".json"):
