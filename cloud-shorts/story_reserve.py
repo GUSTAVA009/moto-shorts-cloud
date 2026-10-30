@@ -94,6 +94,34 @@ QUESTIONS = (
     ("твоя версия", "Какой подход тебе кажется разумнее?"),
     ("как считаешь", "Как бы ты объяснил этот выбор другу?"),
 )
+# Topic-specific opening language. Stop delivering the same robotic
+# "Мотоцикл и ..." phrase thousands of times. Do not invent a real incident.
+OPENINGS = {
+    "forest": "Мотоцикл в лесу: красивый маршрут требует внимания.",
+    "motocross": "Мотоцикл на трассе: всё решает контроль движения.",
+    "repair": "Мотоцикл в мастерской: начнём с полезных мелочей.",
+    "mountain": "Мотоцикл на горной дороге: важен обзор впереди.",
+    "rain": "Мотоцикл под дождём: дорога ощущается иначе.",
+    "desert": "Мотоцикл на песке: сначала оцени условия.",
+    "city": "Мотоцикл в городе: внимание важнее спешки.",
+    "vintage": "Мотоцикл с историей: его детали заслуживают внимания.",
+    "roadtrip": "Мотоцикл в путешествии: маршрут начинается с подготовки.",
+    "training": "Мотоцикл на площадке: есть чему учиться.",
+    "helmet": "Мотоцикл и экипировка: важна не только внешность.",
+    "dirt": "Мотоцикл на грунте: каждый поворот требует взгляда вперёд.",
+    "sunset": "Мотоцикл вечером: свет меняет восприятие дороги.",
+    "snow": "Мотоцикл зимой: важно оценить покрытие заранее.",
+    "racing": "Мотоцикл на треке: внимание к траектории.",
+}
+# The reserve is a planning BANK, not 150k proven engaging finished Shorts.
+FORMAT_LABELS = ("мини-гайд", "разбор", "наблюдение", "вопрос", "ошибка",
+                 "юмор", "сравнение", "практика", "деталь", "совет")
+OPENING_CAPTIONS = ("СМОТРИ:", "СРАВНИ:", "ЗАМЕТЬ:", "ВНИМАНИЕ:",
+                    "НЕ ПРОПУСТИ:", "МОТОФАКТ:", "ЧТО ВАЖНО:",
+                    "ПОСМОТРИ:", "ДЕТАЛЬ:", "А ТЫ ЗНАЛ?")
+assert set(OPENINGS) == set(THEMES)
+
+
 THEME_KEYS = tuple(THEMES)
 PER_THEME = 10_000
 RESERVE_CAPACITY = len(THEME_KEYS) * PER_THEME
@@ -119,8 +147,8 @@ def compose(theme_key: str, local_index: int) -> dict:
     q_label, q_line = QUESTIONS[question]
     # All axes also change the headline, not merely an artificial ID.
     title = f"{display}: {focus}, {a_label}, {l_label} — {q_label}? #shorts"
-    narration = (f"Мотоцикл и {topic}. {a_line} "
-                 f"Отдельная тема — {focus}. {l_line} {q_line}")
+    narration = (f"{OPENINGS[theme_key]} {a_line} "
+                 f"Здесь важны {focus}. {l_line} {q_line}")
     if not 125 <= len(narration) <= 300 or len(title) > 100:
         raise ValueError("Script length outside production limits")
     return {
@@ -128,10 +156,11 @@ def compose(theme_key: str, local_index: int) -> dict:
         "description": (f"Самостоятельная мототема: {focus}. "
                         "Кадры иллюстративные, а не запись одного подтверждённого события."
                         "\n\n#shorts"),
-        "caption_start": display.upper(),
-        "caption_middle": "ВАЖНАЯ ДЕТАЛЬ",
-        "caption_end": "А ТВОЙ ВЫБОР?",
-        "_generation_source": "offline_editorial_reserve_v2",
+        "caption_start": (OPENING_CAPTIONS[angle] + " " + focus.upper())[:31],
+        "caption_middle": "НА ЧТО ОБРАТИТЬ ВНИМАНИЕ",
+        "caption_end": "А ТЫ КАК СЧИТАЕШЬ?",
+        "_editorial_format": FORMAT_LABELS[angle],
+        "_generation_source": "offline_editorial_reserve_v3",
         "_reserve_id": f"r2-{theme_key}-{local_index:04d}",
     }
 
