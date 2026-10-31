@@ -18,6 +18,7 @@ on:
       - 'cloud-shorts/episodes.json'
       - 'cloud-shorts/deep-voice-inbox.json'
       - 'cloud-shorts/deep-voice-inbox-*.json'
+      - 'cloud-shorts/deep_inbox_ingest.py'
       - 'cloud-shorts/test_*.py'
       - 'cloud-shorts/editorial_novelty.py'
       - 'cloud-shorts/production_readiness.py'
