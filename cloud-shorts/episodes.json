@@ -6714,7 +6714,7 @@
     {
       "id": "gustava-20-f06-20261030",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
@@ -6791,11 +6791,11 @@
       },
       "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
       "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
-      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "editorial_review_note": "Direct review on 31 October 2026 of exact GitHub artifact 13057595238 (run 41239954648), MP4 sha256 f165214a06309baa79d991345a2b9d21d75156cfc713bff95f38a30d67a31ee5. Reviewed nine actual decoded frames at 0.5,2,3.5,5.5,7,8,9.5,11.5,13.5 seconds. First independent Pexels clip visibly shows riders preparing and departing a race starting grid; second shows winner doing a wheelie beside a chequered finish flag. Two coherent unlooped 7.549s scenes, moving camera/subjects, readable unclipped Russian title and CTA, no freeze or alternating stock. Confirmed original creators and current Pexels video source pages 11273550 and 30355055 licensed for commercial social-media use. Original AIDocmaker DEEP audio source sha256 bf185e029b50bfca1c7020b9821a5699fde65388f7d42e940e6f911a324169be; independent raw and mixed ASR both lexical 1.0; 720x1280 15.067s stereo MP4; music gain and signal passed. Approved this EXACT MP4, not any future remake.",
       "production_batch": "gustava-20-20261030",
       "mix_category": "facts",
       "priority_rank": 18,
-      "editorial_review_status": "awaiting_frame_review",
+      "editorial_review_status": "assistant_checked_passed",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -6804,7 +6804,25 @@
         "source_audio_sha256": "bf185e029b50bfca1c7020b9821a5699fde65388f7d42e940e6f911a324169be",
         "context_id": "c7b3e64ca8bc456487d463447e8903b3",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_revision_requested": false,
+      "visual_revision_status": "assistant_checked_passed",
+      "reviewed_mp4_sha256": "f165214a06309baa79d991345a2b9d21d75156cfc713bff95f38a30d67a31ee5",
+      "reviewed_artifact_run_id": "41239954648",
+      "reviewed_mp4_duration_seconds": 15.067,
+      "reviewed_caption_layout_version": 1,
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "motorcycle_race_start_lineup",
+          "spoken_anchor": "На первой трассе мотоциклисты стоят перед стартом"
+        },
+        {
+          "source": "clip_1",
+          "action": "motorcycle_victory_wheelie",
+          "spoken_anchor": "На другой гонщик уже празднует победу и выполняет трюк"
+        }
+      ]
     },
     {
       "id": "gustava-20-p03-20261030",

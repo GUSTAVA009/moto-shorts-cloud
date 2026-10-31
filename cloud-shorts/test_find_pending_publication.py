@@ -29,6 +29,23 @@ class BacklogTests(unittest.TestCase):
         self.assertIsNone(q.select({"episodes":[episode]},[receipt],{episode["id"]},
                        [{"name":artifact,"expired":False}]))
 
+    def test_exact_reviewed_deep_victory_short_can_enter_buffer_once(self):
+        import json
+        from pathlib import Path
+        data=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
+        ep=next(e for e in data["episodes"] if e["id"]=="gustava-20-f06-20261030")
+        self.assertTrue(ep["auto_publish"])
+        self.assertEqual(ep["reviewed_mp4_sha256"],"f165214a06309baa79d991345a2b9d21d75156cfc713bff95f38a30d67a31ee5")
+        run=ep["reviewed_artifact_run_id"]
+        receipt={"id":ep["id"],"state":"preview_ready",
+                 "voice_qa_passed":True,"mixed_audio_qa_passed":True,
+                 "voice_profile":"gustava_create_audio_deep_v1",
+                 "male_voice_verified":True,"run_id":run}
+        artifact={"name":f"daily-preview-{ep['id']}-{run}","expired":False}
+        self.assertEqual(q.select({"episodes":[ep]},[receipt],set(),[artifact]),
+                         (int(run),ep["id"],artifact["name"]))
+        self.assertIsNone(q.select({"episodes":[ep]},[receipt],{ep["id"]},[artifact]))
+
     def test_only_new_unpublished_qa_passed_artifacts(self):
         catalog={"episodes":[{"id":"a-new-01","auto_publish":True,"voice_engine":"aidocmaker_deep",
                              "title":"Мотоцикл на трассе",

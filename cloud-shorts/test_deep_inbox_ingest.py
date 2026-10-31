@@ -23,7 +23,17 @@ class DeepInboxTests(unittest.TestCase):
         by_id={x["episode_id"]:x for x in inbox["records"]}
         for item in restored:
             ep=lookup[item]
-            self.assertIs(ep["auto_publish"],False)
+            if item=="gustava-20-f06-20261030":
+                # Exactly one previously PRIVATE episode completed actual
+                # individually reviewed MP4, original-source and final-mix ASR.
+                self.assertIs(ep["auto_publish"],True)
+                self.assertEqual(ep["reviewed_mp4_sha256"],
+                                 "f165214a06309baa79d991345a2b9d21d75156cfc713bff95f38a30d67a31ee5")
+                self.assertEqual(ep["reviewed_artifact_run_id"],"41239954648")
+                self.assertEqual(ep["visual_revision_status"],"assistant_checked_passed")
+                self.assertEqual(len(ep["scene_script_anchors"]),2)
+            else:
+                self.assertIs(ep["auto_publish"],False)
             self.assertIs(ep["auto_preview"],True)
             self.assertEqual(assert_candidate(by_id[item],ep)["voice_id"],"deep")
 

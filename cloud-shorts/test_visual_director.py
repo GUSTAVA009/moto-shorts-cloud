@@ -17,6 +17,25 @@ def ep(footage,title="Что важнее при выборе мотошлема
             ]}
 
 class VisualDirectionTests(unittest.TestCase):
+    def test_reviewed_real_deep_race_start_and_victory_match_actual_sources(self):
+        import json
+        from pathlib import Path
+        from visual_director import verify_scene_script_anchors
+        data=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
+        ep=next(e for e in data["episodes"] if e["id"]=="gustava-20-f06-20261030")
+        self.assertTrue(ep["auto_publish"])
+        self.assertEqual(ep["reviewed_mp4_sha256"],
+                         "f165214a06309baa79d991345a2b9d21d75156cfc713bff95f38a30d67a31ee5")
+        self.assertEqual(ep["reviewed_artifact_run_id"],"41239954648")
+        self.assertEqual(ep["visual_revision_status"],"assistant_checked_passed")
+        self.assertEqual(verify_scene_script_anchors(ep),["clip_0","clip_1"])
+        self.assertFalse(ep.get("visual_revision_requested",False))
+        wrong=dict(ep,scene_script_anchors=[
+            dict(ep["scene_script_anchors"][0],action="motorcycle_victory_wheelie"),
+            ep["scene_script_anchors"][1]])
+        with self.assertRaisesRegex(ValueError,"VISUAL_BEATS_OFF_SCRIPT"):
+            verify_scene_script_anchors(wrong)
+
     def test_actual_repaired_genuine_deep_moto_scenes_are_grounded(self):
         import json
         from pathlib import Path
