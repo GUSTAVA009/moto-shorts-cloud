@@ -215,6 +215,39 @@ class TestPreviewQueue(unittest.TestCase):
                  "mixed_audio_qa_passed":True}
         self.assertTrue(eligible_retry(ep,receipt,preview_fingerprint(ep)))
 
+    def test_fourth_private_retry_needs_actual_replacement_and_failed_run(self):
+        ep={"id":"gustava-20-f01-20261030","auto_preview":True,
+            "auto_publish":False,"voice_engine":"aidocmaker_deep",
+            "source_revision_requested":True,
+            "source_revision_reason":"frozen_source_replaced",
+            "source_replacement_proof":{
+                "old_source_id":"28209492","new_source_id":"12405712",
+                "failed_run_id":"41233361222","old_failure":"VISUAL_FROZEN_SEGMENT"},
+            "footage":[
+                {"source_page":"https://www.pexels.com/video/old-gloves-6435393/"},
+                {"source_page":"https://www.pexels.com/video/new-helmet-12405712/"}]}
+        receipt={"id":ep["id"],"state":"reserved","attempt_count":3,
+                 "run_id":"41233361222","preview_fingerprint":"old-frozen"}
+        check=lambda: pq.eligible_abandoned_source_retry(
+            ep,receipt,"new-different-scene","failure")
+        self.assertTrue(check())
+        self.assertFalse(pq.eligible_abandoned_source_retry(
+            ep,receipt,"new-different-scene","cancelled"))
+        receipt["attempt_count"]=4
+        self.assertFalse(check())
+        receipt["attempt_count"]=3
+        ep["auto_publish"]=True
+        self.assertFalse(check())
+        ep["auto_publish"]=False
+        ep["source_replacement_proof"]["new_source_id"]="28209492"
+        self.assertFalse(check())
+        ep["source_replacement_proof"]["new_source_id"]="12405712"
+        ep["source_replacement_proof"]["failed_run_id"]="wrong"
+        self.assertFalse(check())
+        ep["source_replacement_proof"]["failed_run_id"]="41233361222"
+        ep["footage"][1]["source_page"]="https://www.pexels.com/video/old-helmet-28209492/"
+        self.assertFalse(check())
+
     def test_missing_or_corrupt_registry_fails_closed(self):
         with self.assertRaises(RuntimeError):
             pq.decode_history(None)
