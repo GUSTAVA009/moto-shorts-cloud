@@ -772,6 +772,16 @@
       "episode": "gustava-20-f01-20261030",
       "source": "https://www.pexels.com/video/woman-wearing-a-helmet-9606781/",
       "status": "reserved-or-rendered"
+    },
+    "32401566": {
+      "episode": "gustava-20-p02-20261030",
+      "source": "https://www.pexels.com/video/thrilling-dirt-bike-jump-on-outdoor-track-32401566/",
+      "status": "reserved-or-rendered"
+    },
+    "12295788": {
+      "episode": "gustava-20-p02-20261030",
+      "source": "https://www.pexels.com/video/athlete-on-motocross-motorcycle-12295788/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1145,6 +1155,13 @@
       "story": "independent-riders-check-protection-before-ride",
       "visual": "glove-adjustment-and-pink-helmet-donning",
       "bike": "winter-motorcycle"
+    },
+    "gustava-20-p02-20261030": {
+      "environment": "jump-track-and-competition",
+      "people": "jump-rider-and-race-athletes",
+      "story": "ramp-jump-versus-race",
+      "visual": "takeoff-then-active-race",
+      "bike": "jumping-dirtbike"
     }
   }
 }
