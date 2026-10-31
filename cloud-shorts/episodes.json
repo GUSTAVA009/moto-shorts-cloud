@@ -5663,7 +5663,7 @@
       "production_batch": "gustava-20-20261030",
       "mix_category": "stories",
       "priority_rank": 6,
-      "editorial_review_status": "awaiting_frame_review",
+      "editorial_review_status": "awaiting_corrected_caption_private_QA",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -5672,7 +5672,11 @@
         "source_audio_sha256": "925f22ae719d8b570b2d8ca578b0dd03581b7c6822d4846db62434dd0191b5da",
         "context_id": "d9c629b5b4f6443080c307dcbb1e7b9c",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_revision_requested": true,
+      "visual_revision_reason": "caption_clipped_confirmed",
+      "caption_fit_required": true,
+      "caption_repair_priority": true
     },
     {
       "id": "gustava-20-e02-20261030",
