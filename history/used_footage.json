@@ -802,6 +802,16 @@
       "episode": "gustava-20-f06-20261030",
       "source": "https://www.pexels.com/video/dynamic-motorcycle-racing-victory-celebration-30355055/",
       "status": "reserved-or-rendered"
+    },
+    "8551400": {
+      "episode": "gustava-20-f04-20261030",
+      "source": "https://www.pexels.com/video/men-checking-the-motorbike-engine-8551400/",
+      "status": "reserved-or-rendered"
+    },
+    "34959739": {
+      "episode": "gustava-20-f04-20261030",
+      "source": "https://www.pexels.com/video/mechanics-in-workshop-repairing-motorcycle-34959739/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1196,6 +1206,13 @@
       "story": "grid-start-vs-separate-victory",
       "visual": "start-line-then-celebration",
       "bike": "race-track-motorcycles"
+    },
+    "gustava-20-f04-20261030": {
+      "environment": "outdoor-engine-and-busy-workshop",
+      "people": "two-owners-and-many-mechanics",
+      "story": "two-people-engine-check-vs-multiworker-repair",
+      "visual": "engine-inspection-then-repair",
+      "bike": "garage-engine-bike"
     }
   }
 }
