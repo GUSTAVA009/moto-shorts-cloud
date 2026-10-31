@@ -12,6 +12,8 @@ on:
       # becomes eligible to enter the real Buffer schedule.
       - 'cloud-shorts/episodes.json'
       - 'cloud-shorts/buffer_autopublish.py'
+      - 'cloud-shorts/buffer_delivery_gate.py'
+      - 'cloud-shorts/test_buffer_delivery_gate.py'
       - 'cloud-shorts/publication_safety.py'
       - 'cloud-shorts/find_pending_buffer.py'
       - 'cloud-shorts/find_pending_publication.py'
@@ -25,7 +27,7 @@ on:
     - cron: "35 2,5,8,11,14,17,20,23 * * *"
 permissions:
   contents: write
-  actions: read
+  actions: write
 concurrency:
   group: gustava-buffer-verified-publishing
   cancel-in-progress: false
@@ -40,6 +42,7 @@ jobs:
         run: |
           python3 -m compileall -q cloud-shorts
           python3 -m unittest discover -s cloud-shorts -p 'test_buffer_autopublish.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_buffer_delivery_gate.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_find_pending_buffer.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_find_pending_publication.py' -v
       - name: Select one original, QA-passed, never-published video
@@ -58,6 +61,7 @@ jobs:
           github-token: ${{ github.token }}
           path: staged
       - name: Publish to the verified pinned GUSTAVA Enduro channel through Buffer
+        id: send
         if: steps.pick.outputs.has_job == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED != 'false'
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -79,7 +83,19 @@ jobs:
             --video "staged/$EPISODE/$EPISODE.mp4" \
             --metadata "staged/$EPISODE/publication.json" \
             --voice-qa "staged/$EPISODE/voice_qa.json" \
-            --mixed-qa "staged/$EPISODE/mixed_audio_qa.json"
+            --mixed-qa "staged/$EPISODE/mixed_audio_qa.json" | tee "$RUNNER_TEMP/verified_buffer_response.log"
+          # A successful process exit can still mean skipped; require a real
+          # Buffer ID from the createPost acceptance response.
+          python3 cloud-shorts/buffer_delivery_gate.py confirm \
+            --log "$RUNNER_TEMP/verified_buffer_response.log" \
+            --output "$GITHUB_OUTPUT"
+      - name: Immediately send next DISTINCT pre-approved video
+        if: steps.send.outputs.queued == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED != 'false'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 cloud-shorts/buffer_delivery_gate.py dispatch
       - name: Audit empty Buffer queue and alert instead of returning false success
         if: steps.pick.outputs.has_job != 'true'
         env:
