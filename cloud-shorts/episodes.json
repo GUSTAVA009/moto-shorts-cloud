@@ -6953,6 +6953,105 @@
       "mix_category": "facts",
       "priority_rank": 20,
       "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "gustava-courier-parcels-deep-20261031",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "МОТОКУРЬЕР: работа начинается до дороги 🏍️ #shorts",
+      "narration": "Рабочий день мотокурьера начинается не со скорости. Сначала — посылки: курьер укладывает их на мотоцикл. А дальше — движение среди машин, где важно видеть дорогу и не спешить. В кадре два разных человека, но у обоих одна задача: довезти груз безопасно. Ты бы выдержал такую смену?",
+      "description": "Реальная работа мотокурьера: подготовка посылок и дорога среди машин. Две независимые съёмки разных людей, а не одна поездка. Что сложнее всего в такой профессии?\n\n#мото #мотокурьер #работа #shorts",
+      "caption_start": "РАБОТА НАЧИНАЕТСЯ ДО ДОРОГИ",
+      "caption_middle": "ПОСЫЛКИ И ГОРОДСКОЙ ПОТОК",
+      "caption_end": "ВЫДЕРЖАЛ БЫ ТАКУЮ СМЕНУ?",
+      "max_duration_seconds": 27,
+      "opening_trim_seconds": 0,
+      "music_style": "garage-groove",
+      "music_bpm": 108,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/6867868/",
+          "source_page": "https://www.pexels.com/video/delivery-man-on-motorcycle-6867868/",
+          "source_title": "delivery man on motorcycle",
+          "author": "Kindel Media",
+          "license": "Pexels License",
+          "duration": 10,
+          "topics": [
+            "courier",
+            "parcel-loading",
+            "motorcycle"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/36107346/",
+          "source_page": "https://www.pexels.com/video/busy-suburban-road-with-delivery-rider-36107346/",
+          "source_title": "busy suburban road with delivery rider",
+          "author": "Airam Dato-on",
+          "license": "Pexels License",
+          "duration": 17,
+          "topics": [
+            "courier",
+            "traffic",
+            "motorcycle"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 9.2
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 15.5
+        }
+      ],
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "courier_organizing_parcels",
+          "spoken_anchor": "Сначала — посылки: курьер укладывает их на мотоцикл"
+        },
+        {
+          "source": "clip_1",
+          "action": "courier_riding_in_urban_traffic",
+          "spoken_anchor": "А дальше — движение среди машин"
+        }
+      ],
+      "editorial": {
+        "environment": "courier-residential-and-suburban-traffic",
+        "bike": "parcel-delivery-motorcycles",
+        "people": "two-unrelated-working-couriers",
+        "story": "preparing-parcels-and-driving-in-traffic",
+        "visual": "parcel-loading-then-moving-city-traffic"
+      },
+      "tags": [
+        "мото",
+        "мотокурьер",
+        "работа",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "ТЫ БЫ ВЫДЕРЖАЛ ТАКУЮ СМЕНУ?",
+        "description": "Расскажи, смог бы работать мотокурьером."
+      },
+      "source_selection": "Pexels provider pages checked 2026-10-31: Kindel Media 6867868 (10s) and Airam Dato-on 36107346 (17s). Source IDs absent from 63 current catalog episodes; independently check final MP4 and previous publication receipts before release.",
+      "generation_provenance": "New source-specific scene-first Russian narration recorded by AI Doc Maker with voice_id=deep; the two independent videos depict different workers.",
+      "editorial_review_status": "awaiting_frame_review",
+      "editorial_review_note": "PRIVATE PREVIEW ONLY. No auto publish without original provider SHA, independent source and mixed Russian ASR >=97%, real MP4 visual inspection, no freeze, strong readability, safe stereo and explicit editorial approval.",
+      "caption_fit_required": true,
+      "production_batch": "gustava-independent-20261031",
+      "mix_category": "stories"
     }
   ]
 }
