@@ -274,12 +274,12 @@ class TestPreviewQueue(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             a=Path(root)/"raw.json";b=Path(root)/"mixed.json"
             a.write_text(json.dumps(raw));b.write_text(json.dumps(mixed))
-            with patch.dict(os.environ,{"GITHUB_RUN_ID":"4100"}), \\
-                 patch.object(pq,"api",side_effect=[record("sha1"),record("sha2"),record("sha3")]), \\
+            with patch.dict(os.environ,{"GITHUB_RUN_ID":"4100"}), \
+                 patch.object(pq,"api",side_effect=[record("sha1"),record("sha2"),record("sha3")]), \
                  patch.object(pq,"store",side_effect=[
                      RuntimeError("GitHub queue operation failed HTTP 409"),
                      RuntimeError("GitHub queue operation failed HTTP 409"),
-                     {"commit":{"sha":"done"}}]) as store, \\
+                     {"commit":{"sha":"done"}}]) as store, \
                  patch("time.sleep",return_value=None):
                 pq.finish(slug,a,b)
                 self.assertEqual(store.call_count,3)
@@ -302,12 +302,12 @@ class TestPreviewQueue(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             raw=Path(folder)/"voice.json"
             raw.write_text("{}")
-            with patch.dict(os.environ,{"GITHUB_RUN_ID":"4100"}), \\
+            with patch.dict(os.environ,{"GITHUB_RUN_ID":"4100"}), \
                  patch.object(pq,"api",side_effect=[
                      wrap(original,"sha1"),
-                     wrap({**original,"run_id":"evil-run"},"sha2")]), \\
+                     wrap({**original,"run_id":"evil-run"},"sha2")]), \
                  patch.object(pq,"store",side_effect=RuntimeError(
-                     "GitHub queue operation failed HTTP 409")) as store, \\
+                     "GitHub queue operation failed HTTP 409")) as store, \
                  patch("time.sleep",return_value=None):
                 with self.assertRaisesRegex(RuntimeError,"receipt changed"):
                     pq.finish(slug,raw)
