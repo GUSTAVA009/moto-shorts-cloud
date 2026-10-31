@@ -1,9 +1,20 @@
-## Regression: native licensed bass baritone replaces rejected Kokoro vocal for new Shorts.
+## Owner-approved GUSTAVA DEEP factory contract plus offline pipeline safety regression.
 name: Shorts Factory - Fast Code and Episode Checks
 on:
   pull_request:
     branches: [main]
     paths:
+      - 'AGENTS.md'
+      - 'README.md'
+      - 'AUTOPILOT_SETUP_RU.md'
+      - 'docs/FACTORY_CONTRACT_RU.md'
+      - 'docs/shorts-breakout-playbook-2026-10-30.md'
+      - 'cloud-shorts/factory_contract.json'
+      - 'cloud-shorts/production_batch20_20261030.json'
+      - 'cloud-shorts/rolling_batch_worker.py'
+      - 'cloud-shorts/rolling_batches.py'
+      - 'cloud-shorts/ten_daily_slots.py'
+      - '.github/workflows/rolling-ten.yml'
       - 'cloud-shorts/episodes.json'
       - 'cloud-shorts/deep-voice-inbox.json'
       - 'cloud-shorts/test_*.py'
@@ -22,6 +33,17 @@ on:
   push:
     branches: [main]
     paths:
+      - 'AGENTS.md'
+      - 'README.md'
+      - 'AUTOPILOT_SETUP_RU.md'
+      - 'docs/FACTORY_CONTRACT_RU.md'
+      - 'docs/shorts-breakout-playbook-2026-10-30.md'
+      - 'cloud-shorts/factory_contract.json'
+      - 'cloud-shorts/production_batch20_20261030.json'
+      - 'cloud-shorts/rolling_batch_worker.py'
+      - 'cloud-shorts/rolling_batches.py'
+      - 'cloud-shorts/ten_daily_slots.py'
+      - '.github/workflows/rolling-ten.yml'
       - "cloud-shorts/episodes.json"
       - "cloud-shorts/render_episode.py"
       - "cloud-shorts/visual_director.py"
@@ -71,6 +93,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install caption measurement dependency
         run: python3 -m pip install --disable-pip-version-check Pillow==11.3.0
+      - name: Enforce owner requirements before touching factory logic
+        run: python3 -m unittest discover -s cloud-shorts -p 'test_factory_contract.py' -v
       - name: Check Python syntax and all safety tests (no external downloads)
         run: |
           python3 -m compileall -q cloud-shorts
