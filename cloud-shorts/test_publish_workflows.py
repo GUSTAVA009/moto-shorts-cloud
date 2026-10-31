@@ -42,6 +42,14 @@ class PublisherShellTests(unittest.TestCase):
         self.assertIn("BUFFER_VERIFIED_DISPATCH_CONFIRMED", preview)
         self.assertNotIn("buffer_autopublish.py --episode", preview)
 
+    def test_buffer_chains_only_after_confirmed_provider_post_id(self):
+        workflow = source(".github/workflows/buffer-backlog.yml")
+        self.assertIn("actions: write", workflow)
+        self.assertIn("id: send", workflow)
+        self.assertIn("buffer_delivery_gate.py confirm", workflow)
+        self.assertIn("if: steps.send.outputs.queued == 'true'", workflow)
+        self.assertIn("buffer_delivery_gate.py dispatch", workflow)
+
     def test_no_legacy_scheduled_publisher(self):
         self.assertFalse((ROOT / ".github/workflows/publora-backlog.yml").exists())
         active = (ROOT / ".github/workflows").glob("*.yml")
