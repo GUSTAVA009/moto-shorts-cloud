@@ -156,7 +156,8 @@ def eligible_retry(episode, receipt, new_fingerprint):
                      and episode.get("visual_revision_reason") in (
                          "source_freeze_confirmed",
                          "owner_rejected_static_helmet_coverage",
-                         "owner_rejected_end_clip_no_helmet_removal"))
+                         "owner_rejected_end_clip_no_helmet_removal",
+                         "caption_clipped_confirmed"))
     male_voice_repair = (
         episode.get("voice_engine") == REQUIRED_MALE_ENGINE
         and episode.get("voice_revision_requested") is True

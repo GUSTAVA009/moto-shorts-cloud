@@ -15,6 +15,12 @@ class VisualRevisionTests(unittest.TestCase):
     def test_explicit_new_visuals_allow_one_extra_unpublished_rerender(self):
         self.assertTrue(eligible_retry(self.ep, self.receipt, "fresh-sources"))
 
+    def test_clipped_private_caption_can_be_repaired_once(self):
+        self.ep["visual_revision_reason"] = "caption_clipped_confirmed"
+        self.ep["auto_publish"] = False
+        self.assertTrue(eligible_retry(self.ep, self.receipt, "new-caption-fit"))
+        self.assertFalse(eligible_retry(self.ep, self.receipt, "old"))
+
     def test_fourth_visual_attempt_is_last(self):
         self.receipt["attempt_count"] = 4
         self.assertFalse(eligible_retry(self.ep, self.receipt, "fresh-sources"))

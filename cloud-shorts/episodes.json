@@ -5237,7 +5237,10 @@
         "source_audio_sha256": "aa05363a62d5c16fe7f6913542436bfaa87cf1ba9f82b067eeaff308bdaf09f7",
         "context_id": "eb2b4be786b04a6a8394723e4bbd5fb8",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_revision_requested": true,
+      "visual_revision_reason": "caption_clipped_confirmed",
+      "caption_fit_required": true
     },
     {
       "id": "gustava-20-e01-20261030",
@@ -5332,7 +5335,10 @@
         "source_audio_sha256": "1af5581f5438888705c0273e269992990516c0de352666a712eb5f26026dbe7a",
         "context_id": "e622107c1de348d5b9a0e2f0bf35e911",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_revision_requested": true,
+      "visual_revision_reason": "caption_clipped_confirmed",
+      "caption_fit_required": true
     },
     {
       "id": "gustava-20-p01-20261030",
@@ -5427,7 +5433,10 @@
         "source_audio_sha256": "7d54c02797cda51a59d8a6ce53dfa15606ef4bc1287447c7a6f4b813be831219",
         "context_id": "d7519055981a415f8e41cad39e3dddb7",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_revision_requested": true,
+      "visual_revision_reason": "caption_clipped_confirmed",
+      "caption_fit_required": true
     },
     {
       "id": "gustava-20-f02-20261030",
@@ -5522,7 +5531,10 @@
         "source_audio_sha256": "afc40bd9050448f452556b638d95a47920749ffbaebf2c7a51935d502ddc6e13",
         "context_id": "0715ce6d46e84fa688135dceb3dfe56a",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_revision_requested": true,
+      "visual_revision_reason": "caption_clipped_confirmed",
+      "caption_fit_required": true
     },
     {
       "id": "gustava-20-s02-20261030",
@@ -5807,7 +5819,10 @@
         "source_audio_sha256": "e1d8337bdf2df2254758cf6cfec3d89fad90d7d19ff3f0522e9145a8674bb86d",
         "context_id": "41da04d7db174b9794e126ebeb1f3b79",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_revision_requested": true,
+      "visual_revision_reason": "caption_clipped_confirmed",
+      "caption_fit_required": true
     },
     {
       "id": "gustava-20-s03-20261030",
