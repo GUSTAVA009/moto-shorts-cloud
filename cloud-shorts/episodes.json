@@ -5366,7 +5366,7 @@
     },
     {
       "id": "gustava-20-p01-20261030",
-      "auto_preview": true,
+      "auto_preview": false,
       "auto_publish": false,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
@@ -5448,7 +5448,7 @@
       "production_batch": "gustava-20-20261030",
       "mix_category": "spectacle",
       "priority_rank": 4,
-      "editorial_review_status": "awaiting_frame_review",
+      "editorial_review_status": "rejected_after_independent_frame_review_20261031",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -5458,9 +5458,11 @@
         "context_id": "d7519055981a415f8e41cad39e3dddb7",
         "licence_mode": "public_provider_attribution"
       },
-      "visual_revision_requested": true,
-      "visual_revision_reason": "caption_clipped_confirmed",
-      "caption_fit_required": true
+      "visual_revision_requested": false,
+      "visual_revision_reason": "night_stunt_clip_too_dark_for_release",
+      "caption_fit_required": true,
+      "visual_review_failed": true,
+      "rejected_mp4_sha256": "31adf4197b2f21ba36cbc91c9ff601a6b824f9f56cec8e88591ce21d4bfb5da7"
     },
     {
       "id": "gustava-20-f02-20261030",
