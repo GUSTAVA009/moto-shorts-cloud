@@ -215,7 +215,8 @@ def eligible_abandoned_source_retry(episode, receipt, new_fingerprint, old_concl
     if episode.get("source_revision_reason") not in (
             "oversized_source_replaced", "unavailable_source_replaced",
             "frozen_source_replaced", "oversized_source_bounded_stream",
-            "short_helmet_adjustment_rebalanced"):
+            "short_helmet_adjustment_rebalanced",
+            "undersized_source_motion_verified"):
         return False
     if int(receipt.get("attempt_count", 1)) >= MAX_ATTEMPTS:
         return False
