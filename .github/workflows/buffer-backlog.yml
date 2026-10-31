@@ -97,7 +97,7 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           python3 cloud-shorts/buffer_delivery_gate.py dispatch
-      - name: Audit empty Buffer queue and alert instead of returning false success
+      - name: Fail when Buffer reserve is too low and no new approved MP4 exists
         if: steps.pick.outputs.has_job != 'true'
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
@@ -109,17 +109,20 @@ jobs:
           sys.path.insert(0, "cloud-shorts")
           from buffer_autopublish import verify_channel
           queued, sent = verify_channel(include_sent=True)
+          min_queue_reserve = 7  # Same threshold as rolling_batch_worker.MIN_BUFFER_SCHEDULED
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf8") as out:
               out.write("\n## Verified Buffer channel\n")
               out.write("Queued posts: " + str(len(queued)) + "\n")
+              out.write("Minimum scheduled reserve: " + str(min_queue_reserve) + "\n")
               out.write("No new editorially approved DEEP MP4 selected.\n")
-          if queued:
-              print("BUFFER_QUEUE_NONEMPTY_BUT_NO_NEW_APPROVED_MP4",
+          if len(queued) >= min_queue_reserve:
+              print("BUFFER_RESERVE_ABOVE_MINIMUM_BUT_NO_NEW_APPROVED_MP4",
                     len(queued), flush=True)
           else:
-              print("::error::BUFFER_QUEUE_EMPTY: zero scheduled posts and zero "
-                    "editorially approved original DEEP MP4 to deliver. "
-                    "The 10/day autopilot is BLOCKED, not successful.",
+              print(f"::error::BUFFER_RESERVE_UNDER_MINIMUM: "
+                    f"{len(queued)}/{min_queue_reserve} scheduled; no new "
+                    "verified, editorially approved MP4 available. "
+                    "Autonomous DEEP supply or a new reviewed video is required.",
                     flush=True)
               raise SystemExit(1)
           PY
