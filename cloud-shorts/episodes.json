@@ -5068,7 +5068,7 @@
       "voice_profile": "gustava_create_audio_deep_v1",
       "visual_director_version": 3,
       "title": "ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️ #shorts",
-      "narration": "Один райдер готовит перчатки к холодному выезду, другой достаёт шлем из гаража. Разные люди, одна привычка: готовиться заранее. А ты что надеваешь первым?",
+      "narration": "Один райдер готовит перчатки перед поездкой, а девушка надевает шлем рядом с мотоциклом. Разные люди, одна привычка: проверять защиту перед дорогой. А ты что надеваешь первым?",
       "description": "Мотофакт в кадре: ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
       "caption_start": "ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️",
       "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
@@ -5093,15 +5093,17 @@
         },
         {
           "key": "clip_1",
-          "url": "https://www.pexels.com/download/video/28209492/",
-          "source_page": "https://www.pexels.com/video/motorbike-rider-picking-up-helmet-from-bike-28209492/",
-          "source_title": "motorbike rider picking up helmet from bike",
-          "author": "Themba Mtegha",
+          "url": "https://www.pexels.com/download/video/9606781/",
+          "source_page": "https://www.pexels.com/video/woman-wearing-a-helmet-9606781/",
+          "source_title": "a female biker puts on her pink helmet outdoors",
+          "author": "Anastasia Shuraeva",
           "license": "Pexels License",
-          "duration": 6,
+          "duration": 21,
           "topics": [
             "facts",
-            "motorcycle"
+            "motorcycle",
+            "helmet",
+            "gear"
           ]
         }
       ],
@@ -5114,14 +5116,14 @@
         {
           "source": "clip_1",
           "start": 0,
-          "seconds": 5.25
+          "seconds": 7.75
         }
       ],
       "editorial": {
-        "environment": "cold-gear-and-garage",
-        "people": "winter-rider-and-garage-rider",
-        "story": "gloves-then-helmet",
-        "visual": "two-gear-preparation-actions",
+        "environment": "glove-preparation-and-outdoor-helmet",
+        "people": "gloved-rider-and-helmet-wearing-female-rider",
+        "story": "independent-riders-check-protection-before-ride",
+        "visual": "glove-adjustment-and-pink-helmet-donning",
         "bike": "winter-motorcycle"
       },
       "editorial_format": "2026-10-30 evidence-anchored facts: gloves-then-helmet",
@@ -5136,24 +5138,21 @@
         "overlay": "НАПИШИ СВОЙ ВЫБОР",
         "description": "Напиши в комментариях, какой момент тебе ближе."
       },
-      "source_selection": "Source Pexels 28209492 has verified public duration 0:06 (not 0:08). Use real 5.25-second helmet action; source excerpt must pass full motion/duration QC. Unique Pexels attribution retained.",
+      "source_selection": "Distinct previously unused Pexels footage 9606781, Anastasia Shuraeva: visible moving pink helmet placement outdoors, 21-second actual licensed source, not in render-ledger; independently verify movement and frame composition before approval.",
       "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
       "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
       "production_batch": "gustava-20-20261030",
       "mix_category": "facts",
       "priority_rank": 1,
       "editorial_review_status": "awaiting_frame_review",
-      "deep_audio": {
-        "provider": "aidocmaker.com",
-        "voice_id": "deep",
-        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/f7bbe630-106a-4c1d-b901-dda9787f5196.mp3",
-        "transcript_sha256": "7d2fdf6360b75d69851331a20f5598249c688ab4f1014911f98df7b6385e65db",
-        "source_audio_sha256": "a0f8096b654c3710f1c9bb2e219c5ebdc64de0205d6b37f6a1b187691c3140ac",
-        "context_id": "971c5f196ede4a4ba252f574e4daf8f1",
-        "licence_mode": "public_provider_attribution"
-      },
       "source_revision_requested": true,
-      "source_revision_reason": "short_helmet_adjustment_rebalanced"
+      "source_revision_reason": "frozen_source_replaced",
+      "source_replacement_proof": {
+        "old_source_id": "28209492",
+        "new_source_id": "9606781",
+        "failed_run_id": "41233361222",
+        "old_failure": "VISUAL_FROZEN_SEGMENT"
+      }
     },
     {
       "id": "gustava-20-s01-20261030",

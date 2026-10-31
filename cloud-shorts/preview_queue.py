@@ -218,10 +218,40 @@ def eligible_abandoned_source_retry(episode, receipt, new_fingerprint, old_concl
             "short_helmet_adjustment_rebalanced",
             "undersized_source_motion_verified"):
         return False
-    if int(receipt.get("attempt_count", 1)) >= MAX_ATTEMPTS:
+    attempt = receipt.get("attempt_count", 1)
+    if type(attempt) is not int or attempt < 1:
         return False
     if receipt.get("preview_fingerprint") == new_fingerprint:
         return False
+    # A verified frozen licensed source, NOT a failed voice or already
+    # rendered/published MP4, may receive one extra private source repair
+    # after the third unsuccessful render. Confirm both media identity
+    # change and exact prior failed run; selector checks GitHub conclusion
+    # and permanent publication receipts separately.
+    if attempt >= MAX_ATTEMPTS:
+        proof = episode.get("source_replacement_proof")
+        if not (attempt == MAX_ATTEMPTS
+                and episode.get("auto_preview") is True
+                and episode.get("auto_publish") is False
+                and episode.get("voice_engine") == REQUIRED_MALE_ENGINE
+                and episode.get("source_revision_reason") == "frozen_source_replaced"
+                and isinstance(proof, dict)
+                and proof.get("old_failure") == "VISUAL_FROZEN_SEGMENT"
+                and proof.get("failed_run_id") == str(receipt.get("run_id"))
+                and old_conclusion == "failure"):
+            return False
+        old_media = proof.get("old_source_id", "")
+        new_media = proof.get("new_source_id", "")
+        if (not isinstance(old_media, str) or not old_media.isdigit()
+                or not isinstance(new_media, str) or not new_media.isdigit()
+                or old_media == new_media):
+            return False
+        sources = {str(m.get("source_page") or "").rstrip("/")
+                   for m in episode.get("footage") or []}
+        if (not any(u.endswith("-" + new_media) or u.endswith("/" + new_media) for u in sources)
+                or any(u.endswith("-" + old_media) or u.endswith("/" + old_media) for u in sources)):
+            return False
+        return True
     return old_conclusion in ("failure", "cancelled", "timed_out")
 
 
