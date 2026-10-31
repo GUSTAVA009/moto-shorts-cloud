@@ -267,7 +267,7 @@
     "size": 10
   },
   "next_cursor": 30,
-  "last_polled_at": "2026-10-31T20:20:35.969368+00:00",
-  "last_replenish_request_at": "2026-10-31T20:20:35.969368+00:00",
+  "last_polled_at": "2026-10-31T21:08:11.902290+00:00",
+  "last_replenish_request_at": "2026-10-31T21:08:11.902290+00:00",
   "notes": "Count tracks Buffer status=sent since monitoring/bootstrap, not lifetime YouTube views."
 }
