@@ -1,10 +1,10 @@
 {
   "id": "gustava-20-f01-20261030",
   "state": "reserved",
-  "run_id": "41232941248",
-  "attempt_count": 2,
-  "preview_fingerprint": "2942fe613316ab77e25e581307f70bc2c58f7c69886d8adac7a691054b291443",
+  "run_id": "41233361222",
+  "attempt_count": 3,
+  "preview_fingerprint": "765748453fee55df0cd5ab962f18c4f44d5d59ad091a2c1e7b743e6f9b5c9b11",
   "deep_source_sha256": "a0f8096b654c3710f1c9bb2e219c5ebdc64de0205d6b37f6a1b187691c3140ac",
-  "previous_run_id": "41232485420",
+  "previous_run_id": "41232941248",
   "notes": "Revised preview only; never retry a public or uncertain upload."
 }
