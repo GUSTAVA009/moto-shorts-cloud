@@ -1,16 +1,10 @@
 {
   "id": "gustava-20-p01-20261030",
-  "state": "preview_ready",
-  "run_id": "41191045843",
-  "attempt_count": 2,
-  "preview_fingerprint": "a2ade0158966c6feca944af65f095583c97f007bb02947430a634e62897eb9cc",
+  "state": "reserved",
+  "run_id": "41196197031",
+  "attempt_count": 3,
+  "preview_fingerprint": "be0928802618782019af7f90d91cac81530c7f23ff87f6d254f9cc8e26974da0",
   "deep_source_sha256": "7d54c02797cda51a59d8a6ce53dfa15606ef4bc1287447c7a6f4b813be831219",
-  "previous_run_id": "41064929324",
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": true,
-  "voice_qa_coverage": 1.0,
-  "voice_profile": "gustava_create_audio_deep_v1",
-  "male_voice_verified": true,
-  "mixed_audio_qa_passed": true,
-  "mixed_audio_qa_coverage": 1.0
+  "previous_run_id": "41191045843",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
