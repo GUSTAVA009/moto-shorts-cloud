@@ -6564,7 +6564,16 @@
       "production_batch": "gustava-20-20261030",
       "mix_category": "facts",
       "priority_rank": 15,
-      "editorial_review_status": "awaiting_frame_review"
+      "editorial_review_status": "awaiting_frame_review",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/67d87528-dca6-4274-999d-42e0cd943bf9.mp3",
+        "transcript_sha256": "70dc214bf3a81ba318b3edae8176c401c8d6511990407850abbf2463291b7adb",
+        "source_audio_sha256": "b79799cbbdc072951fea4dbfcfc954999b5dadafa8abedf8f1e3bc93e7abdd3e",
+        "context_id": "c05aced7ef6849b18bbd7756fce38e99",
+        "licence_mode": "public_provider_attribution"
+      }
     },
     {
       "id": "gustava-20-s05-20261030",
