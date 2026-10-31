@@ -394,6 +394,13 @@ def choose(catalog, output):
                      if ep.get("research_pillar") in ("engineering", "nature", "science",
                                                       "history", "space", "surprising_facts")
                      and records[ep["id"]][0] is None), None)
+    # Genuine NEW originals have priority over recycling older private
+    # revisions. A newly sourced story with hash-pinned DEEP must not wait
+    # behind old clips repeatedly submitted for visual fixes.
+    if selected is None:
+        selected = next((ep for ep in listed
+                         if records[ep["id"]][0] is None
+                         and unpublished(ep["id"])), None)
     # An explicit, unpublished narration repair has priority over historical
     # retries. It cannot target a published video, only a revised preview.
     if selected is None:
@@ -440,9 +447,6 @@ def choose(catalog, output):
                 if unpublished(item["id"]):
                     selected = item
                     break
-    # Then try any new licensed episode before retrying an old non-series clip.
-    if selected is None:
-        selected = next((ep for ep in listed if records[ep["id"]][0] is None and unpublished(ep["id"])), None)
     # An install-only technical failure must not permanently consume an
     # unpublished original DEEP recording. Confirm exact failed GitHub job
     # and a changed render/ASR fingerprint before a bounded recovery.
