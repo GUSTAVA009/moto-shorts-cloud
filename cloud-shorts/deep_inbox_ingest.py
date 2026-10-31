@@ -16,7 +16,9 @@ from editorial_guard import validate_catalog
 
 CATALOG="cloud-shorts/episodes.json"
 INBOX=Path(__file__).with_name("deep-voice-inbox.json")
-MAX_RECORDS=20
+MAX_RECORDS=20  # Per immutable daily shard, not a lifetime limit
+MAX_SHARDS=3000
+SHARD_NAME=re.compile(r"deep-voice-inbox-[0-9]{8}\.json\Z")
 
 def digest(data): return hashlib.sha256(data).hexdigest()
 
@@ -99,17 +101,45 @@ def inspect_candidates(items, episodes, folder, assessor=assess):
         changes.append((ep["id"],fresh,proof))
     return changes,rejected
 
+def load_voice_records(directory=None):
+    """Load legacy inbox plus date-named append-only shards.
+
+    Keep every original provider receipt in Git, without a hard lifetime
+    twenty-record ceiling. Refuse duplicate episode IDs across ALL shards:
+    different recordings of the same episode require an explicit replacement
+    of the original record, never a second possible truth.
+    """
+    folder=Path(directory) if directory is not None else INBOX.parent
+    files=[folder/INBOX.name]
+    shards=sorted(p for p in folder.glob("deep-voice-inbox-*.json")
+                  if SHARD_NAME.fullmatch(p.name))
+    if len(shards)>MAX_SHARDS:
+        raise ValueError("DEEP_INBOX_SHARD_LIMIT_REACHED: archive safely")
+    files+=shards
+    all_items=[]
+    seen=set()
+    for path in files:
+        batch=json.loads(path.read_text(encoding="utf8"))
+        if not isinstance(batch,dict) or batch.get("version")!=1 or batch.get("voice_id")!="deep":
+            raise ValueError("Invalid DEEP inbox batch: "+path.name)
+        items=batch.get("records")
+        if not isinstance(items,list) or not 1<=len(items)<=MAX_RECORDS:
+            raise ValueError("Invalid DEEP inbox batch size: "+path.name)
+        for item in items:
+            if not isinstance(item,dict) or not isinstance(item.get("episode_id"),str):
+                raise ValueError("Invalid DEEP inbox record: "+path.name)
+            episode_id=item["episode_id"]
+            if episode_id in seen:
+                raise ValueError("DEEP_INBOX_DUPLICATE_EPISODE: "+episode_id)
+            seen.add(episode_id)
+            all_items.append(item)
+    return all_items
+
+
 def main():
     if os.environ.get("GITHUB_REPOSITORY")!="GUSTAVA009/moto-shorts-cloud":
         raise RuntimeError("Repository mismatch")
-    records=json.loads(INBOX.read_text(encoding="utf8"))
-    if records.get("version")!=1 or records.get("voice_id")!="deep":
-        raise ValueError("Invalid inbox")
-    items=records.get("records")
-    if not isinstance(items,list) or not 1<=len(items)<=MAX_RECORDS:
-        raise ValueError("Invalid inbox record count")
-    if len({x["episode_id"] for x in items})!=len(items):
-        raise ValueError("Duplicate episode inbox keys")
+    items=load_voice_records()
     entry=github("GET","contents/"+CATALOG+"?ref=main")
     catalog=json.loads(base64.b64decode(entry["content"]))
     episodes={e["id"]:e for e in catalog["episodes"]}
