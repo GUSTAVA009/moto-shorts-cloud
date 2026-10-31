@@ -3,7 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import Mock
+from unittest.mock import Mock, MagicMock
 from buffer_delivery_gate import parse_confirmed, confirm, dispatch_next
 
 GOOD = {"queued": True, "episode": "clip-01",
@@ -34,9 +34,8 @@ class BufferDeliveryGateTests(unittest.TestCase):
     def test_dispatch_uses_fixed_repo_and_workflow(self):
         dummy = Mock()
         dummy.status = 204
-        session = Mock()
-        session.__enter__ = Mock(return_value=dummy)
-        session.__exit__ = Mock(return_value=False)
+        session = MagicMock()
+        session.__enter__.return_value = dummy
         urlopen = Mock(return_value=session)
         dispatch_next("test-only-token", "GUSTAVA009/moto-shorts-cloud", urlopen=urlopen)
         request = urlopen.call_args[0][0]
