@@ -767,6 +767,11 @@
       "episode": "gustava-20-f01-20261030",
       "source": "https://www.pexels.com/video/motorbike-rider-picking-up-helmet-from-bike-28209492/",
       "status": "reserved-or-rendered"
+    },
+    "9606781": {
+      "episode": "gustava-20-f01-20261030",
+      "source": "https://www.pexels.com/video/woman-wearing-a-helmet-9606781/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1135,10 +1140,10 @@
       "bike": "speedway-racing-bike"
     },
     "gustava-20-f01-20261030": {
-      "environment": "cold-gear-and-garage",
-      "people": "winter-rider-and-garage-rider",
-      "story": "gloves-then-helmet",
-      "visual": "two-gear-preparation-actions",
+      "environment": "glove-preparation-and-outdoor-helmet",
+      "people": "gloved-rider-and-helmet-wearing-female-rider",
+      "story": "independent-riders-check-protection-before-ride",
+      "visual": "glove-adjustment-and-pink-helmet-donning",
       "bike": "winter-motorcycle"
     }
   }
