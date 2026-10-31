@@ -108,6 +108,26 @@ class EpisodeTests(unittest.TestCase):
             self.assertFalse(dst.exists())
             self.assertFalse((Path(tmp)/"not-ready.source.tmp.mp4").exists())
 
+    def test_small_genuine_moving_excerpt_is_checked_not_rejected_by_byte_count(self):
+        item={"key":"clip_0","url":"https://www.pexels.com/download/video/6435393/",
+              "source_page":"https://www.pexels.com/video/a-motorcyclist-putting-on-gloves-6435393/",
+              "license":"Pexels License","author":"Andrew Kota","duration":8}
+        def fake_ffmpeg(cmd,**kwargs):
+            Path(cmd[-1]).write_bytes(b"x"*170_000)
+            return SimpleNamespace(returncode=0,stderr="")
+        with tempfile.TemporaryDirectory() as tmp:
+            dst=Path(tmp)/"moving.mp4"
+            with patch.object(r.subprocess,"run",side_effect=fake_ffmpeg), \
+                 patch.object(r,"probe",return_value=(7.75,[{"codec_type":"video"}])), \
+                 patch.object(r,"motion_verified",return_value=True) as movement:
+                r.stream_pexels_excerpt(item,dst,7.75)
+                movement.assert_called_once_with(dst)
+            with patch.object(r.subprocess,"run",side_effect=fake_ffmpeg), \
+                 patch.object(r,"probe",return_value=(7.75,[{"codec_type":"video"}])), \
+                 patch.object(r,"motion_verified",return_value=False):
+                with self.assertRaisesRegex(RuntimeError,"VISUAL_FROZEN_SEGMENT"):
+                    r.stream_pexels_excerpt(item,dst,7.75)
+
     def test_source_length_is_bounded_to_shot_requirements(self):
         catalog=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
         e=next(x for x in catalog["episodes"] if x["id"]=="moto-forest-4bd53e13fec4")
