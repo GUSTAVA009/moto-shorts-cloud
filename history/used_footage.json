@@ -757,6 +757,16 @@
       "episode": "gustava-20-p03-20261030",
       "source": "https://www.pexels.com/video/a-motocross-race-in-an-enclosed-off-road-circuits-3345138/",
       "status": "reserved-or-rendered"
+    },
+    "6435393": {
+      "episode": "gustava-20-f01-20261030",
+      "source": "https://www.pexels.com/video/a-motorcyclist-putting-on-gloves-6435393/",
+      "status": "reserved-or-rendered"
+    },
+    "28209492": {
+      "episode": "gustava-20-f01-20261030",
+      "source": "https://www.pexels.com/video/motorbike-rider-picking-up-helmet-from-bike-28209492/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1123,6 +1133,13 @@
       "story": "slow-motion-day-jump-vs-night-race",
       "visual": "day-jump-and-night-race",
       "bike": "speedway-racing-bike"
+    },
+    "gustava-20-f01-20261030": {
+      "environment": "cold-gear-and-garage",
+      "people": "winter-rider-and-garage-rider",
+      "story": "gloves-then-helmet",
+      "visual": "two-gear-preparation-actions",
+      "bike": "winter-motorcycle"
     }
   }
 }
