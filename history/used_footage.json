@@ -782,6 +782,16 @@
       "episode": "gustava-20-p02-20261030",
       "source": "https://www.pexels.com/video/athlete-on-motocross-motorcycle-12295788/",
       "status": "reserved-or-rendered"
+    },
+    "29290602": {
+      "episode": "gustava-20-e04-20261030",
+      "source": "https://www.pexels.com/video/dynamic-motorcycle-ride-through-urban-tunnel-29290602/",
+      "status": "reserved-or-rendered"
+    },
+    "4443924": {
+      "episode": "gustava-20-e04-20261030",
+      "source": "https://www.pexels.com/video/person-riding-a-motorcycle-in-the-streets-4443924/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1162,6 +1172,13 @@
       "story": "ramp-jump-versus-race",
       "visual": "takeoff-then-active-race",
       "bike": "jumping-dirtbike"
+    },
+    "gustava-20-e04-20261030": {
+      "environment": "urban-tunnel-and-city-streets",
+      "people": "tunnel-commuter-and-street-rider",
+      "story": "tunnel-riding-vs-regular-city",
+      "visual": "tunnel-pov-then-city-pov",
+      "bike": "street-commuter-bike"
     }
   }
 }
