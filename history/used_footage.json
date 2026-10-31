@@ -822,6 +822,16 @@
       "episode": "gustava-20-e05-20261030",
       "source": "https://www.pexels.com/video/off-road-motorcycle-obstacle-course-adventure-30767777/",
       "status": "reserved-or-rendered"
+    },
+    "9606648": {
+      "episode": "gustava-20-f05-20261030",
+      "source": "https://www.pexels.com/video/man-wearing-black-shirt-wearing-his-helmet-9606648/",
+      "status": "reserved-or-rendered"
+    },
+    "4922587": {
+      "episode": "gustava-20-f05-20261030",
+      "source": "https://www.pexels.com/video/a-man-riding-his-motorcycle-4922587/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1230,6 +1240,13 @@
       "story": "sand-riding-vs-skill-obstacles",
       "visual": "desert-dirt-vs-obstacle",
       "bike": "dirt-obstacle-bike"
+    },
+    "gustava-20-f05-20261030": {
+      "environment": "helmet-preparation-and-bike-start",
+      "people": "helmeted-rider-and-urban-starter",
+      "story": "putting-helmet-vs-starting-motorcycle",
+      "visual": "helmet-on-then-bike-start",
+      "bike": "city-riding-motorcycle"
     }
   }
 }
