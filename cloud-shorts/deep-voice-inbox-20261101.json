@@ -19,6 +19,24 @@
       "narration": "Первый райдер едет по песку и поднимает пыль. На другой съёмке мотоциклисты проходят препятствия на трассе. Какое испытание для тебя сложнее?",
       "provider": "aidocmaker.com",
       "voice_id": "deep"
+    },
+    {
+      "episode_id": "gustava-20-f05-20261030",
+      "context_id": "c05aced7ef6849b18bbd7756fce38e99",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/67d87528-dca6-4274-999d-42e0cd943bf9.mp3",
+      "provider": "aidocmaker.com",
+      "voice_id": "deep",
+      "title": "ШЛЕМ ПЕРЕД СТАРТОМ: что замечаешь? 🏍️ #shorts",
+      "narration": "Один байкер надевает шлем перед поездкой, другой готовит мотоцикл к выезду. Два независимых кадра. Что ты проверяешь прямо перед стартом?"
+    },
+    {
+      "episode_id": "gustava-20-s04-20261030",
+      "context_id": "bf8f44ed29ae40dc94f1fc2f574a94aa",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/ba0588c2-88c7-408f-a9c3-9b22fa1a3379.mp3",
+      "provider": "aidocmaker.com",
+      "voice_id": "deep",
+      "title": "МОТОСЕРВИС: что происходит за дверью? 🔧 #shorts",
+      "narration": "На одном видео у входа в мотосервис кипит жизнь. В другой мастерской механики заняты ремонтом. Это разные места. Ты предпочитаешь сервис или собственный гараж?"
     }
   ]
 }
