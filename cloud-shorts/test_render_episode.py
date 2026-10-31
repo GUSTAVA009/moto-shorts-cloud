@@ -26,6 +26,17 @@ class EpisodeTests(unittest.TestCase):
         self.assertNotIn("12405712", str(ep["footage"]))
         self.assertFalse(ep["auto_publish"])
 
+    def test_short_pexels_motocross_duration_is_grounded_not_faked(self):
+        data=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
+        ep=next(e for e in data["episodes"] if e["id"]=="gustava-20-p02-20261030")
+        self.assertFalse(ep["auto_publish"])
+        self.assertEqual(ep["footage"][0]["duration"],6)
+        self.assertEqual(ep["shots"][0]["seconds"],5.5)
+        self.assertEqual(ep["source_revision_reason"],"undersized_source_motion_verified")
+        self.assertLessEqual(r.required_source_seconds(ep,"clip_0"),6)
+        self.assertGreaterEqual(sum(s["seconds"] for s in ep["shots"]),12)
+        self.assertEqual(r.validate_episode(ep),ep["id"])
+
     def test_two_line_overlay_text_never_embeds_ffmpeg_newline_glyph(self):
         one={"text":"ПЕРВЫЙ ВЫЕЗД:","line_count":1}
         two={"text":"ПЕРВЫЙ ВЫЕЗД:" + chr(10) + "улыбка или скорость?",
