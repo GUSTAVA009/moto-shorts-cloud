@@ -363,7 +363,7 @@ def caption_text_lines(layout):
     Send each authored caption line to an independent drawtext filter; never
     put a newline into an FFmpeg textfile. Keep width/line-count checks intact.
     """
-    lines = str(layout.get("text", "")).split("\\n")
+    lines = str(layout.get("text", "")).splitlines()
     if (len(lines) != layout.get("line_count")
             or not 1 <= len(lines) <= 2
             or any(not line.strip() for line in lines)):
