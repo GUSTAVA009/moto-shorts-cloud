@@ -79,8 +79,18 @@ class ConfirmedCityDurationRetryTests(unittest.TestCase):
         }
 
     def test_confirmed_failed_private_preview_can_retry_once(self):
-        ep = self.episode()
+        # The earlier private repair has now been completed AND exact visual
+        # and 100%-ASR MP4 approved. Never retry the actual released asset.
+        approved=self.episode()
+        self.assertTrue(approved["auto_publish"])
+        self.assertEqual(approved["reviewed_mp4_sha256"],
+                         "0ce509c6394ea45a2ce84b8722466c12603e259bcdce029fa0ae2e9138b7f7c0")
         r = self.reservation()
+        self.assertFalse(q.eligible_abandoned_visual_duration_retry(
+            approved,r,"fixed-real-moving-scenes","failure"))
+        # Historical pre-approval transition remains testable without
+        # converting the published episode back to private in main.
+        ep = dict(approved,auto_publish=False)
         self.assertTrue(q.eligible_abandoned_visual_duration_retry(
             ep, r, "fixed-real-moving-scenes", "failure"))
         self.assertFalse(q.eligible_abandoned_visual_duration_retry(
