@@ -5147,7 +5147,7 @@
     {
       "id": "gustava-20-s01-20261030",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
@@ -5238,9 +5238,24 @@
         "context_id": "eb2b4be786b04a6a8394723e4bbd5fb8",
         "licence_mode": "public_provider_attribution"
       },
-      "visual_revision_requested": true,
-      "visual_revision_reason": "caption_clipped_confirmed",
-      "caption_fit_required": true
+      "visual_revision_requested": false,
+      "caption_fit_required": true,
+      "visual_revision_status": "assistant_checked_passed",
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "classic_motorbike_repair",
+          "spoken_anchor": "Один мастер чинит классический мотоцикл"
+        },
+        {
+          "source": "clip_1",
+          "action": "mechanics_show_tools",
+          "spoken_anchor": "В другой мастерской люди выбирают инструменты"
+        }
+      ],
+      "reviewed_mp4_sha256": "8f8e19367deb4015165b13e1ca104632c944bd434049e9da1d4fb20318e194d5",
+      "reviewed_render_run_id": "41195446882",
+      "reviewed_caption_layout_version": 1
     },
     {
       "id": "gustava-20-e01-20261030",
