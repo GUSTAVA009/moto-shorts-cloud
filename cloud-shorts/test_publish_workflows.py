@@ -26,6 +26,16 @@ class PublisherShellTests(unittest.TestCase):
         self.assertIn("Select one original, QA-passed, never-published video", workflow)
         self.assertIn("find_pending_buffer.py", workflow)
 
+    def test_deep_render_worker_does_not_install_retired_tts_or_nonexistent_kokoro(self):
+        workflow = source(".github/workflows/daily-preview.yml")
+        self.assertIn("Pillow==11.3.0", workflow)
+        self.assertIn("--index-url https://download.pytorch.org/whl/cpu", workflow)
+        self.assertNotIn("pip install --disable-pip-version-check piper-tts", workflow)
+        self.assertNotIn("silero==0.5.5", workflow)
+        self.assertNotIn("kokoro==0.9.4 ruaccent", workflow)
+        self.assertNotIn("phonemizer==3.4.0", workflow)
+        self.assertIn("PRODUCTION_GUSTAVA_REAL_CREATE_AUDIO_DEEP_ONLY", workflow)
+
     def test_daily_generation_never_directly_posts(self):
         workflow = source(".github/workflows/daily-preview.yml").casefold()
         self.assertNotIn("publora", workflow)
