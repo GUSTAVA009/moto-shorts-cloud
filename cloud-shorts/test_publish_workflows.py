@@ -36,6 +36,11 @@ class PublisherShellTests(unittest.TestCase):
         self.assertNotIn("phonemizer==3.4.0", workflow)
         self.assertIn("PRODUCTION_GUSTAVA_REAL_CREATE_AUDIO_DEEP_ONLY", workflow)
 
+    def test_caption_renderer_fix_retriggers_guarded_private_preview(self):
+        workflow = source(".github/workflows/daily-preview.yml")
+        self.assertIn("- 'cloud-shorts/render_episode.py'", workflow)
+        self.assertIn("cancel-in-progress: false",workflow)
+
     def test_editorially_corrected_catalog_triggers_new_private_preview(self):
         workflow = source(".github/workflows/daily-preview.yml")
         self.assertIn("- 'cloud-shorts/episodes.json'", workflow)
