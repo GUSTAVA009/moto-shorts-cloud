@@ -17,6 +17,17 @@ def ep(footage,title="Что важнее при выборе мотошлема
             ]}
 
 class VisualDirectionTests(unittest.TestCase):
+    def test_new_helmet_video_rejected_without_visible_helmet_donning(self):
+        import json
+        from pathlib import Path
+        data=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
+        ep=next(e for e in data["episodes"] if e["id"]=="gustava-20-f05-20261030")
+        self.assertIs(ep["auto_publish"],False)
+        self.assertIs(ep["visual_review_failed"],True)
+        self.assertIs(ep["visual_revision_requested"],True)
+        self.assertEqual(ep["rejected_mp4_sha256"],
+                         "f8613dcda0293ae71455b6b90f646ab1c3e04aa6267dd795cc6beeeae84811b8")
+
     def test_reviewed_real_deep_race_start_and_victory_match_actual_sources(self):
         import json
         from pathlib import Path
