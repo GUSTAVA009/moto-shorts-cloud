@@ -64,6 +64,7 @@ VISIBLE_ACTION = re.compile(
 
 
 SCENE_ACTION_SLUGS = {
+    "helmet_putting_on": re.compile(r"a-smiling-young-woman-putting-on-a-helmet", re.I),
     "visor_close": re.compile(r"closing-(?:the-)?visor|visor-closing|"
                               r"lowering-(?:the-)?visor", re.I),
     "riding": re.compile(r"travel(?:ing|ling)?-on-a-motorbike|riding|"
