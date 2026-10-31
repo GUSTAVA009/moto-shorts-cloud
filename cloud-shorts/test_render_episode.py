@@ -26,6 +26,14 @@ class EpisodeTests(unittest.TestCase):
         self.assertNotIn("12405712", str(ep["footage"]))
         self.assertFalse(ep["auto_publish"])
 
+    def test_cyrillic_video_titling_never_renders_missing_emoji_as_tofu(self):
+        original="ПЕРВЫЙ ВЫЕЗД: улыбка или скорость? 🏍️"
+        clean=r.safe_caption_display(original)
+        self.assertEqual(clean,"ПЕРВЫЙ ВЫЕЗД: улыбка или скорость?")
+        self.assertNotIn("🏍",clean)
+        self.assertEqual(r.safe_caption_display("ДВА РАЗНЫХ МОМЕНТА"),
+                         "ДВА РАЗНЫХ МОМЕНТА")
+
     def test_both_original_episodes_have_distinct_provenance(self):
         data = json.loads((Path(__file__).parent / "episodes.json").read_text(encoding="utf8"))
         self.assertGreaterEqual(len(data["episodes"]), 2)
