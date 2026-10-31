@@ -215,9 +215,23 @@ def stream_pexels_excerpt(item, destination, required_seconds, ffmpeg="ffmpeg"):
     duration_read, tracks = probe(destination)
     if not any(t.get("codec_type") == "video" for t in tracks):
         raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: excerpt has no video")
-    if duration_read < duration - 0.75:
-        raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: excerpt missing required scene time")
-    if size < 250_000 and not motion_verified(destination):
+    # Third-party Pexels catalogs sometimes round or incorrectly declare
+    # 8-second clips that are only 6 seconds long. A bounded shortfall may
+    # still form a valid two-scene video if the actual moving clip is long
+    # enough. NEVER loop, extend, freeze, or forge a source duration; the
+    # downstream director makes the final decision from ffprobe durations.
+    shortfall=max(0.0,duration-duration_read)
+    if shortfall > 0.75:
+        if (shortfall>2.25 or shortfall>duration*0.35
+                or duration_read<3.5):
+            raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: excerpt missing required scene time")
+        if not motion_verified(destination):
+            raise RuntimeError("VISUAL_FROZEN_SEGMENT: shortened source " +
+                               item["key"] + " lacks real motion")
+        print("SOURCE_ACTUAL_DURATION_RECONCILED",item["key"],
+              "requested",round(duration,2),"actual",round(duration_read,2),
+              "final director still requires full valid storyboard",flush=True)
+    if size < 250_000 and shortfall <= 0.75 and not motion_verified(destination):
         raise RuntimeError("VISUAL_FROZEN_SEGMENT: compact source " +
                            item["key"] + " has no independently verified motion")
     print("LICENSED_PEXELS_SHORT_EXCERPT", item["key"], round(duration_read, 2),
