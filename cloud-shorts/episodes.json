@@ -5456,7 +5456,7 @@
     {
       "id": "gustava-20-f02-20261030",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
@@ -5537,7 +5537,7 @@
       "production_batch": "gustava-20-20261030",
       "mix_category": "facts",
       "priority_rank": 5,
-      "editorial_review_status": "awaiting_frame_review",
+      "editorial_review_status": "approved_after_individual_frame_and_asr_review",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -5547,9 +5547,24 @@
         "context_id": "0715ce6d46e84fa688135dceb3dfe56a",
         "licence_mode": "public_provider_attribution"
       },
-      "visual_revision_requested": true,
-      "visual_revision_reason": "caption_clipped_confirmed",
-      "caption_fit_required": true
+      "visual_revision_requested": false,
+      "caption_fit_required": true,
+      "visual_revision_status": "assistant_checked_passed",
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "cone_slalom",
+          "spoken_anchor": "На парковке райдеры проходят конусы"
+        },
+        {
+          "source": "clip_1",
+          "action": "motorbike_obstacle_training",
+          "spoken_anchor": "а на другом полигоне тренируются на препятствиях"
+        }
+      ],
+      "reviewed_mp4_sha256": "9febaf4fe9566dac03eb605678e85101be3bfae920ec5ca9b3d0f93ce814bb82",
+      "reviewed_render_run_id": "41196377172",
+      "reviewed_caption_layout_version": 1
     },
     {
       "id": "gustava-20-s02-20261030",
