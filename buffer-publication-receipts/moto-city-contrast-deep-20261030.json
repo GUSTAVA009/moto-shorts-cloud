@@ -2,6 +2,8 @@
   "episode": "moto-city-contrast-deep-20261030",
   "sha256": "0ce509c6394ea45a2ce84b8722466c12603e259bcdce029fa0ae2e9138b7f7c0",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-moto-city-contrast-deep-20261030-0ce509c6394e/moto-city-contrast-deep-20261030.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae6592b21c807e9d586050d",
+  "due_at": "2026-11-01T05:00:00.000Z"
 }
