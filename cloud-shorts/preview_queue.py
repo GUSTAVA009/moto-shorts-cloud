@@ -248,8 +248,8 @@ def eligible_abandoned_source_retry(episode, receipt, new_fingerprint, old_concl
             return False
         sources = {str(m.get("source_page") or "").rstrip("/")
                    for m in episode.get("footage") or []}
-        if (not any(u.endswith("/" + new_media) for u in sources)
-                or any(u.endswith("/" + old_media) for u in sources)):
+        if (not any(u.endswith("-" + new_media) or u.endswith("/" + new_media) for u in sources)
+                or any(u.endswith("-" + old_media) or u.endswith("/" + old_media) for u in sources)):
             return False
         return True
     return old_conclusion in ("failure", "cancelled", "timed_out")
