@@ -23,13 +23,20 @@ class DeepInboxTests(unittest.TestCase):
         by_id={x["episode_id"]:x for x in inbox["records"]}
         for item in restored:
             ep=lookup[item]
-            if item=="gustava-20-f06-20261030":
-                # Exactly one previously PRIVATE episode completed actual
-                # individually reviewed MP4, original-source and final-mix ASR.
+            reviewed={
+                "gustava-20-f06-20261030":(
+                    "f165214a06309baa79d991345a2b9d21d75156cfc713bff95f38a30d67a31ee5",
+                    "41239954648"),
+                "gustava-20-e04-20261030":(
+                    "9b63292edf78d5f085f1d500bc6e02bd79c1e7fc70b6a9ecdcbdcff115513488",
+                    "41240172563"),
+            }
+            if item in reviewed:
+                # Only exact, independently reviewed, 100%-ASR MP4s can
+                # leave the private stage. All other DEEP records stay private.
                 self.assertIs(ep["auto_publish"],True)
-                self.assertEqual(ep["reviewed_mp4_sha256"],
-                                 "f165214a06309baa79d991345a2b9d21d75156cfc713bff95f38a30d67a31ee5")
-                self.assertEqual(ep["reviewed_artifact_run_id"],"41239954648")
+                self.assertEqual(ep["reviewed_mp4_sha256"],reviewed[item][0])
+                self.assertEqual(ep["reviewed_artifact_run_id"],reviewed[item][1])
                 self.assertEqual(ep["visual_revision_status"],"assistant_checked_passed")
                 self.assertEqual(len(ep["scene_script_anchors"]),2)
             else:
