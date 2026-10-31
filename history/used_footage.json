@@ -812,6 +812,16 @@
       "episode": "gustava-20-f04-20261030",
       "source": "https://www.pexels.com/video/mechanics-in-workshop-repairing-motorcycle-34959739/",
       "status": "reserved-or-rendered"
+    },
+    "29439166": {
+      "episode": "gustava-20-e05-20261030",
+      "source": "https://www.pexels.com/video/desert-dirt-biking-adventure-in-action-29439166/",
+      "status": "reserved-or-rendered"
+    },
+    "30767777": {
+      "episode": "gustava-20-e05-20261030",
+      "source": "https://www.pexels.com/video/off-road-motorcycle-obstacle-course-adventure-30767777/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1213,6 +1223,13 @@
       "story": "two-people-engine-check-vs-multiworker-repair",
       "visual": "engine-inspection-then-repair",
       "bike": "garage-engine-bike"
+    },
+    "gustava-20-e05-20261030": {
+      "environment": "dry-desert-and-offroad-obstacle",
+      "people": "desert-rider-and-course-riders",
+      "story": "sand-riding-vs-skill-obstacles",
+      "visual": "desert-dirt-vs-obstacle",
+      "bike": "dirt-obstacle-bike"
     }
   }
 }
