@@ -357,6 +357,20 @@ def safe_caption_display(text):
                    if ord(ch) <= 0xFFFF and ord(ch) not in (0xFE0F, 0x200D)).strip()
 
 
+def caption_text_lines(layout):
+    """FFmpeg textfile renders literal newline bytes as missing-glyph squares.
+
+    Send each authored caption line to an independent drawtext filter; never
+    put a newline into an FFmpeg textfile. Keep width/line-count checks intact.
+    """
+    lines = str(layout.get("text", "")).splitlines()
+    if (len(lines) != layout.get("line_count")
+            or not 1 <= len(lines) <= 2
+            or any(not line.strip() for line in lines)):
+        raise ValueError("CAPTION_LINES_INVALID")
+    return lines
+
+
 def draw_captions(ep, work, total):
     if not FONT.is_file():
         raise RuntimeError("Expected Cyrillic font not present")
@@ -372,17 +386,23 @@ def draw_captions(ep, work, total):
             return
         text = safe_caption_display(text)
         layout = layout_caption(text, font_path=FONT)
-        caption_file = work / ("subtitle_%02d.txt" % index)
-        caption_file.write_text(layout["text"], encoding="utf-8")
-        filters.extend([
+        lines = caption_text_lines(layout)
+        filters.append(
             ("drawbox=x=23:y=%d:w=674:h=%d:color=black@0.50:t=fill:"
              "enable='between(t,%.3f,%.3f)'") %
-            (layout["box_y"], layout["box_height"], at, until),
-            ("drawtext=fontfile=%s:textfile=%s:fontsize=%d:fontcolor=white:"
-             "shadowcolor=black@0.95:shadowx=2:shadowy=2:"
-             "x=(w-text_w)/2:y=%d:enable='between(t,%.3f,%.3f)'") %
-            (FONT, caption_file, layout["font_size"], layout["text_y"], at, until),
-        ])
+            (layout["box_y"], layout["box_height"], at, until)
+        )
+        for line_index, one_line in enumerate(lines):
+            caption_file = work / ("subtitle_%02d_%d.txt" % (index, line_index))
+            caption_file.write_text(one_line, encoding="utf-8")
+            # Both text lines remain inside the pre-measured black safe box.
+            y = layout["text_y"] + line_index * round(layout["font_size"] * 1.30)
+            filters.append(
+                ("drawtext=fontfile=%s:textfile=%s:fontsize=%d:fontcolor=white:"
+                 "shadowcolor=black@0.95:shadowx=2:shadowy=2:"
+                 "x=(w-text_w)/2:y=%d:enable='between(t,%.3f,%.3f)'") %
+                (FONT, caption_file, layout["font_size"], y, at, until)
+            )
         caption_checks.append({"label": label, "font_size": layout["font_size"],
                                "line_count": layout["line_count"],
                                "max_line_width_px": layout["max_line_width_px"],
