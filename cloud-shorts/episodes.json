@@ -6186,7 +6186,7 @@
     {
       "id": "gustava-20-f04-20261030",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
@@ -6263,11 +6263,11 @@
       },
       "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
       "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
-      "editorial_review_note": "Private only: previous approved voice preset DEEP candidate failed independent ASR at 95.2%. This newly generated ORIGINAL DEEP candidate requires fresh independent 100%-target Russian ASR and true footage QA before any individual release.",
+      "editorial_review_note": "Direct actual MP4 review 2026-10-31 of exact 11.4s 720x1280 stereo artifact 13057795592 from render run 41240927449, SHA256 c8335445059503e4e006e987fdcc0f40a2952d2ea4f66fec7da483689c04e2b3. Nine decoded frames at 0.4,1.4,2.5,3.7,4.8,5.9,7.1,8.4,10.3s inspected: two workers actively checking motorcycle engine with visible hands, then distinct team in motorcycle workshop with bikes and tools. No black/frozen/repeated footage, captions centered fully legible, safe CTA. Original Pexels 8551400 and 34959739 registered with distinct creator and license. Original AIDocmaker DEEP source sha256 e41c7f715679333701f41f58b08a8016165dc7debc86f3b200a1a89aebb32b39, independent source and final mixed ASR lexical 1.0, final mixed SHA pinned. Individual approval only of exact artifact; new edits need new review.",
       "production_batch": "gustava-20-20261030",
       "mix_category": "facts",
       "priority_rank": 12,
-      "editorial_review_status": "awaiting_frame_review",
+      "editorial_review_status": "assistant_checked_passed",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -6276,7 +6276,24 @@
         "source_audio_sha256": "e41c7f715679333701f41f58b08a8016165dc7debc86f3b200a1a89aebb32b39",
         "context_id": "845deb1bfe454df583a5780876173d63",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_revision_status": "assistant_checked_passed",
+      "reviewed_mp4_sha256": "c8335445059503e4e006e987fdcc0f40a2952d2ea4f66fec7da483689c04e2b3",
+      "reviewed_artifact_run_id": "41240927449",
+      "reviewed_mp4_duration_seconds": 11.4,
+      "reviewed_caption_layout_version": 1,
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "motorbike_engine_inspection",
+          "spoken_anchor": "Два механика проверяют мотор возле гаража"
+        },
+        {
+          "source": "clip_1",
+          "action": "workshop_mechanics_repair",
+          "spoken_anchor": "На другой съёмке команда чинит мотоцикл в мастерской"
+        }
+      ]
     },
     {
       "id": "gustava-20-s04-20261030",
