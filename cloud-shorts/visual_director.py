@@ -80,6 +80,8 @@ SCENE_ACTION_SLUGS = {
     "motorbike_stunt": re.compile(r"performing-stunts-with-his-motorbike", re.I),
     "classic_motorbike_repair": re.compile(r"man-fixing-motorbike", re.I),
     "mechanics_show_tools": re.compile(r"men-holding-mechanic-tools", re.I),
+    "motorcycle_desert_dirt_ride": re.compile(r"desert-dirt-biking-adventure-in-action", re.I),
+    "motorcycle_obstacle_course": re.compile(r"off-road-motorcycle-obstacle-course-adventure", re.I),
     "motorbike_engine_inspection": re.compile(r"men-checking-the-motorbike-engine", re.I),
     "workshop_mechanics_repair": re.compile(r"mechanics-in-workshop-repairing-motorcycle", re.I),
     "motorcycle_tunnel_ride": re.compile(r"dynamic-motorcycle-ride-through-urban-tunnel", re.I),
