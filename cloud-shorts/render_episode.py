@@ -354,7 +354,7 @@ def safe_caption_display(text):
     Preserve all Cyrillic, words, punctuation and human meaning.
     """
     return "".join(ch for ch in str(text)
-                   if ord(ch) <= 0xFFFF and ch not in ("\\ufe0f", "\\u200d")).strip()
+                   if ord(ch) <= 0xFFFF and ord(ch) not in (0xFE0F, 0x200D)).strip()
 
 
 def draw_captions(ep, work, total):
