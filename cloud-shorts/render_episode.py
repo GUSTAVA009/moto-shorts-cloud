@@ -346,6 +346,17 @@ def fitted_story_beats(ep, total):
     return result
 
 
+def safe_caption_display(text):
+    """DejaVuSans-Bold has no emoji glyphs: don't burn tofu squares into MP4.
+
+    YouTube title/description retain their original emoji; only video overlay
+    text is projected to characters that the bundled font can display.
+    Preserve all Cyrillic, words, punctuation and human meaning.
+    """
+    return "".join(ch for ch in str(text)
+                   if ord(ch) <= 0xFFFF and ch not in ("\\ufe0f", "\\u200d")).strip()
+
+
 def draw_captions(ep, work, total):
     if not FONT.is_file():
         raise RuntimeError("Expected Cyrillic font not present")
@@ -359,6 +370,7 @@ def draw_captions(ep, work, total):
     def add_caption(label, text, at, until, index):
         if until <= at:
             return
+        text = safe_caption_display(text)
         layout = layout_caption(text, font_path=FONT)
         caption_file = work / ("subtitle_%02d.txt" % index)
         caption_file.write_text(layout["text"], encoding="utf-8")
