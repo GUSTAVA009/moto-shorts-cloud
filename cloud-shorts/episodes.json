@@ -6169,7 +6169,16 @@
       "production_batch": "gustava-20-20261030",
       "mix_category": "spectacle",
       "priority_rank": 11,
-      "editorial_review_status": "awaiting_frame_review"
+      "editorial_review_status": "awaiting_frame_review",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/f32ddf98-bb2d-4c9e-b3d0-a5226602bf42.mp3",
+        "transcript_sha256": "aa64d76813b66869bd002e03d5ee8926fbd62cad937ab04fb4931d02eceb653f",
+        "source_audio_sha256": "451032d8f2a774272e1b64692742cc0d1ed834b377f41297cbda616ab79f4ff7",
+        "context_id": "56e268d2ca8b4125b2c772ba8b8a0527",
+        "licence_mode": "public_provider_attribution"
+      }
     },
     {
       "id": "gustava-20-f04-20261030",
@@ -6427,7 +6436,16 @@
       "production_batch": "gustava-20-20261030",
       "mix_category": "experiments",
       "priority_rank": 14,
-      "editorial_review_status": "awaiting_frame_review"
+      "editorial_review_status": "awaiting_frame_review",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/3a54023a-f5e6-42c8-88a6-fb7cd10c79a9.mp3",
+        "transcript_sha256": "0d87f4145c395edae2d068ea4ec8223af2b44a37784e320eb054e49d8972ab0d",
+        "source_audio_sha256": "bbb21eafc9890c20964d3448820098750733fdaa40fecf8c71e644b1d2e6ab4c",
+        "context_id": "067c07c3e2084d54a198ac24be3dd713",
+        "licence_mode": "public_provider_attribution"
+      }
     },
     {
       "id": "gustava-20-f05-20261030",
