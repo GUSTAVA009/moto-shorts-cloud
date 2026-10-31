@@ -255,6 +255,64 @@ class TestPreviewQueue(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             pq.decode_history({"sha": "x", "content": ""})
 
+    def test_finish_409_conflict_retries_identical_reservation_not_new_render(self):
+        import base64,json,os,tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        slug="test-deep-conflict-01"
+        old={"id":slug,"run_id":"4100","state":"reserved",
+             "preview_fingerprint":"pinned-source","deep_source_sha256":"a"*64}
+        def record(sha="sha1",**overrides):
+            d={**old,**overrides}
+            return {"sha":sha,"content":base64.b64encode(json.dumps(d).encode()).decode()}
+        raw={"episode_id":slug,"passed":True,"status":"passed",
+             "final_word_present":True,"lexical_coverage":1.0,
+             "male_voice_verified":True,"voice_profile":pq.REQUIRED_MALE_PROFILE}
+        mixed={"episode_id":slug,"source":"FINAL_MIXED_MP4",
+               "passed":True,"status":"passed","final_word_present":True,
+               "numerics_match":True,"lexical_coverage":1.0}
+        with tempfile.TemporaryDirectory() as root:
+            a=Path(root)/"raw.json";b=Path(root)/"mixed.json"
+            a.write_text(json.dumps(raw));b.write_text(json.dumps(mixed))
+            with patch.dict(os.environ,{"GITHUB_RUN_ID":"4100"}), \\
+                 patch.object(pq,"api",side_effect=[record("sha1"),record("sha2"),record("sha3")]), \\
+                 patch.object(pq,"store",side_effect=[
+                     RuntimeError("GitHub queue operation failed HTTP 409"),
+                     RuntimeError("GitHub queue operation failed HTTP 409"),
+                     {"commit":{"sha":"done"}}]) as store, \\
+                 patch("time.sleep",return_value=None):
+                pq.finish(slug,a,b)
+                self.assertEqual(store.call_count,3)
+                self.assertEqual([x.args[3] for x in store.call_args_list],
+                                 ["sha1","sha2","sha3"])
+                self.assertEqual(store.call_args.kwargs,{})
+                self.assertTrue(store.call_args.args[1]["voice_qa_passed"])
+                self.assertTrue(store.call_args.args[1]["mixed_audio_qa_passed"])
+
+    def test_finish_409_conflict_never_overwrites_changed_run(self):
+        import base64,json,os,tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        slug="test-deep-conflict-02"
+        original={"id":slug,"run_id":"4100","state":"reserved",
+                  "preview_fingerprint":"original"}
+        def wrap(record,sha):
+            return {"sha":sha,"content":base64.b64encode(
+                json.dumps(record).encode()).decode()}
+        with tempfile.TemporaryDirectory() as folder:
+            raw=Path(folder)/"voice.json"
+            raw.write_text("{}")
+            with patch.dict(os.environ,{"GITHUB_RUN_ID":"4100"}), \\
+                 patch.object(pq,"api",side_effect=[
+                     wrap(original,"sha1"),
+                     wrap({**original,"run_id":"evil-run"},"sha2")]), \\
+                 patch.object(pq,"store",side_effect=RuntimeError(
+                     "GitHub queue operation failed HTTP 409")) as store, \\
+                 patch("time.sleep",return_value=None):
+                with self.assertRaisesRegex(RuntimeError,"receipt changed"):
+                    pq.finish(slug,raw)
+                self.assertEqual(store.call_count,1)
+
     def test_receipt_filename_validation(self):
         self.assertEqual(pq.item_path("jump-second-01"),
                          "render-receipts/jump-second-01.json")
