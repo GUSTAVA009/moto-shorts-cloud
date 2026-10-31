@@ -42,6 +42,7 @@ jobs:
         run: |
           python3 -m compileall -q cloud-shorts
           python3 -m unittest discover -s cloud-shorts -p 'test_buffer_autopublish.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_buffer_delivery_gate.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_find_pending_buffer.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_find_pending_publication.py' -v
       - name: Select one original, QA-passed, never-published video
