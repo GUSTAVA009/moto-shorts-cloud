@@ -71,6 +71,26 @@ class BacklogTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"VISUAL_BEATS_OFF_SCRIPT"):
             verify_scene_script_anchors(mismatched)
 
+    def test_verified_engine_workshop_original_deep_release_is_one_time(self):
+        import json
+        from pathlib import Path
+        from visual_director import verify_scene_script_anchors
+        catalog=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
+        episode=next(x for x in catalog["episodes"] if x["id"]=="gustava-20-f04-20261030")
+        self.assertTrue(episode["auto_publish"])
+        self.assertEqual(episode["reviewed_mp4_sha256"],
+                         "c8335445059503e4e006e987fdcc0f40a2952d2ea4f66fec7da483689c04e2b3")
+        self.assertEqual(episode["reviewed_artifact_run_id"],"41240927449")
+        self.assertEqual(verify_scene_script_anchors(episode),["clip_0","clip_1"])
+        receipt={"id":episode["id"],"state":"preview_ready",
+                 "voice_qa_passed":True,"mixed_audio_qa_passed":True,
+                 "voice_profile":"gustava_create_audio_deep_v1",
+                 "male_voice_verified":True,"run_id":episode["reviewed_artifact_run_id"]}
+        artifact={"name":f"daily-preview-{episode['id']}-{receipt['run_id']}","expired":False}
+        self.assertEqual(q.select({"episodes":[episode]},[receipt],set(),[artifact]),
+                         (int(receipt["run_id"]),episode["id"],artifact["name"]))
+        self.assertIsNone(q.select({"episodes":[episode]},[receipt],{episode["id"]},[artifact]))
+
     def test_only_new_unpublished_qa_passed_artifacts(self):
         catalog={"episodes":[{"id":"a-new-01","auto_publish":True,"voice_engine":"aidocmaker_deep",
                              "title":"Мотоцикл на трассе",
