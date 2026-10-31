@@ -19,7 +19,10 @@ def parse_confirmed(log):
     if not lines:
         raise RuntimeError("BUFFER_DELIVERY_UNCONFIRMED: empty response")
     try:
-        response = json.loads(lines[-1])
+        final = lines[-1]
+        if final.startswith("BUFFER_AUTOPUBLISH "):
+            final = final.split(" ", 1)[1]
+        response = json.loads(final)
     except (ValueError, TypeError) as exc:
         raise RuntimeError("BUFFER_DELIVERY_UNCONFIRMED: missing final JSON") from exc
     if (not isinstance(response, dict)
