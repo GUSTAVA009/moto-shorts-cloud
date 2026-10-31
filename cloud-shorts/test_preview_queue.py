@@ -199,21 +199,22 @@ class TestPreviewQueue(unittest.TestCase):
                         source.index("# An explicit, unpublished narration repair"))
         self.assertIn('records[ep["id"]][0] is None',source)
 
-    def test_correcting_old_clipped_private_helmet_video_is_prioritized(self):
+    def test_reviewed_caption_fix_is_never_requeued_for_unapproved_rerender(self):
         from pathlib import Path
         import json
         catalog=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
         ep=next(e for e in catalog["episodes"] if e["id"]=="gustava-20-s02-20261030")
-        self.assertIs(ep["auto_publish"],False)
-        self.assertIs(ep["visual_revision_requested"],True)
-        self.assertEqual(ep["visual_revision_reason"],"caption_clipped_confirmed")
+        self.assertIs(ep["auto_publish"],True)
+        self.assertIs(ep["visual_revision_requested"],False)
         self.assertIs(ep["caption_fit_required"],True)
-        self.assertIs(ep["caption_repair_priority"],True)
+        self.assertEqual(ep["visual_revision_status"],"assistant_checked_passed")
+        self.assertEqual(ep["reviewed_artifact_run_id"],"41234971139")
         from preview_queue import eligible_retry,preview_fingerprint
-        receipt={"id":ep["id"],"state":"preview_ready","attempt_count":1,
+        receipt={"id":ep["id"],"state":"preview_ready","attempt_count":4,
                  "preview_fingerprint":"old-caption","voice_qa_passed":True,
-                 "mixed_audio_qa_passed":True}
-        self.assertTrue(eligible_retry(ep,receipt,preview_fingerprint(ep)))
+                 "mixed_audio_qa_passed":True,
+                 "voice_profile":"gustava_create_audio_deep_v1"}
+        self.assertFalse(eligible_retry(ep,receipt,preview_fingerprint(ep)))
 
     def test_fourth_private_retry_needs_actual_replacement_and_failed_run(self):
         ep={"id":"gustava-20-f01-20261030","auto_preview":True,
