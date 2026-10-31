@@ -11,9 +11,18 @@ FONT_PATH = Path('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf')
 SAFE_WIDTH = 615
 
 
+def readable_caption_text(value):
+    """Hide unsupported emoji codepoints in drawn titles, not public metadata."""
+    def is_emoji(code):
+        return (0x1F000 <= code <= 0x1FAFF or 0x2600 <= code <= 0x27BF
+                or code in (0xFE0E, 0xFE0F, 0x200D, 0x20E3))
+    safe = ''.join(ch for ch in str(value) if not is_emoji(ord(ch)))
+    return re.sub(r'\s+', ' ', safe).strip()
+
+
 def layout_caption(value, font_path=FONT_PATH):
     from PIL import ImageFont
-    words = re.sub(r'\s+', ' ', str(value)).strip().split(' ')
+    words = readable_caption_text(value).split(' ')
     if not words or not any(words):
         raise ValueError('CAPTION_EMPTY')
     title = ' '.join(words)
