@@ -5068,7 +5068,7 @@
       "voice_profile": "gustava_create_audio_deep_v1",
       "visual_director_version": 3,
       "title": "ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️ #shorts",
-      "narration": "Один райдер готовит перчатки перед поездкой, а девушка надевает шлем рядом с мотоциклом. Разные люди, одна привычка: проверять защиту перед дорогой. А ты что надеваешь первым?",
+      "narration": "Один райдер готовит перчатки перед поездкой. В другом кадре девушка надевает шлем рядом с мотоциклом. Это два разных человека и два разных момента подготовки. Главное — не забывать о защите перед выездом. А ты что надеваешь первым?",
       "description": "Мотофакт в кадре: ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
       "caption_start": "ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️",
       "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
@@ -5152,6 +5152,15 @@
         "new_source_id": "9606781",
         "failed_run_id": "41233361222",
         "old_failure": "VISUAL_FROZEN_SEGMENT"
+      },
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/46ddf40e-d216-462b-804a-3a5280762c81.mp3",
+        "transcript_sha256": "868da5e532c0ae239ed79acfba0a7bd0f08cd3b4a0caf6be8304f95a92ed084f",
+        "source_audio_sha256": "9f171103f7c67536321061b60be233c45860990f23a53d459749aca14439c139",
+        "context_id": "a0fb695cddfd4ce28901f87fc205a39e",
+        "licence_mode": "public_provider_attribution"
       }
     },
     {
