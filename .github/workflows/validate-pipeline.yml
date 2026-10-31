@@ -14,6 +14,8 @@ on:
       - 'cloud-shorts/find_pending_buffer.py'
       - 'cloud-shorts/find_pending_publication.py'
       - 'cloud-shorts/preview_queue.py'
+      - 'cloud-shorts/render_episode.py'
+      - 'cloud-shorts/caption_layout.py'
       - '.github/workflows/buffer-backlog.yml'
       - '.github/workflows/daily-preview.yml'
       - '.github/workflows/validate-pipeline.yml'
@@ -67,6 +69,8 @@ jobs:
     timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
+      - name: Install caption measurement dependency
+        run: python3 -m pip install --disable-pip-version-check Pillow==11.3.0
       - name: Check Python syntax and all safety tests (no external downloads)
         run: |
           python3 -m compileall -q cloud-shorts
