@@ -221,11 +221,11 @@ class TestPreviewQueue(unittest.TestCase):
             "source_revision_requested":True,
             "source_revision_reason":"frozen_source_replaced",
             "source_replacement_proof":{
-                "old_source_id":"28209492","new_source_id":"12405712",
+                "old_source_id":"28209492","new_source_id":"9606781",
                 "failed_run_id":"41233361222","old_failure":"VISUAL_FROZEN_SEGMENT"},
             "footage":[
                 {"source_page":"https://www.pexels.com/video/old-gloves-6435393/"},
-                {"source_page":"https://www.pexels.com/video/new-helmet-12405712/"}]}
+                {"source_page":"https://www.pexels.com/video/new-helmet-9606781/"}]}
         receipt={"id":ep["id"],"state":"reserved","attempt_count":3,
                  "run_id":"41233361222","preview_fingerprint":"old-frozen"}
         check=lambda: pq.eligible_abandoned_source_retry(
