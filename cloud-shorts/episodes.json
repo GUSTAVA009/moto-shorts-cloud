@@ -6715,7 +6715,7 @@
       "voice_profile": "gustava_create_audio_deep_v1",
       "visual_director_version": 3,
       "title": "СТАРТ И ПОБЕДА: что громче? 🏁 #shorts",
-      "narration": "На первой трассе мотоциклисты выстраиваются перед стартом. На другой гонщик отмечает победу трюком. Это разные соревнования. Какой момент цепляет тебя сильнее?",
+      "narration": "На первой трассе мотоциклисты стоят перед стартом. На другой гонщик уже празднует победу и выполняет трюк. Это разные соревнования и разные моменты. Что захватывает сильнее: начало гонки или победный финиш?",
       "description": "Мотофакт в кадре: СТАРТ И ПОБЕДА: что громче? 🏁. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
       "caption_start": "СТАРТ И ПОБЕДА: что громче? 🏁",
       "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
@@ -6789,7 +6789,16 @@
       "production_batch": "gustava-20-20261030",
       "mix_category": "facts",
       "priority_rank": 18,
-      "editorial_review_status": "awaiting_frame_review"
+      "editorial_review_status": "awaiting_frame_review",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/991a9dc3-8b72-4bcc-8147-f069b4c5753b.mp3",
+        "transcript_sha256": "be0259efa614d3d539cf8fdd7b9f8d700526c9eed7883833c818cae9c113823e",
+        "source_audio_sha256": "bf185e029b50bfca1c7020b9821a5699fde65388f7d42e940e6f911a324169be",
+        "context_id": "c7b3e64ca8bc456487d463447e8903b3",
+        "licence_mode": "public_provider_attribution"
+      }
     },
     {
       "id": "gustava-20-p03-20261030",
