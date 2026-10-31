@@ -17,7 +17,7 @@ def readable_caption_text(value):
         return (0x1F000 <= code <= 0x1FAFF or 0x2600 <= code <= 0x27BF
                 or code in (0xFE0E, 0xFE0F, 0x200D, 0x20E3))
     safe = ''.join(ch for ch in str(value) if not is_emoji(ord(ch)))
-    return re.sub(r'\\s+', ' ', safe).strip()
+    return re.sub(r'\s+', ' ', safe).strip()
 
 
 def layout_caption(value, font_path=FONT_PATH):
