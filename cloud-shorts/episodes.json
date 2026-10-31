@@ -6577,11 +6577,11 @@
       },
       "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
       "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
-      "editorial_review_note": "Private only. Exact original DEEP provider recording needs independent Russian ASR and motion/semantic visual checks. Helmet fastening/gear must actually match the narrated on-screen action before any publication. No blind owner approval or reuse.",
+      "editorial_review_note": "Exact original 10.6s MP4 from GitHub Actions 41241225773 artifact 13057586850, SHA256 f8613dcda0293ae71455b6b90f646ab1c3e04aa6267dd795cc6beeeae84811b8, spoken narration: 'Один байкер надевает шлем перед поездкой'. Independent 9-frame inspection at 0.4,1.5,2.4,3.4s proves first subject holds helmet in hands but DOES NOT put it on head; later motorcycle stands parked for several seconds, inconsistent with spoken preparation claim. Both source and mixed ASR 100% but visual action fails. Do not auto-publish or promote reserved 409 receipt. Rebuild only with genuinely new licensed helmet-donning footage, exact original DEEP audio preserved, independently reviewed and new visual QA. No duplicate of already used helmet footage.",
       "production_batch": "gustava-20-20261030",
       "mix_category": "facts",
       "priority_rank": 15,
-      "editorial_review_status": "awaiting_frame_review",
+      "editorial_review_status": "rejected_after_actual_frame_review_mismatched_helmet_action",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -6590,7 +6590,11 @@
         "source_audio_sha256": "b79799cbbdc072951fea4dbfcfc954999b5dadafa8abedf8f1e3bc93e7abdd3e",
         "context_id": "c05aced7ef6849b18bbd7756fce38e99",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_review_failed": true,
+      "visual_revision_requested": true,
+      "visual_revision_reason": "owner_rejected_static_helmet_coverage",
+      "rejected_mp4_sha256": "f8613dcda0293ae71455b6b90f646ab1c3e04aa6267dd795cc6beeeae84811b8"
     },
     {
       "id": "gustava-20-s05-20261030",
