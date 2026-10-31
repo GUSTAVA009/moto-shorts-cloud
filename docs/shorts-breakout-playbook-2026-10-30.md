@@ -11,7 +11,9 @@ Prepared 2026-10-30. This is an editorial strategy and implementation specificat
 ## Promise to viewers
 Short funny motorcycle situations, memorable riders/roads, surprising real details and useful lessons. One complete visual story per Short, with narration matching what actually happens. Russian script; approved GUSTAVA Create Audio Deep voice only. Do not use the previously excluded public words "Хапыч" or "эндуро" in published content.
 
-## Editorial mix: precisely four comedy, three adrenaline, three useful out of ten
+## Неактивное экспериментальное предложение: 4 comedy / 3 adrenaline / 3 useful
+
+**Внимание:** рабочая, ранее утверждённая двадцатка: **7 facts / 5 stories / 5 experiments / 3 spectacle (35/25/25/15)**. Схема 4/3/3 ниже — гипотеза для отдельного эксперимента, она не отменяет рабочую сетку и не включается без явного решения владельца. См. [обязательный контракт](FACTORY_CONTRACT_RU.md).
 | Slot | Format | Starting hook | Required proof footage |
 |---|---|---|---|
 | 1 | Comedy | "Поехали на пятнадцать минут..." | Clearly filmed skit with true actor continuity or openly fictional POV |
@@ -37,12 +39,12 @@ These are ideas, not approved ready MP4s. Comedy cannot present a fabricated acc
 No seven-second stills, frozen footage, repeated scene loops, mismatched "tips", or meaningless montage. Preserve a single Deep narrator mixed without stereo doubled voice.
 
 ## Three-batch test: 30 independently created QA-passed Shorts
-1. Produce three ten-slot batches at 4 comedy / 3 adrenaline / 3 useful each, changing location, characters, plot, motorcycle and hook between videos.
+1. **Только после отдельного утверждения эксперимента**: возможен тест трёх десятислотовых партий по 4 comedy / 3 adrenaline / 3 useful; до этого рабочее распределение остаётся 7/5/5/3 на двадцатку. При любом варианте меняются локация, персонажи, сюжет, мотоцикл и зацепка.
 2. Within each genre experiment with an action hook, before/after contrast, or a one-sentence surprising question. Never upload near-duplicate variants for artificial A/B testing.
 3. Record each episode's genre, hook type, length, Deep proof, visual QA, render receipt, Buffer queue ID, actual sent time, public URL and YouTube Analytics at 24h, 48h, and 7d.
 4. Compare like-for-like age windows by **engaged views**, **stayed-to-watch**, **average percentage viewed**, **shares per 1,000 engaged views**, and **subscribers gained per 1,000 engaged views**. Segment by comedy, adrenaline and utility.
 5. Early experimental signal: at least one of every ten exceeds the *preceding comparable median* engaged views by 10x, while passing originality and safety. Stretch goal: one in ten achieves 1M+ public views. These are project targets, not officially validated viral thresholds.
-6. After 30 finished uploads, move up to 60% of slots toward clearly winning genres, keeping at least 20% novel format exploration and at least one useful video. Repeat format logic, never exact assets, wording or repeated scenes.
+6. **Не переключать стратегию автоматически.** После минимум 30 реальных проверенных публикаций можно предложить увеличить долю успешных жанров только по метрикам равного возраста и после решения владельца. Никогда не повторять кадры, тексты и сюжетные схемы механически.
 7. A video can take longer to reach a wide audience. Keep 7-day and 28-day performance checks rather than deleting slow starters.
 
 ## Production automation acceptance criteria

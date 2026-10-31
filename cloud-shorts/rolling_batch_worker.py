@@ -12,7 +12,8 @@ import preview_queue as ledger
 from rolling_batches import STATE_PATH, reconcile, progress
 
 MIN_REFILL_COOLDOWN_MINUTES = 45
-MIN_BUFFER_SCHEDULED = 7
+MIN_BUFFER_SCHEDULED = 7  # alert if actual scheduled posts fall below this
+REFILL_AT_OR_BELOW_SCHEDULED = 9  # owner contract: request next 10 at 9 remaining
 
 def read_state(entry):
     if not entry:
@@ -36,7 +37,9 @@ def should_replenish(state, events, scheduled_count, now):
     if any(x in events for x in ("bootstrap_active_ten", "stage_next_ten",
                                "late_stage_ten", "promote_next_ten")):
         return True
-    if scheduled_count >= MIN_BUFFER_SCHEDULED:
+    # This is the 9-post REPLENISH trigger, not the separate 7-post
+    # low-stock alarm. Script creation and ready-to-send MP4s remain distinct.
+    if scheduled_count > REFILL_AT_OR_BELOW_SCHEDULED:
         return False
     last = iso(state.get("last_replenish_request_at"))
     return last is None or now - last >= timedelta(minutes=MIN_REFILL_COOLDOWN_MINUTES)
