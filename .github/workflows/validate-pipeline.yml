@@ -17,6 +17,8 @@ on:
       - '.github/workflows/rolling-ten.yml'
       - 'cloud-shorts/episodes.json'
       - 'cloud-shorts/deep-voice-inbox.json'
+      - 'cloud-shorts/deep-voice-inbox-*.json'
+      - 'cloud-shorts/deep_inbox_ingest.py'
       - 'cloud-shorts/test_*.py'
       - 'cloud-shorts/editorial_novelty.py'
       - 'cloud-shorts/production_readiness.py'
@@ -45,6 +47,9 @@ on:
       - 'cloud-shorts/ten_daily_slots.py'
       - '.github/workflows/rolling-ten.yml'
       - "cloud-shorts/episodes.json"
+      - 'cloud-shorts/deep-voice-inbox.json'
+      - 'cloud-shorts/deep-voice-inbox-*.json'
+      - 'cloud-shorts/deep_inbox_ingest.py'
       - "cloud-shorts/render_episode.py"
       - "cloud-shorts/visual_director.py"
       - "cloud-shorts/tts_voice.py"

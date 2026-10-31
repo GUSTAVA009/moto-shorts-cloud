@@ -27,6 +27,33 @@ class DeepInboxTests(unittest.TestCase):
             self.assertIs(ep["auto_preview"],True)
             self.assertEqual(assert_candidate(by_id[item],ep)["voice_id"],"deep")
 
+    def test_immutable_daily_inbox_shards_extend_capacity_without_duplication(self):
+        import json,tempfile
+        from pathlib import Path
+        from deep_inbox_ingest import load_voice_records,MAX_RECORDS
+        with tempfile.TemporaryDirectory() as td:
+            folder=Path(td)
+            base={"version":1,"voice_id":"deep",
+                  "records":[dict(self.record,episode_id="legacy-original")]}
+            shard={"version":1,"voice_id":"deep",
+                   "records":[dict(self.record,episode_id="new-original")]}
+            (folder/"deep-voice-inbox.json").write_text(json.dumps(base),encoding="utf8")
+            one=folder/"deep-voice-inbox-20261101.json"
+            one.write_text(json.dumps(shard),encoding="utf8")
+            self.assertEqual([r["episode_id"] for r in load_voice_records(folder)],
+                             ["legacy-original","new-original"])
+            # A second voice candidate for an old episode must never silently
+            # replace its pinned full-text provenance.
+            shard["records"][0]["episode_id"]="legacy-original"
+            one.write_text(json.dumps(shard),encoding="utf8")
+            with self.assertRaisesRegex(ValueError,"DUPLICATE_EPISODE"):
+                load_voice_records(folder)
+            shard["records"]=[dict(self.record,episode_id=f"item-{i}")
+                              for i in range(MAX_RECORDS+1)]
+            one.write_text(json.dumps(shard),encoding="utf8")
+            with self.assertRaisesRegex(ValueError,"batch size"):
+                load_voice_records(folder)
+
     def test_exact_voice_and_identity(self):
         self.assertEqual(assert_candidate(self.record,self.episode)["voice_id"],"deep")
         for mutate in ({"voice_id":"ru_alexandr"},{"provider":"unknown"},
