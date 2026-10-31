@@ -5098,7 +5098,7 @@
           "source_title": "motorbike rider picking up helmet from bike",
           "author": "Themba Mtegha",
           "license": "Pexels License",
-          "duration": 8,
+          "duration": 6,
           "topics": [
             "facts",
             "motorcycle"
@@ -5114,7 +5114,7 @@
         {
           "source": "clip_1",
           "start": 0,
-          "seconds": 7.75
+          "seconds": 5.25
         }
       ],
       "editorial": {
@@ -5136,7 +5136,7 @@
         "overlay": "НАПИШИ СВОЙ ВЫБОР",
         "description": "Напиши в комментариях, какой момент тебе ближе."
       },
-      "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
+      "source_selection": "Source Pexels 28209492 has verified public duration 0:06 (not 0:08). Use real 5.25-second helmet action; source excerpt must pass full motion/duration QC. Unique Pexels attribution retained.",
       "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
       "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
       "production_batch": "gustava-20-20261030",
@@ -5153,7 +5153,7 @@
         "licence_mode": "public_provider_attribution"
       },
       "source_revision_requested": true,
-      "source_revision_reason": "undersized_source_motion_verified"
+      "source_revision_reason": "short_helmet_adjustment_rebalanced"
     },
     {
       "id": "gustava-20-s01-20261030",
