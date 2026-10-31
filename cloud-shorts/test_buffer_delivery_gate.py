@@ -15,6 +15,7 @@ class BufferDeliveryGateTests(unittest.TestCase):
     def test_only_real_accepted_post_allows_refill(self):
         self.assertEqual(parse_confirmed("some audit\n" + json.dumps(GOOD)),
                          GOOD)
+        self.assertEqual(parse_confirmed("other log\nBUFFER_AUTOPUBLISH " + json.dumps(GOOD)), GOOD)
         with tempfile.TemporaryDirectory() as tmp:
             log, out = Path(tmp) / "res", Path(tmp) / "out"
             log.write_text(json.dumps(GOOD), encoding="utf8")
