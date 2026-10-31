@@ -5151,7 +5151,9 @@
         "source_audio_sha256": "a0f8096b654c3710f1c9bb2e219c5ebdc64de0205d6b37f6a1b187691c3140ac",
         "context_id": "971c5f196ede4a4ba252f574e4daf8f1",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "source_revision_requested": true,
+      "source_revision_reason": "undersized_source_motion_verified"
     },
     {
       "id": "gustava-20-s01-20261030",
