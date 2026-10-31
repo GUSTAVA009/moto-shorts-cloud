@@ -192,6 +192,13 @@ class TestPreviewQueue(unittest.TestCase):
         self.assertFalse(pq.eligible_abandoned_bootstrap_retry(
             ep,receipt,"fixed-worker",True))
 
+    def test_new_genuine_deep_stock_precedes_private_revision_retries(self):
+        from pathlib import Path
+        source=Path(__file__).with_name("preview_queue.py").read_text(encoding="utf8")
+        self.assertLess(source.index("# Genuine NEW originals have priority"),
+                        source.index("# An explicit, unpublished narration repair"))
+        self.assertIn('records[ep["id"]][0] is None',source)
+
     def test_missing_or_corrupt_registry_fails_closed(self):
         with self.assertRaises(RuntimeError):
             pq.decode_history(None)
