@@ -6,6 +6,27 @@ class DeepInboxTests(unittest.TestCase):
         self.record={"episode_id":"moto-rain-example","provider":"aidocmaker.com",
                      "voice_id":"deep","narration":"Мотоцикл готов к поездке. "+"Это короткая оригинальная проверка голоса. "*5,
                      "preview_url":"https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/9c7659a8-7eee-4cb3-b086-d96a3890f8f9.mp3"}
+    def test_staged_genuine_deep_previews_are_private_and_unique(self):
+        import json
+        from pathlib import Path
+        import deep_inbox_ingest as di
+        root=Path(__file__).parent
+        inbox=json.loads((root/"deep-voice-inbox.json").read_text(encoding="utf8"))
+        catalog=json.loads((root/"episodes.json").read_text(encoding="utf8"))
+        lookup={x["id"]:x for x in catalog["episodes"]}
+        self.assertLessEqual(len(inbox["records"]),di.MAX_RECORDS)
+        self.assertEqual(len({x["episode_id"] for x in inbox["records"]}),
+                         len(inbox["records"]))
+        restored=("gustava-20-f01-20261030","gustava-20-e03-20261030",
+                  "gustava-20-p02-20261030","gustava-20-e04-20261030",
+                  "gustava-20-f06-20261030","gustava-20-p03-20261030")
+        by_id={x["episode_id"]:x for x in inbox["records"]}
+        for item in restored:
+            ep=lookup[item]
+            self.assertIs(ep["auto_publish"],False)
+            self.assertIs(ep["auto_preview"],True)
+            self.assertEqual(assert_candidate(by_id[item],ep)["voice_id"],"deep")
+
     def test_exact_voice_and_identity(self):
         self.assertEqual(assert_candidate(self.record,self.episode)["voice_id"],"deep")
         for mutate in ({"voice_id":"ru_alexandr"},{"provider":"unknown"},

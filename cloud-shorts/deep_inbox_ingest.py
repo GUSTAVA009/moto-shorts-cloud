@@ -16,7 +16,7 @@ from editorial_guard import validate_catalog
 
 CATALOG="cloud-shorts/episodes.json"
 INBOX=Path(__file__).with_name("deep-voice-inbox.json")
-MAX_RECORDS=10
+MAX_RECORDS=20
 
 def digest(data): return hashlib.sha256(data).hexdigest()
 
