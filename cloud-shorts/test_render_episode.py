@@ -16,13 +16,14 @@ class EpisodeTests(unittest.TestCase):
         ep = next(e for e in data["episodes"] if e["id"] == "gustava-20-f01-20261030")
         source = next(m for m in ep["footage"] if m["key"] == "clip_1")
         cut = next(s for s in ep["shots"] if s["source"] == "clip_1")
-        self.assertTrue(source["source_page"].endswith("/man-wearing-helmet-12405712/"))
-        self.assertEqual(source["duration"], 22)
+        self.assertTrue(source["source_page"].endswith("/woman-wearing-a-helmet-9606781/"))
+        self.assertEqual(source["duration"], 21)
         self.assertEqual(source["license"], "Pexels License")
         self.assertLessEqual(r.required_source_seconds(ep, "clip_1"), source["duration"])
         self.assertGreaterEqual(sum(s["seconds"] for s in ep["shots"]), 12)
         self.assertEqual(ep["source_revision_reason"], "frozen_source_replaced")
         self.assertNotIn("28209492", str(ep["footage"]))
+        self.assertNotIn("12405712", str(ep["footage"]))
         self.assertFalse(ep["auto_publish"])
 
     def test_both_original_episodes_have_distinct_provenance(self):
