@@ -17,6 +17,25 @@ def ep(footage,title="Что важнее при выборе мотошлема
             ]}
 
 class VisualDirectionTests(unittest.TestCase):
+    def test_actual_repaired_genuine_deep_moto_scenes_are_grounded(self):
+        import json
+        from pathlib import Path
+        from visual_director import verify_scene_script_anchors
+        catalog = json.loads((Path(__file__).parent / "episodes.json").read_text(encoding="utf8"))
+        episodes = {ep["id"]: ep for ep in catalog["episodes"]}
+        repair = episodes["gustava-20-s01-20261030"]
+        self.assertEqual(verify_scene_script_anchors(repair), ["clip_0", "clip_1"])
+        wrong = dict(repair, scene_script_anchors=list(reversed(repair["scene_script_anchors"])))
+        with self.assertRaisesRegex(ValueError, "VISUAL_BEATS_OFF_SCRIPT"):
+            verify_scene_script_anchors(wrong)
+        training = dict(episodes["gustava-20-f02-20261030"],
+                        scene_script_anchors=[
+                            {"source": "clip_0", "action": "cone_slalom",
+                             "spoken_anchor": "На парковке райдеры проходят конусы"},
+                            {"source": "clip_1", "action": "motorbike_obstacle_training",
+                             "spoken_anchor": "а на другом полигоне тренируются на препятствиях"}])
+        self.assertEqual(verify_scene_script_anchors(training), ["clip_0", "clip_1"])
+
     def test_actual_failed_helmet_stock_rejected_even_if_tag_says_helmet(self):
         f=[video("a","person-riding-his-motorcycle"),
            video("b","close-up-shot-of-a-man-on-a-motorcycle")]
