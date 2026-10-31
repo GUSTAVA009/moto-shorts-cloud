@@ -330,6 +330,19 @@ def verified_visual_artifact(episode, mp4_path):
             or any(float(p.get("seconds",0))<MIN_SCENE_SECONDS for p in plan)
             or obj.get("source_reused_in_short") is not False):
         raise ValueError("VISUAL_QA_REJECTED: repeated/missing/corrupt visual chapters")
+    # All newly rendered public releases require measured safe-frame captions.
+    # Old previews had passing visual QA despite their Cyrillic titles being cut.
+    if episode.get("caption_fit_required") is True:
+        layouts = obj.get("caption_layouts")
+        if (obj.get("caption_layout_version") != 1
+                or obj.get("caption_fit_passed") is not True
+                or not isinstance(layouts, list) or not layouts
+                or any(not isinstance(item, dict)
+                       or item.get("max_line_width_px", 9999) > 615
+                       or item.get("safe_width_px") != 615
+                       or item.get("line_count") not in (1, 2)
+                       for item in layouts)):
+            raise ValueError("CAPTION_FIT_QA_MISSING: old clipped preview cannot publish")
     if evidence["subject"] is not None:
         if obj.get("subject")!=evidence["subject"] or seq[0] not in evidence["evidence_sources"]:
             raise ValueError("VISUAL_TOPIC_MISMATCH: story object not shown first")

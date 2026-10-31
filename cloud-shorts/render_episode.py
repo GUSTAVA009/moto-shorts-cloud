@@ -20,6 +20,7 @@ import urllib.request
 from soundtrack import generate as make_music
 from audio_accents import create as make_audio_accents, cover_times
 from visual_director import verify_story_subject, directed_plan
+from caption_layout import layout_caption
 from tts_voice import render as make_voice
 from silero_voice import render as make_silero_voice, MODEL_ID as SILERO_MODEL_ID, SPEAKER as SILERO_SPEAKER
 from native_bass_voice import render as make_native_bass_voice, VOICE_ENGINE as NATIVE_BASS_ENGINE, SPEAKER as NATIVE_BASS_SPEAKER
@@ -340,41 +341,37 @@ def fitted_story_beats(ep, total):
 def draw_captions(ep, work, total):
     if not FONT.is_file():
         raise RuntimeError("Expected Cyrillic font not present")
-    spans = [
-        ("caption_start", 0.05, min(2.45, total - 4.0)),
-    ]
-    # Fact explanations take the middle of a story-driven Short. Do not
-    # place generic middle captions on top of the factual sequence.
+    spans = [("caption_start", 0.05, min(2.45, total - 4.0))]
     if not ep.get("story_steps"):
         spans.append(("caption_middle", min(3.9, total - 4.0), min(6.35, total - 2.8)))
     spans.append(("caption_end", total - 2.75, total - 0.12))
     filters = []
+    caption_checks = []
+
+    def add_caption(label, text, at, until, index):
+        if until <= at:
+            return
+        layout = layout_caption(text, font_path=FONT)
+        caption_file = work / ("subtitle_%02d.txt" % index)
+        caption_file.write_text(layout["text"], encoding="utf-8")
+        filters.extend([
+            ("drawbox=x=23:y=%d:w=674:h=%d:color=black@0.50:t=fill:"
+             "enable='between(t,%.3f,%.3f)'") %
+            (layout["box_y"], layout["box_height"], at, until),
+            ("drawtext=fontfile=%s:textfile=%s:fontsize=%d:fontcolor=white:"
+             "shadowcolor=black@0.95:shadowx=2:shadowy=2:"
+             "x=(w-text_w)/2:y=%d:enable='between(t,%.3f,%.3f)'") %
+            (FONT, caption_file, layout["font_size"], layout["text_y"], at, until),
+        ])
+        caption_checks.append({"label": label, "font_size": layout["font_size"],
+                               "line_count": layout["line_count"],
+                               "max_line_width_px": layout["max_line_width_px"],
+                               "safe_width_px": layout["safe_width_px"]})
+
     for i, (field, lo, hi) in enumerate(spans):
-        if hi <= lo:
-            continue
-        caption_file = work / ("subtitle_%02d.txt" % i)
-        caption_file.write_text(ep[field], encoding="utf-8")
-        filters.extend([
-            "drawbox=x=23:y=126:w=674:h=92:color=black@0.45:t=fill:"
-            "enable='between(t,%.3f,%.3f)'" % (lo, hi),
-            "drawtext=fontfile=%s:textfile=%s:fontsize=34:fontcolor=white:"
-            "shadowcolor=black@0.95:shadowx=2:shadowy=2:"
-            "x=(w-text_w)/2:y=154:enable='between(t,%.3f,%.3f)'"
-            % (FONT, caption_file, lo, hi),
-        ])
-    # New, longer narrative Shorts can display independently authored,
-    # time-coded factual beats rather than silent slides or recycled templates.
+        add_caption(field, ep[field], lo, hi, i)
     for j, (beat_text, at, until) in enumerate(fitted_story_beats(ep, total)):
-        beat_file = work / ("story_beat_%02d.txt" % j)
-        beat_file.write_text(beat_text, encoding="utf-8")
-        filters.extend([
-            "drawbox=x=23:y=126:w=674:h=92:color=black@0.45:t=fill:"
-            "enable='between(t,%.3f,%.3f)'" % (at,until),
-            "drawtext=fontfile=%s:textfile=%s:fontsize=34:fontcolor=white:"
-            "shadowcolor=black@0.95:shadowx=2:shadowy=2:"
-            "x=(w-text_w)/2:y=154:enable='between(t,%.3f,%.3f)'"
-            % (FONT, beat_file, at, until),
-        ])
+        add_caption("story_beat_%d" % j, beat_text, at, until, j + len(spans))
     # Documentary chapters use separately licensed, present-day illustration,
     # NEVER archival footage of their real historical protagonist.
     if ep.get("episode_series", {}).get("historical_reconstruction") is True:
@@ -387,6 +384,10 @@ def draw_captions(ep, work, total):
         ])
     # Quiet lower-third CTA rotates per episode; story and final question remain readable.
     filters.extend(overlay_filters(ep, work, total, FONT))
+    (work / "caption_fit.json").write_text(json.dumps({
+        "version": 1, "passed": bool(caption_checks),
+        "entries": caption_checks,
+    }, ensure_ascii=False, indent=2), encoding="utf8")
     filters.append("fade=t=out:st=%.2f:d=0.30" % max(0, total - 0.30))
     return ",".join(filters)
 
@@ -503,6 +504,19 @@ def render(ep, output_dir):
         raise RuntimeError("Final MP4 must be 720x1280 vertical")
     if not any(s["codec_type"] == "audio" for s in streams):
         raise RuntimeError("Final video missing narration/music audio")
+    # QA was previously blind to text extending outside the portrait frame.
+    # Only the NEW render receives this proof; existing clipped artifacts
+    # remain ineligible for auto-publication until genuinely corrected.
+    caption_report = json.loads((work / "caption_fit.json").read_text(encoding="utf8"))
+    if (caption_report.get("version") != 1 or caption_report.get("passed") is not True
+            or not caption_report.get("entries")):
+        raise RuntimeError("CAPTION_FIT_QA_NOT_VERIFIED")
+    visual_path = output_dir / "visual_qa.json"
+    visual_payload = json.loads(visual_path.read_text(encoding="utf8"))
+    visual_payload.update(caption_layout_version=1, caption_fit_passed=True,
+                          caption_layouts=caption_report["entries"])
+    visual_path.write_text(json.dumps(visual_payload, ensure_ascii=False, indent=2),
+                           encoding="utf8")
     # Covers must be extracted from this exact rendered episode, never
     # scraped from another creator or made to depict unrelated events.
     times = cover_times(total)
