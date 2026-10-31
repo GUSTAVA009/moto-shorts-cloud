@@ -588,8 +588,40 @@ def finish(slug, qa_report=None, mixed_report=None):
         and mix.get("lexical_coverage", 0) >= .79
     )
     contents["mixed_audio_qa_coverage"] = mix.get("lexical_coverage")
-    store(path, contents, "Rendered unique Shorts preview " + slug, item["sha"])
-    print("QUEUE_PREVIEW_READY", slug)
+    # GitHub's shared render-ledger branch is also written by rolling-batch,
+    # Buffer and future render workers. Even a content PUT with the correct
+    # file SHA can receive HTTP 409 when another file committed to the same
+    # branch between the file read and write. This must not strand an
+    # otherwise valid, finished and independently QA-passed MP4 forever.
+    # On conflict re-read the EXACT same reservation and retry only if its
+    # run ID, source/fingerprint and ALL fields remain unchanged.
+    original = json.loads(base64.b64decode(item["content"]))
+    from time import sleep
+    last_conflict = None
+    for attempt in range(4):
+        current = item if attempt == 0 else api(path)
+        if (not current or not current.get("sha")
+                or json.loads(base64.b64decode(current["content"])) != original):
+            raise RuntimeError(
+                "Render receipt changed during HTTP 409 recovery; "
+                "no blind publication, retry or overwrite"
+            )
+        try:
+            store(path, contents, "Rendered unique Shorts preview " + slug, current["sha"])
+        except RuntimeError as exc:
+            if "GitHub queue operation failed HTTP 409" not in str(exc):
+                raise
+            last_conflict = exc
+            if attempt >= 3:
+                break
+            sleep(0.5 * (2 ** attempt))
+            continue
+        print("QUEUE_PREVIEW_READY", slug)
+        return
+    raise RuntimeError(
+        "GitHub queue finish contention after bounded 409 retries; "
+        "MP4 retained privately and NOT published"
+    ) from last_conflict
 
 
 def main():
