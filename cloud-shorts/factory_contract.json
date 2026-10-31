@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "authority": "Owner-approved historical requirements; changes require explicit owner approval and passing regression tests",
+  "project": {
+    "name": "GUSTAVA Enduro YouTube Factory",
+    "channel_id": "UCS0QCodPcFBTjMt4ioEWOUw",
+    "handle": "@gustava009",
+    "separate_other_channel": "@motobratr1",
+    "timezone": "Europe/Moscow"
+  },
+  "production": {
+    "target_new_unique_shorts_per_day": 10,
+    "reviewed_mp4_reserve_target": 10,
+    "script_reserve_minimum": 100000,
+    "never_count_script_as_mp4": true,
+    "require_unique_licensed_visuals": true,
+    "allow_private_local_pc_videos": false
+  },
+  "buffer": {
+    "provider": "Buffer",
+    "target_scheduled_posts": 10,
+    "free_tier_scheduled_limit": 10,
+    "replenish_at_or_below_scheduled": 9,
+    "hard_low_queue_warning_at": 7,
+    "voice_and_media_qa_required": true,
+    "confirm_real_post_id": true,
+    "never_retry_uncertain_upload": true
+  },
+  "publishing": {
+    "max_posts_per_day": 10,
+    "spacing_minutes": 90,
+    "allow_only_approved_mp4": true,
+    "do_not_mark_success_from_workflow_only": true,
+    "public_release_only_after_individual_visual_review": true
+  },
+  "voice": {
+    "provider": "aidocmaker.com",
+    "voice_engine": "aidocmaker_deep",
+    "voice_id": "deep",
+    "voice_profile": "gustava_create_audio_deep_v1",
+    "allow_fallback": false,
+    "forbidden_fallbacks": [
+      "Silero",
+      "V6",
+      "Kokoro",
+      "pitch-shifted substitute"
+    ],
+    "requires_sha_pinned_original": true,
+    "requires_russian_source_and_mixed_asr": true
+  },
+  "editorial": {
+    "batch_size": 20,
+    "category_percent": {
+      "facts": 35,
+      "stories": 25,
+      "experiments": 25,
+      "spectacle": 15
+    },
+    "batch_20_counts": {
+      "facts": 7,
+      "stories": 5,
+      "experiments": 5,
+      "spectacle": 3
+    },
+    "change_mix_only_after_verified_metrics_and_owner_decision": true,
+    "source_video_has_to_show_narrated_action": true,
+    "disallow_reused_footage": true,
+    "do_not_invent_single_event_from_independent_stock": true,
+    "public_title_forbidden_words": [
+      "хапыч",
+      "эндуро"
+    ]
+  },
+  "video": {
+    "width": 720,
+    "height": 1280,
+    "portrait": true,
+    "no_frozen_frames": true,
+    "no_abrupt_unmotivated_ab_cuts": true,
+    "no_clipped_captions": true,
+    "no_alternating_stereo_voice": true,
+    "consistent_single_centered_narrator": true,
+    "original_music_licensed_footage_only": true
+  },
+  "evidence_stages": [
+    "script_draft",
+    "rights_and_scene_verified",
+    "original_deep_source_audio_sha_pinned",
+    "mp4_rendered",
+    "voice_and_mixed_asr_passed",
+    "visual_qa_passed",
+    "human_frame_review_passed",
+    "buffer_post_id_confirmed",
+    "buffer_sent_confirmed",
+    "youtube_public_url_confirmed"
+  ],
+  "metrics": {
+    "distinguish_public_views_from_eligible_shorts_views": true,
+    "compare_at_least_48_hour_matured_shorts": true,
+    "avoid_fake_engagement": true,
+    "channel_growth_never_guaranteed": true
+  },
+  "privacy": {
+    "never_commit_tokens_or_private_studio_exports": true,
+    "never_touch_local_personal_videos": true
+  }
+}
