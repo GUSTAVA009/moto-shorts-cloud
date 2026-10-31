@@ -46,6 +46,31 @@ class BacklogTests(unittest.TestCase):
                          (int(run),ep["id"],artifact["name"]))
         self.assertIsNone(q.select({"episodes":[ep]},[receipt],{ep["id"]},[artifact]))
 
+    def test_exact_urban_deep_private_preview_released_only_after_frame_review(self):
+        import json
+        from pathlib import Path
+        from visual_director import verify_scene_script_anchors
+        data=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
+        ep=next(e for e in data["episodes"] if e["id"]=="gustava-20-e04-20261030")
+        self.assertTrue(ep["auto_publish"])
+        self.assertFalse(ep["source_revision_requested"])
+        self.assertEqual(ep["reviewed_mp4_sha256"],
+                         "9b63292edf78d5f085f1d500bc6e02bd79c1e7fc70b6a9ecdcbdcff115513488")
+        self.assertEqual(verify_scene_script_anchors(ep),["clip_0","clip_1"])
+        receipt={"id":ep["id"],"state":"preview_ready",
+                 "voice_qa_passed":True,"mixed_audio_qa_passed":True,
+                 "voice_profile":"gustava_create_audio_deep_v1",
+                 "male_voice_verified":True,"run_id":ep["reviewed_artifact_run_id"]}
+        artifact={"name":f"daily-preview-{ep['id']}-{receipt['run_id']}","expired":False}
+        self.assertEqual(q.select({"episodes":[ep]},[receipt],set(),[artifact]),
+                         (int(receipt["run_id"]),ep["id"],artifact["name"]))
+        self.assertIsNone(q.select({"episodes":[ep]},[receipt],{ep["id"]},[artifact]))
+        mismatched=dict(ep,scene_script_anchors=[
+            dict(ep["scene_script_anchors"][0],action="motorcycle_city_pov"),
+            ep["scene_script_anchors"][1]])
+        with self.assertRaisesRegex(ValueError,"VISUAL_BEATS_OFF_SCRIPT"):
+            verify_scene_script_anchors(mismatched)
+
     def test_only_new_unpublished_qa_passed_artifacts(self):
         catalog={"episodes":[{"id":"a-new-01","auto_publish":True,"voice_engine":"aidocmaker_deep",
                              "title":"Мотоцикл на трассе",
