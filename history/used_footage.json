@@ -737,6 +737,16 @@
       "episode": "gustava-20-s03-20261030",
       "source": "https://www.pexels.com/video/dynamic-off-road-dirt-bike-adventure-in-desert-29488248/",
       "status": "reserved-or-rendered"
+    },
+    "10221923": {
+      "episode": "gustava-20-e03-20261030",
+      "source": "https://www.pexels.com/video/motorcycle-driving-course-10221923/",
+      "status": "reserved-or-rendered"
+    },
+    "5803515": {
+      "episode": "gustava-20-e03-20261030",
+      "source": "https://www.pexels.com/video/motorcyclist-helmet-5803515/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1089,6 +1099,13 @@
       "story": "mud-section-versus-desert-run",
       "visual": "mud-obstacles-and-sand-run",
       "bike": "offroad-two-surface-bike"
+    },
+    "gustava-20-e03-20261030": {
+      "environment": "rider-lesson-and-motocross-paddock",
+      "people": "learner-rider-and-helmet-racer",
+      "story": "handling-course-vs-helmet-prep",
+      "visual": "training-turn-then-helmet-rider",
+      "bike": "training-race-motorcycle"
     }
   }
 }
