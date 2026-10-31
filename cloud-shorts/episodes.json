@@ -6681,7 +6681,7 @@
     {
       "id": "gustava-20-e05-20261030",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
@@ -6758,11 +6758,11 @@
       },
       "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
       "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
-      "editorial_review_note": "Private only: previous approved voice preset DEEP candidate failed independent ASR at 95.2%. This newly generated ORIGINAL DEEP candidate requires fresh independent 100%-target Russian ASR and true footage QA before any individual release.",
+      "editorial_review_note": "Direct 9-frame contact review on 2026-10-31 of exact GitHub artifact 13057920467 from Actions 41241069846, MP4 SHA256 8b9b9eed6e9b7ca382afe07fe49ccf035ce1de7ec78113956ee897156701be47, 10.933s, 720x1280 stereo. Frames at 0.4/1.4/2.5/3.7/4.8 show genuine moving dirtbike in sand and dust plume; 5.7/6.7/8/9.8 show different slow offroad practice bike traversing uneven wooden-plank course with tape and obstacles. Two visibly independent dynamic source scenes (5.461s each), no A/B, freeze, darkness or clipped Cyrillic captions. Original real Pexels sources 29439166 Habeeb Sujan and 30767777 Harvey Tan Villarino; independent full Russian source and final MP4 ASR lexical 1.0; deep original source SHA 408987cdceddfed14904f998c4b6ec852cc3e31e6f7113c2928cf6afd6680735. Only this exact MP4 approved, no other rendering granted.",
       "production_batch": "gustava-20-20261030",
       "mix_category": "experiments",
       "priority_rank": 17,
-      "editorial_review_status": "awaiting_frame_review",
+      "editorial_review_status": "assistant_checked_passed",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -6771,7 +6771,25 @@
         "source_audio_sha256": "408987cdceddfed14904f998c4b6ec852cc3e31e6f7113c2928cf6afd6680735",
         "context_id": "e49b21ac8eaa442cbef3cb785c2b2503",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_revision_requested": false,
+      "visual_revision_status": "assistant_checked_passed",
+      "reviewed_mp4_sha256": "8b9b9eed6e9b7ca382afe07fe49ccf035ce1de7ec78113956ee897156701be47",
+      "reviewed_artifact_run_id": "41241069846",
+      "reviewed_mp4_duration_seconds": 10.933,
+      "reviewed_caption_layout_version": 1,
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "motorcycle_desert_dirt_ride",
+          "spoken_anchor": "Первый райдер едет по песку и поднимает пыль"
+        },
+        {
+          "source": "clip_1",
+          "action": "motorcycle_obstacle_course",
+          "spoken_anchor": "На другой съёмке мотоциклисты проходят препятствия на трассе"
+        }
+      ]
     },
     {
       "id": "gustava-20-f06-20261030",
