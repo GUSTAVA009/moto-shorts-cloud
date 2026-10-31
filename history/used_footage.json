@@ -747,6 +747,16 @@
       "episode": "gustava-20-e03-20261030",
       "source": "https://www.pexels.com/video/motorcyclist-helmet-5803515/",
       "status": "reserved-or-rendered"
+    },
+    "12294780": {
+      "episode": "gustava-20-p03-20261030",
+      "source": "https://www.pexels.com/video/slow-motion-of-motocross-competition-12294780/",
+      "status": "reserved-or-rendered"
+    },
+    "3345138": {
+      "episode": "gustava-20-p03-20261030",
+      "source": "https://www.pexels.com/video/a-motocross-race-in-an-enclosed-off-road-circuits-3345138/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1106,6 +1116,13 @@
       "story": "handling-course-vs-helmet-prep",
       "visual": "training-turn-then-helmet-rider",
       "bike": "training-race-motorcycle"
+    },
+    "gustava-20-p03-20261030": {
+      "environment": "slow-motion-course-and-night-speedway",
+      "people": "jump-athlete-and-speedway-riders",
+      "story": "slow-motion-day-jump-vs-night-race",
+      "visual": "day-jump-and-night-race",
+      "bike": "speedway-racing-bike"
     }
   }
 }
