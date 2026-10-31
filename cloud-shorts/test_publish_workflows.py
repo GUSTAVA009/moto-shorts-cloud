@@ -58,6 +58,13 @@ class PublisherShellTests(unittest.TestCase):
         self.assertIn('ep["id"] in published', workflow)
         self.assertIn('ep.get("auto_publish") is not False', workflow)
 
+    def test_depleted_buffer_reserve_reports_failure_not_green(self):
+        workflow = source(".github/workflows/buffer-backlog.yml")
+        self.assertIn("min_queue_reserve = 7", workflow)
+        self.assertIn("if len(queued) >= min_queue_reserve:", workflow)
+        self.assertIn("BUFFER_RESERVE_UNDER_MINIMUM", workflow)
+        self.assertIn("raise SystemExit(1)", workflow)
+
     def test_no_legacy_scheduled_publisher(self):
         self.assertFalse((ROOT / ".github/workflows/publora-backlog.yml").exists())
         active = (ROOT / ".github/workflows").glob("*.yml")
