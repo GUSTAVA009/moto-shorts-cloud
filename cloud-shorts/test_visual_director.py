@@ -17,6 +17,17 @@ def ep(footage,title="Что важнее при выборе мотошлема
             ]}
 
 class VisualDirectionTests(unittest.TestCase):
+    def test_s02_public_release_has_real_helmet_then_highway_proof(self):
+        from pathlib import Path
+        import json
+        from visual_director import verify_scene_script_anchors
+        cat=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
+        ep=next(e for e in cat["episodes"] if e["id"]=="gustava-20-s02-20261030")
+        self.assertTrue(ep["auto_publish"])
+        self.assertEqual(ep["visual_revision_status"],"assistant_checked_passed")
+        self.assertEqual(len(ep["reviewed_mp4_sha256"]),64)
+        self.assertEqual(verify_scene_script_anchors(ep),["clip_0","clip_1"])
+
     def test_actual_repaired_genuine_deep_moto_scenes_are_grounded(self):
         import json
         from pathlib import Path
