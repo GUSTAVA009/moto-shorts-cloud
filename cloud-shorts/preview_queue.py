@@ -302,6 +302,64 @@ def failed_action_conclusion(run_id):
     return data.get("conclusion")
 
 
+def verified_failed_preflight(run_id):
+    """A retry is allowed only if GitHub proves the runner failed *before render*."""
+    token = os.environ.get("GITHUB_TOKEN", "").strip()
+    repo = os.environ.get("GITHUB_REPOSITORY", "").strip()
+    if (not str(run_id).isdigit() or not token
+            or repo != "GUSTAVA009/moto-shorts-cloud"):
+        raise RuntimeError("Cannot prove failed DEEP bootstrap")
+    root = "https://api.github.com/repos/" + repo + "/actions/"
+    headers = {"Authorization": "Bearer " + token,
+               "Accept": "application/vnd.github+json",
+               "User-Agent": "gustava-strict-bootstrap-recovery"}
+    def read(suffix):
+        req = urllib.request.Request(root + suffix, headers=headers)
+        with urllib.request.urlopen(req, timeout=30) as response:
+            return json.load(response)
+    run = read("runs/" + str(run_id))
+    if (run.get("id") != int(run_id) or run.get("status") != "completed"
+            or run.get("conclusion") != "failure"):
+        return False
+    jobs = read("runs/" + str(run_id) + "/jobs?per_page=100")
+    if jobs.get("total_count", 0) > 100:
+        raise RuntimeError("Incomplete bootstrap job evidence")
+    for job in jobs.get("jobs", []):
+        if (job.get("name") != "daily-draft"
+                or job.get("status") != "completed"
+                or job.get("conclusion") != "failure"):
+            continue
+        steps = {step.get("name"): step.get("conclusion")
+                 for step in job.get("steps", [])}
+        if (steps.get("Install free audio/video engines") == "failure"
+                and steps.get("Render and automatically repair bad narration or voice masking (maximum three QA attempts)")
+                    in ("skipped", None)
+                and steps.get("Mark one-off preview as completed") != "success"):
+            return True
+    return False
+
+
+def eligible_abandoned_bootstrap_retry(episode, receipt, new_fingerprint, bootstrap_proved):
+    """Recover a *private* MP4 attempt that died installing retired TTS packages.
+
+    Never retries unchanged code, a published/approved release, an in-flight job,
+    or one whose runner actually started rendering video. The separate selector
+    also checks permanent YouTube/Buffer receipts before any write.
+    """
+    return bool(
+        bootstrap_proved is True
+        and episode.get("auto_preview") is True
+        and episode.get("auto_publish") is False
+        and episode.get("voice_engine") == REQUIRED_MALE_ENGINE
+        and isinstance(receipt, dict)
+        and receipt.get("id") == episode.get("id")
+        and receipt.get("state") == "reserved"
+        and type(receipt.get("attempt_count")) is int
+        and 1 <= receipt["attempt_count"] < MAX_ATTEMPTS
+        and receipt.get("preview_fingerprint") != new_fingerprint
+    )
+
+
 def choose(catalog, output):
     data = json.loads(Path(catalog).read_text(encoding="utf8"))
     validate_catalog(data)
@@ -385,6 +443,27 @@ def choose(catalog, output):
     # Then try any new licensed episode before retrying an old non-series clip.
     if selected is None:
         selected = next((ep for ep in listed if records[ep["id"]][0] is None and unpublished(ep["id"])), None)
+    # An install-only technical failure must not permanently consume an
+    # unpublished original DEEP recording. Confirm exact failed GitHub job
+    # and a changed render/ASR fingerprint before a bounded recovery.
+    if selected is None:
+        for item in listed:
+            if item.get("auto_publish") is not False:
+                continue
+            _, receipt = records[item["id"]]
+            if (not receipt or receipt.get("state") != "reserved"
+                    or receipt.get("attempt_count", MAX_ATTEMPTS) >= MAX_ATTEMPTS
+                    or not unpublished(item["id"])):
+                continue
+            new_fp = preview_fingerprint(item)
+            if receipt.get("preview_fingerprint") == new_fp:
+                continue
+            proof = verified_failed_preflight(receipt.get("run_id"))
+            if eligible_abandoned_bootstrap_retry(item, receipt, new_fp, proof):
+                selected = item
+                print("VERIFIED_INSTALL_FAILED_DEEP_RETRY", item["id"],
+                      "previous", receipt.get("run_id"), flush=True)
+                break
     # Published/cleared originals are not retried. Failed unreleased, approved
     # Shorts can be improved only when the text or sound engine was revised.
     if selected is None:
