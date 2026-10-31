@@ -205,13 +205,21 @@ def stream_pexels_excerpt(item, destination, required_seconds, ffmpeg="ffmpeg"):
         raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: bounded Pexels excerpt: "
                            + (result.stderr or "")[-550:])
     size = destination.stat().st_size
-    if not 250_000 <= size <= MAX_SHORT_SOURCE_BYTES:
-        raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: bounded excerpt outside 0.25-90MB")
+    # Byte count is not a motion or quality metric: a genuine short scene can
+    # be less than 250KB after bounded H264 encoding. Keep a strict 80KB
+    # corruption floor, verify duration/codec, then independently test movement
+    # for every unusually compact source before final per-shot motion QA.
+    if not 80_000 <= size <= MAX_SHORT_SOURCE_BYTES:
+        raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: " + item["key"] +
+                           " bounded bytes " + str(size) + " outside 80KB-90MB")
     duration_read, tracks = probe(destination)
     if not any(t.get("codec_type") == "video" for t in tracks):
         raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: excerpt has no video")
     if duration_read < duration - 0.75:
         raise RuntimeError("SOURCE_VIDEO_DOWNLOAD_FAILED: excerpt missing required scene time")
+    if size < 250_000 and not motion_verified(destination):
+        raise RuntimeError("VISUAL_FROZEN_SEGMENT: compact source " +
+                           item["key"] + " has no independently verified motion")
     print("LICENSED_PEXELS_SHORT_EXCERPT", item["key"], round(duration_read, 2),
           "seconds", size, "bytes", flush=True)
 
