@@ -75,6 +75,10 @@ SCENE_ACTION_SLUGS = {
     "showroom_high_five": re.compile(r"high-five-at-a-motorcycle-showroom", re.I),
     "garage_motorcycle_talk": re.compile(r"talking-about-motorcycle", re.I),
     "motorbike_stunt": re.compile(r"performing-stunts-with-his-motorbike", re.I),
+    "classic_motorbike_repair": re.compile(r"man-fixing-motorbike", re.I),
+    "mechanics_show_tools": re.compile(r"men-holding-mechanic-tools", re.I),
+    "cone_slalom": re.compile(r"bikers-driving-around-traffic-cones", re.I),
+    "motorbike_obstacle_training": re.compile(r"motorbikers-training-on-outdoor-course", re.I),
 }
 
 
