@@ -142,6 +142,34 @@ class EpisodeTests(unittest.TestCase):
             self.assertFalse(dst.exists())
             self.assertFalse((Path(tmp)/"not-ready.source.tmp.mp4").exists())
 
+    def test_real_six_second_clip_from_declared_eight_never_loops_or_fakes_frames(self):
+        item={"key":"clip_0","url":"https://www.pexels.com/download/video/32401566/",
+              "source_page":"https://www.pexels.com/video/thrilling-dirt-bike-jump-on-outdoor-track-32401566/",
+              "license":"Pexels License","author":"Harvey Tan Villarino","duration":8}
+        def ffmpeg_stub(cmd,**kwargs):
+            Path(cmd[-1]).write_bytes(b"g"*500_000)
+            return SimpleNamespace(returncode=0,stderr="")
+        with tempfile.TemporaryDirectory() as td:
+            dst=Path(td)/"real-six.mp4"
+            with patch.object(r.subprocess,"run",side_effect=ffmpeg_stub) as ffmpeg, \
+                 patch.object(r,"probe",return_value=(6.0,[{"codec_type":"video"}])), \
+                 patch.object(r,"motion_verified",return_value=True) as motion:
+                r.stream_pexels_excerpt(item,dst,8.0)
+            self.assertTrue(dst.exists())
+            self.assertEqual(ffmpeg.call_count,1)
+            self.assertIn("-t",ffmpeg.call_args.args[0])
+            self.assertNotIn("-stream_loop",ffmpeg.call_args.args[0])
+            motion.assert_called_once_with(dst)
+            with patch.object(r.subprocess,"run",side_effect=ffmpeg_stub), \
+                 patch.object(r,"probe",return_value=(6.0,[{"codec_type":"video"}])), \
+                 patch.object(r,"motion_verified",return_value=False):
+                with self.assertRaisesRegex(RuntimeError,"VISUAL_FROZEN_SEGMENT"):
+                    r.stream_pexels_excerpt(item,dst,8.0)
+            with patch.object(r.subprocess,"run",side_effect=ffmpeg_stub), \
+                 patch.object(r,"probe",return_value=(4.0,[{"codec_type":"video"}])):
+                with self.assertRaisesRegex(RuntimeError,"missing required scene time"):
+                    r.stream_pexels_excerpt(item,dst,8.0)
+
     def test_small_genuine_moving_excerpt_is_checked_not_rejected_by_byte_count(self):
         item={"key":"clip_0","url":"https://www.pexels.com/download/video/6435393/",
               "source_page":"https://www.pexels.com/video/a-motorcyclist-putting-on-gloves-6435393/",
