@@ -106,7 +106,7 @@ def assert_new_sources(episode, history):
 
 
 RENDER_DEPENDENCIES = (
-    "render_episode.py", "tts_voice.py", "silero_voice.py",
+    "render_episode.py", "caption_layout.py", "tts_voice.py", "silero_voice.py",
     "soundtrack.py", "kokoro_voice.py", "voice_qa.py", "mixed_audio_qa.py",
     "asr_fallback.py", "qa_autorepair.py", "moto_assets.py", "voice_style.py", "native_bass_voice.py", "silero_voice.py", "deep_voice.py",
 )
