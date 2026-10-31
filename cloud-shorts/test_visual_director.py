@@ -36,6 +36,22 @@ class VisualDirectionTests(unittest.TestCase):
                              "spoken_anchor": "а на другом полигоне тренируются на препятствиях"}])
         self.assertEqual(verify_scene_script_anchors(training), ["clip_0", "clip_1"])
 
+    def test_first_ride_script_anchors_are_supported_by_real_pexels_actions(self):
+        import json
+        from pathlib import Path
+        from visual_director import verify_scene_script_anchors
+        cat=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
+        ep=next(e for e in cat["episodes"] if e["id"]=="gustava-20-s02-20261030")
+        ep=dict(ep,scene_script_anchors=[
+            {"source":"clip_0","action":"helmet_donning",
+             "spoken_anchor":"Девушка с улыбкой надевает шлем"},
+            {"source":"clip_1","action":"riding",
+             "spoken_anchor":"райдер уже едет по открытой дороге"}])
+        self.assertEqual(verify_scene_script_anchors(ep),["clip_0","clip_1"])
+        bad=dict(ep,scene_script_anchors=list(reversed(ep["scene_script_anchors"])))
+        with self.assertRaisesRegex(ValueError,"VISUAL_BEATS_OFF_SCRIPT"):
+            verify_scene_script_anchors(bad)
+
     def test_actual_failed_helmet_stock_rejected_even_if_tag_says_helmet(self):
         f=[video("a","person-riding-his-motorcycle"),
            video("b","close-up-shot-of-a-man-on-a-motorcycle")]
