@@ -50,6 +50,14 @@ class PublisherShellTests(unittest.TestCase):
         self.assertIn("if: steps.send.outputs.queued == 'true'", workflow)
         self.assertIn("buffer_delivery_gate.py dispatch", workflow)
 
+    def test_repaired_private_deep_preview_chains_until_restored(self):
+        workflow = source(".github/workflows/daily-preview.yml")
+        self.assertIn("PRIVATE_DEEP_CAPTION_REVISIONS_PENDING", workflow)
+        self.assertIn("eligible_retry(ep,receipt,preview_fingerprint(ep))", workflow)
+        self.assertIn("waiting=revised+waiting", workflow)
+        self.assertIn('ep["id"] in published', workflow)
+        self.assertIn('ep.get("auto_publish") is not False', workflow)
+
     def test_no_legacy_scheduled_publisher(self):
         self.assertFalse((ROOT / ".github/workflows/publora-backlog.yml").exists())
         active = (ROOT / ".github/workflows").glob("*.yml")
