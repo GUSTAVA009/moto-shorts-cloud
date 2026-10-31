@@ -64,6 +64,9 @@ VISIBLE_ACTION = re.compile(
 
 
 SCENE_ACTION_SLUGS = {
+    # Real first-ride story: a woman visibly puts a helmet on her head,
+    # not a static closeup falsely labelled as protective gear.
+    "helmet_donning": re.compile(r"putting-on-(?:a-)?helmet", re.I),
     "visor_close": re.compile(r"closing-(?:the-)?visor|visor-closing|"
                               r"lowering-(?:the-)?visor", re.I),
     "riding": re.compile(r"travel(?:ing|ling)?-on-a-motorbike|riding|"
