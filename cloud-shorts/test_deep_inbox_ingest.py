@@ -30,6 +30,9 @@ class DeepInboxTests(unittest.TestCase):
                 "gustava-20-e04-20261030":(
                     "9b63292edf78d5f085f1d500bc6e02bd79c1e7fc70b6a9ecdcbdcff115513488",
                     "41240172563"),
+                "gustava-20-p02-20261030":(
+                    "68beafcd34710b62bdc82b5e4ad0474e0b445286a1852df553f53e97b740e253",
+                    "41240063734"),
             }
             if item in reviewed:
                 # Only exact, independently reviewed, 100%-ASR MP4s can
