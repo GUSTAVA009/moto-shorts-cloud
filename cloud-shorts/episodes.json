@@ -6448,7 +6448,10 @@
         "source_audio_sha256": "bbb21eafc9890c20964d3448820098750733fdaa40fecf8c71e644b1d2e6ab4c",
         "context_id": "067c07c3e2084d54a198ac24be3dd713",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "source_revision_requested": true,
+      "source_revision_reason": "undersized_source_motion_verified",
+      "source_revision_evidence": "Verified failed private Actions run 41239853722: real Pexels bounded clip shorter than old 8s catalog estimate. New renderer reconciles <=2.25s only with independently verified motion, then rechecks real full storyboard. No frozen/looping footage and no public approval."
     },
     {
       "id": "gustava-20-f05-20261030",
