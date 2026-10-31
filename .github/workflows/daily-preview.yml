@@ -2,14 +2,14 @@ name: Shorts Factory - Three Unique Cloud Previews Daily
 on:
   push:
     branches: [main]
-    # Prevent source-catalog changes and repair commits from spawning
-    # multiple pending builds that cancel one another. New episodes are
-    # instead dispatched exactly once by the supplier/repair bots.
-    # A guarded queue-selection repair starts exactly one pending preview;
-    # the permanent render ledger blocks duplicates and published episodes.
+    # Release a newly approved/revised private episode immediately when
+    # the source catalog is merged via GitHub PR. Bot commits made with
+    # GITHUB_TOKEN do not recursively trigger push workflows; the ingest bot
+    # explicitly dispatches them. Receipt dedup blocks repeated renders.
     paths:
       - '.github/workflows/daily-preview.yml'
       - 'cloud-shorts/preview_queue.py'
+      - 'cloud-shorts/episodes.json'
   schedule:
     # Review-only cut revision: final helmet-removal scene should begin after the strap adjustment.
     # Revalidate scene-first Deep voice chapter anchors after the ASR-corrected word "Остаётся".
