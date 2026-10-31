@@ -168,6 +168,30 @@ class TestPreviewQueue(unittest.TestCase):
         receipt["state"]="preview_ready"
         self.assertFalse(pq.eligible_abandoned_source_retry(ep,receipt,"new-three-scenes","failure"))
 
+    def test_exact_failed_worker_install_can_retry_private_deep_once(self):
+        ep = {"id":"gustava-20-e03-20261030",
+              "auto_preview":True,"auto_publish":False,
+              "voice_engine":"aidocmaker_deep"}
+        receipt = {"id":ep["id"],"state":"reserved","attempt_count":1,
+                   "preview_fingerprint":"old-worker"}
+        self.assertTrue(pq.eligible_abandoned_bootstrap_retry(
+            ep,receipt,"fixed-worker",True))
+        self.assertFalse(pq.eligible_abandoned_bootstrap_retry(
+            ep,receipt,"fixed-worker",False))
+        self.assertFalse(pq.eligible_abandoned_bootstrap_retry(
+            ep,receipt,"old-worker",True))
+        ep["auto_publish"]=True
+        self.assertFalse(pq.eligible_abandoned_bootstrap_retry(
+            ep,receipt,"fixed-worker",True))
+        ep["auto_publish"]=False
+        receipt["attempt_count"]=3
+        self.assertFalse(pq.eligible_abandoned_bootstrap_retry(
+            ep,receipt,"fixed-worker",True))
+        receipt["attempt_count"]=1
+        receipt["state"]="preview_ready"
+        self.assertFalse(pq.eligible_abandoned_bootstrap_retry(
+            ep,receipt,"fixed-worker",True))
+
     def test_missing_or_corrupt_registry_fails_closed(self):
         with self.assertRaises(RuntimeError):
             pq.decode_history(None)
