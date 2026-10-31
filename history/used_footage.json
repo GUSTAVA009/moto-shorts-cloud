@@ -792,6 +792,16 @@
       "episode": "gustava-20-e04-20261030",
       "source": "https://www.pexels.com/video/person-riding-a-motorcycle-in-the-streets-4443924/",
       "status": "reserved-or-rendered"
+    },
+    "11273550": {
+      "episode": "gustava-20-f06-20261030",
+      "source": "https://www.pexels.com/video/motrocycle-riders-starting-11273550/",
+      "status": "reserved-or-rendered"
+    },
+    "30355055": {
+      "episode": "gustava-20-f06-20261030",
+      "source": "https://www.pexels.com/video/dynamic-motorcycle-racing-victory-celebration-30355055/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1179,6 +1189,13 @@
       "story": "tunnel-riding-vs-regular-city",
       "visual": "tunnel-pov-then-city-pov",
       "bike": "street-commuter-bike"
+    },
+    "gustava-20-f06-20261030": {
+      "environment": "race-staging-and-victory-track",
+      "people": "starting-grid-riders-and-winning-racer",
+      "story": "grid-start-vs-separate-victory",
+      "visual": "start-line-then-celebration",
+      "bike": "race-track-motorcycles"
     }
   }
 }
