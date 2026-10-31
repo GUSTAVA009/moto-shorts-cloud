@@ -219,6 +219,30 @@ jobs:
           sys.path.insert(0,"cloud-shorts")
           from deep_voice import ready
           from editorial_novelty import is_repeated_visual_formula
+          from preview_queue import eligible_retry, preview_fingerprint
+          # Repaired, still-private episodes have existing render receipts.
+          # The old refiller mistook them for exhausted inventory and stopped.
+          published={x["path"].split("/")[-1][:-5] for x in tree["tree"]
+                     if (x["path"].startswith("publication-receipts/")
+                         or x["path"].startswith("buffer-publication-receipts/"))
+                     and x["path"].endswith(".json")}
+          revised=[]
+          for ep in catalog["episodes"]:
+              if (ep.get("auto_preview") is not True
+                  or ep.get("auto_publish") is not False
+                  or ep.get("visual_revision_requested") is not True
+                  or ep["id"] not in reserved or ep["id"] in published
+                  or ep.get("editorial_rejected") is True
+                  or ep.get("visual_review_failed") is True
+                  or is_repeated_visual_formula(ep,catalog["episodes"])
+                  or not ready(ep)):
+                  continue
+              record=get("contents/render-receipts/"+ep["id"]+
+                         ".json?ref=render-ledger")
+              receipt=json.loads(base64.b64decode(record["content"]))
+              if eligible_retry(ep,receipt,preview_fingerprint(ep)):
+                  revised.append(ep["id"])
+          print("PRIVATE_DEEP_CAPTION_REVISIONS_PENDING",revised,flush=True)
           waiting=[
               ep["id"] for ep in catalog["episodes"]
               if ep.get("auto_preview") is True
@@ -229,6 +253,7 @@ jobs:
               and not is_repeated_visual_formula(ep,catalog["episodes"])
               and ready(ep)
           ]
+          waiting=revised+waiting
           if not waiting:
               print("VERIFIED_DEEP_RESERVE_DRAINED: no unattended DEEP synthesis "
                     "available; no substitute voice and no fictional MP4",flush=True)
