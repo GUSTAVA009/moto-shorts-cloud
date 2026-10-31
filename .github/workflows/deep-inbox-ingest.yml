@@ -7,6 +7,8 @@ on:
       - '.github/workflows/deep-inbox-ingest.yml'
       - 'cloud-shorts/deep-voice-inbox.json'
       - 'cloud-shorts/deep_inbox_ingest.py'
+      - 'cloud-shorts/voice_qa.py'
+      - 'cloud-shorts/test_voice_qa.py'
       - 'cloud-shorts/test_deep_inbox_ingest.py'
 permissions:
   contents: write

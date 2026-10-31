@@ -58,6 +58,10 @@ def tokens(text):
     normalized = re.sub(r"\b80[-–][хx]\b", "80", normalized)
     raw = [_ASR_SPELLING_EQUIVALENTS.get(t, t)
            for t in re.findall(r"[а-яa-z0-9]+", normalized)]
+    # Russian infinitive -ться and third-person -тся are homophones.
+    # Whisper cannot distinguish their spelling from sound: compare phonemes,
+    # but preserve every word, verb stem, tense and actual spoken ending.
+    raw = [re.sub(r"ться$", "тся", token) for token in raw]
     out = []
     i = 0
     while i < len(raw):

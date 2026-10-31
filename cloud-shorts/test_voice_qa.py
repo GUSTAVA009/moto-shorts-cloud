@@ -32,6 +32,22 @@ class VoiceQATests(unittest.TestCase):
         self.assertFalse(q.score(reference, without_tail)["final_word_present"])
         self.assertFalse(q.score(reference, reference.replace("мотокросс", "supercross"))["passed"])
 
+    def test_real_deep_asr_russian_reflexive_homophone_not_false_rejected(self):
+        ref = ("Один райдер готовит перчатки к холодному выезду, другой "
+               "достаёт шлем из гаража. Разные люди, одна привычка: "
+               "готовиться заранее. А ты что надеваешь первым?")
+        heard = ("Один райдер готовит перчатки к холодному выезду, другой "
+                 "достает шлем из гаража. Разные люди, одна привычка, "
+                 "готовится заранее. А ты что надеваешь первым?")
+        self.assertTrue(q.score(ref, heard)["passed"])
+        self.assertEqual(q.score(ref, heard)["lexical_coverage"], 1.0)
+
+    def test_real_verbal_mismatch_does_not_get_hidden_by_homophone_rule(self):
+        ref = ("На трассе спортсмены проходят участок под взглядами зрителей. "
+               "Райдер готовит мотоцикл и тщательно проверяет шлем перед стартом.")
+        heard = ref.replace("проходят", "проходит")
+        self.assertFalse(q.score(ref, heard)["passed"])
+
     def test_swallowed_tail_is_blocked(self):
         s = "Перед поездкой проверь колёса, тормоза и свет. Затем выбирай безопасный маршрут домой."
         t = "Перед поездкой проверь колёса тормоза и свет. Затем выбирай безопасный"
