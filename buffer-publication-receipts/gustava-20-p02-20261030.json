@@ -2,6 +2,8 @@
   "episode": "gustava-20-p02-20261030",
   "sha256": "68beafcd34710b62bdc82b5e4ad0474e0b445286a1852df553f53e97b740e253",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-gustava-20-p02-20261030-68beafcd3471/gustava-20-p02-20261030.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae658b0cf3a3112f3c35ca4",
+  "due_at": "2026-11-01T03:30:00.000Z"
 }
