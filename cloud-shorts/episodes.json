@@ -5142,7 +5142,16 @@
       "production_batch": "gustava-20-20261030",
       "mix_category": "facts",
       "priority_rank": 1,
-      "editorial_review_status": "awaiting_frame_review"
+      "editorial_review_status": "awaiting_frame_review",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/f7bbe630-106a-4c1d-b901-dda9787f5196.mp3",
+        "transcript_sha256": "7d2fdf6360b75d69851331a20f5598249c688ab4f1014911f98df7b6385e65db",
+        "source_audio_sha256": "a0f8096b654c3710f1c9bb2e219c5ebdc64de0205d6b37f6a1b187691c3140ac",
+        "context_id": "971c5f196ede4a4ba252f574e4daf8f1",
+        "licence_mode": "public_provider_attribution"
+      }
     },
     {
       "id": "gustava-20-s01-20261030",
