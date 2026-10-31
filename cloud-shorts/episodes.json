@@ -6112,7 +6112,7 @@
           "source_title": "thrilling dirt bike jump on outdoor track",
           "author": "Harvey Tan Villarino",
           "license": "Pexels License",
-          "duration": 8,
+          "duration": 6,
           "topics": [
             "spectacle",
             "motorcycle"
@@ -6136,7 +6136,7 @@
         {
           "source": "clip_0",
           "start": 0,
-          "seconds": 7.75
+          "seconds": 5.5
         },
         {
           "source": "clip_1",
@@ -6178,7 +6178,10 @@
         "source_audio_sha256": "451032d8f2a774272e1b64692742cc0d1ed834b377f41297cbda616ab79f4ff7",
         "context_id": "56e268d2ca8b4125b2c772ba8b8a0527",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "source_revision_requested": true,
+      "source_revision_reason": "undersized_source_motion_verified",
+      "source_revision_evidence": "Pexels video 32401566 is publicly listed as 0:06, not 0:08; first bounded renderer run 41239693170 failed SOURCE_VIDEO_DOWNLOAD_FAILED while requiring 8 seconds. Shortened original shot without repeating frames, keeping episode private."
     },
     {
       "id": "gustava-20-f04-20261030",
