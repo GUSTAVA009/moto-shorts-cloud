@@ -15,6 +15,7 @@ on:
       - 'cloud-shorts/buffer_delivery_gate.py'
       - 'cloud-shorts/test_buffer_delivery_gate.py'
       - 'cloud-shorts/publication_safety.py'
+      - 'cloud-shorts/visual_director.py'
       - 'cloud-shorts/find_pending_buffer.py'
       - 'cloud-shorts/find_pending_publication.py'
       - 'cloud-shorts/channel_focus.py'
