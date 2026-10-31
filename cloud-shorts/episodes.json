@@ -5068,7 +5068,7 @@
       "voice_profile": "gustava_create_audio_deep_v1",
       "visual_director_version": 3,
       "title": "ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️ #shorts",
-      "narration": "Один райдер готовит перчатки к холодному выезду, другой в мастерской примеряет шлем и поправляет его посадку. Разные люди, одна привычка: проверять защиту перед дорогой. А ты что надеваешь первым?",
+      "narration": "Один райдер готовит перчатки перед поездкой, а девушка надевает шлем рядом с мотоциклом. Разные люди, одна привычка: проверять защиту перед дорогой. А ты что надеваешь первым?",
       "description": "Мотофакт в кадре: ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
       "caption_start": "ПЕРЧАТКИ И ШЛЕМ: с чего ты начинаешь? 🏍️",
       "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
@@ -5093,12 +5093,12 @@
         },
         {
           "key": "clip_1",
-          "url": "https://www.pexels.com/download/video/12405712/",
-          "source_page": "https://www.pexels.com/video/man-wearing-helmet-12405712/",
-          "source_title": "individual fitting and adjusting motorcycle helmet in indoor workshop",
-          "author": "RDNE Stock project",
+          "url": "https://www.pexels.com/download/video/9606781/",
+          "source_page": "https://www.pexels.com/video/woman-wearing-a-helmet-9606781/",
+          "source_title": "a female biker puts on her pink helmet outdoors",
+          "author": "Anastasia Shuraeva",
           "license": "Pexels License",
-          "duration": 22,
+          "duration": 21,
           "topics": [
             "facts",
             "motorcycle",
@@ -5120,10 +5120,10 @@
         }
       ],
       "editorial": {
-        "environment": "cold-gear-and-garage",
-        "people": "winter-rider-and-garage-rider",
-        "story": "gloves-then-helmet",
-        "visual": "two-gear-preparation-actions",
+        "environment": "glove-preparation-and-outdoor-helmet",
+        "people": "gloved-rider-and-helmet-wearing-female-rider",
+        "story": "independent-riders-check-protection-before-ride",
+        "visual": "glove-adjustment-and-pink-helmet-donning",
         "bike": "winter-motorcycle"
       },
       "editorial_format": "2026-10-30 evidence-anchored facts: gloves-then-helmet",
@@ -5138,7 +5138,7 @@
         "overlay": "НАПИШИ СВОЙ ВЫБОР",
         "description": "Напиши в комментариях, какой момент тебе ближе."
       },
-      "source_selection": "Replacement for confirmed frozen Pexels 28209492: distinct RDNE Stock project video 12405712; free Pexels License, 22 seconds, real helmet fitting and adjustment in workshop; verify FFmpeg motion and frame quality before approving.",
+      "source_selection": "Distinct previously unused Pexels footage 9606781, Anastasia Shuraeva: visible moving pink helmet placement outdoors, 21-second actual licensed source, not in render-ledger; independently verify movement and frame composition before approval.",
       "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
       "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
       "production_batch": "gustava-20-20261030",
@@ -5149,7 +5149,7 @@
       "source_revision_reason": "frozen_source_replaced",
       "source_replacement_proof": {
         "old_source_id": "28209492",
-        "new_source_id": "12405712",
+        "new_source_id": "9606781",
         "failed_run_id": "41233361222",
         "old_failure": "VISUAL_FROZEN_SEGMENT"
       }
