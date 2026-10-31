@@ -26,6 +26,17 @@ class EpisodeTests(unittest.TestCase):
         self.assertNotIn("12405712", str(ep["footage"]))
         self.assertFalse(ep["auto_publish"])
 
+    def test_two_line_overlay_text_never_embeds_ffmpeg_newline_glyph(self):
+        one={"text":"ПЕРВЫЙ ВЫЕЗД:","line_count":1}
+        two={"text":"ПЕРВЫЙ ВЫЕЗД:\\nулыбка или скорость?",
+             "line_count":2}
+        self.assertEqual(r.caption_text_lines(one),["ПЕРВЫЙ ВЫЕЗД:"])
+        self.assertEqual(r.caption_text_lines(two),
+                         ["ПЕРВЫЙ ВЫЕЗД:","улыбка или скорость?"])
+        self.assertFalse(any("\\n" in x for x in r.caption_text_lines(two)))
+        with self.assertRaisesRegex(ValueError,"CAPTION_LINES_INVALID"):
+            r.caption_text_lines({"text":"title\\n","line_count":2})
+
     def test_cyrillic_video_titling_never_renders_missing_emoji_as_tofu(self):
         original="ПЕРВЫЙ ВЫЕЗД: улыбка или скорость? 🏍️"
         clean=r.safe_caption_display(original)
