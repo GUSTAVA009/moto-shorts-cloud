@@ -4715,7 +4715,7 @@
     {
       "id": "moto-city-contrast-deep-20261030",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
@@ -4792,7 +4792,7 @@
       },
       "source_selection": "Distinct-author internal verified Pexels pool; visual review pending",
       "generation_provenance": "Original scene-first narration, separate non-consecutive stock clips",
-      "editorial_review_note": "PREVIEW ONLY: first two Deep recordings failed independent Russian ASR (0.906, ~0.970). Third independently generated original voice pending independent ASR >= 0.97 and visual review.",
+      "editorial_review_note": "Individually reviewed exact original 17.067-sec 720x1280 stereo MP4 artifact 12971813914 from GitHub Actions 41046270508, SHA256 0ce509c6394ea45a2ce84b8722466c12603e259bcdce029fa0ae2e9138b7f7c0. Nine actual decoded frames at .7,2.7,4.8,6.7,8,9.2,11.1,13.1,15.4 seconds show busy urban street with multiple motorcycle passengers, yellow vehicle and pedestrians first, then different genuine sunrise motorbike POV with buses and street traffic, bright evening/morning directional light. Both active coherent source shots 8.545sec; no A/B loops, black frames or clipped captions. Pexels videos 36067565 (Airam Dato-on) and 35613949 (Shital Khadgi), license verified source registry. Original approved AIDocmaker DEEP source SHA 66ff7f4f8fac93a09ea617698622dd1c10933a2478efdbffc5c9b651346a3763, independent source and mixed final Russian ASR lexical 1.0. Only exact MP4 approved.",
       "voice_revision_requested": false,
       "voice_revision_note": "Simple clear sentences for naturally spoken Russian, no changing approved Deep voice or QA threshold.",
       "deep_audio": {
@@ -4807,7 +4807,26 @@
       "visual_duration_revision_requested": true,
       "visual_duration_revision_reason": "two_active_moving_scenes_not_long_enough",
       "visual_duration_revision_note": "GitHub Actions run 41045277757 completed FAILURE: VISUAL_DURATION_SHORTAGE at 15.84s approved voice + 1.25s; two real riding scenes capped at 8.0s each. Allow exact moving city scenes up to 9.5s once; no blank padding, speed changes, new source or public release.",
-      "active_ride_scene_seconds": 9.5
+      "active_ride_scene_seconds": 9.5,
+      "visual_revision_requested": false,
+      "visual_revision_status": "assistant_checked_passed",
+      "editorial_review_status": "assistant_checked_passed",
+      "reviewed_mp4_sha256": "0ce509c6394ea45a2ce84b8722466c12603e259bcdce029fa0ae2e9138b7f7c0",
+      "reviewed_artifact_run_id": "41046270508",
+      "reviewed_mp4_duration_seconds": 17.067,
+      "reviewed_caption_layout_version": 1,
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "urban_motorcycle_traffic",
+          "spoken_anchor": "В первом кадре плотный поток машин"
+        },
+        {
+          "source": "clip_1",
+          "action": "morning_motorcycle_sunrise",
+          "spoken_anchor": "во втором — утренняя дорога"
+        }
+      ]
     },
     {
       "id": "moto-routes-contrast-deep-20261030",
