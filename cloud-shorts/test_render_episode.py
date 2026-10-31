@@ -29,7 +29,12 @@ class EpisodeTests(unittest.TestCase):
     def test_short_pexels_motocross_duration_is_grounded_not_faked(self):
         data=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
         ep=next(e for e in data["episodes"] if e["id"]=="gustava-20-p02-20261030")
-        self.assertFalse(ep["auto_publish"])
+        # The previously private six-second source was now individually
+        # inspected in the exact 100%-ASR 11.4s released MP4.
+        self.assertTrue(ep["auto_publish"])
+        self.assertEqual(ep["reviewed_mp4_sha256"],
+                         "68beafcd34710b62bdc82b5e4ad0474e0b445286a1852df553f53e97b740e253")
+        self.assertFalse(ep["source_revision_requested"])
         self.assertEqual(ep["footage"][0]["duration"],6)
         self.assertEqual(ep["shots"][0]["seconds"],5.5)
         self.assertEqual(ep["source_revision_reason"],"undersized_source_motion_verified")
