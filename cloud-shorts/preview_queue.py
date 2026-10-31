@@ -405,7 +405,7 @@ def choose(catalog, output):
     # An explicit, unpublished narration repair has priority over historical
     # retries. It cannot target a published video, only a revised preview.
     if selected is None:
-        for item in sorted(listed, key=lambda ep: (0 if ep.get("voice_revision_priority") is True else 1)):
+        for item in sorted(listed, key=lambda ep: (0 if (ep.get("caption_repair_priority") is True and ep.get("caption_fit_required") is True and ep.get("auto_publish") is False) else 1, 0 if ep.get("voice_revision_priority") is True else 1)):
             if not (item.get("voice_revision_requested") is True
                     or item.get("visual_revision_requested") is True):
                 continue
