@@ -10,7 +10,9 @@ from datetime import datetime, timedelta, timezone, time
 from zoneinfo import ZoneInfo
 
 TARGET_PER_DAY = 16  # flexible 90-minute posting WINDOWS, not 16 releases
-MAX_POSTS_PER_DAY = 10  # hard owner requested daily release ceiling
+# 330/month requires 12/day even in February. 16 windows permit catch-up.
+BASE_POSTS_PER_DAY = 12
+MAX_POSTS_PER_DAY = 16
 TZ_NAME = "Europe/Moscow"
 LOCAL_TIMES = tuple(((30 + 90 * index) // 60 % 24,
                      (30 + 90 * index) % 60) for index in range(TARGET_PER_DAY))
@@ -30,11 +32,15 @@ def parse_date(value):
     return dt.astimezone(timezone.utc)
 
 
-def choose_slot(posts, now=None, timezone_name=TZ_NAME):
+def choose_slot(posts, now=None, timezone_name=TZ_NAME,
+                max_posts_per_day=BASE_POSTS_PER_DAY):
     """Choose the next local daily slot, accounting for scheduled and sent posts.
 
     Does not modify a scheduled post, does not bypass post QA or duplicate checks.
     """
+    if (type(max_posts_per_day) is not int or
+            not BASE_POSTS_PER_DAY <= max_posts_per_day <= MAX_POSTS_PER_DAY):
+        raise ValueError("UNSAFE_MONTHLY_CATCHUP_DAILY_LIMIT")
     tz = ZoneInfo(timezone_name)
     now = parse_date(now or datetime.now(timezone.utc))
     seen = []
@@ -46,7 +52,7 @@ def choose_slot(posts, now=None, timezone_name=TZ_NAME):
     for day in range(21):
         target_day = start + timedelta(days=day)
         day_posts = [p for p in seen if p.astimezone(tz).date() == target_day]
-        if len(day_posts) >= MAX_POSTS_PER_DAY:
+        if len(day_posts) >= max_posts_per_day:
             continue
         for hour, minute in LOCAL_TIMES:
             local = datetime.combine(target_day, time(hour=hour, minute=minute), tzinfo=tz)
