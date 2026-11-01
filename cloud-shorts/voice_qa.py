@@ -6,6 +6,7 @@ Missing words or a clipped ending must keep the video out of auto-publication.
 No speech recognition or paid service runs during offline unit tests.
 """
 from __future__ import annotations
+from apply_exact_qa_episode_repair import change as apply_verified_episode_revision
 import argparse
 import hashlib
 import json
@@ -214,7 +215,9 @@ def main():
     p.add_argument("--out", required=True, type=Path)
     p.add_argument("--model", default="small")
     args = p.parse_args()
-    episodes = json.loads(args.catalog.read_text(encoding="utf8"))["episodes"]
+    catalog = json.loads(args.catalog.read_text(encoding="utf8"))
+    apply_verified_episode_revision(catalog)
+    episodes = catalog["episodes"]
     chosen = next((e for e in episodes if e["id"] == args.episode), None)
     if chosen is None:
         raise SystemExit("Episode not found; no audio QA")
