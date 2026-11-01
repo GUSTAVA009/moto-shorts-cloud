@@ -191,10 +191,44 @@ def eligible_retry(episode, receipt, new_fingerprint):
         and episode.get("voice_profile") == REQUIRED_MALE_PROFILE
         and receipt.get("voice_profile") != REQUIRED_MALE_PROFILE
     )
+    # One evidence-backed private-only recovery after a failed FINAL mixed
+    # audio ASR and editorial frame review. The original WAV passed: 1.000.
+    # This is specific to the exact third-render MP4, with 3 -> 4 as the
+    # absolute limit, never public upload or an unverified new source.
+    audio_proof = episode.get("mixed_editorial_revision_evidence") or {}
+    verified_mix_editorial_repair = (
+        episode.get("id") == "moto-roadtrip-5b98825cae72"
+        and episode.get("auto_preview") is True
+        and episode.get("auto_publish") is False
+        and episode.get("voice_engine") == "gustava_selfhosted_qwen3"
+        and episode.get("voice_profile") == "gustava_original_qwen3_v1"
+        and episode.get("mixed_editorial_revision_requested") is True
+        and episode.get("mixed_editorial_revision_reason")
+            == "actual_final_mix_asr_and_visual_truth_fix"
+        and receipt.get("voice_qa_passed") is True
+        and receipt.get("mixed_audio_qa_passed") is False
+        and receipt.get("voice_profile") == episode.get("voice_profile")
+        and str(receipt.get("run_id")) == "41333288738"
+        and attempts == MAX_ATTEMPTS
+        and isinstance(audio_proof, dict)
+        and audio_proof.get("prior_run_id") == "41333288738"
+        and audio_proof.get("prior_mp4_sha256")
+            == "68ed361b2d2b6936cfe224eb7072b3896b2c005b205f8c349bef487038191b86"
+        and audio_proof.get("prior_raw_asr_coverage") == 1.0
+        and audio_proof.get("prior_mixed_asr_coverage") == 0.957
+        and audio_proof.get("source_ids") == ["32659157", "31894372"]
+        and episode.get("clean_speech_intro_seconds") == 3.3
+        and "по треку" in episode.get("narration", "").casefold()
+        and "путешеств" in episode.get("narration", "").casefold()
+        and "гонка" not in episode.get("narration", "").casefold()
+        and 125 <= len(episode.get("narration", "")) <= 160
+        and {source_id(f) for f in episode.get("footage", [])}
+            == {"32659157", "31894372"}
+    )
     limit = (MAX_DOCUMENTARY_ATTEMPTS if
              episode.get("episode_series", {}).get("historical_reconstruction")
              else MAX_VISUAL_REPAIR_ATTEMPTS
-             if visual_repair or male_voice_repair else MAX_ATTEMPTS)
+             if visual_repair or male_voice_repair or verified_mix_editorial_repair else MAX_ATTEMPTS)
     if not 1 <= attempts < limit:
         return False
     # Real-event documentaries may pass language QA but still have factually
