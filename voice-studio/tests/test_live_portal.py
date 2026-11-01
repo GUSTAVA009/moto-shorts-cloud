@@ -237,8 +237,8 @@ class LivePortalContract(unittest.TestCase):
             value=int(32767*(0.18*math.sin(2*math.pi*80*i/rate) +
                              0.06*math.sin(2*math.pi*1000*i/rate)))
             frames.append(value)
-        source=self.tmp.name+"/source.wav"
-        output=self.tmp.name+"/processed.wav"
+        source=self.td.name+"/source.wav"
+        output=self.td.name+"/processed.wav"
         with wave.open(source,"wb") as f:
             f.setnchannels(1);f.setsampwidth(2);f.setframerate(rate)
             f.writeframes(frames.tobytes())
