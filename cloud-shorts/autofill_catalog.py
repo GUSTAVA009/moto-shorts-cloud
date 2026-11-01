@@ -111,12 +111,13 @@ def main():
         print("PRODUCTION_INVENTORY", json.dumps(state, ensure_ascii=False), flush=True)
         if production_unavailable(state):
             raise RuntimeError(
-                "AUTONOMOUS_DEEP_TTS_MISSING: script-only backlog is not MP4 "
-                "production stock; exact voice_id=deep needs independently "
-                "authorized unattended provider synthesis and pinned ASR")
-        print("SCRIPT_CAPACITY_HEALTHY_BUT_ONLY",
-              state["unrendered_verified_deep_originals"],
-              "real DEEP audio originals ready for renderer", flush=True)
+                "AUTONOMOUS_VOICE_NOT_CONFIGURED: script-only backlog is not MP4. "
+                "Set up any approved HAPYCH Qwen cloud/PC or Chatterbox voice "
+                "HTTPS endpoint, channel-scoped key and verified WAV reference.")
+        print("SCRIPT_CAPACITY_HEALTHY_AND_VOICE_READY",
+              state["ready_unattended_voice_episodes"],
+              "verified Deep or configured owner-route candidates; "
+              "live synthesis still must pass QA", flush=True)
         return 0
 
     import preview_queue as ledger
@@ -157,10 +158,11 @@ def main():
         print("PRODUCTION_INVENTORY", json.dumps(state, ensure_ascii=False), flush=True)
         if production_unavailable(state):
             raise RuntimeError(
-                "AUTONOMOUS_DEEP_TTS_MISSING: no new, hash-pinned DEEP audio "
-                "to render; a script reserve is not an autonomous Shorts farm")
-        print("NO_MORE_SCRIPTS_REQUIRED_RIGHT_NOW: verified DEEP previews",
-              state["unrendered_verified_deep_originals"], flush=True)
+                "AUTONOMOUS_VOICE_NOT_CONFIGURED: no verified Deep or "
+                "configured Qwen cloud/PC/third voice for any pending "
+                "episode; script bank is not an autonomous Shorts farm")
+        print("NO_MORE_SCRIPTS_REQUIRED_RIGHT_NOW: voice-ready previews",
+              state["ready_unattended_voice_episodes"], flush=True)
         return 0
 
     content = base64.b64encode((json.dumps(catalog, ensure_ascii=False, indent=2)
@@ -177,8 +179,9 @@ def main():
         # Persist distinct scripts, but NEVER run a doomed renderer with no
         # genuine GUSTAVA DEEP, and never claim another Short was generated.
         raise RuntimeError(
-            "NEW_SCRIPTS_AWAITING_ORIGINAL_DEEP: provider voice_id=deep "
-            "has no unattended API connection; 0 new MP4 were generated")
+            "NEW_SCRIPTS_AWAITING_APPROVED_TTS: none of the three owner "
+            "voice services is configured and no pinned DEEP is present. "
+            "0 new MP4 generated; unattended voice must be connected.")
     # GITHUB_TOKEN commits intentionally do not activate push workflows.
     # Dispatch exactly one safe renderer. Further attempts run by schedule.
     if os.getenv("GITHUB_EVENT_NAME") == "schedule":
