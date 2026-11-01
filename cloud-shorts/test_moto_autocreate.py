@@ -380,5 +380,41 @@ class NewMotoSourceTests(unittest.TestCase):
         self.assertTrue(ep["narration"].startswith("Мотоцикл"))
 
 
+    def test_verified_2026_pexels_stock_mapped_to_distinct_live_action_scenes(self):
+        """Actual official pages and video HEAD/ffprobe checked on 2026-11-01.
+        These sources add *potential* raw footage, never counted as MP4.
+        """
+        import json
+        from pathlib import Path
+        from source_story import scene_for, select_pair
+        from moto_assets import source_id, validated_media
+        pool=json.loads((Path(__file__).resolve().parent /
+                         "verified_pexels_pool.json").read_text(encoding="utf8"))
+        checked={int(x["key"].split("_")[1]):x for x in pool["sources"]
+                 if x["key"].startswith("curated_")}
+        incoming={31894372,32191741,13470940,15540590,36306512,
+                  36926096,35963831,40347388,32659157,29465924}
+        self.assertTrue(incoming.issubset(checked))
+        for i in incoming:
+            clip=checked[i]
+            self.assertEqual(source_id(clip),str(i))
+            self.assertEqual(validated_media(clip),str(i))
+            self.assertEqual(clip["license"],"Pexels License")
+            self.assertGreaterEqual(clip["duration"],9.0)
+            self.assertLess(clip["duration"],90)
+            self.assertIsNotNone(scene_for(clip),str(i))
+        self.assertEqual(scene_for(checked[36306512])[0],"city")
+        self.assertEqual(scene_for(checked[35963831])[0],"city")
+        self.assertEqual(scene_for(checked[31894372])[0],"race")
+        self.assertEqual(scene_for(checked[13470940])[0],"mountain")
+        from source_story import require_filmable, compose
+        pair=select_pair([checked[31894372],checked[13470940]],set())
+        self.assertEqual(len(pair),2)
+        self.assertEqual(len({x["author"] for x in pair}),2)
+        draft=compose(pair,[])
+        self.assertEqual(set(require_filmable(draft,pair)),{"race","mountain"})
+        self.assertNotIn("https://",draft["narration"])
+
+
 if __name__ == "__main__":
     unittest.main()
