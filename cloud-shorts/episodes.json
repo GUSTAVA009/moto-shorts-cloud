@@ -7389,7 +7389,7 @@
       "voice_profile": "gustava_original_qwen3_v1",
       "selfhosted_voice_id": "gustava-original-v1",
       "title": "Турист или гонщик? Кто придумал этот спор? #shorts",
-      "narration": "Мотоцикл в путешествии — скука? Здесь райдер едет по горному маршруту. На другом видео — настоящая гонка на треке. Разные люди и съёмки. Что ближе тебе?",
+      "narration": "Мотоцикл в путешествии — скука? Здесь райдер едет по горному маршруту. На другом видео — гонка на треке. Разные люди и съёмки. Что ближе тебе?",
       "description": "Ироничный разбор мифа о туристических байках. Два независимых лицензированных эпизода: путешествие и гонка. Не одно событие и не сравнение характеристик моделей.\n\n#shorts",
       "caption_start": "МИФ: ТУРИСТ — ЭТО СКУЧНО?",
       "caption_middle": "ДОРОГА ИЛИ ГОНОЧНЫЙ ТРЕК?",
@@ -7477,6 +7477,28 @@
         "observed_previous_run_failure": true,
         "licensed_media_immutable": true,
         "publication_authorized": false
+      },
+      "voice_revision_requested": true,
+      "voice_revision_priority": true,
+      "voice_revision_note": "One exact mispronounced Russian adjective (настоящая -> настоящее) documented in real independent raw/mixed ASR. Rephrase unpublished narration without new claims, replacing adjective with neutral wording. Keep auto_publish false and re-run original/mixed ASR and visual review.",
+      "voice_revision_evidence": {
+        "previous_run_id": "41332576263",
+        "previous_mp4_sha256": "47350fa4faead044e0b9b948c33e303828e159025110927b75d5199f40a0b937",
+        "previous_wav_sha256": "8fd80df20fb59dbb8b5cba0d22c6ecb0361a8f55c3319746aac98651c44e25f8",
+        "previous_raw_asr_coverage": 0.958,
+        "previous_mixed_asr_coverage": 0.958,
+        "expected_mispronounced_phrase": "настоящая гонка",
+        "observed_asr_phrase": "настоящее гонка",
+        "approved_semantic_rewrite": "гонка на треке",
+        "old_narration_length": 152,
+        "new_narration_length": 142,
+        "previous_failed_action_status": "failure",
+        "previous_receipt_state": "preview_ready",
+        "previous_receipt_attempt_count": 2,
+        "licensed_media_immutable": true,
+        "publication_authorized": false,
+        "visual_semantic_review_still_required": true,
+        "voice_timbre_approval_still_required": true
       }
     },
     {
