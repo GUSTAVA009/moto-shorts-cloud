@@ -23,7 +23,7 @@ class MonthContractTests(unittest.TestCase):
     def test_distinct_sent_receipts_not_scripts_or_scheduled(self):
         now=datetime(2026,11,10,8,tzinfo=timezone.utc)
         state={"p1":"2026-11-01T04:00:00Z",
-               "p2":"2026-10-31T22:01:00Z"}
+               "p2":"2026-10-31T18:01:00Z"}
         rows=[{"id":"p1","sentAt":"2026-11-01T04:00:00Z"},
               {"id":"p3","sentAt":"2026-11-10T04:00:00Z"}]
         result=month_capacity(now,state,rows)
