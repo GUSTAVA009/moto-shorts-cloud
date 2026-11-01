@@ -22,9 +22,6 @@ from native_bass_voice import (PROFILE_ID as NATIVE_BASS_PROFILE,
 from deep_voice import (VOICE_ENGINE as DEEP_ENGINE,
                         PROFILE_ID as DEEP_PROFILE,
                         verify_profile as verify_deep_profile)
-from cartesia_voice import (VOICE_ENGINE as CARTESIA_ENGINE,
-                            PROFILE_ID as CARTESIA_PROFILE,
-                            verify_profile as verify_cartesia_profile)
 from selfhosted_voice import (VOICE_ENGINE as SELFHOSTED_ENGINE,
                               PROFILE_ID as SELFHOSTED_PROFILE,
                               verify_profile as verify_selfhosted_profile)
@@ -178,21 +175,6 @@ def check(episode, wav, model="small"):
             result["passed"] = False
             result["status"] = "manual_review_required"
             result["reason"] = "SELFHOSTED_RUSSIAN_VOICE_SHA_NOT_VERIFIED: " + type(exc).__name__
-    elif episode.get("voice_engine") == CARTESIA_ENGINE:
-        try:
-            report = verify_cartesia_profile(audio_path, episode)
-            result["male_voice_verified"] = True
-            result["voice_profile"] = CARTESIA_PROFILE
-            result["voice_speaker"] = report["voice_id"]
-            result["voice_provider"] = "cartesia.ai"
-            result["voice_source_audio_sha256"] = report["source_audio_sha256"]
-            result["voice_model_id"] = report["model_id"]
-        except (ValueError, OSError, TypeError, KeyError, json.JSONDecodeError) as exc:
-            result["male_voice_verified"] = False
-            result["voice_profile"] = None
-            result["passed"] = False
-            result["status"] = "manual_review_required"
-            result["reason"] = "CARTESIA_VOICE_SOURCE_NOT_VERIFIED: " + type(exc).__name__
     elif episode.get("voice_engine") == NATIVE_BASS_ENGINE:
         try:
             profile=validate_native_bass_report(audio_path)
