@@ -169,10 +169,19 @@ def required_source_seconds(episode, source_key):
     ]
     if not windows:
         raise ValueError("No visual shot uses licensed source " + source_key)
-    declared_duration = float(
-        next(x["duration"] for x in episode["footage"] if x["key"] == source_key)
-    )
-    return round(min(max(windows) + 0.7, declared_duration), 2)
+    source = next(x for x in episode["footage"] if x["key"] == source_key)
+    # Some individually researched Pexels pages omit an exact duration.
+    # Never forge it: request only the selected excerpt, ffprobe the actual
+    # streamed result, and let visual QA fail closed if the clip is too short.
+    # When real duration is known, never request past its bound.
+    needed = max(windows) + 0.7
+    declared = source.get("duration")
+    if declared is None:
+        return round(needed, 2)
+    declared_duration = float(declared)
+    if declared_duration <= 0:
+        raise ValueError("INVALID_DECLARED_SOURCE_DURATION")
+    return round(min(needed, declared_duration), 2)
 
 
 def stream_pexels_excerpt(item, destination, required_seconds, ffmpeg="ffmpeg"):

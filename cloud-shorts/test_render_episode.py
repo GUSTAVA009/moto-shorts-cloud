@@ -26,6 +26,17 @@ class EpisodeTests(unittest.TestCase):
         self.assertNotIn("12405712", str(ep["footage"]))
         self.assertFalse(ep["auto_publish"])
 
+    def test_unknown_curated_pexels_duration_is_measured_later_not_invented(self):
+        episode={"footage":[{"key":"clip_0","source_page":
+            "https://www.pexels.com/video/off-road-motorcycle-adventure-in-muddy-terrain-36365086/"}],
+            "shots":[{"source":"clip_0","start":0,"seconds":8.0}]}
+        self.assertEqual(r.required_source_seconds(episode,"clip_0"),8.7)
+        episode["footage"][0]["duration"]=7.0
+        self.assertEqual(r.required_source_seconds(episode,"clip_0"),7.0)
+        episode["footage"][0]["duration"]=-5
+        with self.assertRaisesRegex(ValueError,"INVALID_DECLARED_SOURCE_DURATION"):
+            r.required_source_seconds(episode,"clip_0")
+
     def test_short_pexels_motocross_duration_is_grounded_not_faked(self):
         data=json.loads((Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))
         ep=next(e for e in data["episodes"] if e["id"]=="gustava-20-p02-20261030")

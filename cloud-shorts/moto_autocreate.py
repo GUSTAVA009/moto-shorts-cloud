@@ -477,8 +477,10 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
         except (ValueError, KeyError, TypeError) as exc:
             # Do not lower originality or license checks. Boundedly request
             # a different independent script if its structure is invalid.
-            problem = type(exc).__name__
-            print("ORIGINAL_SCRIPT_QA_RETRY", attempt + 1, problem, flush=True)
+            problem = type(exc).__name__ + ": " + re.sub(
+                r"https?://\\S+", "[source-page]", str(exc))[:180]
+            print("ORIGINAL_SCRIPT_QA_RETRY", theme[0], attempt + 1,
+                  problem, flush=True)
     raise RuntimeError("ORIGINAL_SCRIPT_QA_FAILED_AFTER_3_TRIES: " + str(problem))
 
 
