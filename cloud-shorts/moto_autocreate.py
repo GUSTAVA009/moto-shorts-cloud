@@ -26,8 +26,7 @@ from editorial_novelty import require_novel_visual_story
 from moto_assets import validated_media, build_commons_candidate
 from render_episode import validate_episode
 from visual_director import verify_story_subject, source_evidence, OBJECTS
-from deep_voice import (PROFILE_ID as MALE_PROFILE,
-                        VOICE_ENGINE as NATIVE_BASS_ENGINE)
+from voice_routing import new_episode_configuration
 from engagement_cta import CTA_KINDS
 from autofill_catalog import github
 from story_reserve import choose as choose_reserved_story, RESERVE_CAPACITY
@@ -327,8 +326,7 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
         # source/mixed ASR and individual real-frame editorial approval.
         "id": slug, "auto_preview": True, "auto_publish": False,
         "channel_niche": "motorcycle", "research_pillar": "motorcycle",
-        "voice_engine": NATIVE_BASS_ENGINE,
-        "voice_profile": MALE_PROFILE,
+        **new_episode_configuration(),
         **{k: prose[k] for k in ("title", "narration", "description",
             "caption_start", "caption_middle", "caption_end")},
         "max_duration_seconds": 34, "opening_trim_seconds": 0.1,
