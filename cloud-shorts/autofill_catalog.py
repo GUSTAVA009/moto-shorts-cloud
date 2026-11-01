@@ -50,9 +50,12 @@ def candidate(catalog, seed_bank, reserved_ids, target=2):
         new_catalog = dict(catalog, episodes=episodes + [scene])
         validate_catalog(new_catalog)
         return new_catalog, scene["id"]
-    if pending == 0:
-        raise RuntimeError("CURATED_STORY_BANK_EXHAUSTED: new independently sourced footage needed")
-    return None
+    # Every shortage, not just an *empty* queue, requires fresh source search.
+    # Previously 1..9 unrendered drafts made us return None and permanently
+    # bypass moto_autocreate.create_one, even when new licensed media existed.
+    raise RuntimeError(
+        "CURATED_STORY_BANK_EXHAUSTED: search for genuinely new, "
+        "licensed, action-matched footage rather than stop at old drafts")
 
 
 def github(method, path, payload=None):

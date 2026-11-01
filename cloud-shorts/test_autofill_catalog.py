@@ -66,6 +66,21 @@ class CatalogAutofillTests(unittest.TestCase):
                          {e["id"] for e in self.catalog["episodes"] if e.get("auto_preview")},
                          target=10)
 
+
+    def test_partial_pending_does_not_deadlock_fresh_source_research(self):
+        """An exhausted seed file may NOT disable creation with 1..9 drafts."""
+        active = [e for e in self.catalog["episodes"] if e.get("auto_preview") is True]
+        for pending_count in (1, 2, 5, 9):
+            # Catalog still contains those drafts; receipts reserve all others.
+            held = {e["id"] for e in active[pending_count:]}
+            with self.subTest(pending=pending_count):
+                self.assertEqual(af.pending_originals(self.catalog, held),
+                                 pending_count)
+                with self.assertRaisesRegex(RuntimeError,
+                                            "CURATED_STORY_BANK_EXHAUSTED"):
+                    af.candidate(self.catalog, {"version":1,"episodes":[]},
+                                 held, target=10)
+
     def test_empty_bank_must_not_forge_new_footage(self):
         active = {ep["id"] for ep in self.catalog["episodes"]
                   if ep.get("auto_preview") is True}
