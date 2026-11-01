@@ -150,6 +150,33 @@ class NewMotoSourceTests(unittest.TestCase):
                              fetch=lambda a,b,c: fake)
 
 
+    def test_one_free_commons_search_researches_each_of_fifteen_distinct_topics(self):
+        from urllib.parse import urlsplit,parse_qs
+        self.assertEqual(len(s.COMMONS_QUERY),len(s.THEMES))
+        seen=[]
+        def metadata_only_fetch(url,headers=None,payload=None):
+            self.assertTrue(url.startswith("https://commons.wikimedia.org/w/api.php?"))
+            q=parse_qs(urlsplit(url).query)
+            self.assertEqual(q["action"],["query"])
+            self.assertEqual(q["gsrnamespace"],["6"])
+            self.assertEqual(q["gsrlimit"],["50"])
+            self.assertEqual(q["prop"],["imageinfo"])
+            self.assertTrue(q["gsrsearch"][0].endswith(" filetype:video"))
+            self.assertNotIn("pexels",url)
+            seen.append(q["gsrsearch"][0])
+            return {"query":{"pages":[]}}
+        for topic in s.THEMES:
+            self.assertEqual(s.commons_results(topic,fetch=metadata_only_fetch),[])
+        self.assertEqual(len(seen),15)
+        self.assertEqual(len(set(seen)),15)
+        self.assertIn("motocross filetype:video",seen)
+        self.assertIn("enduro filetype:video",seen)
+        self.assertIn("motorcycle mechanic filetype:video",seen)
+        self.assertNotEqual(seen[0],seen[1])
+        # This is only 15 OFFLINE simulated calls. Real producer still caps
+        # Commons to one query per 90-minute scheduled cycle, and every
+        # returned source must still pass CC0/SHA/author/video QA.
+
     def test_one_keyless_commons_call_per_full_autonomous_research_cycle(self):
         from unittest.mock import patch
         seen = []
