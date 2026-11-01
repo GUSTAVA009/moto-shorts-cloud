@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+*.sqlite3*
+__pycache__/
+*.pyc
+voice-reference-original.wav
+voice-reference-original.json
+audio/
+data/
+tests/
+.git/
