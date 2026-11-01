@@ -1,18 +1,11 @@
 {
   "id": "moto-racing-mud-contrast-20261101",
-  "state": "preview_ready",
-  "run_id": "41293506062",
-  "attempt_count": 2,
-  "preview_fingerprint": "af932cdd5ac237b5a98ef022a42cceb8550604f15330887ce2df702d47d313a8",
-  "deep_source_sha256": "7059313cb93e12819e8b7be44084968a0102587c440820b82db6204251088be5",
+  "state": "reserved",
+  "run_id": "41293926876",
+  "attempt_count": 3,
+  "preview_fingerprint": "2a1f42699f2b58ce849212220dd945829b9426418f2c20617f29a174f1165be6",
+  "deep_source_sha256": "a4d38802a9fff154834af75897e4a0d37170f1d7c1f825c66e8ee7bb6921df7f",
   "selfhosted_voice_id": null,
-  "previous_run_id": "41292865035",
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": true,
-  "voice_qa_coverage": 1.0,
-  "voice_profile": "gustava_create_audio_deep_v1",
-  "selfhosted_reference_sha256": null,
-  "male_voice_verified": true,
-  "mixed_audio_qa_passed": true,
-  "mixed_audio_qa_coverage": 1.0
+  "previous_run_id": "41293506062",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
