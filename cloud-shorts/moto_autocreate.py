@@ -450,6 +450,38 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
             chosen = (theme, media)
             break
     if not chosen:
+        # Recover an ORIGINAL two-action episode even when each individual
+        # topic has only one unused clip. Both clips are from the existing
+        # rights-audited public Pexels catalog, not invented placeholders.
+        # Their independent action labels and authors still must pass the
+        # SAME action/novelty/license/video QA before an MP4 can exist.
+        # Do not cross theme boundaries merely to repeat two ride-only clips.
+        cross_topic_stock = []
+        for candidate_theme in themes:
+            if candidate_theme[3] == last_bike:
+                continue
+            for clip in curated_pexels_results(candidate_theme, used):
+                if all(source_id(existing) != source_id(clip)
+                       for _, existing in cross_topic_stock):
+                    cross_topic_stock.append((candidate_theme, clip))
+        cross_pair = select_pair([clip for _, clip in cross_topic_stock], used)
+        if len(cross_pair) == 2:
+            try:
+                require_novel_visual_story({"footage": cross_pair},
+                                           catalog["episodes"])
+            except ValueError as exc:
+                print("CROSS_THEME_NOVELTY_REJECTED",
+                      str(exc)[:150], flush=True)
+            else:
+                first_id = source_id(cross_pair[0])
+                origin = next(theme for theme, clip in cross_topic_stock
+                              if source_id(clip) == first_id)
+                chosen = (origin, cross_pair)
+                print("CROSS_THEME_LICENSED_ACTION_PAIR_READY",
+                      source_id(cross_pair[0]), source_id(cross_pair[1]),
+                      "two independent creators, original private draft",
+                      flush=True)
+    if not chosen:
         print("COMMONS_SCOUT_LIMIT", commons_calls,
               "selected_theme", commons_target, flush=True)
         raise RuntimeError(

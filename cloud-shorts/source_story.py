@@ -19,7 +19,7 @@ SCENES = (
     ("wheel", r"(?:repair|fix|replac|chang|servic|maintain).*?(?:tire|tyre|wheel)|(?:tire|tyre|wheel).*?(?:repair|replac|servic|maintain)",
      "при ремонте колеса", "мастер ремонтирует колесо байка", "ремонт колеса",
      r"колес|шин|покрыш"),
-    ("motor", r"(?:engine|motor).*?(?:repair|assembl|maintain|servic|restor)|(?:repair|assembl|maintain|servic|restor).*?(?:engine|motor)",
+    ("motor", r"(?:engine|\bmotor\b).*?(?:repair|assembl|maintain|servic|restor)|(?:repair|assembl|maintain|servic|restor).*?(?:engine|\bmotor\b)",
      "при работе с двигателем", "механик занимается мотором мотоцикла", "работа с мотором",
      r"двигател|мотор"),
     ("jump", r"(?:motorcycle|motorbike|motocross|dirt bike).*?(?:jump|leap)|(?:jump|leap).*?(?:motorcycle|motorbike|motocross|dirt bike)",
