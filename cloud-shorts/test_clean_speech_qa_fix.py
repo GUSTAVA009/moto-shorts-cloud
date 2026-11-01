@@ -47,6 +47,27 @@ class PrivateMixedAudioEditorialTests(unittest.TestCase):
                 "voice_qa_passed": True,
                 "mixed_audio_qa_passed": False}
 
+    def test_actual_catalog_loading_sees_one_safe_revision(self):
+        # The 294-KB source catalog is unchanged on disk; selectors and both
+        # independent ASR readers apply the same exact verified private patch.
+        from apply_exact_qa_episode_repair import change
+        from render_episode import load_episode
+        from editorial_guard import validate_catalog
+        catalog = json.loads((HERE / "episodes.json").read_text(encoding="utf8"))
+        total = len(catalog["episodes"])
+        self.assertTrue(change(catalog))
+        self.assertFalse(change(catalog))  # idempotent, no blind extra repair
+        self.assertEqual(len(catalog["episodes"]), total)
+        item = next(x for x in catalog["episodes"] if x["id"] == ID)
+        self.assertEqual(item["narration"], NEW_TEXT)
+        self.assertFalse(item["auto_publish"])
+        self.assertEqual(item["mixed_editorial_revision_evidence"]["prior_mp4_sha256"],
+                         PREV_SHA)
+        validate_catalog(catalog)
+        loaded = load_episode(HERE / "episodes.json", ID)
+        self.assertEqual(loaded["narration"], NEW_TEXT)
+        self.assertEqual(loaded["clean_speech_intro_seconds"], 3.3)
+
     def test_speech_first_intro_is_bounded_and_validated(self):
         self.assertEqual(validated_clean_speech_intro_seconds("3.3"), 3.3)
         self.assertEqual(validated_clean_speech_intro_seconds(0), 0)
