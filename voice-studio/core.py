@@ -23,6 +23,10 @@ PRIMARY_CHANNEL = "gustava"
 PRIMARY_YOUTUBE_CHANNEL_ID = "UCS0QCodPcFBTjMt4ioEWOUw"
 CHANNEL_RE = re.compile(r"[a-z][a-z0-9-]{2,39}\Z")
 YOUTUBE_RE = re.compile(r"UC[A-Za-z0-9_-]{22}\Z")
+# Distinct published CustomVoice presets from the 0.6B open-weight model.
+# Never silently reuse the same stock speaker on a different channel.
+FREE_CPU_SPEAKERS = ("eric","aiden","dylan","ryan","uncle_fu")
+
 
 
 def voice_id_for(slug: str) -> str:
@@ -85,7 +89,8 @@ class Ledger:
                 youtube_channel_id TEXT UNIQUE,
                 created_at INTEGER NOT NULL,
                 voice_timbre TEXT NOT NULL,
-                voice_delivery TEXT NOT NULL
+                voice_delivery TEXT NOT NULL,
+                speaker_preset TEXT UNIQUE
             );
             CREATE TABLE IF NOT EXISTS keys (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -121,6 +126,11 @@ class Ledger:
                 " VALUES(?,?,?,?,?,?)",
                 (PRIMARY_CHANNEL,"GUSTAVA Enduro",PRIMARY_YOUTUBE_CHANNEL_ID,
                  int(time.time()),"deep","documentary"))
+            channel_cols={r["name"] for r in db.execute("PRAGMA table_info(channels)")}
+            if "speaker_preset" not in channel_cols:
+                db.execute("ALTER TABLE channels ADD COLUMN speaker_preset TEXT")
+            db.execute("UPDATE channels SET speaker_preset='eric' "
+                       "WHERE slug=? AND speaker_preset IS NULL", (PRIMARY_CHANNEL,))
             db.execute("CREATE INDEX IF NOT EXISTS keys_by_channel"
                        " ON keys(channel_slug)")
 
@@ -140,44 +150,57 @@ class Ledger:
     def create_channel(self, slug: str, name: str,
                        timbre: str = "deep", delivery: str = "documentary",
                        youtube_channel_id: str | None = None):
-        voice_id = voice_id_for(slug)
+        identity=voice_id_for(slug)
         if not isinstance(name,str) or not 2 <= len(name) <= 72:
             raise ValueError("CHANNEL_DISPLAY_NAME_INVALID")
         if timbre not in ("deep","velvet","resonant"):
             raise ValueError("CHANNEL_TIMBRE_INVALID")
         if delivery not in ("documentary","dynamic","ironic"):
             raise ValueError("CHANNEL_DELIVERY_INVALID")
-        if (youtube_channel_id is not None
-                and (not isinstance(youtube_channel_id,str)
-                     or not YOUTUBE_RE.fullmatch(youtube_channel_id))):
+        if (youtube_channel_id is not None and
+                (not isinstance(youtube_channel_id,str)
+                 or not YOUTUBE_RE.fullmatch(youtube_channel_id))):
             raise ValueError("YOUTUBE_CHANNEL_ID_INVALID")
         with self.connection() as db:
+            db.execute("BEGIN IMMEDIATE")
+            existing={r[0] for r in db.execute(
+                "SELECT speaker_preset FROM channels WHERE speaker_preset IS NOT NULL")}
+            voice=next((speaker for speaker in FREE_CPU_SPEAKERS
+                        if speaker not in existing),None)
+            if not voice:
+                db.execute("ROLLBACK")
+                raise Denied("NO_MORE_DISTINCT_FREE_CPU_VOICE_PRESETS",409)
             try:
                 db.execute(
                     "INSERT INTO channels"
                     "(slug,name,youtube_channel_id,created_at,"
-                    "voice_timbre,voice_delivery)"
-                    "VALUES(?,?,?,?,?,?)",
+                    "voice_timbre,voice_delivery,speaker_preset)"
+                    "VALUES(?,?,?,?,?,?,?)",
                     (slug,name,youtube_channel_id,int(time.time()),
-                     timbre,delivery))
+                     timbre,delivery,voice))
+                db.execute("COMMIT")
             except sqlite3.IntegrityError:
+                db.execute("ROLLBACK")
                 raise Denied("CHANNEL_ALREADY_EXISTS_OR_DUPLICATE_YOUTUBE_ID",409) from None
         return {
-            "slug":slug,"name":name,"voice_id":voice_id,
+            "slug":slug,"name":name,"voice_id":identity,
             "youtube_channel_id":youtube_channel_id,
             "timbre":timbre,"delivery":delivery,
+            "speaker_preset":voice,
         }
 
     def get_channel(self,slug: str):
-        voice_id=voice_id_for(slug)
+        identity=voice_id_for(slug)
         with self.connection() as db:
             row=db.execute(
                 "SELECT slug,name,youtube_channel_id,created_at,"
-                "voice_timbre,voice_delivery FROM channels WHERE slug=?",
-                (slug,)).fetchone()
+                "voice_timbre,voice_delivery,speaker_preset "
+                "FROM channels WHERE slug=?", (slug,)).fetchone()
         if row is None:
             raise Denied("UNKNOWN_YOUTUBE_CHANNEL",404)
-        return dict(row)|{"voice_id":voice_id}
+        if row["speaker_preset"] not in FREE_CPU_SPEAKERS:
+            raise Denied("CHANNEL_CPU_VOICE_PRESET_NOT_PROVISIONED",503)
+        return dict(row)|{"voice_id":identity}
 
     def list_channels(self):
         with self.connection() as db:
@@ -185,7 +208,7 @@ class Ledger:
                 dict(row)|{"voice_id":voice_id_for(row["slug"])}
                 for row in db.execute(
                   "SELECT c.slug,c.name,c.youtube_channel_id,"
-                  "c.voice_timbre,c.voice_delivery,c.created_at,"
+                  "c.voice_timbre,c.voice_delivery,c.speaker_preset,c.created_at,"
                   "(SELECT COUNT(*) FROM keys k WHERE k.channel_slug=c.slug "
                   "AND k.revoked=0) AS active_keys"
                   " FROM channels c ORDER BY c.created_at,c.slug")
