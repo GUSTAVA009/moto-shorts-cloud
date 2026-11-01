@@ -17,6 +17,7 @@ import sys
 import urllib.parse
 import urllib.request
 
+from apply_exact_qa_episode_repair import change as apply_verified_episode_revision
 from soundtrack import generate as make_music
 from audio_accents import create as make_audio_accents, cover_times
 from visual_director import verify_story_subject, directed_plan
@@ -161,6 +162,7 @@ def validate_episode(ep):
 
 def load_episode(path, slug):
     raw = json.loads(Path(path).read_text(encoding="utf-8"))
+    apply_verified_episode_revision(raw)
     validate_catalog(raw)  # Fail before fetching any footage if previously used source appears.
     for ep in raw["episodes"]:
         validate_episode(ep)
