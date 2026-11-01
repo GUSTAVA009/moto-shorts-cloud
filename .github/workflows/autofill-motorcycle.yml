@@ -52,5 +52,4 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GUSTAVA_SCRIPT_MODEL: ${{ vars.GUSTAVA_SCRIPT_MODEL }}
           GUSTAVA_TTS_PROVIDER: ${{ vars.GUSTAVA_TTS_PROVIDER }}
-          CARTESIA_VOICE_ID: ${{ vars.CARTESIA_VOICE_ID }}
         run: python3 cloud-shorts/autofill_catalog.py
