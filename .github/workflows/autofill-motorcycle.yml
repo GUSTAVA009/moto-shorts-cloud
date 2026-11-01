@@ -9,6 +9,8 @@ on:
       - 'cloud-shorts/rolling_batch_worker.py'
       - 'cloud-shorts/test_rolling_batches.py'
       - 'cloud-shorts/moto_autocreate.py'
+      - 'cloud-shorts/cc0_source_pool.py'
+      - 'cloud-shorts/test_cc0_source_pool.py'
       - 'cloud-shorts/moto_assets.py'
       - 'cloud-shorts/test_moto_autocreate.py'
       - 'cloud-shorts/test_moto_assets.py'
@@ -39,6 +41,7 @@ jobs:
           python3 -m unittest discover -s cloud-shorts -p 'test_autofill_catalog.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_moto_assets.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_moto_autocreate.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_cc0_source_pool.py' -v
       - name: Keep rolling 10 original scripts supplied, with max two materialized per run
         env:
           GITHUB_TOKEN: ${{ github.token }}
