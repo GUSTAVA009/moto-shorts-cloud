@@ -43,9 +43,9 @@ class FactoryContractTests(unittest.TestCase):
         from rolling_batches import BATCH_SIZE
         p = CONTRACT["production"]
         b = CONTRACT["buffer"]
-        self.assertEqual(p["target_new_unique_shorts_per_day"], 12)
-        self.assertEqual(p["minimum_finished_shorts_per_calendar_month"],330)
-        self.assertEqual(p["shortest_month_28_days_baseline"],336)
+        self.assertEqual(p["target_new_unique_shorts_per_day"], 14)
+        self.assertEqual(p["minimum_finished_shorts_per_calendar_month"],400)
+        self.assertEqual(p["shortest_month_28_days_baseline"],420)
         self.assertTrue(p["minimum_monthly_goal_per_active_factory_channel"])
         self.assertEqual(p["reviewed_mp4_reserve_target"], 10)
         self.assertTrue(p["never_count_script_as_mp4"])
@@ -56,9 +56,9 @@ class FactoryContractTests(unittest.TestCase):
         self.assertEqual(b["hard_low_queue_warning_at"], w.MIN_BUFFER_SCHEDULED)
         self.assertEqual(w.REFILL_AT_OR_BELOW_SCHEDULED, 9)
         self.assertEqual(BATCH_SIZE, 10)
-        self.assertEqual(s.BASE_POSTS_PER_DAY,12)
+        self.assertEqual(s.BASE_POSTS_PER_DAY,14)
         self.assertEqual(s.MAX_POSTS_PER_DAY,16)
-        self.assertEqual(CONTRACT["publishing"]["baseline_posts_per_day"],12)
+        self.assertEqual(CONTRACT["publishing"]["baseline_posts_per_day"],14)
         self.assertEqual(CONTRACT["publishing"]["max_posts_per_day"],16)
         self.assertEqual(s.TARGET_PER_DAY, 16)  # 90-minute windows != 16 posts
         minutes = [h * 60 + m for h, m in s.LOCAL_TIMES]
