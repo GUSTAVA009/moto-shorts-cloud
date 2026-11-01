@@ -85,6 +85,29 @@ class FactoryContractTests(unittest.TestCase):
         self.assertTrue(CONTRACT["buffer"]["confirm_real_post_id"])
         self.assertTrue(CONTRACT["buffer"]["never_retry_uncertain_upload"])
 
+    def test_owner_approved_cartesia_api_not_auto_charged_or_published(self):
+        from cartesia_voice import VOICE_ENGINE, MODEL_ID, PROFILE_ID
+        change = CONTRACT["owner_approved_voice_automation_change"]
+        cartesia = CONTRACT["cartesia_voice"]
+        self.assertEqual(change["date"], "2026-11-01")
+        self.assertTrue(change["existing_deep_remains_unmodified"])
+        self.assertTrue(change["no_unapproved_billing"])
+        self.assertEqual(cartesia["voice_engine"], VOICE_ENGINE)
+        self.assertEqual(cartesia["voice_profile"], PROFILE_ID)
+        self.assertEqual(cartesia["model_id"], MODEL_ID)
+        self.assertTrue(cartesia["requires_explicit_activation"])
+        self.assertTrue(cartesia["requires_monthly_budget"])
+        self.assertTrue(cartesia["requires_commercial_plan_for_publication"])
+        self.assertFalse(CONTRACT["voice"]["allow_fallback"])
+        wf = (ROOT / ".github/workflows/daily-preview.yml").read_text("utf8")
+        self.assertIn("CARTESIA_API_KEY: ${{ secrets.CARTESIA_API_KEY }}", wf)
+        self.assertIn("CARTESIA_TTS_ENABLED: ${{ vars.CARTESIA_TTS_ENABLED }}", wf)
+        self.assertIn("test_cartesia_voice.py", wf)
+        producer = (ROOT / ".github/workflows/autofill-motorcycle.yml").read_text("utf8")
+        self.assertIn("GUSTAVA_TTS_PROVIDER: ${{ vars.GUSTAVA_TTS_PROVIDER }}", producer)
+        pub = (ROOT / ".github/workflows/buffer-backlog.yml").read_text("utf8")
+        self.assertIn("CARTESIA_COMMERCIAL_PLAN_CONFIRMED", pub)
+
     def test_no_green_build_can_be_called_public_success(self):
         self.assertTrue(CONTRACT["publishing"]["do_not_mark_success_from_workflow_only"])
         self.assertTrue(CONTRACT["publishing"]["public_release_only_after_individual_visual_review"])
