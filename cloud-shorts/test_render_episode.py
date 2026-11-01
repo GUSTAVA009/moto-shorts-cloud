@@ -54,6 +54,19 @@ class EpisodeTests(unittest.TestCase):
         self.assertEqual(r.validate_episode(ep),ep["id"])
 
 
+    def test_middle_caption_is_after_actual_second_scene_not_before_it(self):
+        episode={"creative_treatment":"scene_comparison",
+                 "align_middle_caption_to_second_scene":True,
+                 "opening_trim_seconds":0.1}
+        plan=[{"source":"clip_0","seconds":3.82},
+              {"source":"clip_1","seconds":7.942}]
+        spans=r.caption_schedule(episode,11.633,plan)
+        self.assertEqual(spans[1][0],"caption_middle")
+        self.assertAlmostEqual(spans[1][1],3.82-0.1+0.12,places=2)
+        self.assertGreater(spans[1][1],plan[0]["seconds"]-.1)
+        with self.assertRaisesRegex(RuntimeError,"SCENE_CAPTION_REQUIRES_VERIFIED"):
+            r.caption_schedule(episode,11.633,None)
+
     def test_ironic_reveal_caption_follows_real_second_scene_not_fixed_timer(self):
         episode = {
             "id": "private-myth-preview",
