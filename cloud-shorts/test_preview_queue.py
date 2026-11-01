@@ -61,6 +61,38 @@ class TestPreviewQueue(unittest.TestCase):
         bad["attempt_count"] = 3
         self.assertFalse(pq.eligible_retry(episode, bad, "revised-script"))
 
+    def test_real_qwen_private_visual_shortage_has_only_one_proven_safe_retry(self):
+        import json
+        from pathlib import Path
+        catalog=json.loads((Path(__file__).parent/"episodes.json").read_text("utf8"))
+        item=next(ep for ep in catalog["episodes"]
+                  if ep["id"]=="moto-vintage-c81aecc34671")
+        prior={"id":item["id"],"state":"reserved","run_id":"41316919801",
+               "attempt_count":1,
+               "preview_fingerprint":
+                 "7a61955e435972a44cad2e1ef3f12dbf64315ecbff7c7f1ef75ee9aa8c50f445"}
+        now=pq.preview_fingerprint(item)
+        allow=pq.eligible_private_qwen_concise_retry
+        self.assertTrue(allow(item,prior,now,"failure"))
+        self.assertFalse(allow(item,prior,now,"in_progress"))
+        self.assertFalse(allow(item,prior,prior["preview_fingerprint"],"failure"))
+        self.assertFalse(allow(item,dict(prior,attempt_count=2),now,"failure"))
+        self.assertFalse(allow(item,dict(prior,state="preview_ready"),now,"failure"))
+        self.assertFalse(allow(dict(item,auto_publish=True),prior,now,"failure"))
+        self.assertFalse(allow(dict(item,voice_engine="silero_mit_bass_baritone"),
+                               prior,now,"failure"))
+        self.assertFalse(allow(dict(item,narration="Короткий текст"),
+                               prior,now,"failure"))
+        e=dict(item,visual_duration_revision_evidence={
+              **item["visual_duration_revision_evidence"],"previous_run_id":"other"})
+        self.assertFalse(allow(e,prior,now,"failure"))
+        e=dict(item,visual_duration_revision_evidence={
+              **item["visual_duration_revision_evidence"],"source_ids":["other","source"]})
+        self.assertFalse(allow(e,prior,now,"failure"))
+        e=dict(item,visual_duration_revision_evidence={
+              **item["visual_duration_revision_evidence"],"previous_error":"VOICE_QA_FAILED"})
+        self.assertFalse(allow(e,prior,now,"failure"))
+
     def test_user_requested_deep_male_voice_may_repair_unpublished_bright_preview(self):
         ep = {"id": "moto-old-bright-voice", "auto_publish": True,
               "voice_engine": "aidocmaker_deep",
