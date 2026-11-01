@@ -29,7 +29,8 @@ import httpx
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Literal
 
-from core import Ledger, VOICE_ID, MAX_INPUT_CHARS, Denied, check_wav, sha
+from core import (Ledger, VOICE_ID, PRIMARY_CHANNEL, voice_id_for,
+                  MAX_INPUT_CHARS, Denied, check_wav, sha)
 
 DATA = Path(os.environ.get("VOICE_STUDIO_DATA", "/data")).resolve()
 ROOT = Path(__file__).resolve().parent
@@ -164,6 +165,16 @@ class CreateKey(BaseModel):
     # 0 = unlimited locally; no credits or quota from external TTS providers.
     max_chars_month: int = Field(default=0, ge=0, le=100_000_000)
     max_rpm: int = Field(default=12, ge=1, le=120)
+    channel_slug: str = PRIMARY_CHANNEL
+
+
+class ChannelCreate(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    slug: str = Field(min_length=3,max_length=40)
+    name: str = Field(min_length=2,max_length=72)
+    youtube_channel_id: str | None = None
+    timbre: Literal["deep","velvet","resonant"] = "deep"
+    delivery: Literal["documentary","dynamic","ironic"] = "documentary"
 
 
 class OriginalDesign(BaseModel):
@@ -171,12 +182,14 @@ class OriginalDesign(BaseModel):
     confirm_original: bool
     timbre: Literal["deep", "velvet", "resonant"] = "deep"
     delivery: Literal["documentary", "dynamic", "ironic"] = "documentary"
+    channel_slug: str = PRIMARY_CHANNEL
 
 
 class SpeechBody(BaseModel):
     model_config = ConfigDict(extra="forbid")
     text: str = Field(min_length=1, max_length=MAX_INPUT_CHARS)
     voice: str = VOICE_ID
+    channel_slug: str | None = None
     speed: float = Field(default=1.0, ge=0.85, le=1.15)
     response_format: str = "wav"
 
@@ -185,27 +198,38 @@ def exception_for(error: Denied):
     return HTTPException(error.status, str(error))
 
 
-def validated_reference():
-    if not VOICE_FILE.is_file() or not VOICE_PROOF.is_file():
-        raise HTTPException(503, "ORIGINAL_VOICE_NOT_CREATED")
+def voice_paths(slug: str):
+    """Per-channel immutable voice references; no traversal across tenants."""
+    LEDGER.get_channel(slug)
+    if slug == PRIMARY_CHANNEL:
+        return VOICE_FILE, VOICE_PROOF
+    directory=DATA / "voices" / slug
+    return directory / "reference-original.wav", directory / "reference-original.json"
+
+
+def validated_reference(slug: str = PRIMARY_CHANNEL):
+    voice_file,voice_proof=voice_paths(slug)
+    if not voice_file.is_file() or not voice_proof.is_file():
+        raise HTTPException(503,"ORIGINAL_VOICE_NOT_CREATED")
     try:
-        meta = json.loads(VOICE_PROOF.read_text(encoding="utf8"))
-        raw = VOICE_FILE.read_bytes()
+        meta=json.loads(voice_proof.read_text(encoding="utf8"))
+        raw=voice_file.read_bytes()
         check_wav(raw)
-        design = meta.get("design", {"timbre": "deep", "delivery": "documentary"})
-        current = design_instruction(design["timbre"], design["delivery"])
-        valid = (
-            meta.get("source") == "selfhosted_qwen_voice_design"
-            and meta.get("voice_id") == VOICE_ID
-            and meta.get("wav_sha256") == sha(raw)
-            and meta.get("reference_text") == REFERENCE_TEXT
-            and meta.get("instruction_sha256") == sha(current.encode("utf8"))
+        design=meta.get("design",{"timbre":"deep","delivery":"documentary"})
+        expected=design_instruction(design["timbre"],design["delivery"])
+        valid=(
+            meta.get("source")=="selfhosted_qwen_voice_design"
+            and meta.get("channel_slug",PRIMARY_CHANNEL)==slug
+            and meta.get("voice_id")==voice_id_for(slug)
+            and meta.get("wav_sha256")==sha(raw)
+            and meta.get("reference_text")==REFERENCE_TEXT
+            and meta.get("instruction_sha256")==sha(expected.encode("utf8"))
         )
         if not valid:
             raise ValueError("reference fingerprint mismatch")
-        return raw, meta
-    except (ValueError, OSError, TypeError, KeyError, json.JSONDecodeError):
-        raise HTTPException(503, "ORIGINAL_VOICE_REFERENCE_VERIFICATION_FAILED")
+        return raw,meta
+    except (ValueError,OSError,TypeError,KeyError,json.JSONDecodeError):
+        raise HTTPException(503,"ORIGINAL_VOICE_REFERENCE_VERIFICATION_FAILED")
 
 
 async def qwen_audio(route: str, payload: dict):
@@ -346,17 +370,42 @@ def health():
     }
 
 
+@app.get("/api/admin/channels", dependencies=[Depends(admin)])
+def channels():
+    return {"channels":LEDGER.list_channels()}
+
+
+@app.post("/api/admin/channels", dependencies=[Depends(admin)], status_code=201)
+def create_channel(body: ChannelCreate):
+    try:
+        return LEDGER.create_channel(
+            body.slug,body.name,body.timbre,body.delivery,
+            body.youtube_channel_id)
+    except ValueError as exc:
+        raise HTTPException(400,str(exc)) from None
+    except Denied as exc:
+        raise exception_for(exc) from None
+
+
 @app.get("/api/admin/keys", dependencies=[Depends(admin)])
-def keys():
-    return {"keys": LEDGER.list_keys()}
+def keys(channel_slug: str | None = None):
+    try:
+        return {"keys":LEDGER.list_keys(channel_slug)}
+    except Denied as exc:
+        raise exception_for(exc) from None
+    except ValueError as exc:
+        raise HTTPException(400,str(exc)) from None
 
 
 @app.post("/api/admin/keys", dependencies=[Depends(admin)], status_code=201)
 def create_key(body: CreateKey):
     try:
-        return LEDGER.create_key(body.label, body.max_chars_month, body.max_rpm)
+        return LEDGER.create_key(body.label, body.max_chars_month,
+                                 body.max_rpm, body.channel_slug)
     except ValueError as exc:
-        raise HTTPException(400, str(exc)) from None
+        raise HTTPException(400,str(exc)) from None
+    except Denied as exc:
+        raise exception_for(exc) from None
 
 
 @app.delete("/api/admin/keys/{key_id}", dependencies=[Depends(admin)])
@@ -369,21 +418,31 @@ def revoke_key(key_id: int):
 
 
 @app.get("/api/admin/voice", dependencies=[Depends(admin)])
-def voice_details():
-    if not VOICE_FILE.is_file() or not VOICE_PROOF.is_file():
-        return {"created": False, "voice_id": VOICE_ID}
-    _, meta = validated_reference()
+def voice_details(channel_slug: str = PRIMARY_CHANNEL):
+    try:
+        ch=LEDGER.get_channel(channel_slug)
+    except Denied as exc:
+        raise exception_for(exc) from None
+    except ValueError as exc:
+        raise HTTPException(400,str(exc)) from None
+    vf,vp=voice_paths(channel_slug)
+    if not vf.is_file() and not vp.is_file():
+        return {"created":False, "channel_slug":channel_slug,
+                "voice_id":ch["voice_id"],
+                "design":{"timbre":ch["voice_timbre"],
+                          "delivery":ch["voice_delivery"]}}
+    _,meta=validated_reference(channel_slug)
     return {
-        "created": True, "voice_id": VOICE_ID,
-        "created_at": meta.get("created_at"),
-        "reference_sha256": meta["wav_sha256"], "source": meta["source"],
-        "design": meta.get("design", {"timbre":"deep", "delivery":"documentary"}),
+        "created":True,"channel_slug":channel_slug,
+        "voice_id":ch["voice_id"],"created_at":meta.get("created_at"),
+        "reference_sha256":meta["wav_sha256"],"source":meta["source"],
+        "design":meta.get("design",{"timbre":"deep","delivery":"documentary"}),
     }
 
 
 @app.get("/api/admin/voice/reference", dependencies=[Depends(admin)])
-def original_reference():
-    raw, meta = validated_reference()
+def original_reference(channel_slug: str = PRIMARY_CHANNEL):
+    raw, meta = validated_reference(channel_slug)
     return Response(content=raw, media_type="audio/wav",
                     headers={"X-Voice-SHA256": meta["wav_sha256"]})
 
@@ -393,16 +452,28 @@ async def create_original(body: OriginalDesign):
     if body.confirm_original is not True:
         raise HTTPException(400, "CONFIRM_ORIGINAL_NON_IMPERSONATING_VOICE")
     async with DESIGN_LOCK:
-        if VOICE_FILE.exists() or VOICE_PROOF.exists():
-            raise HTTPException(409, "ORIGINAL_VOICE_IS_PINNED_DO_NOT_OVERWRITE")
-        instruction = design_instruction(body.timbre, body.delivery)
+        try:
+            channel=LEDGER.get_channel(body.channel_slug)
+        except Denied as exc:
+            raise exception_for(exc) from None
+        except ValueError as exc:
+            raise HTTPException(400,str(exc)) from None
+        voice_file,voice_proof=voice_paths(body.channel_slug)
+        if voice_file.exists() or voice_proof.exists():
+            raise HTTPException(409,"ORIGINAL_VOICE_IS_PINNED_DO_NOT_OVERWRITE")
+        if (body.timbre != channel["voice_timbre"]
+                or body.delivery != channel["voice_delivery"]):
+            raise HTTPException(409,"CHANNEL_VOICE_STYLE_MUST_MATCH_REGISTRY")
+        instruction=design_instruction(body.timbre,body.delivery)
         generated = await qwen_audio(
             "/api/v1/voice-design/generate",
             {"text": REFERENCE_TEXT, "language": "Russian",
              "instruct": instruction, "response_format": "wav"},
         )
         proof = {
-            "source": "selfhosted_qwen_voice_design", "voice_id": VOICE_ID,
+            "source": "selfhosted_qwen_voice_design",
+            "channel_slug":body.channel_slug,
+            "voice_id":voice_id_for(body.channel_slug),
             "reference_text": REFERENCE_TEXT,
             "instruction_sha256": sha(instruction.encode("utf8")),
             "design": {"timbre": body.timbre, "delivery": body.delivery},
@@ -412,15 +483,17 @@ async def create_original(body: OriginalDesign):
             "uses_only_original_design": True,
         }
         try:
-            with VOICE_FILE.open("xb") as output:
+            voice_file.parent.mkdir(parents=True,exist_ok=True)
+            with voice_file.open("xb") as output:
                 output.write(generated)
-            with VOICE_PROOF.open("x", encoding="utf8") as output:
+            with voice_proof.open("x", encoding="utf8") as output:
                 json.dump(proof, output, ensure_ascii=False, indent=2)
         except FileExistsError:
             raise HTTPException(
                 409, "ORIGINAL_VOICE_IS_PINNED_DO_NOT_OVERWRITE") from None
         return {
-            "voice_id": VOICE_ID, "created": True,
+            "voice_id":voice_id_for(body.channel_slug),
+            "channel_slug":body.channel_slug,"created":True,
             "reference_sha256": proof["wav_sha256"],
             "next": "Review Russian audio before enabling private factory",
         }
@@ -439,15 +512,18 @@ async def speech(
         account = LEDGER.authenticate(token or "")
     except Denied as exc:
         raise exception_for(exc) from None
-    if body.voice != VOICE_ID:
-        raise HTTPException(400, "ONLY_PINNED_ORIGINAL_VOICE_AVAILABLE")
+    slug=account["channel_slug"]
+    actual_voice=voice_id_for(slug)
+    if body.voice != actual_voice or (
+            body.channel_slug is not None and body.channel_slug != slug):
+        raise HTTPException(403,"API_KEY_IS_BOUND_TO_ANOTHER_CHANNEL_VOICE")
     if body.response_format != "wav":
         raise HTTPException(400, "ONLY_WAV_SUPPORTED_FOR_VERIFIED_RAW_AUDIO")
     if not body.text.strip():
         raise HTTPException(400, "EMPTY_TRANSCRIPT")
-    reference, proof = validated_reference()
-    signature = sha(json.dumps({
-        "text": body.text, "voice": VOICE_ID,
+    reference,proof=validated_reference(slug)
+    signature=sha(json.dumps({
+        "text":body.text,"voice":actual_voice,"channel_slug":slug,
         "speed": body.speed, "response_format": "wav",
     }, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf8"))
     try:
@@ -475,6 +551,7 @@ async def speech(
         audio_hash = receipt["sha256"]
     return Response(
         content=output, media_type="audio/wav",
-        headers={"X-Voice-ID": VOICE_ID, "X-Audio-SHA256": audio_hash,
-                 "X-Reference-SHA256": proof["wav_sha256"]},
+        headers={"X-Voice-ID":actual_voice,"X-Channel-ID":slug,
+                 "X-Audio-SHA256":audio_hash,
+                 "X-Reference-SHA256":proof["wav_sha256"]},
     )
