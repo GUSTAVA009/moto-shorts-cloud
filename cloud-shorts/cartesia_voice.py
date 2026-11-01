@@ -165,8 +165,8 @@ def _github_api(method, path, data=None):
 def monthly_limit(env=None):
     env = env if env is not None else os.environ
     try:
-        limit = int(env.get("CARTESIA_MONTHLY_CHAR_LIMIT",
-                            str(DEFAULT_MONTHLY_CHAR_CAP)))
+        limit = int(env.get("CARTESIA_MONTHLY_CHAR_LIMIT") or
+                    str(DEFAULT_MONTHLY_CHAR_CAP))
     except (TypeError, ValueError) as error:
         raise ValueError("CARTESIA_MONTHLY_LIMIT_INVALID") from error
     if not 1 <= limit <= 20_000:
