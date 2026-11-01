@@ -74,8 +74,10 @@ def verify_bank(bank):
 
 
 def validate_public(snap):
-    if snap.get("channel_id")!=CHANNEL or snap.get("source")!="vidiq_owned_channel_public_metadata":
-        raise ValueError("PUBLIC_METADATA_UNAUTHORIZED_SOURCE_OR_CHANNEL")
+    if snap.get("channel_id")!=CHANNEL:
+        raise ValueError("PUBLIC_METADATA_WRONG_CHANNEL")
+    if snap.get("source")!="vidiq_owned_channel_public_metadata":
+        raise ValueError("PUBLIC_METADATA_UNAUTHORIZED_SOURCE")
     date.fromisoformat(snap["observed_date"])
     for k in ("subscribers","lifetime_public_views","public_video_count"):
         v=snap.get(k)
