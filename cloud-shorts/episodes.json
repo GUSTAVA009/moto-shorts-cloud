@@ -7138,6 +7138,87 @@
       "mix_category": "facts",
       "priority_rank": 20,
       "editorial_review_status": "awaiting_frame_review"
+    },
+    {
+      "id": "moto-racing-mud-contrast-20261101",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "title": "ГОНКА И ГРЯЗЬ: два разных испытания 🏍️ #shorts",
+      "narration": "На одной трассе мотоцикл разгоняется в гонке. На другой съёмке райдер едет по грязному бездорожью. Скорость или сложное покрытие — какой заезд интереснее?",
+      "description": "Два независимых мотосюжета: скоростной заезд на трассе и движение по грязному бездорожью. Что интереснее смотреть? 🏁\n\n#мото #мотокросс #shorts",
+      "caption_start": "СКОРОСТЬ НА ТРАССЕ",
+      "caption_middle": "ГРЯЗНОЕ БЕЗДОРОЖЬЕ",
+      "caption_end": "КАКОЙ ЗАЕЗД ТЕБЕ БЛИЖЕ?",
+      "max_duration_seconds": 22,
+      "opening_trim_seconds": 0.1,
+      "music_style": "race-breakbeat",
+      "music_bpm": 129,
+      "footage": [
+        {
+          "topics": [
+            "motocross",
+            "racing"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/32034080/",
+          "source_page": "https://www.pexels.com/video/high-speed-motorcycle-drag-race-action-32034080/",
+          "author": "Gavin Fregona",
+          "license": "Pexels License",
+          "source_title": "high speed motorcycle drag race action",
+          "duration": 18
+        },
+        {
+          "topics": [
+            "motocross",
+            "racing",
+            "training"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/36365086/",
+          "source_page": "https://www.pexels.com/video/off-road-motorcycle-adventure-in-muddy-terrain-36365086/",
+          "author": "Harvey Tan Villarino",
+          "license": "Pexels License",
+          "source_title": "off road motorcycle adventure in muddy terrain"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0,
+          "seconds": 8.5
+        },
+        {
+          "source": "clip_1",
+          "start": 0,
+          "seconds": 8
+        }
+      ],
+      "visual_director_version": 3,
+      "active_ride_scene_seconds": 10,
+      "editorial": {
+        "environment": "drag-racing-and-muddy-offroad-20261101",
+        "bike": "race-and-offroad-motorcycle",
+        "people": "race-track-and-offroad-riders",
+        "story": "racing-speed-vs-mud-control",
+        "visual": "two-independent-moving-motorbike-actions"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "гонка",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "КАКОЙ ЗАЕЗД ТЕБЕ БЛИЖЕ?",
+        "description": "Напиши в комментариях, какой сюжет интереснее."
+      },
+      "source_selection": "Two documented independent Pexels motorcycle scenes",
+      "generation_provenance": "Independently authored Russian voiceover for real distinct Pexels actions"
     }
   ]
 }
