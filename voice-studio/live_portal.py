@@ -120,16 +120,17 @@ job=r.job_id;poll();
 };
 async function poll(){
 if(!job)return;
+let pending=false;
 try{
 const s=await api('/api/portal/preview/'+job);
-if(s.state==='pending'||s.state==='running'){msg('preview-status','Озвучка '+(s.state==='running'?'создаётся':'ожидает')+'…');setTimeout(poll,2500);return}
+if(s.state==='pending'||s.state==='running'){pending=true;msg('preview-status','Озвучка '+(s.state==='running'?'создаётся':'ожидает')+'…');setTimeout(poll,2500);return}
 if(s.state!=='done')throw Error(s.error||'Генерация отклонена');
 $('player').src='/api/portal/audio/'+job;
 $('download').href='/api/portal/audio/'+job;
 $('result-audio').hidden=false;
 msg('preview-status','Реальный WAV готов, '+s.duration_seconds+' с. Не является одобрением тембра Deep для автопубликации.');
 }catch(e){msg('preview-status',e.message)}
-finally{if($('result-audio').hidden===false||$('preview-status').textContent.includes('отклонен')||$('preview-status').textContent.includes('недоступен'))$('generate').disabled=false}
+finally{if(!pending)$('generate').disabled=false}
 }
 $('change').onclick=async()=>{
 try{await api('/auth/change-password','POST',{current:$('old-password').value,next:$('new-password').value});
@@ -429,6 +430,10 @@ class PortalHandler(BaseHTTPRequestHandler):
                 return self.error(401,"OWNER_AUTH_REQUIRED")
             with LOCK:
                 ATTEMPTS[ip] = []
+            try:
+                (PRIVATE / 'owner-first-login.txt').unlink(missing_ok=True)
+            except OSError:
+                pass
             token = new_session()
             return self.json(200, {"ok":True}, {"Set-Cookie": owner_cookie(token)})
         session = self.authorized(csrf=True)
