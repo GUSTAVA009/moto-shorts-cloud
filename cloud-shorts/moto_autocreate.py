@@ -69,6 +69,31 @@ THEMES = (
      "racing-crews", "circuit-racing"),
 )
 
+# Distinct search terms across 15 editorial topics make genuinely new
+# zero-cost Commons CC0 film discoverable. Previous implementation repeated
+# "motorcycle filetype:video" for 12/15 categories and permanently
+# starved the researched source bank. Always ONE API request per 90-minute
+# scheduled cycle, rights/mime/creator/SHA checks remain unchanged.
+COMMONS_QUERY = {
+    "forest": "motorcycle forest",
+    "motocross": "motocross",
+    "repair": "motorcycle mechanic",
+    "mountain": "motorbike mountain",
+    "rain": "motorcycle rain",
+    "desert": "dirt bike desert",
+    "city": "motorcycle street",
+    "vintage": "classic motorcycle",
+    "roadtrip": "motorcycle touring",
+    "training": "enduro practice",
+    "helmet": "motorcycle helmet",
+    "dirt": "enduro",
+    "sunset": "motorcycle sunset",
+    "snow": "motorcycle snow",
+    "racing": "motorcycle racing",
+}
+assert {theme[0] for theme in THEMES} == set(COMMONS_QUERY)
+
+
 CTA_CYCLE = [
     ("comment", "НАПИШИ СВОЙ ВЫБОР", "Расскажи в комментариях, какой маршрут выбрал бы ты."),
     ("subscribe", "ПОДПИШИСЬ НА МОТОИСТОРИИ", "Подпишись, если любишь настоящие мотопутешествия."),
@@ -135,8 +160,7 @@ def commons_results(theme, fetch=http_json):
     params = urllib.parse.urlencode({
         "action":"query", "format":"json", "formatversion":"2",
         "generator":"search",
-        "gsrsearch": ("motocross" if theme[0] in ("motocross", "training", "racing")
-                       else "motorcycle") + " filetype:video",
+        "gsrsearch": COMMONS_QUERY[theme[0]] + " filetype:video",
         "gsrnamespace":6, "gsrlimit":50, "prop":"imageinfo",
         "iiprop":"url|mime|size|sha1|extmetadata",
         "iiextmetadatafilter":"LicenseShortName|LicenseUrl|Copyrighted|Artist",
