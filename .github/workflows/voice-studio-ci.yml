@@ -1,0 +1,48 @@
+name: GUSTAVA Voice Studio - API and security tests
+on:
+  pull_request:
+    paths:
+      - 'voice-studio/**'
+      - '.github/workflows/voice-studio-ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'voice-studio/**'
+      - '.github/workflows/voice-studio-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  secure-voice-api:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install self-hosted HTTP app dependencies only (no GPU, no Cartesia)
+        run: python -m pip install -r voice-studio/requirements.txt
+      - name: Compile frontend API and models
+        run: python -m compileall -q voice-studio
+      - name: Test original voice rights, API authentication and durable idempotency
+        env:
+          VOICE_STUDIO_DATA: /tmp/gustava-voice-studio-test
+          VOICE_STUDIO_ADMIN_TOKEN: admin-test-only-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          UPSTREAM_API_KEY: internal-test-only-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+          QWEN_BACKEND_URL: http://qwen:8000
+        run: python -m unittest discover -s voice-studio/tests -p 'test_*.py' -v
+      - name: Validate compose syntax without exposing real secrets or downloading GPU weights
+        env:
+          VOICE_STUDIO_ADMIN_TOKEN: non-production-dummy-admin-key-never-usable
+          UPSTREAM_API_KEY: non-production-dummy-upstream-key-never-usable
+        run: docker compose -f voice-studio/compose.yaml config --quiet
+      - name: Safety: no secrets, reference voices, or Cartesia-generated speaker sample in source
+        run: |
+          if find voice-studio -type f \( -name '*.wav' -o -name '*.mp3' -o -name '*.sqlite3*' -o -name '.env' \) | grep .; then
+            echo '::error::Private voice recording/DB/secret committed to public code.'
+            exit 1
+          fi
+          echo 'Original Qwen VoiceDesign speaker generated only on the authorized GPU server.'
