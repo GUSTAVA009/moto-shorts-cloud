@@ -135,11 +135,15 @@ def touring_track_myth(sources, previous_titles):
         "Что важнее лично тебе: маршрут или гонка?",
         "Что тебе ближе: путешествие или гонка?",
     )
+    # The Qwen3 cloud narrator may require ~12-15 s for 125-160 chars.
+    # Two actual moving shots in v3 are limited to 8 s each; lengthy
+    # narration cannot be solved by looping licensed footage.
     narration = (
-        f"{openers[variant]} На первой независимой съёмке {a[3]}. "
-        f"На другой — {b[3]}. Это разные люди и разные кадры, "
-        f"а не состязание двух байков. {endings[variant]}"
+        f"Мотоцикл в путешествии скучный? {a[3].capitalize()}. "
+        f"На другом видео {b[3]}. Разные люди и съёмки. Что ближе тебе?"
     )
+    if not 125 <= len(narration) <= 160:
+        raise ValueError("MYTH_NARRATION_EXCEEDS_TWO_REAL_SCENE_CAPACITY")
     titles = (
         "Туристический байк скучный? Проверь стереотип #shorts",
         "Миф о туристических мотоциклах: дорога против трека #shorts",
@@ -185,9 +189,19 @@ def compose(sources, previous_titles):
         f"Что ты пересмотрел бы: {a[4]} или {b[4]}?",
         f"Какой момент сильнее: {a[4]} или {b[4]}?",
     )
-    narration = (f"{openings[variant]} Сначала {a[3]}. "
-                 f"На другом, независимом видео {b[3]}. "
-                 f"Это разные люди и съёмки, не один заезд. {ending[variant]}")
+    concise_options = (
+        f"Мотоцикл в двух сценах: {a[3]}. На другом видео {b[3]}. "
+        f"Это независимые съёмки. Что ближе тебе?",
+        f"Мотоцикл в разных сюжетах: {a[3]}. На второй съёмке {b[3]}. "
+        f"Это разные люди и кадры. Что сильнее цепляет?",
+        f"Мотоцикл под разными углами: {a[3]}. В другом ролике {b[3]}. "
+        f"Два отдельных момента. Какой пересмотрел бы ты?",
+    )
+    filmable_options = [text for text in concise_options
+                        if 125 <= len(text) <= 160]
+    if not filmable_options:
+        raise ValueError("NO_CONCISE_TWO_SCENE_NARRATION")
+    narration = filmable_options[variant % len(filmable_options)]
     title = f"{a[4].capitalize()} или {b[4]}: какой момент интереснее? #shorts"
     prose = {
         "title": title, "narration": narration,
