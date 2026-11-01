@@ -284,6 +284,65 @@ class NewMotoSourceTests(unittest.TestCase):
                          {tour["source_page"],race["source_page"]})
         self.assertEqual(len(ep["shots"]),2)
 
+    def test_cross_theme_fresh_repair_and_mud_keeps_truthful_qa_gates(self):
+        """Each topic contains just one actionable video; two verified
+        independent scenes should still create ONE private render candidate.
+        Generic repair must never claim a motor/engine rebuild."""
+        from unittest.mock import patch
+        from source_story import scene_for, require_filmable
+        files=[
+            {"key":"r","url":"https://www.pexels.com/download/video/90001231/",
+             "source_page":"https://www.pexels.com/video/man-repairing-motorcycle-90001231/",
+             "author":"First Independent Mechanic","license":"Pexels License",
+             "source_title":"man repairing motorcycle","duration":19},
+            {"key":"m","url":"https://www.pexels.com/download/video/90001232/",
+             "source_page":"https://www.pexels.com/video/off-road-motorcycle-adventure-in-muddy-terrain-90001232/",
+             "author":"Second Independent Rider","license":"Pexels License",
+             "source_title":"off road motorcycle adventure in muddy terrain","duration":19},
+        ]
+        self.assertEqual(scene_for(files[0])[0],"repair")
+        self.assertEqual(scene_for(files[1])[0],"mud")
+        assert not any(x["source_page"] in
+                       {v["source_page"] for ep in self.catalog["episodes"]
+                        for v in ep["footage"]} for x in files)
+        def curated(theme, used):
+            if theme[0]=="repair":
+                return [files[0]]
+            if theme[0]=="dirt":
+                return [files[1]]
+            return []
+        with patch.dict("os.environ",{"PEXELS_API_KEY":"",
+                                       "OPENAI_API_KEY":"",
+                                       "OPENROUTER_API_KEY":""}), \\
+             patch.object(s,"curated_pexels_results",side_effect=curated):
+            ep=s.create_one(self.catalog,source_fetch=lambda *a:[],
+                            commons_fetch=lambda *a:[],prepared_scripts=[])
+        self.assertEqual(len(ep["footage"]),2)
+        self.assertEqual(set(require_filmable(ep,ep["footage"])),{"repair","mud"})
+        self.assertTrue(ep["auto_preview"])
+        self.assertFalse(ep["auto_publish"])
+        self.assertEqual(ep["voice_engine"],"gustava_selfhosted_qwen3")
+        self.assertEqual(len(set(x["author"] for x in ep["footage"])),2)
+        self.assertTrue(all(x["license"]=="Pexels License" for x in ep["footage"]))
+        self.assertNotIn("мотором",ep["narration"].casefold())
+
+    def test_cross_theme_never_reuses_ride_only_pair_or_same_creator(self):
+        from unittest.mock import patch
+        generic={
+           "key":"a","url":"https://www.pexels.com/download/video/90001231/",
+           "source_page":"https://www.pexels.com/video/motorcycle-ride-90001231/",
+           "author":"First","license":"Pexels License","duration":14}
+        other=dict(generic,key="b",author="Second",
+                   url="https://www.pexels.com/download/video/90001232/",
+                   source_page="https://www.pexels.com/video/motorcycle-riding-90001232/")
+        def curated(theme,used):
+            return ([generic] if theme[0]=="repair" else
+                    [other] if theme[0]=="dirt" else [])
+        with patch.dict("os.environ",{"PEXELS_API_KEY":""}), \\
+             patch.object(s,"curated_pexels_results",side_effect=curated):
+            with self.assertRaisesRegex(RuntimeError,"NO_NEW_ACTION_MATCHING_LICENSED_MOTO_CLIPS"):
+                s.create_one(self.catalog,commons_fetch=lambda *_:[])
+
     def test_new_story_pins_owner_cloud_cpu_voice_not_saas(self):
         from unittest.mock import patch
         import selfhosted_voice as cv
