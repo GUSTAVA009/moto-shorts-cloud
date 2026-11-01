@@ -249,7 +249,10 @@ class NewMotoSourceTests(unittest.TestCase):
         self.assertEqual(require_filmable(draft,pair),["touring","race"])
         self.assertTrue(125<=len(draft["narration"])<=300)
         self.assertIn("турист",draft["narration"].lower()) if "турист" in draft["narration"].lower() else self.assertIn("путешеств",draft["narration"].lower())
-        self.assertIn("гонк",draft["narration"].lower())
+        # A provider title may say racing, but the frames can show only one rider.
+        # The safe generated story mentions the actual track, not competition.
+        self.assertIn("трек",draft["narration"].lower())
+        self.assertNotIn("мотоциклисты участвуют в гонке",draft["narration"].lower())
         self.assertNotIn("эндуро",draft["narration"].lower())
         self.assertEqual(compose([bland,race],[])["_editorial_format"],
                          "source_anchored_action_contrast")
