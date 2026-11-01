@@ -882,6 +882,16 @@
       "episode": "moto-racing-59aff99f5dee",
       "source": "https://www.pexels.com/video/high-speed-desert-motorcycle-racing-adventure-29465924/",
       "status": "reserved-or-rendered"
+    },
+    "36306512": {
+      "episode": "moto-city-2ed049c15ee1",
+      "source": "https://www.pexels.com/video/busy-urban-traffic-with-motorcyclists-at-intersection-36306512/",
+      "status": "reserved-or-rendered"
+    },
+    "6435404": {
+      "episode": "moto-city-2ed049c15ee1",
+      "source": "https://www.pexels.com/video/person-riding-a-motorcycle-on-the-snow-6435404/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1332,6 +1342,13 @@
       "people": "racing-crews-59aff",
       "story": "circuit-racing-59aff",
       "visual": "three-clips-59aff"
+    },
+    "moto-city-2ed049c15ee1": {
+      "environment": "urban-streets-2ed04",
+      "bike": "urban-motorbike",
+      "people": "city-riders-2ed04",
+      "story": "urban-riding-2ed04",
+      "visual": "three-clips-2ed04"
     }
   }
 }
