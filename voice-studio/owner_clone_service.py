@@ -101,8 +101,11 @@ def actions_oidc(token):
             options={"require":["iss","aud","exp","iat","sub","nbf"]},
             leeway=20)
         validate_actions_claims(claims)
-    except Exception:
-        # No raw JWT, headers, paths, or claim body in any public error.
+    except Exception as exc:
+        # Only the exception class is logged on the PRIVATE server to triage
+        # real OIDC 403 responses; NEVER log token, claims, request or bearer.
+        print("OWNER_TTS_OIDC_REJECTED_EXCEPTION_CLASS",
+              type(exc).__name__, flush=True)
         raise PermissionError("OWNER_TTS_INVALID_GITHUB_IDENTITY") from None
 
 
