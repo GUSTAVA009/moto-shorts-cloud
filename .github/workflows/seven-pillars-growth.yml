@@ -1,0 +1,63 @@
+name: GUSTAVA - Seven-Pillar Growth Strategy and 100 Idea Review
+on:
+  workflow_dispatch:
+  schedule:
+    # Weekly Monday morning UTC + calendar-month opening report.
+    - cron: "17 06 * * 1"
+    - cron: "26 06 1 * *"
+  pull_request:
+    branches: [main]
+    paths:
+      - 'cloud-shorts/channel_growth_os.py'
+      - 'cloud-shorts/channel_public_snapshot_*.json'
+      - 'cloud-shorts/channel_idea_bank_100.json'
+      - 'cloud-shorts/test_channel_growth_os.py'
+      - 'docs/SEVEN_PILLARS_GROWTH_RU.md'
+      - '.github/workflows/seven-pillars-growth.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'cloud-shorts/channel_growth_os.py'
+      - 'cloud-shorts/channel_public_snapshot_*.json'
+      - 'cloud-shorts/channel_idea_bank_100.json'
+      - 'cloud-shorts/test_channel_growth_os.py'
+      - 'docs/SEVEN_PILLARS_GROWTH_RU.md'
+      - '.github/workflows/seven-pillars-growth.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gustava-seven-pillars-readonly-growth
+  cancel-in-progress: false
+
+jobs:
+  monthly-and-weekly-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate 100 ideas, real-data gates and owner seven-pillar contract
+        run: |
+          python3 -m compileall -q cloud-shorts/channel_growth_os.py
+          python3 -m unittest discover -s cloud-shorts -p 'test_channel_growth_os.py' -v
+      - name: Build truthful growth review, top-20 research slate and monetization paths
+        run: python3 cloud-shorts/channel_growth_os.py --out-dir cloud-shorts/dist/growth-os
+      - name: Explain limited measurement and do not claim production
+        run: |
+          echo "## Seven-pillar growth review (read only)" >> "$GITHUB_STEP_SUMMARY"
+          echo "100 research ideas, 20 briefs / 7:5:5:3; no MP4 created or scheduled." >> "$GITHUB_STEP_SUMMARY"
+          echo "Public channel metadata is dated 2026-11-01, not current Studio analytics." >> "$GITHUB_STEP_SUMMARY"
+          echo "No live YouTube Studio retention/CTR/RPM is authorized in this public workflow." >> "$GITHUB_STEP_SUMMARY"
+          echo "Do not connect private analytics to a public artifact: use private local --studio-json only." >> "$GITHUB_STEP_SUMMARY"
+          echo "YPP eligibility depends on dated YouTube Studio Earn, not lifetime views." >> "$GITHUB_STEP_SUMMARY"
+      - name: Archive non-private research recommendations only
+        uses: actions/upload-artifact@v4
+        with:
+          name: seven-pillars-public-research-${{ github.run_id }}
+          path: |
+            cloud-shorts/dist/growth-os/growth-plan.json
+            cloud-shorts/dist/growth-os/weekly-and-monthly-plan.md
+            cloud-shorts/dist/growth-os/next-20-research-briefs.json
+          retention-days: 30
+          if-no-files-found: error
