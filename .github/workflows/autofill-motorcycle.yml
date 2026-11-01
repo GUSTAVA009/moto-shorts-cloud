@@ -12,6 +12,8 @@ on:
       - 'cloud-shorts/cc0_source_pool.py'
       - 'cloud-shorts/test_cc0_source_pool.py'
       - 'cloud-shorts/moto_assets.py'
+      - 'cloud-shorts/verified_pexels_pool.json'
+      - 'cloud-shorts/test_curated_source_recovery.py'
       - 'cloud-shorts/test_moto_autocreate.py'
       - 'cloud-shorts/test_moto_assets.py'
       - 'cloud-shorts/seed_backlog.json'

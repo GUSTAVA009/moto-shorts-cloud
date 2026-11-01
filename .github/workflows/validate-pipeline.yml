@@ -8,6 +8,10 @@ on:
       - 'README.md'
       - 'AUTOPILOT_SETUP_RU.md'
       - 'docs/FACTORY_CONTRACT_RU.md'
+      - 'docs/INSTALLATION_RU.md'
+      - 'docs/TECHNICAL_REVIEW_RU.md'
+      - 'scripts/factory_doctor.py'
+      - 'cloud-shorts/verified_pexels_pool.json'
       - 'docs/shorts-breakout-playbook-2026-10-30.md'
       - 'cloud-shorts/factory_contract.json'
       - 'cloud-shorts/production_batch20_20261030.json'
@@ -39,6 +43,10 @@ on:
       - 'README.md'
       - 'AUTOPILOT_SETUP_RU.md'
       - 'docs/FACTORY_CONTRACT_RU.md'
+      - 'docs/INSTALLATION_RU.md'
+      - 'docs/TECHNICAL_REVIEW_RU.md'
+      - 'scripts/factory_doctor.py'
+      - 'cloud-shorts/verified_pexels_pool.json'
       - 'docs/shorts-breakout-playbook-2026-10-30.md'
       - 'cloud-shorts/factory_contract.json'
       - 'cloud-shorts/production_batch20_20261030.json'
@@ -104,6 +112,11 @@ jobs:
         run: |
           python3 -m compileall -q cloud-shorts
           python3 -m unittest discover -s cloud-shorts -p 'test_*.py' -v
+      - name: Verify read-only zero-budget factory doctor and offline supply inventory
+        run: |
+          python3 -m compileall -q scripts
+          python3 -m unittest discover -s cloud-shorts -p 'test_factory_doctor.py' -v
+          python3 scripts/factory_doctor.py --json
       - name: Validate public episode descriptions and internal attribution
         run: |
           python3 - <<'PY'
