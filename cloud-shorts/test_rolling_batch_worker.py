@@ -56,6 +56,20 @@ class RollingBatchWorkerTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             w.should_request_voice_refill(state,-1,now)
 
+    def test_empty_factory_is_blocked_despite_successful_scheduler(self):
+        health=w.factory_health(0,0,0,[])
+        self.assertFalse(health["operational"])
+        self.assertEqual(health["status"],"BLOCKED")
+        self.assertEqual(len(health["blockers"]),4)
+        self.assertIsNone(health["youtube_publications_verified"])
+        half=w.factory_health(10,0,2,["local_pc"])
+        self.assertFalse(half["operational"])
+        self.assertEqual(half["blockers"],["NO_REVIEWED_MP4_STOCK"])
+        supplied=w.factory_health(10,10,10,["cloud"])
+        self.assertTrue(supplied["operational"])
+        self.assertEqual(supplied["status"],"SUPPLY_PRESENT_NOT_PUBLICATION_PROOF")
+        self.assertIsNone(supplied["youtube_publications_verified"])
+
     def test_corrupt_ledger_never_reinitialized(self):
         with self.assertRaises(RuntimeError):
             w.read_state({"sha":"1","content":""})

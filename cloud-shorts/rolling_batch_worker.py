@@ -186,6 +186,17 @@ def dispatch_plan(refill, urgent_voice_refill, events, scheduled_count,
     }
 
 
+def factory_health(scheduled_count,reserve_count,voice_count,routes):
+    blockers=[]
+    if not routes: blockers.append("NO_CONNECTED_TTS_ENDPOINT")
+    if voice_count==0: blockers.append("NO_VOICE_READY_EPISODES")
+    if reserve_count==0: blockers.append("NO_REVIEWED_MP4_STOCK")
+    if scheduled_count==0: blockers.append("BUFFER_QUEUE_EMPTY")
+    return {"operational":not blockers,"status":"BLOCKED" if blockers else
+            "SUPPLY_PRESENT_NOT_PUBLICATION_PROOF","blockers":blockers,
+            "youtube_publications_verified":None}
+
+
 def needs_persist(before, after, events, now):
     if before is None or events:
         return True
@@ -247,7 +258,13 @@ def main():
     plan = dispatch_plan(refill, urgent_voice_refill, events, len(scheduled),
                          ready_voice_candidates, reserve_count)
     summary["actions"] = plan
+    summary["factory_health"] = factory_health(
+        len(scheduled),reserve_count,ready_voice_candidates,
+        voice_supply["configured_voice_route_names"])
     print("ROLLING_TEN_STATUS",json.dumps(summary,ensure_ascii=False),flush=True)
+    if not summary["factory_health"]["operational"]:
+        print("::error::FACTORY_NOT_OPERATIONAL: "+
+              ",".join(summary["factory_health"]["blockers"]),flush=True)
     if plan["request_new_sources"]:
         github("POST","actions/workflows/autofill-motorcycle.yml/dispatches",{"ref":"main"})
         print("ROLLING_TEN_AUTOFILL_DISPATCHED",flush=True)
@@ -274,6 +291,9 @@ def main():
                "Scheduled in Buffer: "+str(summary["buffer_scheduled_posts"]),
                "Separate release-eligible QA MP4 reserve: "+str(reserve_count)+"/10", "",
                "Drafts are not QA-passed MP4s or verified public YouTube views."]
+        lines.extend(["Factory health: "+summary["factory_health"]["status"],
+                      "Blockers: "+(", ".join(summary["factory_health"]["blockers"]) or "none"),
+                      "Workflow success is NOT proof of YouTube publication."])
         Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text("\n".join(lines)+"\n",encoding="utf8")
     return 0
 
