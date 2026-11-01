@@ -30,7 +30,7 @@ SCENES = (
      r"гряз|коле"),
     ("snow", r"(?:motorcycle|motorbike|motocross|dirt bike).*?(?:snow|winter)|(?:snow|winter).*?(?:motorcycle|motorbike|motocross|dirt bike)",
      "на снегу", "мотоциклист едет по заснеженной дороге", "снег",
-     r"снег|зим"),
+     r"снег|снеж|зим"),
     ("sand", r"(?:motorcycle|motorbike|motocross|dirt bike).*?(?:sand|desert|dune)|(?:sand|desert|dune).*?(?:motorcycle|motorbike|motocross|dirt bike)",
      "на песке", "райдер едет по песчаной трассе", "песчаная трасса",
      r"пес|дюн|пустын"),
