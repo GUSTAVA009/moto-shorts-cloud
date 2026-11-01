@@ -352,10 +352,10 @@ class PortalHandler(BaseHTTPRequestHandler):
         if not isinstance(value, dict):
             raise ValueError("INVALID_REQUEST")
         return value
-    def path(self):
+    def request_path(self):
         return self.path.split("?",1)[0]
     def do_GET(self):
-        path = self.path()
+        path = self.request_path()
         if path == "/":
             return self.redirect("/studio")
         if path == "/login":
@@ -411,7 +411,7 @@ class PortalHandler(BaseHTTPRequestHandler):
                              {"Content-Disposition": 'attachment; filename="gustava-preview.wav"'})
         return self.error(404, "NOT_FOUND")
     def do_POST(self):
-        path = self.path()
+        path = self.request_path()
         if self.headers.get("Origin") != ORIGIN:
             return self.error(403,"ORIGIN_REJECTED")
         try:
