@@ -7,6 +7,7 @@ external TTS quota, remote telemetry, or authorization bypass.
 from __future__ import annotations
 from contextlib import contextmanager
 from datetime import datetime, timezone
+import array
 import hashlib
 import hmac
 import io
@@ -36,15 +37,21 @@ def check_wav(data: bytes) -> tuple[int, float]:
                                      f.getframerate())
             frames = f.getnframes()
             duration = frames / rate if rate else 0
+            pcm = f.readframes(frames)
     except (ValueError, EOFError, wave.Error, ZeroDivisionError) as exc:
         raise ValueError("AUDIO_NOT_A_VALID_WAV") from exc
     if channels != 1 or width != 2 or not 12000 <= rate <= 48000:
         raise ValueError("AUDIO_REQUIRES_PCM16_MONO")
     if not 1.5 <= duration <= 65:
         raise ValueError("AUDIO_DURATION_UNSAFE")
-    # WAV header alone is not a generated take.
-    if len(data) < frames * channels * width + 40:
+    # WAV header or silent audio is not a produced voice. Sample the
+    # audio amplitude; independent Russian ASR remains the stronger gate.
+    if len(data) < frames * channels * width + 40 or len(pcm) != frames * width:
         raise ValueError("AUDIO_TRUNCATED")
+    samples = array.array("h")
+    samples.frombytes(pcm)
+    if not samples or max(abs(n) for n in samples[::100]) < 150:
+        raise ValueError("AUDIO_SILENT")
     return rate, round(duration, 3)
 
 
@@ -237,7 +244,10 @@ class Ledger:
                 self.root / "audio").resolve():
             raise Denied("CACHED_VOICE_FILE_MISSING", 503)
         data = path.read_bytes()
-        check_wav(data)
+        try:
+            check_wav(data)
+        except ValueError:
+            raise Denied("CACHED_VOICE_INVALID_WAV", 503) from None
         if sha(data) != record["sha256"]:
             raise Denied("CACHED_VOICE_SHA_MISMATCH", 503)
         return data
