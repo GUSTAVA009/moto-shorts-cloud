@@ -66,7 +66,7 @@ class RealWebsiteWithoutGpuTests(unittest.TestCase):
         response=self.client.get("/")
         self.assertEqual(response.status_code,200)
         self.assertIn("GUSTAVA VOICE",response.text)
-        self.assertIn("Озвучку",response.text)
+        self.assertIn("Создать озвучку",response.text)
         self.assertEqual(response.headers["x-frame-options"],"DENY")
         self.assertIn("script-src 'self'",response.headers["content-security-policy"])
         for asset in ("/site.css","/site.js"):
