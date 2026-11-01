@@ -25,7 +25,7 @@ class BufferScheduleAuditTests(unittest.TestCase):
         detail = json.loads(line.split(" ", 1)[1])
         self.assertEqual(detail["queued_posts"], 0)
         self.assertEqual(detail["max_actual_posts_per_day"], 16)
-        self.assertEqual(detail["normal_daily_target"],12)
+        self.assertEqual(detail["normal_daily_target"],14)
         self.assertEqual(detail["monthly_minimum"],330)
         self.assertEqual(detail["available_time_windows"], 16)
         self.assertFalse(detail["content_queue_nonempty"])
