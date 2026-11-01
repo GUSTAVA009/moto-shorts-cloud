@@ -17,6 +17,8 @@ import hashlib
 import hmac
 import json
 import os
+import subprocess
+import tempfile
 from pathlib import Path
 import re
 import secrets
@@ -38,8 +40,9 @@ DATA.mkdir(parents=True, exist_ok=True)
 LEDGER = Ledger(DATA)
 VOICE_FILE = DATA / "voice-reference-original.wav"
 VOICE_PROOF = DATA / "voice-reference-original.json"
-UPSTREAM = os.environ.get("QWEN_BACKEND_URL", "http://qwen:8000").rstrip("/")
-UPSTREAM_KEY = os.environ.get("UPSTREAM_API_KEY", "")
+# Oracle Always Free ARM CPU has no GPU. Only use the Qwen3 CustomVoice
+# C engine on loopback; never disclose private voice data to public engines.
+UPSTREAM=os.environ.get("QWEN_BACKEND_URL","http://127.0.0.1:8002").rstrip("/")
 
 COOKIE = "hapych_owner"
 SESSION_HOURS = 8
@@ -77,11 +80,11 @@ def design_instruction(timbre: str, delivery: str):
 ORIGINAL_INSTRUCTION = design_instruction("deep", "documentary")
 
 app = FastAPI(
-    title="HAPYCH Voice — private local studio", version="0.2.0",
+    title="HAPYCH Voice — owner-only free ARM cloud service", version="0.3.0",
     description="Owner-only original Russian TTS; API requires revocable owner-issued keys",
     docs_url=None, redoc_url=None, openapi_url=None,
 )
-GPU_LOCK = asyncio.Lock()
+INFERENCE_LOCK = asyncio.Lock()
 DESIGN_LOCK = asyncio.Lock()
 
 
@@ -144,14 +147,37 @@ def admin(request: Request, x_admin_token: str | None = Header(default=None),
 
 
 def safe_upstream():
-    value = urlsplit(UPSTREAM)
-    if (value.scheme != "http" or value.hostname not in
-            {"qwen", "localhost", "127.0.0.1"}
-            or value.username or value.password or value.query
-            or value.fragment or value.path):
-        raise RuntimeError("QWEN_BACKEND_MUST_BE_PRIVATE_CONTAINER")
-    if not UPSTREAM_KEY or len(UPSTREAM_KEY) < 24:
-        raise RuntimeError("QWEN_UPSTREAM_SECRET_NOT_SET")
+    parsed=urlsplit(UPSTREAM)
+    if (parsed.scheme!="http" or parsed.hostname not in
+            {"127.0.0.1","localhost"}
+            or parsed.port!=8002 or parsed.username or parsed.password
+            or parsed.query or parsed.fragment or parsed.path):
+        raise RuntimeError("QWEN_CPU_ENGINE_MUST_BE_LOOPBACK_8002")
+
+
+def adjust_speed(source:bytes, speed:float):
+    """CPU postprocessing with ffmpeg atempo preserves voice pitch."""
+    if speed==1.0:
+        return source
+    # Never run a shell. Input/output live only in the private data folder.
+    with tempfile.TemporaryDirectory(prefix="pace-",dir=DATA) as td:
+        incoming=Path(td)/"input.wav"
+        outgoing=Path(td)/"output.wav"
+        incoming.write_bytes(source)
+        try:
+            subprocess.run([
+                "ffmpeg","-nostdin","-hide_banner","-loglevel","error",
+                "-y","-i",str(incoming),"-filter:a",f"atempo={speed:.3f}",
+                "-ar","24000","-ac","1","-c:a","pcm_s16le",str(outgoing)
+            ],check=True,capture_output=True,timeout=60)
+        except (subprocess.CalledProcessError,subprocess.TimeoutExpired,
+                FileNotFoundError):
+            raise HTTPException(502,"VOICE_PACE_PROCESSING_FAILED") from None
+        result=outgoing.read_bytes()
+        try:check_wav(result)
+        except ValueError:
+            raise HTTPException(502,"VOICE_PACE_INVALID_AUDIO") from None
+        return result
 
 
 class LoginBody(BaseModel):
@@ -218,12 +244,13 @@ def validated_reference(slug: str = PRIMARY_CHANNEL):
         design=meta.get("design",{"timbre":"deep","delivery":"documentary"})
         expected=design_instruction(design["timbre"],design["delivery"])
         valid=(
-            meta.get("source")=="selfhosted_qwen_voice_design"
+            meta.get("source")=="selfhosted_qwen_cpu_preset"
             and meta.get("channel_slug",PRIMARY_CHANNEL)==slug
             and meta.get("voice_id")==voice_id_for(slug)
             and meta.get("wav_sha256")==sha(raw)
             and meta.get("reference_text")==REFERENCE_TEXT
             and meta.get("instruction_sha256")==sha(expected.encode("utf8"))
+            and meta.get("preset_voice")==LEDGER.get_channel(slug)["speaker_preset"]
         )
         if not valid:
             raise ValueError("reference fingerprint mismatch")
@@ -232,33 +259,37 @@ def validated_reference(slug: str = PRIMARY_CHANNEL):
         raise HTTPException(503,"ORIGINAL_VOICE_REFERENCE_VERIFICATION_FAILED")
 
 
-async def qwen_audio(route: str, payload: dict):
+async def qwen_audio(route: str,payload:dict):
+    """Use official Qwen3 C CustomVoice HTTP endpoint, not cloud SaaS."""
     safe_upstream()
-    if route not in {"/api/v1/voice-design/generate", "/api/v1/base/clone"}:
-        raise RuntimeError("QWEN_UNAPPROVED_ROUTE")
-    headers = {
-        "X-API-Key": UPSTREAM_KEY, "Content-Type": "application/json",
-        "Accept": "audio/wav",
-    }
-    timeout = httpx.Timeout(connect=12, read=480, write=25, pool=15)
-    async with GPU_LOCK:
+    if route not in ("/api/v1/voice-design/generate","/api/v1/base/clone"):
+        raise RuntimeError("QWEN_UNAPPROVED_OPERATION")
+    # Input is a private, server-owned Qwen3 speaker preset, NOT a model
+    # created by VoiceDesign. CPU 0.6B does not implement VoiceDesign.
+    speaker=payload.get("speaker")
+    from core import FREE_CPU_SPEAKERS
+    if speaker not in FREE_CPU_SPEAKERS:
+        raise HTTPException(422,"CHANNEL_CPU_VOICE_NOT_ALLOCATED")
+    body={"text":payload["text"],"speaker":speaker,"language":"Russian"}
+    timeout=httpx.Timeout(connect=8,read=600,write=25,pool=15)
+    async with INFERENCE_LOCK:
         try:
             async with httpx.AsyncClient(timeout=timeout,
-                                          follow_redirects=False,
-                                          trust_env=False) as client:
-                reply = await client.post(
-                    UPSTREAM + route, json=payload, headers=headers)
-        except (httpx.TimeoutException, httpx.RequestError):
-            raise HTTPException(502, "PRIVATE_VOICE_ENGINE_UNAVAILABLE")
-    if reply.status_code != 200:
-        # No upstream error body, request URL, headers or private tokens
-        # forwarded to clients.
-        raise HTTPException(502, "PRIVATE_VOICE_ENGINE_GENERATION_FAILED")
-    try:
-        check_wav(reply.content)
+                                         follow_redirects=False,
+                                         trust_env=False) as client:
+                response=await client.post(UPSTREAM+"/v1/tts",json=body,
+                                            headers={"Accept":"audio/wav"})
+        except (httpx.TimeoutException,httpx.RequestError):
+            raise HTTPException(502,"PRIVATE_CPU_VOICE_ENGINE_UNAVAILABLE") from None
+    if response.status_code!=200:
+        raise HTTPException(502,"PRIVATE_CPU_VOICE_ENGINE_FAILED")
+    try: check_wav(response.content)
     except ValueError:
-        raise HTTPException(502, "PRIVATE_VOICE_ENGINE_INVALID_WAV")
-    return reply.content
+        raise HTTPException(502,"PRIVATE_CPU_VOICE_ENGINE_INVALID_WAV") from None
+    speed=payload.get("speed",1.0)
+    if not isinstance(speed,(int,float)) or not .80<=speed<=1.20:
+        raise HTTPException(422,"VOICE_PACE_OUTSIDE_SAFE_RANGE")
+    return adjust_speed(response.content,float(speed))
 
 
 @app.middleware("http")
@@ -450,7 +481,7 @@ def original_reference(channel_slug: str = PRIMARY_CHANNEL):
 @app.post("/api/admin/voice/design", dependencies=[Depends(admin)])
 async def create_original(body: OriginalDesign):
     if body.confirm_original is not True:
-        raise HTTPException(400, "CONFIRM_ORIGINAL_NON_IMPERSONATING_VOICE")
+        raise HTTPException(400,"CONFIRM_PERMITTED_OPEN_MODEL_SPEAKER")
     async with DESIGN_LOCK:
         try:
             channel=LEDGER.get_channel(body.channel_slug)
@@ -470,13 +501,18 @@ async def create_original(body: OriginalDesign):
                 "WHERE slug=?",
                 (body.timbre,body.delivery,body.channel_slug))
         instruction=design_instruction(body.timbre,body.delivery)
-        generated = await qwen_audio(
+        # On a free cloud CPU, create a pinned ORIGINAL-FOR-THIS-CHANNEL
+        # sample of a licensed open-model voice preset; NOT a new designed
+        # timbre. It must not be marketed as an exclusive original speaker.
+        speaker=channel["speaker_preset"]
+        generated=await qwen_audio(
             "/api/v1/voice-design/generate",
-            {"text": REFERENCE_TEXT, "language": "Russian",
-             "instruct": instruction, "response_format": "wav"},
+            {"text":REFERENCE_TEXT,"language":"Russian","speaker":speaker,
+             "instruct":instruction,"response_format":"wav"},
         )
         proof = {
-            "source": "selfhosted_qwen_voice_design",
+            "source":"selfhosted_qwen_cpu_preset",
+            "preset_voice":speaker,
             "channel_slug":body.channel_slug,
             "voice_id":voice_id_for(body.channel_slug),
             "reference_text": REFERENCE_TEXT,
@@ -484,8 +520,9 @@ async def create_original(body: OriginalDesign):
             "design": {"timbre": body.timbre, "delivery": body.delivery},
             "wav_sha256": sha(generated),
             "created_at": datetime.now(timezone.utc).isoformat(),
-            "model_expected": "Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
-            "uses_only_original_design": True,
+            "model_expected":"Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
+            "exclusive_original_voice":False,
+            "derived_from_cartesia":False,
         }
         try:
             voice_file.parent.mkdir(parents=True,exist_ok=True)
@@ -500,7 +537,7 @@ async def create_original(body: OriginalDesign):
             "voice_id":voice_id_for(body.channel_slug),
             "channel_slug":body.channel_slug,"created":True,
             "reference_sha256": proof["wav_sha256"],
-            "next": "Review Russian audio before enabling private factory",
+            "next":"Review preset's native Russian speech before publishing",
         }
 
 
@@ -546,9 +583,10 @@ async def speech(
         output = await qwen_audio(
             "/api/v1/base/clone", {
                 "text": body.text, "language": "Russian",
-                "ref_audio_base64": base64.b64encode(reference).decode("ascii"),
-                "ref_text": proof["reference_text"],
-                "x_vector_only_mode": False, "speed": body.speed,
+                "speaker":proof["preset_voice"],
+                "ref_audio_base64":base64.b64encode(reference).decode("ascii"),
+                "ref_text":proof["reference_text"],
+                "x_vector_only_mode":False,"speed":body.speed,
                 "response_format": "wav",
             },
         )
