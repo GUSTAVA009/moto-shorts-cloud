@@ -120,6 +120,31 @@ class SevenPillarsTests(unittest.TestCase):
         self.assertTrue(new["goal_is_not_forecast"])
         self.assertFalse(new["ypp_approval_or_monetization_guaranteed"])
 
+    def test_seven_screenshots_are_permanent_repo_contract(self):
+        repo=ROOT.parent
+        contract=json.loads((ROOT/"factory_contract.json").read_text("utf8"))
+        k=contract["seven_pillars_growth"]
+        self.assertEqual(k["source"],"Owner's 7 screenshots, 2026-11-01")
+        self.assertFalse(k["auto_niche_change_allowed"])
+        self.assertTrue(k["no_engagement_fraud_or_mass_produced_repeat_content"])
+        self.assertTrue(k["ideas_are_not_approved_scripts_or_mp4s"])
+        self.assertEqual(k["next_twenty_approved_mix"],o.MIX)
+        self.assertEqual(k["minimum_videos_per_experiment_group"],3)
+        self.assertTrue(k["private_studio_data_never_committed_to_public_repo"])
+        self.assertTrue(k["manual_assistant_audio_creation_is_not_factory_operation"]
+                        if "manual_assistant_audio_creation_is_not_factory_operation" in k
+                        else contract["production"]["manual_assistant_audio_creation_is_not_factory_operation"])
+        agents=(repo/"AGENTS.md").read_text("utf8")
+        doc=(repo/"docs"/"SEVEN_PILLARS_GROWTH_RU.md").read_text("utf8")
+        self.assertIn("SEVEN_PILLARS_GROWTH_RU.md",agents)
+        self.assertIn("НЕ ДЕЛАЙ РОЛИКИ ЗА ЗАВОД",agents)
+        for i in range(1,8):
+            self.assertIn("## "+str(i)+".",doc)
+        workflow=(repo/".github/workflows/seven-pillars-growth.yml").read_text("utf8")
+        self.assertIn("contents: read",workflow)
+        self.assertNotIn("secrets.",workflow)
+        self.assertNotIn("buffer-backlog",workflow)
+
     def test_one_programmatic_report_covers_all_7_pillars(self):
         p=o.compose(self.public,self.bank)
         s=o.markdown(p)
