@@ -42,6 +42,20 @@ class CuratedRecoveryTests(unittest.TestCase):
         self.assertLessEqual(len(story["title"]),100)
         self.assertNotIn("https://",story["description"])
 
+    def test_selected_story_can_pass_full_factory_episode_validation(self):
+        """A title-only preflight test is insufficient: ensure real catalog QA."""
+        from moto_autocreate import assemble_episode, THEMES
+        catalog=json.loads((ROOT / "episodes.json").read_text("utf8"))
+        race=next(x for x in self.pool if source_id(x)=="32034080")
+        mud=next(x for x in self.pool if source_id(x)=="36365086")
+        pair=[race,mud]
+        prose=compose(pair,[x["title"] for x in catalog["episodes"]])
+        theme=next(t for t in THEMES if t[0]=="motocross")
+        ep=assemble_episode(catalog,theme,pair,prose,len(catalog["episodes"]))
+        self.assertIs(ep["auto_publish"],False)
+        self.assertTrue(ep["auto_preview"])
+        self.assertEqual(len(ep["footage"]),2)
+
     def test_recognized_sources_cannot_be_reused(self):
         race=next(x for x in self.pool if source_id(x)=="32034080")
         mud=next(x for x in self.pool if source_id(x)=="36365086")
