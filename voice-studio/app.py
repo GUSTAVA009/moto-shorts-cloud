@@ -270,7 +270,15 @@ async def qwen_audio(route: str,payload:dict):
     from core import FREE_CPU_SPEAKERS
     if speaker not in FREE_CPU_SPEAKERS:
         raise HTTPException(422,"CHANNEL_CPU_VOICE_NOT_ALLOCATED")
-    body={"text":payload["text"],"speaker":speaker,"language":"Russian"}
+    moods={"documentary":"news","dynamic":"excited","ironic":"dramatic"}
+    delivery=payload.get("delivery","documentary")
+    if delivery not in moods:
+        raise HTTPException(422,"VOICE_DELIVERY_NOT_APPROVED")
+    speed=payload.get("speed",1.0)
+    if not isinstance(speed,(int,float)) or not .80<=speed<=1.20:
+        raise HTTPException(422,"VOICE_PACE_OUTSIDE_SAFE_RANGE")
+    body={"text":payload["text"],"speaker":speaker,"language":"Russian",
+          "emotion":moods[delivery], "rate":float(speed)}
     timeout=httpx.Timeout(connect=8,read=600,write=25,pool=15)
     async with INFERENCE_LOCK:
         try:
@@ -286,10 +294,9 @@ async def qwen_audio(route: str,payload:dict):
     try: check_wav(response.content)
     except ValueError:
         raise HTTPException(502,"PRIVATE_CPU_VOICE_ENGINE_INVALID_WAV") from None
-    speed=payload.get("speed",1.0)
-    if not isinstance(speed,(int,float)) or not .80<=speed<=1.20:
-        raise HTTPException(422,"VOICE_PACE_OUTSIDE_SAFE_RANGE")
-    return adjust_speed(response.content,float(speed))
+    # The CPU Qwen server implements pitch-preserving rate and emotions.
+    # Avoid a second postprocessing filter which could distort voice timbre.
+    return response.content
 
 
 @app.middleware("http")
@@ -508,7 +515,8 @@ async def create_original(body: OriginalDesign):
         generated=await qwen_audio(
             "/api/v1/voice-design/generate",
             {"text":REFERENCE_TEXT,"language":"Russian","speaker":speaker,
-             "instruct":instruction,"response_format":"wav"},
+             "instruct":instruction,"delivery":body.delivery,
+             "response_format":"wav"},
         )
         proof = {
             "source":"selfhosted_qwen_cpu_preset",
@@ -587,6 +595,7 @@ async def speech(
                 "ref_audio_base64":base64.b64encode(reference).decode("ascii"),
                 "ref_text":proof["reference_text"],
                 "x_vector_only_mode":False,"speed":body.speed,
+                "delivery":proof["design"]["delivery"],
                 "response_format": "wav",
             },
         )
