@@ -43,6 +43,19 @@ class RollingBatchWorkerTests(unittest.TestCase):
         state["last_replenish_request_at"]=(now-timedelta(minutes=46)).isoformat()
         self.assertTrue(w.should_replenish(state,[],0,now))
 
+    def test_voice_refill_under_two_and_independent_cooldown(self):
+        now=datetime(2026,11,1,tzinfo=timezone.utc)
+        state,_=b.reconcile(None,[])
+        self.assertTrue(w.should_request_voice_refill(state,0,now))
+        self.assertTrue(w.should_request_voice_refill(state,1,now))
+        self.assertFalse(w.should_request_voice_refill(state,2,now))
+        state["last_voice_refill_request_at"]=(now-timedelta(minutes=10)).isoformat()
+        self.assertFalse(w.should_request_voice_refill(state,0,now))
+        state["last_voice_refill_request_at"]=(now-timedelta(minutes=31)).isoformat()
+        self.assertTrue(w.should_request_voice_refill(state,0,now))
+        with self.assertRaises(ValueError):
+            w.should_request_voice_refill(state,-1,now)
+
     def test_corrupt_ledger_never_reinitialized(self):
         with self.assertRaises(RuntimeError):
             w.read_state({"sha":"1","content":""})
