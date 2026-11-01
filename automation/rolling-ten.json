@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "verified_sent_count": 22,
+  "verified_sent_count": 23,
   "seen_buffer_sent_ids": {
     "6ae238b79435d252661176a0": "2026-10-27T16:45:43.000Z",
     "6ae238b79435d252661176cd": "2026-10-27T23:03:58.000Z",
@@ -23,7 +23,8 @@
     "6ae6446e37c1acd2a0c8d93a": "2026-10-31T20:00:23.755Z",
     "6ae653b6f0984eef332df7e3": "2026-10-31T21:30:25.641Z",
     "6ae654c3cf3a3112f3c23129": "2026-10-31T23:00:17.021Z",
-    "6ae6566af0984eef332e9f44": "2026-11-01T00:30:12.315Z"
+    "6ae6566af0984eef332e9f44": "2026-11-01T00:30:12.315Z",
+    "6ae6575837c1acd2a0ce1a00": "2026-11-01T02:00:15.984Z"
   },
   "active_batch": {
     "number": 2,
@@ -154,7 +155,7 @@
   },
   "pending_batch": null,
   "next_cursor": 30,
-  "last_polled_at": "2026-11-01T01:32:29.727862+00:00",
+  "last_polled_at": "2026-11-01T02:00:19.688876+00:00",
   "last_replenish_request_at": "2026-11-01T01:32:29.727862+00:00",
   "notes": "Count tracks Buffer status=sent since monitoring/bootstrap, not lifetime YouTube views."
 }
