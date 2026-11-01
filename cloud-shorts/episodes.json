@@ -7257,7 +7257,16 @@
       ],
       "voice_revision_requested": true,
       "voice_revision_reason": "narration_visually_corrected_private",
-      "voice_revision_priority": true
+      "voice_revision_priority": true,
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/c62144f8-105e-4497-b7b2-1a65eb4997d4.mp3",
+        "transcript_sha256": "a6e5331195e4f3a223df09afb24f756f629bfc9f59ffeea05d1bab42e6cb5dfe",
+        "source_audio_sha256": "a4d38802a9fff154834af75897e4a0d37170f1d7c1f825c66e8ee7bb6921df7f",
+        "context_id": "7147b0e7fe41478290a0afcb05fc4530",
+        "licence_mode": "public_provider_attribution"
+      }
     }
   ]
 }
