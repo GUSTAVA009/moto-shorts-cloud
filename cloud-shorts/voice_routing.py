@@ -1,8 +1,9 @@
-"""Only owner-approved ORIGINAL voice routes: legacy DEEP and private Qwen.
+"""Independent owner-approved speech for NEW episodes; historic Deep immutable.
 
-No SaaS voice generations, no service usage credits, no silent fallback.
-Old verified DEEP episodes remain unmodified. All future episodes choose
-their speaker at creation and never change identities mid-production.
+New future episodes target the owner-controlled Qwen endpoint (cloud, local PC,
+or approved third route) by default. Never create new Deep-only drafts that
+require the assistant to generate a separate voice clip. Explicit historical
+Deep records remain valid, with no silent narrator substitutions.
 """
 from __future__ import annotations
 import os
@@ -12,7 +13,10 @@ import selfhosted_voice
 
 def new_episode_configuration(environment=None):
     env = environment if environment is not None else os.environ
-    provider = env.get("GUSTAVA_TTS_PROVIDER", deep_voice.VOICE_ENGINE)
+    # A blank Actions variable is NOT permission to fall back to manual Deep.
+    # Qwen3 is the owner-approved autonomous voice profile. If no owner
+    # endpoints are configured, the draft may be staged but cannot render.
+    provider = env.get("GUSTAVA_TTS_PROVIDER") or selfhosted_voice.VOICE_ENGINE
     if provider == deep_voice.VOICE_ENGINE:
         return {
             "voice_engine": deep_voice.VOICE_ENGINE,

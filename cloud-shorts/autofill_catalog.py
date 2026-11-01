@@ -20,6 +20,8 @@ from editorial_guard import validate_catalog, source_id
 from render_episode import validate_episode
 from production_readiness import inventory, production_unavailable
 from editorial_novelty import require_novel_visual_story
+from deep_voice import ready as approved_legacy_deep, VOICE_ENGINE as DEEP_ENGINE
+from selfhosted_voice import VOICE_ENGINE as OWNER_TTS_ENGINE
 
 TARGET_PENDING_EPISODES = 10
 MAX_ADD_PER_RUN = 2
@@ -29,19 +31,27 @@ CATALOG_PATH = "cloud-shorts/episodes.json"
 SEEDS = ROOT / "seed_backlog.json"
 
 
-def candidate(catalog, seed_bank, reserved_ids, target=2):
+def actionable_voice_plan(episode):
+    """Only stage jobs not dependent on an assistant manually recording."""
+    return bool(episode.get("voice_engine") == OWNER_TTS_ENGINE
+                or (episode.get("voice_engine") == DEEP_ENGINE
+                    and approved_legacy_deep(episode)))
+
+
+def candidate(catalog, seed_bank, reserved_ids, target=2, autonomous=False):
     """Pick a rights-cleared episode while the target has not been met."""
     if seed_bank.get("version") != 1:
         raise ValueError("Invalid curated story bank version")
     episodes = catalog["episodes"]
     pending = sum(x.get("auto_preview") is True and x["id"] not in reserved_ids
+                  and (not autonomous or actionable_voice_plan(x))
                   for x in episodes)
     if pending >= target:
         return None
     used = {x["id"] for x in episodes}
     used_media = {source_id(video) for x in episodes for video in x["footage"]}
     for scene in seed_bank["episodes"]:
-        if scene["id"] in used:
+        if scene["id"] in used or (autonomous and not actionable_voice_plan(scene)):
             continue
         validate_episode(scene)
         require_novel_visual_story(scene, episodes)
@@ -77,8 +87,9 @@ def github(method, path, payload=None):
         return json.loads(raw) if raw else {}
 
 
-def pending_originals(catalog, reserved):
+def pending_originals(catalog, reserved, autonomous=False):
     return sum(e.get("auto_preview") is True and e["id"] not in reserved
+               and (not autonomous or actionable_voice_plan(e))
                for e in catalog["episodes"])
 
 
@@ -106,17 +117,18 @@ def main():
     added = []
     # Never spend time/materials on unused videos if ten originals
     # are already awaiting rendering.
-    if pending_originals(catalog, reserved) >= TARGET_PENDING_EPISODES:
+    if pending_originals(catalog, reserved, autonomous=True) >= TARGET_PENDING_EPISODES:
         state = inventory(catalog, reserved)
         print("PRODUCTION_INVENTORY", json.dumps(state, ensure_ascii=False), flush=True)
         if production_unavailable(state):
             raise RuntimeError(
-                "AUTONOMOUS_DEEP_TTS_MISSING: script-only backlog is not MP4 "
-                "production stock; exact voice_id=deep needs independently "
-                "authorized unattended provider synthesis and pinned ASR")
-        print("SCRIPT_CAPACITY_HEALTHY_BUT_ONLY",
-              state["unrendered_verified_deep_originals"],
-              "real DEEP audio originals ready for renderer", flush=True)
+                "AUTONOMOUS_VOICE_NOT_CONFIGURED: script-only backlog is not MP4. "
+                "Set up any approved HAPYCH Qwen cloud/PC or Chatterbox voice "
+                "HTTPS endpoint, channel-scoped key and verified WAV reference.")
+        print("SCRIPT_CAPACITY_HEALTHY_AND_VOICE_READY",
+              state["ready_unattended_voice_episodes"],
+              "verified Deep or configured owner-route candidates; "
+              "live synthesis still must pass QA", flush=True)
         return 0
 
     import preview_queue as ledger
@@ -126,7 +138,7 @@ def main():
     for index in range(MAX_ADD_PER_RUN):
         try:
             selection = candidate(catalog, seeds, reserved,
-                                  target=TARGET_PENDING_EPISODES)
+                                  target=TARGET_PENDING_EPISODES, autonomous=True)
         except RuntimeError as exc:
             if "CURATED_STORY_BANK_EXHAUSTED" not in str(exc):
                 raise
@@ -157,10 +169,11 @@ def main():
         print("PRODUCTION_INVENTORY", json.dumps(state, ensure_ascii=False), flush=True)
         if production_unavailable(state):
             raise RuntimeError(
-                "AUTONOMOUS_DEEP_TTS_MISSING: no new, hash-pinned DEEP audio "
-                "to render; a script reserve is not an autonomous Shorts farm")
-        print("NO_MORE_SCRIPTS_REQUIRED_RIGHT_NOW: verified DEEP previews",
-              state["unrendered_verified_deep_originals"], flush=True)
+                "AUTONOMOUS_VOICE_NOT_CONFIGURED: no verified Deep or "
+                "configured Qwen cloud/PC/third voice for any pending "
+                "episode; script bank is not an autonomous Shorts farm")
+        print("NO_MORE_SCRIPTS_REQUIRED_RIGHT_NOW: voice-ready previews",
+              state["ready_unattended_voice_episodes"], flush=True)
         return 0
 
     content = base64.b64encode((json.dumps(catalog, ensure_ascii=False, indent=2)
@@ -171,14 +184,16 @@ def main():
     })
     state = inventory(catalog, reserved)
     print("NEW_STORIES_ADDED", len(added), added,
-          "unrendered_backlog", pending_originals(catalog, reserved), flush=True)
+          "unattended_voice_plan_backlog", pending_originals(catalog, reserved,
+                                                             autonomous=True), flush=True)
     print("PRODUCTION_INVENTORY", json.dumps(state, ensure_ascii=False), flush=True)
     if production_unavailable(state):
         # Persist distinct scripts, but NEVER run a doomed renderer with no
         # genuine GUSTAVA DEEP, and never claim another Short was generated.
         raise RuntimeError(
-            "NEW_SCRIPTS_AWAITING_ORIGINAL_DEEP: provider voice_id=deep "
-            "has no unattended API connection; 0 new MP4 were generated")
+            "NEW_SCRIPTS_AWAITING_APPROVED_TTS: none of the three owner "
+            "voice services is configured and no pinned DEEP is present. "
+            "0 new MP4 generated; unattended voice must be connected.")
     # GITHUB_TOKEN commits intentionally do not activate push workflows.
     # Dispatch exactly one safe renderer. Further attempts run by schedule.
     if os.getenv("GITHUB_EVENT_NAME") == "schedule":

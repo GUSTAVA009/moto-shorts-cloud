@@ -44,7 +44,7 @@ jobs:
           python3 -m unittest discover -s cloud-shorts -p 'test_moto_assets.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_moto_autocreate.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_cc0_source_pool.py' -v
-      - name: Keep rolling 10 original scripts supplied, with max two materialized per run
+      - name: Create owner-voice-ready scripts without manual Deep narrations
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -53,5 +53,21 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GUSTAVA_SCRIPT_MODEL: ${{ vars.GUSTAVA_SCRIPT_MODEL }}
-          GUSTAVA_TTS_PROVIDER: ${{ vars.GUSTAVA_TTS_PROVIDER }}
+          # New episodes must be synthesizable without calling ChatGPT.
+          # Historic Deep-only recordings retain their immutable profile.
+          GUSTAVA_TTS_PROVIDER: gustava_selfhosted_qwen3
+          GUSTAVA_VOICE_REFERENCE_SHA256: ${{ vars.GUSTAVA_VOICE_REFERENCE_SHA256 }}
+          GUSTAVA_SELFHOSTED_TTS_ENABLED: ${{ vars.GUSTAVA_SELFHOSTED_TTS_ENABLED }}
+          GUSTAVA_VOICE_KEY_PRESENT: ${{ secrets.GUSTAVA_VOICE_API_KEY != '' }}
+          GUSTAVA_VOICE_API_URL: ${{ vars.GUSTAVA_VOICE_API_URL }}
+          GUSTAVA_VOICE_APPROVED_HOST: ${{ vars.GUSTAVA_VOICE_APPROVED_HOST }}
+          GUSTAVA_LOCAL_TTS_ENABLED: ${{ vars.GUSTAVA_LOCAL_TTS_ENABLED }}
+          GUSTAVA_LOCAL_VOICE_KEY_PRESENT: ${{ secrets.GUSTAVA_LOCAL_VOICE_API_KEY != '' }}
+          GUSTAVA_LOCAL_VOICE_API_URL: ${{ vars.GUSTAVA_LOCAL_VOICE_API_URL }}
+          GUSTAVA_LOCAL_VOICE_APPROVED_HOST: ${{ vars.GUSTAVA_LOCAL_VOICE_APPROVED_HOST }}
+          GUSTAVA_TERTIARY_TTS_ENABLED: ${{ vars.GUSTAVA_TERTIARY_TTS_ENABLED }}
+          GUSTAVA_TERTIARY_VOICE_KEY_PRESENT: ${{ secrets.GUSTAVA_TERTIARY_VOICE_API_KEY != '' }}
+          GUSTAVA_TERTIARY_VOICE_API_URL: ${{ vars.GUSTAVA_TERTIARY_VOICE_API_URL }}
+          GUSTAVA_TERTIARY_VOICE_APPROVED_HOST: ${{ vars.GUSTAVA_TERTIARY_VOICE_APPROVED_HOST }}
+          GUSTAVA_TERTIARY_VOICE_CANARY_APPROVED: ${{ vars.GUSTAVA_TERTIARY_VOICE_CANARY_APPROVED }}
         run: python3 cloud-shorts/autofill_catalog.py

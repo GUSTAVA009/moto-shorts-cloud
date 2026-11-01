@@ -10,6 +10,7 @@ from autofill_catalog import github
 from buffer_autopublish import verify_channel
 import preview_queue as ledger
 from rolling_batches import STATE_PATH, reconcile, progress
+from production_readiness import inventory, production_unavailable
 
 MIN_REFILL_COOLDOWN_MINUTES = 45
 MIN_BUFFER_SCHEDULED = 7  # alert if actual scheduled posts fall below this
@@ -73,7 +74,7 @@ def count_unqueued_reviewed_mp4(catalog, receipts, artifacts, ledger_paths):
     return count
 
 
-def live_unqueued_reviewed_mp4(catalog):
+def live_unqueued_reviewed_mp4(catalog, include_reserved=False):
     """Fetch permanent publication receipts and active GitHub MP4 artifacts."""
     tree = github("GET", "git/trees/render-ledger?recursive=1")
     if tree.get("truncated"):
@@ -84,6 +85,10 @@ def live_unqueued_reviewed_mp4(catalog):
                  if (p.startswith("publication-receipts/")
                      or p.startswith("buffer-publication-receipts/"))
                  and p.endswith(".json")}
+    reserved_ids = {Path(row["path"]).stem for row in tree.get("tree", [])
+                    if row.get("type") == "blob"
+                    and row["path"].startswith("render-receipts/")
+                    and row["path"].endswith(".json")}
     candidates = [ep for ep in catalog.get("episodes", [])
                   if ep.get("auto_publish") is True
                   and ep["id"] not in published
@@ -91,7 +96,7 @@ def live_unqueued_reviewed_mp4(catalog):
                   and ep.get("reviewed_mp4_sha256")
                   and ep.get("reviewed_artifact_run_id")]
     if not candidates:
-        return 0
+        return (0, reserved_ids) if include_reserved else 0
     receipts = []
     for ep in candidates:
         entry = ledger.api("render-receipts/" + ep["id"] + ".json")
@@ -106,7 +111,8 @@ def live_unqueued_reviewed_mp4(catalog):
             break
     else:
         raise RuntimeError("Artifact list incomplete; cannot count QA reserve")
-    return count_unqueued_reviewed_mp4(catalog, receipts, artifacts, paths)
+    count = count_unqueued_reviewed_mp4(catalog, receipts, artifacts, paths)
+    return (count, reserved_ids) if include_reserved else count
 
 
 def read_state(entry):
@@ -155,6 +161,31 @@ def should_request_voice_refill(state, scheduled_count, now):
     return last is None or now - last >= timedelta(minutes=VOICE_REFILL_COOLDOWN_MINUTES)
 
 
+def dispatch_plan(refill, urgent_voice_refill, events, scheduled_count,
+                  ready_voice_candidates, reserve_count):
+    """Pure action planner. Never dispatch an empty video/voice queue.
+
+    Production requests are NOT successful clips or Buffer receipts. This
+    scheduler can be regression-tested without talking to external services.
+    """
+    if min(scheduled_count, ready_voice_candidates, reserve_count) < 0:
+        raise ValueError("NEGATIVE_FACTORY_INVENTORY")
+    source = bool(refill or urgent_voice_refill)
+    shortage = bool(urgent_voice_refill
+                    or (refill and scheduled_count < MIN_BUFFER_SCHEDULED))
+    return {
+        "request_new_sources":source,
+        "request_voice_and_render":bool(shortage and ready_voice_candidates > 0),
+        "request_verified_buffer_delivery":bool(
+            reserve_count > 0 and
+            ("promote_next_ten" in events or
+             (refill and scheduled_count < MIN_BUFFER_SCHEDULED))),
+        "voice_not_ready":bool(shortage and ready_voice_candidates == 0),
+        "no_qa_mp4_for_buffer":bool(scheduled_count < MIN_BUFFER_SCHEDULED
+                                   and reserve_count == 0),
+    }
+
+
 def needs_persist(before, after, events, now):
     if before is None or events:
         return True
@@ -182,7 +213,13 @@ def main():
     now = datetime.now(timezone.utc)
     state, events = reconcile(before, sent, now=now.isoformat(),
                               consumed_ids=used_ids, consumed_titles=titles)
-    reserve_count = live_unqueued_reviewed_mp4(catalog)
+    reserve_count, reserved_ids = live_unqueued_reviewed_mp4(
+        catalog, include_reserved=True)
+    voice_supply = inventory(catalog, reserved_ids)
+    # A script is not voice-ready merely because a cron requests a render.
+    # Block speculative renders if there is neither a pinned historic Deep
+    # audio source nor an owner-configured private voice route.
+    ready_voice_candidates = voice_supply["ready_unattended_voice_episodes"]
     refill = should_replenish(state, events, len(scheduled), now,
                               reviewed_mp4_reserve_count=reserve_count)
     urgent_voice_refill = should_request_voice_refill(state, len(scheduled), now)
@@ -199,24 +236,35 @@ def main():
                "low_queue_voice_trigger_below":LOW_QUEUE_VOICE_REFILL_BELOW,
                "unqueued_reviewed_mp4_reserve":reserve_count,
                "unqueued_reviewed_mp4_target":REVIEWED_MP4_RESERVE_TARGET,
+               "voice_ready_unrendered_episodes":ready_voice_candidates,
+               "configured_owner_voice_routes":voice_supply["configured_voice_route_names"],
+               "voice_live_verified":voice_supply["voice_route_reachability_verified"],
+               "unrendered_scripts_needing_voice":(
+                   voice_supply["unrendered_missing_original_deep"]
+                   +voice_supply["unrendered_selfhosted_not_configured"]),
                "buffer_delivery_errors":len(errors), "buffer_still_sending":len(sending),
                **progress(state, len(scheduled))}
+    plan = dispatch_plan(refill, urgent_voice_refill, events, len(scheduled),
+                         ready_voice_candidates, reserve_count)
+    summary["actions"] = plan
     print("ROLLING_TEN_STATUS",json.dumps(summary,ensure_ascii=False),flush=True)
-    if refill or urgent_voice_refill:
+    if plan["request_new_sources"]:
         github("POST","actions/workflows/autofill-motorcycle.yml/dispatches",{"ref":"main"})
         print("ROLLING_TEN_AUTOFILL_DISPATCHED",flush=True)
-    if (urgent_voice_refill or
-            (refill and len(scheduled) < MIN_BUFFER_SCHEDULED)):
-        # When stock is queued in episodes.json but Buffer is running empty,
-        # a new supplier run alone can be a no-op. Explicitly nudge the
-        # guarded renderer and sender; both implement receipt deduplication.
+    if plan["request_voice_and_render"]:
         github("POST","actions/workflows/daily-preview.yml/dispatches",{"ref":"main"})
-        print("ROLLING_TEN_URGENT_PREVIEW_DISPATCHED",flush=True)
-        if urgent_voice_refill:
-            print("LOW_QUEUE_UNATTENDED_VOICE_RENDER_REQUESTED_NOT_COMPLETED",flush=True)
-    if "promote_next_ten" in events or (refill and len(scheduled) < MIN_BUFFER_SCHEDULED):
+        print("ROLLING_TEN_VOICE_READY_PREVIEW_DISPATCHED", ready_voice_candidates,
+              flush=True)
+    elif plan["voice_not_ready"]:
+        print("::warning::VOICE_SUPPLY_BLOCKED: only unvoiced scripts remain; "
+              "no manual Deep generation. Cloud, Windows or approved independent "
+              "third owner TTS must provide an actual SHA-pinned WAV.",flush=True)
+    if plan["request_verified_buffer_delivery"]:
         github("POST","actions/workflows/buffer-backlog.yml/dispatches",{"ref":"main"})
         print("ROLLING_TEN_VERIFIED_PUBLISHER_DISPATCHED",flush=True)
+    elif plan["no_qa_mp4_for_buffer"]:
+        print("::warning::MP4_SUPPLY_BLOCKED: zero released, QA-reviewed MP4 "
+              "available; do not falsely report Buffer replenished.",flush=True)
     if os.getenv("GITHUB_STEP_SUMMARY"):
         lines=["## Rolling ten: Buffer status=sent", "",
                "Confirmed sent since bootstrap: "+str(summary["verified_buffer_sent_count_since_bootstrap"]),

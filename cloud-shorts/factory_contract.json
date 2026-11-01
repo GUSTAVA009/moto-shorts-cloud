@@ -20,7 +20,15 @@
     "monthly_required_deliverable": "unique_licensed_QA_approved_rendered_MP4_not_scenarios",
     "shortest_month_28_days_baseline": 420,
     "monthly_backlog_catchup_slots_max_per_day": 16,
-    "daily_target_depends_on_calendar_month": true
+    "daily_target_depends_on_calendar_month": true,
+    "default_unattended_voice_engine": "gustava_selfhosted_qwen3",
+    "manual_assistant_audio_creation_is_not_factory_operation": true,
+    "legacy_deep_requires_existing_sha_pinned_recording": true,
+    "disabled_legacy_deep_is_not_counted_in_autonomous_supply": true,
+    "automatic_dispatch_requires_voice_ready_episode": true,
+    "buffer_dispatch_requires_verified_qa_mp4": true,
+    "three_voice_routes_must_be_provisioned_and_live_tested_before_claiming_full_autonomy": true,
+    "autonomous_publications_count_source": "live Buffer sent receipts AND independently verified public YouTube URL, never static contract"
   },
   "buffer": {
     "provider": "Buffer",
