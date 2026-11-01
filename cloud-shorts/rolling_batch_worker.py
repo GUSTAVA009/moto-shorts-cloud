@@ -15,6 +15,98 @@ MIN_REFILL_COOLDOWN_MINUTES = 45
 MIN_BUFFER_SCHEDULED = 7  # alert if actual scheduled posts fall below this
 REFILL_AT_OR_BELOW_SCHEDULED = 9  # owner contract: request next 10 at 9 remaining
 
+REVIEWED_MP4_RESERVE_TARGET = 10
+
+
+def count_unqueued_reviewed_mp4(catalog, receipts, artifacts, ledger_paths):
+    """Conservatively count distinct, unqueued MP4s with real QA evidence.
+
+    Only an individually reviewed, SHA-pinned release whose original artifact
+    still exists and whose original Deep/mixed QA receipt passes counts.
+    Scripts and private/unreviewed previews are never a finished reserve.
+    """
+    import re
+    from find_pending_publication import select as select_publishable
+
+    paths = set(ledger_paths)
+    blocked = {Path(p).stem for p in paths
+               if (p.startswith("publication-receipts/")
+                   or p.startswith("buffer-publication-receipts/"))
+               and p.endswith(".json")}
+    receipt_by_id = {}
+    for record in receipts:
+        slug = record.get("id")
+        if slug in receipt_by_id:
+            raise RuntimeError("Duplicate render receipts in reserve inventory")
+        receipt_by_id[slug] = record
+
+    eligible_episodes = []
+    eligible_receipts = []
+    for ep in catalog.get("episodes", []):
+        slug = ep["id"]
+        run = str(ep.get("reviewed_artifact_run_id") or "")
+        sha = ep.get("reviewed_mp4_sha256") or ""
+        if (slug in blocked or ep.get("auto_publish") is not True
+                or not re.fullmatch(r"[0-9a-f]{64}", sha)
+                or not run.isdigit()
+                or "render-receipts/" + slug + ".json" not in paths):
+            continue
+        receipt = receipt_by_id.get(slug)
+        if not receipt or str(receipt.get("run_id")) != run:
+            continue
+        eligible_episodes.append(ep)
+        eligible_receipts.append(receipt)
+
+    # Reuse the exact public release gate; never loosen voice/visual QA
+    # merely to make the reserve dashboard show ten.
+    eligible_catalog = {"episodes": eligible_episodes}
+    count = 0
+    while True:
+        chosen = select_publishable(
+            eligible_catalog, eligible_receipts, blocked, artifacts)
+        if chosen is None:
+            break
+        blocked.add(chosen[1])
+        count += 1
+    return count
+
+
+def live_unqueued_reviewed_mp4(catalog):
+    """Fetch permanent publication receipts and active GitHub MP4 artifacts."""
+    tree = github("GET", "git/trees/render-ledger?recursive=1")
+    if tree.get("truncated"):
+        raise RuntimeError("Incomplete MP4 receipt inventory; cannot count reserve")
+    paths = [row["path"] for row in tree.get("tree", [])
+             if row.get("type") == "blob"]
+    published = {Path(p).stem for p in paths
+                 if (p.startswith("publication-receipts/")
+                     or p.startswith("buffer-publication-receipts/"))
+                 and p.endswith(".json")}
+    candidates = [ep for ep in catalog.get("episodes", [])
+                  if ep.get("auto_publish") is True
+                  and ep["id"] not in published
+                  and "render-receipts/" + ep["id"] + ".json" in paths
+                  and ep.get("reviewed_mp4_sha256")
+                  and ep.get("reviewed_artifact_run_id")]
+    if not candidates:
+        return 0
+    receipts = []
+    for ep in candidates:
+        entry = ledger.api("render-receipts/" + ep["id"] + ".json")
+        if not entry:
+            raise RuntimeError("Missing permanent render receipt")
+        receipts.append(ledger.decode_receipt(entry))
+    artifacts = []
+    for page in range(1, 7):
+        response = github("GET", "actions/artifacts?per_page=100&page=" + str(page))
+        artifacts.extend(response.get("artifacts", []))
+        if len(response.get("artifacts", [])) < 100:
+            break
+    else:
+        raise RuntimeError("Artifact list incomplete; cannot count QA reserve")
+    return count_unqueued_reviewed_mp4(catalog, receipts, artifacts, paths)
+
+
 def read_state(entry):
     if not entry:
         return None
@@ -33,13 +125,15 @@ def iso(text):
         raise ValueError("Rolling ten timestamp missing timezone")
     return value
 
-def should_replenish(state, events, scheduled_count, now):
+def should_replenish(state, events, scheduled_count, now,
+                     reviewed_mp4_reserve_count=REVIEWED_MP4_RESERVE_TARGET):
     if any(x in events for x in ("bootstrap_active_ten", "stage_next_ten",
                                "late_stage_ten", "promote_next_ten")):
         return True
     # This is the 9-post REPLENISH trigger, not the separate 7-post
     # low-stock alarm. Script creation and ready-to-send MP4s remain distinct.
-    if scheduled_count > REFILL_AT_OR_BELOW_SCHEDULED:
+    if (scheduled_count > REFILL_AT_OR_BELOW_SCHEDULED
+            and reviewed_mp4_reserve_count >= REVIEWED_MP4_RESERVE_TARGET):
         return False
     last = iso(state.get("last_replenish_request_at"))
     return last is None or now - last >= timedelta(minutes=MIN_REFILL_COOLDOWN_MINUTES)
@@ -70,7 +164,9 @@ def main():
     now = datetime.now(timezone.utc)
     state, events = reconcile(before, sent, now=now.isoformat(),
                               consumed_ids=used_ids, consumed_titles=titles)
-    refill = should_replenish(state, events, len(scheduled), now)
+    reserve_count = live_unqueued_reviewed_mp4(catalog)
+    refill = should_replenish(state, events, len(scheduled), now,
+                              reviewed_mp4_reserve_count=reserve_count)
     if refill:
         state["last_replenish_request_at"] = now.isoformat()
     if needs_persist(before, state, events, now):
@@ -78,6 +174,8 @@ def main():
                      "Rolling ten verified sent checkpoint: "+(", ".join(events) or "poll"),
                      old_sha=entry["sha"] if entry else None)
     summary = {"events":events, "dispatch_replenishment":refill,
+               "unqueued_reviewed_mp4_reserve":reserve_count,
+               "unqueued_reviewed_mp4_target":REVIEWED_MP4_RESERVE_TARGET,
                "buffer_delivery_errors":len(errors), "buffer_still_sending":len(sending),
                **progress(state, len(scheduled))}
     print("ROLLING_TEN_STATUS",json.dumps(summary,ensure_ascii=False),flush=True)
@@ -99,7 +197,8 @@ def main():
                "Current batch: "+str(summary["current_pack_progress"])+"/10",
                "Active draft scripts: "+str(summary["active_script_drafts_ready"]),
                "Next staged draft scripts: "+str(summary["next_script_drafts_ready"]),
-               "Scheduled in Buffer: "+str(summary["buffer_scheduled_posts"]), "",
+               "Scheduled in Buffer: "+str(summary["buffer_scheduled_posts"]),
+               "Separate release-eligible QA MP4 reserve: "+str(reserve_count)+"/10", "",
                "Drafts are not QA-passed MP4s or verified public YouTube views."]
         Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text("\n".join(lines)+"\n",encoding="utf8")
     return 0
