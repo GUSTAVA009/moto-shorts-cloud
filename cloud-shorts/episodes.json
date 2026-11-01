@@ -7188,7 +7188,7 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 4,
           "seconds": 8.5
         },
         {
@@ -7227,7 +7227,32 @@
         "source_audio_sha256": "7059313cb93e12819e8b7be44084968a0102587c440820b82db6204251088be5",
         "context_id": "3a9da445f7c141369100c040095b9c8b",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "spoken_second_scene_at_seconds": 3.82,
+      "align_middle_caption_to_second_scene": true,
+      "visual_revision_requested": true,
+      "visual_revision_reason": "spoken_scene_caption_mismatch",
+      "visual_revision_evidence": {
+        "prior_run_id": "41292865035",
+        "prior_mp4_sha256": "b5f30e4b3c9fd5d9c453bb45cb5519ce780567f9100f7ce028e7274094522983",
+        "old_caption_start_seconds": 3.9,
+        "old_second_scene_start_seconds": 5.881,
+        "reviewed_from": "actual_first_preview_mp4",
+        "issue": "caption depicts muddy offroad before first race shot ended",
+        "corrective_action": "start race at observed launch and cut to mud before its spoken caption"
+      },
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "motorcycle_drag_race",
+          "spoken_anchor": "мотоцикл разгоняется в гонке"
+        },
+        {
+          "source": "clip_1",
+          "action": "motorcycle_muddy_offroad",
+          "spoken_anchor": "райдер едет по грязному бездорожью"
+        }
+      ]
     }
   ]
 }
