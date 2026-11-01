@@ -72,6 +72,18 @@ def validated_music_gain(gain):
     return level
 
 
+def validated_clean_speech_intro_seconds(value):
+    """Keep an evidence-backed spoken hook free of competing music and SFX.
+
+    This changes only the sound bed. The original narrator, reference, and
+    final independent mixed-MP4 ASR threshold remain unchanged.
+    """
+    seconds = float(value)
+    if not 0.0 <= seconds <= 4.0:
+        raise ValueError("Speech-first intro must be 0-4 seconds")
+    return seconds
+
+
 def clean_description(text):
     return "\n".join(
         ln for ln in str(text).splitlines()
@@ -143,6 +155,7 @@ def validate_episode(ep):
     opening_trim = float(ep.get("opening_trim_seconds", 0.0))
     if not 0 <= opening_trim <= 2.0:
         raise ValueError("Action hook trim must be between 0 and 2 seconds")
+    validated_clean_speech_intro_seconds(ep.get("clean_speech_intro_seconds", 0))
     return slug
 
 
@@ -584,16 +597,21 @@ def render(ep, output_dir):
 
     output = output_dir / (slug + ".mp4")
     mix_gain = validated_music_gain(os.environ.get("GUSTAVA_MUSIC_GAIN", "0.18"))
+    intro_seconds = validated_clean_speech_intro_seconds(
+        ep.get("clean_speech_intro_seconds", 0))
+    intro_fade = 0.70 if intro_seconds > 0 else 0.18
     filter_graph = (
         "[0:v]" + captions + "[v];"
         "[1:a]aresample=48000,highpass=f=85,lowpass=f=8900,"
         "volume=1.00,adelay=160|160,apad,atrim=duration=%.3f,"
         "asetpts=PTS-STARTPTS,aformat=channel_layouts=stereo,asplit=2[voice_duck][voice_mix];" % total
         + f"[2:a]aresample=48000,volume={mix_gain:.2f},"
-        "afade=t=in:st=0:d=0.18,afade=t=out:st=%.3f:d=0.4,"
+        + f"afade=t=in:st={intro_seconds:.2f}:d={intro_fade:.2f},"
+        "afade=t=out:st=%.3f:d=0.4,"
         "atrim=duration=%.3f,asetpts=PTS-STARTPTS,"
         "aformat=channel_layouts=stereo,haas=side_gain=0.55[bed];" % (max(0.1, total - 0.4), total)
         + "[3:a]aresample=48000,volume=0.22,"
+        + f"afade=t=in:st={intro_seconds:.2f}:d={intro_fade:.2f},"
           "aformat=channel_layouts=stereo,atrim=duration=%.3f[fx];" % total
         + "[bed][fx]amix=inputs=2:duration=first:normalize=0[soundbed];"
         + "[soundbed][voice_duck]sidechaincompress=threshold=0.022:"
