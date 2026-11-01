@@ -73,10 +73,17 @@ def store(path, body, message, old_sha=None):
     return api(path, "PUT", payload)
 
 
+def may_enter_preview_queue(episode):
+    """An editorially rejected preview stays blocked until a new reviewed fix."""
+    return (episode.get("auto_preview") is True
+            and episode.get("editorial_rejected") is not True
+            and episode.get("visual_review_failed") is not True)
+
+
 def pick(episodes, exists):
-    """Pure helper: select first explicitly approved, never-reserved item."""
+    """Pure helper: select first eligible, never-reserved item."""
     for ep in episodes:
-        if ep.get("auto_preview") is True and not exists(ep["id"]):
+        if may_enter_preview_queue(ep) and not exists(ep["id"]):
             return ep["id"]
     return None
 
@@ -398,10 +405,9 @@ def choose(catalog, output):
     output.parent.mkdir(parents=True, exist_ok=True)
     listed = []
     for ep in data["episodes"]:
-        if ep.get("auto_preview") is not True or not deep_audio_ready(ep):
+        if not may_enter_preview_queue(ep) or not deep_audio_ready(ep):
             continue
-        if (ep.get("editorial_rejected") is True
-                or is_repeated_visual_formula(ep, data["episodes"])):
+        if is_repeated_visual_formula(ep, data["episodes"]):
             print("REPETITIVE_VIDEO_BLOCKED", ep["id"], flush=True)
             continue
         try:
