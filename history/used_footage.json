@@ -862,6 +862,16 @@
       "episode": "moto-vintage-c81aecc34671",
       "source": "https://www.pexels.com/video/thrilling-off-road-motorcycle-adventure-in-muddy-terrain-31881759/",
       "status": "reserved-or-rendered"
+    },
+    "32659157": {
+      "episode": "moto-roadtrip-5b98825cae72",
+      "source": "https://www.pexels.com/video/epic-motorcycle-journey-through-ladakh-s-mountains-32659157/",
+      "status": "reserved-or-rendered"
+    },
+    "31894372": {
+      "episode": "moto-roadtrip-5b98825cae72",
+      "source": "https://www.pexels.com/video/motorcycle-racing-on-track-in-indonesia-31894372/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1298,6 +1308,13 @@
       "people": "classic-restorers-c81ae",
       "story": "vintage-bike-work-c81ae",
       "visual": "three-clips-c81ae"
+    },
+    "moto-roadtrip-5b98825cae72": {
+      "environment": "countryside-road-5b988",
+      "bike": "touring-motorcycle",
+      "people": "touring-travelers-5b988",
+      "story": "scenic-country-road-5b988",
+      "visual": "three-clips-5b988"
     }
   }
 }
