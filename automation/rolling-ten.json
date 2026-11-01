@@ -157,7 +157,7 @@
   },
   "pending_batch": null,
   "next_cursor": 30,
-  "last_polled_at": "2026-11-01T06:31:51.299448+00:00",
-  "last_replenish_request_at": "2026-11-01T06:31:51.299448+00:00",
+  "last_polled_at": "2026-11-01T08:11:39.744026+00:00",
+  "last_replenish_request_at": "2026-11-01T08:11:39.744026+00:00",
   "notes": "Count tracks Buffer status=sent since monitoring/bootstrap, not lifetime YouTube views."
 }
