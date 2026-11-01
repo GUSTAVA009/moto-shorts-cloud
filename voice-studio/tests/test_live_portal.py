@@ -221,5 +221,52 @@ class LivePortalContract(unittest.TestCase):
         self.assertEqual(portal.VOICE_ID,"gustava-original-v1")
         self.assertEqual(len(portal.REF_SHA),64)
 
+    def test_ffmpeg_equalizer_changes_real_pcm_when_ffmpeg_available(self):
+        """Confirm actual signal processing, not just the sliders/filter text."""
+        import array
+        import io
+        import math
+        import shutil
+        import subprocess
+        import wave
+        if not shutil.which("ffmpeg"):
+            self.skipTest("ffmpeg is installed on owner production VPS, not every CI runner")
+        rate=24000
+        frames=array.array("h")
+        for i in range(rate * 2):
+            value=int(32767*(0.18*math.sin(2*math.pi*80*i/rate) +
+                             0.06*math.sin(2*math.pi*1000*i/rate)))
+            frames.append(value)
+        source=self.tmp.name+"/source.wav"
+        output=self.tmp.name+"/processed.wav"
+        with wave.open(source,"wb") as f:
+            f.setnchannels(1);f.setsampwidth(2);f.setframerate(rate)
+            f.writeframes(frames.tobytes())
+        filters=portal.voice_filters(1.0,
+                    {"80":4,"250":0,"1000":0,"3000":0,"8000":0})
+        subprocess.run(["ffmpeg","-nostdin","-hide_banner","-loglevel","error",
+                        "-y","-i",source,"-filter:a",",".join(filters),
+                        "-ar","24000","-ac","1","-c:a","pcm_s16le",output],
+                       capture_output=True,check=True,timeout=30)
+        with wave.open(output,"rb") as wav:
+            self.assertEqual(wav.getnchannels(),1)
+            self.assertEqual(wav.getframerate(),rate)
+            self.assertEqual(wav.getsampwidth(),2)
+            filtered=array.array("h")
+            filtered.frombytes(wav.readframes(wav.getnframes()))
+        self.assertNotEqual(frames[:2000],filtered[:2000])
+        self.assertLess(max(abs(v) for v in filtered),31500)
+        def frequency_power(signal,freq):
+            # One complete second gives orthogonal 80 Hz and 1 kHz harmonics.
+            size=rate
+            cos=sum(signal[i]*math.cos(2*math.pi*freq*i/rate)
+                    for i in range(size))
+            sin=sum(signal[i]*math.sin(2*math.pi*freq*i/rate)
+                    for i in range(size))
+            return (cos*cos+sin*sin)**0.5 / size
+        self.assertGreater(frequency_power(filtered,80),
+                           frequency_power(frames,80)*1.25)
+
+
 if __name__ == "__main__":
     unittest.main()
