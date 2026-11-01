@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Honest >=330/month KPI: sent Buffer receipts, ready MP4s and source bottlenecks.
+"""Honest >=400/month KPI: sent Buffer receipts, ready MP4s and source bottlenecks.
 
 Read only: never schedules or publishes a video and never reveals API keys.
 """
@@ -88,7 +88,7 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
     # Script prompts can be composed locally; licensed moving footage cannot.
     if not pexels and unused_public_clips < weekly_clip_floor:
         deficits.append(
-            "LICENSED_ACTION_MATCHED_FOOTAGE_BELOW_330_MONTH_PACE: "
+            "LICENSED_ACTION_MATCHED_FOOTAGE_BELOW_400_MONTH_PACE: "
             + str(unused_public_clips) + " unused public source IDs vs "
             + str(weekly_clip_floor) + " new clips for 7-day buffer; "
             "filmmaker identity, action and license still need live verification"
@@ -97,22 +97,22 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
     if reserve_left < 10000:
         deficits.append("EDITORIAL_STORY_RESERVE_LOW: expand template axes")
     if len(sent_today) + len(scheduled_today) < TARGET:
-        deficits.append("BELOW_TWELVE_SCHEDULED_OR_SENT_TODAY")
+        deficits.append("BELOW_DAILY_TARGET_SCHEDULED_OR_SENT_TODAY")
     if len(visually_eligible) < max(0,TARGET-len(sent_today)-len(scheduled_today)):
-        deficits.append("NOT_ENOUGH_APPROVED_ORIGINAL_VOICE_AND_VISUAL_STOCK_FOR_TWELVE")
+        deficits.append("NOT_ENOUGH_APPROVED_ORIGINAL_VOICE_AND_VISUAL_STOCK_FOR_DAILY_TARGET")
     if waiting_deep_audio:
         deficits.append("DEEP_AUDIO_STOCK_MISSING: "+str(len(waiting_deep_audio)))
     if waiting_owner_cpu:
         deficits.append("CLOUD_OWNER_QWEN_AUDIO_NOT_CONNECTED: "+str(len(waiting_owner_cpu)))
     if not monthly["monthly_goal_achievable_at_current_capacity"]:
-        deficits.append("MONTHLY_330_TARGET_NOT_RECOVERABLE_WITH_16_DAILY_WINDOWS")
+        deficits.append("MONTHLY_400_TARGET_NOT_RECOVERABLE_WITH_16_DAILY_WINDOWS")
     if visually_rejected:
         deficits.append("VISUAL_TOPIC_MISMATCH: "+str(len(visually_rejected)))
     # No verified public API exists for unattended AI Doc Maker Deep TTS.
     # ChatGPT scheduled task has been created, but actual execution and
     # provider quota must be confirmed separately; never imply it ran.
     if len(sent_today)<TARGET:
-        deficits.append("TWELVE_PUBLISHED_TODAY_NOT_CONFIRMED")
+        deficits.append("DAILY_TARGET_PUBLISHED_NOT_CONFIRMED")
     rolling = rolling_progress(rolling_state, len(scheduled)) if rolling_state else None
     return {
         "rolling_ten": rolling,
@@ -134,7 +134,7 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
         "new_deep_visuals_and_voice_both_verified": len(visually_eligible),
         "new_deep_voice_assets_missing": len(waiting_deep_audio),
         "new_deep_visual_subject_rejections": len(visually_rejected),
-        "true_twelve_sent_today_confirmed": len(sent_today)>=TARGET,
+        "true_daily_target_sent_today_confirmed": len(sent_today)>=TARGET,
         "autonomous_deep_tts_api_confirmed": False,
         "cloud_selfhosted_voice_server_live_confirmed": False,
         "curated_unused_script_reserve": len(waiting),
@@ -179,16 +179,16 @@ def main():
             "".join(checkpoint["content"].split()), validate=True))
     state = summarize(catalog, saved, dispatched, queued, sent, now,
                       model, pexels, rolling_state, errors, sending)
-    print("GUSTAVA_MIN_330_MONTH_STATUS", json.dumps(state, ensure_ascii=False))
+    print("GUSTAVA_MIN_400_MONTH_STATUS", json.dumps(state, ensure_ascii=False))
     path = os.getenv("GITHUB_STEP_SUMMARY")
     if path:
         lines = [
-            "## GUSTAVA Enduro — минимум 330 Shorts / месяц",
+            "## GUSTAVA Enduro — минимум 400 Shorts / месяц",
             "",
             "| Метрика | Текущее значение |",
             "|---|---|",
             f"| Дата (Москва) | {state['date_moscow']} |",
-            f"| Реально отправлено Buffer сегодня | {state['published_today_reported_by_buffer']} / 12 |",
+            f"| Реально отправлено Buffer сегодня | {state['published_today_reported_by_buffer']} / {state['daily_target']} |",
             f"| Минимум в месяц | {state['monthly_minimum_short']} |",
             f"| Наблюдалось Buffer sent в текущем месяце | {state['monthly_delivery_observations']['observed_buffer_sent_this_month']} |",
             f"| Требуемо сегодня с учётом отставания | {state['monthly_delivery_observations']['daily_catchup_goal']} |",
@@ -202,7 +202,7 @@ def main():
             f"| Deep + тематически подходящее видео | {state['new_deep_visuals_and_voice_both_verified']} |",
             f"| Не хватает оригинальных DEEP-записей | {state['new_deep_voice_assets_missing']} |",
             f"| Отклонено за несоответствие сюжета кадрам | {state['new_deep_visual_subject_rejections']} |",
-            f"| 12 Buffer sent сегодня | {'ДА' if state['true_twelve_sent_today_confirmed'] else 'НЕТ'} |",
+            f"| Buffer sent сегодня достигло дневной цели | {'ДА' if state['true_daily_target_sent_today_confirmed'] else 'НЕТ'} |",
             f"| Подтверждён официальный API DEEP | НЕТ (автоматизация ChatGPT требует проверки) |",
             f"| Осталось оригиналов из резервного каталога | {state['curated_unused_script_reserve']} |",
             f"| Ключ модели для новых сценариев | {'YES' if model else 'NO'} |",
