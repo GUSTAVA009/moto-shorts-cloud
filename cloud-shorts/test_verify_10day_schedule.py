@@ -24,7 +24,9 @@ class BufferScheduleAuditTests(unittest.TestCase):
                     if x.startswith("GUSTAVA_BUFFER_SCHEDULING_CONFIGURED"))
         detail = json.loads(line.split(" ", 1)[1])
         self.assertEqual(detail["queued_posts"], 0)
-        self.assertEqual(detail["max_actual_posts_per_day"], 10)
+        self.assertEqual(detail["max_actual_posts_per_day"], 16)
+        self.assertEqual(detail["normal_daily_target"],12)
+        self.assertEqual(detail["monthly_minimum"],330)
         self.assertEqual(detail["available_time_windows"], 16)
         self.assertFalse(detail["content_queue_nonempty"])
 
