@@ -3,7 +3,7 @@
 
 def pending_verified_previews(catalog, reserved_ids):
     """Never mistake a script for a synthesised and approved new MP4."""
-    from deep_voice import ready
+    from voice_routing import ready
     reserved = set(reserved_ids)
     return [ep["id"] for ep in catalog["episodes"]
             if ep.get("auto_preview") is True
