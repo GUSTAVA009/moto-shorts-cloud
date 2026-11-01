@@ -7218,7 +7218,16 @@
         "description": "Напиши в комментариях, какой сюжет интереснее."
       },
       "source_selection": "Two documented independent Pexels motorcycle scenes",
-      "generation_provenance": "Independently authored Russian voiceover for real distinct Pexels actions"
+      "generation_provenance": "Independently authored Russian voiceover for real distinct Pexels actions",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/f2c2a259-6eba-4f16-bb3e-f7c003331f6a.mp3",
+        "transcript_sha256": "f724e760b197da5df5fc1d707e5b0e4f26873fea1db95376c8297d05aeecf817",
+        "source_audio_sha256": "7059313cb93e12819e8b7be44084968a0102587c440820b82db6204251088be5",
+        "context_id": "3a9da445f7c141369100c040095b9c8b",
+        "licence_mode": "public_provider_attribution"
+      }
     }
   ]
 }
