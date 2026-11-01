@@ -282,6 +282,12 @@ def original_story(theme, sources, previous_titles, client=None, fetch=http_json
         raise ValueError("AI story is not complete")
     if not 125 <= len(obj["narration"]) <= 300:
         raise ValueError("Generated narration exceeds reviewed length")
+    if len(obj["narration"]) > 160:
+        # One v3 short uses only TWO independent moving sources (8 s each).
+        # Re-author faithfully from those exact sources rather than trigger
+        # expensive Qwen synthesis of an impossible 20+ second visual track.
+        print("TWO_SCENE_SCRIPT_REAUTHORED_FOR_ACTUAL_VIDEO_CAP",len(obj["narration"]),flush=True)
+        return offline_original_story(theme, sources, previous_titles)
     if not re.search(r"мотоцик|мотокросс|байк", obj["narration"], re.I):
         raise ValueError("AI story is not explicitly about motorcycles")
     if any(t in " ".join(obj.values()).casefold() for t in
