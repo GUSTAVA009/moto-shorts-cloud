@@ -1,11 +1,18 @@
 {
   "id": "moto-racing-59aff99f5dee",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "41350684712",
   "attempt_count": 2,
   "preview_fingerprint": "cbd6460fa4e12ec422adff80487cf9854440f1519e4209f96d52bf78996a51ba",
   "deep_source_sha256": null,
   "selfhosted_voice_id": "gustava-original-v1",
   "previous_run_id": "41329265407",
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 1.0,
+  "voice_profile": "gustava_original_qwen3_v1",
+  "selfhosted_reference_sha256": "ed27b23b9f86345c45263ab28957e96fd2d399379b3ea90ed9fbc75be183a3cc",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 1.0
 }
