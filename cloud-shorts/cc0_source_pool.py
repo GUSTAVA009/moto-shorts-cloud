@@ -90,8 +90,16 @@ def discover(theme, github_client=None, commons_search=None):
         if error.code != 404:
             raise
     data = decode(old)
-    # This is bounded by the outer create_one code to one search/cycle.
-    fresh = commons_search(theme)
+    # GitHub's last valid CC0 results remain available even if the
+    # Commons API is briefly throttled. Never clear or overwrite on 429.
+    try:
+        fresh = commons_search(theme)
+    except urllib.error.HTTPError as error:
+        if error.code != 429 or not data["sources"]:
+            raise
+        print("COMMONS_429_CACHE_RETAINED",
+              len(data["sources"]), flush=True)
+        return data["sources"]
     merged, added = append_new(data, fresh)
     if added:
         payload = {
