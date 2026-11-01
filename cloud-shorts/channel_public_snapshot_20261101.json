@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "observed_date": "2026-11-01",
+  "channel_id": "UCS0QCodPcFBTjMt4ioEWOUw",
+  "handle": "@gustava009",
+  "source": "vidiq_owned_channel_public_metadata",
+  "subscribers": 533,
+  "lifetime_public_views": 80382,
+  "public_video_count": 79,
+  "observed_metrics_not_studio_retention": true,
+  "official_ypp_qualified_short_views_90d": null,
+  "official_ypp_longform_watch_hours_365d": null,
+  "independent_youtube_publication_confirmation_not_included": true,
+  "notes": "Accessible zero-credit vidIQ owner-channel metadata on 2026-11-01; detailed analytics and uploads could not be queried because vidIQ credits were exhausted, available again 2026-11-27. Not a live source for following days."
+}
