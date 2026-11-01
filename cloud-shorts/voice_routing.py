@@ -10,6 +10,7 @@ import os
 
 import cartesia_voice
 import deep_voice
+import selfhosted_voice
 
 
 def new_episode_configuration(environment=None):
@@ -28,6 +29,12 @@ def new_episode_configuration(environment=None):
             "voice_profile": cartesia_voice.PROFILE_ID,
             "cartesia_voice_id": pinned,
         }
+    if provider == selfhosted_voice.VOICE_ENGINE:
+        return {
+            "voice_engine": selfhosted_voice.VOICE_ENGINE,
+            "voice_profile": selfhosted_voice.PROFILE_ID,
+            "selfhosted_voice_id": selfhosted_voice.VOICE_ID,
+        }
     raise ValueError("UNAPPROVED_TTS_PROVIDER: no replacement speaker permitted")
 
 
@@ -37,6 +44,8 @@ def ready(episode, environment=None):
         return deep_voice.ready(episode)
     if engine == cartesia_voice.VOICE_ENGINE:
         return cartesia_voice.ready(episode, environment)
+    if engine == selfhosted_voice.VOICE_ENGINE:
+        return selfhosted_voice.ready(episode, environment)
     return False
 
 
@@ -46,6 +55,9 @@ def expected_profile(episode):
     if episode.get("voice_engine") == cartesia_voice.VOICE_ENGINE:
         return (cartesia_voice.PROFILE_ID if
                 cartesia_voice.supported_episode(episode) else None)
+    if episode.get("voice_engine") == selfhosted_voice.VOICE_ENGINE:
+        return (selfhosted_voice.PROFILE_ID if
+                selfhosted_voice.approved_profile(episode) else None)
     return None
 
 
