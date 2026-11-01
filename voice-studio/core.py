@@ -19,6 +19,17 @@ import time
 import wave
 
 VOICE_ID = "gustava-original-v1"
+PRIMARY_CHANNEL = "gustava"
+PRIMARY_YOUTUBE_CHANNEL_ID = "UCS0QCodPcFBTjMt4ioEWOUw"
+CHANNEL_RE = re.compile(r"[a-z][a-z0-9-]{2,39}\Z")
+YOUTUBE_RE = re.compile(r"UC[A-Za-z0-9_-]{22}\Z")
+
+
+def voice_id_for(slug: str) -> str:
+    if not isinstance(slug,str) or not CHANNEL_RE.fullmatch(slug):
+        raise ValueError("INVALID_YOUTUBE_CHANNEL_SLUG")
+    return VOICE_ID if slug == PRIMARY_CHANNEL else "hapych-" + slug + "-original-v1"
+
 MAX_INPUT_CHARS = 600
 MAX_AUDIO_BYTES = 12_000_000
 IDEMP_RE = re.compile(r"[A-Za-z0-9_.:-]{8,96}\Z")
@@ -69,12 +80,20 @@ class Ledger:
         self.path = self.root / "voice-keys.sqlite3"
         with self.connection() as db:
             db.executescript("""
+            CREATE TABLE IF NOT EXISTS channels (
+                slug TEXT PRIMARY KEY, name TEXT NOT NULL,
+                youtube_channel_id TEXT UNIQUE,
+                created_at INTEGER NOT NULL,
+                voice_timbre TEXT NOT NULL,
+                voice_delivery TEXT NOT NULL
+            );
             CREATE TABLE IF NOT EXISTS keys (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 label TEXT NOT NULL, token_hash TEXT NOT NULL UNIQUE,
                 created_at INTEGER NOT NULL, revoked INTEGER NOT NULL DEFAULT 0,
                 max_chars_month INTEGER NOT NULL DEFAULT 0,
-                max_rpm INTEGER NOT NULL DEFAULT 12
+                max_rpm INTEGER NOT NULL DEFAULT 12,
+                channel_slug TEXT REFERENCES channels(slug)
             );
             CREATE TABLE IF NOT EXISTS usage (
                 key_id INTEGER NOT NULL, month TEXT NOT NULL,
@@ -91,6 +110,19 @@ class Ledger:
             CREATE INDEX IF NOT EXISTS requests_recent
                 ON requests (key_id, created_at);
             """)
+            # Upgrade older installed SQLite databases without losing hashes
+            # or charging an old unscoped key against the wrong YouTube channel.
+            names={r["name"] for r in db.execute("PRAGMA table_info(keys)")}
+            if "channel_slug" not in names:
+                db.execute("ALTER TABLE keys ADD COLUMN channel_slug TEXT")
+            db.execute(
+                "INSERT OR IGNORE INTO channels"
+                "(slug,name,youtube_channel_id,created_at,voice_timbre,voice_delivery)"
+                " VALUES(?,?,?,?,?,?)",
+                (PRIMARY_CHANNEL,"GUSTAVA Enduro",PRIMARY_YOUTUBE_CHANNEL_ID,
+                 int(time.time()),"deep","documentary"))
+            db.execute("CREATE INDEX IF NOT EXISTS keys_by_channel"
+                       " ON keys(channel_slug)")
 
     @contextmanager
     def connection(self):
@@ -105,8 +137,62 @@ class Ledger:
                 db.rollback()
             db.close()
 
+    def create_channel(self, slug: str, name: str,
+                       timbre: str = "deep", delivery: str = "documentary",
+                       youtube_channel_id: str | None = None):
+        voice_id = voice_id_for(slug)
+        if not isinstance(name,str) or not 2 <= len(name) <= 72:
+            raise ValueError("CHANNEL_DISPLAY_NAME_INVALID")
+        if timbre not in ("deep","velvet","resonant"):
+            raise ValueError("CHANNEL_TIMBRE_INVALID")
+        if delivery not in ("documentary","dynamic","ironic"):
+            raise ValueError("CHANNEL_DELIVERY_INVALID")
+        if (youtube_channel_id is not None
+                and (not isinstance(youtube_channel_id,str)
+                     or not YOUTUBE_RE.fullmatch(youtube_channel_id))):
+            raise ValueError("YOUTUBE_CHANNEL_ID_INVALID")
+        with self.connection() as db:
+            try:
+                db.execute(
+                    "INSERT INTO channels"
+                    "(slug,name,youtube_channel_id,created_at,"
+                    "voice_timbre,voice_delivery)"
+                    "VALUES(?,?,?,?,?,?)",
+                    (slug,name,youtube_channel_id,int(time.time()),
+                     timbre,delivery))
+            except sqlite3.IntegrityError:
+                raise Denied("CHANNEL_ALREADY_EXISTS_OR_DUPLICATE_YOUTUBE_ID",409) from None
+        return {
+            "slug":slug,"name":name,"voice_id":voice_id,
+            "youtube_channel_id":youtube_channel_id,
+            "timbre":timbre,"delivery":delivery,
+        }
+
+    def get_channel(self,slug: str):
+        voice_id=voice_id_for(slug)
+        with self.connection() as db:
+            row=db.execute(
+                "SELECT slug,name,youtube_channel_id,created_at,"
+                "voice_timbre,voice_delivery FROM channels WHERE slug=?",
+                (slug,)).fetchone()
+        if row is None:
+            raise Denied("UNKNOWN_YOUTUBE_CHANNEL",404)
+        return dict(row)|{"voice_id":voice_id}
+
+    def list_channels(self):
+        with self.connection() as db:
+            return [
+                dict(row)|{"voice_id":voice_id_for(row["slug"])}
+                for row in db.execute(
+                  "SELECT c.slug,c.name,c.youtube_channel_id,"
+                  "c.voice_timbre,c.voice_delivery,c.created_at,"
+                  "(SELECT COUNT(*) FROM keys k WHERE k.channel_slug=c.slug "
+                  "AND k.revoked=0) AS active_keys"
+                  " FROM channels c ORDER BY c.created_at,c.slug")
+            ]
+
     def create_key(self, label: str, max_chars_month: int = 0,
-                   max_rpm: int = 12):
+                   max_rpm: int = 12, channel_slug: str = PRIMARY_CHANNEL):
         if not isinstance(label, str) or not re.fullmatch(r"[\w .-]{2,72}", label):
             raise ValueError("KEY_LABEL_INVALID")
         if (type(max_chars_month) is not int or
@@ -114,23 +200,35 @@ class Ledger:
             raise ValueError("KEY_QUOTA_INVALID")
         if type(max_rpm) is not int or not 1 <= max_rpm <= 120:
             raise ValueError("KEY_RATE_LIMIT_INVALID")
+        self.get_channel(channel_slug)
         token = "gvk_" + secrets.token_urlsafe(32)
         with self.connection() as db:
             cur = db.execute(
-                "INSERT INTO keys(label,token_hash,created_at,max_chars_month,max_rpm)"
-                " VALUES(?,?,?,?,?)",
-                (label, sha(token.encode()), int(time.time()),
-                 max_chars_month, max_rpm))
+                "INSERT INTO keys(label,token_hash,created_at,"
+                "max_chars_month,max_rpm,channel_slug)"
+                " VALUES(?,?,?,?,?,?)",
+                (label,sha(token.encode()),int(time.time()),
+                 max_chars_month,max_rpm,channel_slug))
             key_id = cur.lastrowid
         return {"id": key_id, "label": label, "api_key": token,
+                "channel_slug":channel_slug,
+                "voice_id":voice_id_for(channel_slug),
                 "max_chars_month": max_chars_month, "max_rpm": max_rpm,
                 "warning": "API key shown once; save securely"}
 
-    def list_keys(self):
+    def list_keys(self,channel_slug=None):
         with self.connection() as db:
-            return [dict(row) for row in db.execute(
-                "SELECT id,label,created_at,revoked,max_chars_month,max_rpm"
-                " FROM keys ORDER BY id DESC")]
+            if channel_slug is None:
+                cursor=db.execute(
+                    "SELECT id,label,created_at,revoked,max_chars_month,max_rpm,"
+                    "channel_slug FROM keys ORDER BY id DESC")
+            else:
+                self.get_channel(channel_slug)
+                cursor=db.execute(
+                    "SELECT id,label,created_at,revoked,max_chars_month,max_rpm,"
+                    "channel_slug FROM keys WHERE channel_slug=? ORDER BY id DESC",
+                    (channel_slug,))
+            return [dict(row) for row in cursor]
         
     def revoke(self, key_id: int):
         with self.connection() as db:
@@ -145,11 +243,13 @@ class Ledger:
             raise Denied("API_KEY_INVALID", 401)
         with self.connection() as db:
             row = db.execute(
-                "SELECT id, token_hash, revoked, max_chars_month, max_rpm"
-                " FROM keys WHERE token_hash=?", (sha(token.encode()),)).fetchone()
+                "SELECT id, token_hash, revoked, max_chars_month, max_rpm,"
+                " channel_slug FROM keys WHERE token_hash=?", (sha(token.encode()),)).fetchone()
         if (row is None or row["revoked"] or
                 not hmac.compare_digest(row["token_hash"], sha(token.encode()))):
             raise Denied("API_KEY_INVALID", 401)
+        if not row["channel_slug"]:
+            raise Denied("LEGACY_API_KEY_REISSUE_FOR_CHANNEL_REQUIRED",401)
         return dict(row)
 
     def cache_location(self, key_id: int, request_id: str):
@@ -171,11 +271,15 @@ class Ledger:
             # Revocation must hold even if the client was authenticated earlier
             # while another admin transaction revoked this very key.
             key = db.execute(
-                "SELECT revoked,max_chars_month,max_rpm FROM keys WHERE id=?",
+                "SELECT revoked,max_chars_month,max_rpm,channel_slug"
+                " FROM keys WHERE id=?",
                 (account["id"],)).fetchone()
-            if not key or key["revoked"]:
+            if not key or key["revoked"] or not key["channel_slug"]:
                 db.execute("ROLLBACK")
-                raise Denied("API_KEY_REVOKED", 401)
+                raise Denied("API_KEY_REVOKED_OR_UNSCOPED",401)
+            if key["channel_slug"] != account.get("channel_slug"):
+                db.execute("ROLLBACK")
+                raise Denied("API_KEY_CANNOT_SWITCH_YOUTUBE_CHANNEL",403)
             previous = db.execute(
                 "SELECT payload_hash,status,sha256,file_path FROM requests"
                 " WHERE key_id=? AND idempotency=?",
