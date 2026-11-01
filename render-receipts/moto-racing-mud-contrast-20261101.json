@@ -1,0 +1,11 @@
+{
+  "id": "moto-racing-mud-contrast-20261101",
+  "state": "reserved",
+  "run_id": "41292865035",
+  "attempt_count": 1,
+  "preview_fingerprint": "3ed90dcdb0610e1d17d69195dc040833a0696b9e199c328143a19e2224be12dd",
+  "deep_source_sha256": "7059313cb93e12819e8b7be44084968a0102587c440820b82db6204251088be5",
+  "selfhosted_voice_id": null,
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
