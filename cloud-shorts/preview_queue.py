@@ -306,6 +306,53 @@ def eligible_abandoned_audio_config_retry(episode, receipt, new_fingerprint, old
     return old_conclusion in ("failure", "cancelled", "timed_out")
 
 
+def eligible_private_qwen_concise_retry(episode, receipt, new_fingerprint, old_conclusion):
+    """Exactly one PRIVATE retry after original speech exceeded real shot caps.
+
+    A previously failed Action run, prior fingerprint and immutable source
+    identities are mandatory. No footage reuse by a different episode; no
+    external video release. The new text must fit the existing 2-shot
+    documentary: both independent actions remain explicitly in narration.
+    """
+    if (not isinstance(receipt, dict)
+            or receipt.get("id") != episode.get("id")
+            or receipt.get("state") != "reserved"
+            or old_conclusion != "failure"
+            or type(receipt.get("attempt_count")) is not int
+            or receipt["attempt_count"] != 1
+            or episode.get("auto_preview") is not True
+            or episode.get("auto_publish") is not False
+            or episode.get("voice_engine") != "gustava_selfhosted_qwen3"
+            or int(episode.get("visual_director_version") or 0) != 3
+            or episode.get("visual_duration_revision_requested") is not True
+            or episode.get("visual_duration_revision_reason") !=
+                "concise_script_fits_original_moving_scenes"):
+        return False
+    proof = episode.get("visual_duration_revision_evidence")
+    if not isinstance(proof,dict):
+        return False
+    if (proof.get("previous_run_id") != str(receipt.get("run_id"))
+            or proof.get("previous_fingerprint") != receipt.get("preview_fingerprint")
+            or proof.get("previous_error") != "VISUAL_DURATION_SHORTAGE"
+            or receipt.get("preview_fingerprint") == new_fingerprint):
+        return False
+    footage=episode.get("footage") or []
+    shot_keys={shot.get("source") for shot in episode.get("shots") or []}
+    if len(footage)!=2 or len(shot_keys)!=2 or shot_keys!={f.get("key") for f in footage}:
+        return False
+    try:
+        if set(proof.get("source_ids") or []) != {source_id(f) for f in footage}:
+            return False
+        narration=episode.get("narration")
+        if not isinstance(narration,str) or not 125<=len(narration)<=160:
+            return False
+        from source_story import require_filmable
+        require_filmable({"narration":narration},footage)
+    except (ValueError,TypeError,KeyError):
+        return False
+    return True
+
+
 def eligible_abandoned_visual_duration_retry(episode, receipt, new_fingerprint, old_conclusion):
     """One bounded retry for confirmed visual-duration failure on original Deep.
 
@@ -490,6 +537,8 @@ def choose(catalog, output):
             if (eligible_abandoned_source_retry(item, receipt, new_fp, outcome)
                     or eligible_abandoned_audio_config_retry(item, receipt, new_fp, outcome)
                     or eligible_abandoned_visual_duration_retry(
+                        item, receipt, new_fp, outcome)
+                    or eligible_private_qwen_concise_retry(
                         item, receipt, new_fp, outcome)):
                 selected = item
                 break
