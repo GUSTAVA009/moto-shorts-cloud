@@ -25,6 +25,7 @@ def fresh_state() -> dict:
         "seen_buffer_sent_ids": {}, "active_batch": None, "pending_batch": None,
         "next_cursor": 0, "last_polled_at": None,
         "last_replenish_request_at": None,
+        "last_voice_refill_request_at": None,
         "notes": "Count is Buffer sent statuses observed since tracking/bootstrap; NOT lifetime YouTube published count.",
     }
 

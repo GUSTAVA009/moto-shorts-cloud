@@ -12,7 +12,7 @@ class NinetyMinuteSlotsTests(unittest.TestCase):
         self.assertEqual(len(LOCAL_TIMES), 16)
         self.assertEqual(len(set(LOCAL_TIMES)), 16)
         self.assertEqual(TARGET_PER_DAY, 16)
-        self.assertEqual(BASE_POSTS_PER_DAY,12)
+        self.assertEqual(BASE_POSTS_PER_DAY,14)
         self.assertEqual(MAX_POSTS_PER_DAY,16)
 
     def test_12_per_day_baseline_does_not_confuse_buffer_queue_cap_ten(self):
@@ -26,14 +26,14 @@ class NinetyMinuteSlotsTests(unittest.TestCase):
         self.assertEqual(
             choose_slot(existing, datetime(2026,10,30,3,tzinfo=timezone.utc)),
             "2026-10-30T12:30:00Z")
-        # All 12 daily slots occupied: next day starts.
+        # Twelve slots occupied: the next default slot is #13.
         twelve=existing+[
             datetime.combine(date(2026,10,30),time(*LOCAL_TIMES[i]),tz)
                 .astimezone(timezone.utc) for i in (10,11)
         ]
         self.assertEqual(
             choose_slot(twelve, datetime(2026,10,30,3,tzinfo=timezone.utc)),
-            "2026-10-30T21:30:00Z")
+            "2026-10-30T15:30:00Z")
         # With verified monthly shortfall, bounded catch-up may use slot #13.
         self.assertEqual(
             choose_slot(twelve,datetime(2026,10,30,3,tzinfo=timezone.utc),

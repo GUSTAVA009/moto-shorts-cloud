@@ -10,8 +10,8 @@ from datetime import datetime, timedelta, timezone, time
 from zoneinfo import ZoneInfo
 
 TARGET_PER_DAY = 16  # flexible 90-minute posting WINDOWS, not 16 releases
-# 330/month requires 12/day even in February. 16 windows permit catch-up.
-BASE_POSTS_PER_DAY = 12
+# 400/month needs 14/day in most months and 15/day in 28-day February.
+BASE_POSTS_PER_DAY = 14
 MAX_POSTS_PER_DAY = 16
 TZ_NAME = "Europe/Moscow"
 LOCAL_TIMES = tuple(((30 + 90 * index) // 60 % 24,
