@@ -115,6 +115,25 @@ class VisualDirectionTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError,"VISUAL_DURATION_SHORTAGE"):
             directed_plan(x,{"a":9,"b":9},21)
 
+    def test_reviewed_mud_comparison_cuts_at_spoken_action_boundary(self):
+        import json
+        from pathlib import Path
+        data=json.loads((Path(__file__).parent/"episodes.json").read_text("utf8"))
+        item=next(e for e in data["episodes"]
+                  if e["id"]=="moto-racing-mud-contrast-20261101")
+        duration=11.762
+        plan=directed_plan(item,{"clip_0":18.0,"clip_1":9.5},duration)
+        self.assertEqual([x["source"] for x in plan],["clip_0","clip_1"])
+        self.assertAlmostEqual(plan[0]["seconds"],3.82,places=2)
+        self.assertAlmostEqual(plan[1]["seconds"],duration-3.82,places=2)
+        self.assertEqual(plan[0]["start"],4.0)
+        self.assertTrue(all(x["seconds"]>=MIN_SCENE_SECONDS for x in plan))
+        with self.assertRaisesRegex(RuntimeError,"SPOKEN_SCENE_TIMING_OUTSIDE_REAL"):
+            directed_plan(item,{"clip_0":18.0,"clip_1":5.0},duration)
+        with self.assertRaisesRegex(RuntimeError,"SPOKEN_SCENE_TIMING_OUTSIDE_REAL"):
+            directed_plan(dict(item,spoken_second_scene_at_seconds=1.8),
+                          {"clip_0":18.0,"clip_1":9.5},duration)
+
     def test_publisher_visual_proof_prevents_faked_scenes(self):
         import tempfile, json
         from pathlib import Path
