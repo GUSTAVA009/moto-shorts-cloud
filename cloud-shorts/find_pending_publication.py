@@ -19,7 +19,7 @@ from editorial_novelty import is_repeated_visual_formula
 from deep_voice import (PROFILE_ID as REQUIRED_MALE_PROFILE,
                         VOICE_ENGINE as REQUIRED_MALE_ENGINE,
                         ready as deep_audio_ready)
-from cartesia_voice import VOICE_ENGINE as CARTESIA_ENGINE
+from selfhosted_voice import VOICE_ENGINE as SELFHOSTED_ENGINE
 from voice_routing import may_publish_with_verified_profile
 
 
@@ -40,15 +40,14 @@ def gh(path):
 
 def select(catalog, receipt_entries, published, artifacts):
     # Retired Piper/Silero voices must NEVER re-enter the public backlog.
-    # Only newly reviewed native-Russian male Kokoro originals are eligible.
+    # Only individually reviewed original voices enter public queue.
     allowed={ep["id"] for ep in catalog["episodes"]
              if ep.get("auto_publish") is True
              and ep.get("editorial_rejected") is not True
              and not is_repeated_visual_formula(ep, catalog["episodes"])
-             and ep.get("voice_engine") in (REQUIRED_MALE_ENGINE,
-                                             CARTESIA_ENGINE)
-             and (ep.get("voice_engine") != CARTESIA_ENGINE or
-                  os.environ.get("CARTESIA_COMMERCIAL_PLAN_CONFIRMED") == "1")
+             and ep.get("voice_engine") in (REQUIRED_MALE_ENGINE, SELFHOSTED_ENGINE)
+             and (ep.get("voice_engine") != SELFHOSTED_ENGINE or
+                  os.environ.get("GUSTAVA_ORIGINAL_VOICE_APPROVED") == "1")
              and ep.get("visual_review_failed") is not True
              and ep.get("visual_revision_requested") is not True
              and (int(ep.get("visual_director_version") or 0)<3
@@ -63,9 +62,12 @@ def select(catalog, receipt_entries, published, artifacts):
             continue
         episode = next(ep for ep in catalog["episodes"] if ep["id"] == slug)
         if (not may_publish_with_verified_profile(episode, obj)
-                or (episode.get("voice_engine") == CARTESIA_ENGINE
-                    and episode.get("cartesia_voice_id") !=
-                    obj.get("cartesia_voice_id"))
+                or (episode.get("voice_engine") == SELFHOSTED_ENGINE
+                    and (episode.get("selfhosted_voice_id") !=
+                         obj.get("selfhosted_voice_id")
+                         or not os.environ.get("GUSTAVA_VOICE_REFERENCE_SHA256")
+                         or os.environ.get("GUSTAVA_VOICE_REFERENCE_SHA256") !=
+                            obj.get("selfhosted_reference_sha256")))
                 or slug in published):
             continue
         run=str(obj.get("run_id",""))

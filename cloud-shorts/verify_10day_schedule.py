@@ -3,7 +3,8 @@
 from datetime import datetime, timezone
 import json
 from buffer_autopublish import verify_channel, CHANNEL
-from ten_daily_slots import choose_slot, LOCAL_TIMES, TARGET_PER_DAY, MAX_POSTS_PER_DAY
+from ten_daily_slots import choose_slot, LOCAL_TIMES, TARGET_PER_DAY, MAX_POSTS_PER_DAY, BASE_POSTS_PER_DAY
+from monthly_capacity import MINIMUM_MONTHLY_SHORTS
 
 def main():
     queue, recent = verify_channel(include_sent=True)
@@ -12,6 +13,9 @@ def main():
           json.dumps({"channel_id": CHANNEL,
                       "available_time_windows": TARGET_PER_DAY,
                       "max_actual_posts_per_day": MAX_POSTS_PER_DAY,
+                      "normal_daily_target": BASE_POSTS_PER_DAY,
+                      "monthly_minimum": MINIMUM_MONTHLY_SHORTS,
+                      "buffer_free_queue_limit":10,
                       "local_timezone": "Europe/Moscow", "local_slots": [
                           "%02d:%02d" % pair for pair in LOCAL_TIMES],
                       "queued_posts": len(queue), "recent_sent": len(recent),

@@ -1,4 +1,4 @@
-"""No-network verification of truthful sent/queued versus ten-per-day targets."""
+"""No-network verification of monthly 330 and daily 12 targets."""
 from datetime import datetime, timezone
 import unittest
 
@@ -19,9 +19,12 @@ class CapacityReportTests(unittest.TestCase):
         report = summarize(catalog, {"a"}, {"p1"}, queue, sent, today,
                            model=False, pexels=False)
         self.assertEqual(report["published_today_reported_by_buffer"], 1)
+        self.assertEqual(report["monthly_minimum_short"],330)
+        self.assertEqual(report["daily_target"],12)
+        self.assertEqual(report["monthly_delivery_observations"]["baseline_daily_target"],12)
         self.assertEqual(report["scheduled_for_today"], 1)
         self.assertEqual(report["new_unique_scripts_ready_to_render"], 1)
-        self.assertIn("BELOW_TEN_SCHEDULED_OR_SENT_TODAY", report["hard_blockers"])
+        self.assertIn("BELOW_TWELVE_SCHEDULED_OR_SENT_TODAY", report["hard_blockers"])
         self.assertTrue(report["keyless_editorial_script_reserve"])
         self.assertEqual(report["script_reserve_capacity"], 150000)
         self.assertEqual(report["script_reserve_remaining"], 150000)

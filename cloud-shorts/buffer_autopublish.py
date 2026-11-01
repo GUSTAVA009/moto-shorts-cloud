@@ -19,6 +19,11 @@ import preview_queue as ledger
 from publication_safety import publication_allowed, file_sha256
 from channel_focus import is_motorcycle_episode
 from ten_daily_slots import choose_slot
+from monthly_capacity import month_capacity, BASE_DAILY_SHORTS
+from rolling_batches import STATE_PATH as ROLLING_STATE_PATH
+from deep_voice import VOICE_ENGINE as HISTORIC_DEEP_ENGINE
+from selfhosted_voice import VOICE_ENGINE as OWN_PRIVATE_TTS_ENGINE
+import base64
 
 CHANNEL = "6ae238b32f1f5ed648ff9011"
 ORG = "6ae237b760e9c8dd49173dc8"
@@ -202,7 +207,9 @@ def publish(episode, video, metadata, voice, mixed):
         return {"skipped": "Buffer auto-publication disabled"}
     if not is_motorcycle_episode(episode):
         return {"skipped": "CHANNEL_TOPIC_BLOCKED: episode is unrelated to GUSTAVA Enduro"}
-    if episode.get("auto_publish") is not True or episode.get("voice_engine") != "aidocmaker_deep":
+    if (episode.get("auto_publish") is not True or
+            episode.get("voice_engine") not in
+            (HISTORIC_DEEP_ENGINE, OWN_PRIVATE_TTS_ENGINE)):
         return {"skipped": "Episode or narrator not approved for automatic publication"}
     rec = "buffer-publication-receipts/" + episode["id"] + ".json"
     if ledger.api(rec) or ledger.api("publication-receipts/" + episode["id"] + ".json"):
@@ -215,8 +222,31 @@ def publish(episode, video, metadata, voice, mixed):
         return {"skipped": "Buffer queue near capacity (10 queued, Free plan maximum); retry after the next publication"}
     if any(p.get("text", "").strip() == metadata["description"].strip() for p in posts):
         raise RuntimeError("Potential identical scheduled post in Buffer")
+    # Distinguish the Buffer 10 scheduled-queue limit from our >=12/day
+    # monthly minimum. Only a verified month-to-date shortfall permits up
+    # to 16 different 90-minute release windows per day.
+    quota = BASE_DAILY_SHORTS
+    rolling_entry = ledger.api(ROLLING_STATE_PATH)
+    if rolling_entry:
+        try:
+            historic = json.loads(base64.b64decode(
+                "".join(rolling_entry["content"].split()), validate=True))
+            seen = historic["seen_buffer_sent_ids"]
+            if not isinstance(seen, dict):
+                raise ValueError("MONTHLY_SENT_LEDGER_INVALID")
+            status = month_capacity(datetime.now(timezone.utc), seen, sent_posts)
+            quota = status["daily_catchup_goal"]
+            print("MONTHLY_SHIP_TARGET", json.dumps({
+                "minimum": status["monthly_minimum"],
+                "observed_buffer_sent": status["observed_buffer_sent_this_month"],
+                "daily_slots": quota,
+                "catchup_possible": status["monthly_goal_achievable_at_current_capacity"]
+            }), flush=True)
+        except (ValueError, TypeError, KeyError) as exc:
+            raise RuntimeError("MONTHLY_SENT_LEDGER_UNTRUSTWORTHY") from exc
     due_at = choose_slot(posts + sent_posts,
-                         timezone_name=os.getenv("GUSTAVA_POST_TIMEZONE", "Europe/Moscow"))
+                          timezone_name=os.getenv("GUSTAVA_POST_TIMEZONE", "Europe/Moscow"),
+                          max_posts_per_day=quota)
     sha = file_sha256(video)
     url = release_url(episode["id"], video, sha)
     state = {"episode": episode["id"], "sha256": sha, "media_url": url,

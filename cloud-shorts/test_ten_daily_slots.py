@@ -3,7 +3,8 @@ import unittest
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
-from ten_daily_slots import choose_slot, LOCAL_TIMES, TARGET_PER_DAY, MAX_POSTS_PER_DAY
+from ten_daily_slots import (choose_slot, LOCAL_TIMES, TARGET_PER_DAY,
+                             MAX_POSTS_PER_DAY, BASE_POSTS_PER_DAY)
 
 
 class NinetyMinuteSlotsTests(unittest.TestCase):
@@ -11,20 +12,41 @@ class NinetyMinuteSlotsTests(unittest.TestCase):
         self.assertEqual(len(LOCAL_TIMES), 16)
         self.assertEqual(len(set(LOCAL_TIMES)), 16)
         self.assertEqual(TARGET_PER_DAY, 16)
-        self.assertEqual(MAX_POSTS_PER_DAY, 10)
+        self.assertEqual(BASE_POSTS_PER_DAY,12)
+        self.assertEqual(MAX_POSTS_PER_DAY,16)
 
-    def test_ten_posts_are_the_ceiling_even_with_six_unused_time_windows(self):
+    def test_12_per_day_baseline_does_not_confuse_buffer_queue_cap_ten(self):
         from datetime import date, time
-        tz = ZoneInfo("Europe/Moscow")
-        existing = [
-            datetime.combine(date(2026, 10, 30), time(h,m), tz).astimezone(timezone.utc)
-            for h,m in LOCAL_TIMES[:10]
+        tz=ZoneInfo("Europe/Moscow")
+        existing=[
+            datetime.combine(date(2026,10,30),time(h,m),tz)
+                .astimezone(timezone.utc) for h,m in LOCAL_TIMES[:10]
+        ]
+        # 10 in Buffer queued is a provider inventory ceiling, not daily cap.
+        self.assertEqual(
+            choose_slot(existing, datetime(2026,10,30,3,tzinfo=timezone.utc)),
+            "2026-10-30T12:30:00Z")
+        # All 12 daily slots occupied: next day starts.
+        twelve=existing+[
+            datetime.combine(date(2026,10,30),time(*LOCAL_TIMES[i]),tz)
+                .astimezone(timezone.utc) for i in (10,11)
         ]
         self.assertEqual(
-            choose_slot(existing, datetime(2026, 10, 30, 3, tzinfo=timezone.utc)),
-            "2026-10-30T21:30:00Z"
-        )
+            choose_slot(twelve, datetime(2026,10,30,3,tzinfo=timezone.utc)),
+            "2026-10-30T21:30:00Z")
+        # With verified monthly shortfall, bounded catch-up may use slot #13.
+        self.assertEqual(
+            choose_slot(twelve,datetime(2026,10,30,3,tzinfo=timezone.utc),
+                        max_posts_per_day=16),
+            "2026-10-30T15:30:00Z")
 
+    def test_never_exceed_sixteen_windows_or_silently_disable_limits(self):
+        with self.assertRaisesRegex(ValueError,"UNSAFE_MONTHLY_CATCHUP"):
+            choose_slot([],datetime(2026,10,30,3,tzinfo=timezone.utc),
+                        max_posts_per_day=17)
+        with self.assertRaisesRegex(ValueError,"UNSAFE_MONTHLY_CATCHUP"):
+            choose_slot([],datetime(2026,10,30,3,tzinfo=timezone.utc),
+                        max_posts_per_day=10)
 
     def test_exact_ninety_minutes_including_midnight(self):
         from datetime import date, time, timedelta

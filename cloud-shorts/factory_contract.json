@@ -9,12 +9,17 @@
     "timezone": "Europe/Moscow"
   },
   "production": {
-    "target_new_unique_shorts_per_day": 10,
+    "target_new_unique_shorts_per_day": 12,
     "reviewed_mp4_reserve_target": 10,
     "script_reserve_minimum": 100000,
     "never_count_script_as_mp4": true,
     "require_unique_licensed_visuals": true,
-    "allow_private_local_pc_videos": false
+    "allow_private_local_pc_videos": false,
+    "minimum_finished_shorts_per_calendar_month": 330,
+    "minimum_monthly_goal_per_active_factory_channel": true,
+    "monthly_required_deliverable": "unique_licensed_QA_approved_rendered_MP4_not_scenarios",
+    "shortest_month_28_days_baseline": 336,
+    "monthly_backlog_catchup_slots_max_per_day": 16
   },
   "buffer": {
     "provider": "Buffer",
@@ -27,11 +32,14 @@
     "never_retry_uncertain_upload": true
   },
   "publishing": {
-    "max_posts_per_day": 10,
+    "max_posts_per_day": 16,
     "spacing_minutes": 90,
     "allow_only_approved_mp4": true,
     "do_not_mark_success_from_workflow_only": true,
-    "public_release_only_after_individual_visual_review": true
+    "public_release_only_after_individual_visual_review": true,
+    "baseline_posts_per_day": 12,
+    "monthly_minimum_verified_buffer_sent": 330,
+    "verified_youTube_public_URL_separate_from_buffer_sent": true
   },
   "voice": {
     "provider": "aidocmaker.com",
@@ -106,26 +114,43 @@
   },
   "owner_approved_voice_automation_change": {
     "date": "2026-11-01",
-    "authority": "User explicitly allows replacement of the narrator to unblock real API automation",
+    "authority": "Owner explicitly excludes Cartesia, requires no local GPU/PC, private cloud CPU voice studio for multiple independent YouTube channels",
     "existing_deep_remains_unmodified": true,
     "production_voice_can_change": true,
     "voice_coherence_required": true,
-    "no_unapproved_billing": true
+    "no_unapproved_billing": true,
+    "cartesia_excluded": true,
+    "local_voice_inference_prohibited": true,
+    "multi_channel_voice_and_keys_required": true
   },
-  "cartesia_voice": {
-    "provider": "cartesia.ai",
-    "voice_engine": "cartesia_sonic36",
-    "voice_profile": "gustava_cartesia_ru_male_v1",
-    "model_id": "sonic-3.6-2026-08-27",
+  "selfhosted_voice": {
+    "voice_engine": "gustava_selfhosted_qwen3",
+    "voice_profile": "gustava_original_qwen3_v1",
+    "backend": "Qwen3-TTS 0.6B CustomVoice CPU (open-weight)",
+    "runtime": "owner-controlled ARM cloud server, no PC GPU",
+    "key_prefix": "gvk_",
+    "key_scope": "a single verified YouTube channel and its fixed speaker",
+    "channel_voice_ids_distinct": true,
+    "limit_builtin_distinct_cpu_presets": 5,
+    "presets_are_shared_model_speakers_not_exclusive_owner_voices": true,
     "language": "ru",
-    "requires_pinned_masculine_native_russian_voice_id": true,
-    "requires_secret_in_github_actions": "CARTESIA_API_KEY",
-    "requires_explicit_activation": true,
-    "requires_monthly_budget": true,
-    "monthly_char_cap_default": 15000,
-    "requires_commercial_plan_for_publication": true,
-    "requires_sha_pinned_wav_and_source": true,
-    "requires_independent_source_and_mixed_asr": true,
-    "no_fallback_to_rejected_voices": true
+    "only_owner_can_manage_channels_and_keys": true,
+    "require_https": true,
+    "require_reference_sha256": true,
+    "require_both_source_and_mixed_russian_asr": true,
+    "requires_individual_video_qa_and_editorial_approval": true,
+    "website_private_session": true,
+    "previous_deep_immutable": true
+  },
+  "voice_host_options": {
+    "target": "Oracle Cloud Always Free Ampere A1",
+    "verified_as_of": "2026-11-01",
+    "official_source": "https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm",
+    "free_cap": "1500 OCPU hours + 9000 GiB hours/month (~2 OCPU / 12 GiB for full month)",
+    "published_provider_claim": "Free compute allocation is real; no ready VM or speech benchmark is verified",
+    "requires_payment_card_verification": true,
+    "requires_capacity": true,
+    "reclaim_idle_possible": true,
+    "guaranteed_zero_cost_multichannel_sla": false
   }
 }

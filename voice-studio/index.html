@@ -1,96 +1,100 @@
 <!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="color-scheme" content="dark">
-  <meta name="description" content="GUSTAVA Voice Studio — собственная студия русского голоса с API без сторонних кредитов.">
-  <title>GUSTAVA VOICE — независимая студия озвучки</title>
-  <link rel="stylesheet" href="/site.css">
-  <script src="/site.js" defer></script>
-</head>
-<body>
-  <div class="shell">
-    <header class="topbar">
-      <div class="identity">
-        <div class="symbol">G<span>V</span></div>
-        <div><strong>GUSTAVA <em>VOICE</em></strong><small>Независимая студия озвучки</small></div>
-      </div>
-      <div class="top-actions"><span id="service-status" class="live">Проверка сервера…</span><a href="/docs" target="_blank" rel="noopener">Документация API ↗</a></div>
-    </header>
-
-    <main>
-      <section class="hero">
-        <p class="eyebrow"><span class="dot"></span> СВОЙ СЕРВЕР · СВОИ КЛЮЧИ · РУССКАЯ РЕЧЬ</p>
-        <h1>Твой голос.<br><span>Твои правила.</span></h1>
-        <p class="hero-sub">Авторская озвучка на открытой нейросети Qwen3-TTS. Без кредитов Cartesia и зависимости от стороннего кабинета. Оригинальный диктор, единая тональность, защищённый API для YouTube-завода.</p>
-        <div class="hero-metrics">
-          <div><b>100%</b><span>Локальный синтез</span></div>
-          <div><b>REST</b><span>Собственный API</span></div>
-          <div><b>WAV</b><span>Исходное качество</span></div>
-        </div>
-      </section>
-
-      <div class="layout">
-        <section class="panel compose">
-          <div class="panel-heading"><span class="step">01</span><div><h2>Создать озвучку</h2><p>Введи текст — получи настоящий файл речи</p></div></div>
-          <label for="transcript">Текст для диктора</label>
-          <textarea id="transcript" rows="6" maxlength="600" spellcheck="true">Говорят, туристические мотоциклы скучные. А ты видел, на какие приключения они способны? Дорога только начинается!</textarea>
-          <div class="between"><span id="text-count">0 / 600</span><span>Русский · наш оригинальный диктор</span></div>
-
-          <div class="field-grid">
-            <div><label for="voice-selector">Голос</label><select id="voice-selector"><option value="gustava-original-v1">GUSTAVA Original · баритон</option></select></div>
-            <div><label for="format-selector">Формат</label><select id="format-selector"><option value="wav">WAV · 16-bit PCM</option></select></div>
-          </div>
-          <label for="client-token">Твой API-ключ (локально в поле, без сохранения)</label>
-          <input id="client-token" type="password" autocomplete="off" placeholder="gvk_••••••••••••••••••••">
-          <button class="primary" id="generate" type="button"><span>▶</span> Создать аудио</button>
-          <p id="generate-result" class="message" role="status" aria-live="polite">Для генерации нужны работающая GPU-модель, созданный оригинальный голос и выданный ключ.</p>
-          <div id="player-wrap" hidden><audio id="player" controls preload="none"></audio><a id="download-audio" class="download" download="gustava-voice.wav">↓ Сохранить WAV</a></div>
-        </section>
-
-        <aside class="side">
-          <section class="panel owner-panel">
-            <div class="panel-heading"><span class="step">02</span><div><h2>Панель владельца</h2><p>Только для администратора</p></div></div>
-            <label for="admin-token">Секрет владельца</label>
-            <input type="password" id="admin-token" autocomplete="off" placeholder="VOICE_STUDIO_ADMIN_TOKEN">
-            <button type="button" class="secondary" id="refresh-admin">Проверить состояние и ключи</button>
-            <div class="speaker"><div class="speaker-icon">◉</div><div><strong>GUSTAVA Original</strong><span id="original-status">Нет данных</span></div></div>
-            <label class="check"><input type="checkbox" id="original-consent"> <span>Создать новый оригинальный голос из текстового описания, не копируя чужого диктора.</span></label>
-            <button type="button" class="secondary" id="design-voice">Создать и закрепить голос</button>
-            <button type="button" class="quiet" id="listen-reference">Прослушать оригинальный эталон</button>
-            <div id="reference-player" hidden><audio id="reference-audio" controls preload="none"></audio></div>
-            <p class="message" id="owner-result" role="status" aria-live="polite">Эталон создаётся один раз и закрепляется за всеми следующими записями.</p>
-          </section>
-          <section class="panel keys-panel">
-            <div class="panel-heading"><span class="step">03</span><div><h2>API-ключи</h2><p>Выпуск и отзыв без передачи ключей третьим лицам</p></div></div>
-            <label for="key-label">Название ключа</label><input id="key-label" value="YouTube Shorts Factory" maxlength="72">
-            <div class="field-grid">
-              <div><label for="key-limit">Символов/месяц</label><input id="key-limit" type="number" min="0" max="100000000" value="0"><small>0 = без месячного лимита</small></div>
-              <div><label for="key-rpm">Запросов/мин</label><input id="key-rpm" type="number" min="1" max="120" value="12"></div>
-            </div>
-            <button class="secondary" type="button" id="issue-key">+ Создать новый API-ключ</button>
-            <div id="new-key" class="secret-output" hidden><span>Скопируй сейчас, ключ показывается один раз:</span><code id="issued-secret"></code><button type="button" id="copy-key">Скопировать</button></div>
-            <div id="key-list"><p class="muted">Введи секрет владельца и нажми «Проверить».</p></div>
-          </section>
-        </aside>
-      </div>
-
-      <section class="api-band">
-        <div><p class="eyebrow">ДЛЯ НАШЕГО YOUTUBE-ЗАВОДА</p><h2>Один запрос — один оригинальный голос</h2><p>Отправляй текст по защищённому HTTPS, получай WAV и контрольный SHA-256. Повторы с тем же idempotency-key возвращают сохранённый файл, а не запускают озвучку повторно.</p></div>
-        <pre><code>POST /v1/audio/speech
-Authorization: Bearer gvk_…
-X-Idempotency-Key: moto-episode-001
-
-{
-  "text": "Дорога только начинается!",
-  "voice": "gustava-original-v1",
-  "response_format": "wav"
-}</code></pre>
-      </section>
-
-      <footer><span>GUSTAVA VOICE · Собственный API / Qwen3-TTS</span><span>Никаких обучений на записи чужого коммерческого голоса</span></footer>
-    </main>
+<html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="color-scheme" content="dark"><title>HAPYCH VOICE • Закрытая студия</title>
+<link rel="stylesheet" href="/site.css"><script defer src="/site.js"></script>
+</head><body>
+<div class="app">
+<aside class="sidebar" aria-label="Разделы студии">
+  <div class="identity">
+    <div class="brand-icon" aria-hidden="true">
+      <svg viewBox="0 0 80 80" fill="none"><path d="M10 31 18 9 34 17h12L62 9l8 22c5 19-5 35-30 40C15 66 5 50 10 31Z" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"/><path d="M14 33C20 21 31 24 40 32c9-8 20-11 26 1-2 15-13 22-26 21-13 1-24-6-26-21Z" fill="currentColor" opacity=".20"/><path d="M25 37h6m18 0h6" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/><path d="m34 46 6 5 6-5" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>
+    </div><div class="brand-text"><strong>HAPYCH<span> VOICE</span></strong><small>Приватная мастерская</small></div>
   </div>
-</body>
-</html>
+  <nav aria-label="Меню">
+    <a class="nav-link active" href="#studio"><span class="nav-ico">◈</span> Студия</a>
+    <a class="nav-link" href="#channels"><span class="nav-ico">▦</span> Каналы</a>
+    <a class="nav-link" href="#voice"><span class="nav-ico">◉</span> Настройка голоса</a>
+    <a class="nav-link" href="#keys"><span class="nav-ico">⌘</span> Ключи завода</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="private-sign"><span class="signal"></span> Вход только для владельца</div>
+    <button type="button" id="logout" class="logout">Выйти из студии <span>↗</span></button>
+  </div>
+</aside>
+<main class="workspace">
+  <header class="top">
+    <div><p class="eyebrow">VOICE CONTROL CENTER / CLOUD</p><h1>Мастерская голоса</h1><p class="top-sub">Несколько YouTube-каналов. Отдельный голос и ключ на каждый.</p></div>
+    <div class="system-status"><span class="pulse"></span><span id="service-status">Проверяем сервер</span></div>
+  </header>
+  <section class="channel-strip" id="channels">
+    <div class="channel-control"><label for="channel-select">Активный YouTube-канал</label>
+      <select id="channel-select" aria-label="Выбрать канал"><option value="gustava">GUSTAVA Enduro</option></select></div>
+    <details class="create-channel"><summary>+ Добавить канал</summary>
+      <div class="channel-create-grid">
+        <label>Короткий ID <input id="channel-slug" placeholder="motobratr" maxlength="40" pattern="[a-z][a-z0-9-]{2,39}"></label>
+        <label>Имя канала <input id="channel-name" placeholder="Второй YouTube-канал" maxlength="72"></label>
+        <label>YouTube Channel ID (необязательно) <input id="youtube-channel-id" placeholder="UC…" maxlength="24"></label>
+      </div>
+      <button type="button" class="secondary-button" id="create-channel">Добавить отдельный голос и пространство ключей</button>
+      <p id="channel-result" class="feedback" role="status" aria-live="polite"></p>
+    </details>
+  </section>
+  <div class="workspace-grid">
+    <section class="primary-panel panel" id="studio" aria-labelledby="speech-title">
+      <div class="section-top"><div><p class="eyebrow">01 · СИНТЕЗ</p><h2 id="speech-title">Новая озвучка</h2></div><div class="chip">RU <span>•</span> 24KHz WAV</div></div>
+      <div class="speaker-line">
+        <div class="speaker-mark" aria-hidden="true">◉</div>
+        <div><strong id="speaker-name">Хапыч · Original 01</strong><small id="speaker-channel">Оригинальный русский баритон</small></div>
+        <span id="original-status" class="speaker-state">Не создан</span>
+      </div>
+      <label for="transcript">Текст сценария</label>
+      <textarea id="transcript" maxlength="600" rows="8" spellcheck="true" placeholder="Напиши текст будущей озвучки…">Говорят, туристические мотоциклы скучные. А ты видел, на какие приключения они способны? Дорога только начинается!</textarea>
+      <div class="editor-bottom"><span id="text-count">0 / 600</span><span>Без смены диктора</span></div>
+      <div class="speed-box">
+        <div class="between"><label for="speed">Темп речи</label><output id="speed-value" for="speed">1.00×</output></div>
+        <input id="speed" type="range" min="0.85" max="1.15" step="0.05" value="1.00">
+        <div class="range-labels"><span>Спокойнее</span><span>Нейтрально</span><span>Быстрее</span></div>
+      </div>
+      <details class="extra" id="api-options">
+        <summary>Подключение к личному API <span>⌄</span></summary>
+        <label for="client-token">Ключ генерации (не сохраняется в браузере)</label>
+        <input id="client-token" type="password" autocomplete="off" placeholder="gvk_…">
+      </details>
+      <button type="button" id="generate" class="primary-button"><span>▶</span> Сгенерировать озвучку <span class="button-arrow">↗</span></button>
+      <p class="feedback" id="generate-result" role="status" aria-live="polite">Голос должен быть создан и проверен на собственной видеокарте.</p>
+      <div class="preview" id="player-wrap" hidden><div class="preview-head"><strong>Аудио готово</strong><a id="download-audio" download="hapych-voice.wav">Скачать WAV ↓</a></div><audio id="player" controls preload="none"></audio></div>
+    </section>
+    <div class="right-stack">
+      <section class="panel" id="voice" aria-labelledby="voice-title">
+        <div class="section-top"><div><p class="eyebrow">02 · ХАРАКТЕР</p><h2 id="voice-title">Настройка диктора</h2></div><span class="side-dot">●</span></div>
+        <p class="description">Выбери характер голоса <strong>до первого создания</strong>. После утверждения эталон закрепляется и больше не меняется автоматически.</p>
+        <div class="setting">
+          <label for="timbre">Тембр</label>
+          <select id="timbre"><option value="deep">Глубокий · баритон</option><option value="velvet">Бархатный · мягкий</option><option value="resonant">Объёмный · кинематографичный</option></select>
+        </div>
+        <div class="setting">
+          <label for="delivery">Подача</label>
+          <select id="delivery"><option value="documentary">Уверенная · документальная</option><option value="dynamic">Драйвовая · энергичная</option><option value="ironic">Ироничная · выразительная</option></select>
+        </div>
+        <div class="setting"><div class="locked"><span>Язык</span><strong>Русский <span>◆</span></strong></div></div>
+        <label class="consent"><input type="checkbox" id="original-consent"><span>Создать самостоятельного вымышленного диктора, не копируя голос другого человека.</span></label>
+        <button type="button" id="design-voice" class="secondary-button">Создать и закрепить голос</button>
+        <button type="button" id="listen-reference" class="text-button">Прослушать эталон ↗</button>
+        <div id="reference-player" hidden><audio id="reference-audio" controls preload="none"></audio></div>
+        <p class="feedback" id="owner-result" role="status" aria-live="polite">Эталон сохраняется с контрольным хешем SHA-256.</p>
+      </section>
+      <section class="panel" id="keys" aria-labelledby="key-title">
+        <div class="section-top"><div><p class="eyebrow">03 · АВТОМАТИЗАЦИЯ</p><h2 id="key-title">Доступ завода</h2></div><span class="private-chip">PRIVATE</span></div>
+        <p class="description">Каждый ключ закреплён за выбранным YouTube-каналом и не может запрашивать голос другого канала. Робот получает только WAV.</p>
+        <label for="key-label">Название клиента</label><input id="key-label" value="YouTube Shorts Factory" maxlength="72">
+        <div class="mini-grid"><div><label for="key-limit">Символов / мес.</label><input type="number" id="key-limit" min="0" max="100000000" value="0"><small>0 — без квоты</small></div><div><label for="key-rpm">Запросов / мин.</label><input type="number" id="key-rpm" min="1" max="120" value="12"></div></div>
+        <button type="button" id="issue-key" class="secondary-button">+ Выпустить API-ключ</button>
+        <div id="new-key" class="secret-output" hidden><small>Скопируй сейчас — повторно ключ не показывается.</small><code id="issued-secret"></code><button type="button" id="copy-key" class="text-button">Скопировать ключ</button></div>
+        <div id="key-list" class="keys-list"><span class="description">Загрузка ключей…</span></div>
+      </section>
+    </div>
+  </div>
+  <footer><span>HAPYCH VOICE / SELF-HOSTED QWEN3</span><span>Закрытый доступ · Только оригинальная озвучка</span></footer>
+</main></div></body></html>

@@ -128,7 +128,7 @@ class BufferPublisherTests(unittest.TestCase):
 
     def test_valid_post_uses_correct_channel_and_youtube_metadata(self):
         with patch.dict(os.environ, {"BUFFER_AUTO_PUBLISH_ENABLED": "true"}):
-            with patch.object(b.ledger, "api", side_effect=[None, None, {"sha": "receiptsha"}]):
+            with patch.object(b.ledger, "api", side_effect=[None, None, None, {"sha": "receiptsha"}]):
                 with patch.object(b.ledger, "store") as store:
                     with patch.object(b, "validate_video", return_value=None):
                         with patch.object(b, "verify_channel", return_value=([], [])):

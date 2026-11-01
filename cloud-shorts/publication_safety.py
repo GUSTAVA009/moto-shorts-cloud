@@ -14,10 +14,10 @@ from deep_voice import (VOICE_ENGINE as REQUIRED_MALE_ENGINE,
                         PROFILE_ID as REQUIRED_MALE_PROFILE,
                         PUBLIC_ATTRIBUTION as DEEP_ATTRIBUTION,
                         ready as deep_audio_ready)
-from cartesia_voice import (VOICE_ENGINE as CARTESIA_ENGINE,
-                            PROFILE_ID as CARTESIA_PROFILE,
-                            MODEL_ID as CARTESIA_MODEL,
-                            supported_episode as cartesia_supported)
+from selfhosted_voice import (VOICE_ENGINE as SELFHOSTED_ENGINE,
+                              PROFILE_ID as SELFHOSTED_PROFILE,
+                              VOICE_ID as SELFHOSTED_VOICE_ID,
+                              approved_profile as selfhosted_approved_profile)
 
 
 def file_sha256(path):
@@ -57,22 +57,20 @@ def publication_allowed(episode, meta, qa, video):
                 or qa.get("voice_source_audio_sha256") !=
                    episode["deep_audio"]["source_audio_sha256"]):
             raise ValueError("ONLY_APPROVED_CREATE_AUDIO_DEEP: genuine voice source not verified")
-    elif episode.get("voice_engine") == CARTESIA_ENGINE:
-        # Free Cartesia evaluations cannot be silently pushed to a
-        # monetizable channel. This explicit flag is independently checked
-        # by BOTH the preview-release selector and publisher.
-        if os.environ.get("CARTESIA_COMMERCIAL_PLAN_CONFIRMED") != "1":
-            raise ValueError("CARTESIA_COMMERCIAL_RIGHTS_NOT_VERIFIED")
-        if (not cartesia_supported(episode)
+    elif episode.get("voice_engine") == SELFHOSTED_ENGINE:
+        approved_ref = os.environ.get("GUSTAVA_VOICE_REFERENCE_SHA256", "")
+        if (os.environ.get("GUSTAVA_ORIGINAL_VOICE_APPROVED") != "1"
+                or not re.fullmatch(r"[0-9a-f]{64}", approved_ref)):
+            raise ValueError("SELFHOSTED_ORIGINAL_VOICE_NOT_APPROVED_FOR_PUBLICATION")
+        if (not selfhosted_approved_profile(episode)
                 or qa.get("male_voice_verified") is not True
-                or qa.get("voice_profile") != CARTESIA_PROFILE
-                or qa.get("voice_speaker") != episode.get("cartesia_voice_id")
-                or qa.get("voice_model_id") != CARTESIA_MODEL
-                or qa.get("voice_provider") != "cartesia.ai"
-                or not isinstance(qa.get("voice_source_audio_sha256"), str)
+                or qa.get("voice_profile") != SELFHOSTED_PROFILE
+                or qa.get("voice_speaker") != SELFHOSTED_VOICE_ID
+                or qa.get("voice_provider") != "owner_selfhosted_qwen3"
+                or qa.get("selfhosted_reference_sha256") != approved_ref
                 or not re.fullmatch(r"[0-9a-f]{64}",
-                                    qa["voice_source_audio_sha256"])):
-            raise ValueError("CARTESIA_GENUINE_RUSSIAN_VOICE_SOURCE_NOT_VERIFIED")
+                                    str(qa.get("voice_source_audio_sha256") or ""))):
+            raise ValueError("SELFHOSTED_GENUINE_ORIGINAL_VOICE_SOURCE_NOT_VERIFIED")
     else:
         raise ValueError("UNAPPROVED_TTS_PROVIDER_FOR_PUBLICATION")
     if qa.get("passed") is not True or qa.get("status") != "passed":
@@ -101,8 +99,8 @@ def publication_allowed(episode, meta, qa, video):
             raise ValueError("Missing required AI Doc Maker credit")
         safe_description = description.replace(DEEP_ATTRIBUTION, "")
     else:
-        # Cartesia commercial use is not licensed by this project's old
-        # AIDocMaker attribution; do not falsely credit the wrong service.
+        # The original local voice does not use the legacy AIDocMaker
+        # attribution; do not falsely credit the wrong service.
         safe_description = description
     if any(s in safe_description.lower() for s in ("https://", "www.")):
         raise ValueError("Unauthorized external links in description")

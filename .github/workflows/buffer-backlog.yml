@@ -51,7 +51,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          CARTESIA_COMMERCIAL_PLAN_CONFIRMED: ${{ vars.CARTESIA_COMMERCIAL_PLAN_CONFIRMED }}
+          GUSTAVA_ORIGINAL_VOICE_APPROVED: ${{ vars.GUSTAVA_ORIGINAL_VOICE_APPROVED }}
+          GUSTAVA_VOICE_REFERENCE_SHA256: ${{ vars.GUSTAVA_VOICE_REFERENCE_SHA256 }}
         run: python3 cloud-shorts/find_pending_buffer.py --output "$GITHUB_OUTPUT"
       - name: Download the exact QA-verified MP4
         if: steps.pick.outputs.has_job == 'true' && vars.BUFFER_AUTO_PUBLISH_ENABLED != 'false'
@@ -70,7 +71,8 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED || 'true' }}
-          CARTESIA_COMMERCIAL_PLAN_CONFIRMED: ${{ vars.CARTESIA_COMMERCIAL_PLAN_CONFIRMED }}
+          GUSTAVA_ORIGINAL_VOICE_APPROVED: ${{ vars.GUSTAVA_ORIGINAL_VOICE_APPROVED }}
+          GUSTAVA_VOICE_REFERENCE_SHA256: ${{ vars.GUSTAVA_VOICE_REFERENCE_SHA256 }}
           YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID || 'UCS0QCodPcFBTjMt4ioEWOUw' }}
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |

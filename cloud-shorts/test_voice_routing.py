@@ -1,64 +1,65 @@
-"""Cartesia/DEEP routing retains history and forbids publisher fallbacks."""
+"""Owner-approved PRIVATE Qwen route, no SaaS voices and no silent fallback."""
 import unittest
 from unittest.mock import patch
-import voice_routing as v
-import cartesia_voice as c
+import voice_routing as r
 import deep_voice as d
-
-VOICE = "0f111c12-cabc-4ba0-9a29-1ef98b133e90"
+import selfhosted_voice as h
 
 
 class VoiceRoutingTests(unittest.TestCase):
-    def test_no_unapproved_provider_and_legacy_defaults_unchanged(self):
-        self.assertEqual(v.new_episode_configuration({}),
+    def test_deep_history_default_unmodified(self):
+        self.assertEqual(r.new_episode_configuration({}),
                          {"voice_engine":d.VOICE_ENGINE,
                           "voice_profile":d.PROFILE_ID})
-        with self.assertRaisesRegex(ValueError,"UNAPPROVED_TTS_PROVIDER"):
-            v.new_episode_configuration({"GUSTAVA_TTS_PROVIDER":"silero"})
-        with self.assertRaisesRegex(ValueError,"CARTESIA_VOICE_ID_NOT_SET"):
-            v.new_episode_configuration({"GUSTAVA_TTS_PROVIDER":c.VOICE_ENGINE})
-
-    def test_approved_cartesia_mode_pins_uuid_to_each_new_episode(self):
-        config=v.new_episode_configuration({
-            "GUSTAVA_TTS_PROVIDER": c.VOICE_ENGINE,
-            "CARTESIA_VOICE_ID":VOICE,
-        })
-        self.assertEqual(config["voice_engine"],c.VOICE_ENGINE)
-        self.assertEqual(config["voice_profile"],c.PROFILE_ID)
-        self.assertEqual(config["cartesia_voice_id"],VOICE)
-
-    def test_only_valid_secret_preflight_selects_a_private_cartesia_script(self):
-        e=dict(v.new_episode_configuration({
-            "GUSTAVA_TTS_PROVIDER":c.VOICE_ENGINE,"CARTESIA_VOICE_ID":VOICE}),
-            auto_preview=True,auto_publish=False,narration="Мотоцикл едет.")
-        self.assertFalse(v.ready(e,{"CARTESIA_TTS_ENABLED":"1"}))
-        self.assertTrue(v.ready(e,{
-            "CARTESIA_TTS_ENABLED":"1","CARTESIA_KEY_PRESENT":"true"}))
-        self.assertFalse(v.ready(dict(e,auto_publish=True),{
-            "CARTESIA_TTS_ENABLED":"1","CARTESIA_KEY_PRESENT":"true"}))
-        self.assertEqual(v.expected_profile(e),c.PROFILE_ID)
-        self.assertIsNone(v.expected_profile(dict(e,cartesia_voice_id="invalid")))
-
-    def test_legacy_original_deep_receipts_still_work(self):
-        ep={"id":"old","voice_engine":d.VOICE_ENGINE}
         with patch("deep_voice.ready",return_value=True):
-            self.assertTrue(v.ready(ep))
-        report={"voice_qa_passed":True,"mixed_audio_qa_passed":True,
-                "voice_profile":d.PROFILE_ID,"male_voice_verified":True}
-        self.assertTrue(v.may_publish_with_verified_profile(ep,report))
-        report["voice_profile"]=c.PROFILE_ID
-        self.assertFalse(v.may_publish_with_verified_profile(ep,report))
+            self.assertTrue(r.ready({"voice_engine":d.VOICE_ENGINE}))
+        receipt={"voice_qa_passed":True,"mixed_audio_qa_passed":True,
+                 "male_voice_verified":True,"voice_profile":d.PROFILE_ID}
+        self.assertTrue(r.may_publish_with_verified_profile(
+            {"voice_engine":d.VOICE_ENGINE},receipt))
 
-    def test_only_exact_matching_cartesia_profile_reaches_release_gate(self):
-        ep={"voice_engine":c.VOICE_ENGINE,"voice_profile":c.PROFILE_ID,
-            "cartesia_voice_id":VOICE}
-        report={"voice_qa_passed":True,"mixed_audio_qa_passed":True,
-                "voice_profile":c.PROFILE_ID,"male_voice_verified":True}
-        self.assertTrue(v.may_publish_with_verified_profile(ep,report))
-        self.assertFalse(v.may_publish_with_verified_profile(
-            ep,dict(report,male_voice_verified=False)))
-        self.assertFalse(v.may_publish_with_verified_profile(
-            ep,dict(report,mixed_audio_qa_passed=False)))
+    def test_cloud_cpu_is_explicit_single_channel_speaker(self):
+        cfg=r.new_episode_configuration({"GUSTAVA_TTS_PROVIDER":h.VOICE_ENGINE})
+        self.assertEqual(cfg,{"voice_engine":h.VOICE_ENGINE,
+                              "voice_profile":h.PROFILE_ID,
+                              "selfhosted_voice_id":h.VOICE_ID})
+        self.assertEqual(r.expected_profile(cfg),h.PROFILE_ID)
+        self.assertIsNone(r.expected_profile(dict(cfg,selfhosted_voice_id="other")))
+
+    def test_only_secure_owner_domain_and_key_enables_private_preview(self):
+        ep=dict(r.new_episode_configuration({"GUSTAVA_TTS_PROVIDER":h.VOICE_ENGINE}),
+                auto_preview=True,auto_publish=False)
+        env={"GUSTAVA_SELFHOSTED_TTS_ENABLED":"1",
+             "GUSTAVA_VOICE_KEY_PRESENT":"true",
+             "GUSTAVA_VOICE_API_URL":"https://voice.hapychrust.ru/v1/audio/speech",
+             "GUSTAVA_VOICE_APPROVED_HOST":"voice.hapychrust.ru",
+             "GUSTAVA_VOICE_REFERENCE_SHA256":"a"*64}
+        self.assertTrue(r.ready(ep,env))
+        self.assertFalse(r.ready(ep,dict(env,GUSTAVA_VOICE_KEY_PRESENT="false")))
+        self.assertFalse(r.ready(ep,dict(env,GUSTAVA_VOICE_API_URL=
+            "https://random-tts.example/v1/audio/speech")))
+        self.assertFalse(r.ready(dict(ep,auto_publish=True),env))
+        self.assertFalse(r.ready(ep,dict(env,GUSTAVA_VOICE_REFERENCE_SHA256="nope")))
+
+    def test_all_external_paid_voice_engines_are_rejected(self):
+        for forbidden in ("cartesia_sonic36","silero","kokoro","unknown","openvoice"):
+            with self.subTest(forbidden=forbidden):
+                with self.assertRaisesRegex(ValueError,"UNAPPROVED_TTS_PROVIDER"):
+                    r.new_episode_configuration({"GUSTAVA_TTS_PROVIDER":forbidden})
+                self.assertFalse(r.ready({"voice_engine":forbidden}))
+                self.assertIsNone(r.expected_profile({"voice_engine":forbidden}))
+
+    def test_only_independently_qa_verified_original_profile_reaches_release(self):
+        ep=dict(r.new_episode_configuration({"GUSTAVA_TTS_PROVIDER":h.VOICE_ENGINE}))
+        receipt={"voice_qa_passed":True,"mixed_audio_qa_passed":True,
+                 "male_voice_verified":True,"voice_profile":h.PROFILE_ID}
+        self.assertTrue(r.may_publish_with_verified_profile(ep,receipt))
+        for bad in (
+            dict(receipt,mixed_audio_qa_passed=False),
+            dict(receipt,voice_profile="unverified"),
+            dict(receipt,male_voice_verified=False)
+        ):
+            self.assertFalse(r.may_publish_with_verified_profile(ep,bad))
 
 
 if __name__ == "__main__":
