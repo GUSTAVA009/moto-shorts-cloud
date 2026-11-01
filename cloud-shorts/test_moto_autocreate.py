@@ -313,7 +313,7 @@ class NewMotoSourceTests(unittest.TestCase):
             return []
         with patch.dict("os.environ",{"PEXELS_API_KEY":"",
                                        "OPENAI_API_KEY":"",
-                                       "OPENROUTER_API_KEY":""}), \\
+                                       "OPENROUTER_API_KEY":""}), \
              patch.object(s,"curated_pexels_results",side_effect=curated):
             ep=s.create_one(self.catalog,source_fetch=lambda *a:[],
                             commons_fetch=lambda *a:[],prepared_scripts=[])
@@ -338,7 +338,7 @@ class NewMotoSourceTests(unittest.TestCase):
         def curated(theme,used):
             return ([generic] if theme[0]=="repair" else
                     [other] if theme[0]=="dirt" else [])
-        with patch.dict("os.environ",{"PEXELS_API_KEY":""}), \\
+        with patch.dict("os.environ",{"PEXELS_API_KEY":""}), \
              patch.object(s,"curated_pexels_results",side_effect=curated):
             with self.assertRaisesRegex(RuntimeError,"NO_NEW_ACTION_MATCHING_LICENSED_MOTO_CLIPS"):
                 s.create_one(self.catalog,commons_fetch=lambda *_:[])
