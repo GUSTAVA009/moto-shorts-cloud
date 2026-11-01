@@ -7,10 +7,18 @@ import selfhosted_voice as h
 
 
 class VoiceRoutingTests(unittest.TestCase):
-    def test_deep_history_default_unmodified(self):
+    def test_unattended_qwen_default_and_immutable_historic_deep(self):
+        # A missing/blank variable must NEVER silently queue paid/manual Deep.
         self.assertEqual(r.new_episode_configuration({}),
-                         {"voice_engine":d.VOICE_ENGINE,
-                          "voice_profile":d.PROFILE_ID})
+                         {"voice_engine":h.VOICE_ENGINE,
+                          "voice_profile":h.PROFILE_ID,
+                          "selfhosted_voice_id":h.VOICE_ID})
+        self.assertEqual(r.new_episode_configuration({"GUSTAVA_TTS_PROVIDER":""}),
+                         r.new_episode_configuration({}))
+        # Historical DEEP is only enabled by an explicit opt-in or existing episode.
+        self.assertEqual(r.new_episode_configuration(
+            {"GUSTAVA_TTS_PROVIDER":d.VOICE_ENGINE}),
+            {"voice_engine":d.VOICE_ENGINE,"voice_profile":d.PROFILE_ID})
         with patch("deep_voice.ready",return_value=True):
             self.assertTrue(r.ready({"voice_engine":d.VOICE_ENGINE}))
         receipt={"voice_qa_passed":True,"mixed_audio_qa_passed":True,
