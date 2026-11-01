@@ -5818,7 +5818,7 @@
     },
     {
       "id": "gustava-20-f03-20261030",
-      "auto_preview": true,
+      "auto_preview": false,
       "auto_publish": false,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
@@ -5896,11 +5896,11 @@
       },
       "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
       "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
-      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "editorial_review_note": "Actual decoded MP4 frame review 2026-11-01; render run 41232321888: first scene shows mechanic reaching across tank/controls, second close-up shows gloved hands on side/rear wheel/body. Narration claims engine/oil service in second scene, not substantiated by the actual frames. Block publication and automatic preview; retain original pinned DEEP audio.",
       "production_batch": "gustava-20-20261030",
       "mix_category": "facts",
       "priority_rank": 8,
-      "editorial_review_status": "awaiting_frame_review",
+      "editorial_review_status": "rejected_after_independent_frame_review_20261101",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -5912,7 +5912,9 @@
       },
       "visual_revision_requested": true,
       "visual_revision_reason": "caption_clipped_confirmed",
-      "caption_fit_required": true
+      "caption_fit_required": true,
+      "visual_review_failed": true,
+      "visual_review_reason": "Actual decoded MP4 frame review 2026-11-01; render run 41232321888: first scene shows mechanic reaching across tank/controls, second close-up shows gloved hands on side/rear wheel/body. Narration claims engine/oil service in second scene, not substantiated by the actual frames. Block publication and automatic preview; retain original pinned DEEP audio."
     },
     {
       "id": "gustava-20-s03-20261030",
@@ -6011,7 +6013,7 @@
     },
     {
       "id": "gustava-20-e03-20261030",
-      "auto_preview": true,
+      "auto_preview": false,
       "auto_publish": false,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
@@ -6089,11 +6091,11 @@
       },
       "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
       "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
-      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "editorial_review_note": "Actual decoded MP4 frame review 2026-11-01; render run 41232559316: second scene shows woman smiling beside a helmet resting on a motorcycle, not wearing helmet or preparing to ride on track as narrated. Block publication and automatic preview; retain original pinned DEEP audio.",
       "production_batch": "gustava-20-20261030",
       "mix_category": "experiments",
       "priority_rank": 10,
-      "editorial_review_status": "awaiting_frame_review",
+      "editorial_review_status": "rejected_after_independent_frame_review_20261101",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -6102,7 +6104,9 @@
         "source_audio_sha256": "8db3f49d70e7aadeca815c8aa119dbfa294e201c2748a8bafdf2e2f939a2fd8d",
         "context_id": "d1542eebf5d541bf8d6a07bc1458c812",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_review_failed": true,
+      "visual_review_reason": "Actual decoded MP4 frame review 2026-11-01; render run 41232559316: second scene shows woman smiling beside a helmet resting on a motorcycle, not wearing helmet or preparing to ride on track as narrated. Block publication and automatic preview; retain original pinned DEEP audio."
     },
     {
       "id": "gustava-20-p02-20261030",
@@ -6644,19 +6648,19 @@
     },
     {
       "id": "gustava-20-s05-20261030",
-      "auto_preview": false,
+      "auto_preview": true,
       "auto_publish": false,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
       "voice_profile": "gustava_create_audio_deep_v1",
       "visual_director_version": 3,
-      "title": "РЕМОНТ НА УЛИЦЕ: два мастера и два байка 🔧 #shorts",
-      "narration": "Один мастер ремонтирует мотоцикл на городской улице. Другой занимается мотором в совершенно другом месте. А ты доверишь байк незнакомому мастеру?",
-      "description": "Независимые моменты мотожизни: РЕМОНТ НА УЛИЦЕ: два мастера и два байка 🔧. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
-      "caption_start": "РЕМОНТ НА УЛИЦЕ: два мастера и два байка 🔧",
-      "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
-      "caption_end": "ЧТО ВЫБЕРЕШЬ ТЫ?",
+      "title": "БАЙК ВСТАЛ В ГОРОДЕ? Что делать первым? 🔧 #shorts",
+      "narration": "Байк встал в городе? На улице мастер чинит мотоцикл. На другой съёмке — ремонт двигателя. По кадрам причину не узнать. А какой инструмент возишь с собой?",
+      "description": "На независимых съёмках два ремонта: один мотоцикл чинят прямо на городской улице, другой мастер работает с двигателем. Это разные случаи: причину поломки нельзя определить по этим кадрам.\n\n#мото #мотоцикл #shorts",
+      "caption_start": "БАЙК ВСТАЛ В ГОРОДЕ?",
+      "caption_middle": "ДРУГОЙ РЕМОНТ МОТОРА",
+      "caption_end": "КАКОЙ ИНСТРУМЕНТ БЕРЁШЬ?",
       "max_duration_seconds": 19.5,
       "opening_trim_seconds": 0,
       "music_style": "night-drive",
@@ -6722,7 +6726,7 @@
       },
       "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
       "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
-      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "editorial_review_note": "ORIGINAL AI DOC MAKER DEEP private preview only, 2026-11-01. Neither scene is represented as the same repair. No auto release. Require original-source SHA, independent Russian source/mixed ASR, actual moving frame inspection and editorial sign-off.",
       "production_batch": "gustava-20-20261030",
       "mix_category": "stories",
       "priority_rank": 16,
