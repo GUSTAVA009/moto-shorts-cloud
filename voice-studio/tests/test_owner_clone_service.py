@@ -2,6 +2,7 @@
 import contextlib
 import hashlib
 from http.server import ThreadingHTTPServer
+import http.client
 import io
 import json
 import os
@@ -118,24 +119,31 @@ class OwnerCloneServiceTests(unittest.TestCase):
         thread.start()
         self.addCleanup(app.server_close)
         self.addCleanup(app.shutdown)
-        url="http://127.0.0.1:"+str(app.server_address[1])+"/v1/audio/speech"
+        port=app.server_address[1]
         body=json.dumps(self.request,ensure_ascii=False).encode("utf8")
-        request=urllib.request.Request(url,data=body,method="POST",
-             headers={"X-Idempotency-Key":"factory-0003","Content-Type":"application/json"})
-        with self.assertRaises(urllib.error.HTTPError) as blocked:
-            urllib.request.urlopen(request,timeout=3)
-        self.assertEqual(blocked.exception.code,403)
+        headers={"X-Idempotency-Key":"factory-0003",
+                 "Content-Type":"application/json"}
+        def raw_post(h):
+            # No system HTTP_PROXY or urllib opener: hit this exact loopback server.
+            conn=http.client.HTTPConnection("127.0.0.1",port,timeout=5)
+            try:
+                conn.request("POST","/v1/audio/speech",body=body,headers=h)
+                response=conn.getresponse()
+                return response.status,dict(response.getheaders()),response.read()
+            finally:
+                conn.close()
+        status,_,_=raw_post(headers)
+        self.assertEqual(status,403)
         with patch.object(api,"production_run",return_value=pcm_wav()):
-            authed=urllib.request.Request(url,data=body,method="POST",
-                headers={"X-Idempotency-Key":"factory-0003",
-                         "Content-Type":"application/json",
-                         "Authorization":"Bearer "+self.env["OWNER_TTS_API_KEY"]})
-            with urllib.request.urlopen(authed,timeout=5) as r:
-                self.assertEqual(r.status,200)
-                self.assertEqual(r.headers["X-Audio-SHA256"],
-                                 hashlib.sha256(r.read()).hexdigest())
-                self.assertEqual(r.headers["X-Voice-ID"],api.VOICE_ID)
-                self.assertEqual(r.headers["X-Channel-ID"],api.CHANNEL)
+            self.assertEqual(api.authorize("Bearer "+self.env["OWNER_TTS_API_KEY"]),
+                             "owner_key")
+            status,proof,raw=raw_post(dict(
+                headers,Authorization="Bearer "+self.env["OWNER_TTS_API_KEY"]))
+            self.assertEqual(status,200)
+            self.assertEqual(proof["X-Audio-SHA256"],
+                             hashlib.sha256(raw).hexdigest())
+            self.assertEqual(proof["X-Voice-ID"],api.VOICE_ID)
+            self.assertEqual(proof["X-Channel-ID"],api.CHANNEL)
 
 if __name__=="__main__":
     unittest.main()
