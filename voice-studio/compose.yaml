@@ -39,10 +39,15 @@ services:
       - qwen_models:/app/models
     networks:
       - private_voice
+      - model_egress
 
 networks:
+  # Public voice-api cannot reach outbound internet or arbitrary services.
   private_voice:
     internal: true
+  # Only Qwen may download open-weight models from Hugging Face.
+  model_egress:
+    driver: bridge
 
 volumes:
   voice_data:
