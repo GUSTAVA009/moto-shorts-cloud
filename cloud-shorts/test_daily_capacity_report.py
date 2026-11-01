@@ -24,7 +24,7 @@ class CapacityReportTests(unittest.TestCase):
         self.assertEqual(report["monthly_delivery_observations"]["baseline_daily_target"],14)
         self.assertEqual(report["scheduled_for_today"], 1)
         self.assertEqual(report["new_unique_scripts_ready_to_render"], 1)
-        self.assertIn("BELOW_TWELVE_SCHEDULED_OR_SENT_TODAY", report["hard_blockers"])
+        self.assertIn("BELOW_DAILY_TARGET_SCHEDULED_OR_SENT_TODAY", report["hard_blockers"])
         self.assertTrue(report["keyless_editorial_script_reserve"])
         self.assertEqual(report["script_reserve_capacity"], 150000)
         self.assertEqual(report["script_reserve_remaining"], 150000)
