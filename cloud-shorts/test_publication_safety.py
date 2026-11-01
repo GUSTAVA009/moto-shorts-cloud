@@ -50,6 +50,47 @@ class PublicationQualityTests(unittest.TestCase):
     def tearDown(self):
         self.temp.cleanup()
 
+    def set_cartesia_voice(self):
+        from cartesia_voice import VOICE_ENGINE, PROFILE_ID, MODEL_ID
+        voice_id = "0f111c12-cabc-4ba0-9a29-1ef98b133e90"
+        self.episode["voice_engine"] = VOICE_ENGINE
+        self.episode["voice_profile"] = PROFILE_ID
+        self.episode["cartesia_voice_id"] = voice_id
+        self.episode.pop("deep_audio", None)
+        self.meta["description"] = "Оригинальный мотоконтент с русской озвучкой."
+        self.qa.update({
+            "voice_profile": PROFILE_ID,
+            "voice_speaker": voice_id,
+            "voice_provider": "cartesia.ai",
+            "voice_model_id": MODEL_ID,
+            "voice_source_audio_sha256": "b" * 64,
+        })
+
+    def test_cartesia_free_or_unlicensed_voice_cannot_publish(self):
+        from unittest.mock import patch
+        self.set_cartesia_voice()
+        with patch.dict("os.environ", {"CARTESIA_COMMERCIAL_PLAN_CONFIRMED": "0"}):
+            with self.assertRaisesRegex(ValueError, "CARTESIA_COMMERCIAL_RIGHTS"):
+                p.publication_allowed(self.episode, self.meta,
+                                      self.qa, self.video)
+        with patch.dict("os.environ", {"CARTESIA_COMMERCIAL_PLAN_CONFIRMED": "1"}):
+            self.assertTrue(p.publication_allowed(self.episode, self.meta,
+                                                 self.qa, self.video))
+            for field in ("voice_speaker", "voice_provider", "voice_model_id",
+                          "voice_source_audio_sha256"):
+                original=self.qa[field]
+                self.qa[field]="unknown"
+                try:
+                    with self.assertRaisesRegex(ValueError, "CARTESIA_GENUINE"):
+                        p.publication_allowed(self.episode,self.meta,
+                                              self.qa,self.video)
+                finally:
+                    self.qa[field]=original
+            self.qa["voice_profile"] = "old-male-voice"
+            with self.assertRaisesRegex(ValueError, "CARTESIA_GENUINE"):
+                p.publication_allowed(self.episode,self.meta,
+                                      self.qa,self.video)
+
     def test_valid_motorcycle_clip(self):
         self.assertTrue(p.publication_allowed(self.episode, self.meta, self.qa, self.video))
 
