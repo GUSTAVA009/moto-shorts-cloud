@@ -42,6 +42,44 @@ class EpisodeTests(unittest.TestCase):
         self.assertGreaterEqual(sum(s["seconds"] for s in ep["shots"]),12)
         self.assertEqual(r.validate_episode(ep),ep["id"])
 
+
+    def test_ironic_reveal_caption_follows_real_second_scene_not_fixed_timer(self):
+        episode = {
+            "id": "private-myth-preview",
+            "creative_treatment": "myth_vs_reality_irony",
+            "opening_trim_seconds": 0.10,
+        }
+        scenes = [{"source":"clip_0","seconds":11.45},
+                  {"source":"clip_1","seconds":10.70}]
+        spans = r.caption_schedule(episode, 21.95, scenes)
+        self.assertEqual([x[0] for x in spans],
+                         ["caption_start","caption_middle","caption_end"])
+        self.assertAlmostEqual(spans[1][1],11.45-0.10+0.12)
+        self.assertGreater(spans[1][1],spans[0][2])
+        self.assertLess(spans[1][2],spans[2][1])
+        self.assertLess(spans[1][2]-spans[1][1],2.5)
+        # No regression to legacy 3.9s cue for normal episodes.
+        ordinary=r.caption_schedule({"story_steps":[]},21.95)
+        self.assertAlmostEqual(ordinary[1][1],3.9)
+        self.assertEqual(len(r.caption_schedule({"story_steps":[{"text":"proof"}]},
+                                                 21.95)),2)
+
+    def test_ironic_caption_fails_closed_without_correct_two_scene_proof(self):
+        ep={"creative_treatment":"myth_vs_reality_irony",
+            "opening_trim_seconds":0.1}
+        with self.assertRaisesRegex(RuntimeError,
+                                    "MYTH_CAPTION_REQUIRES_VERIFIED_TWO_SHOT_PLAN"):
+            r.caption_schedule(ep,21.2,None)
+        with self.assertRaisesRegex(RuntimeError,
+                                    "MYTH_CAPTION_REQUIRES_VERIFIED_TWO_SHOT_PLAN"):
+            r.caption_schedule(ep,21.2,[{"seconds":5.0}])
+        with self.assertRaisesRegex(RuntimeError,
+                                    "MYTH_CAPTION_CUT_OUTSIDE_READABLE_DURATION"):
+            r.caption_schedule(ep,21.2,[{"seconds":19},{"seconds":2}])
+        with self.assertRaisesRegex(RuntimeError,
+                                    "MYTH_CAPTION_TRANSITION_UNVERIFIED"):
+            r.caption_schedule(ep,21.2,[{"seconds":"bad"},{"seconds":5}])
+
     def test_two_line_overlay_text_never_embeds_ffmpeg_newline_glyph(self):
         one={"text":"ПЕРВЫЙ ВЫЕЗД:","line_count":1}
         two={"text":"ПЕРВЫЙ ВЫЕЗД:" + chr(10) + "улыбка или скорость?",
