@@ -32,6 +32,31 @@ jobs:
           sys.path.insert(0,"cloud-shorts")
           import voice_failover as v
           from selfhosted_voice import valid_source_wav
+          # Diagnose only non-secret, boolean claim compatibility on the
+          # GitHub runner. NEVER print JWT, bearer, payload values or signature.
+          import json,base64
+          signed=v.owner_actions_oidc(os.environ)
+          payload=signed.split(".")[1]
+          claim=json.loads(base64.urlsafe_b64decode(
+              payload+"="*((-len(payload))%4)))
+          expected_workflow=(
+              "GUSTAVA009/moto-shorts-cloud/.github/workflows/"
+              "voice-live-smoke.yml@refs/heads/main")
+          checks={
+              "issuer_ok":claim.get("iss")=="https://token.actions.githubusercontent.com",
+              "audience_ok":claim.get("aud")=="voice.hapychrust.ru",
+              "has_nbf":"nbf" in claim,
+              "has_exp":"exp" in claim,
+              "has_iat":"iat" in claim,
+              "has_sub":"sub" in claim,
+              "repo_id_ok":str(claim.get("repository_id"))=="1436068497",
+              "repo_ok":claim.get("repository")=="GUSTAVA009/moto-shorts-cloud",
+              "branch_ok":claim.get("ref")=="refs/heads/main",
+              "workflow_ok":claim.get("workflow_ref")==expected_workflow,
+              "has_job_workflow_ref":"job_workflow_ref" in claim,
+          }
+          print("LIVE_OIDC_CLAIM_BOOLEAN_DIAGNOSTIC",
+                json.dumps(checks,sort_keys=True))
           episode={
               "id":"private-oidc-canary-voice-20261101",
               "narration":"Это настоящая проверка автоматической озвучки на сервере канала Густава. Русский голос должен оставаться разборчивым и непрерывным.",
