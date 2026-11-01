@@ -1,0 +1,10 @@
+# Add ONLY these specific ingress entries into the existing voice-tunnel.yml,
+# preserving its real tunnel ID, credentials path, and fallback rule.
+# NEVER redirect /health or /v1/audio/speech to the portal service.
+ingress:
+  - hostname: voice.hapychrust.ru
+    path: ^/(login|studio|portal-assets/.*|auth/.*|api/portal/.*)?$
+    service: http://127.0.0.1:8078
+  - hostname: voice.hapychrust.ru
+    service: http://127.0.0.1:8077
+  - service: http_status:404
