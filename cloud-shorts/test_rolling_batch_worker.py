@@ -57,5 +57,50 @@ class RollingBatchWorkerTests(unittest.TestCase):
         self.assertTrue(w.needs_persist(state,dict(state),["stage_next_ten"],now))
         self.assertTrue(w.needs_persist(state,dict(state),[],now+timedelta(hours=7)))
 
+
+
+    def test_full_buffer_still_refills_when_separate_reviewed_mp4_reserve_empty(self):
+        now=datetime(2026,11,1,tzinfo=timezone.utc)
+        state,_=b.reconcile(None,[])
+        state["last_replenish_request_at"]=(now-timedelta(hours=2)).isoformat()
+        self.assertTrue(w.should_replenish(state,[],10,now,0))
+        self.assertTrue(w.should_replenish(state,[],10,now,9))
+        self.assertFalse(w.should_replenish(state,[],10,now,10))
+        state["last_replenish_request_at"]=(now-timedelta(minutes=5)).isoformat()
+        self.assertFalse(w.should_replenish(state,[],10,now,0))
+
+    def test_only_real_unqueued_deep_reviewed_mp4_counts_as_reserve(self):
+        ep={"id":"fresh-moto-01", "auto_publish":True,
+            "voice_engine":"aidocmaker_deep",
+            "reviewed_mp4_sha256":"a"*64,
+            "reviewed_artifact_run_id":"42",
+            "visual_director_version":3,
+            "visual_revision_status":"assistant_checked_passed",
+            "scene_script_anchors":[{"source":"clip_0","action":"riding",
+                                     "spoken_anchor":"мотоцикл"}],
+            "title":"Мотоцикл едет", "narration":"Мотоцикл едет по трассе.",
+            "editorial":{"bike":"offroad-trail-motorcycle"}}
+        receipt={"id":"fresh-moto-01","state":"preview_ready",
+                 "voice_qa_passed":True,"mixed_audio_qa_passed":True,
+                 "voice_profile":"gustava_create_audio_deep_v1",
+                 "male_voice_verified":True,"run_id":"42"}
+        artifact={"name":"daily-preview-fresh-moto-01-42","expired":False}
+        path="render-receipts/fresh-moto-01.json"
+        count=w.count_unqueued_reviewed_mp4
+        self.assertEqual(count({"episodes":[ep]},[receipt],[artifact],[path]),1)
+        self.assertEqual(count({"episodes":[ep]},[receipt],[artifact],
+                               [path,"buffer-publication-receipts/fresh-moto-01.json"]),0)
+        self.assertEqual(count({"episodes":[ep]},[receipt],
+                               [dict(artifact,expired=True)],[path]),0)
+        self.assertEqual(count({"episodes":[dict(ep,auto_publish=False)]},
+                               [receipt],[artifact],[path]),0)
+        self.assertEqual(count({"episodes":[dict(ep,reviewed_mp4_sha256="")]},
+                               [receipt],[artifact],[path]),0)
+        self.assertEqual(count({"episodes":[ep]},
+                               [dict(receipt,mixed_audio_qa_passed=False)],
+                               [artifact],[path]),0)
+        self.assertEqual(count({"episodes":[dict(ep,visual_review_failed=True)]},
+                               [receipt],[artifact],[path]),0)
+
 if __name__=="__main__":
     unittest.main()
