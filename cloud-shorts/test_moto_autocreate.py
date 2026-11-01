@@ -223,6 +223,67 @@ class NewMotoSourceTests(unittest.TestCase):
         self.assertEqual(len(select_pair([base,second],set())),2)
         self.assertEqual(select_pair([base,second],{"90000001"}),[])
 
+
+    def test_reference_style_requires_real_touring_and_racing_scenes(self):
+        """Reference is a creative *format*, not its copyrighted media/text."""
+        from source_story import scene_for, compose, select_pair, require_filmable
+        journey = {
+            "key":"j", "url":"https://www.pexels.com/download/video/90000011/",
+            "source_page":"https://www.pexels.com/video/motorcycle-touring-journey-90000011/",
+            "author":"Touring Camera", "license":"Pexels License", "duration":18}
+        race = {
+            "key":"r", "url":"https://www.pexels.com/download/video/90000012/",
+            "source_page":"https://www.pexels.com/video/motocross-race-on-track-90000012/",
+            "author":"Track Camera", "license":"Pexels License", "duration":17}
+        bland = {
+            "key":"b", "url":"https://www.pexels.com/download/video/90000013/",
+            "source_page":"https://www.pexels.com/video/motorcycle-ride-90000013/",
+            "author":"Road Camera", "license":"Pexels License", "duration":18}
+        self.assertEqual(scene_for(journey)[0],"touring")
+        self.assertEqual(scene_for(race)[0],"race")
+        pair=select_pair([bland,journey,race],set())
+        self.assertEqual([media["key"] for media in pair],["j","r"])
+        draft=compose(pair,[])
+        self.assertEqual(draft["_creative_treatment"],"myth_vs_reality_irony")
+        self.assertEqual(draft["_editorial_format"],"ironic_touring_vs_track_myth")
+        self.assertEqual(require_filmable(draft,pair),["touring","race"])
+        self.assertTrue(125<=len(draft["narration"])<=300)
+        self.assertIn("турист",draft["narration"].lower()) if "турист" in draft["narration"].lower() else self.assertIn("путешеств",draft["narration"].lower())
+        self.assertIn("гонк",draft["narration"].lower())
+        self.assertNotIn("эндуро",draft["narration"].lower())
+        self.assertEqual(compose([bland,race],[])["_editorial_format"],
+                         "source_anchored_action_contrast")
+        with self.assertRaisesRegex(ValueError,"MYTH_TITLE_PREVIOUSLY_USED"):
+            compose(pair,[draft["title"]])
+        race["author"]=journey["author"]
+        self.assertEqual(select_pair([journey,race],set()),[])
+
+    def test_cross_theme_touring_story_is_private_and_keeps_exact_deep(self):
+        from unittest.mock import patch
+        tour = {
+            "key":"j", "url":"https://www.pexels.com/download/video/90000021/",
+            "source_page":"https://www.pexels.com/video/motorcycle-touring-journey-90000021/",
+            "author":"Touring Creator","license":"Pexels License","duration":17}
+        race = {
+            "key":"r", "url":"https://www.pexels.com/download/video/90000022/",
+            "source_page":"https://www.pexels.com/video/motocross-race-on-track-90000022/",
+            "author":"Track Creator","license":"Pexels License","duration":18}
+        def cached(theme, used):
+            return [tour] if theme[0]=="roadtrip" else [race] if theme[0]=="racing" else []
+        with patch.dict("os.environ",{"PEXELS_API_KEY":""}), \
+             patch.object(s,"choose_theme",return_value=s.THEMES[8]), \
+             patch.object(s,"curated_pexels_results",side_effect=cached):
+            ep=s.create_one(self.catalog, commons_fetch=lambda _:[])
+        self.assertEqual(ep["editorial_format"],"ironic_touring_vs_track_myth")
+        self.assertEqual(ep["creative_treatment"],"myth_vs_reality_irony")
+        self.assertEqual(ep["voice_engine"],"aidocmaker_deep")
+        self.assertTrue(ep["auto_preview"])
+        self.assertFalse(ep["auto_publish"])
+        self.assertEqual(ep["music_style"],"race-breakbeat")
+        self.assertEqual({media["source_page"] for media in ep["footage"]},
+                         {tour["source_page"],race["source_page"]})
+        self.assertEqual(len(ep["shots"]),2)
+
     def test_build_vetted_unique_episode(self):
         media = s.pexels_results(s.THEMES[0], 1, "demo",
               fetch=lambda a,b: {"videos": [
