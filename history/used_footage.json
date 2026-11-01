@@ -832,6 +832,16 @@
       "episode": "gustava-20-f05-20261030",
       "source": "https://www.pexels.com/video/a-man-riding-his-motorcycle-4922587/",
       "status": "reserved-or-rendered"
+    },
+    "38893306": {
+      "episode": "gustava-20-s04-20261030",
+      "source": "https://www.pexels.com/video/busy-motorcycle-repair-shop-entrance-scene-38893306/",
+      "status": "reserved-or-rendered"
+    },
+    "34953288": {
+      "episode": "gustava-20-s04-20261030",
+      "source": "https://www.pexels.com/video/industrial-motorcycle-workshop-with-mechanics-34953288/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1247,6 +1257,13 @@
       "story": "putting-helmet-vs-starting-motorcycle",
       "visual": "helmet-on-then-bike-start",
       "bike": "city-riding-motorcycle"
+    },
+    "gustava-20-s04-20261030": {
+      "environment": "shop-entrance-and-industrial-service",
+      "people": "passersby-and-workshop-staff",
+      "story": "busy-repairshop-door-vs-inside-repair",
+      "visual": "exterior-door-then-shop-floor",
+      "bike": "service-shop-motorcycles"
     }
   }
 }
