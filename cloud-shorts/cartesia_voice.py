@@ -43,7 +43,7 @@ def sha(data):
 
 
 def parse_voice_id(value):
-    if not isinstance(value, str):
+    if not isinstance(value, str) or not value.strip():
         raise ValueError("CARTESIA_VOICE_ID_NOT_SET")
     try:
         normal = str(uuid.UUID(value))
