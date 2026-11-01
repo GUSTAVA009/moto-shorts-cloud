@@ -1,56 +1,27 @@
-# Run inside voice-studio/: docker compose up -d --build
-# Requires a GPU-enabled Docker host with NVIDIA Container Toolkit.
+# Oracle Cloud ARM64 CPU instance; no NVIDIA GPU and NO LOCAL PC.
+# Install the open Qwen3-TTS C CPU engine as a host systemd service
+# on http://127.0.0.1:8002 before starting this private web API.
+# docker compose -f compose.yaml up -d --build
 services:
   voice-api:
     build: .
     restart: unless-stopped
-    depends_on:
-      - qwen
+    network_mode: host
+    command: ["uvicorn", "app:app", "--host", "127.0.0.1", "--port", "8080",
+              "--workers", "1", "--no-server-header", "--no-access-log"]
     environment:
-      VOICE_STUDIO_ADMIN_TOKEN: ${VOICE_STUDIO_ADMIN_TOKEN:?Set owner admin token in local .env}
-      VOICE_STUDIO_SESSION_SECRET: ${VOICE_STUDIO_SESSION_SECRET:?Set independent 40-byte browser session secret}
-      VOICE_STUDIO_LOCAL_HTTP: ${VOICE_STUDIO_LOCAL_HTTP:-0}
-      UPSTREAM_API_KEY: ${UPSTREAM_API_KEY:?Set independent internal key in local .env}
-      QWEN_BACKEND_URL: http://qwen:8000
+      VOICE_STUDIO_ADMIN_TOKEN: ${VOICE_STUDIO_ADMIN_TOKEN:?Set 40-character owner admin secret}
+      VOICE_STUDIO_SESSION_SECRET: ${VOICE_STUDIO_SESSION_SECRET:?Set independent 40-character session secret}
+      VOICE_STUDIO_LOCAL_HTTP: "0"
+      QWEN_BACKEND_URL: http://127.0.0.1:8002
       VOICE_STUDIO_DATA: /data
-    ports:
-      - "127.0.0.1:8080:8080"
     volumes:
       - voice_data:/data
-    networks:
-      - private_voice
-
-  qwen:
-    image: linkary/qwen-tts-server:latest
-    restart: unless-stopped
-    gpus: all
-    environment:
-      ENV: production
-      API_KEYS: ${UPSTREAM_API_KEY:?Set internal Qwen API key}
-      EXPOSE_API_KEY: "false"
-      CUDA_DEVICE: cuda:0
-      MODEL_DTYPE: float16
-      USE_FLASH_ATTENTION: "false"
-      PRELOAD_MODELS: "false"
-      CACHE_FIRST_MODEL_LOADING: "true"
-      QWEN_TTS_VOICE_DESIGN_MODEL: Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign
-      QWEN_TTS_BASE_MODEL: Qwen/Qwen3-TTS-12Hz-0.6B-Base
-      HF_HOME: /app/models
-      MODEL_CACHE_DIR: /app/models
-    volumes:
-      - qwen_models:/app/models
-    networks:
-      - private_voice
-      - model_egress
-
-networks:
-  # Public voice-api cannot reach outbound internet or arbitrary services.
-  private_voice:
-    internal: true
-  # Only Qwen may download open-weight models from Hugging Face.
-  model_egress:
-    driver: bridge
-
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 256
+    mem_limit: 700m
 volumes:
   voice_data:
-  qwen_models:
