@@ -1,0 +1,12 @@
+# Optional: public HTTPS if this server has reachable ports 80/443.
+# For GPU Windows PC behind home NAT, use Cloudflare Tunnel instead;
+# the website itself is deliberately bound to 127.0.0.1:8080.
+voice.hapychrust.ru {
+    encode zstd gzip
+    reverse_proxy 127.0.0.1:8080
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "no-referrer"
+    }
+}
