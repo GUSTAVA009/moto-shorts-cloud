@@ -1,0 +1,50 @@
+name: GUSTAVA - LIVE Signed OIDC Voice API Canary (NO publication)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/voice-live-smoke.yml'
+      - 'voice-studio/owner_clone_service.py'
+      - 'cloud-shorts/voice_failover.py'
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: gustava-real-owner-tts-canary
+  cancel-in-progress: false
+jobs:
+  check-real-private-owner-tts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      GUSTAVA_SELFHOSTED_TTS_ENABLED: '1'
+      GUSTAVA_VOICE_OIDC_ENABLED: '1'
+      GUSTAVA_VOICE_API_URL: 'https://voice.hapychrust.ru/v1/audio/speech'
+      GUSTAVA_VOICE_APPROVED_HOST: 'voice.hapychrust.ru'
+      GUSTAVA_VOICE_REFERENCE_SHA256: 'ed27b23b9f86345c45263ab28957e96fd2d399379b3ea90ed9fbc75be183a3cc'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate a REAL Russian WAV via the owner's server using signed Actions OIDC
+        run: |
+          python3 - <<'PY'
+          import os,sys,hashlib,wave,io
+          sys.path.insert(0,"cloud-shorts")
+          import voice_failover as v
+          from selfhosted_voice import valid_source_wav
+          episode={
+              "id":"private-oidc-canary-voice-20261101",
+              "narration":"Это настоящая проверка автоматической озвучки на сервере канала Густава. Русский голос должен оставаться разборчивым и непрерывным.",
+          }
+          audio,ref_sha,route=v.synthesize(episode,env=os.environ,
+              validator=valid_source_wav)
+          with wave.open(io.BytesIO(audio),"rb") as w:
+              seconds=w.getnframes()/w.getframerate()
+          assert route=="cloud", route
+          assert ref_sha==os.environ["GUSTAVA_VOICE_REFERENCE_SHA256"]
+          assert seconds>=3.0 and len(audio)>10000
+          print("LIVE_CLOUD_QWEN_REAL_WAV_VERIFIED",
+                "route",route,"duration_sec",round(seconds,2),
+                "sha256",hashlib.sha256(audio).hexdigest())
+          print("NO_PUBLICATION_PERFORMED; this is NOT narrator editorial approval")
+          PY
