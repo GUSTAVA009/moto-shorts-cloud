@@ -10,10 +10,15 @@ import threading
 import unittest
 from unittest.mock import patch
 from urllib.error import HTTPError
-from urllib.request import Request, urlopen
+from urllib.request import Request, build_opener, HTTPRedirectHandler
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import live_portal as portal
+
+
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self,req,fp,code,msg,headers,newurl):
+        return None
 
 
 class LivePortalContract(unittest.TestCase):
@@ -49,7 +54,7 @@ class LivePortalContract(unittest.TestCase):
         body=json.dumps(data).encode() if data is not None else None
         req=Request(self.base+path,data=body,headers=headers,method=method)
         try:
-            with urlopen(req,timeout=5) as r:
+            with build_opener(NoRedirect()).open(req,timeout=5) as r:
                 return r.status,r.headers,r.read()
         except HTTPError as exc:
             return exc.code,exc.headers,exc.read()
