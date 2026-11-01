@@ -131,9 +131,12 @@ def main():
             if "CURATED_STORY_BANK_EXHAUSTED" not in str(exc):
                 raise
             from moto_autocreate import create_one
+            from cc0_source_pool import discover as discover_commons
             try:
                 selected = create_one(
-                    catalog, permanently_used=set(history["used"]),
+                    catalog,
+                    commons_fetch=discover_commons,
+                    permanently_used=set(history["used"]),
                     prepared_scripts=prepared)
             except (RuntimeError, ValueError, OSError) as failure:
                 # Preserve any successfully authored stories instead of
