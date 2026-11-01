@@ -842,6 +842,16 @@
       "episode": "gustava-20-s04-20261030",
       "source": "https://www.pexels.com/video/industrial-motorcycle-workshop-with-mechanics-34953288/",
       "status": "reserved-or-rendered"
+    },
+    "32034080": {
+      "episode": "moto-racing-mud-contrast-20261101",
+      "source": "https://www.pexels.com/video/high-speed-motorcycle-drag-race-action-32034080/",
+      "status": "reserved-or-rendered"
+    },
+    "36365086": {
+      "episode": "moto-racing-mud-contrast-20261101",
+      "source": "https://www.pexels.com/video/off-road-motorcycle-adventure-in-muddy-terrain-36365086/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1264,6 +1274,13 @@
       "story": "busy-repairshop-door-vs-inside-repair",
       "visual": "exterior-door-then-shop-floor",
       "bike": "service-shop-motorcycles"
+    },
+    "moto-racing-mud-contrast-20261101": {
+      "environment": "drag-racing-and-muddy-offroad-20261101",
+      "bike": "race-and-offroad-motorcycle",
+      "people": "race-track-and-offroad-riders",
+      "story": "racing-speed-vs-mud-control",
+      "visual": "two-independent-moving-motorbike-actions"
     }
   }
 }
