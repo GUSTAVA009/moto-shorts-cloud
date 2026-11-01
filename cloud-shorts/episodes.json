@@ -7389,7 +7389,7 @@
       "voice_profile": "gustava_original_qwen3_v1",
       "selfhosted_voice_id": "gustava-original-v1",
       "title": "Турист или гонщик? Кто придумал этот спор? #shorts",
-      "narration": "Мотоцикл на дальнем маршруте скучнее гонки? Спорный стереотип. На первой независимой съёмке райдер едет на туристическом мотоцикле. На другой — мотоциклисты участвуют в гонке. Это разные люди и разные кадры, а не состязание двух байков. Что тебе ближе: путешествие или гонка?",
+      "narration": "Мотоцикл в путешествии — скука? Здесь райдер едет по горному маршруту. На другом видео — настоящая гонка на треке. Разные люди и съёмки. Что ближе тебе?",
       "description": "Ироничный разбор мифа о туристических байках. Два независимых лицензированных эпизода: путешествие и гонка. Не одно событие и не сравнение характеристик моделей.\n\n#shorts",
       "caption_start": "МИФ: ТУРИСТ — ЭТО СКУЧНО?",
       "caption_middle": "ДОРОГА ИЛИ ГОНОЧНЫЙ ТРЕК?",
@@ -7432,12 +7432,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         }
       ],
@@ -7461,7 +7461,23 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_original_touring_track_satire_v1",
-      "story_reserve_id": "r2-roadtrip-0023"
+      "story_reserve_id": "r2-roadtrip-0023",
+      "visual_duration_revision_requested": true,
+      "visual_duration_revision_reason": "concise_script_fits_original_moving_scenes",
+      "visual_duration_revision_evidence": {
+        "previous_run_id": "41329033081",
+        "previous_fingerprint": "7d0e1494f1fdcc3ed98c848b358afae22f7c22f0b92c73f026ec2f2b6d34e097",
+        "previous_error": "VISUAL_DURATION_SHORTAGE",
+        "source_ids": [
+          "32659157",
+          "31894372"
+        ],
+        "old_narration_length": 275,
+        "new_narration_length": 152,
+        "observed_previous_run_failure": true,
+        "licensed_media_immutable": true,
+        "publication_authorized": false
+      }
     },
     {
       "id": "moto-racing-59aff99f5dee",
@@ -7515,12 +7531,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 8.97
         }
       ],
