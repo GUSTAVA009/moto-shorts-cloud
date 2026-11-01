@@ -42,6 +42,11 @@ JOBS = {}
 LOCK = threading.RLock()
 SYNTH_LOCK = threading.Lock()
 MAX_JSON = 4200
+EQ_FREQS = ("80", "250", "1000", "3000", "8000")
+EQ_FLAT = {frequency: 0 for frequency in EQ_FREQS}
+EQ_MIN_DB = -6
+EQ_MAX_DB = 6
+
 
 STYLE = """
 :root{color-scheme:dark;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:#090e18;color:#f3f5fa}
@@ -66,6 +71,13 @@ h1{font-size:2.25rem;line-height:1.15;margin:5px 0 15px}h2{font-size:1.2rem;marg
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.kpi{padding:18px;background:#0d1725;border-radius:12px}
 .kpi b{font-size:1.12rem;display:block;margin:8px 0}.kpi span{color:#9aabc0;font-size:.78rem}
 select{appearance:auto}.two{display:flex;gap:12px;align-items:end}.two>*{flex:1}.inline-action{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.eq-row{display:grid;grid-template-columns:55px minmax(0,1fr) 55px;gap:11px;align-items:center;margin:9px 0}
+.eq-row label{margin:0;font-size:.83rem;color:#a4dfff}
+.eq-row output{text-align:right;font-size:.83rem;color:#f0f5fc;font-variant-numeric:tabular-nums}
+.eq-row input[type=range]{padding:0;background:transparent;accent-color:#33b9ff;border:0;height:20px}
+.eq-box{padding:12px 14px;border:1px solid #2a4965;background:#0c1929;border-radius:12px}
+.eq-help{font-size:.83rem;color:#96aec8}
+.pw-hint{font-size:.8rem;color:#9eb5c9}
 audio{width:100%;margin:14px 0}small{color:#a0afc2}.feedback{min-height:22px}.line{height:1px;background:#2a3d50;margin:22px 0}
 @media(max-width:870px){.shell{display:block;padding:18px}aside{min-height:auto;border-right:0;padding:12px 5px 22px}aside a{display:inline-block;margin:12px 16px 0 0}.grid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr}.auth{margin:8vh 14px}}
 """
@@ -84,6 +96,27 @@ APP_JS = """
 let csrf='',job=null;
 const $=id=>document.getElementById(id);
 const msg=(id,s)=>{$(id).textContent=s;};
+const EQ_FREQS=['80','250','1000','3000','8000'];
+const EQ_PRESETS={
+flat:[0,0,0,0,0],
+deep:[3,1,-1,1,0],
+warm:[2,1,0,-1,-2],
+clear:[-2,-1,0,2,2]
+};
+function readEq(){const v={};for(const f of EQ_FREQS)v[f]=Number($('eq-'+f).value);return v}
+function drawEq(eq){
+for(const f of EQ_FREQS){
+const v=Number(eq?.[f]??0);
+$('eq-'+f).value=Number.isInteger(v)&&v>=-6&&v<=6?v:0;
+$('eq-value-'+f).textContent=(Number($('eq-'+f).value)>0?'+':'')+$('eq-'+f).value+' дБ';
+}
+syncEqPreset()
+}
+function syncEqPreset(){
+const v=EQ_FREQS.map(f=>Number($('eq-'+f).value));
+const match=Object.keys(EQ_PRESETS).find(p=>v.every((x,i)=>x===EQ_PRESETS[p][i]));
+$('eq-preset').value=match||'custom';
+}
 async function api(path,method='GET',body=null){
 const headers={};if(method!=='GET')headers['X-CSRF-Token']=csrf;
 if(body!==null)headers['Content-Type']='application/json';
@@ -96,7 +129,7 @@ async function boot(){
 try{
 const s=await api('/auth/session');csrf=s.csrf;
 const p=await api('/api/portal/preferences');
-$('channel-name').value=p.channel_name;$('speed').value=p.speed;$('text').value=p.text;
+$('channel-name').value=p.channel_name;$('speed').value=p.speed;$('text').value=p.text;drawEq(p.eq);
 const h=await api('/api/portal/status');
 $('tts').textContent=h.tts_ready?'Работает':'Недоступен';
 $('tts').className=h.tts_ready?'ok':'error';
@@ -107,14 +140,14 @@ $('server-status').textContent=h.tts_ready?'Qwen3 CPU доступен':'Про�
 }
 $('save').onclick=async()=>{
 try{
-await api('/api/portal/preferences','POST',{channel_name:$('channel-name').value,speed:Number($('speed').value),text:$('text').value});
-msg('feedback','Настройки кабинета сохранены. Темп применяется к новым предпросмотрам.');
+await api('/api/portal/preferences','POST',{channel_name:$('channel-name').value,speed:Number($('speed').value),text:$('text').value,eq:readEq()});
+msg('feedback','Настройки сохранены. Темп и эквалайзер применяются к новым WAV-предпросмотрам.');
 }catch(e){msg('feedback',e.message)}
 };
 $('generate').onclick=async()=>{
 const button=$('generate');button.disabled=true;msg('preview-status','Генерация на сервере запущена…');
 try{
-const r=await api('/api/portal/preview','POST',{text:$('text').value,speed:Number($('speed').value)});
+const r=await api('/api/portal/preview','POST',{text:$('text').value,speed:Number($('speed').value),eq:readEq()});
 job=r.job_id;poll();
 }catch(e){msg('preview-status',e.message);button.disabled=false}
 };
@@ -133,10 +166,42 @@ msg('preview-status','Реальный WAV готов, '+s.duration_seconds+' с
 finally{if(!pending)$('generate').disabled=false}
 }
 $('change').onclick=async()=>{
-try{await api('/auth/change-password','POST',{current:$('old-password').value,next:$('new-password').value});
-$('old-password').value='';$('new-password').value='';msg('security-msg','Пароль изменён. Все другие сеансы закрыты.');
-}catch(e){msg('security-msg',e.message)}
+const current=$('old-password').value, next=$('new-password').value, confirm=$('confirm-password').value;
+if(!current)return msg('security-msg','Введите действующий пароль, с которым вошли в кабинет.');
+if(next.length<14)return msg('security-msg','Новый пароль слишком короткий: нужно минимум 14 символов. Сейчас: '+next.length+'.');
+if(next.length>128)return msg('security-msg','Новый пароль должен быть не длиннее 128 символов.');
+if(next!==confirm)return msg('security-msg','Новый пароль и подтверждение не совпадают.');
+if(current===next)return msg('security-msg','Новый пароль должен отличаться от текущего.');
+const button=$('change');button.disabled=true;
+try{
+const changed=await api('/auth/change-password','POST',{current,next});
+csrf=changed.csrf;
+$('old-password').value='';$('new-password').value='';$('confirm-password').value='';
+msg('password-length','Минимум 14 символов.');
+msg('security-msg','Пароль успешно изменён. Текущий вход сохранён, остальные сеансы завершены.');
+}catch(e){
+const messages={
+CURRENT_PASSWORD_INCORRECT:'Неверный текущий пароль. Вводи только значение пароля, без INITIAL_OWNER_PASSWORD=.',
+NEW_PASSWORD_MIN_14_CHARACTERS:'Новый пароль должен содержать минимум 14 символов.',
+NEW_PASSWORD_TOO_LONG:'Максимальная длина нового пароля — 128 символов.',
+NEW_PASSWORD_MUST_DIFFER:'Новый пароль должен отличаться от текущего.',
+PASSWORD_REQUIRED:'Заполни оба поля.',
+NEW_PASSWORD_MUST_NOT_MATCH_CURRENT:'Новый пароль должен отличаться от текущего.'
 };
+msg('security-msg',messages[e.message]||e.message);
+}finally{button.disabled=false}
+};
+$('new-password').addEventListener('input',()=>{
+const n=$('new-password').value.length;
+msg('password-length',n>=14?'Длина: '+n+' — подходит.':'Длина: '+n+' из минимум 14 символов.');
+});
+$('eq-preset').addEventListener('change',()=>{
+const preset=EQ_PRESETS[$('eq-preset').value];
+if(preset)drawEq(Object.fromEntries(EQ_FREQS.map((f,i)=>[f,preset[i]])));
+});
+for(const f of EQ_FREQS)$('eq-'+f).addEventListener('input',()=>drawEq(readEq()));
+$('eq-reset').onclick=()=>drawEq(Object.fromEntries(EQ_FREQS.map(f=>[f,0])));
+
 $('logout').onclick=async()=>{await api('/auth/logout','POST');location.replace('/login')};
 boot();
 """
@@ -163,10 +228,25 @@ APP_HTML = """<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta n
 <div><section id="settings" class="panel"><h2>⚙ Настройки кабинета</h2><label for="channel-name">Название канала в кабинете</label><input id="channel-name" maxlength="72">
 <p class="muted">Сохраняются название, черновик и темп предпросмотра. Основной голос Factory и правила публикации остаются защищены.</p>
 <button id="save" class="secondary">Сохранить настройки</button><p id="feedback" class="feedback"></p></section>
+<section id="eq" class="panel"><h2>🎚 Эквалайзер голоса</h2>
+<p class="eq-help">5 полос, от −6 до +6 дБ. Настройка реально применяется к WAV-предпросмотру, а не к исходному голосу завода.</p>
+<label for="eq-preset">Звучание</label>
+<select id="eq-preset"><option value="flat">Нейтральное</option><option value="deep">Глубже и объёмнее</option><option value="warm">Тёплый баритон</option><option value="clear">Чёткая дикция</option><option value="custom" disabled>Ручная настройка</option></select>
+<div class="eq-box">
+<div class="eq-row"><label for="eq-80">80 Гц</label><input id="eq-80" type="range" min="-6" max="6" step="1" value="0"><output id="eq-value-80">0 дБ</output></div>
+<div class="eq-row"><label for="eq-250">250 Гц</label><input id="eq-250" type="range" min="-6" max="6" step="1" value="0"><output id="eq-value-250">0 дБ</output></div>
+<div class="eq-row"><label for="eq-1000">1 кГц</label><input id="eq-1000" type="range" min="-6" max="6" step="1" value="0"><output id="eq-value-1000">0 дБ</output></div>
+<div class="eq-row"><label for="eq-3000">3 кГц</label><input id="eq-3000" type="range" min="-6" max="6" step="1" value="0"><output id="eq-value-3000">0 дБ</output></div>
+<div class="eq-row"><label for="eq-8000">8 кГц</label><input id="eq-8000" type="range" min="-6" max="6" step="1" value="0"><output id="eq-value-8000">0 дБ</output></div>
+</div><button type="button" class="secondary" id="eq-reset">Сбросить эквалайзер</button>
+<p class="eq-help">Для сохранения нажми «Сохранить настройки» выше. Для сравнения с оригиналом выбери «Нейтральное».</p></section>
 <section id="security" class="panel"><h2>⌘ Сменить пароль</h2>
-<label for="old-password">Текущий</label><input id="old-password" type="password" autocomplete="current-password">
-<label for="new-password">Новый (минимум 14 символов)</label><input id="new-password" type="password" autocomplete="new-password">
-<button id="change" class="secondary">Сменить пароль</button><p id="security-msg" class="feedback"></p></section></div></div>
+<label for="old-password">Текущий пароль</label><input id="old-password" type="password" autocomplete="current-password">
+<p class="pw-hint">Если копируешь из начального файла, бери только значение после знака =.</p>
+<label for="new-password">Новый пароль</label><input id="new-password" type="password" autocomplete="new-password" minlength="14" maxlength="128">
+<p id="password-length" class="pw-hint">Минимум 14 символов.</p>
+<label for="confirm-password">Повтори новый пароль</label><input id="confirm-password" type="password" autocomplete="new-password" minlength="14" maxlength="128">
+<button id="change" type="button" class="secondary">Сменить пароль</button><p id="security-msg" class="feedback" role="status" aria-live="polite"></p></section></div></div>
 <p class="muted"><small>Рабочее API YouTube Factory остаётся независимо доступным по /v1/audio/speech · Без подмены голоса и обхода QA.</small></p></main></div></body></html>"""
 
 def ensure_dirs():
@@ -202,11 +282,34 @@ def atomic_json(path, data):
     finally:
         tmp.unlink(missing_ok=True)
 
+def validate_eq(value):
+    if not isinstance(value, dict) or set(value) != set(EQ_FREQS):
+        raise ValueError("INVALID_EQ_BANDS")
+    if any(type(value[f]) is not int or not EQ_MIN_DB <= value[f] <= EQ_MAX_DB
+           for f in EQ_FREQS):
+        raise ValueError("INVALID_EQ_DB")
+    return {f: value[f] for f in EQ_FREQS}
+
+def voice_filters(speed, eq):
+    """Safe ffmpeg allowlisted equalizer: no user-supplied filter strings."""
+    result = [] if speed == 1.0 else [f"atempo={speed:.2f}"]
+    for f in EQ_FREQS:
+        if eq[f]:
+            result.append(f"equalizer=f={f}:t=q:w=1.0:g={eq[f]}")
+    if any(eq.values()):
+        result.append("alimiter=limit=0.95:level=false")
+    return result
+
 def get_preferences():
-    default = {"channel_name": "GUSTAVA Enduro", "speed": 1.0, "text": ""}
+    default = {"channel_name": "GUSTAVA Enduro", "speed": 1.0, "text": "", "eq": dict(EQ_FLAT)}
     try:
         value = json.loads(PREFS_FILE.read_text(encoding="utf-8"))
-        return {k: value.get(k, v) for k, v in default.items()}
+        prefs = {k: value.get(k, v) for k, v in default.items()}
+        try:
+            prefs["eq"] = validate_eq(prefs["eq"])
+        except ValueError:
+            prefs["eq"] = dict(EQ_FLAT)
+        return prefs
     except (OSError, ValueError, TypeError):
         return default
 
@@ -244,7 +347,7 @@ def runtime_health():
     except (OSError, HTTPError, URLError, ValueError):
         return False
 
-def generate_job(job_id, text, speed):
+def generate_job(job_id, text, speed, eq):
     with LOCK:
         JOBS[job_id]["state"] = "running"
     try:
@@ -271,25 +374,29 @@ def generate_job(job_id, text, speed):
                 vid = response.headers.get("X-Voice-ID", "")
             if len(data) > 12_000_000 or hashlib.sha256(data).hexdigest() != sha or ref != REF_SHA or vid != VOICE_ID:
                 raise RuntimeError("Контроль качества WAV: неверная SHA или идентичность голоса.")
-            if speed != 1.0:
+            filters = voice_filters(speed, eq)
+            if filters:
                 source = AUDIO_DIR / (job_id + ".source.wav")
-                target = AUDIO_DIR / (job_id + ".wav")
+                target = AUDIO_DIR / (job_id + ".processed.wav")
                 source.write_bytes(data)
                 os.chmod(source, 0o600)
                 try:
                     subprocess.run(["ffmpeg","-nostdin","-hide_banner","-loglevel","error","-y",
-                                    "-i",str(source),"-filter:a","atempo=%.2f" % speed,
+                                    "-i",str(source),"-filter:a",",".join(filters),
                                     "-ar","24000","-ac","1","-c:a","pcm_s16le",str(target)],
                                    check=True, timeout=65, capture_output=True)
                     data = target.read_bytes()
                 finally:
                     source.unlink(missing_ok=True)
+                    target.unlink(missing_ok=True)
             with wave.open(io.BytesIO(data), "rb") as wav:
                 if wav.getnchannels() != 1 or wav.getframerate() != 24000 or wav.getsampwidth() != 2:
                     raise RuntimeError("Неверный аудиоформат.")
                 duration = round(wav.getnframes() / 24000, 2)
                 if not 2 <= duration <= 45:
                     raise RuntimeError("Неверная длительность WAV.")
+            if not data or len(data) > 12_000_000:
+                raise RuntimeError("AUDIO_INVALID_OUTPUT_SIZE")
             final = AUDIO_DIR / (job_id + ".wav")
             final.write_bytes(data)
             os.chmod(final, 0o600)
@@ -443,36 +550,57 @@ class PortalHandler(BaseHTTPRequestHandler):
                 SESSIONS.pop(session[0],None)
             return self.json(200, {"ok":True}, {"Set-Cookie":"hapych_portal=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0"})
         if path == "/auth/change-password":
+            if set(body) != {"current", "next"}:
+                return self.error(422, "PASSWORD_REQUIRED")
             old,new = body.get("current"),body.get("next")
-            if not isinstance(old,str) or not isinstance(new,str) or not verify_password(old) or not 14<=len(new)<=128:
-                return self.error(422,"INVALID_CURRENT_OR_NEW_PASSWORD")
+            if not isinstance(old,str) or not isinstance(new,str) or not old or not new:
+                return self.error(422, "PASSWORD_REQUIRED")
+            if not verify_password(old):
+                return self.error(403, "CURRENT_PASSWORD_INCORRECT")
+            if len(new) < 14:
+                return self.error(422, "NEW_PASSWORD_MIN_14_CHARACTERS")
+            if len(new) > 128:
+                return self.error(422, "NEW_PASSWORD_TOO_LONG")
+            if old == new:
+                return self.error(422, "NEW_PASSWORD_MUST_DIFFER")
             atomic_json(PASSWORD_FILE,password_record(new))
             with LOCK:
                 SESSIONS.clear()
-            token=new_session()
-            return self.json(200,{"ok":True},{"Set-Cookie":owner_cookie(token)})
+                token=new_session()
+                new_csrf=SESSIONS[token][1]
+            return self.json(200,{"ok":True,"csrf":new_csrf},{"Set-Cookie":owner_cookie(token)})
         if path == "/api/portal/preferences":
-            if set(body) != {"channel_name","speed","text"}:
+            if set(body) != {"channel_name","speed","text","eq"}:
                 return self.error(422,"INVALID_SETTINGS")
             name, speed, script = body.get("channel_name"),body.get("speed"),body.get("text")
+            try:
+                eq=validate_eq(body.get("eq"))
+            except ValueError:
+                return self.error(422,"INVALID_EQ")
             if not isinstance(name,str) or not 2<=len(name.strip())<=72 or not isinstance(script,str) or len(script)>600 or isinstance(speed,bool) or not isinstance(speed,(float,int)) or not .85<=speed<=1.15:
                 return self.error(422,"INVALID_SETTINGS")
             allowed = [0.85,0.9,0.95,1.0,1.05,1.1,1.15]
             if not any(abs(speed-x)<0.001 for x in allowed):
                 return self.error(422,"UNSUPPORTED_TEMPO")
-            prefs={"channel_name":name.strip(),"speed":speed,"text":script}
+            prefs={"channel_name":name.strip(),"speed":speed,"text":script,"eq":eq}
             atomic_json(PREFS_FILE,prefs)
             return self.json(200,{"saved":True})
         if path == "/api/portal/preview":
+            if set(body) != {"text","speed","eq"}:
+                return self.error(422,"INVALID_PREVIEW_REQUEST")
             text,speed=body.get("text"),body.get("speed")
             if not isinstance(text,str) or not 15<=len(text.strip())<=400 or isinstance(speed,bool) or not isinstance(speed,(int,float)) or not any(abs(speed-x)<0.001 for x in [.85,.90,.95,1,1.05,1.1,1.15]):
                 return self.error(422,"INVALID_PREVIEW_TEXT_OR_SPEED")
+            try:
+                eq=validate_eq(body.get("eq"))
+            except ValueError:
+                return self.error(422, "INVALID_EQ")
             with LOCK:
                 active=[j for j in JOBS.values() if j["state"] in ("pending","running")]
                 if active:return self.error(429,"PREVIEW_ALREADY_RUNNING")
                 job=secrets.token_hex(16)
                 JOBS[job]={"state":"pending","owner":session[0],"started_at":time.time()}
-            threading.Thread(target=generate_job,args=(job,text.strip(),float(speed)),daemon=True).start()
+            threading.Thread(target=generate_job,args=(job,text.strip(),float(speed),eq),daemon=True).start()
             return self.json(202,{"job_id":job})
         return self.error(404,"NOT_FOUND")
 
