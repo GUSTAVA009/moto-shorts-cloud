@@ -28,8 +28,7 @@
     "automatic_dispatch_requires_voice_ready_episode": true,
     "buffer_dispatch_requires_verified_qa_mp4": true,
     "three_voice_routes_must_be_provisioned_and_live_tested_before_claiming_full_autonomy": true,
-    "autonomous_publications_verified": 0,
-    "autonomous_publications_verified_note": "Not a persistent live counter; last audited no new public YouTube delivery confirmed"
+    "autonomous_publications_count_source": "live Buffer sent receipts AND independently verified public YouTube URL, never static contract"
   },
   "buffer": {
     "provider": "Buffer",
