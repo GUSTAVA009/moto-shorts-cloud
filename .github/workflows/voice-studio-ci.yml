@@ -39,7 +39,7 @@ jobs:
           VOICE_STUDIO_ADMIN_TOKEN: non-production-dummy-admin-key-never-usable
           UPSTREAM_API_KEY: non-production-dummy-upstream-key-never-usable
         run: docker compose -f voice-studio/compose.yaml config --quiet
-      - name: Safety: no secrets, reference voices, or Cartesia-generated speaker sample in source
+      - name: Check source excludes private voice, credentials and Cartesia speaker WAV
         run: |
           if find voice-studio -type f \( -name '*.wav' -o -name '*.mp3' -o -name '*.sqlite3*' -o -name '.env' \) | grep .; then
             echo '::error::Private voice recording/DB/secret committed to public code.'
