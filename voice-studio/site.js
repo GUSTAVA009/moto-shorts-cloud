@@ -4,7 +4,56 @@ let csrf="";
 let lastAudioURL=null;
 let referenceURL=null;
 let waitingRequest=null;
-const SPEAKER="gustava-original-v1";
+let activeChannel="gustava";
+let activeVoice="gustava-original-v1";
+let allChannels=[];
+
+function channelQuery(){
+ return "?channel_slug="+encodeURIComponent(activeChannel);
+}
+async function refreshChannels(selected){
+ const data=await ownerFetch("/api/admin/channels");
+ allChannels=data.channels;
+ const select=$("channel-select");
+ select.replaceChildren();
+ for(const ch of allChannels){
+  const option=document.createElement("option");
+  option.value=ch.slug;option.textContent=ch.name+" · "+ch.slug;
+  select.append(option);
+ }
+ if(!allChannels.length)throw Error("Ни одного YouTube-канала не найдено.");
+ activeChannel=allChannels.some(x=>x.slug===selected)?selected:allChannels[0].slug;
+ select.value=activeChannel;
+ activeVoice=allChannels.find(x=>x.slug===activeChannel).voice_id;
+ $("speaker-name").textContent=allChannels.find(x=>x.slug===activeChannel).name+" · Original";
+ $("speaker-channel").textContent=activeChannel+" / "+activeVoice;
+}
+async function selectChannel(slug){
+ await refreshChannels(slug);
+ waitingRequest=null;
+ $("client-token").value="";
+ $("new-key").hidden=true;
+ $("issued-secret").textContent="";
+ $("player-wrap").hidden=true;
+ await Promise.all([refreshStatus(),refreshKeys()]);
+}
+async function createChannel(){
+ const button=$("create-channel");button.disabled=true;
+ const payload={
+  slug:$("channel-slug").value.trim(),
+  name:$("channel-name").value.trim(),
+  youtube_channel_id:$("youtube-channel-id").value.trim()||null,
+ };
+ try{
+  const item=await ownerFetch("/api/admin/channels","POST",payload);
+  $("channel-slug").value="";$("channel-name").value="";
+  $("youtube-channel-id").value="";
+  await selectChannel(item.slug);
+  $("channel-result").textContent="Канал добавлен, настроен отдельный голос и пространство ключей.";
+  feedback("owner-result","Оригинальный эталон для этого канала ещё не создан.");
+ }catch(e){$("channel-result").textContent=e.message;}
+ finally{button.disabled=false;}
+}
 
 function feedback(id,text,kind=""){
  const el=$(id);el.textContent=text;el.className="feedback"+(kind?" "+kind:"");
@@ -25,13 +74,19 @@ async function boot(){
   const sess=await fetch("/auth/session",{credentials:"same-origin",cache:"no-store"});
   if(!sess.ok){location.replace("/login");return;}
   csrf=(await sess.json()).csrf;
+  await refreshChannels(activeChannel);
   await Promise.all([refreshStatus(),refreshKeys()]);
  }catch(e){feedback("owner-result",e.message,"error");}
 }
 async function refreshStatus(){
  try{
-  const [health,voice]=await Promise.all([ownerFetch("/health"),ownerFetch("/api/admin/voice")]);
+  const [health,voice]=await Promise.all([
+   ownerFetch("/health"),
+   ownerFetch("/api/admin/voice"+channelQuery())
+  ]);
   const created=voice.created===true;
+  activeVoice=voice.voice_id;
+  $("speaker-channel").textContent=activeChannel+" / "+activeVoice;
   $("service-status").textContent=created?"Эталон закреплён":"Эталон не создан";
   $("original-status").textContent=created?"Зафиксирован":"Не создан";
   $("service-status").parentElement.classList.toggle("offline",!created);
@@ -45,7 +100,7 @@ async function refreshStatus(){
  }catch(e){feedback("owner-result",e.message,"error");}
 }
 async function refreshKeys(){
- try{const list=await ownerFetch("/api/admin/keys");
+ try{const list=await ownerFetch("/api/admin/keys"+channelQuery());
   const root=$("key-list");root.replaceChildren();
   if(!list.keys.length){const p=document.createElement("p");p.className="description";p.textContent="Ключи ещё не выдавались.";root.append(p);return;}
   for(const key of list.keys){
@@ -92,7 +147,7 @@ async function generateAudio(){
  const speed=Number($("speed").value);
  if(!key){$("api-options").open=true;return feedback("generate-result","Нужен выданный владельцем API-ключ.","error");}
  if(!text||text.length>600)return feedback("generate-result","Текст должен содержать от 1 до 600 символов.","error");
- const fingerprint=JSON.stringify({text,speed,voice:SPEAKER});
+ const fingerprint=JSON.stringify({text,speed,voice:activeVoice,channel_slug:activeChannel});
  if(waitingRequest&&waitingRequest.fingerprint!==fingerprint)waitingRequest=null;
  if(!waitingRequest)waitingRequest={fingerprint,key:"hapych-"+crypto.randomUUID()};
  const button=$("generate");button.disabled=true;
@@ -102,7 +157,8 @@ async function generateAudio(){
    method:"POST",credentials:"omit",cache:"no-store",headers:{
     "Authorization":"Bearer "+key,"X-Idempotency-Key":waitingRequest.key,
     "Content-Type":"application/json"},
-   body:JSON.stringify({text,voice:SPEAKER,speed,response_format:"wav"})
+   body:JSON.stringify({text,voice:activeVoice,channel_slug:activeChannel,
+    speed,response_format:"wav"})
   });
   const file=await audioBlob(response);setAudio(file,"sample");
   feedback("generate-result","WAV создан • SHA "+(response.headers.get("X-Audio-SHA256")||"")?.slice(0,16)+"…","success");
@@ -117,7 +173,8 @@ async function designVoice(){
  feedback("owner-result","Создаётся единственный оригинальный эталон. Он будет закреплён за заводом.");
  try{
   const response=await ownerFetch("/api/admin/voice/design","POST",{
-   confirm_original:true,timbre:$("timbre").value,delivery:$("delivery").value
+   confirm_original:true,timbre:$("timbre").value,
+   delivery:$("delivery").value,channel_slug:activeChannel
   });
   feedback("owner-result","Эталон создан • SHA "+response.reference_sha256.slice(0,16)+"…","success");
   await refreshStatus();
@@ -126,7 +183,8 @@ async function designVoice(){
 }
 async function listen(){
  try{
-  const response=await ownerFetch("/api/admin/voice/reference","GET",null,true);
+  const response=await ownerFetch("/api/admin/voice/reference"+channelQuery(),
+    "GET",null,true);
   const audio=await audioBlob(response);setAudio(audio,"reference");
  }catch(e){feedback("owner-result",e.message,"error");}
 }
@@ -136,7 +194,7 @@ async function issueKey(){
   const result=await ownerFetch("/api/admin/keys","POST",{
    label:$("key-label").value.trim(),
    max_chars_month:Number($("key-limit").value),
-   max_rpm:Number($("key-rpm").value)
+   max_rpm:Number($("key-rpm").value),channel_slug:activeChannel
   });
   $("issued-secret").textContent=result.api_key;
   $("new-key").hidden=false;
@@ -150,6 +208,8 @@ async function logout(){
  try{await ownerFetch("/auth/logout","POST");}finally{location.replace("/login");}
 }
 $("generate").addEventListener("click",generateAudio);
+$("channel-select").addEventListener("change",e=>selectChannel(e.target.value));
+$("create-channel").addEventListener("click",createChannel);
 $("design-voice").addEventListener("click",designVoice);
 $("listen-reference").addEventListener("click",listen);
 $("issue-key").addEventListener("click",issueKey);
