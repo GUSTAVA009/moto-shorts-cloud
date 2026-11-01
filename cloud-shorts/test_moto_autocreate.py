@@ -150,6 +150,35 @@ class NewMotoSourceTests(unittest.TestCase):
                              fetch=lambda a,b,c: fake)
 
 
+    def test_one_keyless_commons_call_per_full_autonomous_research_cycle(self):
+        from unittest.mock import patch
+        seen = []
+        def fetch(theme):
+            seen.append(theme[0])
+            return []
+        with patch.dict("os.environ", {"PEXELS_API_KEY":""}), \
+             patch.object(s, "curated_pexels_results", return_value=[]):
+            with self.assertRaisesRegex(RuntimeError,
+                                       "NO_NEW_ACTION_MATCHING_LICENSED_MOTO_CLIPS"):
+                s.create_one(self.catalog, commons_fetch=fetch)
+        self.assertEqual(len(seen), 1)
+        self.assertIn(seen[0], [theme[0] for theme in s.THEMES])
+
+    def test_cc0_http_429_is_a_one_shot_cycle_blocker_not_fifteen_retries(self):
+        from unittest.mock import patch
+        import urllib.error
+        seen = []
+        def throttled(theme):
+            seen.append(theme[0])
+            raise urllib.error.HTTPError(
+                "https://commons.wikimedia.org/w/api.php", 429,
+                "Too Many Requests", {}, None)
+        with patch.dict("os.environ", {"PEXELS_API_KEY":""}), \
+             patch.object(s, "curated_pexels_results", return_value=[]):
+            with self.assertRaisesRegex(RuntimeError, "COMMONS_RATE_LIMITED"):
+                s.create_one(self.catalog, commons_fetch=throttled)
+        self.assertEqual(len(seen), 1)
+
     def test_action_paired_keyless_narration_contains_exact_two_scene_actions(self):
         from source_story import compose, require_filmable, select_pair, scene_for
         shots=[

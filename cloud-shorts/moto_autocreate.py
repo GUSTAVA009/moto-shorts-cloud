@@ -17,6 +17,7 @@ import os
 from pathlib import Path
 import re
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -134,7 +135,9 @@ def pexels_results(theme, page, api_key, fetch=http_json):
 def commons_results(theme, fetch=http_json):
     params = urllib.parse.urlencode({
         "action":"query", "format":"json", "formatversion":"2",
-        "generator":"search", "gsrsearch": theme[1] + " filetype:video",
+        "generator":"search",
+        "gsrsearch": ("motocross" if theme[0] in ("motocross", "training", "racing")
+                       else "motorcycle") + " filetype:video",
         "gsrnamespace":6, "gsrlimit":50, "prop":"imageinfo",
         "iiprop":"url|mime|size|sha1|extmetadata",
         "iiextmetadatafilter":"LicenseShortName|LicenseUrl|Copyrighted|Artist",
@@ -382,6 +385,14 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
     chosen = None
     key = os.getenv("PEXELS_API_KEY", "")
     last_bike = catalog["episodes"][-1]["editorial"]["bike"] if catalog["episodes"] else None
+    # Scan every local stock theme, but never hammer Commons: a single
+    # independent CC0 discovery query per UTC 90-minute production cycle.
+    from datetime import datetime, timezone
+    eligible_themes = [t for t in themes if t[3] != last_bike]
+    commons_target = eligible_themes[
+        int(datetime.now(timezone.utc).timestamp() // 5400) % len(eligible_themes)
+    ][0]
+    commons_calls = 0
     for theme in themes:
         # Retain a staged subject for later instead of repeating the last
         # motorcycle type and failing the same editorial QA three times.
@@ -396,8 +407,18 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
         # Public, author-and-license checked Pexels pages survive absent API keys.
         if not select_pair(found, used):
             found.extend(curated_pexels_results(theme, used))
-        if not select_pair(found, used):
-            found.extend(commons_fetch(theme))
+        if (not select_pair(found, used) and commons_calls == 0
+                and theme[0] == commons_target):
+            commons_calls += 1
+            try:
+                found.extend(commons_fetch(theme))
+            except urllib.error.HTTPError as error:
+                if error.code == 429:
+                    raise RuntimeError(
+                        "COMMONS_RATE_LIMITED: one search per cycle; "
+                        "retry on the next 90-minute production schedule"
+                    ) from error
+                raise
         # Helmet stock must ACTUALLY contain a helmet in the provider title.
         # A generic motorcycle clip tagged "helmet" is not evidence.
         if theme[0] == "helmet":
@@ -420,6 +441,8 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
             chosen = (theme, media)
             break
     if not chosen:
+        print("COMMONS_SCOUT_LIMIT", commons_calls,
+              "selected_theme", commons_target, flush=True)
         raise RuntimeError(
             "NO_NEW_ACTION_MATCHING_LICENSED_MOTO_CLIPS: vetted footage "
             "does not contain two fresh visibly distinct actions from two "
