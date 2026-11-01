@@ -7,10 +7,10 @@ import unittest
 import moto_autocreate as s
 
 
-def fixture(id, name):
+def fixture(id, name, action="motorcycle-ride"):
     return {
         "id": id,
-        "url": "https://www.pexels.com/video/motorcycle-ride-" + str(id) + "/",
+        "url": "https://www.pexels.com/video/" + action + "-" + str(id) + "/",
         "duration": 24, "user": {"name": name},
         "video_files": [{"id": id, "link": "https://videos.pexels.com/media/demo.mp4"}],
     }
@@ -99,9 +99,9 @@ class NewMotoSourceTests(unittest.TestCase):
         planned["theme"] = "motocross"
         media = s.pexels_results(s.THEMES[1], 1, "demo",
                 fetch=lambda a,b: {"videos": [
-                    fixture(90000001, "Alice Rider"),
-                    fixture(90000002, "Bob Mechanic"),
-                    fixture(90000004, "Daria Rider")]})
+                    fixture(90000001, "Alice Rider", "motocross-jump"),
+                    fixture(90000002, "Bob Mechanic", "motorcycle-wheel-repair"),
+                    fixture(90000004, "Daria Rider", "motorcycle-race")]})
         relevant = (dict(self.catalog, episodes=self.catalog["episodes"][:-1])
                     if self.catalog["episodes"][-1]["editorial"]["bike"] == s.THEMES[1][3]
                     else self.catalog)
@@ -115,8 +115,11 @@ class NewMotoSourceTests(unittest.TestCase):
                                       AssertionError("Active reserve draft should win")),
                                   prepared_scripts=[planned])
         self.assertEqual(ep["story_reserve_id"], planned["_reserve_id"])
-        self.assertEqual(ep["narration"], planned["narration"])
-        self.assertEqual(ep["title"], planned["title"])
+        self.assertNotEqual(ep["narration"], planned["narration"])
+        self.assertNotEqual(ep["title"], planned["title"])
+        self.assertIn("трамплин", ep["narration"])
+        self.assertIn("колес", ep["narration"])
+        self.assertFalse(ep["auto_publish"])
 
     def test_supplier_never_repeats_last_motorcycle_type(self):
         from unittest.mock import patch
@@ -133,7 +136,7 @@ class NewMotoSourceTests(unittest.TestCase):
         with patch.dict("os.environ", {"PEXELS_API_KEY": ""}):
             with patch.object(s, "curated_pexels_results",
                  side_effect=lambda theme,used: media if theme[0]=="motocross" else []):
-                with self.assertRaisesRegex(RuntimeError, "NO_NEW_LICENSED_MOTO_CLIPS"):
+                with self.assertRaisesRegex(RuntimeError, "NO_NEW_ACTION_MATCHING_LICENSED_MOTO_CLIPS"):
                     s.create_one(catalog, source_fetch=lambda *a: [],
                                  commons_fetch=lambda *a: [],
                                  prepared_scripts=[planned])
@@ -146,6 +149,51 @@ class NewMotoSourceTests(unittest.TestCase):
             s.original_story(s.THEMES[0], [], [], client=("https://example.com", "key", "test"),
                              fetch=lambda a,b,c: fake)
 
+
+    def test_action_paired_keyless_narration_contains_exact_two_scene_actions(self):
+        from source_story import compose, require_filmable, select_pair, scene_for
+        shots=[
+            {"key":"a", "url":"https://www.pexels.com/download/video/90000001/",
+             "source_page":"https://www.pexels.com/video/motocross-jump-90000001/",
+             "author":"First Creator", "license":"Pexels License", "duration":14},
+            {"key":"b", "url":"https://www.pexels.com/download/video/90000002/",
+             "source_page":"https://www.pexels.com/video/motorcycle-wheel-repair-90000002/",
+             "author":"Second Creator", "license":"Pexels License", "duration":14},
+        ]
+        pair=select_pair(shots, set())
+        self.assertEqual(len(pair), 2)
+        story=compose(pair, [])
+        self.assertEqual(story["_generation_source"],"keyless_action_filmable_v1")
+        self.assertEqual(require_filmable(story,pair),["jump","wheel"])
+        self.assertTrue(125<=len(story["narration"])<=300)
+        self.assertIn("трамплин",story["narration"])
+        self.assertIn("колес",story["narration"])
+        self.assertIsNone(scene_for(dict(shots[0],source_page=
+             "https://www.pexels.com/video/motorcycle-portrait-90000001/")))
+        with self.assertRaisesRegex(ValueError,"UNRELATED_BORING_SCRIPT"):
+            require_filmable({"narration":
+                "Мотоцикл красивый, а дорога очень интересная. "
+                "У каждого свой выбор. Смотри на дорогу и готовься заранее. "
+                "Какой путь выбрал бы ты? Поделись этим роликом с другом."},pair)
+
+    def test_autonomous_source_selection_rejects_generic_reruns_or_same_creator(self):
+        from source_story import select_pair, compose
+        base = dict(key="a",url="https://www.pexels.com/download/video/90000001/",
+                    source_page="https://www.pexels.com/video/motorcycle-ride-90000001/",
+                    author="One",license="Pexels License",duration=15)
+        second=dict(base,key="b",url="https://www.pexels.com/download/video/90000002/",
+                    source_page="https://www.pexels.com/video/motorcycle-ride-90000002/",
+                    author="Two")
+        self.assertEqual(select_pair([base,second],set()),[])
+        with self.assertRaisesRegex(ValueError,"NO_ACTION_DIVERSITY"):
+            compose([base,second],[])
+        second["source_page"]="https://www.pexels.com/video/motorcycle-wheel-repair-90000002/"
+        second["author"]="One"
+        self.assertEqual(select_pair([base,second],set()),[])
+        second["author"]="Two"
+        self.assertEqual(len(select_pair([base,second],set())),2)
+        self.assertEqual(select_pair([base,second],{"90000001"}),[])
+
     def test_build_vetted_unique_episode(self):
         media = s.pexels_results(s.THEMES[0], 1, "demo",
               fetch=lambda a,b: {"videos": [
@@ -154,7 +202,7 @@ class NewMotoSourceTests(unittest.TestCase):
         theme = s.choose_theme(self.catalog["episodes"])
         ep = s.assemble_episode(self.catalog, theme, media[:3],
                                 story(), len(self.catalog["episodes"]))
-        self.assertTrue(ep["auto_publish"])
+        self.assertFalse(ep["auto_publish"])
         self.assertEqual(len(ep["shots"]), len(ep["footage"]))
         self.assertEqual(len({s["source"] for s in ep["shots"]}),len(ep["shots"]))
         self.assertTrue(all(s["seconds"]>=4 for s in ep["shots"]))

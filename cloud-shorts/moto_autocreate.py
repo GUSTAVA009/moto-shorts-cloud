@@ -198,6 +198,11 @@ def story_model_client():
 
 # v2: keyless, addressable, 150,000-slot editorial reserve.
 def offline_original_story(theme, sources, previous_titles):
+    # The 150,000 variants are planning slots, not footage-specific scripts.
+    # Keyless production authors truthful action beats from available media.
+    if sources:
+        from source_story import compose
+        return compose(sources, previous_titles)
     return choose_reserved_story(theme[0], sources, previous_titles)
 
 
@@ -284,6 +289,14 @@ def original_story(theme, sources, previous_titles, client=None, fetch=http_json
         raise ValueError("AI created unverified numerical claim")
     if len(obj["title"]) > 100 or any(len(obj[k]) > 31 for k in required[3:]):
         raise ValueError("Unusable Shorts caption/title size")
+    if sources:
+        from source_story import require_filmable
+        try:
+            require_filmable(obj, sources)
+        except ValueError as mismatch:
+            print("UNSUPPORTED_MODEL_NARRATION_REAUTHORED",
+                  str(mismatch), flush=True)
+            return offline_original_story(theme, sources, previous_titles)
     obj["_editorial_format"] = content_format
     return obj
 
@@ -307,7 +320,9 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
         for source in sources
     ]
     ep = {
-        "id": slug, "auto_preview": True, "auto_publish": True,
+        # A new script/source candidate is PRIVATE until original DEEP,
+        # source/mixed ASR and individual real-frame editorial approval.
+        "id": slug, "auto_preview": True, "auto_publish": False,
         "channel_niche": "motorcycle", "research_pillar": "motorcycle",
         "voice_engine": NATIVE_BASS_ENGINE,
         "voice_profile": MALE_PROFILE,
@@ -361,8 +376,9 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
         last_bike = catalog["episodes"][-1]["editorial"]["bike"] if catalog["episodes"] else None
         themes.sort(key=lambda t: (t[0] not in prepared_topics,
                                    t[3] == last_bike))
-    # Keep looking across independent motorcycle themes when one stock
-    # category is exhausted. Never reuse any video from another production.
+    # Prefer two provable, contrasting actions by different filmmakers,
+    # instead of a random collection of generic motorcycle riding B-roll.
+    from source_story import select_pair
     chosen = None
     key = os.getenv("PEXELS_API_KEY", "")
     last_bike = catalog["episodes"][-1]["editorial"]["bike"] if catalog["episodes"] else None
@@ -375,12 +391,12 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
         if key:
             for page in (1, 2, 3):
                 found.extend(source_fetch(theme, page, key))
-                if len(choose_sources(found, used)) >= 3:
+                if select_pair(found, used):
                     break
         # Public, author-and-license checked Pexels pages survive absent API keys.
-        if len(choose_sources(found, used)) < 2:
+        if not select_pair(found, used):
             found.extend(curated_pexels_results(theme, used))
-        if len(choose_sources(found, used)) < 2:
+        if not select_pair(found, used):
             found.extend(commons_fetch(theme))
         # Helmet stock must ACTUALLY contain a helmet in the provider title.
         # A generic motorcycle clip tagged "helmet" is not evidence.
@@ -389,7 +405,7 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
             found.sort(key=lambda clip: (
                 not bool(matcher.search(source_evidence(clip))),
                 str(clip.get("source_title", ""))))
-        media = choose_sources(found, used)
+        media = select_pair(found, used)
         if theme[0] == "helmet":
             if not any(OBJECTS["helmet"][1].search(source_evidence(x)) for x in media):
                 print("VISUAL_STOCK_MISSING_HELMET",flush=True)
@@ -404,19 +420,26 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
             chosen = (theme, media)
             break
     if not chosen:
-        raise RuntimeError("NO_NEW_LICENSED_MOTO_CLIPS: vetted Pexels reserve and Commons search exhausted")
+        raise RuntimeError(
+            "NO_NEW_ACTION_MATCHING_LICENSED_MOTO_CLIPS: vetted footage "
+            "does not contain two fresh visibly distinct actions from two "
+            "creators; never fabricate an engaging story from generic B-roll")
     theme, media = chosen
     problem = None
     for attempt in range(3):
         try:
             staged = next((s for s in prepared if s.get("theme") == theme[0]), None)
             if staged:
-                # This is a SCRIPT DRAFT only. Source rights, episode
-                # uniqueness and final ASR/video QA are still mandatory.
-                prose = staged
+                # Preserve the rolling-batch reservation ID, NOT its bland
+                # combinatorial narration, which does not describe the shots.
+                prose = offline_original_story(
+                    theme, media, [x["title"] for x in catalog["episodes"]])
+                prose["_reserve_id"] = staged["_reserve_id"]
             else:
                 prose = prose_factory(theme, media,
                                       [x["title"] for x in catalog["episodes"]])
+            from source_story import require_filmable
+            require_filmable(prose, media)
             return assemble_episode(catalog, theme, media, prose,
                                     len(catalog["episodes"]))
         except (ValueError, KeyError, TypeError) as exc:
