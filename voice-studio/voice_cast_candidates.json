@@ -1,0 +1,551 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-11-01",
+  "project": "HAPYCH Voice / GUSTAVA Factory",
+  "kind": "research_and_character_specs_only",
+  "production_status": "NOT_DEPLOYED",
+  "source_voice_status": "VIDIQ_PREMADE_FOR_AUDITION_ONLY",
+  "assignment_policy": {
+    "any_production_approved_voice_may_be_assigned_to_any_owner_managed_channel": true,
+    "same_voice_may_be_reused_across_channels": true,
+    "voice_settings_persist_per_voice_id": true,
+    "channel_assignment_is_explicit_and_does_not_auto_change_incumbent": true,
+    "current_gustava_deep_must_not_change_without_owner_voice_approval": true,
+    "production_speaker_requires_its_own_authorized_reference_or_original_generation": true,
+    "no_global_tts_narration_duration_limit": true,
+    "clip_time_and_scene_consistency_must_be_proven_separately": true,
+    "longer_narration_requires_longer_or_more_licensed_moving_scenes_not_silence_or_loops": true,
+    "unlicensed_youtube_voice_extraction_prohibited": true,
+    "release_requires_actual_russian_test_audio_and_voice_editorial_qa": true,
+    "no_automatic_paid_service_usage": true
+  },
+  "legacy_voice": {
+    "id": "gustava_deep",
+    "profile": "gustava_original_qwen3_v1",
+    "status": "current_pinned_reference_not_independently_timbre_approved",
+    "protected": true
+  },
+  "proposed_character_voices": [
+    {
+      "id": "child_cartoon",
+      "name_ru": "Мультяшный ребёнок",
+      "description_ru": "Звонкий, игривый, ясная русская дикция; не имитировать голос конкретного актёра.",
+      "design_prompt_en": "Create an ORIGINAL playful high bright cartoon child-like character, quick curious Russian speech, articulate, dynamic but never shrill.",
+      "reference_voice_ids_for_audition": [
+        "cgSgspJ2msm6clMCkdW9",
+        "FGY2WhTYpPnrIDTdsKH5"
+      ],
+      "content_use": "animated_family",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "comic_bass_cartoon",
+      "name_ru": "Комический басовитый мультяшка",
+      "description_ru": "Смешной персонаж: лёгкая басовость с детской интонацией, пружинистые акценты и паузы.",
+      "design_prompt_en": "Design an ORIGINAL humorous slightly bass-heavy cartoon character with playful child-like intonation and springy comic delivery in native Russian.",
+      "reference_voice_ids_for_audition": [
+        "N2lVS1w4EtoT3dr4eOWO",
+        "SOYHLrjzK2X1ezoPC6cr"
+      ],
+      "content_use": "comedy",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "medium_warm",
+      "name_ru": "Приятный средний мужской",
+      "description_ru": "Чистый естественный мужской голос среднего регистра, долго слушать комфортно.",
+      "design_prompt_en": "Original natural Russian male middle-register narrator, balanced warmth, sincere conversational pacing, clear vowels, no shouting.",
+      "reference_voice_ids_for_audition": [
+        "CwhRBWXzGAHq8TQ4Fs17",
+        "SAz9YHcvj6GT2YYXdXww",
+        "bIHbv24MWmeRgasZH58o"
+      ],
+      "content_use": "narrator",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "grandpa_biker",
+      "name_ru": "Дед-байкер",
+      "description_ru": "Пожилой заядлый байкер: низкий потрёпанный тембр, умеренная натуральная хрипотца, спокойная харизма.",
+      "design_prompt_en": "Original veteran biker grandpa Russian voice, weathered low rumble, controlled husky gravel, warm experienced storyteller, intelligible without artificial pitch shift.",
+      "reference_voice_ids_for_audition": [
+        "N2lVS1w4EtoT3dr4eOWO",
+        "pqHfZKP75CvOlQylNhV4"
+      ],
+      "content_use": "family_dialogue",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "son_teen",
+      "name_ru": "Сын",
+      "description_ru": "Живой юношеский голос, энергичный, удивлённый открытиями, отличается от ребёнка и папы.",
+      "design_prompt_en": "Original youthful teenage son voice in Russian, expressive curiosity, quick natural conversational delivery, distinct from both child and father.",
+      "reference_voice_ids_for_audition": [
+        "TX3LPaxmHKxFdv7VOQHJ",
+        "IKne3meq5aSn9XLyUdCD"
+      ],
+      "content_use": "family_dialogue",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "father",
+      "name_ru": "Отец",
+      "description_ru": "Взрослый уверенный голос; тёплый, сдержанный, авторитетный, без ненужного басового эффекта.",
+      "design_prompt_en": "Original middle-aged father voice in native Russian, warm firm resonant yet soft, relaxed protective intonation, clear storytelling.",
+      "reference_voice_ids_for_audition": [
+        "cjVigY5qzO86Huf0OWal",
+        "nPczCjzI2devNBz1zQrb"
+      ],
+      "content_use": "family_dialogue",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "mother",
+      "name_ru": "Мама",
+      "description_ru": "Тёплый женский голос, эмоциональный, доброжелательный, с выразительными реакциями.",
+      "design_prompt_en": "Original warm expressive mother voice in fluent Russian, natural adult timbre, emotionally varied without exaggerated sweetness.",
+      "reference_voice_ids_for_audition": [
+        "EXAVITQu4vr4xnSDxMaL",
+        "hpp4J3VqNfWAUOO0d1Us"
+      ],
+      "content_use": "family_dialogue",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "grandma",
+      "name_ru": "Бабушка",
+      "description_ru": "Мягкий зрелый женский голос с добрым юмором и жизненным опытом.",
+      "design_prompt_en": "Original elderly woman Russian voice with warm texture, amused gentle cadence and highly understandable consonants.",
+      "reference_voice_ids_for_audition": [
+        "pFZP5JQG7iQjIQuC4Bku",
+        "XrExE9yKIg1WjnnlVkGX"
+      ],
+      "content_use": "family_dialogue",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "mechanic",
+      "name_ru": "Механик",
+      "description_ru": "Хрипловатый мастер гаража, деловитый, чуть ироничный.",
+      "design_prompt_en": "Original rough-edged Russian mechanic, practical delivery, subtle low gravel, witty reactions, clear native pronunciation.",
+      "reference_voice_ids_for_audition": [
+        "iP95p4xoKVk53GoZ742B",
+        "nPczCjzI2devNBz1zQrb"
+      ],
+      "content_use": "moto_story",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "sport_energy",
+      "name_ru": "Энергичный мото-комментатор",
+      "description_ru": "Чёткий драйвовый голос для быстрых моментов, без крика и проглатывания слов.",
+      "design_prompt_en": "Original athletic Russian male commentary voice, high energy, precise consonants, controlled excitement and breath.",
+      "reference_voice_ids_for_audition": [
+        "TX3LPaxmHKxFdv7VOQHJ",
+        "IKne3meq5aSn9XLyUdCD"
+      ],
+      "content_use": "moto_story",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "soft_female",
+      "name_ru": "Мягкая рассказчица",
+      "description_ru": "Спокойная женская озвучка тёплого семейного рассказа.",
+      "design_prompt_en": "Original calm female Russian storyteller, rich midrange, kind and intimately conversational, clear diction.",
+      "reference_voice_ids_for_audition": [
+        "EXAVITQu4vr4xnSDxMaL",
+        "pFZP5JQG7iQjIQuC4Bku"
+      ],
+      "content_use": "narrator",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "comic_villain",
+      "name_ru": "Комический хитрец",
+      "description_ru": "Смешной хитроватый мультипликационный персонаж с резкими эмоциональными переходами.",
+      "design_prompt_en": "Create an original comic scheming cartoon villain voice in Russian, slightly nasal with low-end warmth and playful rhythmic shifts.",
+      "reference_voice_ids_for_audition": [
+        "N2lVS1w4EtoT3dr4eOWO",
+        "SOYHLrjzK2X1ezoPC6cr"
+      ],
+      "content_use": "comedy",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "young_female",
+      "name_ru": "Дочка-подросток",
+      "description_ru": "Молодой живой женский голос для семейных диалогов.",
+      "design_prompt_en": "Original enthusiastic teenage daughter-like Russian voice, light lively tone, crisp and sincere expression.",
+      "reference_voice_ids_for_audition": [
+        "FGY2WhTYpPnrIDTdsKH5",
+        "cgSgspJ2msm6clMCkdW9"
+      ],
+      "content_use": "family_dialogue",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "dry_humor",
+      "name_ru": "Сухой саркастический рассказчик",
+      "description_ru": "Уверенный мужской тембр с паузами для комического эффекта.",
+      "design_prompt_en": "Original Russian dry-humor male narrator, deadpan timing, subtle low resonance and expressive pauses, intelligible.",
+      "reference_voice_ids_for_audition": [
+        "CwhRBWXzGAHq8TQ4Fs17",
+        "onwK4e9ZLuTAKqWW03F9"
+      ],
+      "content_use": "comedy",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "news_story",
+      "name_ru": "Документальный рассказчик",
+      "description_ru": "Убедительный спокойный диктор для фактов и мини-документалистики.",
+      "design_prompt_en": "Original clear professional Russian documentary narrator, measured pace, credible natural mid-low register, no fake authority cues.",
+      "reference_voice_ids_for_audition": [
+        "onwK4e9ZLuTAKqWW03F9",
+        "JBFqnCBsd6RMkjVDRZzb"
+      ],
+      "content_use": "narrator",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    },
+    {
+      "id": "warm_biker_woman",
+      "name_ru": "Опытная байкерша",
+      "description_ru": "Низковатый женский голос с характером, для мото-историй и диалогов.",
+      "design_prompt_en": "Original mature Russian female biker storyteller, confident mildly smoky low-mid tone with warmth and grounded delivery.",
+      "reference_voice_ids_for_audition": [
+        "XrExE9yKIg1WjnnlVkGX",
+        "EXAVITQu4vr4xnSDxMaL"
+      ],
+      "content_use": "moto_story",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true
+    }
+  ],
+  "available_premade_audition_voices": [
+    {
+      "voice_id": "CwhRBWXzGAHq8TQ4Fs17",
+      "name": "Roger",
+      "category": "conversational",
+      "public_description_en": "casual resonant male",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "EXAVITQu4vr4xnSDxMaL",
+      "name": "Sarah",
+      "category": "entertainment_tv",
+      "public_description_en": "warm mature confident woman",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "FGY2WhTYpPnrIDTdsKH5",
+      "name": "Laura",
+      "category": "social_media",
+      "public_description_en": "enthusiastic quirky female",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "IKne3meq5aSn9XLyUdCD",
+      "name": "Charlie",
+      "category": "conversational",
+      "public_description_en": "confident energetic young male",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "name": "George",
+      "category": "narrative_story",
+      "public_description_en": "warm mature storyteller",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "N2lVS1w4EtoT3dr4eOWO",
+      "name": "Callum",
+      "category": "characters_animation",
+      "public_description_en": "husky gravelly trickster",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "SAz9YHcvj6GT2YYXdXww",
+      "name": "River",
+      "category": "conversational",
+      "public_description_en": "relaxed neutral narrator",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "SOYHLrjzK2X1ezoPC6cr",
+      "name": "Harry",
+      "category": "characters_animation",
+      "public_description_en": "fierce animated warrior",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+      "name": "Liam",
+      "category": "social_media",
+      "public_description_en": "energetic warm young man",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "Xb7hH8MSUJpSbSDYk0k2",
+      "name": "Alice",
+      "category": "informative_educational",
+      "public_description_en": "clear friendly educator",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "XrExE9yKIg1WjnnlVkGX",
+      "name": "Matilda",
+      "category": "informative_educational",
+      "public_description_en": "alto professional female",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "bIHbv24MWmeRgasZH58o",
+      "name": "Will",
+      "category": "conversational",
+      "public_description_en": "relaxed optimistic male",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "cgSgspJ2msm6clMCkdW9",
+      "name": "Jessica",
+      "category": "conversational",
+      "public_description_en": "playful bright woman",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "cjVigY5qzO86Huf0OWal",
+      "name": "Eric",
+      "category": "conversational",
+      "public_description_en": "smooth trustworthy middle-aged man",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "hpp4J3VqNfWAUOO0d1Us",
+      "name": "Bella",
+      "category": "informative_educational",
+      "public_description_en": "bright warm female",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "iP95p4xoKVk53GoZ742B",
+      "name": "Chris",
+      "category": "conversational",
+      "public_description_en": "down-to-earth natural male",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "nPczCjzI2devNBz1zQrb",
+      "name": "Brian",
+      "category": "social_media",
+      "public_description_en": "deep resonant comfortable male",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "onwK4e9ZLuTAKqWW03F9",
+      "name": "Daniel",
+      "category": "informative_educational",
+      "public_description_en": "steady broadcaster male",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "pFZP5JQG7iQjIQuC4Bku",
+      "name": "Lily",
+      "category": "informative_educational",
+      "public_description_en": "warm velvety actress female",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "pNInz6obpgDQGcFmaJgB",
+      "name": "Adam",
+      "category": "social_media",
+      "public_description_en": "firm bold male",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    },
+    {
+      "voice_id": "pqHfZKP75CvOlQylNhV4",
+      "name": "Bill",
+      "category": "advertisement",
+      "public_description_en": "wise mature balanced male",
+      "source": "connected_vidIQ_voiceover_list_voices",
+      "is_custom": false,
+      "russian_canary_verified": false,
+      "commercial_rights_for_factory_verified": false,
+      "production_enabled": false
+    }
+  ],
+  "youtube_format_evidence": [
+    {
+      "title": "Барбоскины",
+      "reference_url": "https://www.youtube.com/@barboskinyonline",
+      "metric": "9.62 billion channel lifetime views as of 2026-10-31, third-party tracker",
+      "source_url": "https://whatstat.ru/youtube/channels/paT35gf_4O",
+      "takeaway": "family cast supports character format as creative hypothesis; views are NOT voice-only attribution"
+    },
+    {
+      "title": "Маша и Медведь - Маша плюс каша",
+      "reference_url": "https://www.youtube.com/watch?v=KYniUCGPGLs",
+      "metric": ">4 billion historical views by 2019, not current live count",
+      "source_url": "https://www.sostav.ru/publication/multfilm-masha-i-medved-dostig-4-mlrd-prosmotrov-na-youtube-38444.html",
+      "takeaway": "bright character delivery; no copying original actor performance"
+    },
+    {
+      "title": "MotoRaido",
+      "reference_url": "https://us.youtubers.me/motoraido/youtube-videos-stats",
+      "metric": "2.19 billion lifetime channel views as shown by tracker",
+      "source_url": "https://us.youtubers.me/motoraido/youtube-videos-stats",
+      "takeaway": "motorcycle story + humor context; voices must be newly designed; video views do not isolate voice effect"
+    }
+  ],
+  "notes": [
+    "VidIQ list contained 21 premade English-described voices with no custom voices. Preview IDs may not be free for production; check commercial rights and Russian canary.",
+    "Qwen3-TTS-0.6B Base running on owner VPS is voice cloning via authorized reference; generating unique character voices from text requires separate VoiceDesign engine, not just EQ.",
+    "Do not scrape, clone or impersonate the original performer from a viral YouTube video without permission.",
+    "Existing YouTube Factory publishing and Deep identity gates remain unchanged.",
+    "Character names are creative role identifiers and not identities of real actors.",
+    "Current video PR #89 merged; render job 41332576263 was running during research; Buffer was empty before new QA."
+  ]
+}

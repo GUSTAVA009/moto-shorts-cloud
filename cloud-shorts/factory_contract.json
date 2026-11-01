@@ -244,5 +244,21 @@
     "no_engagement_fraud_or_mass_produced_repeat_content": true,
     "auto_niche_change_allowed": false,
     "never_relax_quality_gates_for_volume": true
+  },
+  "owner_approved_voice_cast_and_assignment_2026_11_01": {
+    "authority": "Owner directly clarified any approved voice can be selected for any owned YouTube channel; wants original cartoon child, humorous bass-childlike character, medium male, rugged raspy veteran biker grandpa, son, dad, mom and expanded family cast.",
+    "catalog": "voice-studio/voice_cast_candidates.json",
+    "cast_specified_but_not_yet_generated": true,
+    "any_approved_voice_assignable_to_any_owned_channel": true,
+    "same_voice_may_serve_multiple_channels": true,
+    "per_voice_eq_and_style_saved_independently": true,
+    "channel_voice_reassignment_must_be_explicit_and_quality_checked": true,
+    "current_gustava_voice_immutable_until_specific_owner_approval": true,
+    "no_global_limit_on_tts_narration_duration": true,
+    "narration_visual_duration_must_match_real_licensed_footage": true,
+    "two_scene_short_script_restriction_not_a_voice_engine_limit": true,
+    "youtube_creators_used_as_research_not_unconsented_voice_clones": true,
+    "paid_voice_providers_opt_in_only": true,
+    "no_automatic_deep_substitution_or_publication_gate_bypass": true
   }
 }
