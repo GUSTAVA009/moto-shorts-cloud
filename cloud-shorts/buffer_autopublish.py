@@ -222,10 +222,12 @@ def publish(episode, video, metadata, voice, mixed):
         return {"skipped": "Buffer queue near capacity (10 queued, Free plan maximum); retry after the next publication"}
     if any(p.get("text", "").strip() == metadata["description"].strip() for p in posts):
         raise RuntimeError("Potential identical scheduled post in Buffer")
-    # Distinguish the Buffer 10 scheduled-queue limit from our >=12/day
-    # monthly minimum. Only a verified month-to-date shortfall permits up
+    # Distinguish the Buffer 10 scheduled-queue limit from our 400/month
+    # delivery target. Only a verified month-to-date shortfall permits up
     # to 16 different 90-minute release windows per day.
-    quota = BASE_DAILY_SHORTS
+    # Always compute the calendar-specific baseline, even on first bootstrap
+    # before a rolling state exists (28-day February requires 15/day).
+    quota = month_capacity(datetime.now(timezone.utc), {}, sent_posts)["daily_catchup_goal"]
     rolling_entry = ledger.api(ROLLING_STATE_PATH)
     if rolling_entry:
         try:
