@@ -29,7 +29,7 @@ class CapacityReportTests(unittest.TestCase):
         self.assertEqual(report["script_reserve_capacity"], 150000)
         self.assertEqual(report["script_reserve_remaining"], 150000)
         self.assertGreaterEqual(report["unconsumed_curated_pexels_clips"], 0)
-        self.assertEqual(report["minimum_new_distinct_action_clips_per_day"], 24)
+        self.assertEqual(report["minimum_new_distinct_action_clips_per_day"], 28)
         self.assertEqual(report["minimum_seven_day_source_buffer_clips"], 196)
         self.assertGreaterEqual(
             report["public_footage_source_id_coverage_days_upper_bound"],0)
