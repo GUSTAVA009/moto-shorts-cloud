@@ -158,9 +158,35 @@ async def qwen_audio(route: str, payload: dict):
     return data
 
 
+@app.middleware("http")
+async def secure_site_headers(request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; script-src 'self'; style-src 'self'; "
+        "img-src 'self' data:; media-src 'self' blob:; "
+        "connect-src 'self'; object-src 'none'; "
+        "frame-ancestors 'none'; base-uri 'none'; form-action 'self'")
+    if request.url.path.startswith(("/v1/", "/api/admin/")):
+        response.headers["Cache-Control"] = "no-store"
+    return response
+
+
 @app.get("/", response_class=HTMLResponse)
 def home():
     return (ROOT / "index.html").read_text(encoding="utf8")
+
+
+@app.get("/site.css")
+def stylesheet():
+    return FileResponse(ROOT / "site.css", media_type="text/css")
+
+
+@app.get("/site.js")
+def javascript():
+    return FileResponse(ROOT / "site.js", media_type="application/javascript")
 
 
 @app.get("/health")
