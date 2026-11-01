@@ -102,7 +102,8 @@ class LivePortalContract(unittest.TestCase):
     def test_owner_can_save_private_preview_preferences(self):
         cookie,csrf=self.login()
         data={"channel_name":"GUSTAVA Enduro","speed":0.95,
-              "text":"Текст сценария для тестового прослушивания."}
+              "text":"Текст сценария для тестового прослушивания.",
+              "eq":{"80":3,"250":1,"1000":-1,"3000":1,"8000":0}}
         status,_,_=self.request("POST","/api/portal/preferences",
                                 data,cookie,csrf=csrf)
         self.assertEqual(status,200)
@@ -118,7 +119,8 @@ class LivePortalContract(unittest.TestCase):
         # The preview endpoint must not require any new public TTS API key.
         with patch.object(portal,"generate_job",lambda *a:None):
             code,_,body=self.request("POST","/api/portal/preview",
-                {"text":"Проверяем автономную приватную русскую озвучку.", "speed":1},
+                {"text":"Проверяем автономную приватную русскую озвучку.", "speed":1,
+                 "eq":data["eq"]},
                 cookie,csrf=csrf)
         self.assertEqual(code,202)
         job=json.loads(body)["job_id"]
@@ -143,6 +145,81 @@ class LivePortalContract(unittest.TestCase):
         self.assertEqual(self.request("POST","/auth/login",
                 {"password":"a-test-secret-longer-than-14"})[0],429)
 
+
+    def test_password_error_codes_and_new_session_csrf_survive_rotation(self):
+        cookie,csrf=self.login()
+        def change(current,next_value):
+            status,headers,raw=self.request("POST","/auth/change-password",
+                {"current":current,"next":next_value},cookie,csrf=csrf)
+            return status,headers,json.loads(raw)
+        self.assertEqual(change("wrong current","long-enough-new-secret-123")[2]["error"],
+                         "CURRENT_PASSWORD_INCORRECT")
+        self.assertEqual(change("a-test-secret-longer-than-14","too-short")[2]["error"],
+                         "NEW_PASSWORD_MIN_14_CHARACTERS")
+        self.assertEqual(change("a-test-secret-longer-than-14","a-test-secret-longer-than-14")[2]["error"],
+                         "NEW_PASSWORD_MUST_DIFFER")
+        self.assertTrue(portal.verify_password("a-test-secret-longer-than-14"))
+        status,headers,response=change("a-test-secret-longer-than-14","brand-new-strong-passphrase-2026")
+        self.assertEqual(status,200)
+        self.assertEqual(response["ok"],True)
+        newcsrf=response["csrf"]
+        self.assertNotEqual(newcsrf,csrf)
+        newcookie=headers["Set-Cookie"].split(";",1)[0]
+        old=self.request("GET","/auth/session",cookie=cookie)
+        self.assertEqual(old[0],401)
+        new=self.request("GET","/auth/session",cookie=newcookie)
+        self.assertEqual(new[0],200)
+        self.assertEqual(json.loads(new[2])["csrf"],newcsrf)
+        payload={"channel_name":"GUSTAVA","text":"after reset","speed":1.0}
+        self.assertEqual(self.request("POST","/api/portal/preferences",
+            payload,newcookie,csrf=csrf)[0],403)
+        self.assertEqual(self.request("POST","/api/portal/preferences",
+            payload,newcookie,csrf=newcsrf)[0],200)
+
+    def test_eq_is_bounded_persistent_and_only_affects_preview(self):
+        cookie,csrf=self.login()
+        flat={"80":0,"250":0,"1000":0,"3000":0,"8000":0}
+        deep={"80":3,"250":1,"1000":-1,"3000":1,"8000":0}
+        self.assertEqual(portal.voice_filters(1.0,flat),[])
+        self.assertEqual(portal.voice_filters(0.95,flat),["atempo=0.95"])
+        filters=portal.voice_filters(1.0,deep)
+        self.assertIn("equalizer=f=80:t=q:w=1.0:g=3",filters)
+        self.assertIn("equalizer=f=1000:t=q:w=1.0:g=-1",filters)
+        self.assertIn("alimiter=limit=0.95:level=false",filters)
+        for bad in ({**deep, "3000":"1;rm"}, {**deep,"80":19},
+                    {**deep,"80":True}, {**deep,"42":0},{}):
+            with self.assertRaises(ValueError):
+                portal.validate_eq(bad)
+            code,_,_=self.request("POST","/api/portal/preferences",{
+                "channel_name":"GUSTAVA","speed":1,"text":"test","eq":bad},
+                cookie,csrf=csrf)
+            self.assertEqual(code,422)
+            code,_,_=self.request("POST","/api/portal/preview",{
+                "text":"Это осмысленный русский тест для эквалайзера.",
+                "speed":1,"eq":bad},cookie,csrf=csrf)
+            self.assertEqual(code,422)
+        code,_,body=self.request("GET","/api/portal/preferences",cookie=cookie)
+        self.assertEqual(code,200)
+        self.assertEqual(json.loads(body)["eq"],flat)
+        payload={"channel_name":"GUSTAVA","speed":1.0,"text":"test","eq":deep}
+        self.assertEqual(self.request("POST","/api/portal/preferences",payload,cookie,csrf=csrf)[0],200)
+        self.assertEqual(json.loads(self.request("GET","/api/portal/preferences",
+                          cookie=cookie)[2])["eq"],deep)
+        # Existing pre-upgrade tab must continue to work without resetting EQ.
+        legacy={"channel_name":"GUSTAVA","speed":1.0,"text":"old tab"}
+        self.assertEqual(self.request("POST","/api/portal/preferences",legacy,cookie,csrf=csrf)[0],200)
+        self.assertEqual(json.loads(self.request("GET","/api/portal/preferences",
+                          cookie=cookie)[2])["eq"],deep)
+        with patch.object(portal,"generate_job",lambda *a:None):
+            status,_,body=self.request("POST","/api/portal/preview",{
+                "text":"Готовим новую озвучку на сервере для прослушивания.",
+                "speed":1.0,"eq":deep},cookie,csrf=csrf)
+        self.assertEqual(status,202)
+        job_id=json.loads(body)["job_id"]
+        self.assertEqual(len(job_id),32)
+        # No production voice profile or source reference is mutable here.
+        self.assertEqual(portal.VOICE_ID,"gustava-original-v1")
+        self.assertEqual(len(portal.REF_SHA),64)
 
 if __name__ == "__main__":
     unittest.main()
