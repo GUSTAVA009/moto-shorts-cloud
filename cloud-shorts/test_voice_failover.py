@@ -28,6 +28,60 @@ def env():
 EPISODE={"id": "moto-test-voice-101", "narration": "Это тест оригинального голоса."}
 
 class VoiceFailoverTests(unittest.TestCase):
+    def test_private_owner_actions_can_render_without_stored_gh_api_key(self):
+        state=env()
+        state.pop("GUSTAVA_VOICE_API_KEY")
+        state.update({
+            "GUSTAVA_VOICE_OIDC_ENABLED":"1",
+            "GITHUB_REPOSITORY":"GUSTAVA009/moto-shorts-cloud",
+            "GITHUB_REF":"refs/heads/main",
+            "ACTIONS_ID_TOKEN_REQUEST_URL":
+                "https://pipelines.actions.githubusercontent.com/oidc/idtoken?job=42",
+            "ACTIONS_ID_TOKEN_REQUEST_TOKEN":"ephemeral-runner-token",
+        })
+        rows=v.available_routes(state,require_secret=True)
+        self.assertEqual(rows[0].name,"cloud")
+        self.assertEqual(rows[0].key,"")
+        self.assertEqual(len(rows),3)
+        for k,val in (
+            ("GITHUB_REF","refs/pull/99/merge"),
+            ("GITHUB_REPOSITORY","foreign/fork"),
+            ("ACTIONS_ID_TOKEN_REQUEST_TOKEN",""),
+            ("GUSTAVA_VOICE_OIDC_ENABLED","0"),
+        ):
+            bad=dict(state,**{k:val})
+            self.assertEqual([x.name for x in v.available_routes(bad,require_secret=True)],
+                             ["local_pc","chatterbox_v3"])
+
+    def test_oidc_is_ephemeral_and_only_requested_from_github_host(self):
+        from unittest.mock import patch
+        state=env()
+        state.update({
+            "GUSTAVA_VOICE_OIDC_ENABLED":"1",
+            "GITHUB_REPOSITORY":"GUSTAVA009/moto-shorts-cloud",
+            "GITHUB_REF":"refs/heads/main",
+            "ACTIONS_ID_TOKEN_REQUEST_URL":
+                "https://pipelines.actions.githubusercontent.com/oidc/idtoken?job=42",
+            "ACTIONS_ID_TOKEN_REQUEST_TOKEN":"secret-runner",
+        })
+        class Response:
+            def __enter__(self): return self
+            def __exit__(self,*args): return False
+            def read(self,n): return b'{"value":"header.payload.signature"}'
+        def openurl(req,timeout):
+            self.assertIn("audience=voice.hapychrust.ru",req.full_url)
+            self.assertEqual(req.headers["Authorization"],"bearer secret-runner")
+            return Response()
+        with patch.object(v.urllib.request,"urlopen",side_effect=openurl):
+            self.assertEqual(v.owner_actions_oidc(state),"header.payload.signature")
+        with self.assertRaisesRegex(RuntimeError,"REQUEST_UNAVAILABLE"):
+            v.owner_actions_oidc(dict(
+                state,ACTIONS_ID_TOKEN_REQUEST_URL="http://127.0.0.1/oidc"))
+        with self.assertRaisesRegex(RuntimeError,"REQUEST_UNAVAILABLE"):
+            v.owner_actions_oidc(dict(
+                state,ACTIONS_ID_TOKEN_REQUEST_URL=
+                    "https://pipelines.actions.githubusercontent.com.evil.org/oidc"))
+
     def test_order_and_separate_keys_and_domains(self):
         rows=v.available_routes(env(), require_secret=True)
         self.assertEqual([r.name for r in rows], ["cloud","local_pc","chatterbox_v3"])

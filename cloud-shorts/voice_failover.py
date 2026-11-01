@@ -68,11 +68,17 @@ def available_routes(env=None, *, require_secret=False):
         if env.get(enable) != "1" or (canary and env.get(canary) != "1"):
             continue
         key = str(env.get(prefix + "_API_KEY") or "")
+        oidc = bool(name == "cloud"
+            and env.get("GUSTAVA_VOICE_OIDC_ENABLED") == "1"
+            and env.get("GITHUB_REPOSITORY") == "GUSTAVA009/moto-shorts-cloud"
+            and env.get("GITHUB_REF") == "refs/heads/main"
+            and env.get("ACTIONS_ID_TOKEN_REQUEST_URL")
+            and env.get("ACTIONS_ID_TOKEN_REQUEST_TOKEN"))
         if require_secret:
-            if not TOKEN_RE.fullmatch(key):
+            if not TOKEN_RE.fullmatch(key) and not oidc:
                 continue
         elif (not TOKEN_RE.fullmatch(key)
-              and env.get(prefix + "_KEY_PRESENT") != "true"):
+              and env.get(prefix + "_KEY_PRESENT") != "true" and not oidc):
             continue
         try:
             url = approved_endpoint(env.get(prefix + "_API_URL"),
@@ -85,6 +91,37 @@ def available_routes(env=None, *, require_secret=False):
         seen.add(url)
         found.append(Route(name, url, key, expected_backend))
     return tuple(found)
+
+
+def owner_actions_oidc(env):
+    """Use GitHub's ephemeral identity, rather than storing a server secret in Actions.
+
+    The destination independently verifies the token signature, audience,
+    repository_id, main branch and workflow reference before generating WAV.
+    """
+    if (env.get("GUSTAVA_VOICE_OIDC_ENABLED") != "1"
+            or env.get("GITHUB_REPOSITORY") != "GUSTAVA009/moto-shorts-cloud"
+            or env.get("GITHUB_REF") != "refs/heads/main"):
+        raise RuntimeError("OWNER_GITHUB_OIDC_NOT_AUTHORIZED")
+    url = str(env.get("ACTIONS_ID_TOKEN_REQUEST_URL") or "")
+    token = str(env.get("ACTIONS_ID_TOKEN_REQUEST_TOKEN") or "")
+    parsed = urllib.parse.urlsplit(url)
+    if (parsed.scheme != "https" or not parsed.hostname
+            or not parsed.hostname.endswith(".actions.githubusercontent.com")
+            or parsed.username or parsed.password or parsed.port not in (None,443)
+            or not token or len(token) > 9000):
+        raise RuntimeError("OWNER_GITHUB_OIDC_REQUEST_UNAVAILABLE")
+    delim = "&" if parsed.query else "?"
+    request=urllib.request.Request(
+        url+delim+urllib.parse.urlencode({"audience":"voice.hapychrust.ru"}),
+        headers={"Authorization":"bearer "+token,"Accept":"application/json",
+                 "User-Agent":"GUSTAVA-VOICE-FACTORY"})
+    with urllib.request.urlopen(request,timeout=15) as response:
+        payload=json.load(__import__("io").BytesIO(response.read(10000)))
+    jwt=payload.get("value")
+    if not isinstance(jwt,str) or len(jwt.split("."))!=3 or len(jwt)>6500:
+        raise RuntimeError("OWNER_GITHUB_OIDC_TOKEN_INVALID")
+    return jwt
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -100,10 +137,13 @@ def _post(route: Route, episode: dict, env, *, opener=None):
         "text": text, "voice": VOICE_ID,
         "channel_slug": CHANNEL_SLUG, "response_format": "wav",
     }
+    key = route.key
+    if not TOKEN_RE.fullmatch(key) and route.name == "cloud":
+        key = owner_actions_oidc(env)
     req = urllib.request.Request(
         route.url, data=json.dumps(payload, ensure_ascii=False).encode("utf8"),
         headers={
-            "Authorization": "Bearer " + route.key,
+            "Authorization": "Bearer " + key,
             "Content-Type": "application/json",
             "Accept": "audio/wav",
             "X-Idempotency-Key": request_id,
