@@ -1,18 +1,11 @@
 {
   "id": "moto-vintage-c81aecc34671",
-  "state": "preview_ready",
-  "run_id": "41317559714",
-  "attempt_count": 2,
-  "preview_fingerprint": "b5138c8c73f9331c2316264ea280b7f1a643e047fc6e4ea033afd496483f5bea",
+  "state": "reserved",
+  "run_id": "41318314496",
+  "attempt_count": 3,
+  "preview_fingerprint": "2f8bff380f9bd60d1517f167e2be2a10ffd750609c93ad93bc93a81662e71e58",
   "deep_source_sha256": null,
   "selfhosted_voice_id": "gustava-original-v1",
-  "previous_run_id": "41316919801",
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": true,
-  "voice_qa_coverage": 1.0,
-  "voice_profile": "gustava_original_qwen3_v1",
-  "selfhosted_reference_sha256": "ed27b23b9f86345c45263ab28957e96fd2d399379b3ea90ed9fbc75be183a3cc",
-  "male_voice_verified": true,
-  "mixed_audio_qa_passed": true,
-  "mixed_audio_qa_coverage": 1.0
+  "previous_run_id": "41317559714",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
