@@ -12,6 +12,7 @@ on:
       - 'cloud-shorts/episodes.json'
       - 'cloud-shorts/render_episode.py'
       - 'cloud-shorts/cartesia_voice.py'
+      - 'cloud-shorts/selfhosted_voice.py'
       - 'cloud-shorts/voice_routing.py'
   schedule:
     # Review-only cut revision: final helmet-removal scene should begin after the strap adjustment.
@@ -47,6 +48,11 @@ jobs:
     env:
       CARTESIA_TTS_ENABLED: ${{ vars.CARTESIA_TTS_ENABLED }}
       CARTESIA_KEY_PRESENT: ${{ secrets.CARTESIA_API_KEY != '' }}
+      GUSTAVA_SELFHOSTED_TTS_ENABLED: ${{ vars.GUSTAVA_SELFHOSTED_TTS_ENABLED }}
+      GUSTAVA_VOICE_KEY_PRESENT: ${{ secrets.GUSTAVA_VOICE_API_KEY != '' }}
+      GUSTAVA_VOICE_API_URL: ${{ vars.GUSTAVA_VOICE_API_URL }}
+      GUSTAVA_VOICE_APPROVED_HOST: ${{ vars.GUSTAVA_VOICE_APPROVED_HOST }}
+      GUSTAVA_VOICE_REFERENCE_SHA256: ${{ vars.GUSTAVA_VOICE_REFERENCE_SHA256 }}
     steps:
       - uses: actions/checkout@v4
       - name: Check content queue and reserve next episode
@@ -61,6 +67,7 @@ jobs:
           python3 -m unittest discover -s cloud-shorts -p 'test_native_bass_voice.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_deep_voice.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_cartesia_voice.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_selfhosted_voice.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_voice_routing.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_visual_director.py' -v
           python3 - <<'PY'
@@ -113,6 +120,7 @@ jobs:
         env:
           EPISODE: ${{ steps.pick.outputs.episode }}
           CARTESIA_API_KEY: ${{ secrets.CARTESIA_API_KEY }}
+          GUSTAVA_VOICE_API_KEY: ${{ secrets.GUSTAVA_VOICE_API_KEY }}
           CARTESIA_MONTHLY_CHAR_LIMIT: ${{ vars.CARTESIA_MONTHLY_CHAR_LIMIT }}
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
