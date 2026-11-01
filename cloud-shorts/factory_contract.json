@@ -186,5 +186,63 @@
     "no_local_personal_videos": true,
     "no_publishing_without_complete_multistage_qa": true,
     "endpoint_configured_is_not_service_operational": true
+  },
+  "seven_pillars_growth": {
+    "source": "Owner's 7 screenshots, 2026-11-01",
+    "canon": "docs/SEVEN_PILLARS_GROWTH_RU.md",
+    "strategy_and_positioning_required": true,
+    "niche_research_requires_real_demand_and_competitor_data": true,
+    "old_active_channel_niche_remains_motorcycle_until_evidence_and_owner_approval": true,
+    "original_research_ideas_target": 100,
+    "ideas_are_not_approved_scripts_or_mp4s": true,
+    "editorial_categories_five_batches": {
+      "facts": 35,
+      "stories": 25,
+      "experiments": 25,
+      "spectacle": 15
+    },
+    "next_twenty_approved_mix": {
+      "facts": 7,
+      "stories": 5,
+      "experiments": 5,
+      "spectacle": 3
+    },
+    "first_1_5_seconds_action_or_honest_question": true,
+    "actual_visual_footage_and_voice_must_match": true,
+    "cover_must_match_video": true,
+    "no_fabricated_viral_rankings": true,
+    "reporting_weekly_and_monthly": true,
+    "comparative_age_hours": [
+      36,
+      60
+    ],
+    "minimum_videos_per_experiment_group": 3,
+    "minimum_shown_in_feed_per_group": 500,
+    "key_metrics": [
+      "verified_public_shorts_per_month",
+      "median_engaged_views_age_48h",
+      "subscribers_per_1000_engaged_48h"
+    ],
+    "diagnostics": [
+      "shorts_stayed_to_watch",
+      "average_percentage_viewed",
+      "shares",
+      "traffic_sources",
+      "returning_viewers",
+      "longform_impressions_ctr_separately"
+    ],
+    "private_studio_data_never_committed_to_public_repo": true,
+    "ypp_new_applicant_thresholds_from_2027_02_01": {
+      "subscribers": 1000,
+      "qualified_longform_watch_hours_365d": 8000,
+      "qualified_shorts_views_90d": 20000000
+    },
+    "youtube_earn_qualification_requires_official_studio_snapshot": true,
+    "monthly_income_goal_gross_usd": 5000,
+    "allow_compliant_sponsorships_affiliates_digital_products_and_memberships": true,
+    "three_times_faster_is_unverified_hypothesis": true,
+    "no_engagement_fraud_or_mass_produced_repeat_content": true,
+    "auto_niche_change_allowed": false,
+    "never_relax_quality_gates_for_volume": true
   }
 }

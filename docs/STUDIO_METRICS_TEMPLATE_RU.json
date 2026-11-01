@@ -1,0 +1,24 @@
+{
+  "comment": "PRIVATE LOCAL TEMPLATE ONLY. Copy outside public repo and replace nulls using official YouTube Studio Earn/Analytics. Do not commit real private analytics.",
+  "channel_id": "UCS0QCodPcFBTjMt4ioEWOUw",
+  "source": "official_youtube_studio_export",
+  "observed_date": "2026-11-01",
+  "subscribers": null,
+  "qualified_shorts_views_90d": null,
+  "qualified_longform_watch_hours_365d": null,
+  "per_video_48h": [],
+  "per_video_48h_format": {
+    "video_id": "11-character YouTube ID",
+    "category": "facts | stories | experiments | spectacle",
+    "published_at": "2026-10-29T09:00:00+00:00",
+    "measured_at": "2026-10-31T09:00:00+00:00",
+    "engaged_views": "integer from own Studio",
+    "views": "integer raw public",
+    "shown_in_feed": "integer real Shorts feed impressions",
+    "subscribers_gained": "integer 0+",
+    "shares": "integer",
+    "comments": "integer",
+    "viewed_instead_of_swiped_fraction": "0..1",
+    "average_percentage_viewed": "0..3"
+  }
+}
