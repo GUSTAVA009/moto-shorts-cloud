@@ -1,0 +1,1918 @@
+{
+  "schema_version": 1,
+  "channel_id": "UCS0QCodPcFBTjMt4ioEWOUw",
+  "as_of": "2026-11-01",
+  "source": "Owner's seven strategy screenshots + editorial hypothesis; not live YouTube demand data",
+  "verified_market_demand": false,
+  "total_ideas": 100,
+  "mix": {
+    "facts": 35,
+    "stories": 25,
+    "experiments": 25,
+    "spectacle": 15
+  },
+  "bank_is_not_licensed_footage_or_ready_mp4": true,
+  "automatic_publication_allowed": false,
+  "ideas": [
+    {
+      "idea_id": "GUSTAVA-001",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Как проверить натяжение цепи",
+      "hook_draft": "Покажу, что здесь действительно происходит: как проверить натяжение цепи",
+      "thumbnail_caption": "Как проверить натяжение цепи",
+      "required_visual_evidence": "Крупный план цепи и измерение свободного хода на стоящем мотоцикле",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-002",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Что говорит рисунок износа шин",
+      "hook_draft": "Обычно эту деталь не замечают: что говорит рисунок износа шин",
+      "thumbnail_caption": "Что говорит рисунок износа шин",
+      "required_visual_evidence": "Реальная покрышка с читаемым протектором и демонстрация отличий",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-003",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Почему разметка опаснее в дождь",
+      "hook_draft": "Проверим на реальном примере: почему разметка опаснее в дождь",
+      "thumbnail_caption": "Почему разметка опаснее в дождь",
+      "required_visual_evidence": "Дорожная разметка под дождём, без имитации падения",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-004",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Зачем проверять давление перед поездкой",
+      "hook_draft": "Разберём без мифов: зачем проверять давление перед поездкой",
+      "thumbnail_caption": "Зачем проверять давление перед поез…",
+      "required_visual_evidence": "Манометр на конкретной шине и показания",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-005",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Когда пора менять тормозные колодки",
+      "hook_draft": "Одна проверка перед поездкой: когда пора менять тормозные колодки",
+      "thumbnail_caption": "Когда пора менять тормозные колодки",
+      "required_visual_evidence": "Крупный план толщины реальных колодок без демонстрации опасной езды",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-006",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Как работает ABS на мотоцикле",
+      "hook_draft": "Покажу, что здесь действительно происходит: как работает abs на мотоцикле",
+      "thumbnail_caption": "Как работает ABS на мотоцикле",
+      "required_visual_evidence": "Настоящий контролируемый тест на закрытой площадке или техническая анимация",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-007",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "В чём смысл контрруления",
+      "hook_draft": "Обычно эту деталь не замечают: в чём смысл контрруления",
+      "thumbnail_caption": "В чём смысл контрруления",
+      "required_visual_evidence": "Проверенная учебная демонстрация на закрытой площадке",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-008",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Как распознать старую тормозную жидкость",
+      "hook_draft": "Проверим на реальном примере: как распознать старую тормозную жидкость",
+      "thumbnail_caption": "Как распознать старую тормозную жид…",
+      "required_visual_evidence": "Сервисная проверка по мануалу и прибор, без выдуманных измерений",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-009",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Что делает воздушный фильтр",
+      "hook_draft": "Разберём без мифов: что делает воздушный фильтр",
+      "thumbnail_caption": "Что делает воздушный фильтр",
+      "required_visual_evidence": "Сравнение двух реальных фильтров и видимые загрязнения",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-010",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Зачем чистить радиатор",
+      "hook_draft": "Одна проверка перед поездкой: зачем чистить радиатор",
+      "thumbnail_caption": "Зачем чистить радиатор",
+      "required_visual_evidence": "Настоящий радиатор до и после обслуживания одного мотоцикла",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-011",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Как меняется сцепление шин на гравии",
+      "hook_draft": "Покажу, что здесь действительно происходит: как меняется сцепление шин на гравии",
+      "thumbnail_caption": "Как меняется сцепление шин на гравии",
+      "required_visual_evidence": "Учебные кадры той же трассы, без рискованного эксперимента на дороге",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-012",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Почему цепь и звёзды изнашиваются вместе",
+      "hook_draft": "Обычно эту деталь не замечают: почему цепь и звёзды изнашиваются вместе",
+      "thumbnail_caption": "Почему цепь и звёзды изнашиваются в…",
+      "required_visual_evidence": "Крупные планы износа реальной звезды и цепи",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-013",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Какая разница между турингом и эндуро-шинами",
+      "hook_draft": "Проверим на реальном примере: какая разница между турингом и эндуро-шинами",
+      "thumbnail_caption": "Какая разница между турингом и энду…",
+      "required_visual_evidence": "Два подписанных типа шин и фактический рисунок протектора",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-014",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Что проверяют на вилке перед выездом",
+      "hook_draft": "Разберём без мифов: что проверяют на вилке перед выездом",
+      "thumbnail_caption": "Что проверяют на вилке перед выездом",
+      "required_visual_evidence": "Реальный осмотр уплотнений и подтёков на стоящем байке",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-015",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Когда люфт руля становится проблемой",
+      "hook_draft": "Одна проверка перед поездкой: когда люфт руля становится проблемой",
+      "thumbnail_caption": "Когда люфт руля становится проблемой",
+      "required_visual_evidence": "Механик показывает корректную безопасную проверку люфта",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-016",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Чем помогает хорошая защита рук",
+      "hook_draft": "Покажу, что здесь действительно происходит: чем помогает хорошая защита рук",
+      "thumbnail_caption": "Чем помогает хорошая защита рук",
+      "required_visual_evidence": "Сертифицированные перчатки и элементы их конструкции",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-017",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Почему визор запотевает",
+      "hook_draft": "Обычно эту деталь не замечают: почему визор запотевает",
+      "thumbnail_caption": "Почему визор запотевает",
+      "required_visual_evidence": "Визор и проверенная демонстрация вентиляции или Pinlock",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-018",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Как видят мотоцикл в слепой зоне",
+      "hook_draft": "Проверим на реальном примере: как видят мотоцикл в слепой зоне",
+      "thumbnail_caption": "Как видят мотоцикл в слепой зоне",
+      "required_visual_evidence": "Схема слепой зоны с документированным источником и реальная стоянка",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-019",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Для чего нужны светоотражатели",
+      "hook_draft": "Разберём без мифов: для чего нужны светоотражатели",
+      "thumbnail_caption": "Для чего нужны светоотражатели",
+      "required_visual_evidence": "Кадры светоотражающей экипировки при одинаковом освещении",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-020",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Как работает сцепление мотоцикла",
+      "hook_draft": "Одна проверка перед поездкой: как работает сцепление мотоцикла",
+      "thumbnail_caption": "Как работает сцепление мотоцикла",
+      "required_visual_evidence": "Настоящий разрез узла, учебная анимация или сервисный стенд",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-021",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Чем отличаются звуки цепи и двигателя",
+      "hook_draft": "Покажу, что здесь действительно происходит: чем отличаются звуки цепи и двигателя",
+      "thumbnail_caption": "Чем отличаются звуки цепи и двигателя",
+      "required_visual_evidence": "Два записанных раздельно оригинальных звука с достоверным источником",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-022",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Как подготовить мотоцикл к хранению",
+      "hook_draft": "Обычно эту деталь не замечают: как подготовить мотоцикл к хранению",
+      "thumbnail_caption": "Как подготовить мотоцикл к хранению",
+      "required_visual_evidence": "Реальные безопасные этапы консервации одного байка",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-023",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Что показывает свеча зажигания",
+      "hook_draft": "Проверим на реальном примере: что показывает свеча зажигания",
+      "thumbnail_caption": "Что показывает свеча зажигания",
+      "required_visual_evidence": "Реальная свеча из обслуживания и проверенные справочные признаки",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-024",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Почему масло подбирают по допуску",
+      "hook_draft": "Разберём без мифов: почему масло подбирают по допуску",
+      "thumbnail_caption": "Почему масло подбирают по допуску",
+      "required_visual_evidence": "Этикетки настоящих подходящих масел и руководство производителя",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-025",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Где искать дату производства шлема",
+      "hook_draft": "Одна проверка перед поездкой: где искать дату производства шлема",
+      "thumbnail_caption": "Где искать дату производства шлема",
+      "required_visual_evidence": "Крупный план маркировки производителя на сертифицированном шлеме",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-026",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Как проверить свет фары",
+      "hook_draft": "Покажу, что здесь действительно происходит: как проверить свет фары",
+      "thumbnail_caption": "Как проверить свет фары",
+      "required_visual_evidence": "Настройка на стене в гараже с реальным световым пятном",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-027",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Чем полезен центральный кофр",
+      "hook_draft": "Обычно эту деталь не замечают: чем полезен центральный кофр",
+      "thumbnail_caption": "Чем полезен центральный кофр",
+      "required_visual_evidence": "Реальная проверка крепления и багажного пространства без опасной езды",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-028",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Почему после дождя тормоза ведут себя иначе",
+      "hook_draft": "Проверим на реальном примере: почему после дождя тормоза ведут себя иначе",
+      "thumbnail_caption": "Почему после дождя тормоза ведут се…",
+      "required_visual_evidence": "Сервисная проверка тормозов без вымышленных цифр",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-029",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Как выбрать высоту сиденья",
+      "hook_draft": "Разберём без мифов: как выбрать высоту сиденья",
+      "thumbnail_caption": "Как выбрать высоту сиденья",
+      "required_visual_evidence": "Сравнение посадки на стоящем мотоцикле с согласия участников",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-030",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Как распознать старую резину",
+      "hook_draft": "Одна проверка перед поездкой: как распознать старую резину",
+      "thumbnail_caption": "Как распознать старую резину",
+      "required_visual_evidence": "Маркировка DOT и состояние конкретной покрышки",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-031",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Что меняет настройка преднатяга",
+      "hook_draft": "Покажу, что здесь действительно происходит: что меняет настройка преднатяга",
+      "thumbnail_caption": "Что меняет настройка преднатяга",
+      "required_visual_evidence": "Механик показывает изменение положения подвески по мануалу",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-032",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Когда нужен контроль спиц",
+      "hook_draft": "Обычно эту деталь не замечают: когда нужен контроль спиц",
+      "thumbnail_caption": "Когда нужен контроль спиц",
+      "required_visual_evidence": "Обслуживание спиц специалистом с настоящими инструментами",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-033",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Что проверить перед долгой дорогой",
+      "hook_draft": "Проверим на реальном примере: что проверить перед долгой дорогой",
+      "thumbnail_caption": "Что проверить перед долгой дорогой",
+      "required_visual_evidence": "Оригинальный чек-лист на реальном мотоцикле перед поездкой",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-034",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Почему на песке нужен другой протектор",
+      "hook_draft": "Разберём без мифов: почему на песке нужен другой протектор",
+      "thumbnail_caption": "Почему на песке нужен другой протектор",
+      "required_visual_evidence": "Два типа шин и подтверждённые сцены различных покрытий",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-035",
+      "niche": "motorcycle",
+      "category": "facts",
+      "title": "Чем дорожная экипировка отличается от трековой",
+      "hook_draft": "Одна проверка перед поездкой: чем дорожная экипировка отличается от трековой",
+      "thumbnail_caption": "Чем дорожная экипировка отличается…",
+      "required_visual_evidence": "Два полных комплекта защиты с фактическими стандартами",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-036",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Путь одного мотоцикла через мастерскую",
+      "hook_draft": "Смотри, как развивается эта история: путь одного мотоцикла через мастерскую",
+      "thumbnail_caption": "Путь одного мотоцикла через мастерскую",
+      "required_visual_evidence": "Последовательные кадры обслуживания именно одного байка",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-037",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Как райдер готовится к первому выезду",
+      "hook_draft": "Вот что произошло на самом деле: как райдер готовится к первому выезду",
+      "thumbnail_caption": "Как райдер готовится к первому выезду",
+      "required_visual_evidence": "Один согласившийся участник: подготовка и старт поездки",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-038",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Маршрут после ливня",
+      "hook_draft": "Началось всё с этого: маршрут после ливня",
+      "thumbnail_caption": "Маршрут после ливня",
+      "required_visual_evidence": "Настоящая зафиксированная перемена маршрута с датой и контекстом",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-039",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Заезд в осенний лес",
+      "hook_draft": "От первого шага до результата: заезд в осенний лес",
+      "thumbnail_caption": "Заезд в осенний лес",
+      "required_visual_evidence": "Последовательная поездка одного райдера по разрешённой трассе",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-040",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Встреча двух поколений мотоциклов",
+      "hook_draft": "Эта поездка запомнилась вот чем: встреча двух поколений мотоциклов",
+      "thumbnail_caption": "Встреча двух поколений мотоциклов",
+      "required_visual_evidence": "Съёмка двух настоящих байков на одной площадке",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-041",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Как устроен день мотомеханика",
+      "hook_draft": "Смотри, как развивается эта история: как устроен день мотомеханика",
+      "thumbnail_caption": "Как устроен день мотомеханика",
+      "required_visual_evidence": "Согласованная съёмка рабочего процесса с реальным героем",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-042",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Возвращение старого байка на дорогу",
+      "hook_draft": "Вот что произошло на самом деле: возвращение старого байка на дорогу",
+      "thumbnail_caption": "Возвращение старого байка на дорогу",
+      "required_visual_evidence": "Подтверждённое до и после одного мотоцикла",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-043",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Путешествие через горный перевал",
+      "hook_draft": "Началось всё с этого: путешествие через горный перевал",
+      "thumbnail_caption": "Путешествие через горный перевал",
+      "required_visual_evidence": "Непрерывный маршрут с подтверждённой географией",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-044",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Тренировка перед соревнованием",
+      "hook_draft": "От первого шага до результата: тренировка перед соревнованием",
+      "thumbnail_caption": "Тренировка перед соревнованием",
+      "required_visual_evidence": "Съёмка одной реальной тренировочной сессии",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-045",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Как собирают байк после ремонта",
+      "hook_draft": "Эта поездка запомнилась вот чем: как собирают байк после ремонта",
+      "thumbnail_caption": "Как собирают байк после ремонта",
+      "required_visual_evidence": "Реальная сборка одного транспортного средства",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-046",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Подготовка к зимнему сезону",
+      "hook_draft": "Смотри, как развивается эта история: подготовка к зимнему сезону",
+      "thumbnail_caption": "Подготовка к зимнему сезону",
+      "required_visual_evidence": "Последовательный сервисный процесс на одном мотоцикле",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-047",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "История первого падения на закрытой трассе",
+      "hook_draft": "Вот что произошло на самом деле: история первого падения на закрытой трассе",
+      "thumbnail_caption": "История первого падения на закрытой…",
+      "required_visual_evidence": "Только добровольное интервью и настоящие кадры без выдуманных травм",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-048",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Как райдер выбирает шлем",
+      "hook_draft": "Началось всё с этого: как райдер выбирает шлем",
+      "thumbnail_caption": "Как райдер выбирает шлем",
+      "required_visual_evidence": "Реальная примерка и выбор с согласия участника",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-049",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Поездка на рассвете",
+      "hook_draft": "От первого шага до результата: поездка на рассвете",
+      "thumbnail_caption": "Поездка на рассвете",
+      "required_visual_evidence": "Одна поездка с исходным непрерывным видео или подтверждённым маршрутом",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-050",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Знакомство с классическим мотоциклом",
+      "hook_draft": "Эта поездка запомнилась вот чем: знакомство с классическим мотоциклом",
+      "thumbnail_caption": "Знакомство с классическим мотоциклом",
+      "required_visual_evidence": "Оригинальные крупные планы одной конкретной модели",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-051",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Один день на гоночном треке",
+      "hook_draft": "Смотри, как развивается эта история: один день на гоночном треке",
+      "thumbnail_caption": "Один день на гоночном треке",
+      "required_visual_evidence": "Документальная съёмка разрешённого трекового дня",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-052",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Проверка байка перед продажей",
+      "hook_draft": "Вот что произошло на самом деле: проверка байка перед продажей",
+      "thumbnail_caption": "Проверка байка перед продажей",
+      "required_visual_evidence": "Одна реальная техническая инспекция без персональных данных",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-053",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Как спасают мотоцикл из грязи",
+      "hook_draft": "Началось всё с этого: как спасают мотоцикл из грязи",
+      "thumbnail_caption": "Как спасают мотоцикл из грязи",
+      "required_visual_evidence": "Настоящее извлечение на разрешённой трассе без приписывания чужих событий",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-054",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Подготовка к путешествию вдвоём",
+      "hook_draft": "От первого шага до результата: подготовка к путешествию вдвоём",
+      "thumbnail_caption": "Подготовка к путешествию вдвоём",
+      "required_visual_evidence": "Достоверные кадры груза и экипировки одной пары",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-055",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Первая мойка после грязевой трассы",
+      "hook_draft": "Эта поездка запомнилась вот чем: первая мойка после грязевой трассы",
+      "thumbnail_caption": "Первая мойка после грязевой трассы",
+      "required_visual_evidence": "Один байк до и после мойки, подтверждённая непрерывность",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-056",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Поиск подходящих шин к сезону",
+      "hook_draft": "Смотри, как развивается эта история: поиск подходящих шин к сезону",
+      "thumbnail_caption": "Поиск подходящих шин к сезону",
+      "required_visual_evidence": "Один реальный выбор с консультацией специалиста",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-057",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Сборы на первый мотослёт",
+      "hook_draft": "Вот что произошло на самом деле: сборы на первый мотослёт",
+      "thumbnail_caption": "Сборы на первый мотослёт",
+      "required_visual_evidence": "Подготовка и выезд одного участника",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-058",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Велосипедист и мотоциклист на одном маршруте",
+      "hook_draft": "Началось всё с этого: велосипедист и мотоциклист на одном маршруте",
+      "thumbnail_caption": "Велосипедист и мотоциклист на одном…",
+      "required_visual_evidence": "Оригинальное сравнение маршрутов без имитации встречи",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-059",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "Что изменилось после замены подвески",
+      "hook_draft": "От первого шага до результата: что изменилось после замены подвески",
+      "thumbnail_caption": "Что изменилось после замены подвески",
+      "required_visual_evidence": "Подтверждённое сравнение одного байка с сервисными данными",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-060",
+      "niche": "motorcycle",
+      "category": "stories",
+      "title": "На чём ездит инструктор",
+      "hook_draft": "Эта поездка запомнилась вот чем: на чём ездит инструктор",
+      "thumbnail_caption": "На чём ездит инструктор",
+      "required_visual_evidence": "Интервью и съёмка настоящего инструкторского мотоцикла",
+      "format": "shorts",
+      "estimated_seconds": 25,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-061",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Тест видимости двух видов экипировки",
+      "hook_draft": "Сравним в одинаковых условиях: тест видимости двух видов экипировки",
+      "thumbnail_caption": "Тест видимости двух видов экипировки",
+      "required_visual_evidence": "Сравнение на стоянке при фиксированном освещении",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-062",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Сравнение двух шинных рисунков",
+      "hook_draft": "Что покажет реальный тест: сравнение двух шинных рисунков",
+      "thumbnail_caption": "Сравнение двух шинных рисунков",
+      "required_visual_evidence": "Настоящие покрышки и маркировки, без выдуманных сцепных коэффициентов",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-063",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Тест яркости двух фонарей",
+      "hook_draft": "Измерим, а не будем гадать: тест яркости двух фонарей",
+      "thumbnail_caption": "Тест яркости двух фонарей",
+      "required_visual_evidence": "Реальные измерения одинаковым прибором",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-064",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Проверка влагозащиты сумки",
+      "hook_draft": "Посмотри на разницу: проверка влагозащиты сумки",
+      "thumbnail_caption": "Проверка влагозащиты сумки",
+      "required_visual_evidence": "Одна реальная сумка, контролируемое поливание и осмотр",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-065",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Сравнение времени подготовки к поездке",
+      "hook_draft": "Вот как проверить результат: сравнение времени подготовки к поездке",
+      "thumbnail_caption": "Сравнение времени подготовки к поездке",
+      "required_visual_evidence": "Измерения секундомером одного и того же райдера",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-066",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Два способа хранения шлема",
+      "hook_draft": "Сравним в одинаковых условиях: два способа хранения шлема",
+      "thumbnail_caption": "Два способа хранения шлема",
+      "required_visual_evidence": "Настоящая демонстрация на подставках и инструкции производителя",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-067",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Сравнение света с чистым и грязным визором",
+      "hook_draft": "Что покажет реальный тест: сравнение света с чистым и грязным визором",
+      "thumbnail_caption": "Сравнение света с чистым и грязным…",
+      "required_visual_evidence": "Контролируемая съёмка через один визор",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-068",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Шум разных цепных смазок",
+      "hook_draft": "Измерим, а не будем гадать: шум разных цепных смазок",
+      "thumbnail_caption": "Шум разных цепных смазок",
+      "required_visual_evidence": "Только оригинальная запись и корректные сравнимые условия",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-069",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Наблюдение давления утром и после поездки",
+      "hook_draft": "Посмотри на разницу: наблюдение давления утром и после поездки",
+      "thumbnail_caption": "Наблюдение давления утром и после п…",
+      "required_visual_evidence": "Манометр на одной шине с зафиксированной температурой",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-070",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Один маршрут с двумя типами камеры",
+      "hook_draft": "Вот как проверить результат: один маршрут с двумя типами камеры",
+      "thumbnail_caption": "Один маршрут с двумя типами камеры",
+      "required_visual_evidence": "Синхронная съёмка одной трассы и честные настройки камер",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-071",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Сравнение кофров по объёму",
+      "hook_draft": "Сравним в одинаковых условиях: сравнение кофров по объёму",
+      "thumbnail_caption": "Сравнение кофров по объёму",
+      "required_visual_evidence": "Настоящие габариты и вместимость без рекламы под видом факта",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-072",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Сравнение посадки на двух байках",
+      "hook_draft": "Что покажет реальный тест: сравнение посадки на двух байках",
+      "thumbnail_caption": "Сравнение посадки на двух байках",
+      "required_visual_evidence": "Стоящие мотоциклы, согласие участников и одинаковая точка камеры",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-073",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Сколько света дают отражатели",
+      "hook_draft": "Измерим, а не будем гадать: сколько света дают отражатели",
+      "thumbnail_caption": "Сколько света дают отражатели",
+      "required_visual_evidence": "Реальная ночная демонстрация на закрытой площадке",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-074",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Тест работы крепления телефона",
+      "hook_draft": "Посмотри на разницу: тест работы крепления телефона",
+      "thumbnail_caption": "Тест работы крепления телефона",
+      "required_visual_evidence": "Стенд или закрытая безопасная площадка, без отвлечения в движении",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-075",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "До и после замены воздушного фильтра",
+      "hook_draft": "Вот как проверить результат: до и после замены воздушного фильтра",
+      "thumbnail_caption": "До и после замены воздушного фильтра",
+      "required_visual_evidence": "Реальный сервис одного байка, без фиктивной прибавки мощности",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-076",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Сравнение чистки цепи двумя щётками",
+      "hook_draft": "Сравним в одинаковых условиях: сравнение чистки цепи двумя щётками",
+      "thumbnail_caption": "Сравнение чистки цепи двумя щётками",
+      "required_visual_evidence": "Контролируемый безопасный сервисный эксперимент",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-077",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Сколько времени занимает осмотр шин",
+      "hook_draft": "Что покажет реальный тест: сколько времени занимает осмотр шин",
+      "thumbnail_caption": "Сколько времени занимает осмотр шин",
+      "required_visual_evidence": "Реальная фиксация шагов и времени",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-078",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Сравнение перчаток по вентиляции",
+      "hook_draft": "Измерим, а не будем гадать: сравнение перчаток по вентиляции",
+      "thumbnail_caption": "Сравнение перчаток по вентиляции",
+      "required_visual_evidence": "Наглядная конструкция материалов, не выдуманный тест безопасности",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-079",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Насколько отличается слышимость двух сигналов",
+      "hook_draft": "Посмотри на разницу: насколько отличается слышимость двух сигналов",
+      "thumbnail_caption": "Насколько отличается слышимость дву…",
+      "required_visual_evidence": "Измерения приборами по правилам на стоянке",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-080",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Проверка крепления багажа",
+      "hook_draft": "Вот как проверить результат: проверка крепления багажа",
+      "thumbnail_caption": "Проверка крепления багажа",
+      "required_visual_evidence": "Статическая безопасная проверка с реальным крепежом",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-081",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Сравнение разных стоп-сигналов",
+      "hook_draft": "Сравним в одинаковых условиях: сравнение разных стоп-сигналов",
+      "thumbnail_caption": "Сравнение разных стоп-сигналов",
+      "required_visual_evidence": "Наглядная съёмка с равным светом на закрытой площадке",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-082",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Тест чистоты после двух видов мойки",
+      "hook_draft": "Что покажет реальный тест: тест чистоты после двух видов мойки",
+      "thumbnail_caption": "Тест чистоты после двух видов мойки",
+      "required_visual_evidence": "Подтверждённое до и после одного участка байка",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-083",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Сравнение проходимости двух шин",
+      "hook_draft": "Измерим, а не будем гадать: сравнение проходимости двух шин",
+      "thumbnail_caption": "Сравнение проходимости двух шин",
+      "required_visual_evidence": "Только обученная команда и разрешённый закрытый полигон",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-084",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Что меняет регулировка зеркал",
+      "hook_draft": "Посмотри на разницу: что меняет регулировка зеркал",
+      "thumbnail_caption": "Что меняет регулировка зеркал",
+      "required_visual_evidence": "Стационарная схема зоны обзора без движения",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-085",
+      "niche": "motorcycle",
+      "category": "experiments",
+      "title": "Сравнение защитных чехлов от дождя",
+      "hook_draft": "Вот как проверить результат: сравнение защитных чехлов от дождя",
+      "thumbnail_caption": "Сравнение защитных чехлов от дождя",
+      "required_visual_evidence": "Безопасный тест водой с контрольной съёмкой",
+      "format": "shorts",
+      "estimated_seconds": 30,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-086",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Прыжок и приземление одним кадром",
+      "hook_draft": "Главное движение — с первого кадра: прыжок и приземление одним кадром",
+      "thumbnail_caption": "Прыжок и приземление одним кадром",
+      "required_visual_evidence": "Лицензированная последовательность прыжка с настоящим безопасным приземлением",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-087",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Разворот на пыльной трассе",
+      "hook_draft": "Это стоит увидеть целиком: разворот на пыльной трассе",
+      "thumbnail_caption": "Разворот на пыльной трассе",
+      "required_visual_evidence": "Настоящая непрерывная съёмка разрешённого спортивного манёвра",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-088",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Старт мотокроссовой гонки",
+      "hook_draft": "Смотри за развязкой: старт мотокроссовой гонки",
+      "thumbnail_caption": "Старт мотокроссовой гонки",
+      "required_visual_evidence": "Достоверный старт соревнования без подмены даты и участников",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-089",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Грязевая трасса до и после заезда",
+      "hook_draft": "Лучший момент без подмены событий: грязевая трасса до и после заезда",
+      "thumbnail_caption": "Грязевая трасса до и после заезда",
+      "required_visual_evidence": "Два реальных состояния того же участка и датированные исходники",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-090",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Мотоцикл выходит из глубокой колеи",
+      "hook_draft": "Один непрерывный эпизод: мотоцикл выходит из глубокой колеи",
+      "thumbnail_caption": "Мотоцикл выходит из глубокой колеи",
+      "required_visual_evidence": "Реальное извлечение и контроль безопасности без фиктивного инцидента",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-091",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Эпичная панорама горной дороги",
+      "hook_draft": "Главное движение — с первого кадра: эпичная панорама горной дороги",
+      "thumbnail_caption": "Эпичная панорама горной дороги",
+      "required_visual_evidence": "Лицензированное непрерывное видео с подтверждённым местом",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-092",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Ночной трек глазами пилота",
+      "hook_draft": "Это стоит увидеть целиком: ночной трек глазами пилота",
+      "thumbnail_caption": "Ночной трек глазами пилота",
+      "required_visual_evidence": "Согласованный POV с одной реально снятой сессии",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-093",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Сложный поворот на мототрассе",
+      "hook_draft": "Смотри за развязкой: сложный поворот на мототрассе",
+      "thumbnail_caption": "Сложный поворот на мототрассе",
+      "required_visual_evidence": "Полная связка входа, апекса и выхода без скрытого склеивания",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-094",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Большая группа на открытии сезона",
+      "hook_draft": "Лучший момент без подмены событий: большая группа на открытии сезона",
+      "thumbnail_caption": "Большая группа на открытии сезона",
+      "required_visual_evidence": "Документально отснятая организованная поездка с разрешением",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-095",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Восстановление редкой классики",
+      "hook_draft": "Один непрерывный эпизод: восстановление редкой классики",
+      "thumbnail_caption": "Восстановление редкой классики",
+      "required_visual_evidence": "Подтверждённые кадры одного байка до и после",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-096",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Финиш дождевой гонки",
+      "hook_draft": "Главное движение — с первого кадра: финиш дождевой гонки",
+      "thumbnail_caption": "Финиш дождевой гонки",
+      "required_visual_evidence": "Достоверные кадры конкретного финиша с подтверждением прав",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-097",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Тренировка на снежной трассе",
+      "hook_draft": "Это стоит увидеть целиком: тренировка на снежной трассе",
+      "thumbnail_caption": "Тренировка на снежной трассе",
+      "required_visual_evidence": "Контролируемые спортивные условия и проверенное разрешение",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "initial_test",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-098",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Сравнение двух трековых стартов",
+      "hook_draft": "Смотри за развязкой: сравнение двух трековых стартов",
+      "thumbnail_caption": "Сравнение двух трековых стартов",
+      "required_visual_evidence": "Два отдельных явно подписанных старта без ложного единого события",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "specific_action_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-099",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Широкий пролёт над мототрассой",
+      "hook_draft": "Лучший момент без подмены событий: широкий пролёт над мототрассой",
+      "thumbnail_caption": "Широкий пролёт над мототрассой",
+      "required_visual_evidence": "Лицензированный дрон-кадр соблюдающий местные ограничения",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "question_hook",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    },
+    {
+      "idea_id": "GUSTAVA-100",
+      "niche": "motorcycle",
+      "category": "spectacle",
+      "title": "Соревнование по мототриалу",
+      "hook_draft": "Один непрерывный эпизод: соревнование по мототриалу",
+      "thumbnail_caption": "Соревнование по мототриалу",
+      "required_visual_evidence": "Реальная последовательность прохождения препятствий",
+      "format": "shorts",
+      "estimated_seconds": 20,
+      "editorial_priority_tier": "reserve",
+      "evidence_status": "IDEA_ONLY_NO_FOOTAGE_RIGHTS",
+      "growth_experiment": {
+        "hypothesis": "visual_contrast",
+        "primary_metric": "engaged_views_at_same_age",
+        "guardrail": "originality_and_visual_story_proof"
+      },
+      "status": "research_only_not_scheduled"
+    }
+  ]
+}
