@@ -35,6 +35,7 @@ REQUIRED_REF = "refs/heads/main"
 ALLOWED_WORKFLOWS = (
     "GUSTAVA009/moto-shorts-cloud/.github/workflows/daily-preview.yml@refs/heads/main",
     "GUSTAVA009/moto-shorts-cloud/.github/workflows/render-new-short.yml@refs/heads/main",
+    "GUSTAVA009/moto-shorts-cloud/.github/workflows/voice-live-smoke.yml@refs/heads/main",
 )
 TOKEN_RE = re.compile(r"gvk_[A-Za-z0-9_-]{40,64}\Z")
 REQ_RE = re.compile(r"[A-Za-z0-9_.:-]{8,96}\Z")
