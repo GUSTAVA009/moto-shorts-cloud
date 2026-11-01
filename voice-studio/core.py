@@ -5,6 +5,7 @@ the database stores only SHA-256 hashes. There is no Cartesia dependency,
 external TTS quota, remote telemetry, or authorization bypass.
 """
 from __future__ import annotations
+from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
 import hmac
@@ -84,12 +85,18 @@ class Ledger:
                 ON requests (key_id, created_at);
             """)
 
+    @contextmanager
     def connection(self):
         db = sqlite3.connect(self.path, timeout=30, isolation_level=None)
-        db.row_factory = sqlite3.Row
-        db.execute("PRAGMA busy_timeout=30000")
-        db.execute("PRAGMA journal_mode=WAL")
-        return db
+        try:
+            db.row_factory = sqlite3.Row
+            db.execute("PRAGMA busy_timeout=30000")
+            db.execute("PRAGMA journal_mode=WAL")
+            yield db
+        finally:
+            if db.in_transaction:
+                db.rollback()
+            db.close()
 
     def create_key(self, label: str, max_chars_month: int = 0,
                    max_rpm: int = 12):
