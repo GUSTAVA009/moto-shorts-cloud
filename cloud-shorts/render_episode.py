@@ -405,7 +405,8 @@ def caption_schedule(ep, total, planned_scenes=None):
     """
     start = ("caption_start", 0.05, min(2.45, total - 4.0))
     finish = ("caption_end", total - 2.75, total - 0.12)
-    if ep.get("creative_treatment") != "myth_vs_reality_irony":
+    if (ep.get("creative_treatment") != "myth_vs_reality_irony"
+            and ep.get("align_middle_caption_to_second_scene") is not True):
         spans = [start]
         if not ep.get("story_steps"):
             spans.append(("caption_middle", min(3.9, total - 4.0),
@@ -413,7 +414,9 @@ def caption_schedule(ep, total, planned_scenes=None):
         return spans + [finish]
     if (not isinstance(planned_scenes, list) or len(planned_scenes) != 2
             or any(not isinstance(item, dict) for item in planned_scenes)):
-        raise RuntimeError("MYTH_CAPTION_REQUIRES_VERIFIED_TWO_SHOT_PLAN")
+        if ep.get("creative_treatment") == "myth_vs_reality_irony":
+            raise RuntimeError("MYTH_CAPTION_REQUIRES_VERIFIED_TWO_SHOT_PLAN")
+        raise RuntimeError("SCENE_CAPTION_REQUIRES_VERIFIED_TWO_SHOT_PLAN")
     try:
         cut = float(planned_scenes[0]["seconds"]) - float(
             ep.get("opening_trim_seconds", 0.0))
@@ -434,7 +437,8 @@ def draw_captions(ep, work, total):
     if not FONT.is_file():
         raise RuntimeError("Expected Cyrillic font not present")
     plan = None
-    if ep.get("creative_treatment") == "myth_vs_reality_irony":
+    if (ep.get("creative_treatment") == "myth_vs_reality_irony"
+            or ep.get("align_middle_caption_to_second_scene") is True):
         qa_path = work / "visual_qa.json"
         if not qa_path.is_file():
             raise RuntimeError("MYTH_CAPTION_MISSING_REAL_VISUAL_QA")
