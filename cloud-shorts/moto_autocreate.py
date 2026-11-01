@@ -332,12 +332,16 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
         **{k: prose[k] for k in ("title", "narration", "description",
             "caption_start", "caption_middle", "caption_end")},
         "max_duration_seconds": 34, "opening_trim_seconds": 0.1,
-        "music_style": ("race-breakbeat" if theme[0] in ("motocross", "racing")
+        "music_style": ("race-breakbeat"
+                        if prose.get("_creative_treatment") == "myth_vs_reality_irony"
+                        else "race-breakbeat" if theme[0] in ("motocross", "racing")
                         else "garage-groove" if theme[0] in ("repair", "vintage")
                         else "night-drive" if theme[0] in ("city", "sunset")
                         else "action"),
         "music_bpm": 106 + (seed_index * 11) % 37,
         "editorial_format": prose.get("_editorial_format", "мотонаблюдение"),
+        **({"creative_treatment": prose["_creative_treatment"]}
+           if prose.get("_creative_treatment") else {}),
         "footage": sources, "shots": cuts,
         "visual_director_version": 3,
         "editorial": {
@@ -407,6 +411,13 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
         # Public, author-and-license checked Pexels pages survive absent API keys.
         if not select_pair(found, used):
             found.extend(curated_pexels_results(theme, used))
+        # A touring-versus-race contrast needs both real settings. Combine
+        # local vetted footage pools at zero additional API cost, still
+        # excluding all previously consumed source IDs and reused filmmakers.
+        if theme[0] in ("roadtrip", "racing"):
+            partner = next(t for t in THEMES if t[0] ==
+                           ("racing" if theme[0] == "roadtrip" else "roadtrip"))
+            found.extend(curated_pexels_results(partner, used))
         if (not select_pair(found, used) and commons_calls == 0
                 and theme[0] == commons_target):
             commons_calls += 1
