@@ -16,6 +16,8 @@ MIN_BUFFER_SCHEDULED = 7  # alert if actual scheduled posts fall below this
 REFILL_AT_OR_BELOW_SCHEDULED = 9  # owner contract: request next 10 at 9 remaining
 
 REVIEWED_MP4_RESERVE_TARGET = 10
+LOW_QUEUE_VOICE_REFILL_BELOW = 2  # 0-1 scheduled posts, never at 2
+VOICE_REFILL_COOLDOWN_MINUTES = 30  # protect Actions and voice API from loops
 
 
 def count_unqueued_reviewed_mp4(catalog, receipts, artifacts, ledger_paths):
@@ -138,10 +140,26 @@ def should_replenish(state, events, scheduled_count, now,
     last = iso(state.get("last_replenish_request_at"))
     return last is None or now - last >= timedelta(minutes=MIN_REFILL_COOLDOWN_MINUTES)
 
+def should_request_voice_refill(state, scheduled_count, now):
+    """Emergency voice+video production request, NOT proof of a ready WAV.
+
+    The normal 9-post replenishment and 10 QA-MP4 reserve stay intact.
+    An independent cooldown prevents a 0-post queue from dispatching
+    indefinitely after a failed provider run or workflow_run event.
+    """
+    if scheduled_count < 0:
+        raise ValueError("NEGATIVE_BUFFER_SCHEDULED_COUNT")
+    if scheduled_count >= LOW_QUEUE_VOICE_REFILL_BELOW:
+        return False
+    last = iso(state.get("last_voice_refill_request_at"))
+    return last is None or now - last >= timedelta(minutes=VOICE_REFILL_COOLDOWN_MINUTES)
+
+
 def needs_persist(before, after, events, now):
     if before is None or events:
         return True
-    for key in ("verified_sent_count", "next_cursor", "last_replenish_request_at"):
+    for key in ("verified_sent_count", "next_cursor", "last_replenish_request_at",
+                "last_voice_refill_request_at"):
         if before.get(key) != after.get(key):
             return True
     last = iso(before.get("last_polled_at"))
@@ -167,27 +185,35 @@ def main():
     reserve_count = live_unqueued_reviewed_mp4(catalog)
     refill = should_replenish(state, events, len(scheduled), now,
                               reviewed_mp4_reserve_count=reserve_count)
+    urgent_voice_refill = should_request_voice_refill(state, len(scheduled), now)
     if refill:
         state["last_replenish_request_at"] = now.isoformat()
+    if urgent_voice_refill:
+        state["last_voice_refill_request_at"] = now.isoformat()
     if needs_persist(before, state, events, now):
         ledger.store(STATE_PATH, state,
                      "Rolling ten verified sent checkpoint: "+(", ".join(events) or "poll"),
                      old_sha=entry["sha"] if entry else None)
     summary = {"events":events, "dispatch_replenishment":refill,
+               "low_queue_voice_and_render_requested":urgent_voice_refill,
+               "low_queue_voice_trigger_below":LOW_QUEUE_VOICE_REFILL_BELOW,
                "unqueued_reviewed_mp4_reserve":reserve_count,
                "unqueued_reviewed_mp4_target":REVIEWED_MP4_RESERVE_TARGET,
                "buffer_delivery_errors":len(errors), "buffer_still_sending":len(sending),
                **progress(state, len(scheduled))}
     print("ROLLING_TEN_STATUS",json.dumps(summary,ensure_ascii=False),flush=True)
-    if refill:
+    if refill or urgent_voice_refill:
         github("POST","actions/workflows/autofill-motorcycle.yml/dispatches",{"ref":"main"})
         print("ROLLING_TEN_AUTOFILL_DISPATCHED",flush=True)
-    if refill and len(scheduled) < MIN_BUFFER_SCHEDULED:
+    if (urgent_voice_refill or
+            (refill and len(scheduled) < MIN_BUFFER_SCHEDULED)):
         # When stock is queued in episodes.json but Buffer is running empty,
         # a new supplier run alone can be a no-op. Explicitly nudge the
         # guarded renderer and sender; both implement receipt deduplication.
         github("POST","actions/workflows/daily-preview.yml/dispatches",{"ref":"main"})
         print("ROLLING_TEN_URGENT_PREVIEW_DISPATCHED",flush=True)
+        if urgent_voice_refill:
+            print("LOW_QUEUE_UNATTENDED_VOICE_RENDER_REQUESTED_NOT_COMPLETED",flush=True)
     if "promote_next_ten" in events or (refill and len(scheduled) < MIN_BUFFER_SCHEDULED):
         github("POST","actions/workflows/buffer-backlog.yml/dispatches",{"ref":"main"})
         print("ROLLING_TEN_VERIFIED_PUBLISHER_DISPATCHED",flush=True)
