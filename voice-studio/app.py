@@ -141,7 +141,8 @@ async def qwen_audio(route: str, payload: dict):
     async with GPU_LOCK:
         try:
             async with httpx.AsyncClient(timeout=timeout,
-                                          follow_redirects=False) as client:
+                                          follow_redirects=False,
+                                          trust_env=False) as client:
                 reply = await client.post(UPSTREAM + route,
                                           json=payload, headers=headers)
         except (httpx.TimeoutException, httpx.RequestError):
