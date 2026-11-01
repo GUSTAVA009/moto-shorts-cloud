@@ -7545,6 +7545,86 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1",
       "story_reserve_id": "r2-racing-0029"
+    },
+    {
+      "id": "moto-city-2ed049c15ee1",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_original_qwen3_v1",
+      "selfhosted_voice_id": "gustava-original-v1",
+      "title": "Городская поездка или снег: какой момент интереснее? #shorts",
+      "narration": "Мотоцикл в городском потоке и на снегу: это два разных испытания. Сначала байкер едет по городской улице. На другом, независимом видео мотоциклист едет по заснеженной дороге. Это разные люди и съёмки, не один заезд. Какой момент сильнее: городская поездка или снег?",
+      "description": "Две разные мотоистории: городская поездка и снег. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_middle": "СНЕГ",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "night-drive",
+      "music_bpm": 140,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "topics": [
+            "city"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/36306512/",
+          "source_page": "https://www.pexels.com/video/busy-urban-traffic-with-motorcyclists-at-intersection-36306512/",
+          "author": "Nothing Ahead",
+          "license": "Pexels License",
+          "duration": 19,
+          "source_title": "busy urban traffic with motorcyclists at intersection"
+        },
+        {
+          "topics": [
+            "snow"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/6435404/",
+          "source_page": "https://www.pexels.com/video/person-riding-a-motorcycle-on-the-snow-6435404/",
+          "author": "Andrew Kota",
+          "license": "Pexels License",
+          "source_title": "person riding a motorcycle on the snow",
+          "duration": 13
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.5
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.5
+        }
+      ],
+      "visual_director_version": 3,
+      "editorial": {
+        "environment": "urban-streets-2ed04",
+        "bike": "urban-motorbike",
+        "people": "city-riders-2ed04",
+        "story": "urban-riding-2ed04",
+        "visual": "three-clips-2ed04"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1",
+      "story_reserve_id": "r2-city-0021"
     }
   ]
 }
