@@ -4007,7 +4007,7 @@
       "voice_revision_note": "Replace failed retired V6 voice with the exact authorized AI Doc Maker Create Audio Voice deep recording; independently validate source SHA, Russian ASR, final mix and motion. Approved original Deep source SHA pinned and accepted at >=97% ASR; stop repeating already QA-passed preview after unrelated code updates.",
       "visual_director_version": 3,
       "editorial_format": "scene-first honest night-rain question, separate illustrative sources",
-      "editorial_review_note": "PREVIEW ONLY: inspect actual scene content and frame timing; no public release until visual signoff",
+      "editorial_review_note": "PRIVATE. Direct audit of 18.5s MP4 from GitHub Actions 41044921730, SHA256 fe0bd411fbe2abeb3a59660eb06179349675f78635921d482d6eb5f49c4a38e3. The first 0.9/3.5s frames show wet night asphalt, but the later 6.5/9.5/13/17.5s independent urban traffic shots do not visibly establish the narration's continuing rain/wet road story and several are very dark. Source and mixed ASR 97.6% passed, visual storytelling clarity did not. Do not count or publish until stronger source-matched footage is reviewed.",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -4016,7 +4016,9 @@
         "source_audio_sha256": "9656204cb64bdd7814f791398d00d19a06db73ef6cc65899096df5749404a5c4",
         "context_id": "5734547327a8488093a263c90dd438f0",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_review_failed": true,
+      "editorial_review_status": "rejected_after_actual_frame_review_dark_weather_mismatch"
     },
     {
       "id": "moto-helmet-f2452c64bf21",
@@ -6089,11 +6091,11 @@
       },
       "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
       "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
-      "editorial_review_note": "PRIVATE PREVIEW. New 20-pack: never auto-publish without individual real MP4 frame review and proof-pinned Russian ASR.",
+      "editorial_review_note": "PRIVATE. Direct audit of exact 11.466s MP4 from GitHub Actions 41232559316, SHA256 7fc84005a7f2114cdeaaab2824aaa556b6f350bc7337212623395e11a3a9a41d. Frames 0.7/2.5/4.5s show motorcycle cornering, but at 6.2/8.0/10.3s a large stationary helmet sits in the foreground while the woman behind it is visibly without a helmet. Spoken claim 'спортсменка в шлеме готовится к трассе' is not supported. Old rendered title overlay has visible square/replacement glyphs at 0.7/4.5s. Both ASR reports pass, but real visual review FAILS. Replace actual footage and render with the current caption code; never publish this artifact.",
       "production_batch": "gustava-20-20261030",
       "mix_category": "experiments",
       "priority_rank": 10,
-      "editorial_review_status": "awaiting_frame_review",
+      "editorial_review_status": "rejected_after_actual_frame_review_unhelmeted_actor_and_legacy_caption_glyphs",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -6102,7 +6104,8 @@
         "source_audio_sha256": "8db3f49d70e7aadeca815c8aa119dbfa294e201c2748a8bafdf2e2f939a2fd8d",
         "context_id": "d1542eebf5d541bf8d6a07bc1458c812",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_review_failed": true
     },
     {
       "id": "gustava-20-p02-20261030",
@@ -6412,11 +6415,11 @@
       },
       "source_selection": "Distinct Pexels source IDs checked against original catalog; actual visual and duration checked by runtime FFmpeg, manual video QA required before release.",
       "generation_provenance": "Independent scenes, separately licensed; source-approved voice preset only. No claim of one historical event.",
-      "editorial_review_note": "Private only. Exact original DEEP provider recording needs independent Russian ASR and motion/semantic visual checks. Helmet fastening/gear must actually match the narrated on-screen action before any publication. No blind owner approval or reuse.",
+      "editorial_review_note": "PRIVATE. Direct audit of exact 13.3s MP4 from GitHub Actions 41262916443, SHA256 cd5536b3f4bee1b026d79434e7036a7549fec63408a9966fe8e11aae39a203c9. Frames 0.9/2.7/4.9s show people walking out of an 'Almacen y Ferreteria' storefront beside parked bikes, not verifiable motorcycle service activity. Frames 6.8/9.5/12.3s show a mostly stationary dim workshop overview with no clearly verifiable hands-on repair despite the narration 'мастера чинят мотоцикл'. Genuine provider DEEP voice passed source/mixed Russian ASR 100%, but editorial visual QA FAILS. Keep exact approved Deep asset; select genuinely relevant nonreused licensed moving footage and re-review before any release.",
       "production_batch": "gustava-20-20261030",
       "mix_category": "stories",
       "priority_rank": 13,
-      "editorial_review_status": "awaiting_frame_review",
+      "editorial_review_status": "rejected_after_actual_frame_review_unproven_service_and_static_repair",
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
@@ -6425,7 +6428,8 @@
         "source_audio_sha256": "d9e08538f0ddb7be7352e0f327d1c2672d173fd45ca56474cadd7c59abb59f99",
         "context_id": "84b632743f6d4e95a72f091cdbe9fa80",
         "licence_mode": "public_provider_attribution"
-      }
+      },
+      "visual_review_failed": true
     },
     {
       "id": "gustava-20-e04-20261030",
