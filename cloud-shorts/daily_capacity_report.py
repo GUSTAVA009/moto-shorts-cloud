@@ -78,9 +78,21 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
                     for src in ep.get("footage", []) if "source_page" in src}
     unused_public_clips = sum(src["source_page"] not in used_footage
                               for src in pool["sources"])
+    # Source_story requires TWO distinct fresh, verifiably matching actions
+    # by two different filmmakers per original episode. At a twelve-day pace,
+    # 24 novel approved clips/day and 168/week are needed. These are planning
+    # estimates, NOT a claim that the public pool contains usable actions.
+    minimum_distinct_new_clips_daily = TARGET * 2
+    weekly_clip_floor = minimum_distinct_new_clips_daily * 7
+    verified_clip_days = unused_public_clips // minimum_distinct_new_clips_daily
     # Script prompts can be composed locally; licensed moving footage cannot.
-    if not pexels and unused_public_clips < 2 and not waiting:
-        deficits.append("LICENSED_VIDEO_SUPPLY_LOW: public reserve exhausted; Commons may be limited")
+    if not pexels and unused_public_clips < weekly_clip_floor:
+        deficits.append(
+            "LICENSED_ACTION_MATCHED_FOOTAGE_BELOW_330_MONTH_PACE: "
+            + str(unused_public_clips) + " unused public source IDs vs "
+            + str(weekly_clip_floor) + " new clips for 7-day buffer; "
+            "filmmaker identity, action and license still need live verification"
+        )
     reserve_left = reserve_remaining(e.get("story_reserve_id") for e in catalog["episodes"])
     if reserve_left < 10000:
         deficits.append("EDITORIAL_STORY_RESERVE_LOW: expand template axes")
@@ -133,6 +145,9 @@ def summarize(catalog, saved_ids, dispatched_ids, scheduled, sent, now, model=Fa
         "script_reserve_remaining": reserve_left,
         "script_reserve_type": "on_demand_narrative_variants_not_ready_mp4",
         "unconsumed_curated_pexels_clips": unused_public_clips,
+        "minimum_new_distinct_action_clips_per_day": minimum_distinct_new_clips_daily,
+        "minimum_seven_day_source_buffer_clips": weekly_clip_floor,
+        "public_footage_source_id_coverage_days_upper_bound": verified_clip_days,
         "pexels_search_key_available": pexels,
         "alternate_cc0_library": "limited, license verified live",
         "posting_windows_moscow": ["%02d:%02d" % x for x in LOCAL_TIMES],
@@ -193,6 +208,9 @@ def main():
             f"| Ключ модели для новых сценариев | {'YES' if model else 'NO'} |",
             f"| Ключ Pexels | {'YES' if pexels else 'NO (public reserve)'} |",
             f"| Неиспользованных проверенных публичных видео | {state['unconsumed_curated_pexels_clips']} |",
+            f"| Минимально свежих сюжетных клипов / день | {state['minimum_new_distinct_action_clips_per_day']} |",
+            f"| Запас сюжетных клипов на 7 дней | {state['minimum_seven_day_source_buffer_clips']} |",
+            f"| Верхняя оценка дней запаса по ID | {state['public_footage_source_id_coverage_days_upper_bound']} |",
             "| Генерация сценариев без API-ключа | YES (offline editorial reserve) |",
             f"| Адресуемых вариантов сценариев | {state['script_reserve_capacity']:,} |",
             f"| Неиспользованных вариантов сценариев | {state['script_reserve_remaining']:,} |",
