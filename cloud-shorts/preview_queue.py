@@ -22,6 +22,7 @@ BRANCH = "render-ledger"
 EPISODES = Path(__file__).with_name("episodes.json")
 HISTORY_PATH = "history/used_footage.json"
 
+from apply_exact_qa_episode_repair import change as apply_verified_episode_revision
 from editorial_guard import source_id, validate_catalog
 from editorial_novelty import is_repeated_visual_formula
 from visual_director import verify_story_subject
@@ -501,6 +502,7 @@ def eligible_abandoned_bootstrap_retry(episode, receipt, new_fingerprint, bootst
 
 def choose(catalog, output):
     data = json.loads(Path(catalog).read_text(encoding="utf8"))
+    apply_verified_episode_revision(data)
     validate_catalog(data)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
