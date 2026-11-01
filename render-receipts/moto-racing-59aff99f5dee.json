@@ -1,0 +1,11 @@
+{
+  "id": "moto-racing-59aff99f5dee",
+  "state": "reserved",
+  "run_id": "41329265407",
+  "attempt_count": 1,
+  "preview_fingerprint": "5e000efff634e23654c6dd1dc743cab70958b97fdef816b1b0f6c0ec02938c3a",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-original-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
