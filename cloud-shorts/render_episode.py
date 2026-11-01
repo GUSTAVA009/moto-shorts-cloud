@@ -30,6 +30,8 @@ from deep_voice import (render as make_real_deep_voice,
 from kokoro_voice import render as make_kokoro_voice, MODEL_CARD as KOKORO_MODEL_CARD
 from cartesia_voice import (render as make_cartesia_voice,
                             VOICE_ENGINE as CARTESIA_ENGINE)
+from selfhosted_voice import (render as make_selfhosted_voice,
+                              VOICE_ENGINE as SELFHOSTED_ENGINE)
 from editorial_guard import validate_catalog
 from moto_assets import validated_media, verified_commons
 from channel_focus import assert_motorcycle_episode
@@ -514,6 +516,9 @@ def render(ep, output_dir):
     if engine == DEEP_ENGINE:
         voice_duration = make_real_deep_voice(ep, wav)
         engine_label = "AI Doc Maker Create Audio Voice / deep (original approved preset)"
+    elif engine == SELFHOSTED_ENGINE:
+        voice_duration = make_selfhosted_voice(ep, wav)
+        engine_label = "GUSTAVA Original / private Qwen3-TTS API (SHA-pinned)"
     elif engine == CARTESIA_ENGINE:
         # A private, spending-capped, UUID-verified official API source.
         # No paid re-call during music-only QA changes; source WAV cached
@@ -662,6 +667,7 @@ def render(ep, output_dir):
         "license_sources": ep["footage"],
         "editorial_references": ep.get("editorial_references", []),
         "voice_model_card": ("https://www.aidocmaker.com/" if engine == DEEP_ENGINE
+            else "https://github.com/QwenLM/Qwen3-TTS" if engine == SELFHOSTED_ENGINE
             else "https://docs.cartesia.ai/build-with-cartesia/tts-models/latest"
                  if engine == CARTESIA_ENGINE
             else KOKORO_MODEL_CARD if engine == "kokoro_ru_dima"
