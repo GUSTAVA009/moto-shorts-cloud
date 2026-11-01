@@ -8,6 +8,8 @@ services:
       - qwen
     environment:
       VOICE_STUDIO_ADMIN_TOKEN: ${VOICE_STUDIO_ADMIN_TOKEN:?Set owner admin token in local .env}
+      VOICE_STUDIO_SESSION_SECRET: ${VOICE_STUDIO_SESSION_SECRET:?Set independent 40-byte browser session secret}
+      VOICE_STUDIO_LOCAL_HTTP: ${VOICE_STUDIO_LOCAL_HTTP:-0}
       UPSTREAM_API_KEY: ${UPSTREAM_API_KEY:?Set independent internal key in local .env}
       QWEN_BACKEND_URL: http://qwen:8000
       VOICE_STUDIO_DATA: /data
