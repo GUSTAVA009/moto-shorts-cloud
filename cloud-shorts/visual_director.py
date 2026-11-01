@@ -94,6 +94,11 @@ SCENE_ACTION_SLUGS = {
     "motorcycle_victory_wheelie": re.compile(r"dynamic-motorcycle-racing-victory-celebration", re.I),
     "cone_slalom": re.compile(r"bikers-driving-around-traffic-cones", re.I),
     "motorbike_obstacle_training": re.compile(r"motorbikers-training-on-outdoor-course", re.I),
+    # Exact Pexels provider-page actions; neither editable topics nor
+    # model-authored descriptions can satisfy the chapter proof.
+    "motorcycle_drag_race": re.compile(r"high-speed-motorcycle-drag-race-action", re.I),
+    "motorcycle_muddy_offroad": re.compile(
+        r"off-road-motorcycle-adventure-in-muddy-terrain", re.I),
 }
 
 
