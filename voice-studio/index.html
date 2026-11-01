@@ -14,6 +14,7 @@
   </div>
   <nav aria-label="Меню">
     <a class="nav-link active" href="#studio"><span class="nav-ico">◈</span> Студия</a>
+    <a class="nav-link" href="#channels"><span class="nav-ico">▦</span> Каналы</a>
     <a class="nav-link" href="#voice"><span class="nav-ico">◉</span> Настройка голоса</a>
     <a class="nav-link" href="#keys"><span class="nav-ico">⌘</span> Ключи завода</a>
   </nav>
@@ -24,15 +25,28 @@
 </aside>
 <main class="workspace">
   <header class="top">
-    <div><p class="eyebrow">VOICE CONTROL CENTER / RUSSIAN</p><h1>Мастерская голоса</h1><p class="top-sub">Фирменное звучание Хапыча. Своя нейросеть. Свой API.</p></div>
+    <div><p class="eyebrow">VOICE CONTROL CENTER / CLOUD</p><h1>Мастерская голоса</h1><p class="top-sub">Несколько YouTube-каналов. Отдельный голос и ключ на каждый.</p></div>
     <div class="system-status"><span class="pulse"></span><span id="service-status">Проверяем сервер</span></div>
   </header>
+  <section class="channel-strip" id="channels">
+    <div class="channel-control"><label for="channel-select">Активный YouTube-канал</label>
+      <select id="channel-select" aria-label="Выбрать канал"><option value="gustava">GUSTAVA Enduro</option></select></div>
+    <details class="create-channel"><summary>+ Добавить канал</summary>
+      <div class="channel-create-grid">
+        <label>Короткий ID <input id="channel-slug" placeholder="motobratr" maxlength="40" pattern="[a-z][a-z0-9-]{2,39}"></label>
+        <label>Имя канала <input id="channel-name" placeholder="Второй YouTube-канал" maxlength="72"></label>
+        <label>YouTube Channel ID (необязательно) <input id="youtube-channel-id" placeholder="UC…" maxlength="24"></label>
+      </div>
+      <button type="button" class="secondary-button" id="create-channel">Добавить отдельный голос и пространство ключей</button>
+      <p id="channel-result" class="feedback" role="status" aria-live="polite"></p>
+    </details>
+  </section>
   <div class="workspace-grid">
     <section class="primary-panel panel" id="studio" aria-labelledby="speech-title">
       <div class="section-top"><div><p class="eyebrow">01 · СИНТЕЗ</p><h2 id="speech-title">Новая озвучка</h2></div><div class="chip">RU <span>•</span> 24KHz WAV</div></div>
       <div class="speaker-line">
         <div class="speaker-mark" aria-hidden="true">◉</div>
-        <div><strong>Хапыч · Original 01</strong><small>Оригинальный русский баритон</small></div>
+        <div><strong id="speaker-name">Хапыч · Original 01</strong><small id="speaker-channel">Оригинальный русский баритон</small></div>
         <span id="original-status" class="speaker-state">Не создан</span>
       </div>
       <label for="transcript">Текст сценария</label>
@@ -73,7 +87,7 @@
       </section>
       <section class="panel" id="keys" aria-labelledby="key-title">
         <div class="section-top"><div><p class="eyebrow">03 · АВТОМАТИЗАЦИЯ</p><h2 id="key-title">Доступ завода</h2></div><span class="private-chip">PRIVATE</span></div>
-        <p class="description">Только владелец выдаёт ключи. Робот получает доступ лишь к генерации WAV, без панели администратора.</p>
+        <p class="description">Каждый ключ закреплён за выбранным YouTube-каналом и не может запрашивать голос другого канала. Робот получает только WAV.</p>
         <label for="key-label">Название клиента</label><input id="key-label" value="YouTube Shorts Factory" maxlength="72">
         <div class="mini-grid"><div><label for="key-limit">Символов / мес.</label><input type="number" id="key-limit" min="0" max="100000000" value="0"><small>0 — без квоты</small></div><div><label for="key-rpm">Запросов / мин.</label><input type="number" id="key-rpm" min="1" max="120" value="12"></div></div>
         <button type="button" id="issue-key" class="secondary-button">+ Выпустить API-ключ</button>
