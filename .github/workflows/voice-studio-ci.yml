@@ -31,12 +31,14 @@ jobs:
         env:
           VOICE_STUDIO_DATA: /tmp/gustava-voice-studio-test
           VOICE_STUDIO_ADMIN_TOKEN: admin-test-only-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+          VOICE_STUDIO_SESSION_SECRET: session-test-only-zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
           UPSTREAM_API_KEY: internal-test-only-yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
           QWEN_BACKEND_URL: http://qwen:8000
         run: python -m unittest discover -s voice-studio/tests -p 'test_*.py' -v
       - name: Validate compose syntax without exposing real secrets or downloading GPU weights
         env:
           VOICE_STUDIO_ADMIN_TOKEN: non-production-dummy-admin-key-never-usable
+          VOICE_STUDIO_SESSION_SECRET: non-production-dummy-session-key-never-usable
           UPSTREAM_API_KEY: non-production-dummy-upstream-key-never-usable
         run: docker compose -f voice-studio/compose.yaml config --quiet
       - name: Check source excludes private voice, credentials and Cartesia speaker WAV
