@@ -9,12 +9,17 @@
     "timezone": "Europe/Moscow"
   },
   "production": {
-    "target_new_unique_shorts_per_day": 10,
+    "target_new_unique_shorts_per_day": 12,
     "reviewed_mp4_reserve_target": 10,
     "script_reserve_minimum": 100000,
     "never_count_script_as_mp4": true,
     "require_unique_licensed_visuals": true,
-    "allow_private_local_pc_videos": false
+    "allow_private_local_pc_videos": false,
+    "minimum_finished_shorts_per_calendar_month": 330,
+    "minimum_monthly_goal_per_active_factory_channel": true,
+    "monthly_required_deliverable": "unique_licensed_QA_approved_rendered_MP4_not_scenarios",
+    "shortest_month_28_days_baseline": 336,
+    "monthly_backlog_catchup_slots_max_per_day": 16
   },
   "buffer": {
     "provider": "Buffer",
@@ -27,11 +32,14 @@
     "never_retry_uncertain_upload": true
   },
   "publishing": {
-    "max_posts_per_day": 10,
+    "max_posts_per_day": 16,
     "spacing_minutes": 90,
     "allow_only_approved_mp4": true,
     "do_not_mark_success_from_workflow_only": true,
-    "public_release_only_after_individual_visual_review": true
+    "public_release_only_after_individual_visual_review": true,
+    "baseline_posts_per_day": 12,
+    "monthly_minimum_verified_buffer_sent": 330,
+    "verified_youTube_public_URL_separate_from_buffer_sent": true
   },
   "voice": {
     "provider": "aidocmaker.com",
