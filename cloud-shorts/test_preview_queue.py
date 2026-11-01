@@ -102,6 +102,34 @@ class TestPreviewQueue(unittest.TestCase):
         ep["visual_revision_reason"]="unreviewed"
         self.assertFalse(pq.eligible_retry(ep,rec,"retimed-real-removal"))
 
+    def test_sha_pinned_actual_caption_lead_allows_only_private_visual_retime(self):
+        episode={"id":"moto-racing-mud-contrast-20261101",
+                 "auto_publish":False,"visual_revision_requested":True,
+                 "visual_revision_reason":"spoken_scene_caption_mismatch",
+                 "visual_revision_evidence":{
+                     "prior_run_id":"41292865035",
+                     "prior_mp4_sha256":"b5f30e4b3c9fd5d9c453bb45cb5519ce780567f9100f7ce028e7274094522983",
+                     "old_caption_start_seconds":3.9,
+                     "old_second_scene_start_seconds":5.881}}
+        receipt={"id":episode["id"],"state":"preview_ready","attempt_count":1,
+                 "run_id":"41292865035","preview_fingerprint":"old-plan",
+                 "voice_qa_passed":True,"mixed_audio_qa_passed":True}
+        self.assertTrue(pq.eligible_retry(episode,receipt,"revised-chapter"))
+        self.assertFalse(pq.eligible_retry(episode,receipt,"old-plan"))
+        self.assertFalse(pq.eligible_retry(dict(episode,auto_publish=True),
+                                            receipt,"revised-chapter"))
+        bad=dict(episode,visual_revision_evidence=dict(
+            episode["visual_revision_evidence"],old_second_scene_start_seconds=4.05))
+        self.assertFalse(pq.eligible_retry(bad,receipt,"revised-chapter"))
+        bad=dict(episode,visual_revision_evidence=dict(
+            episode["visual_revision_evidence"],prior_run_id="some-other-run"))
+        self.assertFalse(pq.eligible_retry(bad,receipt,"revised-chapter"))
+        bad=dict(episode,visual_revision_evidence=dict(
+            episode["visual_revision_evidence"],prior_mp4_sha256="not-a-real-sha"))
+        self.assertFalse(pq.eligible_retry(bad,receipt,"revised-chapter"))
+        receipt["attempt_count"]=4
+        self.assertFalse(pq.eligible_retry(episode,receipt,"revised-chapter"))
+
     def test_successful_audio_preview_is_never_remade(self):
         ep = {"id": "motorcycle-serial-02"}
         record = {"id": ep["id"], "state": "preview_ready",
