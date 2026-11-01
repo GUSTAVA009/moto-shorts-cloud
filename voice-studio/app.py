@@ -461,9 +461,14 @@ async def create_original(body: OriginalDesign):
         voice_file,voice_proof=voice_paths(body.channel_slug)
         if voice_file.exists() or voice_proof.exists():
             raise HTTPException(409,"ORIGINAL_VOICE_IS_PINNED_DO_NOT_OVERWRITE")
-        if (body.timbre != channel["voice_timbre"]
-                or body.delivery != channel["voice_delivery"]):
-            raise HTTPException(409,"CHANNEL_VOICE_STYLE_MUST_MATCH_REGISTRY")
+        # Before the first original reference exists, the owner may choose
+        # the voice's timbre and delivery. After creation, SHA-pinned proof
+        # makes the channel voice immutable.
+        with LEDGER.connection() as db:
+            db.execute(
+                "UPDATE channels SET voice_timbre=?,voice_delivery=? "
+                "WHERE slug=?",
+                (body.timbre,body.delivery,body.channel_slug))
         instruction=design_instruction(body.timbre,body.delivery)
         generated = await qwen_audio(
             "/api/v1/voice-design/generate",
