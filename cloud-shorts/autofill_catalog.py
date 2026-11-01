@@ -20,6 +20,8 @@ from editorial_guard import validate_catalog, source_id
 from render_episode import validate_episode
 from production_readiness import inventory, production_unavailable
 from editorial_novelty import require_novel_visual_story
+from deep_voice import ready as approved_legacy_deep, VOICE_ENGINE as DEEP_ENGINE
+from selfhosted_voice import VOICE_ENGINE as OWNER_TTS_ENGINE
 
 TARGET_PENDING_EPISODES = 10
 MAX_ADD_PER_RUN = 2
@@ -29,19 +31,27 @@ CATALOG_PATH = "cloud-shorts/episodes.json"
 SEEDS = ROOT / "seed_backlog.json"
 
 
-def candidate(catalog, seed_bank, reserved_ids, target=2):
+def actionable_voice_plan(episode):
+    """Only stage jobs not dependent on an assistant manually recording."""
+    return bool(episode.get("voice_engine") == OWNER_TTS_ENGINE
+                or (episode.get("voice_engine") == DEEP_ENGINE
+                    and approved_legacy_deep(episode)))
+
+
+def candidate(catalog, seed_bank, reserved_ids, target=2, autonomous=False):
     """Pick a rights-cleared episode while the target has not been met."""
     if seed_bank.get("version") != 1:
         raise ValueError("Invalid curated story bank version")
     episodes = catalog["episodes"]
     pending = sum(x.get("auto_preview") is True and x["id"] not in reserved_ids
+                  and (not autonomous or actionable_voice_plan(x))
                   for x in episodes)
     if pending >= target:
         return None
     used = {x["id"] for x in episodes}
     used_media = {source_id(video) for x in episodes for video in x["footage"]}
     for scene in seed_bank["episodes"]:
-        if scene["id"] in used:
+        if scene["id"] in used or (autonomous and not actionable_voice_plan(scene)):
             continue
         validate_episode(scene)
         require_novel_visual_story(scene, episodes)
@@ -77,8 +87,9 @@ def github(method, path, payload=None):
         return json.loads(raw) if raw else {}
 
 
-def pending_originals(catalog, reserved):
+def pending_originals(catalog, reserved, autonomous=False):
     return sum(e.get("auto_preview") is True and e["id"] not in reserved
+               and (not autonomous or actionable_voice_plan(e))
                for e in catalog["episodes"])
 
 
@@ -106,7 +117,7 @@ def main():
     added = []
     # Never spend time/materials on unused videos if ten originals
     # are already awaiting rendering.
-    if pending_originals(catalog, reserved) >= TARGET_PENDING_EPISODES:
+    if pending_originals(catalog, reserved, autonomous=True) >= TARGET_PENDING_EPISODES:
         state = inventory(catalog, reserved)
         print("PRODUCTION_INVENTORY", json.dumps(state, ensure_ascii=False), flush=True)
         if production_unavailable(state):
@@ -127,7 +138,7 @@ def main():
     for index in range(MAX_ADD_PER_RUN):
         try:
             selection = candidate(catalog, seeds, reserved,
-                                  target=TARGET_PENDING_EPISODES)
+                                  target=TARGET_PENDING_EPISODES, autonomous=True)
         except RuntimeError as exc:
             if "CURATED_STORY_BANK_EXHAUSTED" not in str(exc):
                 raise
@@ -173,7 +184,8 @@ def main():
     })
     state = inventory(catalog, reserved)
     print("NEW_STORIES_ADDED", len(added), added,
-          "unrendered_backlog", pending_originals(catalog, reserved), flush=True)
+          "unattended_voice_plan_backlog", pending_originals(catalog, reserved,
+                                                             autonomous=True), flush=True)
     print("PRODUCTION_INVENTORY", json.dumps(state, ensure_ascii=False), flush=True)
     if production_unavailable(state):
         # Persist distinct scripts, but NEVER run a doomed renderer with no
