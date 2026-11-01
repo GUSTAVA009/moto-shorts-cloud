@@ -293,14 +293,33 @@ def directed_plan(episode, source_durations, seconds):
         caps.append(min(scene_duration_limit(episode,src_by_key[key]),available))
     if sum(caps)<target-.12 or any(cap<MIN_SCENE_SECONDS for cap in caps):
         raise RuntimeError("VISUAL_DURATION_SHORTAGE: need more suitable licensed source footage")
-    portions=[min(target/n,cap) for cap in caps]
-    remaining=target-sum(portions)
-    for i,cap in enumerate(caps):
-        add=min(max(0.,cap-portions[i]),remaining)
-        portions[i]+=add
-        remaining-=add
-        if remaining<=.025:
-            break
+    # A voice-first two-action Short may carry an explicitly reviewed
+    # audio chapter boundary. The legacy even split could show racing
+    # footage two seconds after narration/caption switched to mud.
+    # This is an *opt-in* temporal guard, not an arbitrary shorter edit.
+    spoken_cut = episode.get("spoken_second_scene_at_seconds")
+    if spoken_cut is not None:
+        if (type(spoken_cut) not in (int, float) or n != 2
+                or int(episode.get("visual_director_version") or 0) < 3):
+            raise ValueError("SPOKEN_SCENE_TIMING_REQUIRES_TWO_V3_ACTIONS")
+        cut = float(spoken_cut)
+        if (not MIN_SCENE_SECONDS <= cut <= target - MIN_SCENE_SECONDS
+                or cut > caps[0] + .01
+                or target - cut > caps[1] + .01):
+            raise RuntimeError(
+                "SPOKEN_SCENE_TIMING_OUTSIDE_REAL_MOTION_DURATION:"
+                " never freeze or loop a source to fake coverage")
+        portions = [cut, target-cut]
+        remaining = 0.
+    else:
+        portions=[min(target/n,cap) for cap in caps]
+        remaining=target-sum(portions)
+        for i,cap in enumerate(caps):
+            add=min(max(0.,cap-portions[i]),remaining)
+            portions[i]+=add
+            remaining-=add
+            if remaining<=.025:
+                break
     if remaining>.12 or any(x<MIN_SCENE_SECONDS for x in portions):
         raise RuntimeError(
             "VISUAL_SCENE_SHORTAGE: need more action-specific footage; "
