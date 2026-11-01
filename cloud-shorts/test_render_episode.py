@@ -54,6 +54,36 @@ class EpisodeTests(unittest.TestCase):
         self.assertEqual(r.validate_episode(ep),ep["id"])
 
 
+    def test_actual_mud_rescue_preview_qa_corrects_spoken_claims_and_misaligned_title(self):
+        from visual_director import directed_plan
+        data=json.loads((Path(__file__).parent/"episodes.json").read_text("utf8"))
+        ep=next(x for x in data["episodes"]
+                if x["id"]=="moto-vintage-c81aecc34671")
+        proof=ep["visual_revision_evidence"]
+        self.assertEqual(proof["prior_run_id"],"41317559714")
+        self.assertEqual(proof["prior_mp4_sha256"],
+                         "0d6e1dfeebfd9f56f269b870127aaefe5a0c253867c30830fc5ec13b3dd85b41")
+        self.assertEqual(proof["old_caption_start_seconds"],3.9)
+        self.assertEqual(proof["old_second_scene_start_seconds"],5.9)
+        self.assertFalse(ep["auto_publish"])
+        self.assertEqual(ep["voice_engine"],"gustava_selfhosted_qwen3")
+        self.assertTrue(ep["align_middle_caption_to_second_scene"])
+        self.assertIn("помогают вытолкнуть байк из грязи",ep["narration"])
+        self.assertNotIn("райдер проезжает грязный участок",ep["narration"])
+        self.assertEqual(len(ep["footage"]),2)
+        # GitHub renderer downloaded 12.2 seconds of BOTH real Pexels sources.
+        # At ~12.6 seconds total, a 4.85s first scene and 7.75s second
+        # meet 6s repair / 8s muddy-action limits WITHOUT padding or loops.
+        plan=directed_plan(ep,{"clip_0":12.2,"clip_1":12.2},12.61)
+        self.assertEqual([x["source"] for x in plan],["clip_0","clip_1"])
+        self.assertAlmostEqual(plan[0]["seconds"],4.85)
+        self.assertLessEqual(plan[1]["seconds"],8.0)
+        spans=r.caption_schedule(ep,12.51,plan)
+        actual_cut=plan[0]["seconds"]-ep["opening_trim_seconds"]
+        self.assertGreaterEqual(spans[1][1],actual_cut)
+        self.assertLessEqual(spans[1][1]-actual_cut,.15)
+        self.assertLess(spans[1][2],spans[2][1])
+
     def test_middle_caption_is_after_actual_second_scene_not_before_it(self):
         episode={"creative_treatment":"scene_comparison",
                  "align_middle_caption_to_second_scene":True,
