@@ -28,6 +28,7 @@ from visual_director import verify_story_subject
 from deep_voice import (PROFILE_ID as REQUIRED_MALE_PROFILE,
                         VOICE_ENGINE as REQUIRED_MALE_ENGINE,
                         ready as deep_audio_ready)
+from voice_routing import ready as voice_ready
 
 
 def api(path, method="GET", data=None):
@@ -116,6 +117,7 @@ RENDER_DEPENDENCIES = (
     "render_episode.py", "caption_layout.py", "tts_voice.py", "silero_voice.py",
     "soundtrack.py", "kokoro_voice.py", "voice_qa.py", "mixed_audio_qa.py",
     "asr_fallback.py", "qa_autorepair.py", "moto_assets.py", "voice_style.py", "native_bass_voice.py", "silero_voice.py", "deep_voice.py",
+    "cartesia_voice.py", "voice_routing.py",
 )
 MAX_ATTEMPTS = 3
 MAX_VISUAL_REPAIR_ATTEMPTS = 4  # one confirmed frozen-footage correction before any upload
@@ -405,7 +407,7 @@ def choose(catalog, output):
     output.parent.mkdir(parents=True, exist_ok=True)
     listed = []
     for ep in data["episodes"]:
-        if not may_enter_preview_queue(ep) or not deep_audio_ready(ep):
+        if not may_enter_preview_queue(ep) or not voice_ready(ep):
             continue
         if is_repeated_visual_formula(ep, data["episodes"]):
             print("REPETITIVE_VIDEO_BLOCKED", ep["id"], flush=True)
@@ -416,7 +418,7 @@ def choose(catalog, output):
             print("VISUAL_STORY_REJECTED_BEFORE_RESERVATION",ep["id"],str(exc)[:300],flush=True)
             continue
         listed.append(ep)
-    print("GUSTAVA_DEEP_AND_VISUAL_READY_EPISODES",len(listed),flush=True)
+    print("GUSTAVA_APPROVED_VOICE_AND_VISUAL_READY_EPISODES",len(listed),flush=True)
     def unpublished(slug):
         # Legacy uploads and Buffer reservations both block rerenders.
         return (api("publication-receipts/" + slug + ".json") is None
@@ -535,6 +537,7 @@ def choose(catalog, output):
         "attempt_count": attempt,
         "preview_fingerprint": preview_fingerprint(item),
         "deep_source_sha256": (item.get("deep_audio") or {}).get("source_audio_sha256"),
+        "cartesia_voice_id": item.get("cartesia_voice_id"),
         "previous_run_id": old_receipt.get("run_id") if old_receipt else None,
         "notes": "Revised preview only; never retry a public or uncertain upload."
     }

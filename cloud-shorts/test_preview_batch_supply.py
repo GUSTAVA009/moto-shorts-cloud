@@ -13,6 +13,8 @@ class DeepReserveRefillTests(unittest.TestCase):
     def make(self, id, verified=True, preview=True, rejected=False):
         return {"id":id, "auto_preview":preview, "auto_publish":False,
                 "editorial_rejected":rejected,
+                "voice_engine":"aidocmaker_deep",
+                "voice_profile":"gustava_create_audio_deep_v1",
                 "deep_audio":{"voice_id":"deep"} if verified else None}
 
     def test_text_only_drafts_not_counted_as_renderable(self):

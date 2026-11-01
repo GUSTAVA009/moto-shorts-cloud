@@ -103,5 +103,29 @@
   "privacy": {
     "never_commit_tokens_or_private_studio_exports": true,
     "never_touch_local_personal_videos": true
+  },
+  "owner_approved_voice_automation_change": {
+    "date": "2026-11-01",
+    "authority": "User explicitly allows replacement of the narrator to unblock real API automation",
+    "existing_deep_remains_unmodified": true,
+    "production_voice_can_change": true,
+    "voice_coherence_required": true,
+    "no_unapproved_billing": true
+  },
+  "cartesia_voice": {
+    "provider": "cartesia.ai",
+    "voice_engine": "cartesia_sonic36",
+    "voice_profile": "gustava_cartesia_ru_male_v1",
+    "model_id": "sonic-3.6-2026-08-27",
+    "language": "ru",
+    "requires_pinned_masculine_native_russian_voice_id": true,
+    "requires_secret_in_github_actions": "CARTESIA_API_KEY",
+    "requires_explicit_activation": true,
+    "requires_monthly_budget": true,
+    "monthly_char_cap_default": 15000,
+    "requires_commercial_plan_for_publication": true,
+    "requires_sha_pinned_wav_and_source": true,
+    "requires_independent_source_and_mixed_asr": true,
+    "no_fallback_to_rejected_voices": true
   }
 }

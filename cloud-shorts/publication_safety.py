@@ -4,6 +4,8 @@ The quality gate belongs to GUSTAVA Enduro, not a publishing vendor.
 Keep historical provider receipts only for deduplication.
 """
 import hashlib
+import os
+import re
 from pathlib import Path
 
 from channel_focus import assert_motorcycle_episode
@@ -12,6 +14,10 @@ from deep_voice import (VOICE_ENGINE as REQUIRED_MALE_ENGINE,
                         PROFILE_ID as REQUIRED_MALE_PROFILE,
                         PUBLIC_ATTRIBUTION as DEEP_ATTRIBUTION,
                         ready as deep_audio_ready)
+from cartesia_voice import (VOICE_ENGINE as CARTESIA_ENGINE,
+                            PROFILE_ID as CARTESIA_PROFILE,
+                            MODEL_ID as CARTESIA_MODEL,
+                            supported_episode as cartesia_supported)
 
 
 def file_sha256(path):
@@ -41,15 +47,34 @@ def publication_allowed(episode, meta, qa, video):
     assert_motorcycle_episode(episode)
     if meta.get("episode_id") != episode["id"] or qa.get("episode_id") != episode["id"]:
         raise ValueError("Metadata/ASR episode mismatch; do not upload")
-    if not deep_audio_ready(episode):
-        raise ValueError("ONLY_APPROVED_CREATE_AUDIO_DEEP: old voices or missing audio blocked")
-    if (qa.get("male_voice_verified") is not True
-            or qa.get("voice_profile") != REQUIRED_MALE_PROFILE
-            or qa.get("voice_speaker") != "deep"
-            or qa.get("voice_provider") != "aidocmaker.com"
-            or qa.get("voice_source_audio_sha256") !=
-               episode["deep_audio"]["source_audio_sha256"]):
-        raise ValueError("ONLY_APPROVED_CREATE_AUDIO_DEEP: genuine voice source not verified")
+    if episode.get("voice_engine") == REQUIRED_MALE_ENGINE:
+        if not deep_audio_ready(episode):
+            raise ValueError("ONLY_APPROVED_CREATE_AUDIO_DEEP: old voices or missing audio blocked")
+        if (qa.get("male_voice_verified") is not True
+                or qa.get("voice_profile") != REQUIRED_MALE_PROFILE
+                or qa.get("voice_speaker") != "deep"
+                or qa.get("voice_provider") != "aidocmaker.com"
+                or qa.get("voice_source_audio_sha256") !=
+                   episode["deep_audio"]["source_audio_sha256"]):
+            raise ValueError("ONLY_APPROVED_CREATE_AUDIO_DEEP: genuine voice source not verified")
+    elif episode.get("voice_engine") == CARTESIA_ENGINE:
+        # Free Cartesia evaluations cannot be silently pushed to a
+        # monetizable channel. This explicit flag is independently checked
+        # by BOTH the preview-release selector and publisher.
+        if os.environ.get("CARTESIA_COMMERCIAL_PLAN_CONFIRMED") != "1":
+            raise ValueError("CARTESIA_COMMERCIAL_RIGHTS_NOT_VERIFIED")
+        if (not cartesia_supported(episode)
+                or qa.get("male_voice_verified") is not True
+                or qa.get("voice_profile") != CARTESIA_PROFILE
+                or qa.get("voice_speaker") != episode.get("cartesia_voice_id")
+                or qa.get("voice_model_id") != CARTESIA_MODEL
+                or qa.get("voice_provider") != "cartesia.ai"
+                or not isinstance(qa.get("voice_source_audio_sha256"), str)
+                or not re.fullmatch(r"[0-9a-f]{64}",
+                                    qa["voice_source_audio_sha256"])):
+            raise ValueError("CARTESIA_GENUINE_RUSSIAN_VOICE_SOURCE_NOT_VERIFIED")
+    else:
+        raise ValueError("UNAPPROVED_TTS_PROVIDER_FOR_PUBLICATION")
     if qa.get("passed") is not True or qa.get("status") != "passed":
         raise ValueError("Russian voice QA incomplete: no automatic release")
     if (qa.get("lexical_coverage", 0) < .97 or qa.get("ending_coverage", 0) < .95
@@ -69,9 +94,16 @@ def publication_allowed(episode, meta, qa, video):
     if mix.get("mp4_sha256") != file_sha256(video):
         raise ValueError("Final MP4 does not match its independent mixed-audio QA proof")
     description = meta["description"]
-    if len(meta["title"]) > 100 or DEEP_ATTRIBUTION not in description:
-        raise ValueError("Missing required AI Doc Maker credit or invalid title")
-    safe_description = description.replace(DEEP_ATTRIBUTION, "")
+    if len(meta["title"]) > 100:
+        raise ValueError("Invalid video title")
+    if episode.get("voice_engine") == REQUIRED_MALE_ENGINE:
+        if DEEP_ATTRIBUTION not in description:
+            raise ValueError("Missing required AI Doc Maker credit")
+        safe_description = description.replace(DEEP_ATTRIBUTION, "")
+    else:
+        # Cartesia commercial use is not licensed by this project's old
+        # AIDocMaker attribution; do not falsely credit the wrong service.
+        safe_description = description
     if any(s in safe_description.lower() for s in ("https://", "www.")):
         raise ValueError("Unauthorized external links in description")
     if not episode.get("footage") or any(s.get("license") not in ("Pexels License", "CC0 1.0")
