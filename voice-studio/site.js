@@ -1,204 +1,169 @@
 "use strict";
-const $ = (id) => document.getElementById(id);
-let currentAudioURL = null;
-let referenceAudioURL = null;
-let pendingRequest = null;
+const $=(id)=>document.getElementById(id);
+let csrf="";
+let lastAudioURL=null;
+let referenceURL=null;
+let waitingRequest=null;
+const SPEAKER="gustava-original-v1";
 
-function message(id, value, ok = false) {
-  const node = $(id);
-  node.textContent = value;
-  node.classList.toggle("error", !ok && !/готов|создаётся|данных|нужны|проверь/i.test(value));
-  node.classList.toggle("success", ok);
+function feedback(id,text,kind=""){
+ const el=$(id);el.textContent=text;el.className="feedback"+(kind?" "+kind:"");
 }
-function adminToken() { return $("admin-token").value.trim(); }
-function clientToken() { return $("client-token").value.trim(); }
-function reportError(error) { return error.message || "Сервер не ответил"; }
-
-async function jsonCall(path, method="GET", body=null, isAdmin=false) {
-  const headers = {"Accept":"application/json"};
-  if (body !== null) headers["Content-Type"] = "application/json";
-  if (isAdmin) headers["X-Admin-Token"] = adminToken();
-  const response = await fetch(path, {
-    method, headers,
-    body: body === null ? undefined : JSON.stringify(body),
-    cache: "no-store", credentials: "omit"
+async function ownerFetch(path,method="GET",body=null,raw=false){
+ const headers={};
+ if(method!=="GET"){headers["X-CSRF-Token"]=csrf;}
+ if(body!==null)headers["Content-Type"]="application/json";
+ const response=await fetch(path,{method,credentials:"same-origin",cache:"no-store",
+  headers,body:body===null?undefined:JSON.stringify(body)});
+ if(response.status===401){location.replace("/login");throw Error("Сессия завершена");}
+ if(!response.ok){const d=await response.json().catch(()=>({}));
+  throw Error(String(d.detail||"HTTP "+response.status));}
+ return raw?response:response.json();
+}
+async function boot(){
+ try{
+  const sess=await fetch("/auth/session",{credentials:"same-origin",cache:"no-store"});
+  if(!sess.ok){location.replace("/login");return;}
+  csrf=(await sess.json()).csrf;
+  await Promise.all([refreshStatus(),refreshKeys()]);
+ }catch(e){feedback("owner-result",e.message,"error");}
+}
+async function refreshStatus(){
+ try{
+  const [health,voice]=await Promise.all([ownerFetch("/health"),ownerFetch("/api/admin/voice")]);
+  const created=voice.created===true;
+  $("service-status").textContent=created?"Эталон закреплён":"Эталон не создан";
+  $("original-status").textContent=created?"Зафиксирован":"Не создан";
+  $("service-status").parentElement.classList.toggle("offline",!created);
+  $("timbre").disabled=created;$("delivery").disabled=created;
+  $("design-voice").disabled=created;$("original-consent").disabled=created;
+  if(created){
+   $("timbre").value=voice.design?.timbre||"deep";
+   $("delivery").value=voice.design?.delivery||"documentary";
+   feedback("owner-result","Оригинальный эталон закреплён • SHA "+voice.reference_sha256.slice(0,16)+"…","success");
+  }
+ }catch(e){feedback("owner-result",e.message,"error");}
+}
+async function refreshKeys(){
+ try{const list=await ownerFetch("/api/admin/keys");
+  const root=$("key-list");root.replaceChildren();
+  if(!list.keys.length){const p=document.createElement("p");p.className="description";p.textContent="Ключи ещё не выдавались.";root.append(p);return;}
+  for(const key of list.keys){
+   const item=document.createElement("div");item.className="key-line";
+   const wrap=document.createElement("div"),title=document.createElement("strong"),detail=document.createElement("small");
+   title.textContent=key.label;
+   detail.textContent=(key.revoked?"Отозван":"Активен")+" · "+(key.max_chars_month||"без квоты")+" симв./мес · "+key.max_rpm+" запр./мин";
+   wrap.append(title,detail);item.append(wrap);
+   if(!key.revoked){
+    const revoke=document.createElement("button");revoke.type="button";revoke.textContent="Отозвать";
+    revoke.addEventListener("click",async()=>{
+     if(!confirm("Отозвать этот API-ключ? Завод может потерять доступ."))return;
+     try{await ownerFetch("/api/admin/keys/"+key.id,"DELETE");await refreshKeys();}
+     catch(err){feedback("owner-result",err.message,"error");}
+    });item.append(revoke);
+   }
+   root.append(item);
+  }
+ }catch(e){feedback("owner-result",e.message,"error");}
+}
+function setAudio(blob,target){
+ const obj=URL.createObjectURL(blob);
+ if(target==="sample"){
+  if(lastAudioURL)URL.revokeObjectURL(lastAudioURL);
+  lastAudioURL=obj;$("player-wrap").hidden=false;
+  $("player").src=obj;$("download-audio").href=obj;
+ }else{
+  if(referenceURL)URL.revokeObjectURL(referenceURL);
+  referenceURL=obj;$("reference-player").hidden=false;
+  $("reference-audio").src=obj;
+ }
+}
+async function audioBlob(response){
+ if(!response.ok){
+  const error=await response.json().catch(()=>({}));
+  throw Error(String(error.detail||"Сервис озвучки недоступен"));
+ }
+ const file=await response.blob();
+ if(file.size<1500||!file.type.includes("audio/"))throw Error("Сервер вернул неверный WAV");
+ return file;
+}
+async function generateAudio(){
+ const text=$("transcript").value.trim(),key=$("client-token").value.trim();
+ const speed=Number($("speed").value);
+ if(!key){$("api-options").open=true;return feedback("generate-result","Нужен выданный владельцем API-ключ.","error");}
+ if(!text||text.length>600)return feedback("generate-result","Текст должен содержать от 1 до 600 символов.","error");
+ const fingerprint=JSON.stringify({text,speed,voice:SPEAKER});
+ if(waitingRequest&&waitingRequest.fingerprint!==fingerprint)waitingRequest=null;
+ if(!waitingRequest)waitingRequest={fingerprint,key:"hapych-"+crypto.randomUUID()};
+ const button=$("generate");button.disabled=true;
+ feedback("generate-result","Генерация на собственном GPU…");
+ try{
+  const response=await fetch("/v1/audio/speech",{
+   method:"POST",credentials:"omit",cache:"no-store",headers:{
+    "Authorization":"Bearer "+key,"X-Idempotency-Key":waitingRequest.key,
+    "Content-Type":"application/json"},
+   body:JSON.stringify({text,voice:SPEAKER,speed,response_format:"wav"})
   });
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(String(data.detail || "HTTP " + response.status));
-  return data;
+  const file=await audioBlob(response);setAudio(file,"sample");
+  feedback("generate-result","WAV создан • SHA "+(response.headers.get("X-Audio-SHA256")||"")?.slice(0,16)+"…","success");
+  waitingRequest=null;
+ }catch(error){
+  feedback("generate-result",error.message+" • При неясном результате не меняй ID запроса для слепой повторной генерации.","error");
+ }finally{button.disabled=false;}
 }
-async function audioCall(path, options) {
-  const response = await fetch(path, {...options, credentials:"omit", cache:"no-store"});
-  if (!response.ok) {
-    const detail = await response.json().catch(() => ({}));
-    throw new Error(String(detail.detail || "HTTP " + response.status));
-  }
-  const content = await response.blob();
-  if (content.size < 1500 || content.type.indexOf("audio/") === -1)
-    throw new Error("Пустой или неподходящий WAV от сервера");
-  return {blob:content, sha:response.headers.get("X-Audio-SHA256")};
+async function designVoice(){
+ if(!$("original-consent").checked)return feedback("owner-result","Подтверди создание собственного оригинального голоса.","error");
+ const button=$("design-voice");button.disabled=true;
+ feedback("owner-result","Создаётся единственный оригинальный эталон. Он будет закреплён за заводом.");
+ try{
+  const response=await ownerFetch("/api/admin/voice/design","POST",{
+   confirm_original:true,timbre:$("timbre").value,delivery:$("delivery").value
+  });
+  feedback("owner-result","Эталон создан • SHA "+response.reference_sha256.slice(0,16)+"…","success");
+  await refreshStatus();
+ }catch(e){feedback("owner-result",e.message,"error");}
+ finally{if(!$("timbre").disabled)button.disabled=false;}
 }
-function updateCounter() {
-  const count = $("transcript").value.length;
-  $("text-count").textContent = count + " / 600";
+async function listen(){
+ try{
+  const response=await ownerFetch("/api/admin/voice/reference","GET",null,true);
+  const audio=await audioBlob(response);setAudio(audio,"reference");
+ }catch(e){feedback("owner-result",e.message,"error");}
 }
-async function updateStatus() {
-  try {
-    const r = await jsonCall("/health");
-    const ready = r.reference_available === true;
-    $("service-status").textContent = ready
-      ? "Сервис доступен · голос создан"
-      : "Сервис доступен · нужен оригинальный голос";
-    $("service-status").classList.toggle("bad", !ready);
-    $("original-status").textContent = ready
-      ? "Эталон закреплён · готов к синтезу" : "Оригинальный голос ещё не создан";
-  } catch {
-    $("service-status").textContent = "Сервис недоступен";
-    $("service-status").classList.add("bad");
-  }
+async function issueKey(){
+ const button=$("issue-key");button.disabled=true;
+ try{
+  const result=await ownerFetch("/api/admin/keys","POST",{
+   label:$("key-label").value.trim(),
+   max_chars_month:Number($("key-limit").value),
+   max_rpm:Number($("key-rpm").value)
+  });
+  $("issued-secret").textContent=result.api_key;
+  $("new-key").hidden=false;
+  $("client-token").value=result.api_key; // only in memory, never localStorage
+  feedback("owner-result","API-ключ выпущен. Сохрани его сейчас — повторно значение не показывается.","success");
+  await refreshKeys();
+ }catch(e){feedback("owner-result",e.message,"error");}
+ finally{button.disabled=false;}
 }
-function showAudio(blob, type="preview") {
-  const obj = URL.createObjectURL(blob);
-  if (type === "reference") {
-    if (referenceAudioURL) URL.revokeObjectURL(referenceAudioURL);
-    referenceAudioURL = obj;
-    $("reference-player").hidden = false;
-    $("reference-audio").src = obj;
-    return;
-  }
-  if (currentAudioURL) URL.revokeObjectURL(currentAudioURL);
-  currentAudioURL = obj;
-  $("player-wrap").hidden = false;
-  $("player").src = obj;
-  $("download-audio").href = obj;
+async function logout(){
+ try{await ownerFetch("/auth/logout","POST");}finally{location.replace("/login");}
 }
-async function generate() {
-  const text = $("transcript").value.trim();
-  const token = clientToken();
-  if (!token) return message("generate-result","Нужен собственный API-ключ формата gvk_…");
-  if (!text || text.length > 600)
-    return message("generate-result","Текст должен содержать от 1 до 600 символов");
-  const fp = text + "|" + $("voice-selector").value;
-  if (pendingRequest && pendingRequest.fingerprint !== fp) pendingRequest = null;
-  if (!pendingRequest) pendingRequest = {
-    id: "studio-" + crypto.randomUUID(), fingerprint: fp
-  };
-  $("generate").disabled = true;
-  message("generate-result", "Генерация на собственном GPU. Повторный вызов с тем же ID не будет дублировать озвучку.");
-  try {
-    const result = await audioCall("/v1/audio/speech", {
-      method:"POST",
-      headers: {
-        "Authorization":"Bearer " + token,
-        "X-Idempotency-Key":pendingRequest.id,
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({text,voice:$("voice-selector").value,response_format:"wav"})
-    });
-    showAudio(result.blob);
-    message("generate-result", "WAV готов. SHA-256: " + (result.sha || "проверяется"), true);
-    pendingRequest = null;
-  } catch (error) {
-    message("generate-result", reportError(error) +
-      ". При неизвестном результате не перезапускай тот же запрос с другим ID.");
-  } finally { $("generate").disabled = false; }
-}
-
-function displayKeys(keys) {
-  const host = $("key-list");
-  host.textContent = "";
-  if (!keys.length) { const p=document.createElement("p");p.className="muted";p.textContent="Ключей пока нет.";host.append(p); return; }
-  for (const key of keys) {
-    const line=document.createElement("div");line.className="key-line";
-    const meta=document.createElement("div");
-    const name=document.createElement("strong");name.textContent=key.label;
-    const sub=document.createElement("small");
-    sub.textContent="ID " + key.id + " · " +
-      (key.revoked ? "Отозван" : "Активен") + " · " +
-      (key.max_chars_month || "Без лимита") + " симв./мес · " +
-      key.max_rpm + " запр./мин";
-    meta.append(name,sub);line.append(meta);
-    if (!key.revoked) {
-      const revoke=document.createElement("button");
-      revoke.type="button";revoke.textContent="Отозвать";
-      revoke.addEventListener("click",async()=>{
-        if (!confirm("Отозвать ключ \"" + key.label + "\"? Это отключит доступ завода, если он его использует.")) return;
-        try { await jsonCall("/api/admin/keys/"+key.id,"DELETE",null,true);await refreshAdmin(); }
-        catch(e) {message("owner-result",reportError(e));}
-      });
-      line.append(revoke);
-    }
-    host.append(line);
-  }
-}
-async function refreshAdmin() {
-  if (!adminToken()) return message("owner-result", "Введи секрет владельца сервера.");
-  try {
-    const [voice,keys] = await Promise.all([
-      jsonCall("/api/admin/voice","GET",null,true),
-      jsonCall("/api/admin/keys","GET",null,true)
-    ]);
-    $("original-status").textContent = voice.created
-      ? "Закреплён · SHA " + voice.reference_sha256.slice(0,12) + "…"
-      : "Не создан: один раз нажми «Создать и закрепить голос»";
-    displayKeys(keys.keys);
-    message("owner-result","Панель владельца доступна.",true);
-  } catch(error) {message("owner-result",reportError(error));}
-}
-async function issueKey() {
-  if (!adminToken()) return message("owner-result","Введи секрет владельца.");
-  $("issue-key").disabled = true;
-  try {
-    const body={
-      label:$("key-label").value.trim(),
-      max_chars_month:Number($("key-limit").value),
-      max_rpm:Number($("key-rpm").value)
-    };
-    const data=await jsonCall("/api/admin/keys","POST",body,true);
-    $("new-key").hidden=false;
-    $("issued-secret").textContent=data.api_key;
-    message("owner-result","API-ключ создан. Сохрани его сейчас — потом увидеть его значение нельзя.",true);
-    await refreshAdmin();
-  } catch(error) {message("owner-result",reportError(error));}
-  finally{$("issue-key").disabled=false;}
-}
-async function designVoice() {
-  if (!$("original-consent").checked)
-    return message("owner-result","Подтверди создание самостоятельного оригинального голоса.");
-  if (!adminToken())
-    return message("owner-result","Введи секрет владельца.");
-  $("design-voice").disabled=true;
-  message("owner-result","Qwen VoiceDesign создаёт оригинальный русский баритон. Эталон закрепится без возможности случайной перезаписи.");
-  try {
-    const data=await jsonCall("/api/admin/voice/design","POST",
-                              {confirm_original:true},true);
-    message("owner-result","Оригинальный голос создан: " +
-            data.reference_sha256.slice(0,16) + "…",true);
-    await refreshAdmin();
-    await updateStatus();
-  } catch(error){message("owner-result",reportError(error));}
-  finally{$("design-voice").disabled=false;}
-}
-async function listenReference() {
-  if (!adminToken()) return message("owner-result","Нужен секрет владельца.");
-  try {
-    const result=await audioCall("/api/admin/voice/reference",{
-      headers:{"X-Admin-Token":adminToken()}
-    });
-    showAudio(result.blob,"reference");
-    message("owner-result","Воспроизводится наш оригинальный закреплённый эталон.",true);
-  } catch(error){message("owner-result",reportError(error));}
-}
-$("transcript").addEventListener("input",updateCounter);
-$("generate").addEventListener("click",generate);
-$("refresh-admin").addEventListener("click",refreshAdmin);
-$("issue-key").addEventListener("click",issueKey);
+$("generate").addEventListener("click",generateAudio);
 $("design-voice").addEventListener("click",designVoice);
-$("listen-reference").addEventListener("click",listenReference);
+$("listen-reference").addEventListener("click",listen);
+$("issue-key").addEventListener("click",issueKey);
+$("logout").addEventListener("click",logout);
 $("copy-key").addEventListener("click",async()=>{
-  const token=$("issued-secret").textContent;
-  try {await navigator.clipboard.writeText(token);$("copy-key").textContent="Скопировано";}
-  catch{$("copy-key").textContent="Выдели ключ и скопируй вручную";}
+ try{await navigator.clipboard.writeText($("issued-secret").textContent);
+  $("copy-key").textContent="Ключ скопирован";
+ }catch{$("copy-key").textContent="Выдели ключ вручную";}
 });
-updateCounter();
-updateStatus();
+$("transcript").addEventListener("input",()=>{
+ $("text-count").textContent=$("transcript").value.length+" / 600";
+});
+$("speed").addEventListener("input",()=>{
+ $("speed-value").textContent=Number($("speed").value).toFixed(2)+"×";
+});
+$("text-count").textContent=$("transcript").value.length+" / 600";
+boot();
