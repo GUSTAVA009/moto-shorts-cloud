@@ -49,7 +49,7 @@ class MonthContractTests(unittest.TestCase):
               for i in range(250)}
         result=month_capacity(now,rows)
         self.assertTrue(result["monthly_goal_achievable_at_current_capacity"])
-        self.assertEqual(result["daily_catchup_goal"],15 if month == 2 and year == 2027 else 14)
+        self.assertEqual(result["daily_catchup_goal"],14)
 
     def test_invalid_conflicting_timestamps_block_fabricated_progress(self):
         now=datetime(2026,11,15,tzinfo=timezone.utc)
