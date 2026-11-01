@@ -40,7 +40,10 @@ class OwnServerLedgerTests(unittest.TestCase):
         raw=self.store.path.read_bytes()
         self.assertNotIn(first.encode(),raw)
         self.assertNotIn(second.encode(),raw)
-        self.assertIn(hashlib.sha256(first.encode()).hexdigest().encode(),raw)
+        with self.store.connection() as db:
+            stored=db.execute("SELECT token_hash FROM keys WHERE id=?",
+                              (self.issued["id"],)).fetchone()[0]
+        self.assertEqual(stored,hashlib.sha256(first.encode()).hexdigest())
         listed=self.store.list_keys()
         self.assertNotIn("token_hash",str(listed))
         self.assertNotIn("api_key",str(listed))
