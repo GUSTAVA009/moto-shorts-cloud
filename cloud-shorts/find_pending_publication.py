@@ -19,6 +19,8 @@ from editorial_novelty import is_repeated_visual_formula
 from deep_voice import (PROFILE_ID as REQUIRED_MALE_PROFILE,
                         VOICE_ENGINE as REQUIRED_MALE_ENGINE,
                         ready as deep_audio_ready)
+from cartesia_voice import VOICE_ENGINE as CARTESIA_ENGINE
+from voice_routing import may_publish_with_verified_profile
 
 
 def gh(path):
@@ -43,7 +45,10 @@ def select(catalog, receipt_entries, published, artifacts):
              if ep.get("auto_publish") is True
              and ep.get("editorial_rejected") is not True
              and not is_repeated_visual_formula(ep, catalog["episodes"])
-             and ep.get("voice_engine") == REQUIRED_MALE_ENGINE
+             and ep.get("voice_engine") in (REQUIRED_MALE_ENGINE,
+                                             CARTESIA_ENGINE)
+             and (ep.get("voice_engine") != CARTESIA_ENGINE or
+                  os.environ.get("CARTESIA_COMMERCIAL_PLAN_CONFIRMED") == "1")
              and ep.get("visual_review_failed") is not True
              and ep.get("visual_revision_requested") is not True
              and (int(ep.get("visual_director_version") or 0)<3
@@ -56,10 +61,11 @@ def select(catalog, receipt_entries, published, artifacts):
         slug=obj.get("id")
         if slug not in allowed or obj.get("state")!="preview_ready":
             continue
-        if (obj.get("voice_qa_passed") is not True
-                or obj.get("mixed_audio_qa_passed") is not True
-                or obj.get("voice_profile") != REQUIRED_MALE_PROFILE
-                or obj.get("male_voice_verified") is not True
+        episode = next(ep for ep in catalog["episodes"] if ep["id"] == slug)
+        if (not may_publish_with_verified_profile(episode, obj)
+                or (episode.get("voice_engine") == CARTESIA_ENGINE
+                    and episode.get("cartesia_voice_id") !=
+                    obj.get("cartesia_voice_id"))
                 or slug in published):
             continue
         run=str(obj.get("run_id",""))
