@@ -6342,7 +6342,7 @@
       "voice_profile": "gustava_create_audio_deep_v1",
       "visual_director_version": 3,
       "title": "МОТОСЕРВИС: что происходит за дверью? 🔧 #shorts",
-      "narration": "На одном видео у входа в мотосервис кипит жизнь. В другой мастерской механики заняты ремонтом. Это разные места. Ты предпочитаешь сервис или собственный гараж?",
+      "narration": "У входа в мотосервис кипит жизнь. В другой мастерской мастера чинят мотоцикл. Это разные места и разные съёмки. Ты предпочитаешь доверять сервису или ремонтируешь свой байк сам?",
       "description": "Независимые моменты мотожизни: МОТОСЕРВИС: что происходит за дверью? 🔧. Кадры сняты разными авторами и не изображают одно событие.\n\n#мото #мотоцикл #shorts",
       "caption_start": "МОТОСЕРВИС: что происходит за дверью? 🔧",
       "caption_middle": "ДВА РАЗНЫХ РЕАЛЬНЫХ МОМЕНТА",
@@ -6416,7 +6416,16 @@
       "production_batch": "gustava-20-20261030",
       "mix_category": "stories",
       "priority_rank": 13,
-      "editorial_review_status": "awaiting_frame_review"
+      "editorial_review_status": "awaiting_frame_review",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/1f044ae5-8a5b-4eef-a168-d7918c1fd4c7.mp3",
+        "transcript_sha256": "1961deee86d174d1c76066cfe87b90381c4e8cf490e9c85070ad2d8f2bbfa691",
+        "source_audio_sha256": "d9e08538f0ddb7be7352e0f327d1c2672d173fd45ca56474cadd7c59abb59f99",
+        "context_id": "84b632743f6d4e95a72f091cdbe9fa80",
+        "licence_mode": "public_provider_attribution"
+      }
     },
     {
       "id": "gustava-20-e04-20261030",
