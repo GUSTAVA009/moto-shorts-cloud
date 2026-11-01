@@ -117,7 +117,7 @@ RENDER_DEPENDENCIES = (
     "render_episode.py", "caption_layout.py", "tts_voice.py", "silero_voice.py",
     "soundtrack.py", "kokoro_voice.py", "voice_qa.py", "mixed_audio_qa.py",
     "asr_fallback.py", "qa_autorepair.py", "moto_assets.py", "voice_style.py", "native_bass_voice.py", "silero_voice.py", "deep_voice.py",
-    "cartesia_voice.py", "voice_routing.py",
+    "cartesia_voice.py", "selfhosted_voice.py", "voice_routing.py",
 )
 MAX_ATTEMPTS = 3
 MAX_VISUAL_REPAIR_ATTEMPTS = 4  # one confirmed frozen-footage correction before any upload
@@ -538,6 +538,7 @@ def choose(catalog, output):
         "preview_fingerprint": preview_fingerprint(item),
         "deep_source_sha256": (item.get("deep_audio") or {}).get("source_audio_sha256"),
         "cartesia_voice_id": item.get("cartesia_voice_id"),
+        "selfhosted_voice_id": item.get("selfhosted_voice_id"),
         "previous_run_id": old_receipt.get("run_id") if old_receipt else None,
         "notes": "Revised preview only; never retry a public or uncertain upload."
     }
@@ -580,6 +581,7 @@ def finish(slug, qa_report=None, mixed_report=None):
     )
     contents["voice_qa_coverage"] = report.get("lexical_coverage")
     contents["voice_profile"] = report.get("voice_profile")
+    contents["selfhosted_reference_sha256"] = report.get("selfhosted_reference_sha256")
     contents["male_voice_verified"] = report.get("male_voice_verified") is True
     mix = {}
     if mixed_report and Path(mixed_report).is_file():
