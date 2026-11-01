@@ -14,6 +14,22 @@ class TestPreviewQueue(unittest.TestCase):
         self.assertEqual(pq.pick(episodes, lambda i: i in {"second", "third"}), None)
         self.assertEqual(pq.pick(episodes, lambda i: False), "second")
 
+    def test_visual_rejection_blocks_public_and_private_preview_retries(self):
+        drafts=[
+            {"id":"unreviewed", "auto_preview":True,"visual_review_failed":True},
+            {"id":"editorial-rejected","auto_preview":True,"editorial_rejected":True},
+            {"id":"safe-new","auto_preview":True,"auto_publish":False},
+        ]
+        self.assertFalse(pq.may_enter_preview_queue(drafts[0]))
+        self.assertFalse(pq.may_enter_preview_queue(drafts[1]))
+        self.assertTrue(pq.may_enter_preview_queue(drafts[2]))
+        self.assertEqual(pq.pick(drafts, lambda _:False),"safe-new")
+        self.assertIsNone(pq.pick(drafts, lambda slug:slug=="safe-new"))
+        # An explicit reviewed replacement may be retried only after a
+        # catalog PR clears the old visual rejection flag.
+        repaired=dict(drafts[0],visual_review_failed=False)
+        self.assertTrue(pq.may_enter_preview_queue(repaired))
+
     def test_exhausted_queue_returns_none(self):
         self.assertIsNone(pq.pick([], lambda _: False))
         self.assertIsNone(pq.pick([{"id": "draft"}], lambda _: False))
