@@ -134,6 +134,29 @@ class TestPreviewQueue(unittest.TestCase):
         ep["visual_revision_reason"]="unreviewed"
         self.assertFalse(pq.eligible_retry(ep,rec,"retimed-real-removal"))
 
+    def test_sha_pinned_real_qwen_mp4_can_get_one_private_caption_rescue_revision(self):
+        import json
+        from pathlib import Path
+        data=json.loads((Path(__file__).parent/"episodes.json").read_text("utf8"))
+        ep=next(x for x in data["episodes"]
+                if x["id"]=="moto-vintage-c81aecc34671")
+        receipt={
+            "id":ep["id"],"state":"preview_ready",
+            "attempt_count":2,"run_id":"41317559714",
+            "preview_fingerprint":"b5138c8c73f9331c2316264ea280b7f1a643e047fc6e4ea033afd496483f5bea",
+            "voice_qa_passed":True,"mixed_audio_qa_passed":True,
+        }
+        current=pq.preview_fingerprint(ep)
+        self.assertTrue(pq.eligible_retry(ep,receipt,current))
+        self.assertFalse(pq.eligible_retry(ep,receipt,receipt["preview_fingerprint"]))
+        self.assertFalse(pq.eligible_retry(dict(ep,auto_publish=True),receipt,current))
+        self.assertFalse(pq.eligible_retry(ep,dict(receipt,state="reserved"),current))
+        self.assertFalse(pq.eligible_retry(ep,dict(receipt,attempt_count=4),current))
+        self.assertFalse(pq.eligible_retry(ep,dict(receipt,run_id="other"),current))
+        bad=dict(ep,visual_revision_evidence=dict(
+            ep["visual_revision_evidence"],prior_mp4_sha256="bad"))
+        self.assertFalse(pq.eligible_retry(bad,receipt,current))
+
     def test_sha_pinned_actual_caption_lead_allows_only_private_visual_retime(self):
         episode={"id":"moto-racing-mud-contrast-20261101",
                  "auto_publish":False,"visual_revision_requested":True,
