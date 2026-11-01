@@ -7278,7 +7278,7 @@
       "voice_profile": "gustava_original_qwen3_v1",
       "selfhosted_voice_id": "gustava-original-v1",
       "title": "Ремонт байка или грязевая трасса: какой момент интереснее? #shorts",
-      "narration": "Мотоцикл в мастерской: идёт ремонт байка перед выездом. На другом видео райдер проезжает грязный участок. Это две разные съёмки. Что ближе — ремонт или грязь?",
+      "narration": "Мотоцикл в мастерской: механик работает с байком. На другом видео люди помогают вытолкнуть байк из грязи. Это разные сцены. Что ближе — ремонт или бездорожье?",
       "description": "Две разные мотоистории: ремонт байка и грязевая трасса. Независимые кадры, без выдуманного общего события.\n\n#shorts",
       "caption_start": "РЕМОНТ БАЙКА",
       "caption_middle": "ГРЯЗЕВАЯ ТРАССА",
@@ -7344,7 +7344,7 @@
       "cta": {
         "kind": "comment",
         "overlay": "НАПИШИ СВОЙ ВЫБОР",
-        "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
+        "description": "Какая сцена интереснее: ремонт байка или помощь на грязевой трассе? Напиши в комментариях."
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1",
@@ -7362,6 +7362,21 @@
         "real_clips_downloaded_and_11_to_12s_excerpt_verified": true,
         "prior_voice_duration_seconds": 18.4,
         "requested_only_private_preview": true
+      },
+      "align_middle_caption_to_second_scene": true,
+      "spoken_second_scene_at_seconds": 4.85,
+      "visual_revision_requested": true,
+      "visual_revision_reason": "spoken_scene_caption_mismatch",
+      "visual_revision_evidence": {
+        "prior_run_id": "41317559714",
+        "prior_mp4_sha256": "0d6e1dfeebfd9f56f269b870127aaefe5a0c253867c30830fc5ec13b3dd85b41",
+        "old_caption_start_seconds": 3.9,
+        "old_second_scene_start_seconds": 5.9,
+        "reviewed_from": "real downloaded MP4 frames at 0.2, 4.5, 5.8, 6.6, 8, 9.5 and 11 seconds",
+        "source_page_confirmed": "https://www.pexels.com/video/thrilling-off-road-motorcycle-adventure-in-muddy-terrain-31881759/",
+        "finding": "At 4.5s GRYAZEVAYA TRASSA caption overlays the repair motorcycle shot; second video at 6.6-11s depicts helpers assisting a rider/bike caught in mud, not freely riding through the mud as old script claimed",
+        "corrective_action": "Use truthful action 'люди помогают вытолкнуть байк из грязи' and cut to muddy scene at 4.85s; align middle caption to true second shot; preserve two licensed source identities and private auto_publish=false",
+        "owner_voice_quality_unverified": true
       }
     }
   ]
