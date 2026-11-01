@@ -18,6 +18,10 @@ from cartesia_voice import (VOICE_ENGINE as CARTESIA_ENGINE,
                             PROFILE_ID as CARTESIA_PROFILE,
                             MODEL_ID as CARTESIA_MODEL,
                             supported_episode as cartesia_supported)
+from selfhosted_voice import (VOICE_ENGINE as SELFHOSTED_ENGINE,
+                              PROFILE_ID as SELFHOSTED_PROFILE,
+                              VOICE_ID as SELFHOSTED_VOICE_ID,
+                              approved_profile as selfhosted_approved_profile)
 
 
 def file_sha256(path):
@@ -73,6 +77,20 @@ def publication_allowed(episode, meta, qa, video):
                 or not re.fullmatch(r"[0-9a-f]{64}",
                                     qa["voice_source_audio_sha256"])):
             raise ValueError("CARTESIA_GENUINE_RUSSIAN_VOICE_SOURCE_NOT_VERIFIED")
+    elif episode.get("voice_engine") == SELFHOSTED_ENGINE:
+        approved_ref = os.environ.get("GUSTAVA_VOICE_REFERENCE_SHA256", "")
+        if (os.environ.get("GUSTAVA_ORIGINAL_VOICE_APPROVED") != "1"
+                or not re.fullmatch(r"[0-9a-f]{64}", approved_ref)):
+            raise ValueError("SELFHOSTED_ORIGINAL_VOICE_NOT_APPROVED_FOR_PUBLICATION")
+        if (not selfhosted_approved_profile(episode)
+                or qa.get("male_voice_verified") is not True
+                or qa.get("voice_profile") != SELFHOSTED_PROFILE
+                or qa.get("voice_speaker") != SELFHOSTED_VOICE_ID
+                or qa.get("voice_provider") != "owner_selfhosted_qwen3"
+                or qa.get("selfhosted_reference_sha256") != approved_ref
+                or not re.fullmatch(r"[0-9a-f]{64}",
+                                    str(qa.get("voice_source_audio_sha256") or ""))):
+            raise ValueError("SELFHOSTED_GENUINE_ORIGINAL_VOICE_SOURCE_NOT_VERIFIED")
     else:
         raise ValueError("UNAPPROVED_TTS_PROVIDER_FOR_PUBLICATION")
     if qa.get("passed") is not True or qa.get("status") != "passed":
