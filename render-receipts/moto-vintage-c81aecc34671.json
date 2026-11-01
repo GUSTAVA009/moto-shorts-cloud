@@ -1,11 +1,11 @@
 {
   "id": "moto-vintage-c81aecc34671",
   "state": "reserved",
-  "run_id": "41316919801",
-  "attempt_count": 1,
-  "preview_fingerprint": "7a61955e435972a44cad2e1ef3f12dbf64315ecbff7c7f1ef75ee9aa8c50f445",
+  "run_id": "41317559714",
+  "attempt_count": 2,
+  "preview_fingerprint": "b5138c8c73f9331c2316264ea280b7f1a643e047fc6e4ea033afd496483f5bea",
   "deep_source_sha256": null,
   "selfhosted_voice_id": "gustava-original-v1",
-  "previous_run_id": null,
+  "previous_run_id": "41316919801",
   "notes": "Revised preview only; never retry a public or uncertain upload."
 }
