@@ -172,6 +172,81 @@ class RealWebsiteWithoutGpuTests(unittest.TestCase):
             self.assertEqual(changed.status_code,409)
             self.assertEqual(maker.await_count,1)
 
+    def test_two_youtube_channels_get_distinct_speakers_and_isolated_api_keys(self):
+        first=self.owner_key()
+        with patch.object(api,"qwen_audio",new_callable=AsyncMock) as maker:
+            maker.return_value=fake_audio()
+            self.create_original()
+        new=self.client.post("/api/admin/channels",json={
+            "slug":"motorcade","name":"Motorcade Club","timbre":"velvet",
+            "delivery":"dynamic"},headers=ADMIN)
+        self.assertEqual(new.status_code,201,new.text)
+        other_voice=new.json()["voice_id"]
+        other_preset=new.json()["speaker_preset"]
+        self.assertNotEqual(other_voice,VOICE_ID)
+        self.assertNotEqual(other_preset,"eric")
+        new_key=self.client.post("/api/admin/keys",json={
+            "label":"Motorcade Factory","channel_slug":"motorcade"},
+            headers=ADMIN)
+        self.assertEqual(new_key.status_code,201,new_key.text)
+        second=new_key.json()["api_key"]
+        for wrong in [
+            {"voice":VOICE_ID,"text":"Чужой голос"},
+            {"voice":other_voice,"channel_slug":"gustava","text":"Чужой канал"},
+        ]:
+            reply=self.client.post("/v1/audio/speech",json=wrong,
+              headers={"Authorization":"Bearer "+second,
+                       "X-Idempotency-Key":"no-cross-tenant-0001"})
+            self.assertEqual(reply.status_code,403,reply.text)
+        with patch.object(api,"qwen_audio",new_callable=AsyncMock) as maker:
+            maker.return_value=fake_audio()
+            ready=self.client.post("/api/admin/voice/design",json={
+                "confirm_original":True,"channel_slug":"motorcade",
+                "timbre":"velvet","delivery":"dynamic"},headers=ADMIN)
+            self.assertEqual(ready.status_code,200,ready.text)
+            self.assertEqual(maker.await_args.args[1]["speaker"],other_preset)
+        with patch.object(api,"qwen_audio",new_callable=AsyncMock) as synth:
+            synth.return_value=fake_audio()
+            wav=self.client.post("/v1/audio/speech",json={
+                "text":"Настоящий звук второго канала",
+                "voice":other_voice,"channel_slug":"motorcade"},
+                headers={"Authorization":"Bearer "+second,
+                         "X-Idempotency-Key":"only-second-voice-001"})
+            self.assertEqual(wav.status_code,200,wav.text)
+            self.assertEqual(wav.headers["x-channel-id"],"motorcade")
+            self.assertEqual(synth.await_args.args[1]["speaker"],other_preset)
+        denied=self.client.post("/v1/audio/speech",json={
+            "voice":other_voice,"text":"Дай другой голос"},
+            headers={"Authorization":"Bearer "+first,
+                     "X-Idempotency-Key":"never-first-gets-second"})
+        self.assertEqual(denied.status_code,403)
+
+    def test_actual_cpu_engine_http_payload_and_no_external_request(self):
+        class Reply:
+            status_code=200
+            content=fake_audio()
+        called=[]
+        class FakeClient:
+            def __init__(self,**kwargs):pass
+            async def __aenter__(self):return self
+            async def __aexit__(self,*args):return False
+            async def post(self,url,**kwargs):
+                called.append((url,kwargs))
+                return Reply()
+        with patch.object(api,"UPSTREAM","http://127.0.0.1:8002"), \
+             patch.object(api.httpx,"AsyncClient",FakeClient):
+            data=__import__("asyncio").run(api.qwen_audio(
+                "/api/v1/base/clone",{
+                    "text":"Привет, мотоциклы!","speaker":"eric",
+                    "delivery":"dynamic","speed":1.1}))
+        self.assertEqual(data,fake_audio())
+        self.assertEqual(called[0][0],"http://127.0.0.1:8002/v1/tts")
+        body=called[0][1]["json"]
+        self.assertEqual(body["speaker"],"eric")
+        self.assertEqual(body["language"],"Russian")
+        self.assertEqual(body["emotion"],"excited")
+        self.assertEqual(body["rate"],1.1)
+
     def test_admin_required_and_api_keys_never_list_raw_secrets(self):
         self.assertEqual(self.client.get("/api/admin/keys").status_code,401)
         self.assertEqual(self.client.post("/api/admin/keys",json={
@@ -198,8 +273,10 @@ class RealWebsiteWithoutGpuTests(unittest.TestCase):
         created=self.create_original()
         self.assertEqual(created["voice_id"],VOICE_ID)
         proof=json.loads(api.VOICE_PROOF.read_text())
-        self.assertTrue(proof["uses_only_original_design"])
-        self.assertEqual(proof["source"],"selfhosted_qwen_voice_design")
+        self.assertFalse(proof["exclusive_original_voice"])
+        self.assertFalse(proof["derived_from_cartesia"])
+        self.assertEqual(proof["source"],"selfhosted_qwen_cpu_preset")
+        self.assertEqual(proof["preset_voice"],"eric")
         self.assertEqual(proof["wav_sha256"],sha(api.VOICE_FILE.read_bytes()))
         clip=self.client.get("/api/admin/voice/reference",headers=ADMIN)
         self.assertEqual(clip.status_code,200)
@@ -264,9 +341,9 @@ class RealWebsiteWithoutGpuTests(unittest.TestCase):
 
     def test_private_backend_cannot_be_redirected_to_third_party(self):
         with patch.object(api,"UPSTREAM","https://external-tts.example"):
-            with self.assertRaisesRegex(RuntimeError,"QWEN_BACKEND_MUST_BE_PRIVATE"):
+            with self.assertRaisesRegex(RuntimeError,"QWEN_CPU_ENGINE_MUST_BE_LOOPBACK"):
                 api.safe_upstream()
-        with patch.object(api,"UPSTREAM","http://qwen:8000"):
+        with patch.object(api,"UPSTREAM","http://127.0.0.1:8002"):
             api.safe_upstream()
 
 
