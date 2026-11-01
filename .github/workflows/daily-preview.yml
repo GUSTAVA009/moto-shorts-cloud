@@ -11,6 +11,8 @@ on:
       - 'cloud-shorts/preview_queue.py'
       - 'cloud-shorts/episodes.json'
       - 'cloud-shorts/render_episode.py'
+      - 'cloud-shorts/cartesia_voice.py'
+      - 'cloud-shorts/voice_routing.py'
   schedule:
     # Review-only cut revision: final helmet-removal scene should begin after the strap adjustment.
     # Revalidate scene-first Deep voice chapter anchors after the ASR-corrected word "Остаётся".
@@ -42,6 +44,9 @@ jobs:
   daily-draft:
     runs-on: ubuntu-latest
     timeout-minutes: 55
+    env:
+      CARTESIA_TTS_ENABLED: ${{ vars.CARTESIA_TTS_ENABLED }}
+      CARTESIA_KEY_PRESENT: ${{ secrets.CARTESIA_API_KEY != '' }}
     steps:
       - uses: actions/checkout@v4
       - name: Check content queue and reserve next episode
@@ -55,6 +60,8 @@ jobs:
           python3 -m unittest discover -s cloud-shorts -p 'test_voice_style.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_native_bass_voice.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_deep_voice.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_cartesia_voice.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_voice_routing.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_visual_director.py' -v
           python3 - <<'PY'
           import sys
@@ -64,6 +71,10 @@ jobs:
           assert VOICE_ENGINE == 'aidocmaker_deep'
           assert VOICE_ID == 'deep'
           print('PRODUCTION_GUSTAVA_REAL_CREATE_AUDIO_DEEP_ONLY', PROFILE_ID)
+          from cartesia_voice import VOICE_ENGINE as CARTESIA_ENGINE, MODEL_ID
+          assert CARTESIA_ENGINE == 'cartesia_sonic36'
+          assert MODEL_ID == 'sonic-3.6-2026-08-27'
+          print('CARTESIA_PRIVATE_PREVIEW_REQUIRES_SECURE_CONFIG_AND_BUDGET')
           PY
           python3 -m unittest discover -s cloud-shorts -p 'test_voice_qa.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_deep_male_release.py' -v
@@ -101,6 +112,10 @@ jobs:
         if: steps.pick.outputs.has_job == 'true'
         env:
           EPISODE: ${{ steps.pick.outputs.episode }}
+          CARTESIA_API_KEY: ${{ secrets.CARTESIA_API_KEY }}
+          CARTESIA_MONTHLY_CHAR_LIMIT: ${{ vars.CARTESIA_MONTHLY_CHAR_LIMIT }}
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           python3 cloud-shorts/qa_autorepair.py --episode "$EPISODE"
           ffprobe -v error -show_entries stream=codec_type,width,height \
@@ -221,7 +236,7 @@ jobs:
                     and x["path"].endswith(".json")}
           import sys
           sys.path.insert(0,"cloud-shorts")
-          from deep_voice import ready
+          from voice_routing import ready
           from editorial_novelty import is_repeated_visual_formula
           from preview_queue import eligible_retry, preview_fingerprint
           # Repaired, still-private episodes have existing render receipts.
@@ -276,7 +291,7 @@ jobs:
           print("VERIFIED_DEEP_REFILL_DISPATCHED",waiting[0],
                 "remaining_exact_mp3_ready",len(waiting),flush=True)
           PY
-      - name: Replenish next original DEEP preview from verified unrendered stock
+      - name: Replenish next eligible original voice preview from verified unrendered stock
         if: ${{ always() && !cancelled() && steps.pick.outputs.has_job == 'true' }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
