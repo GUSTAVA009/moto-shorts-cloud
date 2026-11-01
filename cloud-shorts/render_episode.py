@@ -28,8 +28,6 @@ from deep_voice import (render as make_real_deep_voice,
                         VOICE_ENGINE as DEEP_ENGINE,
                         PUBLIC_ATTRIBUTION as DEEP_ATTRIBUTION)
 from kokoro_voice import render as make_kokoro_voice, MODEL_CARD as KOKORO_MODEL_CARD
-from cartesia_voice import (render as make_cartesia_voice,
-                            VOICE_ENGINE as CARTESIA_ENGINE)
 from selfhosted_voice import (render as make_selfhosted_voice,
                               VOICE_ENGINE as SELFHOSTED_ENGINE)
 from editorial_guard import validate_catalog
@@ -519,12 +517,6 @@ def render(ep, output_dir):
     elif engine == SELFHOSTED_ENGINE:
         voice_duration = make_selfhosted_voice(ep, wav)
         engine_label = "GUSTAVA Original / private Qwen3-TTS API (SHA-pinned)"
-    elif engine == CARTESIA_ENGINE:
-        # A private, spending-capped, UUID-verified official API source.
-        # No paid re-call during music-only QA changes; source WAV cached
-        # with its exact transcript and SHA-pinned provenance sidecar.
-        voice_duration = make_cartesia_voice(ep, wav)
-        engine_label = "Cartesia Sonic 3.6 / verified native Russian male"
     elif engine == "kokoro_ru_dima":
         retry_speed = float(os.environ.get("GUSTAVA_TTS_SPEED", "1.0"))
         voice_duration = make_kokoro_voice(ep["narration"], wav, work / "kokoro_model", speed=retry_speed)
@@ -668,8 +660,7 @@ def render(ep, output_dir):
         "editorial_references": ep.get("editorial_references", []),
         "voice_model_card": ("https://www.aidocmaker.com/" if engine == DEEP_ENGINE
             else "https://github.com/QwenLM/Qwen3-TTS" if engine == SELFHOSTED_ENGINE
-            else "https://docs.cartesia.ai/build-with-cartesia/tts-models/latest"
-                 if engine == CARTESIA_ENGINE
+
             else KOKORO_MODEL_CARD if engine == "kokoro_ru_dima"
             else "https://github.com/snakers4/silero-models" if engine in ("silero_cis_base_mit", NATIVE_BASS_ENGINE)
             else "https://huggingface.co/rhasspy/piper-voices/blob/main/ru/ru_RU/denis/medium/MODEL_CARD"),
