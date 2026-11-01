@@ -70,6 +70,7 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_AUTO_PUBLISH_ENABLED: ${{ vars.BUFFER_AUTO_PUBLISH_ENABLED || 'true' }}
+          CARTESIA_COMMERCIAL_PLAN_CONFIRMED: ${{ vars.CARTESIA_COMMERCIAL_PLAN_CONFIRMED }}
           YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID || 'UCS0QCodPcFBTjMt4ioEWOUw' }}
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
