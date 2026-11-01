@@ -570,11 +570,11 @@ class PortalHandler(BaseHTTPRequestHandler):
                 new_csrf=SESSIONS[token][1]
             return self.json(200,{"ok":True,"csrf":new_csrf},{"Set-Cookie":owner_cookie(token)})
         if path == "/api/portal/preferences":
-            if set(body) != {"channel_name","speed","text","eq"}:
+            if set(body) not in ({"channel_name","speed","text"}, {"channel_name","speed","text","eq"}):
                 return self.error(422,"INVALID_SETTINGS")
             name, speed, script = body.get("channel_name"),body.get("speed"),body.get("text")
             try:
-                eq=validate_eq(body.get("eq"))
+                eq=validate_eq(body["eq"] if "eq" in body else get_preferences()["eq"])
             except ValueError:
                 return self.error(422,"INVALID_EQ")
             if not isinstance(name,str) or not 2<=len(name.strip())<=72 or not isinstance(script,str) or len(script)>600 or isinstance(speed,bool) or not isinstance(speed,(float,int)) or not .85<=speed<=1.15:
@@ -586,13 +586,13 @@ class PortalHandler(BaseHTTPRequestHandler):
             atomic_json(PREFS_FILE,prefs)
             return self.json(200,{"saved":True})
         if path == "/api/portal/preview":
-            if set(body) != {"text","speed","eq"}:
+            if set(body) not in ({"text","speed"}, {"text","speed","eq"}):
                 return self.error(422,"INVALID_PREVIEW_REQUEST")
             text,speed=body.get("text"),body.get("speed")
             if not isinstance(text,str) or not 15<=len(text.strip())<=400 or isinstance(speed,bool) or not isinstance(speed,(int,float)) or not any(abs(speed-x)<0.001 for x in [.85,.90,.95,1,1.05,1.1,1.15]):
                 return self.error(422,"INVALID_PREVIEW_TEXT_OR_SPEED")
             try:
-                eq=validate_eq(body.get("eq"))
+                eq=validate_eq(body["eq"] if "eq" in body else get_preferences()["eq"])
             except ValueError:
                 return self.error(422, "INVALID_EQ")
             with LOCK:
