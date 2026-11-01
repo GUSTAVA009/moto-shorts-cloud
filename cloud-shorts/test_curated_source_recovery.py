@@ -56,6 +56,22 @@ class CuratedRecoveryTests(unittest.TestCase):
         self.assertTrue(ep["auto_preview"])
         self.assertEqual(len(ep["footage"]),2)
 
+    def test_full_keyless_autofill_can_create_one_episode_from_new_pool(self):
+        """Use the real selector without paid keys or a network request."""
+        import os
+        from unittest.mock import patch
+        from moto_autocreate import create_one
+        catalog=json.loads((ROOT / "episodes.json").read_text("utf8"))
+        with patch.dict(os.environ,{"PEXELS_API_KEY":"","OPENAI_API_KEY":"",
+                                    "OPENROUTER_API_KEY":"",
+                                    "GUSTAVA_TTS_PROVIDER":"aidocmaker_deep"}):
+            episode=create_one(
+                catalog,source_fetch=lambda *args: [],
+                commons_fetch=lambda theme: [],
+                permanently_used=set(),prepared_scripts=[])
+        self.assertFalse(episode["auto_publish"])
+        self.assertEqual(len(episode["footage"]),2)
+
     def test_recognized_sources_cannot_be_reused(self):
         race=next(x for x in self.pool if source_id(x)=="32034080")
         mud=next(x for x in self.pool if source_id(x)=="36365086")
