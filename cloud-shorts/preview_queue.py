@@ -117,7 +117,7 @@ RENDER_DEPENDENCIES = (
     "render_episode.py", "caption_layout.py", "tts_voice.py", "silero_voice.py",
     "soundtrack.py", "kokoro_voice.py", "voice_qa.py", "mixed_audio_qa.py",
     "asr_fallback.py", "qa_autorepair.py", "moto_assets.py", "voice_style.py", "native_bass_voice.py", "silero_voice.py", "deep_voice.py",
-    "selfhosted_voice.py", "voice_routing.py",
+    "selfhosted_voice.py", "voice_routing.py", "visual_director.py",
 )
 MAX_ATTEMPTS = 3
 MAX_VISUAL_REPAIR_ATTEMPTS = 4  # one confirmed frozen-footage correction before any upload
@@ -161,12 +161,30 @@ def eligible_retry(episode, receipt, new_fingerprint):
     if receipt.get("state") != "preview_ready":
         return False
     attempts = int(receipt.get("attempt_count", 1))
+    # Exact earlier preview: at 3.900s the mud caption appeared while
+    # 5.881s of racing video remained. A successful private QA pass did not
+    # imply audio / visual storytelling alignment. Require a documented,
+    # SHA-pinned review of the *previous* MP4 before a single visual retry.
+    scene_proof = episode.get("visual_revision_evidence") or {}
+    scene_retime = (
+        episode.get("visual_revision_reason") == "spoken_scene_caption_mismatch"
+        and episode.get("auto_publish") is False
+        and isinstance(scene_proof, dict)
+        and scene_proof.get("prior_run_id") == str(receipt.get("run_id"))
+        and bool(re.fullmatch(r"[0-9a-f]{64}",
+                              str(scene_proof.get("prior_mp4_sha256") or "")))
+        and type(scene_proof.get("old_caption_start_seconds")) in (float, int)
+        and type(scene_proof.get("old_second_scene_start_seconds")) in (float, int)
+        and (scene_proof["old_second_scene_start_seconds"]
+             - scene_proof["old_caption_start_seconds"] >= .70)
+    )
     visual_repair = (episode.get("visual_revision_requested") is True
-                     and episode.get("visual_revision_reason") in (
+                     and (episode.get("visual_revision_reason") in (
                          "source_freeze_confirmed",
                          "owner_rejected_static_helmet_coverage",
                          "owner_rejected_end_clip_no_helmet_removal",
-                         "caption_clipped_confirmed"))
+                         "caption_clipped_confirmed")
+                         or scene_retime))
     male_voice_repair = (
         episode.get("voice_engine") == REQUIRED_MALE_ENGINE
         and episode.get("voice_revision_requested") is True
