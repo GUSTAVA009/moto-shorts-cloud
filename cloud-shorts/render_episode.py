@@ -385,13 +385,54 @@ def caption_text_lines(layout):
     return lines
 
 
+def caption_schedule(ep, total, planned_scenes=None):
+    """Match an ironic myth/reveal caption to the *actual* footage cut.
+
+    Previously every second caption appeared at ~3.9s, often several seconds
+    before the real travel-to-racetrack transition; a generic fixed timer
+    therefore made captions feel unrelated to the video.
+    """
+    start = ("caption_start", 0.05, min(2.45, total - 4.0))
+    finish = ("caption_end", total - 2.75, total - 0.12)
+    if ep.get("creative_treatment") != "myth_vs_reality_irony":
+        spans = [start]
+        if not ep.get("story_steps"):
+            spans.append(("caption_middle", min(3.9, total - 4.0),
+                          min(6.35, total - 2.8)))
+        return spans + [finish]
+    if (not isinstance(planned_scenes, list) or len(planned_scenes) != 2
+            or any(not isinstance(item, dict) for item in planned_scenes)):
+        raise RuntimeError("MYTH_CAPTION_REQUIRES_VERIFIED_TWO_SHOT_PLAN")
+    try:
+        cut = float(planned_scenes[0]["seconds"]) - float(
+            ep.get("opening_trim_seconds", 0.0))
+    except (KeyError, TypeError, ValueError, OverflowError) as error:
+        raise RuntimeError("MYTH_CAPTION_TRANSITION_UNVERIFIED") from error
+    if not 3.5 < cut < total - 3.6:
+        raise RuntimeError("MYTH_CAPTION_CUT_OUTSIDE_READABLE_DURATION")
+    # The comparison text appears only AFTER the second real source begins,
+    # never over unrelated B-roll from the first scene.
+    reveal_at = cut + 0.12
+    reveal_until = min(reveal_at + 2.35, total - 3.05)
+    if reveal_until - reveal_at < 1.0:
+        raise RuntimeError("MYTH_CAPTION_REVEAL_TOO_SHORT")
+    return [start, ("caption_middle", reveal_at, reveal_until), finish]
+
+
 def draw_captions(ep, work, total):
     if not FONT.is_file():
         raise RuntimeError("Expected Cyrillic font not present")
-    spans = [("caption_start", 0.05, min(2.45, total - 4.0))]
-    if not ep.get("story_steps"):
-        spans.append(("caption_middle", min(3.9, total - 4.0), min(6.35, total - 2.8)))
-    spans.append(("caption_end", total - 2.75, total - 0.12))
+    plan = None
+    if ep.get("creative_treatment") == "myth_vs_reality_irony":
+        qa_path = work / "visual_qa.json"
+        if not qa_path.is_file():
+            raise RuntimeError("MYTH_CAPTION_MISSING_REAL_VISUAL_QA")
+        visual_qa = json.loads(qa_path.read_text(encoding="utf8"))
+        if (visual_qa.get("passed") is not True
+                or visual_qa.get("episode") != ep.get("id")):
+            raise RuntimeError("MYTH_CAPTION_VISUAL_QA_MISMATCH")
+        plan = visual_qa.get("sequence")
+    spans = caption_schedule(ep, total, plan)
     filters = []
     caption_checks = []
 
@@ -419,6 +460,8 @@ def draw_captions(ep, work, total):
             )
         caption_checks.append({"label": label, "font_size": layout["font_size"],
                                "line_count": layout["line_count"],
+                               "starts_at_seconds": round(at, 3),
+                               "ends_at_seconds": round(until, 3),
                                "max_line_width_px": layout["max_line_width_px"],
                                "safe_width_px": layout["safe_width_px"]})
 
