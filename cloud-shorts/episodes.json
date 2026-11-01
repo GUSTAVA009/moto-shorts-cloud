@@ -7489,7 +7489,7 @@
       "voice_profile": "gustava_original_qwen3_v1",
       "selfhosted_voice_id": "gustava-original-v1",
       "title": "Мотогонка или песчаная трасса: какой момент интереснее? #shorts",
-      "narration": "Мотоцикл на гоночной трассе и на песке: это два разных испытания. Сначала мотоциклисты участвуют в гонке. На другом, независимом видео райдер едет по песчаной трассе. Это разные люди и съёмки, не один заезд. Какой момент сильнее: мотогонка или песчаная трасса?",
+      "narration": "Мотоцикл на гоночной трассе или в песках? На первом видео гонка на треке. На другом райдер едет по песчаной трассе. Это разные съёмки. Что выберешь?",
       "description": "Две разные мотоистории: мотогонка и песчаная трасса. Независимые кадры, без выдуманного общего события.\n\n#shorts",
       "caption_start": "МОТОГОНКА",
       "caption_middle": "ПЕСЧАНАЯ ТРАССА",
@@ -7560,7 +7560,23 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1",
-      "story_reserve_id": "r2-racing-0029"
+      "story_reserve_id": "r2-racing-0029",
+      "visual_duration_revision_requested": true,
+      "visual_duration_revision_reason": "concise_script_fits_original_moving_scenes",
+      "visual_duration_revision_evidence": {
+        "previous_run_id": "41329265407",
+        "previous_fingerprint": "5e000efff634e23654c6dd1dc743cab70958b97fdef816b1b0f6c0ec02938c3a",
+        "previous_error": "VISUAL_DURATION_SHORTAGE",
+        "source_ids": [
+          "32191741",
+          "29465924"
+        ],
+        "old_narration_length": 260,
+        "new_narration_length": 148,
+        "observed_previous_run_failure": true,
+        "licensed_media_immutable": true,
+        "publication_authorized": false
+      }
     }
   ]
 }
