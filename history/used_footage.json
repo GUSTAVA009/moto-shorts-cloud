@@ -872,6 +872,16 @@
       "episode": "moto-roadtrip-5b98825cae72",
       "source": "https://www.pexels.com/video/motorcycle-racing-on-track-in-indonesia-31894372/",
       "status": "reserved-or-rendered"
+    },
+    "32191741": {
+      "episode": "moto-racing-59aff99f5dee",
+      "source": "https://www.pexels.com/video/high-speed-motorcycle-drag-racing-action-32191741/",
+      "status": "reserved-or-rendered"
+    },
+    "29465924": {
+      "episode": "moto-racing-59aff99f5dee",
+      "source": "https://www.pexels.com/video/high-speed-desert-motorcycle-racing-adventure-29465924/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1315,6 +1325,13 @@
       "people": "touring-travelers-5b988",
       "story": "scenic-country-road-5b988",
       "visual": "three-clips-5b988"
+    },
+    "moto-racing-59aff99f5dee": {
+      "environment": "race-paddock-59aff",
+      "bike": "track-racing-bike",
+      "people": "racing-crews-59aff",
+      "story": "circuit-racing-59aff",
+      "visual": "three-clips-59aff"
     }
   }
 }
