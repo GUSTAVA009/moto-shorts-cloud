@@ -1,11 +1,11 @@
 {
   "id": "moto-roadtrip-5b98825cae72",
   "state": "reserved",
-  "run_id": "41329033081",
-  "attempt_count": 1,
-  "preview_fingerprint": "7d0e1494f1fdcc3ed98c848b358afae22f7c22f0b92c73f026ec2f2b6d34e097",
+  "run_id": "41332576263",
+  "attempt_count": 2,
+  "preview_fingerprint": "7c25d160987e17123d72c8b3175cbb53b6740742b2fed985378521639592e10e",
   "deep_source_sha256": null,
   "selfhosted_voice_id": "gustava-original-v1",
-  "previous_run_id": null,
+  "previous_run_id": "41329033081",
   "notes": "Revised preview only; never retry a public or uncertain upload."
 }
