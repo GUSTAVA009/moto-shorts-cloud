@@ -6,6 +6,7 @@ after mixing. This quality gate runs Whisper on the exact finalized MP4 and
 fails closed if the file is missing, damaged or the original words are lost.
 """
 from __future__ import annotations
+from apply_exact_qa_episode_repair import change as apply_verified_episode_revision
 import argparse
 import hashlib
 import json
@@ -53,7 +54,9 @@ def main():
     parser.add_argument("--mp4", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    entries = json.loads(args.catalog.read_text(encoding="utf8"))["episodes"]
+    catalog = json.loads(args.catalog.read_text(encoding="utf8"))
+    apply_verified_episode_revision(catalog)
+    entries = catalog["episodes"]
     episode = next((e for e in entries if e["id"] == args.episode), None)
     if episode is None:
         raise SystemExit("EPISODE_MISSING: no final mixed audio QA")

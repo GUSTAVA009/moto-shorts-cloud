@@ -38,8 +38,8 @@ SCENES = (
      "в путешествии", "райдер едет на туристическом мотоцикле", "мотопутешествие",
      r"турист|путешеств|маршрут|дальн"),
     ("race", r"(?:motorcycle|motorbike|motocross|dirt bike).*?(?:rac|championship|competition)|(?:rac|championship|competition).*?(?:motorcycle|motorbike|motocross|dirt bike)",
-     "на гоночной трассе", "мотоциклисты участвуют в гонке", "мотогонка",
-     r"гонк|соревнован|старт"),
+     "на гоночной трассе", "мотоциклист едет по треку", "поездка по треку",
+     r"гонк|соревнован|старт|трек|трасс"),
     ("city", r"(?:motorcycl(?:e|es|ist|ists)|motorbike(?:s)?|scooter(?:s)?).*?(?:urban|city|traffic|street)|(?:urban|city|traffic|street).*?(?:motorcycl(?:e|es|ist|ists)|motorbike(?:s)?|scooter(?:s)?)",
      "в городском потоке", "байкер едет по городской улице", "городская поездка",
      r"город|улиц|поток"),
@@ -83,8 +83,8 @@ def select_pair(sources, used_ids):
             continue
         validated_media(media)
         eligible.append((media, scene))
-    # Prefer a genuine journey + competition pairing for the optional
-    # ironic-myth format when BOTH actions have source-page evidence.
+    # Prefer a journey + track pairing; source title alone never proves an
+    # organized race or multiple competitors are visible in the frames.
     for index, (first, a) in enumerate(eligible):
         for second, b in eligible[index + 1:]:
             if ({a[0], b[0]} == {"touring", "race"} and
@@ -132,8 +132,8 @@ def touring_track_myth(sources, previous_titles):
     )
     endings = (
         "А ты выбрал бы путешествие или гоночный трек?",
-        "Что важнее лично тебе: маршрут или гонка?",
-        "Что тебе ближе: путешествие или гонка?",
+        "Что важнее лично тебе: горный маршрут или трек?",
+        "Что тебе ближе: путешествие или трек?",
     )
     # The Qwen3 cloud narrator may require ~12-15 s for 125-160 chars.
     # Two actual moving shots in v3 are limited to 8 s each; lengthy
@@ -147,13 +147,13 @@ def touring_track_myth(sources, previous_titles):
     titles = (
         "Туристический байк скучный? Проверь стереотип #shorts",
         "Миф о туристических мотоциклах: дорога против трека #shorts",
-        "Турист или гонщик? Кто придумал этот спор? #shorts",
+        "Путешествие или трек? Два мира мотоциклов #shorts",
     )
     item = {
         "title": titles[variant], "narration": narration,
         "description": (
             "Ироничный разбор мифа о туристических байках. "
-            "Два независимых лицензированных эпизода: путешествие и гонка. "
+            "Два независимых лицензированных эпизода: путешествие и поездка по треку. "
             "Не одно событие и не сравнение характеристик моделей.\n\n#shorts"
         ),
         "caption_start": "МИФ: ТУРИСТ — ЭТО СКУЧНО?",
