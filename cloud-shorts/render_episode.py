@@ -414,6 +414,8 @@ def caption_schedule(ep, total, planned_scenes=None):
         return spans + [finish]
     if (not isinstance(planned_scenes, list) or len(planned_scenes) != 2
             or any(not isinstance(item, dict) for item in planned_scenes)):
+        if ep.get("creative_treatment") == "myth_vs_reality_irony":
+            raise RuntimeError("MYTH_CAPTION_REQUIRES_VERIFIED_TWO_SHOT_PLAN")
         raise RuntimeError("SCENE_CAPTION_REQUIRES_VERIFIED_TWO_SHOT_PLAN")
     try:
         cut = float(planned_scenes[0]["seconds"]) - float(
