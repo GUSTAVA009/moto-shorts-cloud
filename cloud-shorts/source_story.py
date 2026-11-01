@@ -34,6 +34,9 @@ SCENES = (
     ("sand", r"(?:motorcycle|motorbike|motocross|dirt bike).*?(?:sand|desert|dune)|(?:sand|desert|dune).*?(?:motorcycle|motorbike|motocross|dirt bike)",
      "на песке", "райдер едет по песчаной трассе", "песчаная трасса",
      r"пес|дюн|пустын"),
+    ("touring", r"(?:motorcycle|motorbike|touring bike|adventure bike).*?(?:touring|road trip|roadtrip|travel|journey)|(?:touring|road trip|roadtrip|travel|journey).*?(?:motorcycle|motorbike|touring bike|adventure bike)",
+     "в путешествии", "райдер едет на туристическом мотоцикле", "мотопутешествие",
+     r"турист|путешеств|маршрут|дальн"),
     ("race", r"(?:motorcycle|motorbike|motocross|dirt bike).*?(?:rac|championship|competition)|(?:rac|championship|competition).*?(?:motorcycle|motorbike|motocross|dirt bike)",
      "на гоночной трассе", "мотоциклисты участвуют в гонке", "мотогонка",
      r"гонк|соревнован|старт"),
@@ -80,6 +83,13 @@ def select_pair(sources, used_ids):
             continue
         validated_media(media)
         eligible.append((media, scene))
+    # Prefer a genuine journey + competition pairing for the optional
+    # ironic-myth format when BOTH actions have source-page evidence.
+    for index, (first, a) in enumerate(eligible):
+        for second, b in eligible[index + 1:]:
+            if ({a[0], b[0]} == {"touring", "race"} and
+                    first["author"].strip().casefold() != second["author"].strip().casefold()):
+                return [first, second]
     for index, (first, a) in enumerate(eligible):
         for second, b in eligible[index + 1:]:
             if (a[0] != b[0] and
@@ -102,6 +112,58 @@ def require_filmable(prose, sources):
     return [scene[0] for scene in scenes]
 
 
+def touring_track_myth(sources, previous_titles):
+    """Original ironic stereotype-rebuttal, never a claimed single event.
+
+    Owner reference: YouTube Short A80XBI_rnb0 (only title and public
+    description verified; do not reproduce uninspected video or music).
+    """
+    if len(sources) != 2:
+        raise ValueError("MYTH_REQUIRES_TWO_REAL_SCENES")
+    a, b = (scene_for(source) for source in sources)
+    if a is None or b is None or {a[0], b[0]} != {"touring", "race"}:
+        raise ValueError("MYTH_REQUIRES_TOURING_AND_RACING")
+    token = "|".join(str(x["source_page"]) for x in sources)
+    variant = hashlib.sha256(token.encode("utf8")).digest()[0] % 3
+    openers = (
+        "Мотоцикл для путешествий — скука? Так шутят диванные эксперты.",
+        "Мотоцикл в путешествии — якобы без драйва? Диванный миф дня.",
+        "Мотоцикл на дальнем маршруте скучнее гонки? Спорный стереотип.",
+    )
+    endings = (
+        "А ты выбрал бы путешествие или гоночный трек?",
+        "Что важнее лично тебе: маршрут или гонка?",
+        "Что тебе ближе: путешествие или гонка?",
+    )
+    narration = (
+        f"{openers[variant]} На первой независимой съёмке {a[3]}. "
+        f"На другой — {b[3]}. Это разные люди и разные кадры, "
+        f"а не состязание двух байков. {endings[variant]}"
+    )
+    titles = (
+        "Туристический байк скучный? Проверь стереотип #shorts",
+        "Миф о туристических мотоциклах: дорога против трека #shorts",
+        "Турист или гонщик? Кто придумал этот спор? #shorts",
+    )
+    item = {
+        "title": titles[variant], "narration": narration,
+        "description": (
+            "Ироничный разбор мифа о туристических байках. "
+            "Два независимых лицензированных эпизода: путешествие и гонка. "
+            "Не одно событие и не сравнение характеристик моделей.\n\n#shorts"
+        ),
+        "caption_start": "МИФ: ТУРИСТ — ЭТО СКУЧНО?",
+        "caption_middle": "ДОРОГА ИЛИ ГОНОЧНЫЙ ТРЕК?",
+        "caption_end": "А ТЫ ЧТО ВЫБЕРЕШЬ?",
+        "_editorial_format": "ironic_touring_vs_track_myth",
+        "_creative_treatment": "myth_vs_reality_irony",
+        "_generation_source": "keyless_original_touring_track_satire_v1",
+    }
+    require_filmable(item, sources)
+    if item["title"].casefold() in {str(t).strip().casefold() for t in previous_titles}:
+        raise ValueError("MYTH_TITLE_PREVIOUSLY_USED")
+    return item
+
 def compose(sources, previous_titles):
     """A short, grounded contrast, not a fabricated one-event storyline."""
     if len(sources) != 2:
@@ -109,6 +171,8 @@ def compose(sources, previous_titles):
     a, b = (scene_for(s) for s in sources)
     if a is None or b is None or a[0] == b[0]:
         raise ValueError("NO_ACTION_DIVERSITY: source footage not suitable for story")
+    if {a[0], b[0]} == {"touring", "race"}:
+        return touring_track_myth(sources, previous_titles)
     token = "|".join(str(s["source_page"]) for s in sources) + "|" + str(len(previous_titles))
     variant = hashlib.sha256(token.encode("utf8")).digest()[0] % 3
     openings = (
