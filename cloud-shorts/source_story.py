@@ -40,7 +40,7 @@ SCENES = (
     ("race", r"(?:motorcycle|motorbike|motocross|dirt bike).*?(?:rac|championship|competition)|(?:rac|championship|competition).*?(?:motorcycle|motorbike|motocross|dirt bike)",
      "на гоночной трассе", "мотоциклисты участвуют в гонке", "мотогонка",
      r"гонк|соревнован|старт"),
-    ("city", r"(?:motorcycle|motorbike|scooter).*?(?:urban|city|traffic|street)|(?:urban|city|traffic|street).*?(?:motorcycle|motorbike|scooter)",
+    ("city", r"(?:motorcycl(?:e|es|ist|ists)|motorbike(?:s)?|scooter(?:s)?).*?(?:urban|city|traffic|street)|(?:urban|city|traffic|street).*?(?:motorcycl(?:e|es|ist|ists)|motorbike(?:s)?|scooter(?:s)?)",
      "в городском потоке", "байкер едет по городской улице", "городская поездка",
      r"город|улиц|поток"),
     ("forest", r"(?:motorcycle|motorbike|dirt bike).*?(?:forest|woods)|(?:forest|woods).*?(?:motorcycle|motorbike|dirt bike)",
