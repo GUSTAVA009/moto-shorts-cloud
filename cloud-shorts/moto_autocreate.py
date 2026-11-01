@@ -299,6 +299,12 @@ def original_story(theme, sources, previous_titles, client=None, fetch=http_json
             print("UNSUPPORTED_MODEL_NARRATION_REAUTHORED",
                   str(mismatch), flush=True)
             return offline_original_story(theme, sources, previous_titles)
+    if len(obj["narration"]) > 160:
+        # One v3 short uses only TWO independent moving sources (8 s each).
+        # Re-author faithfully from those exact sources rather than trigger
+        # expensive Qwen synthesis of an impossible 20+ second visual track.
+        print("TWO_SCENE_SCRIPT_REAUTHORED_FOR_ACTUAL_VIDEO_CAP",len(obj["narration"]),flush=True)
+        return offline_original_story(theme, sources, previous_titles)
     obj["_editorial_format"] = content_format
     return obj
 
