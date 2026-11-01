@@ -437,6 +437,70 @@
       "license": "Pexels License",
       "duration": 20,
       "source_title": "man doing stunts on a motorcycle"
+    },
+    {
+      "topics": [
+        "motocross",
+        "racing"
+      ],
+      "key": "curated_32034080",
+      "url": "https://www.pexels.com/download/video/32034080/",
+      "source_page": "https://www.pexels.com/video/high-speed-motorcycle-drag-race-action-32034080/",
+      "author": "Gavin Fregona",
+      "license": "Pexels License",
+      "source_title": "high speed motorcycle drag race action",
+      "duration": 18
+    },
+    {
+      "topics": [
+        "repair",
+        "vintage"
+      ],
+      "key": "curated_7170232",
+      "url": "https://www.pexels.com/download/video/7170232/",
+      "source_page": "https://www.pexels.com/video/a-man-repairing-motorcycle-7170232/",
+      "author": "ArtHouse Studio",
+      "license": "Pexels License",
+      "source_title": "a man repairing motorcycle",
+      "duration": 16
+    },
+    {
+      "topics": [
+        "motocross",
+        "racing",
+        "training"
+      ],
+      "key": "curated_36365086",
+      "url": "https://www.pexels.com/download/video/36365086/",
+      "source_page": "https://www.pexels.com/video/off-road-motorcycle-adventure-in-muddy-terrain-36365086/",
+      "author": "Harvey Tan Villarino",
+      "license": "Pexels License",
+      "source_title": "off road motorcycle adventure in muddy terrain"
+    },
+    {
+      "topics": [
+        "motocross",
+        "racing",
+        "training"
+      ],
+      "key": "curated_31881759",
+      "url": "https://www.pexels.com/download/video/31881759/",
+      "source_page": "https://www.pexels.com/video/thrilling-off-road-motorcycle-adventure-in-muddy-terrain-31881759/",
+      "author": "setengah lima sore",
+      "license": "Pexels License",
+      "source_title": "thrilling off road motorcycle adventure in muddy terrain"
+    },
+    {
+      "topics": [
+        "snow"
+      ],
+      "key": "curated_6435404",
+      "url": "https://www.pexels.com/download/video/6435404/",
+      "source_page": "https://www.pexels.com/video/person-riding-a-motorcycle-on-the-snow-6435404/",
+      "author": "Andrew Kota",
+      "license": "Pexels License",
+      "source_title": "person riding a motorcycle on the snow",
+      "duration": 13
     }
   ]
 }
