@@ -284,24 +284,22 @@ class NewMotoSourceTests(unittest.TestCase):
                          {tour["source_page"],race["source_page"]})
         self.assertEqual(len(ep["shots"]),2)
 
-    def test_new_original_story_uses_cartesia_only_after_owner_configuration(self):
+    def test_new_story_pins_owner_cloud_cpu_voice_not_saas(self):
         from unittest.mock import patch
-        import cartesia_voice as cv
-        uuid = "0f111c12-cabc-4ba0-9a29-1ef98b133e90"
+        import selfhosted_voice as cv
         media = s.pexels_results(s.THEMES[0], 1, "demo",
             fetch=lambda a,b: {"videos": [
                 fixture(90000001, "Alice Rider"),
                 fixture(90000002, "Bob Mechanic"),
                 fixture(90000004, "Daria Rider")]})
-        env = {"GUSTAVA_TTS_PROVIDER": cv.VOICE_ENGINE,
-               "CARTESIA_VOICE_ID": uuid}
+        env = {"GUSTAVA_TTS_PROVIDER":cv.VOICE_ENGINE}
         with patch.dict("os.environ", env):
             ep = s.assemble_episode(
                 self.catalog, s.choose_theme(self.catalog["episodes"]),
                 media[:3], story(), len(self.catalog["episodes"]))
         self.assertEqual(ep["voice_engine"], cv.VOICE_ENGINE)
         self.assertEqual(ep["voice_profile"], cv.PROFILE_ID)
-        self.assertEqual(ep["cartesia_voice_id"], uuid)
+        self.assertEqual(ep["selfhosted_voice_id"],cv.VOICE_ID)
         self.assertTrue(ep["auto_preview"])
         self.assertFalse(ep["auto_publish"])
         self.assertNotIn("deep_audio", ep)
