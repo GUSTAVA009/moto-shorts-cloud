@@ -29,6 +29,10 @@ class CapacityReportTests(unittest.TestCase):
         self.assertEqual(report["script_reserve_capacity"], 150000)
         self.assertEqual(report["script_reserve_remaining"], 150000)
         self.assertGreaterEqual(report["unconsumed_curated_pexels_clips"], 0)
+        self.assertEqual(report["minimum_new_distinct_action_clips_per_day"], 24)
+        self.assertEqual(report["minimum_seven_day_source_buffer_clips"], 168)
+        self.assertGreaterEqual(
+            report["public_footage_source_id_coverage_days_upper_bound"],0)
 
     def test_report_shows_verified_rolling_ten_not_scheduled_posts(self):
         batch, _ = reconcile(None, [])
@@ -57,6 +61,11 @@ class CapacityReportTests(unittest.TestCase):
         self.assertEqual(report["published_today_reported_by_buffer"], 0)
         self.assertGreater(len(report["hard_blockers"]), 0)
         self.assertTrue(report["keyless_editorial_script_reserve"])
+        if report["unconsumed_curated_pexels_clips"] < 168:
+            self.assertTrue(any(
+                "LICENSED_ACTION_MATCHED_FOOTAGE_BELOW_330_MONTH_PACE" in error
+                for error in report["hard_blockers"]))
+        self.assertFalse(report["monthly_delivery_observations"]["claims_complete_youtube_publication"])
 
 
 if __name__ == "__main__":
