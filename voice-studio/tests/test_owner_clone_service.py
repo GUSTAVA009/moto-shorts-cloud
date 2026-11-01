@@ -83,7 +83,7 @@ class OwnerCloneServiceTests(unittest.TestCase):
         self.assertEqual(first,repeat)
         self.assertEqual(len(seen),1)
         with self.assertRaisesRegex(ValueError,"IDEMPOTENCY_COLLISION"):
-            api.build_audio(dict(self.request,text="Другой текст"),
+            api.build_audio(dict(self.request,text="Другой текст для проверки повторного запроса."),
                             "factory-test-0001",producer=producer)
         self.assertEqual(len(seen),1)
 
@@ -126,8 +126,11 @@ class OwnerCloneServiceTests(unittest.TestCase):
             urllib.request.urlopen(request,timeout=3)
         self.assertEqual(blocked.exception.code,403)
         with patch.object(api,"production_run",return_value=pcm_wav()):
-            request.add_header("Authorization","Bearer "+self.env["OWNER_TTS_API_KEY"])
-            with urllib.request.urlopen(request,timeout=5) as r:
+            authed=urllib.request.Request(url,data=body,method="POST",
+                headers={"X-Idempotency-Key":"factory-0003",
+                         "Content-Type":"application/json",
+                         "Authorization":"Bearer "+self.env["OWNER_TTS_API_KEY"]})
+            with urllib.request.urlopen(authed,timeout=5) as r:
                 self.assertEqual(r.status,200)
                 self.assertEqual(r.headers["X-Audio-SHA256"],
                                  hashlib.sha256(r.read()).hexdigest())
