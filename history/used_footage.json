@@ -852,6 +852,16 @@
       "episode": "moto-racing-mud-contrast-20261101",
       "source": "https://www.pexels.com/video/off-road-motorcycle-adventure-in-muddy-terrain-36365086/",
       "status": "reserved-or-rendered"
+    },
+    "7170232": {
+      "episode": "moto-vintage-c81aecc34671",
+      "source": "https://www.pexels.com/video/a-man-repairing-motorcycle-7170232/",
+      "status": "reserved-or-rendered"
+    },
+    "31881759": {
+      "episode": "moto-vintage-c81aecc34671",
+      "source": "https://www.pexels.com/video/thrilling-off-road-motorcycle-adventure-in-muddy-terrain-31881759/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1281,6 +1291,13 @@
       "people": "race-track-and-offroad-riders",
       "story": "racing-speed-vs-mud-control",
       "visual": "two-independent-moving-motorbike-actions"
+    },
+    "moto-vintage-c81aecc34671": {
+      "environment": "vintage-workshop-c81ae",
+      "bike": "classic-motorcycle",
+      "people": "classic-restorers-c81ae",
+      "story": "vintage-bike-work-c81ae",
+      "visual": "three-clips-c81ae"
     }
   }
 }
