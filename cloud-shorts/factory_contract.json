@@ -124,7 +124,8 @@
     "no_unapproved_billing": true,
     "cartesia_excluded": true,
     "local_voice_inference_prohibited": true,
-    "multi_channel_voice_and_keys_required": true
+    "multi_channel_voice_and_keys_required": true,
+    "superseded_for_fallback_by": "owner_approved_three_tier_voice_fallback"
   },
   "selfhosted_voice": {
     "voice_engine": "gustava_selfhosted_qwen3",
@@ -143,7 +144,8 @@
     "require_both_source_and_mixed_russian_asr": true,
     "requires_individual_video_qa_and_editorial_approval": true,
     "website_private_session": true,
-    "previous_deep_immutable": true
+    "previous_deep_immutable": true,
+    "actual_backend_and_route_recorded_per_wav": true
   },
   "voice_host_options": {
     "target": "Oracle Cloud Always Free Ampere A1",
@@ -155,5 +157,26 @@
     "requires_capacity": true,
     "reclaim_idle_possible": true,
     "guaranteed_zero_cost_multichannel_sla": false
+  },
+  "owner_approved_three_tier_voice_fallback": {
+    "date": "2026-11-01",
+    "authority": "Owner explicitly confirms local PC can be used as an optional voice generator and authorizes a third independent narrator generator if both earlier routes fail",
+    "provider_preference": [
+      "cloud_qwen3",
+      "owner_windows_qwen3_https",
+      "independent_chatterbox_multilingual_v3"
+    ],
+    "old_no_local_voice_rule_overridden": true,
+    "distinct_https_hosts_and_api_keys": true,
+    "only_fallback_on_network_or_transient_provider_unavailability": true,
+    "no_fallback_on_wrong_voice_wrong_sha_or_invalid_wav": true,
+    "same_pinned_owned_reference_for_all_routes": true,
+    "independent_tertiary_host_required": true,
+    "tertiary_model": "ResembleAI/Chatterbox-Multilingual V3 (Russian, MIT)",
+    "tertiary_requires_canary_approval_and_real_russian_asr": true,
+    "preserve_prior_original_deep_audio_and_no_rejected_voice_substitution": true,
+    "no_local_personal_videos": true,
+    "no_publishing_without_complete_multistage_qa": true,
+    "endpoint_configured_is_not_service_operational": true
   }
 }

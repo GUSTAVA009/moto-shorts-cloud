@@ -1,0 +1,6 @@
+# Install on an INDEPENDENT third machine only.
+# Voice Studio primary Qwen and GitHub validation do not install these weights.
+-r requirements.txt
+chatterbox-tts
+numpy
+torch

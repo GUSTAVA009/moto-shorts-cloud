@@ -19,6 +19,7 @@ import urllib.request
 import wave
 
 from deep_voice import pcm_stats, provenance_path
+import voice_failover
 
 VOICE_ENGINE = "gustava_selfhosted_qwen3"
 VOICE_ID = "gustava-original-v1"
@@ -55,19 +56,9 @@ def valid_url(env=None):
 
 def ready(episode, environment=None):
     env = os.environ if environment is None else environment
-    if not approved_profile(episode) or episode.get("auto_publish") is True:
-        return False
-    if not (env.get("GUSTAVA_SELFHOSTED_TTS_ENABLED") == "1"
-            and (env.get("GUSTAVA_VOICE_KEY_PRESENT") == "true" or
-                 bool(env.get("GUSTAVA_VOICE_API_KEY")))
-            and re.fullmatch(r"[0-9a-f]{64}",
-                             str(env.get("GUSTAVA_VOICE_REFERENCE_SHA256") or ""))):
-        return False
-    try:
-        valid_url(env)
-    except (ValueError, TypeError):
-        return False
-    return True
+    return bool(approved_profile(episode)
+                and episode.get("auto_publish") is not True
+                and voice_failover.available_routes(env))
 
 
 def valid_source_wav(raw):
@@ -89,51 +80,12 @@ def valid_source_wav(raw):
 
 
 def _request(episode):
-    env=os.environ
-    url=valid_url(env)
-    token=env.get("GUSTAVA_VOICE_API_KEY","")
-    if not re.fullmatch(r"gvk_[A-Za-z0-9_-]{40,64}",token):
-        raise RuntimeError("SELFHOSTED_TTS_KEY_NOT_INSTALLED")
-    if env.get("GUSTAVA_SELFHOSTED_TTS_ENABLED") != "1":
-        raise RuntimeError("SELFHOSTED_TTS_NOT_ENABLED")
-    text=episode["narration"]
-    request_id=(episode["id"]+"-"+sha(text.encode("utf8"))[:20])
-    payload={
-        "text": text, "voice": VOICE_ID, "response_format":"wav"
-    }
-    req=urllib.request.Request(url,
-        data=json.dumps(payload,ensure_ascii=False).encode("utf8"),
-        headers={
-            "Authorization":"Bearer "+token,
-            "Content-Type":"application/json",
-            "Accept":"audio/wav",
-            "X-Idempotency-Key":request_id,
-            "User-Agent":"GUSTAVA-SHORTS-FACTORY",
-        },method="POST")
-    class NoRedirect(urllib.request.HTTPRedirectHandler):
-        def redirect_request(self,*args,**kwargs):
-            return None
-    try:
-        # Refuse redirects so Authorization never leaves the approved domain.
-        with urllib.request.build_opener(NoRedirect()).open(
-                req,timeout=360) as response:
-            if response.geturl() != url:
-                raise RuntimeError("SELFHOSTED_TTS_REDIRECT_BLOCKED")
-            data=response.read(MAX_BYTES+1)
-            generated_sha=response.headers.get("X-Audio-SHA256","")
-            voice_id=response.headers.get("X-Voice-ID","")
-            ref_sha=response.headers.get("X-Reference-SHA256","")
-    except urllib.error.HTTPError as error:
-        # Never include provider URL, headers, response body or token.
-        raise RuntimeError("SELFHOSTED_TTS_HTTP_"+str(error.code)) from None
-    except urllib.error.URLError:
-        raise RuntimeError("SELFHOSTED_TTS_NETWORK_UNAVAILABLE") from None
-    valid_source_wav(data)
-    if (generated_sha != sha(data)
-            or voice_id != VOICE_ID
-            or ref_sha != env.get("GUSTAVA_VOICE_REFERENCE_SHA256")):
-        raise ValueError("SELFHOSTED_TTS_SOURCE_OR_SPEAKER_SHA_MISMATCH")
-    return data,ref_sha
+    """Owner cloud -> Windows HTTPS -> approved Chatterbox v3.
+
+    A different narrator or an unverifiable WAV blocks the release rather
+    than silently switching identity. Do not use local PC video files.
+    """
+    return voice_failover.synthesize(episode, validator=valid_source_wav)
 
 
 def verify_profile(wav,episode):
@@ -169,9 +121,11 @@ def render(episode,destination,requester=None):
     target=Path(destination)
     if target.is_file() or provenance_path(target).is_file():
         return verify_profile(target,episode)["duration_seconds"]
-    if os.environ.get("GUSTAVA_SELFHOSTED_TTS_ENABLED") != "1":
-        raise RuntimeError("SELFHOSTED_TTS_NOT_ENABLED")
-    source,ref_sha=(requester or _request)(episode)
+    if not ready(episode):
+        raise RuntimeError("NO_CONFIGURED_APPROVED_TTS_PROVIDER")
+    produced=(requester or _request)(episode)
+    source,ref_sha=produced[:2]
+    provider_route=produced[2] if len(produced)>2 else "verified_test_provider"
     valid_source_wav(source)
     if ref_sha != os.environ.get("GUSTAVA_VOICE_REFERENCE_SHA256"):
         raise ValueError("SELFHOSTED_TTS_REFERENCE_NOT_APPROVED")
@@ -195,7 +149,8 @@ def render(episode,destination,requester=None):
             "reference_sha256":ref_sha,
             "wav_sha256":sha(target.read_bytes()),
             "duration_seconds":info["duration_seconds"],
-            "local_selfhosted":True,"voice_layers":1,"pitch_shift":1.0,
+            "local_selfhosted":provider_route=="local_pc",
+            "provider_route":provider_route,"voice_layers":1,"pitch_shift":1.0,
         }
         provenance_path(target).write_text(
             json.dumps(proof,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
