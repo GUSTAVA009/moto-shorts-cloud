@@ -276,7 +276,7 @@ class NewMotoSourceTests(unittest.TestCase):
             ep=s.create_one(self.catalog, commons_fetch=lambda _:[])
         self.assertEqual(ep["editorial_format"],"ironic_touring_vs_track_myth")
         self.assertEqual(ep["creative_treatment"],"myth_vs_reality_irony")
-        self.assertEqual(ep["voice_engine"],"aidocmaker_deep")
+        self.assertEqual(ep["voice_engine"],"gustava_selfhosted_qwen3")
         self.assertTrue(ep["auto_preview"])
         self.assertFalse(ep["auto_publish"])
         self.assertEqual(ep["music_style"],"race-breakbeat")
