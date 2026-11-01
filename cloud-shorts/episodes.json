@@ -7148,7 +7148,7 @@
       "voice_engine": "aidocmaker_deep",
       "voice_profile": "gustava_create_audio_deep_v1",
       "title": "ГОНКА И ГРЯЗЬ: два разных испытания 🏍️ #shorts",
-      "narration": "На одной трассе мотоцикл разгоняется в гонке. На другой съёмке райдер едет по грязному бездорожью. Скорость или сложное покрытие — какой заезд интереснее?",
+      "narration": "На трассе мотоцикл срывается в скоростной заезд. А здесь девушка на байке застряла в глубокой грязи и пытается выбраться. Что зрелищнее: скорость или борьба с бездорожьем?",
       "description": "Два независимых мотосюжета: скоростной заезд на трассе и движение по грязному бездорожью. Что интереснее смотреть? 🏁\n\n#мото #мотокросс #shorts",
       "caption_start": "СКОРОСТЬ НА ТРАССЕ",
       "caption_middle": "ГРЯЗНОЕ БЕЗДОРОЖЬЕ",
@@ -7219,19 +7219,10 @@
       },
       "source_selection": "Two documented independent Pexels motorcycle scenes",
       "generation_provenance": "Independently authored Russian voiceover for real distinct Pexels actions",
-      "deep_audio": {
-        "provider": "aidocmaker.com",
-        "voice_id": "deep",
-        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/f2c2a259-6eba-4f16-bb3e-f7c003331f6a.mp3",
-        "transcript_sha256": "f724e760b197da5df5fc1d707e5b0e4f26873fea1db95376c8297d05aeecf817",
-        "source_audio_sha256": "7059313cb93e12819e8b7be44084968a0102587c440820b82db6204251088be5",
-        "context_id": "3a9da445f7c141369100c040095b9c8b",
-        "licence_mode": "public_provider_attribution"
-      },
       "spoken_second_scene_at_seconds": 3.82,
       "align_middle_caption_to_second_scene": true,
-      "visual_revision_requested": true,
-      "visual_revision_reason": "spoken_scene_caption_mismatch",
+      "visual_revision_requested": false,
+      "visual_revision_reason": "spoken_scene_caption_mismatch_corrected",
       "visual_revision_evidence": {
         "prior_run_id": "41292865035",
         "prior_mp4_sha256": "b5f30e4b3c9fd5d9c453bb45cb5519ce780567f9100f7ce028e7274094522983",
@@ -7245,14 +7236,28 @@
         {
           "source": "clip_0",
           "action": "motorcycle_drag_race",
-          "spoken_anchor": "мотоцикл разгоняется в гонке"
+          "spoken_anchor": "мотоцикл срывается в скоростной заезд"
         },
         {
           "source": "clip_1",
           "action": "motorcycle_muddy_offroad",
-          "spoken_anchor": "райдер едет по грязному бездорожью"
+          "spoken_anchor": "девушка на байке застряла в глубокой грязи"
         }
-      ]
+      ],
+      "deep_audio_revision_history": [
+        {
+          "prior_narration": "На одной трассе мотоцикл разгоняется в гонке. На другой съёмке райдер едет по грязному бездорожью. Скорость или сложное покрытие — какой заезд интереснее?",
+          "prior_audio_context_id": "3a9da445f7c141369100c040095b9c8b",
+          "prior_deep_source_sha256": "7059313cb93e12819e8b7be44084968a0102587c440820b82db6204251088be5",
+          "prior_asr_passed": true,
+          "prior_render_run_id": "41293506062",
+          "reason": "visually_confirmed_muddy_second_scene_is_moto_struggle_not_riding",
+          "prior_video_private_not_published": true
+        }
+      ],
+      "voice_revision_requested": true,
+      "voice_revision_reason": "narration_visually_corrected_private",
+      "voice_revision_priority": true
     }
   ]
 }
