@@ -22,3 +22,5 @@
 
 ## Контрольные точки
 `cloud-shorts/production_readiness.py`, `cloud-shorts/rolling_batch_worker.py`, `cloud-shorts/find_pending_buffer.py`, `cloud-shorts/buffer_autopublish.py`, `cloud-shorts/daily_capacity_report.py`, `cloud-shorts/episodes.json`, `.github/workflows/daily-preview.yml`, `.github/workflows/buffer-backlog.yml`, `cloud-shorts/test_factory_contract.py`.
+
+**Исторический диктор:** GUSTAVA DEEP сохранён для старых проверенных записей. Новая автоматизация использует только собственный облачный HAPYCH Qwen3-TTS с отдельным ключом на каждый канал.
