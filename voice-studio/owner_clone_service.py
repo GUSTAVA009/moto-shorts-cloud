@@ -168,8 +168,10 @@ def production_run(text, output_path, root, engine, model, reference):
     return raw
 
 
-def build_audio(obj, request_id, producer=production_run):
+def build_audio(obj, request_id, producer=None):
     text = validate_request(obj, request_id)
+    if producer is None:
+        producer = production_run
     root, engine, model, reference, ref_sha = paths()
     private = root / "private"
     cache = private / "request_cache"
@@ -247,16 +249,23 @@ class Handler(BaseHTTPRequestHandler):
             return self.send_json(404,{"error":"NOT_FOUND"})
         try:
             authorize(self.headers.get("Authorization",""))
+        except PermissionError:
+            return self.send_json(403,{"error":"VOICE_AUTHORIZATION_DENIED"})
+        try:
             size=int(self.headers.get("Content-Length") or "0")
             if not 0<size<=MAX_BODY:
                 raise ValueError("OWNER_TTS_REQUEST_SIZE")
             obj=json.loads(self.rfile.read(size))
             request_id=self.headers.get("X-Idempotency-Key")
-            raw,reference_sha=build_audio(obj,request_id)
+            validate_request(obj,request_id)
         except PermissionError:
-            return self.send_json(403,{"error":"VOICE_AUTHORIZATION_DENIED"})
+            return self.send_json(403,{"error":"VOICE_CHANNEL_NOT_AUTHORIZED"})
         except (ValueError,TypeError,KeyError,json.JSONDecodeError):
             return self.send_json(422,{"error":"VOICE_REQUEST_OR_QA_REJECTED"})
+        try:
+            raw,reference_sha=build_audio(obj,request_id)
+        except (ValueError,TypeError,KeyError):
+            return self.send_json(422,{"error":"VOICE_AUDIO_QA_REJECTED"})
         except (TimeoutError,subprocess.TimeoutExpired):
             return self.send_json(503,{"error":"VOICE_COMPUTE_TIMEOUT"})
         except (RuntimeError,OSError):
