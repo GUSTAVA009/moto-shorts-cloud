@@ -161,6 +161,31 @@ def should_request_voice_refill(state, scheduled_count, now):
     return last is None or now - last >= timedelta(minutes=VOICE_REFILL_COOLDOWN_MINUTES)
 
 
+def dispatch_plan(refill, urgent_voice_refill, events, scheduled_count,
+                  ready_voice_candidates, reserve_count):
+    """Pure action planner. Never dispatch an empty video/voice queue.
+
+    Production requests are NOT successful clips or Buffer receipts. This
+    scheduler can be regression-tested without talking to external services.
+    """
+    if min(scheduled_count, ready_voice_candidates, reserve_count) < 0:
+        raise ValueError("NEGATIVE_FACTORY_INVENTORY")
+    source = bool(refill or urgent_voice_refill)
+    shortage = bool(urgent_voice_refill
+                    or (refill and scheduled_count < MIN_BUFFER_SCHEDULED))
+    return {
+        "request_new_sources":source,
+        "request_voice_and_render":bool(shortage and ready_voice_candidates > 0),
+        "request_verified_buffer_delivery":bool(
+            reserve_count > 0 and
+            ("promote_next_ten" in events or
+             (refill and scheduled_count < MIN_BUFFER_SCHEDULED))),
+        "voice_not_ready":bool(shortage and ready_voice_candidates == 0),
+        "no_qa_mp4_for_buffer":bool(scheduled_count < MIN_BUFFER_SCHEDULED
+                                   and reserve_count == 0),
+    }
+
+
 def needs_persist(before, after, events, now):
     if before is None or events:
         return True
@@ -219,26 +244,25 @@ def main():
                    +voice_supply["unrendered_selfhosted_not_configured"]),
                "buffer_delivery_errors":len(errors), "buffer_still_sending":len(sending),
                **progress(state, len(scheduled))}
+    plan = dispatch_plan(refill, urgent_voice_refill, events, len(scheduled),
+                         ready_voice_candidates, reserve_count)
+    summary["actions"] = plan
     print("ROLLING_TEN_STATUS",json.dumps(summary,ensure_ascii=False),flush=True)
-    if refill or urgent_voice_refill:
+    if plan["request_new_sources"]:
         github("POST","actions/workflows/autofill-motorcycle.yml/dispatches",{"ref":"main"})
         print("ROLLING_TEN_AUTOFILL_DISPATCHED",flush=True)
-    need_preview = urgent_voice_refill or (refill and len(scheduled) < MIN_BUFFER_SCHEDULED)
-    if need_preview and ready_voice_candidates > 0:
+    if plan["request_voice_and_render"]:
         github("POST","actions/workflows/daily-preview.yml/dispatches",{"ref":"main"})
         print("ROLLING_TEN_VOICE_READY_PREVIEW_DISPATCHED", ready_voice_candidates,
               flush=True)
-    elif need_preview:
+    elif plan["voice_not_ready"]:
         print("::warning::VOICE_SUPPLY_BLOCKED: only unvoiced scripts remain; "
               "no manual Deep generation. Cloud, Windows or approved independent "
               "third owner TTS must provide an actual SHA-pinned WAV.",flush=True)
-    # A Buffer publisher run with no reviewed MP4 and no new render
-    # generates noise but no output; do not count it as a publication.
-    if ("promote_next_ten" in events or
-            (refill and len(scheduled) < MIN_BUFFER_SCHEDULED)) and reserve_count > 0:
+    if plan["request_verified_buffer_delivery"]:
         github("POST","actions/workflows/buffer-backlog.yml/dispatches",{"ref":"main"})
         print("ROLLING_TEN_VERIFIED_PUBLISHER_DISPATCHED",flush=True)
-    elif len(scheduled) < MIN_BUFFER_SCHEDULED and reserve_count == 0:
+    elif plan["no_qa_mp4_for_buffer"]:
         print("::warning::MP4_SUPPLY_BLOCKED: zero released, QA-reviewed MP4 "
               "available; do not falsely report Buffer replenished.",flush=True)
     if os.getenv("GITHUB_STEP_SUMMARY"):
