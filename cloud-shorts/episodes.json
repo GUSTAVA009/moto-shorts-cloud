@@ -7278,7 +7278,7 @@
       "voice_profile": "gustava_original_qwen3_v1",
       "selfhosted_voice_id": "gustava-original-v1",
       "title": "Ремонт байка или грязевая трасса: какой момент интереснее? #shorts",
-      "narration": "Мотоцикл в мастерской, а потом в грязной колее. Смотри, какая разница. Сначала механик работает с мотоциклом. На другом, независимом видео райдер проезжает грязный участок. Это разные люди и съёмки, не один заезд. Что ты пересмотрел бы: ремонт байка или грязевая трасса?",
+      "narration": "Мотоцикл в мастерской: идёт ремонт байка перед выездом. На другом видео райдер проезжает грязный участок. Это две разные съёмки. Что ближе — ремонт или грязь?",
       "description": "Две разные мотоистории: ремонт байка и грязевая трасса. Независимые кадры, без выдуманного общего события.\n\n#shorts",
       "caption_start": "РЕМОНТ БАЙКА",
       "caption_middle": "ГРЯЗЕВАЯ ТРАССА",
@@ -7319,12 +7319,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         }
       ],
@@ -7348,7 +7348,21 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1",
-      "story_reserve_id": "r2-vintage-0022"
+      "story_reserve_id": "r2-vintage-0022",
+      "visual_duration_revision_requested": true,
+      "visual_duration_revision_reason": "concise_script_fits_original_moving_scenes",
+      "visual_duration_revision_evidence": {
+        "previous_run_id": "41316919801",
+        "previous_fingerprint": "7a61955e435972a44cad2e1ef3f12dbf64315ecbff7c7f1ef75ee9aa8c50f445",
+        "previous_error": "VISUAL_DURATION_SHORTAGE",
+        "source_ids": [
+          "7170232",
+          "31881759"
+        ],
+        "real_clips_downloaded_and_11_to_12s_excerpt_verified": true,
+        "prior_voice_duration_seconds": 18.4,
+        "requested_only_private_preview": true
+      }
     }
   ]
 }

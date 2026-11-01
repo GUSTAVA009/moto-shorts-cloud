@@ -284,7 +284,7 @@ class NewMotoSourceTests(unittest.TestCase):
                          {tour["source_page"],race["source_page"]})
         self.assertEqual(len(ep["shots"]),2)
 
-    def test_cross_theme_fresh_repair_and_mud_keeps_truthful_qa_gates(self):
+    def test_cross_theme_fresh_repair_and_snow_keeps_truthful_qa_gates(self):
         """Each topic contains just one actionable video; two verified
         independent scenes should still create ONE private render candidate.
         Generic repair must never claim a motor/engine rebuild."""
@@ -296,19 +296,19 @@ class NewMotoSourceTests(unittest.TestCase):
              "author":"First Independent Mechanic","license":"Pexels License",
              "source_title":"man repairing motorcycle","duration":19},
             {"key":"m","url":"https://www.pexels.com/download/video/90001232/",
-             "source_page":"https://www.pexels.com/video/off-road-motorcycle-adventure-in-muddy-terrain-90001232/",
+             "source_page":"https://www.pexels.com/video/motorcycle-riding-in-snow-90001232/",
              "author":"Second Independent Rider","license":"Pexels License",
-             "source_title":"off road motorcycle adventure in muddy terrain","duration":19},
+             "source_title":"motorcycle riding in snow","duration":19},
         ]
         self.assertEqual(scene_for(files[0])[0],"repair")
-        self.assertEqual(scene_for(files[1])[0],"mud")
+        self.assertEqual(scene_for(files[1])[0],"snow")
         assert not any(x["source_page"] in
                        {v["source_page"] for ep in self.catalog["episodes"]
                         for v in ep["footage"]} for x in files)
         def curated(theme, used):
             if theme[0]=="repair":
                 return [files[0]]
-            if theme[0]=="dirt":
+            if theme[0]=="snow":
                 return [files[1]]
             return []
         with patch.dict("os.environ",{"PEXELS_API_KEY":"",
@@ -318,7 +318,7 @@ class NewMotoSourceTests(unittest.TestCase):
             ep=s.create_one(self.catalog,source_fetch=lambda *a:[],
                             commons_fetch=lambda *a:[],prepared_scripts=[])
         self.assertEqual(len(ep["footage"]),2)
-        self.assertEqual(set(require_filmable(ep,ep["footage"])),{"repair","mud"})
+        self.assertEqual(set(require_filmable(ep,ep["footage"])),{"repair","snow"})
         self.assertTrue(ep["auto_preview"])
         self.assertFalse(ep["auto_publish"])
         self.assertEqual(ep["voice_engine"],"gustava_selfhosted_qwen3")
