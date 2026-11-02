@@ -64,6 +64,9 @@ SCENES = (
     ("repair", r"(?:mechanic|repair|fixing|tinkering|servic|maintain).*?(?:motorcycle|motorbike|bike)|(?:motorcycle|motorbike).*?(?:mechanic|repair|fixing|tinkering|servic|maintain)",
      "в мастерской", "механик работает с мотоциклом", "ремонт байка",
      r"мастер|механик|ремонт"),
+    ("rain", r"motorcycle.*?(?:rain|wet)|(?:rain|wet).*?motorcycle",
+     "под дождём", "байкер едет на мотоцикле по мокрой дороге", "дождевая поездка",
+     r"дожд|мокр|ливн"),
     ("ride", r"(?:motorcycle|motorbike|motocross|dirt bike).*?(?:riding|ride|travel|driving)|(?:riding|ride|travel|driving).*?(?:motorcycle|motorbike|motocross|dirt bike)",
      "на дороге", "байкер едет на мотоцикле", "поездка",
      r"едет|езд|поездк|движен"),
@@ -72,6 +75,14 @@ SCENES = (
 
 def scene_for(media):
     url = urlsplit(str(media.get("source_page") or ""))
+    if url.hostname == "84-252-66-87.sslip.io":
+        from moto_assets import validated_media
+        # Action label is a preview hint only: the REAL MP4's actual six
+        # frames are later checked independently by the Qwen Vision reviewer.
+        validated_media(media)
+        kind = {"riding":"ride"}.get(media.get("scene_action"),
+                                    media.get("scene_action"))
+        return next((s for s in SCENES if s[0]==kind),None)
     if url.scheme != "https" or url.hostname not in ("www.pexels.com", "commons.wikimedia.org", "mixkit.co"):
         return None
     name = unquote(url.path).casefold().replace("-", " ").replace("_", " ")
@@ -81,8 +92,28 @@ def scene_for(media):
     return None
 
 
+def same_owner_original_pair(first, second):
+    """One genuine owner produced pair: DISTINCT MP4 SHA, distinct scene action,
+    same immutable generation batch. Never impersonate two stock filmmakers."""
+    from moto_assets import source_id
+    return (source_id(first).startswith("gustava-original-")
+            and source_id(second).startswith("gustava-original-")
+            and source_id(first) != source_id(second)
+            and first.get("generation_batch") == second.get("generation_batch")
+            and first.get("scene_action") != second.get("scene_action"))
+
+
+def pair_permitted(first, second):
+    from moto_assets import source_id
+    original_a = source_id(first).startswith("gustava-original-")
+    original_b = source_id(second).startswith("gustava-original-")
+    if original_a or original_b:
+        return original_a and original_b and same_owner_original_pair(first,second)
+    return first["author"].strip().casefold() != second["author"].strip().casefold()
+
+
 def select_pair(sources, used_ids):
-    """Prefer two distinct *actions*, distinct creators, unconsumed real clips."""
+    """Prefer two distinct actions, independent creators or new owner-generated batch."""
     from moto_assets import source_id, validated_media
     eligible, seen = [], set()
     for media in sources:
@@ -100,12 +131,11 @@ def select_pair(sources, used_ids):
     for index, (first, a) in enumerate(eligible):
         for second, b in eligible[index + 1:]:
             if ({a[0], b[0]} == {"touring", "race"} and
-                    first["author"].strip().casefold() != second["author"].strip().casefold()):
+                    pair_permitted(first, second)):
                 return [first, second]
     for index, (first, a) in enumerate(eligible):
         for second, b in eligible[index + 1:]:
-            if (a[0] != b[0] and
-                    first["author"].strip().casefold() != second["author"].strip().casefold()):
+            if (a[0] != b[0] and pair_permitted(first,second)):
                 return [first, second]
     return []
 
