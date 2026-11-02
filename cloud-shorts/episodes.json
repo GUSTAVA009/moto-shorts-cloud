@@ -8384,12 +8384,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         }
       ],
@@ -8466,12 +8466,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         }
       ],
@@ -8506,12 +8506,12 @@
       "voice_engine": "gustava_selfhosted_qwen3",
       "voice_profile": "gustava_cartoon_b_qwen3_v1",
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
-      "title": "Поездка или работа с мотором: какой момент интереснее? #shorts",
-      "narration": "Мотоцикл в двух сценах: байкер едет на мотоцикле. На другом видео механик занимается мотором мотоцикла. Это независимые съёмки. Что ближе тебе?",
-      "description": "Две разные мотоистории: поездка и работа с мотором. Независимые кадры, без выдуманного общего события.\n\n#shorts",
-      "caption_start": "ПОЕЗДКА",
-      "caption_middle": "РАБОТА С МОТОРОМ",
-      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "title": "Грунтовая трасса или город: где больше драйва? #shorts",
+      "narration": "Мотоцикл в двух сценах: райдер едет по грунтовой трассе. На другом видео байкер едет по городской улице. Это разные съёмки. Какой момент тебе ближе?",
+      "description": "Два независимых мотоэпизода: движение по грунтовой трассе и городская поездка. Это разные люди и съёмки, а не одно событие.\n\n#shorts",
+      "caption_start": "ГРУНТОВАЯ ТРАССА",
+      "caption_middle": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_end": "КАКОЙ МОМЕНТ СИЛЬНЕЕ?",
       "max_duration_seconds": 34,
       "opening_trim_seconds": 0.1,
       "music_style": "action",
@@ -8534,26 +8534,25 @@
         },
         {
           "key": "clip_1",
-          "url": "https://www.pexels.com/download/video/30283096/",
-          "source_page": "https://www.pexels.com/video/motorcycle-engine-assembly-process-30283096/",
-          "author": "Emrul Kausar Emon",
+          "url": "https://www.pexels.com/download/video/36067638/",
+          "source_page": "https://www.pexels.com/video/urban-motorcycle-ride-through-a-busy-street-36067638/",
+          "author": "Airam Dato-on",
           "license": "Pexels License",
-          "source_title": "motorcycle engine assembly process",
+          "source_title": "urban motorcycle ride through a busy street",
           "topics": [
-            "repair",
-            "vintage"
+            "city"
           ]
         }
       ],
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         }
       ],
@@ -8578,7 +8577,30 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1",
-      "story_reserve_id": "r2-training-0024"
+      "story_reserve_id": "r2-training-0024",
+      "source_revision_requested": true,
+      "source_revision_reason": "frozen_source_replaced",
+      "source_replacement_proof": {
+        "old_failure": "VISUAL_FROZEN_SEGMENT",
+        "failed_run_id": "41429487873",
+        "previous_run_id": "41429487873",
+        "previous_fingerprint": "d5192b33112521a3bf5a186764d737721b7a4914d765bd205f1c70b6da1ae674",
+        "old_source_id": "30283096",
+        "new_source_id": "36067638",
+        "exact_source_url": "https://www.pexels.com/video/urban-motorcycle-ride-through-a-busy-street-36067638/",
+        "independently_bounded_preflight": {
+          "duration_seconds": 11.7,
+          "bytes": 8836403,
+          "ffmpeg_freeze_events": 0,
+          "threshold_seconds": 1.25,
+          "motion_verified": true
+        },
+        "voice_id_unchanged": "gustava-cartoon-b-v1",
+        "private_preview_only": true,
+        "previous_action_conclusion": "failure",
+        "replacement_media_author": "Airam Dato-on",
+        "replacement_license": "Pexels License"
+      }
     }
   ]
 }
