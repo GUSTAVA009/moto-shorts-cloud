@@ -103,14 +103,13 @@ def live_unqueued_reviewed_mp4(catalog, include_reserved=False):
         if not entry:
             raise RuntimeError("Missing permanent render receipt")
         receipts.append(ledger.decode_receipt(entry))
-    artifacts = []
-    for page in range(1, 7):
-        response = github("GET", "actions/artifacts?per_page=100&page=" + str(page))
-        artifacts.extend(response.get("artifacts", []))
-        if len(response.get("artifacts", [])) < 100:
-            break
-    else:
-        raise RuntimeError("Artifact list incomplete; cannot count QA reserve")
+    # The factory has >600 historical artifacts. The old hardcoded six-page
+    # limit aborted exactly when a valid new reserve became available.
+    # Reuse the publisher's complete, fail-closed inventory contract across
+    # ALL pages; never miscount a partial archive or bypass deduplication.
+    from find_pending_buffer import complete_artifact_inventory
+    artifacts = complete_artifact_inventory(
+        fetch=lambda path: github("GET", path))
     count = count_unqueued_reviewed_mp4(catalog, receipts, artifacts, paths)
     return (count, reserved_ids) if include_reserved else count
 
