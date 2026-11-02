@@ -8332,6 +8332,88 @@
         "never_publish_on_visual_retry": true,
         "max_total_attempts": 3
       }
+    },
+    {
+      "id": "moto-motocross-87bc6da95d28",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Поездка по треку или мотопрыжок: какой момент интереснее? #shorts",
+      "narration": "Мотоцикл в двух сценах: мотоциклист едет по треку. На другом видео райдер прыгает с трамплина. Это независимые съёмки. Что ближе тебе?",
+      "description": "Две разные мотоистории: поездка по треку и мотопрыжок. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ПОЕЗДКА ПО ТРЕКУ",
+      "caption_middle": "МОТОПРЫЖОК",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "race-breakbeat",
+      "music_bpm": 117,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/31623275/",
+          "source_page": "https://www.pexels.com/video/exciting-motorcycle-race-on-dirt-track-31623275/",
+          "author": "setengah lima sore",
+          "license": "Pexels License",
+          "source_title": "exciting motorcycle race on dirt track",
+          "topics": [
+            "racing",
+            "motocross",
+            "training"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/29466269/",
+          "source_page": "https://www.pexels.com/video/thrilling-desert-motocross-race-with-jumps-29466269/",
+          "author": "Habeeb Sujan",
+          "license": "Pexels License",
+          "source_title": "thrilling desert motocross race with jumps",
+          "topics": [
+            "motocross",
+            "racing",
+            "desert"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.5
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.5
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "race-track-87bc6",
+        "bike": "motocross-bike",
+        "people": "track-racers-87bc6",
+        "story": "rider-at-prepared-track-87bc6",
+        "visual": "three-clips-87bc6"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
     }
   ]
 }
