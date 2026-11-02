@@ -33,6 +33,7 @@ MIN_CONFIDENCE = 0.93
 REVIEW_VERSION = 1
 REVIEW_REJECTION_PATH = "automation/visual-review-rejections"
 MODEL_BY_PROVIDER = {
+    "owner_local": ("https://voice.hapychrust.ru/v1/visual/review", "qwen3.5:2b"),
     "openai": ("https://api.openai.com/v1/chat/completions", "gpt-4.1-mini"),
     "openrouter": ("https://openrouter.ai/api/v1/chat/completions", "openai/gpt-4o-mini"),
 }
@@ -99,7 +100,7 @@ def checked_review(episode, mp4_sha=None):
             or proof.get("episode_id") != episode.get("id")
             or proof.get("asset_fingerprint") != visual_asset_fingerprint(episode)
             or proof.get("model_provider") not in MODEL_BY_PROVIDER
-            or not re.fullmatch(r"[a-zA-Z0-9._/-]{5,80}", str(proof.get("model") or ""))
+            or not re.fullmatch(r"[a-zA-Z0-9._:/-]{5,80}", str(proof.get("model") or ""))
             or not re.fullmatch(r"[0-9a-f]{64}", str(proof.get("mp4_sha256") or ""))
             or not str(proof.get("render_run_id") or "").isdigit()
             or str(episode.get("reviewed_artifact_run_id") or "") !=
@@ -186,6 +187,25 @@ def select_private(catalog, ledger_paths, get=api):
 
 
 def model_credentials():
+    # PRIMARY: owner's always-on CPU vision on the HAPYCH VPS, authenticated
+    # through the same pinned GitHub Actions OIDC identity as Cartoon B.
+    # No external paid model token or manual reviewer is required.
+    if os.environ.get("GUSTAVA_LOCAL_VISION_ENABLED") == "true":
+        req = urllib.request.Request("https://voice.hapychrust.ru/health",
+                headers={"Accept":"application/json",
+                         "User-Agent":"gustava-owner-local-vision-check"})
+        try:
+            with urllib.request.urlopen(req,timeout=10) as response:
+                state=json.load(response)
+            if state.get("visual_local_model_ready") is True:
+                from voice_failover import owner_actions_oidc
+                identity=owner_actions_oidc(os.environ)
+                return "owner_local",identity,*MODEL_BY_PROVIDER["owner_local"]
+        except (OSError,ValueError,TypeError,RuntimeError) as e:
+            print("OWNER_VISUAL_OIDC_OR_HEALTH_UNAVAILABLE",
+                  type(e).__name__,flush=True)
+            # The optional cloud alternative requires its OWN explicit key.
+            # A broken local route must never be mistaken for model approval.
     key = os.environ.get("OPENAI_API_KEY")
     if key:
         return "openai", key, *MODEL_BY_PROVIDER["openai"]
@@ -241,6 +261,31 @@ def actual_frames(video, visual, episode):
 
 def request_vision(chapters, episode, provider, secret, url, model):
     """ONE bounded independent visual analysis. A model error never authorizes."""
+    if provider == "owner_local":
+        if (url != MODEL_BY_PROVIDER["owner_local"][0]
+                or model != MODEL_BY_PROVIDER["owner_local"][1]):
+            raise RuntimeError("OWNER_VISION_ENDPOINT_OR_MODEL_CHANGED")
+        # The model gets the REAL six JPEG frames, source-grounded narrative
+        # and exact ordered chapters; the signed server verifies OIDC itself.
+        request={"episode_id":episode["id"],
+                 "title":episode["title"],"narration":episode["narration"],
+                 "chapters":[{
+                     "source":chapter["source"],
+                     "scene_action":chapter["scene_action"],
+                     "expected":chapter["expected"],
+                     "images":chapter["images"]}
+                     for chapter in chapters]}
+        req=urllib.request.Request(
+            url,method="POST",
+            data=json.dumps(request,ensure_ascii=False).encode("utf8"),
+            headers={"Authorization":"Bearer "+secret,
+                     "Content-Type":"application/json",
+                     "User-Agent":"GUSTAVA-AUTONOMOUS-OIDC-FRAME-REVIEW"})
+        with urllib.request.urlopen(req,timeout=550) as response:
+            answer=json.load(response)
+        if answer.get("model")!=model or not isinstance(answer.get("result"),dict):
+            raise RuntimeError("OWNER_VISION_ATTESTED_MODEL_RESPONSE_MISSING")
+        return answer["result"]
     instruction = (
         "Ты независимый строгий редактор мото-Shorts. Перед тобой ТОЛЬКО реальные "
         "кадры из двух последовательных сцен ОДНОГО уже смонтированного видео "
