@@ -8500,7 +8500,7 @@
     {
       "id": "moto-training-8b876c464b6c",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -8600,6 +8600,50 @@
         "previous_action_conclusion": "failure",
         "replacement_media_author": "Airam Dato-on",
         "replacement_license": "Pexels License"
+      },
+      "visual_revision_status": "assistant_checked_passed",
+      "caption_fit_required": true,
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "riding",
+          "spoken_anchor": "райдер едет по грунтовой трассе"
+        },
+        {
+          "source": "clip_1",
+          "action": "riding",
+          "spoken_anchor": "байкер едет по городской улице"
+        }
+      ],
+      "assistant_checked_visual_evidence": {
+        "review_run_id": "41430343816",
+        "mp4_sha256": "bcbf3759250ed207629f80ce3e45ddf9f0aa4257134f2d48ca36ecfe0b281f1c",
+        "voice_qa_passed": true,
+        "final_mix_asr_coverage": 1,
+        "visual_qa_version": 3,
+        "visual_qa_passed": true,
+        "actual_video_duration_seconds": 13.9,
+        "visually_inspected_seconds": [
+          0.5,
+          1.8,
+          3.2,
+          5.6,
+          6.8,
+          7.4,
+          8.8,
+          10.5,
+          12,
+          13.5
+        ],
+        "scene_cut_seconds": 6.985,
+        "original_source_ids": [
+          "9143349",
+          "36067638"
+        ],
+        "no_repeated_source_segments": true,
+        "stereo_rms_difference_db": 0.23,
+        "audio_peak_max": 0.723,
+        "note": "Assistant inspected actual original MP4 frames, moving dirt motocross followed by urban motorcyclists. Story describes independent footage, not one event. Original owner Cartoon B reference hash pinned. Publication allowed only through existing QA and Buffer release gates."
       }
     }
   ]
