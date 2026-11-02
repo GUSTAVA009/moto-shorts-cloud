@@ -28,6 +28,11 @@ import wave
 
 CHANNEL = "gustava"
 VOICE_ID = "gustava-original-v1"
+# Owner explicitly approved cartoon B for new episodes on 2026-11-02.
+# This is distinct from, and never rewrites, the historical DEEP profile.
+CARTOON_B_VOICE_ID = "gustava-cartoon-b-v1"
+CARTOON_B_REFERENCE_SHA = "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef"
+CARTOON_B_BACKEND = "qwen3_0.6b_base_cartoon_b_reference"
 AUDIENCE = "voice.hapychrust.ru"
 REPO_NAME = "GUSTAVA009/moto-shorts-cloud"
 REPO_ID = "1436068497"
@@ -68,6 +73,48 @@ def paths():
     if hashlib.sha256(ref.read_bytes()).hexdigest() != expected:
         raise RuntimeError("OWNER_TTS_REFERENCE_SHA_CHANGED")
     return root, engine, model, ref, expected
+
+
+def cartoon_b_paths():
+    """Use EXACT owner-selected B output as a reference for new Qwen Base lines."""
+    root = Path(required_env("OWNER_TTS_ROOT")).resolve()
+    engine = root / "engine" / "qwen_tts"
+    model = root / "engine" / "qwen3-tts-0.6b-base"
+    selected = root / "private" / "owner_selected_20261102"
+    reference = selected / "CARTOON_TAKE2_B_MINUS2.wav"
+    manifest = selected / "cartoon_voice_design_manifest.json"
+    if not all(p.is_file() for p in (engine, reference, manifest)) or not model.is_dir():
+        raise RuntimeError("CARTOON_B_MODEL_OR_OWNER_REFERENCE_UNAVAILABLE")
+    if reference.is_symlink() or manifest.is_symlink():
+        raise RuntimeError("CARTOON_B_SOURCE_SYMLINK_REJECTED")
+    if hashlib.sha256(reference.read_bytes()).hexdigest() != CARTOON_B_REFERENCE_SHA:
+        raise RuntimeError("CARTOON_B_REFERENCE_SHA_MISMATCH")
+    try:
+        record = json.loads(manifest.read_text(encoding="utf8"))
+    except (ValueError, OSError):
+        raise RuntimeError("CARTOON_B_MANIFEST_UNAVAILABLE") from None
+    rows = [x for x in record.get("candidates", []) if
+            isinstance(x, dict) and x.get("id") == "cartoon_original_voicedesign_v2_b"]
+    if (record.get("model") != "Qwen3-TTS-12Hz-1.7B-VoiceDesign"
+            or len(rows) != 1
+            or rows[0].get("wav_file") != reference.name
+            or rows[0].get("sha256_wav") != CARTOON_B_REFERENCE_SHA
+            or rows[0].get("asr_short_canary_passed") is not True
+            or rows[0].get("pitch_semitones") != -2):
+        raise RuntimeError("CARTOON_B_MANIFEST_PROVENANCE_MISMATCH")
+    return root, engine, model, reference, CARTOON_B_REFERENCE_SHA
+
+
+def profile_paths(voice_id):
+    if voice_id == VOICE_ID:
+        return paths()
+    if voice_id == CARTOON_B_VOICE_ID:
+        return cartoon_b_paths()
+    raise PermissionError("OWNER_TTS_VOICE_CHANNEL_MISMATCH")
+
+
+def backend_label(voice_id):
+    return CARTOON_B_BACKEND if voice_id == CARTOON_B_VOICE_ID else "qwen3_0.6b_base_owner_clone"
 
 
 def validate_actions_claims(claims):
@@ -128,7 +175,7 @@ def validate_request(obj, request_id):
     text = obj.get("text")
     if not isinstance(text,str) or not 15 <= len(text.strip()) <= 600:
         raise ValueError("OWNER_TTS_INVALID_TRANSCRIPT")
-    if (obj.get("voice") != VOICE_ID or obj.get("channel_slug") != CHANNEL
+    if (obj.get("voice") not in (VOICE_ID, CARTOON_B_VOICE_ID) or obj.get("channel_slug") != CHANNEL
             or obj.get("response_format") != "wav"):
         raise PermissionError("OWNER_TTS_VOICE_CHANNEL_MISMATCH")
     return text
@@ -175,7 +222,7 @@ def build_audio(obj, request_id, producer=None):
     text = validate_request(obj, request_id)
     if producer is None:
         producer = production_run
-    root, engine, model, reference, ref_sha = paths()
+    root, engine, model, reference, ref_sha = profile_paths(obj["voice"])
     private = root / "private"
     cache = private / "request_cache"
     cache.mkdir(mode=0o700,parents=True,exist_ok=True)
@@ -241,8 +288,14 @@ class Handler(BaseHTTPRequestHandler):
             paths()
         except (OSError,ValueError,RuntimeError):
             ready=False
+        cartoon_b_ready = True
+        try:
+            cartoon_b_paths()
+        except (OSError,ValueError,RuntimeError):
+            cartoon_b_ready = False
         self.send_json(200 if ready else 503,
                        {"service":"HAPYCH Voice Studio",
+                        "cartoon_b_reference_ready":cartoon_b_ready,
                         "tts_ready_for_private_request":ready,
                         "publishing_authorized":False,
                         "public_api":False})
@@ -275,11 +328,11 @@ class Handler(BaseHTTPRequestHandler):
             return self.send_json(503,{"error":"VOICE_SERVER_NOT_READY"})
         self.send_response(200)
         self.send_header("Content-Type","audio/wav")
-        self.send_header("X-Voice-ID",VOICE_ID)
+        self.send_header("X-Voice-ID",obj["voice"])
         self.send_header("X-Channel-ID",CHANNEL)
         self.send_header("X-Audio-SHA256",hashlib.sha256(raw).hexdigest())
         self.send_header("X-Reference-SHA256",reference_sha)
-        self.send_header("X-TTS-Backend","qwen3_0.6b_base_owner_clone")
+        self.send_header("X-TTS-Backend",backend_label(obj["voice"]))
         self.send_header("Cache-Control","no-store")
         self.send_header("Content-Length",str(len(raw)))
         self.end_headers()
