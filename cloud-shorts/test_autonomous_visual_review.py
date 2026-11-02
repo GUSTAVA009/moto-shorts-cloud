@@ -1,7 +1,9 @@
 import base64
 from copy import deepcopy
 import hashlib
+import io
 import json
+import os
 from pathlib import Path
 import unittest
 from unittest.mock import patch
@@ -55,6 +57,75 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
                              "observed":"Actual motorcycle action in real scene",
                              "frames_sha256":["b"*64,"c"*64,"d"*64]}
                             for f in ep["footage"]]}
+
+    def test_runner_vision_can_work_without_paid_provider_keys(self):
+        env = {"GUSTAVA_LOCAL_VISION_ENABLED":"1", "OPENAI_API_KEY":"",
+               "OPENROUTER_API_KEY":""}
+        with patch.dict(os.environ, env, clear=True):
+            provider, secret, url, model = review.model_credentials()
+        self.assertEqual(provider, "ollama")
+        self.assertEqual(secret, "")
+        self.assertEqual(url, "http://127.0.0.1:11434/api/chat")
+        self.assertEqual(model, "qwen3.5:4b")
+        with patch.dict(os.environ, {}, clear=True):
+            with self.assertRaisesRegex(RuntimeError,
+                                        "AUTO_FRAME_REVIEW_PROVIDER_KEY_MISSING"):
+                review.model_credentials()
+
+    def test_ollama_request_inspects_both_real_frame_chapters_and_no_remote_token(self):
+        images = [base64.b64encode(b"\\xff\\xd8\\xff"+bytes([i])*3000).decode("ascii")
+                  for i in range(6)]
+        chapters = [
+            {"source":"clip_0","expected":"райдер едет по трассе",
+             "images":images[:3]},
+            {"source":"clip_1","expected":"райдер прыгает с трамплина",
+             "images":images[3:]},
+        ]
+        strong = {"chapters":[
+                     {"visible_motorcycle":True,"action_supported":True,
+                      "confidence":0.98,"observed":"Two actual riders on a dirt road"},
+                     {"visible_motorcycle":True,"action_supported":True,
+                      "confidence":0.95,"observed":"Rider seen airborne over the jump"}],
+                  "narration_fully_supported":True,
+                  "independent_events_not_fabricated":True,
+                  "safe_for_release":True}
+        sent=[]
+        def fake_urlopen(request, timeout=0):
+            sent.append((request,timeout))
+            body=json.loads(request.data.decode("utf8"))
+            self.assertEqual(body["model"],"qwen3.5:4b")
+            self.assertEqual(body["format"],"json")
+            self.assertFalse(body["stream"])
+            self.assertFalse(body["think"])
+            self.assertEqual(len(body["messages"]),5)
+            self.assertEqual(body["messages"][2]["images"],images[:3])
+            self.assertEqual(body["messages"][3]["images"],images[3:])
+            return io.BytesIO(json.dumps(
+                {"message":{"content":json.dumps(strong)}}).encode("utf8"))
+        with patch.object(review.urllib.request, "urlopen", side_effect=fake_urlopen):
+            output = review.request_vision(
+                chapters,self.make_episode(),"ollama","",
+                "http://127.0.0.1:11434/api/chat","qwen3.5:4b")
+        self.assertEqual(output,strong)
+        self.assertTrue(review.verified_model_response(output,chapters))
+        self.assertEqual(len(sent),1)
+        self.assertGreaterEqual(sent[0][1],300)
+        self.assertNotIn("Authorization",sent[0][0].headers)
+        with self.assertRaisesRegex(RuntimeError,"UNTRUSTED_OLLAMA_ENDPOINT"):
+            review.request_vision(chapters,self.make_episode(),"ollama","",
+                                  "https://untrusted.test/api/chat","qwen3.5:4b")
+
+    def test_local_visual_model_uncertain_answer_cannot_approve(self):
+        chapters=[{"source":"clip_0"},{"source":"clip_1"}]
+        weak={"chapters":[
+                {"visible_motorcycle":True,"action_supported":False,
+                 "confidence":0.99,"observed":"Bike is static; rider not moving"},
+                {"visible_motorcycle":True,"action_supported":True,
+                 "confidence":0.98,"observed":"A jump is clearly visible"}],
+              "narration_fully_supported":True,
+              "independent_events_not_fabricated":True,
+              "safe_for_release":True}
+        self.assertFalse(review.verified_model_response(weak,chapters))
 
     def test_only_genuine_private_cartoon_b_with_two_distinct_actions(self):
         ep=self.make_episode()
