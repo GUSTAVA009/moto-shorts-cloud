@@ -179,8 +179,48 @@ def eligible_retry(episode, receipt, new_fingerprint):
         and (scene_proof["old_second_scene_start_seconds"]
              - scene_proof["old_caption_start_seconds"] >= .70)
     )
+    # One SHA-and-ledger-bound PRIVATE correction after inspecting the actual
+    # frame sequence. The first 5.905s showed trees, not the narrated rider;
+    # the replacement source visibly shows motocross at 0.6s and 4.2s.
+    # No arbitrary successful preview may be retried on metadata alone.
+    scene_source_repair = (
+        episode.get("id") == "moto-motocross-223d9ab5c67d"
+        and episode.get("auto_preview") is True
+        and episode.get("auto_publish") is False
+        and episode.get("visual_revision_reason")
+            == "actual_first_shot_missing_moto_action"
+        and episode.get("voice_engine") == "gustava_selfhosted_qwen3"
+        and attempts == 1
+        and str(receipt.get("run_id")) == "41370745453"
+        and receipt.get("preview_fingerprint")
+            == "b371f99d486f19f3b38ab630522ac5677d876f950fc16a106e0d59c9f49a4ba4"
+        and receipt.get("voice_qa_passed") is True
+        and receipt.get("mixed_audio_qa_passed") is True
+        and isinstance(scene_proof, dict)
+        and scene_proof.get("prior_run_id") == "41370745453"
+        and scene_proof.get("prior_mp4_sha256")
+            == "1726369965ae387dbb70bbc036c61fcba7fd3dc84de528e3456aac53fb8488e5"
+        and scene_proof.get("prior_preview_fingerprint")
+            == receipt.get("preview_fingerprint")
+        and scene_proof.get("prior_source_id") == "12990227"
+        and scene_proof.get("replacement_source_id") == "32399067"
+        and len(episode.get("footage") or []) == 2
+        and [source_id(f) for f in episode["footage"]]
+            == ["32399067", "9607287"]
+        and [f.get("author") for f in episode["footage"]]
+            == ["Harvey Tan Villarino", "Anastasia Shuraeva"]
+        and episode["footage"][0].get("license") == "Pexels License"
+        and episode.get("shots", [{}])[0].get("seconds") == 6.82
+    )
+    # Never downgrade an evidence-backed visual correction into a generic
+    # failed-audio retry if any part of its proof fails.
+    if (episode.get("visual_revision_reason")
+            == "actual_first_shot_missing_moto_action"
+            and not scene_source_repair):
+        return False
     visual_repair = (episode.get("visual_revision_requested") is True
-                     and (episode.get("visual_revision_reason") in (
+                     and (scene_source_repair
+                     or episode.get("visual_revision_reason") in (
                          "source_freeze_confirmed",
                          "owner_rejected_static_helmet_coverage",
                          "owner_rejected_end_clip_no_helmet_removal",
