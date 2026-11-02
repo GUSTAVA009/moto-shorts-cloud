@@ -14,7 +14,7 @@ import urllib.request
 
 UA = "GUSTAVA-Enduro-Media-Audit/1.0 (royalty-free video validation)"
 PEXELS_ID = re.compile(r"-(\d{5,10})/?$")
-MIXKIT_PAGE = re.compile(r"^/free-stock-video/[a-z0-9-]+-(\\d{4,7})/$")
+MIXKIT_PAGE = re.compile(r"^/free-stock-video/[a-z0-9-]+-(\d{4,7})/$")
 MIXKIT_LICENSE = "Mixkit Stock Video Free License"
 MIXKIT_LICENSE_PAGE = "https://mixkit.co/license/modal/videoFree/"
 COMMONS_SHA1 = re.compile(r"[0-9a-f]{40}$")
