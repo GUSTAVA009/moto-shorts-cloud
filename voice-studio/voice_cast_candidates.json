@@ -2,9 +2,9 @@
   "schema_version": 1,
   "created_utc": "2026-11-01",
   "project": "HAPYCH Voice / GUSTAVA Factory",
-  "kind": "research_and_character_specs_only",
-  "production_status": "NOT_DEPLOYED",
-  "source_voice_status": "VIDIQ_PREMADE_FOR_AUDITION_ONLY",
+  "kind": "original_character_roles_with_live_private_audio_auditions",
+  "production_status": "17_REAL_AUDIO_AUDITIONS_PENDING_INDEPENDENT_RU_ASR_AND_OWNER_APPROVAL",
+  "source_voice_status": "NINE_INSTALLED_QWEN3_CUSTOMVOICE_SPEAKERS; 17 PITCH_ADJUSTED_ROLE_VARIANTS",
   "assignment_policy": {
     "any_production_approved_voice_may_be_assigned_to_any_owner_managed_channel": true,
     "same_voice_may_be_reused_across_channels": true,
@@ -36,11 +36,24 @@
         "FGY2WhTYpPnrIDTdsKH5"
       ],
       "content_use": "animated_family",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "serena",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": 2,
+        "duration_seconds": 5.92,
+        "wav_sha256": "2dfa32d13dd512f7d83ad8a858d9d079fcfc931b01cb57a4519c718b8ff69488",
+        "mp3_sha256": "a954eef3de7f27a8f8e0480662df86786a4129239219fd9be6c2117c0f0c029f",
+        "private_owner_portal_path": "/api/portal/cast/child_cartoon/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "comic_bass_cartoon",
@@ -52,11 +65,24 @@
         "SOYHLrjzK2X1ezoPC6cr"
       ],
       "content_use": "comedy",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "dylan",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": -2,
+        "duration_seconds": 5.44,
+        "wav_sha256": "5ab536845a977d5252395f5f64a09131e2b66a379461a8d413d6227062b6faa0",
+        "mp3_sha256": "5f956da5d5c3436cd432d7e593bea429c666b432710c1e96ab4d2854fa2312ec",
+        "private_owner_portal_path": "/api/portal/cast/comic_bass_cartoon/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "medium_warm",
@@ -69,11 +95,24 @@
         "bIHbv24MWmeRgasZH58o"
       ],
       "content_use": "narrator",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "eric",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": -0.5,
+        "duration_seconds": 8,
+        "wav_sha256": "5d3792ab9f320622533e8c96b8341e6005c249f7e516f625403e7032f0c7e657",
+        "mp3_sha256": "94787fdc28077182a325671118aada0ebc99c080ff00474ab21f3e8282831f3a",
+        "private_owner_portal_path": "/api/portal/cast/medium_warm/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "grandpa_biker",
@@ -85,11 +124,24 @@
         "pqHfZKP75CvOlQylNhV4"
       ],
       "content_use": "family_dialogue",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "uncle_fu",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": -1.2,
+        "duration_seconds": 6.88,
+        "wav_sha256": "3dce49b705cc41f11816e6c1967bc7e2a58b766fec644360f148302b59342300",
+        "mp3_sha256": "cf614d4d7dfc736b2a771f2e1c8b7295b1b91c7c2a58076d2ddf62d030511af2",
+        "private_owner_portal_path": "/api/portal/cast/grandpa_biker/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "son_teen",
@@ -101,11 +153,24 @@
         "IKne3meq5aSn9XLyUdCD"
       ],
       "content_use": "family_dialogue",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "ryan",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": 0.8,
+        "duration_seconds": 5.68,
+        "wav_sha256": "edc22731151324528af3633376914f67cb202403616e003c2206d4976d2b4c0c",
+        "mp3_sha256": "5493035fa5b9e376617dcea21cd79f41a015d049376b4f9a41ad2e126933ef93",
+        "private_owner_portal_path": "/api/portal/cast/son_teen/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "father",
@@ -117,11 +182,24 @@
         "nPczCjzI2devNBz1zQrb"
       ],
       "content_use": "family_dialogue",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "eric",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": 0,
+        "duration_seconds": 8,
+        "wav_sha256": "9a45c5cea851579b7de4d7eb989d3b0976fbea2dc3d0597e5447e6686eedbf23",
+        "mp3_sha256": "191b255467bced85df77166555d56a54c50ccf5eaf7181d1e4019ce29d04ac31",
+        "private_owner_portal_path": "/api/portal/cast/father/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "mother",
@@ -133,11 +211,24 @@
         "hpp4J3VqNfWAUOO0d1Us"
       ],
       "content_use": "family_dialogue",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "vivian",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": 0,
+        "duration_seconds": 6.16,
+        "wav_sha256": "a2eeae6209e2599fb9cf5a5a59531e4c13d4f054ff4f6e8eea319aa5e8db794f",
+        "mp3_sha256": "cc8d8a2c494e95514ba8efef8401d419a6466255ec0be701c05e5ec0aa855fc8",
+        "private_owner_portal_path": "/api/portal/cast/mother/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "grandma",
@@ -149,11 +240,24 @@
         "XrExE9yKIg1WjnnlVkGX"
       ],
       "content_use": "family_dialogue",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "ono_anna",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": -1.5,
+        "duration_seconds": 6.24,
+        "wav_sha256": "dc4581ad64d3372cf9a650aa30410b11dfa74729cb74736b57c4ba9cb13e7e89",
+        "mp3_sha256": "430adbe98626781f83828d95eda72ba0c77e1d17d2b123c40272f728d631c5fd",
+        "private_owner_portal_path": "/api/portal/cast/grandma/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "mechanic",
@@ -165,11 +269,24 @@
         "nPczCjzI2devNBz1zQrb"
       ],
       "content_use": "moto_story",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "aiden",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": -0.8,
+        "duration_seconds": 5.6,
+        "wav_sha256": "2ab1ce24d35128587602120aba51c02a5c7731904f19662c6c97409851cd7347",
+        "mp3_sha256": "df3f9130f4ac589f718d71395e635a7f72743e3fd4fb3d2a62580820ce9bd907",
+        "private_owner_portal_path": "/api/portal/cast/mechanic/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "sport_energy",
@@ -181,11 +298,24 @@
         "IKne3meq5aSn9XLyUdCD"
       ],
       "content_use": "moto_story",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "ryan",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": 1,
+        "duration_seconds": 5.68,
+        "wav_sha256": "eb923213eea789b335310f98a45a6a1f66e5a6226705579cb5bb36d9a04240f5",
+        "mp3_sha256": "b36d140aca92ae397634d3af1b31f9204537c2afeb8a32ead8497ecb46411c23",
+        "private_owner_portal_path": "/api/portal/cast/sport_energy/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "soft_female",
@@ -197,11 +327,24 @@
         "pFZP5JQG7iQjIQuC4Bku"
       ],
       "content_use": "narrator",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "serena",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": 0,
+        "duration_seconds": 5.92,
+        "wav_sha256": "371b42fe7101897de30b64bca97fe88203cd579f3d83d50e8f9282773272afc5",
+        "mp3_sha256": "87d4d924701db08576dc8ad52330b9a08b8ae1c89268be8eeb0b11188f85615f",
+        "private_owner_portal_path": "/api/portal/cast/soft_female/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "comic_villain",
@@ -213,11 +356,24 @@
         "SOYHLrjzK2X1ezoPC6cr"
       ],
       "content_use": "comedy",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "dylan",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": -1.2,
+        "duration_seconds": 5.44,
+        "wav_sha256": "666eef40d416ab90b5be8b3e8d570f671894c5641ff461b44b130f059edc8afc",
+        "mp3_sha256": "4f4f35c01b43ea52a63ee6ea821346780f2b174aabf3fd9fbbfbbf2cdcbde4c8",
+        "private_owner_portal_path": "/api/portal/cast/comic_villain/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "young_female",
@@ -229,11 +385,24 @@
         "cgSgspJ2msm6clMCkdW9"
       ],
       "content_use": "family_dialogue",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "sohee",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": 0.5,
+        "duration_seconds": 7.2,
+        "wav_sha256": "526b68a8d6af2c92e1ea74b4b09a32ff2dde1e06e49896c368c926e7c66e8631",
+        "mp3_sha256": "f5730c6f7ed358345451592e3a567c966ac11648d0155e07abe08906025ba8ea",
+        "private_owner_portal_path": "/api/portal/cast/young_female/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "dry_humor",
@@ -245,11 +414,24 @@
         "onwK4e9ZLuTAKqWW03F9"
       ],
       "content_use": "comedy",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "aiden",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": 0,
+        "duration_seconds": 5.6,
+        "wav_sha256": "b0aa0561c9ebe890e5e351166a08f0b308c7a7e70bd21740812eb67bc05be290",
+        "mp3_sha256": "2b73543dae78fe7e99e5c30e421baea328548997e221b5bf648c629f0ac2ba8d",
+        "private_owner_portal_path": "/api/portal/cast/dry_humor/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "news_story",
@@ -261,11 +443,24 @@
         "JBFqnCBsd6RMkjVDRZzb"
       ],
       "content_use": "narrator",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "uncle_fu",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": -0.4,
+        "duration_seconds": 6.88,
+        "wav_sha256": "f0f59e4d8120f959316cffd6c7734c1eab450e8e6292d5b2e1f74ef207c4f4b9",
+        "mp3_sha256": "bf4f51bd9415025f78b31aefb619177bc93c27531afc13ba8ac538385a9699f7",
+        "private_owner_portal_path": "/api/portal/cast/news_story/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "warm_biker_woman",
@@ -277,11 +472,24 @@
         "EXAVITQu4vr4xnSDxMaL"
       ],
       "content_use": "moto_story",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
-      "requires_russian_asr": true
+      "requires_russian_asr": true,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "vivian",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": -0.7,
+        "duration_seconds": 6.16,
+        "wav_sha256": "668979a56111193e4bc9635fb6e96029fd781f3f4abab71d999b2ab5b1c83fc5",
+        "mp3_sha256": "301ace3e5297fe77c868f2071927b2c60ec85f8f1050838194093c548e44a902",
+        "private_owner_portal_path": "/api/portal/cast/warm_biker_woman/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     },
     {
       "id": "cartoon_spring_nasal_original_v1",
@@ -298,12 +506,25 @@
       "independent_voice_source_required": true,
       "oral_canary_ru": "Мотоциклист на трэке! Сначала проверим шлем, потом покажем трюк — только без спешки.",
       "content_use": "original_cartoon_motorcycle_side_character",
-      "status": "design_spec_only",
+      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
       "requires_russian_asr": true,
-      "may_replace_gustava_deep_without_owner_approval": false
+      "may_replace_gustava_deep_without_owner_approval": false,
+      "audition": {
+        "mode": "Qwen3-0.6B-CustomVoice_stock_speaker_with_pitch_variation",
+        "source_speaker": "ryan",
+        "original_role_voice_is_not_independently_trained": true,
+        "pitch_semitones": -2,
+        "duration_seconds": 5.68,
+        "wav_sha256": "c918dc5c2870802beb99af4f3bc0d8a1994e7872b55151f5b3cf6034d855d190",
+        "mp3_sha256": "0cf5c055d91d60fd9e15a9414eadbdc9dbf92c806c7ac35ce2bf5e2fc91d0520",
+        "private_owner_portal_path": "/api/portal/cast/cartoon_spring_nasal_original_v1/audio",
+        "generated_at_utc": "2026-11-02",
+        "russian_asr_approved": false,
+        "owner_audition_approved": false
+      }
     }
   ],
   "available_premade_audition_voices": [
@@ -569,6 +790,7 @@
     "Existing YouTube Factory publishing and Deep identity gates remain unchanged.",
     "Character names are creative role identifiers and not identities of real actors.",
     "Current video PR #89 merged; render job 41332576263 was running during research; Buffer was empty before new QA.",
-    "2026-11-02: requested playful cartoon voice inspiration: propose a separate ORIGINAL persona pitched -2 semitones with formant preservation. Simple pitch-changing a recognizable SpongeBob recording is not an independent proprietary voice; do not copy copyrighted clips or deploy without authorized voice source, spoken Russian test, and owner listening approval."
+    "2026-11-02: requested playful cartoon voice inspiration: propose a separate ORIGINAL persona pitched -2 semitones with formant preservation. Simple pitch-changing a recognizable SpongeBob recording is not an independent proprietary voice; do not copy copyrighted clips or deploy without authorized voice source, spoken Russian test, and owner listening approval.",
+    "2026-11-02: 17 real WAV+MP3 audition recordings generated and inspected for signal quality on owner VPS. Role samples are 17 variations of nine Qwen3 CustomVoice stock speakers, NOT 17 independent fine-tuned voice models. Authenticated /api/portal/cast playback is available after portal deployment. All remain production_enabled=false until real Russian ASR and owner listening approval. No switching the approved Create Audio Voice DEEP or weakening YouTube Factory release gates."
   ]
 }
