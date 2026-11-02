@@ -62,8 +62,8 @@ class SelectedCartoonBEndpointTests(unittest.TestCase):
                       "channel_slug":"gustava","response_format":"wav"}
 
     def test_B_has_distinct_reference_and_original_DEEP_kept(self):
-        self.assertEqual(api.voice_paths(api.CARTOON_B_VOICE_ID)[-1],self.digest)
-        self.assertEqual(api.voice_paths(api.VOICE_ID)[-1],self.digest)
+        self.assertEqual(api.profile_paths(api.CARTOON_B_VOICE_ID)[-1],self.digest)
+        self.assertEqual(api.profile_paths(api.VOICE_ID)[-1],self.digest)
         self.assertNotEqual(api.CARTOON_B_VOICE_ID,api.VOICE_ID)
         self.assertEqual(api.backend_label(api.CARTOON_B_VOICE_ID),
                          "qwen3_0.6b_base_cartoon_b_reference")
