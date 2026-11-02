@@ -600,7 +600,7 @@
       "source_page": "https://www.pexels.com/video/man-riding-motorcycle-on-sunny-tree-lined-street-40347388/",
       "author": "Tom Shutkin",
       "license": "Pexels License",
-      "duration": 11.2,
+      "duration": 11.21,
       "source_title": "man riding motorcycle on sunny tree lined street"
     },
     {
@@ -885,7 +885,8 @@
       "source_title": "busy city street with motorcycles and cars",
       "topics": [
         "city"
-      ]
+      ],
+      "duration": 11.71
     },
     {
       "key": "px_40373638",
@@ -998,6 +999,84 @@
       "topics": [
         "motocross",
         "racing"
+      ]
+    },
+    {
+      "key": "px_9927896",
+      "url": "https://www.pexels.com/download/video/9927896/",
+      "source_page": "https://www.pexels.com/video/man-riding-motorcycle-along-street-9927896/",
+      "author": "Nitin Khajotia",
+      "license": "Pexels License",
+      "duration": 11.71,
+      "source_title": "man riding motorcycle along street",
+      "topics": [
+        "city",
+        "roadtrip"
+      ]
+    },
+    {
+      "key": "px_31862458",
+      "url": "https://www.pexels.com/download/video/31862458/",
+      "source_page": "https://www.pexels.com/video/dynamic-motorcycle-ride-at-sunset-31862458/",
+      "author": "Hasan basri Yentekün",
+      "license": "Pexels License",
+      "duration": 11.71,
+      "source_title": "dynamic motorcycle ride at sunset",
+      "topics": [
+        "sunset",
+        "roadtrip"
+      ]
+    },
+    {
+      "key": "px_30031070",
+      "url": "https://www.pexels.com/download/video/30031070/",
+      "source_page": "https://www.pexels.com/video/busy-street-traffic-from-motorcycle-perspective-30031070/",
+      "author": "Manish Khandagale",
+      "license": "Pexels License",
+      "duration": 11.71,
+      "source_title": "busy street traffic from motorcycle perspective",
+      "topics": [
+        "city",
+        "roadtrip"
+      ]
+    },
+    {
+      "key": "px_5052421",
+      "url": "https://www.pexels.com/download/video/5052421/",
+      "source_page": "https://www.pexels.com/video/man-riding-a-motorcycle-5052421/",
+      "author": "Pavel Danilyuk",
+      "license": "Pexels License",
+      "duration": 11.71,
+      "source_title": "man riding a motorcycle",
+      "topics": [
+        "sunset",
+        "roadtrip"
+      ]
+    },
+    {
+      "key": "px_5206968",
+      "url": "https://www.pexels.com/download/video/5206968/",
+      "source_page": "https://www.pexels.com/video/a-man-riding-a-motorcycle-5206968/",
+      "author": "cottonbro studio",
+      "license": "Pexels License",
+      "duration": 11.71,
+      "source_title": "a man riding a motorcycle",
+      "topics": [
+        "city",
+        "roadtrip"
+      ]
+    },
+    {
+      "key": "px_35261826",
+      "url": "https://www.pexels.com/download/video/35261826/",
+      "source_page": "https://www.pexels.com/video/adventurous-motorcycle-ride-on-rough-mountain-road-35261826/",
+      "author": "Shital Khadgi",
+      "license": "Pexels License",
+      "duration": 11.71,
+      "source_title": "adventurous motorcycle ride on rough mountain road",
+      "topics": [
+        "mountain",
+        "roadtrip"
       ]
     }
   ]
