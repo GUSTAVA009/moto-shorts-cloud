@@ -7865,6 +7865,168 @@
         ],
         "reason": "Portrait output initial 5.905 sec contains trees and fence without a visible rider; replacement official Pexels has a clearly visible motocross rider in action in both checked frames"
       }
+    },
+    {
+      "id": "moto-repair-e7a716f5132a",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_original_qwen3_v1",
+      "selfhosted_voice_id": "gustava-original-v1",
+      "title": "Работа с мотором или подкачка шины: какой момент интереснее? #shorts",
+      "narration": "Мотоцикл в двух сценах: механик занимается мотором мотоцикла. На другом видео мастер накачивает шину мотоцикла. Это независимые съёмки. Что ближе тебе?",
+      "description": "Две разные мотоистории: работа с мотором и подкачка шины. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "РАБОТА С МОТОРОМ",
+      "caption_middle": "ПОДКАЧКА ШИНЫ",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "garage-groove",
+      "music_bpm": 136,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "topics": [
+            "repair",
+            "vintage"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/34948751/",
+          "source_page": "https://www.pexels.com/video/high-quality-motorcycle-engine-assembly-34948751/",
+          "author": "Emrul Kausar Emon",
+          "license": "Pexels License",
+          "duration": 9,
+          "source_title": "high quality motorcycle engine assembly"
+        },
+        {
+          "topics": [
+            "repair",
+            "vintage"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/36705180/",
+          "source_page": "https://www.pexels.com/video/air-pumping-motorcycle-tire-with-portable-inflator-36705180/",
+          "author": "Erkan Avanoğlu",
+          "license": "Pexels License",
+          "duration": 24,
+          "source_title": "air pumping motorcycle tire with portable inflator"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 8.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.5
+        }
+      ],
+      "visual_director_version": 3,
+      "editorial": {
+        "environment": "garage-workshop-e7a71",
+        "bike": "workshop-bike",
+        "people": "garage-mechanics-e7a71",
+        "story": "mechanic-bike-servicing-e7a71",
+        "visual": "three-clips-e7a71"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Поделись роликом с другом, который любит мотоциклы."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-city-21a5b6e0d121",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_original_qwen3_v1",
+      "selfhosted_voice_id": "gustava-original-v1",
+      "title": "Городская поездка или мототрюк: какой момент интереснее? #shorts",
+      "narration": "Мотоцикл в двух сценах: байкер едет по городской улице. На другом видео райдер выполняет трюк на мотоцикле. Это независимые съёмки. Что ближе тебе?",
+      "description": "Две разные мотоистории: городская поездка и мототрюк. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_middle": "МОТОТРЮК",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "night-drive",
+      "music_bpm": 110,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "topics": [
+            "city"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/36926096/",
+          "source_page": "https://www.pexels.com/video/busy-urban-street-scene-with-motorcyclists-36926096/",
+          "author": "Paul Bill",
+          "license": "Pexels License",
+          "duration": 13.24,
+          "source_title": "busy urban street scene with motorcyclists"
+        },
+        {
+          "topics": [
+            "city",
+            "racing",
+            "motocross"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/9607279/",
+          "source_page": "https://www.pexels.com/video/woman-doing-stunts-on-a-motorcycle-9607279/",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 11,
+          "source_title": "woman doing stunts on a motorcycle"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.5
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 10.75
+        }
+      ],
+      "visual_director_version": 3,
+      "editorial": {
+        "environment": "urban-streets-21a5b",
+        "bike": "urban-motorbike",
+        "people": "city-riders-21a5b",
+        "story": "urban-riding-21a5b",
+        "visual": "three-clips-21a5b"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
     }
   ]
 }
