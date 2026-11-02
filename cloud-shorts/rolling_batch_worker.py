@@ -103,14 +103,13 @@ def live_unqueued_reviewed_mp4(catalog, include_reserved=False):
         if not entry:
             raise RuntimeError("Missing permanent render receipt")
         receipts.append(ledger.decode_receipt(entry))
-    artifacts = []
-    for page in range(1, 7):
-        response = github("GET", "actions/artifacts?per_page=100&page=" + str(page))
-        artifacts.extend(response.get("artifacts", []))
-        if len(response.get("artifacts", [])) < 100:
-            break
-    else:
-        raise RuntimeError("Artifact list incomplete; cannot count QA reserve")
+    # The factory has >600 historical artifacts. The old hardcoded six-page
+    # limit aborted exactly when a valid new reserve became available.
+    # Reuse the publisher's complete, fail-closed inventory contract across
+    # ALL pages; never miscount a partial archive or bypass deduplication.
+    from find_pending_buffer import complete_artifact_inventory
+    artifacts = complete_artifact_inventory(
+        fetch=lambda path: github("GET", path))
     count = count_unqueued_reviewed_mp4(catalog, receipts, artifacts, paths)
     return (count, reserved_ids) if include_reserved else count
 
@@ -295,7 +294,10 @@ def main():
                       "Blockers: "+(", ".join(summary["factory_health"]["blockers"]) or "none"),
                       "Workflow success is NOT proof of YouTube publication."])
         Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text("\n".join(lines)+"\n",encoding="utf8")
-    return 0
+    # A green cron job while Buffer is EMPTY is misleading. Dispatches were
+    # performed above, but the pipeline is still not operational: report it
+    # as a failed production run, not as a completed factory recovery.
+    return 0 if summary["factory_health"]["operational"] else 1
 
 if __name__ == "__main__":
     raise SystemExit(main())

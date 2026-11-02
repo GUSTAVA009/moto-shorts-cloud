@@ -9,6 +9,7 @@ import re
 from pathlib import Path
 
 from channel_focus import assert_motorcycle_episode
+from autonomous_visual_review import checked_review
 from visual_director import verified_visual_artifact
 from deep_voice import (VOICE_ENGINE as REQUIRED_MALE_ENGINE,
                         PROFILE_ID as REQUIRED_MALE_PROFILE,
@@ -38,8 +39,9 @@ def publication_allowed(episode, meta, qa, video):
     if episode.get("visual_review_failed") is True or episode.get("visual_revision_requested") is True:
         raise ValueError("OWNER_REJECTED_VISUALS: reject unfinished or rejected visual material")
     if int(episode.get("visual_director_version") or 0) >= 3:
-        if (episode.get("visual_revision_status") != "assistant_checked_passed"
-                or not episode.get("scene_script_anchors")):
+        if not ((episode.get("visual_revision_status") == "assistant_checked_passed"
+                 and episode.get("scene_script_anchors"))
+                or checked_review(episode, file_sha256(video))):
             raise ValueError("SCENE_FIRST_REVIEW_REQUIRED: actual shots must be reviewed for release")
     # New director-v2 releases MUST provide visual QA proof. Legacy test
     # fixtures and already-approved historic renders keep their prior proof.

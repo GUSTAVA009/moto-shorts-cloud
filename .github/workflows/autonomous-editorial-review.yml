@@ -1,0 +1,88 @@
+# Independent visual review of ORIGINAL real MP4s. No manual per-video toggles.
+# Never approves source-only drafts, expired artifacts or mismatched footage.
+name: GUSTAVA - Autonomous Frame Reviewed Shorts to Buffer
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['Shorts Factory - Three Unique Cloud Previews Daily']
+    types: [completed]
+  schedule:
+    - cron: '12,42 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/autonomous-editorial-review.yml'
+      - 'cloud-shorts/autonomous_visual_review.py'
+      - 'cloud-shorts/test_autonomous_visual_review.py'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: gustava-autonomous-independent-frame-review
+  cancel-in-progress: false
+
+jobs:
+  independent-frame-review:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Verify strict automatic review and immutable receipt contracts
+        run: |
+          python3 -m compileall -q cloud-shorts
+          python3 -m unittest discover -s cloud-shorts -p 'test_autonomous_visual_review.py' -v
+      - name: Select one REAL original privately rendered Cartoon B MP4
+        id: pick
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 cloud-shorts/autonomous_visual_review.py select --output "$GITHUB_OUTPUT"
+      - name: Check independent visual model availability
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          VISION_OPENAI_PRESENT: ${{ secrets.OPENAI_API_KEY != '' }}
+          VISION_OPENROUTER_PRESENT: ${{ secrets.OPENROUTER_API_KEY != '' }}
+        run: |
+          if [ "$VISION_OPENAI_PRESENT" != true ] && [ "$VISION_OPENROUTER_PRESENT" != true ]; then
+            echo '::error::AUTO_FRAME_REVIEW_PROVIDER_KEY_MISSING: no independent visual reviewer. Keeping original MP4 private; do not call the factory autonomous.'
+            exit 1
+          fi
+          echo 'INDEPENDENT_VISUAL_REVIEW_PROVIDER_AVAILABLE'
+      - name: Download exact QA-verified original MP4 and QA evidence
+        if: steps.pick.outputs.has_job == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.pick.outputs.artifact_name }}
+          run-id: ${{ steps.pick.outputs.render_id }}
+          repository: ${{ github.repository }}
+          github-token: ${{ github.token }}
+          path: staged
+      - name: Review ACTUAL movie frames and publish only independently approved originals
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          EPISODE: ${{ steps.pick.outputs.episode }}
+          RENDER_ID: ${{ steps.pick.outputs.render_id }}
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg >/dev/null
+          python3 cloud-shorts/autonomous_visual_review.py review \
+            --episode "$EPISODE" --run-id "$RENDER_ID" --directory staged
+      - name: Record unattended review stage truthfully
+        if: always()
+        env:
+          HAS_JOB: ${{ steps.pick.outputs.has_job }}
+        run: |
+          if [ "$HAS_JOB" = 'true' ]; then
+            echo 'Actual MP4 inspected or review blocked; automatic public release requires passed frame, voice, visual and exact SHA checks.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'No eligible new unreviewed original MP4. No Buffer post was created.' >> "$GITHUB_STEP_SUMMARY"
+          fi

@@ -23,6 +23,7 @@ from selfhosted_voice import (VOICE_ENGINE as SELFHOSTED_ENGINE,
     CARTOON_B_VOICE_ID, CARTOON_B_REFERENCE_SHA,
     profile_for_episode, reference_for_episode)
 from voice_routing import may_publish_with_verified_profile
+from autonomous_visual_review import checked_review
 
 
 def gh(path):
@@ -55,7 +56,8 @@ def select(catalog, receipt_entries, published, artifacts):
              and ep.get("visual_revision_requested") is not True
              and (int(ep.get("visual_director_version") or 0)<3
                   or (ep.get("visual_revision_status") == "assistant_checked_passed"
-                      and bool(ep.get("scene_script_anchors"))))
+                      and bool(ep.get("scene_script_anchors")))
+                  or checked_review(ep))
              and is_motorcycle_episode(ep)}
     available={x["name"] for x in artifacts if not x.get("expired")}
     choices=[]
