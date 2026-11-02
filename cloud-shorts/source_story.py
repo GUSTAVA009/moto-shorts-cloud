@@ -65,7 +65,7 @@ SCENES = (
      "в мастерской", "механик работает с мотоциклом", "ремонт байка",
      r"мастер|механик|ремонт"),
     ("rain", r"motorcycle.*?(?:rain|wet)|(?:rain|wet).*?motorcycle",
-     "под дождём", "байкер едет на мотоцикле по мокрой дороге", "дождевая поездка",
+     "под дождём", "байкер едет под дождём", "дождевая поездка",
      r"дожд|мокр|ливн"),
     ("ride", r"(?:motorcycle|motorbike|motocross|dirt bike).*?(?:riding|ride|travel|driving)|(?:riding|ride|travel|driving).*?(?:motorcycle|motorbike|motocross|dirt bike)",
      "на дороге", "байкер едет на мотоцикле", "поездка",
