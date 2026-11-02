@@ -14,7 +14,7 @@ class VoiceCastContractTests(unittest.TestCase):
     def test_original_cast_is_distinct_and_not_fake_production(self):
         c = self.cast
         self.assertEqual(c["kind"],"original_character_roles_with_live_private_audio_auditions")
-        self.assertEqual(c["production_status"],"15_SHORT_RUSSIAN_CANARIES_PASS_2_FAIL_OWNER_APPROVAL_PENDING")
+        self.assertEqual(c["production_status"],"17_SHORT_RUSSIAN_CANARIES_PASS_0_FAIL_OWNER_APPROVAL_PENDING")
         cast = c["proposed_character_voices"]
         self.assertGreaterEqual(len(cast), 12)
         ids = [voice["id"] for voice in cast]
