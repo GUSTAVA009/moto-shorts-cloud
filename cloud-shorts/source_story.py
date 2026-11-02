@@ -214,7 +214,26 @@ def compose(sources, previous_titles):
     if not filmable_options:
         raise ValueError("NO_CONCISE_TWO_SCENE_NARRATION")
     narration = filmable_options[variant % len(filmable_options)]
-    title = f"{a[4].capitalize()} или {b[4]}: какой момент интереснее? #shorts"
+    # Earlier versions generated exactly ONE title for every action pair.
+    # On 2026-11-02 real refill 41410904531 rejected fresh, licensed
+    # footage three times with SOURCE_STORY_TITLE_ALREADY_USED because the
+    # title was reused independently of the clips. Offer concise distinct
+    # *source-grounded* hooks without claiming two clips show one event.
+    title_options = (
+        f"{a[4].capitalize()} или {b[4]}: какой момент интереснее? #shorts",
+        f"{a[4].capitalize()} и {b[4]} — какой кадр сильнее? #shorts",
+        f"Два мотоэпизода: {a[4]} и {b[4]}. Что выберешь? #shorts",
+        f"Что больше цепляет: {a[4]} или {b[4]}? #shorts",
+        f"Два разных райдера: {a[4]} и {b[4]}. Твой выбор? #shorts",
+        f"{a[4].capitalize()} / {b[4]} — две разные мотосцены #shorts",
+        f"Мото на деле: {a[4]} и {b[4]}. Где больше драйва? #shorts",
+    )
+    used = {str(old).strip().casefold() for old in previous_titles}
+    title = next((option for offset in range(len(title_options))
+                  for option in (title_options[(variant+offset)%len(title_options)],)
+                  if option.casefold() not in used and len(option)<=100), None)
+    if title is None:
+        raise ValueError("SOURCE_STORY_ALL_GROUNDED_TITLES_ALREADY_USED")
     prose = {
         "title": title, "narration": narration,
         "description": (f"Две разные мотоистории: {a[4]} и {b[4]}. "
@@ -226,7 +245,7 @@ def compose(sources, previous_titles):
         "_generation_source": "keyless_action_filmable_v1",
     }
     require_filmable(prose, sources)
-    if title.casefold() in {str(t).casefold() for t in previous_titles}:
+    if title.casefold() in used:
         raise ValueError("SOURCE_STORY_TITLE_ALREADY_USED")
     if len(title) > 100:
         raise ValueError("TITLE_TOO_LONG")
