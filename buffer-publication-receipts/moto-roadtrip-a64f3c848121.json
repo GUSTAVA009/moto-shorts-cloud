@@ -2,6 +2,8 @@
   "episode": "moto-roadtrip-a64f3c848121",
   "sha256": "7b9685e8bf3305df525eb89e6b8b156ba716193b9d381c8daaf4b9cd033ebda6",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-moto-roadtrip-a64f3c848121-7b9685e8bf33/moto-roadtrip-a64f3c848121.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae872c82dd80afa12f4f2af",
+  "due_at": "2026-11-02T15:30:00.000Z"
 }
