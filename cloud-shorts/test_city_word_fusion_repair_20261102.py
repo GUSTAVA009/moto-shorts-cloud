@@ -41,7 +41,12 @@ class PrivateWordFusionRetryTests(unittest.TestCase):
         validate_episode(self.ep)
         validate_catalog(self.catalog)
         self.assertNotEqual(FP,self.fp)
-        self.assertTrue(pq.eligible_retry(self.ep,self.receipt,self.fp))
+        # The first word-fusion retry already PASSED in 41374584510.
+        # It must not be replayed after this episode enters visual review.
+        self.assertFalse(self.ep["voice_revision_requested"])
+        self.assertEqual(self.ep["voice_revision_reason"],
+                         "completed_raw_and_final_asr_fused_video_mechanic")
+        self.assertFalse(pq.eligible_retry(self.ep,self.receipt,self.fp))
     def test_no_unproved_retry_or_voice_swap_or_public_release(self):
         self.assertFalse(pq.eligible_retry(self.ep,self.receipt,FP))
         for key,val in (
