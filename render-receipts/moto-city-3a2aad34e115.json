@@ -1,0 +1,11 @@
+{
+  "id": "moto-city-3a2aad34e115",
+  "state": "reserved",
+  "run_id": "41373650226",
+  "attempt_count": 1,
+  "preview_fingerprint": "8ea4ff16627b5ef49c0a154f490d70214c351400986aabfb715c603e4cd43811",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-original-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
