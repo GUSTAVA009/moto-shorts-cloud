@@ -24,6 +24,9 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 import wave
 import io
+from voice_cast_library import (
+    CastUnavailable, available_auditions, audition_audio,
+)
 
 HOST = "127.0.0.1"
 PORT = 8078
@@ -79,6 +82,13 @@ select{appearance:auto}.two{display:flex;gap:12px;align-items:end}.two>*{flex:1}
 .eq-help{font-size:.83rem;color:#96aec8}
 .pw-hint{font-size:.8rem;color:#9eb5c9}
 audio{width:100%;margin:14px 0}small{color:#a0afc2}.feedback{min-height:22px}.line{height:1px;background:#2a3d50;margin:22px 0}
+.cast-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:12px}
+.cast-card{padding:16px;border:1px solid #30516d;border-radius:13px;background:#0c1929}
+.cast-card strong{font-size:.94rem;display:block;margin-bottom:6px}
+.cast-card small{display:block;line-height:1.5}
+.cast-card audio{display:block;margin:9px 0 6px}
+.cast-card a{font-size:.82rem}
+
 @media(max-width:870px){.shell{display:block;padding:18px}aside{min-height:auto;border-right:0;padding:12px 5px 22px}aside a{display:inline-block;margin:12px 16px 0 0}.grid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr}.auth{margin:8vh 14px}}
 """
 LOGIN_JS = """
@@ -125,6 +135,29 @@ if(r.status===401){location.replace('/login');throw Error('Сессия заве
 if(!r.ok){const e=await r.json().catch(()=>({}));throw Error(e.error||('HTTP '+r.status))}
 return r.json()
 }
+async function loadCast(){
+ const panel=$('cast-list');panel.replaceChildren();
+ try{
+  const info=await api('/api/portal/cast');
+  $('cast-count').textContent=info.count+' голосовых проб на сервере · '+info.independent_stock_speakers+' исходных тембров · допуск к выпуску: '+info.production_approved;
+  for(const role of info.voices){
+   const card=document.createElement('div');card.className='cast-card';
+   const name=document.createElement('strong');name.textContent=role.name_ru;card.appendChild(name);
+   const desc=document.createElement('small');
+   desc.textContent='Qwen '+role.speaker+' · '+(role.pitch_semitones>0?'+':'')+role.pitch_semitones+' полутонов · '+role.duration_seconds+' с';
+   card.appendChild(desc);
+   const audio=document.createElement('audio');audio.controls=true;audio.preload='none';
+   audio.setAttribute('aria-label','Прослушать '+role.name_ru);
+   audio.src='/api/portal/cast/'+encodeURIComponent(role.id)+'/audio';
+   card.appendChild(audio);
+   const link=document.createElement('a');link.href=audio.src;link.download=role.id+'.mp3';
+   link.textContent='Скачать MP3';card.appendChild(link);
+   panel.appendChild(card);
+  }
+ }catch(error){
+  $('cast-count').textContent='Голоса ещё не доступны в этом кабинете: '+error.message;
+ }
+}
 async function boot(){
 try{
 const s=await api('/auth/session');csrf=s.csrf;
@@ -135,6 +168,7 @@ $('tts').textContent=h.tts_ready?'Работает':'Недоступен';
 $('tts').className=h.tts_ready?'ok':'error';
 $('voice').textContent=h.voice_id;$('ref').textContent=h.reference_sha_prefix+'…';
 $('factory-note').textContent='Публичная публикация YouTube и заполнение Buffer требуют отдельного подтверждения.';
+ await loadCast();
 $('server-status').textContent=h.tts_ready?'Qwen3 CPU доступен':'Проверка TTS не пройдена';
 }catch(e){msg('feedback',e.message)}
 }
@@ -213,12 +247,16 @@ LOGIN_HTML = """<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta
 <small>HTTPS · Защищённая сессия · Без платных голосовых API</small></main></body></html>"""
 APP_HTML = """<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HAPYCH Voice — мой кабинет</title><link rel="stylesheet" href="/portal-assets/site.css"><script defer src="/portal-assets/app.js"></script></head><body><div class="shell">
 <aside><div class="brand">◈ HAPYCH <span>VOICE</span></div><p class="muted">Личная студия владельца</p>
-<a href="#status">● Состояние</a><a href="#studio">◈ Озвучка</a><a href="#settings">⚙ Настройки</a><a href="#security">⌘ Безопасность</a>
+<a href="#status">● Состояние</a><a href="#cast">♫ 17 голосов</a><a href="#studio">◈ Озвучка</a><a href="#settings">⚙ Настройки</a><a href="#security">⌘ Безопасность</a>
 <p style="margin-top:36px"><button id="logout" class="secondary">Выйти</button></p></aside>
 <main><header><div><span class="tag">OWNER CONTROL CENTER</span><h1>Мой кабинет</h1><p class="muted">Живая студия озвучки для GUSTAVA, не демонстрационная страница.</p></div><span class="tag" id="server-status">Проверяем</span></header>
 <section id="status" class="panel"><h2>Состояние голосового сервера</h2><div class="kpis"><div class="kpi"><span>Qwen3-TTS · облако</span><b id="tts">Проверяем</b></div>
 <div class="kpi"><span>Закреплённый профиль</span><b id="voice">…</b></div><div class="kpi"><span>SHA эталона</span><b id="ref">…</b></div></div>
 <p id="factory-note" class="muted"></p></section>
+<section id="cast" class="panel"><h2>♫ Реальные голоса и персонажи</h2>
+<p class="muted">17 настоящих проб WAV/MP3 из 9 исходных Qwen3 CustomVoice тембров. Это <strong>кастинг</strong>, а не 17 отдельно обученных моделей. Основной GUSTAVA DEEP не заменяется. Русская дикция и коммерческий выпуск требуют отдельного допуска.</p>
+<p id="cast-count" class="feedback" role="status">Загрузка голосов…</p>
+<div id="cast-list" class="cast-grid"></div></section>
 <div class="grid"><section id="studio" class="panel"><h2>◈ Создать предпросмотр</h2>
 <p class="muted">Настоящий русский WAV на приватном Qwen3. Автовыпуск остаётся закрытым до проверки тембра, текста и видеокадров.</p>
 <label for="text">Текст диктора (до 400 символов)</label><textarea id="text" maxlength="400" placeholder="Напиши текст для теста русского голоса…"></textarea>
@@ -490,6 +528,24 @@ class PortalHandler(BaseHTTPRequestHandler):
             return self.json(200, {"tts_ready": runtime_health(), "voice_id": VOICE_ID,
                                    "reference_sha_prefix": REF_SHA[:16],
                                    "youtube_publication_confirmed": False})
+        if path == "/api/portal/cast":
+            if not self.authorized():return
+            try:
+                return self.json(200, available_auditions())
+            except CastUnavailable:
+                return self.error(503, "VOICE_CAST_AUDITIONS_UNAVAILABLE")
+        if path.startswith("/api/portal/cast/"):
+            if not self.authorized():return
+            match=re.fullmatch(
+                r"/api/portal/cast/([a-z0-9_]{3,64})/audio", path)
+            if not match:return self.error(404,"VOICE_CAST_UNKNOWN_ROLE")
+            try:
+                audio=audition_audio(match.group(1))
+            except CastUnavailable:
+                return self.error(404,"VOICE_CAST_AUDIO_UNAVAILABLE")
+            return self.send(200,audio,"audio/mpeg",
+                {"Content-Disposition":
+                    'inline; filename="'+match.group(1)+'.mp3"'})
         if path == "/api/portal/preferences":
             if not self.authorized():return
             return self.json(200, get_preferences())
