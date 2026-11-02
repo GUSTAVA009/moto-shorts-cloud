@@ -16,6 +16,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+from pronunciation_ru import to_speech_text
+
 VOICE_ID = "gustava-original-v1"
 CHANNEL_SLUG = "gustava"
 MAX_AUDIO_BYTES = 12_000_000
@@ -130,7 +132,8 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def _post(route: Route, episode: dict, env, *, opener=None):
-    text = episode["narration"]
+    # The visual title remains «трек»; only private TTS hears «трэк».
+    text = to_speech_text(episode["narration"])
     request_id = episode["id"] + "-" + hashlib.sha256(
         text.encode("utf8")).hexdigest()[:20]
     payload = {

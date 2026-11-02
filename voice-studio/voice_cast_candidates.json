@@ -282,6 +282,28 @@
       "production_enabled": false,
       "requires_original_voice_canary": true,
       "requires_russian_asr": true
+    },
+    {
+      "id": "cartoon_spring_nasal_original_v1",
+      "name_ru": "Пружинный мультяшный голос — оригинальный",
+      "description_ru": "Энергичный озорной мультяшный мужской голос с лёгкой гнусавостью и пружинной артикуляцией, но собственным узнаваемым тембром. Пробное понижение на 2 полутона с сохранением формант; не копия персонажа или актёра.",
+      "design_prompt_en": "Original, distinctive Russian-language animated comedy voice for an energetic mischievous fictional motorcycle sidekick. Bouncy expressive timing, lightly nasal forward resonance, warm smile, elastic pitch contours, confident natural Russian pronunciation and intelligible consonants. Create a NEW independent vocal identity; do not copy any pre-existing cartoon character or actor.",
+      "reference_voice_ids_for_audition": [
+        "N2lVS1w4EtoT3dr4eOWO",
+        "SOYHLrjzK2X1ezoPC6cr"
+      ],
+      "inspiration_only": "Bouncy upbeat animated television comedy (do not copy SpongeBob SquarePants character voice, recordings or original actor)",
+      "pitch_semitones": -2,
+      "formant_preserving_pitch_shift_required": true,
+      "independent_voice_source_required": true,
+      "oral_canary_ru": "Мотоциклист на трэке! Сначала проверим шлем, потом покажем трюк — только без спешки.",
+      "content_use": "original_cartoon_motorcycle_side_character",
+      "status": "design_spec_only",
+      "language": "ru",
+      "production_enabled": false,
+      "requires_original_voice_canary": true,
+      "requires_russian_asr": true,
+      "may_replace_gustava_deep_without_owner_approval": false
     }
   ],
   "available_premade_audition_voices": [
@@ -546,6 +568,7 @@
     "Do not scrape, clone or impersonate the original performer from a viral YouTube video without permission.",
     "Existing YouTube Factory publishing and Deep identity gates remain unchanged.",
     "Character names are creative role identifiers and not identities of real actors.",
-    "Current video PR #89 merged; render job 41332576263 was running during research; Buffer was empty before new QA."
+    "Current video PR #89 merged; render job 41332576263 was running during research; Buffer was empty before new QA.",
+    "2026-11-02: requested playful cartoon voice inspiration: propose a separate ORIGINAL persona pitched -2 semitones with formant preservation. Simple pitch-changing a recognizable SpongeBob recording is not an independent proprietary voice; do not copy copyrighted clips or deploy without authorized voice source, spoken Russian test, and owner listening approval."
   ]
 }

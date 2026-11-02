@@ -20,6 +20,7 @@ import wave
 
 from deep_voice import pcm_stats, provenance_path
 import voice_failover
+from pronunciation_ru import to_speech_text, LEXICON_VERSION
 
 VOICE_ENGINE = "gustava_selfhosted_qwen3"
 VOICE_ID = "gustava-original-v1"
@@ -96,6 +97,15 @@ def verify_profile(wav,episode):
     if not sidecar.is_file() or not audio.is_file():
         raise ValueError("SELFHOSTED_VOICE_PROVENANCE_MISSING")
     report=json.loads(sidecar.read_text(encoding="utf8"))
+    speech=to_speech_text(episode["narration"])
+    # Unmodified older WAV receipts remain valid. A new pronunciation change
+    # MUST have its own recorded speech-input hash to prevent untraceable audio.
+    if (speech != episode["narration"]
+            and report.get("spoken_text_sha256") != sha(speech.encode("utf8"))):
+        raise ValueError("SELFHOSTED_SPOKEN_TEXT_SHA_MISSING_OR_MISMATCHED")
+    if (report.get("spoken_text_sha256") is not None
+            and report.get("spoken_text_sha256") != sha(speech.encode("utf8"))):
+        raise ValueError("SELFHOSTED_SPOKEN_TEXT_PROVENANCE_MISMATCH")
     expected={
         "episode_id":episode["id"],
         "voice_engine":VOICE_ENGINE,
@@ -145,6 +155,8 @@ def render(episode,destination,requester=None):
             "episode_id":episode["id"],"voice_engine":VOICE_ENGINE,
             "voice_profile":PROFILE_ID,"voice_id":VOICE_ID,
             "text_sha256":sha(episode["narration"].encode("utf8")),
+            "spoken_text_sha256":sha(to_speech_text(episode["narration"]).encode("utf8")),
+            "speech_lexicon_version":LEXICON_VERSION,
             "source_audio_sha256":sha(source),
             "reference_sha256":ref_sha,
             "wav_sha256":sha(target.read_bytes()),
