@@ -8859,7 +8859,7 @@
     {
       "id": "moto-city-397665705424",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -8935,7 +8935,51 @@
         "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
       },
       "source_selection": "Independent official video APIs, no clip reuse",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "assistant_checked_passed",
+      "caption_fit_required": true,
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "riding",
+          "spoken_anchor": "байкер едет по городской улице"
+        },
+        {
+          "source": "clip_1",
+          "action": "riding",
+          "spoken_anchor": "байкер едет на мотоцикле"
+        }
+      ],
+      "assistant_checked_visual_evidence": {
+        "review_run_id": "41434824966",
+        "mp4_sha256": "2a521a3aab3dbb755425c1eac0126f7e5048d98021692739ae91ffdbaf73c776",
+        "original_sources": [
+          "35841419",
+          "5206968"
+        ],
+        "visual_qa_version": 3,
+        "visual_qa_passed": true,
+        "raw_asr_coverage": 1,
+        "mixed_asr_coverage": 1,
+        "video_duration_seconds": 12.166,
+        "frames_inspected_seconds": [
+          0.4,
+          1.8,
+          3.5,
+          5.1,
+          6.4,
+          7.4,
+          8.9,
+          10.1,
+          11.3
+        ],
+        "cut_seconds": 6.145,
+        "audio_left_right_rms_difference_db": -0.186,
+        "audio_peak": 0.492,
+        "voice_id": "gustava-cartoon-b-v1",
+        "voice_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
+        "note": "Frame-by-frame storyboard reviewed: first multiple motorcycles actually moving on a wide city road; second different helmeted rider riding a motorcycle on a city side street, continuously moving; no frozen frames, no fake event connection; 6.145s scene switch, exact spoken anchors. Original licensed filmmakers distinct. 100% word coverage raw and mixed ASR; clean stereo at -0.186dB balance/0.492 peak. All original release QA retained."
+      }
     },
     {
       "id": "moto-roadtrip-a64f3c848121",
