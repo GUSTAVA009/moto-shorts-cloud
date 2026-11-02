@@ -51,7 +51,16 @@ _NUMBERS = {
 # Single verified Russian/Latin loanword spelling equivalence observed in
 # exact MP4 ASR: audio said «мотокросс», Whisper printed "motocross".
 # DO NOT transliterate arbitrary Latin text: that would mask real omissions.
-_ASR_SPELLING_EQUIVALENTS = {"motocross": "мотокросс"}
+_ASR_SPELLING_EQUIVALENTS = {
+    "motocross": "мотокросс",
+    # Whisper may transcribe the same hard-vowel loanword as «трэк» after
+    # our speech-only lexicon is applied. This narrow spelling equivalence
+    # cannot establish correct articulation; a human still checks the audio.
+    "трэк": "трек", "трэка": "трека", "трэку": "треку",
+    "трэке": "треке", "трэком": "треком",
+    "трэки": "треки", "трэков": "треков",
+    "трэками": "треками", "трэках": "треках",
+}
 
 
 def tokens(text):
