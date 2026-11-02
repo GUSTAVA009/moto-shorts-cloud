@@ -8994,7 +8994,7 @@
     {
       "id": "moto-roadtrip-a64f3c848121",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -9071,7 +9071,52 @@
         "description": "Подпишись, если любишь настоящие мотопутешествия."
       },
       "source_selection": "Independent official video APIs, no clip reuse",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "assistant_checked_passed",
+      "caption_fit_required": true,
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "touring_motorcycle_road",
+          "spoken_anchor": "райдер едет на туристическом мотоцикле"
+        },
+        {
+          "source": "clip_1",
+          "action": "riding",
+          "spoken_anchor": "байкер едет по городской улице"
+        }
+      ],
+      "assistant_checked_visual_evidence": {
+        "review_run_id": "41435234920",
+        "mp4_sha256": "7b9685e8bf3305df525eb89e6b8b156ba716193b9d381c8daaf4b9cd033ebda6",
+        "original_sources": [
+          "5052822",
+          "9927896"
+        ],
+        "visual_qa_version": 3,
+        "visual_qa_passed": true,
+        "raw_asr_coverage": 1,
+        "mixed_asr_coverage": 1,
+        "video_duration_seconds": 12.9,
+        "frames_inspected_seconds": [
+          0.4,
+          1.8,
+          3.5,
+          5.1,
+          6.4,
+          7.4,
+          8.9,
+          10.1,
+          11.3,
+          12.8
+        ],
+        "cut_seconds": 6.505,
+        "audio_left_right_rms_difference_db": -0.271,
+        "audio_peak": 0.576,
+        "voice_id": "gustava-cartoon-b-v1",
+        "voice_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
+        "note": "Assistant visually reviewed real MP4 frames. First scene visibly shows a motorcyclist travelling on paved tree-lined rural route; second different filmmaker shows a rider moving through city. Independent films, no implied shared incident. Both exact spoken anchors match scenes. No frozen shots, proper cut 6.505s, 23/23 raw+mixed ASR, balanced stereo; only this episode approved."
+      }
     },
     {
       "id": "moto-racing-025a888103d8",
