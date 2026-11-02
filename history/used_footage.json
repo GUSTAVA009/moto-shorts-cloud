@@ -967,6 +967,16 @@
       "episode": "moto-city-3a2aad34e115",
       "source": "https://mixkit.co/free-stock-video/mechanic-pouring-oil-into-an-engine-41937/",
       "status": "reserved-or-rendered"
+    },
+    "31623275": {
+      "episode": "moto-motocross-87bc6da95d28",
+      "source": "https://www.pexels.com/video/exciting-motorcycle-race-on-dirt-track-31623275/",
+      "status": "reserved-or-rendered"
+    },
+    "29466269": {
+      "episode": "moto-motocross-87bc6da95d28",
+      "source": "https://www.pexels.com/video/thrilling-desert-motocross-race-with-jumps-29466269/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1473,6 +1483,13 @@
       "people": "city-riders-3a2aa",
       "story": "urban-riding-3a2aa",
       "visual": "three-clips-3a2aa"
+    },
+    "moto-motocross-87bc6da95d28": {
+      "environment": "race-track-87bc6",
+      "bike": "motocross-bike",
+      "people": "track-racers-87bc6",
+      "story": "rider-at-prepared-track-87bc6",
+      "visual": "three-clips-87bc6"
     }
   }
 }
