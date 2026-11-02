@@ -37,7 +37,10 @@ class PortalCastLiveIntegrationTests(unittest.TestCase):
                 "id":role,"name_ru":"Тест "+role,"speaker":"ryan",
                 "mp3_file":name,"sha256_mp3":hashlib.sha256(data).hexdigest(),
                 "pitch_semitones":-2 if role=="cartoon_spring_nasal_original_v1" else 0,
-                "seconds":5.7,"asr_passed":None,"production_enabled":False})
+                "seconds":5.7,"asr_passed":True,"production_enabled":False,
+                "sha256_wav":"1"*64,
+                "asr_check":{"engine":"faster-whisper-small-cpu-int8",
+                    "audio_sha256":"1"*64,"coverage":1.0,"precision":1.0}})
         (self.cast_root/"voice_pack_manifest.json").write_text(json.dumps(payload),"utf8")
         p=patch.dict(os.environ,{"HAPYCH_CAST_AUDITION_ROOT":str(self.cast_root)})
         p.start();self.addCleanup(p.stop)
@@ -86,6 +89,7 @@ class PortalCastLiveIntegrationTests(unittest.TestCase):
         info=json.loads(body)
         self.assertEqual(info["count"],17)
         self.assertEqual(info["production_approved"],0)
+        self.assertEqual(info["short_russian_canary_passed"],17)
         self.assertEqual(info["independent_stock_speakers"],9)
         self.assertFalse(any(x["production_enabled"] for x in info["voices"]))
         code,headers,data=self.request("/api/portal/cast/father/audio",cookie=cookie)

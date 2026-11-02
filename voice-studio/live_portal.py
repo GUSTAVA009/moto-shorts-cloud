@@ -139,12 +139,13 @@ async function loadCast(){
  const panel=$('cast-list');panel.replaceChildren();
  try{
   const info=await api('/api/portal/cast');
-  $('cast-count').textContent=info.count+' голосовых проб на сервере · '+info.independent_stock_speakers+' исходных тембров · допуск к выпуску: '+info.production_approved;
+  $('cast-count').textContent=info.count+' голосовых проб на сервере · '+info.short_russian_canary_passed+' прошли контрольную фразу · '+info.short_russian_canary_failed+' ошибки · допуск к выпуску: '+info.production_approved;
   for(const role of info.voices){
    const card=document.createElement('div');card.className='cast-card';
    const name=document.createElement('strong');name.textContent=role.name_ru;card.appendChild(name);
    const desc=document.createElement('small');
-   desc.textContent='Qwen '+role.speaker+' · '+(role.pitch_semitones>0?'+':'')+role.pitch_semitones+' полутонов · '+role.duration_seconds+' с';
+   desc.textContent='Qwen '+role.speaker+' · '+(role.pitch_semitones>0?'+':'')+role.pitch_semitones+' полутонов · '+role.duration_seconds+' с · '+(role.short_russian_canary_passed?'контроль слов 100%':'ошибка слов '+Math.round(role.short_russian_coverage*100)+'%');
+   desc.className=role.short_russian_canary_passed?'ok':'error';
    card.appendChild(desc);
    const audio=document.createElement('audio');audio.controls=true;audio.preload='none';
    audio.setAttribute('aria-label','Прослушать '+role.name_ru);

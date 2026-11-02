@@ -3,7 +3,7 @@
   "created_utc": "2026-11-01",
   "project": "HAPYCH Voice / GUSTAVA Factory",
   "kind": "original_character_roles_with_live_private_audio_auditions",
-  "production_status": "17_REAL_AUDIO_AUDITIONS_PENDING_INDEPENDENT_RU_ASR_AND_OWNER_APPROVAL",
+  "production_status": "15_SHORT_RUSSIAN_CANARIES_PASS_2_FAIL_OWNER_APPROVAL_PENDING",
   "source_voice_status": "NINE_INSTALLED_QWEN3_CUSTOMVOICE_SPEAKERS; 17 PITCH_ADJUSTED_ROLE_VARIANTS",
   "assignment_policy": {
     "any_production_approved_voice_may_be_assigned_to_any_owner_managed_channel": true,
@@ -36,7 +36,7 @@
         "FGY2WhTYpPnrIDTdsKH5"
       ],
       "content_use": "animated_family",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -52,7 +52,12 @@
         "private_owner_portal_path": "/api/portal/cast/child_cartoon/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -65,7 +70,7 @@
         "SOYHLrjzK2X1ezoPC6cr"
       ],
       "content_use": "comedy",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -81,7 +86,12 @@
         "private_owner_portal_path": "/api/portal/cast/comic_bass_cartoon/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку! Механик проверяет тормоза! Готов к поездке!",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -95,7 +105,7 @@
         "bIHbv24MWmeRgasZH58o"
       ],
       "content_use": "narrator",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -111,7 +121,12 @@
         "private_owner_portal_path": "/api/portal/cast/medium_warm/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -124,7 +139,7 @@
         "pqHfZKP75CvOlQylNhV4"
       ],
       "content_use": "family_dialogue",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -140,7 +155,12 @@
         "private_owner_portal_path": "/api/portal/cast/grandpa_biker/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке!",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -153,7 +173,7 @@
         "IKne3meq5aSn9XLyUdCD"
       ],
       "content_use": "family_dialogue",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -169,7 +189,12 @@
         "private_owner_portal_path": "/api/portal/cast/son_teen/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку.  Механик проверяет тормоза.  Готов к поездке.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -182,7 +207,7 @@
         "nPczCjzI2devNBz1zQrb"
       ],
       "content_use": "family_dialogue",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -198,7 +223,12 @@
         "private_owner_portal_path": "/api/portal/cast/father/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -211,7 +241,7 @@
         "hpp4J3VqNfWAUOO0d1Us"
       ],
       "content_use": "family_dialogue",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -227,7 +257,12 @@
         "private_owner_portal_path": "/api/portal/cast/mother/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -240,7 +275,7 @@
         "XrExE9yKIg1WjnnlVkGX"
       ],
       "content_use": "family_dialogue",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_asr_failed_not_publishable",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -256,7 +291,12 @@
         "private_owner_portal_path": "/api/portal/cast/grandma/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": false,
+        "russian_short_canary_coverage": 0.9,
+        "russian_short_canary_precision": 0.9,
+        "russian_short_canary_transcript": "Бакер едет по треку. Механик проверяет тормоза. Готов к поездке.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -269,7 +309,7 @@
         "nPczCjzI2devNBz1zQrb"
       ],
       "content_use": "moto_story",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -285,7 +325,12 @@
         "private_owner_portal_path": "/api/portal/cast/mechanic/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -298,7 +343,7 @@
         "IKne3meq5aSn9XLyUdCD"
       ],
       "content_use": "moto_story",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -314,7 +359,12 @@
         "private_owner_portal_path": "/api/portal/cast/sport_energy/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -327,7 +377,7 @@
         "pFZP5JQG7iQjIQuC4Bku"
       ],
       "content_use": "narrator",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -343,7 +393,12 @@
         "private_owner_portal_path": "/api/portal/cast/soft_female/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -356,7 +411,7 @@
         "SOYHLrjzK2X1ezoPC6cr"
       ],
       "content_use": "comedy",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -372,7 +427,12 @@
         "private_owner_portal_path": "/api/portal/cast/comic_villain/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке!",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -385,7 +445,7 @@
         "cgSgspJ2msm6clMCkdW9"
       ],
       "content_use": "family_dialogue",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_asr_failed_not_publishable",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -401,7 +461,12 @@
         "private_owner_portal_path": "/api/portal/cast/young_female/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": false,
+        "russian_short_canary_coverage": 0.6,
+        "russian_short_canary_precision": 0.667,
+        "russian_short_canary_transcript": "Бакер едет по треку, механик проверяет тормоза, готовка поездки.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -414,7 +479,7 @@
         "onwK4e9ZLuTAKqWW03F9"
       ],
       "content_use": "comedy",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -430,7 +495,12 @@
         "private_owner_portal_path": "/api/portal/cast/dry_humor/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -443,7 +513,7 @@
         "JBFqnCBsd6RMkjVDRZzb"
       ],
       "content_use": "narrator",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -459,7 +529,12 @@
         "private_owner_portal_path": "/api/portal/cast/news_story/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке!",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -472,7 +547,7 @@
         "EXAVITQu4vr4xnSDxMaL"
       ],
       "content_use": "moto_story",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -488,7 +563,12 @@
         "private_owner_portal_path": "/api/portal/cast/warm_biker_woman/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
     {
@@ -506,7 +586,7 @@
       "independent_voice_source_required": true,
       "oral_canary_ru": "Мотоциклист на трэке! Сначала проверим шлем, потом покажем трюк — только без спешки.",
       "content_use": "original_cartoon_motorcycle_side_character",
-      "status": "real_private_audition_generated_pending_russian_asr_and_owner_approval",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -523,7 +603,12 @@
         "private_owner_portal_path": "/api/portal/cast/cartoon_spring_nasal_original_v1/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
-        "owner_audition_approved": false
+        "owner_audition_approved": false,
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке.",
+        "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     }
   ],
@@ -791,6 +876,7 @@
     "Character names are creative role identifiers and not identities of real actors.",
     "Current video PR #89 merged; render job 41332576263 was running during research; Buffer was empty before new QA.",
     "2026-11-02: requested playful cartoon voice inspiration: propose a separate ORIGINAL persona pitched -2 semitones with formant preservation. Simple pitch-changing a recognizable SpongeBob recording is not an independent proprietary voice; do not copy copyrighted clips or deploy without authorized voice source, spoken Russian test, and owner listening approval.",
-    "2026-11-02: 17 real WAV+MP3 audition recordings generated and inspected for signal quality on owner VPS. Role samples are 17 variations of nine Qwen3 CustomVoice stock speakers, NOT 17 independent fine-tuned voice models. Authenticated /api/portal/cast playback is available after portal deployment. All remain production_enabled=false until real Russian ASR and owner listening approval. No switching the approved Create Audio Voice DEEP or weakening YouTube Factory release gates."
+    "2026-11-02: 17 real WAV+MP3 audition recordings generated and inspected for signal quality on owner VPS. Role samples are 17 variations of nine Qwen3 CustomVoice stock speakers, NOT 17 independent fine-tuned voice models. Authenticated /api/portal/cast playback is available after portal deployment. All remain production_enabled=false until real Russian ASR and owner listening approval. No switching the approved Create Audio Voice DEEP or weakening YouTube Factory release gates.",
+    "2026-11-02 independent real faster-whisper small CPU int8 check of 17 recorded mono 24kHz WAVs: 15 exact 100% lexical canaries pass; 2 fail (<97%): grandma 90%, young_female 60%. No speaker production approval or GUSTAVA DEEP substitution authorized."
   ]
 }

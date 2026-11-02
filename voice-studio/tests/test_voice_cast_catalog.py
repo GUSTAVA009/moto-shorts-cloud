@@ -14,7 +14,7 @@ class VoiceCastContractTests(unittest.TestCase):
     def test_original_cast_is_distinct_and_not_fake_production(self):
         c = self.cast
         self.assertEqual(c["kind"],"original_character_roles_with_live_private_audio_auditions")
-        self.assertEqual(c["production_status"],"17_REAL_AUDIO_AUDITIONS_PENDING_INDEPENDENT_RU_ASR_AND_OWNER_APPROVAL")
+        self.assertEqual(c["production_status"],"15_SHORT_RUSSIAN_CANARIES_PASS_2_FAIL_OWNER_APPROVAL_PENDING")
         cast = c["proposed_character_voices"]
         self.assertGreaterEqual(len(cast), 12)
         ids = [voice["id"] for voice in cast]
@@ -22,9 +22,11 @@ class VoiceCastContractTests(unittest.TestCase):
         self.assertTrue({"child_cartoon", "comic_bass_cartoon", "medium_warm",
                          "grandpa_biker", "son_teen", "father", "mother"}.issubset(ids))
         for role in cast:
-            self.assertEqual(role["status"],"real_private_audition_generated_pending_russian_asr_and_owner_approval")
+            self.assertIn(role["status"],("real_audition_short_asr_100pct_owner_review_pending","real_audition_asr_failed_not_publishable"))
             self.assertFalse(role["production_enabled"])
             self.assertFalse(role["audition"]["russian_asr_approved"])
+            self.assertIsInstance(role["audition"]["russian_short_canary_passed"],bool)
+            self.assertGreaterEqual(role["audition"]["russian_short_canary_coverage"],0)
             self.assertFalse(role["audition"]["owner_audition_approved"])
             self.assertTrue(role["audition"]["original_role_voice_is_not_independently_trained"])
             self.assertEqual(len(role["audition"]["wav_sha256"]),64)

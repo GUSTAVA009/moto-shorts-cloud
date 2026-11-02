@@ -67,7 +67,7 @@ def _read_catalog(root=None):
         if (rid not in ROLE_IDS or rid in roles
                 or row.get("speaker") not in SPEAKERS
                 or row.get("production_enabled") is not False
-                or row.get("asr_passed") is not None):
+                or type(row.get("asr_passed")) is not bool):
             raise CastUnavailable("VOICE_CAST_ROLE_NOT_AUDITION_ONLY")
         name=row.get("mp3_file")
         if (not isinstance(name,str)
@@ -85,6 +85,17 @@ def _read_catalog(root=None):
             raise CastUnavailable("VOICE_CAST_SHA_MISSING")
         if hashlib.sha256(file.read_bytes()).hexdigest()!=digest:
             raise CastUnavailable("VOICE_CAST_SHA_MISMATCH")
+        qa=row.get("asr_check")
+        if (not isinstance(qa,dict)
+                or qa.get("engine")!="faster-whisper-small-cpu-int8"
+                or qa.get("audio_sha256")!=row.get("sha256_wav")
+                or type(qa.get("coverage")) not in (float,int)
+                or type(qa.get("precision")) not in (float,int)
+                or not 0<=qa["coverage"]<=1
+                or not 0<=qa["precision"]<=1
+                or bool(qa["coverage"]>=.97 and qa["precision"]>=.97)
+                     != row["asr_passed"]):
+            raise CastUnavailable("VOICE_CAST_ASR_EVIDENCE_MISMATCH")
         duration=row.get("seconds")
         shift=row.get("pitch_semitones")
         if (not isinstance(duration,(float,int)) or not 2<=duration<=30
@@ -104,12 +115,16 @@ def available_auditions(root=None):
         "count":len(roles),
         "independent_stock_speakers":len(SPEAKERS),
         "production_approved":0,
+        "short_russian_canary_passed":sum(1 for x,_ in roles.values() if x["asr_passed"]),
+        "short_russian_canary_failed":sum(1 for x,_ in roles.values() if not x["asr_passed"]),
         "status":"private_auditions_only_awaiting_owner_and_russian_asr",
         "voices":[{
             "id":key, "name_ru":row["name_ru"], "speaker":row["speaker"],
             "pitch_semitones":row["pitch_semitones"],
             "duration_seconds":row["seconds"], "generated":True,
-            "russian_asr_verified":False, "production_enabled":False,
+            "short_russian_canary_passed":row["asr_passed"],
+            "short_russian_coverage":row["asr_check"]["coverage"],
+            "full_russian_asr_verified":False, "production_enabled":False,
         } for key,(row,_) in roles.items()],
     }
 
