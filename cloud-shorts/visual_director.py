@@ -71,6 +71,11 @@ SCENE_ACTION_SLUGS = {
                               r"lowering-(?:the-)?visor", re.I),
     "riding": re.compile(r"travel(?:ing|ling)?-on-a-motorbike|riding|"
                          r"ride|motorcycle-on-road|racing", re.I),
+    # Actual 2026-11-02 MP4 41434824966: visible motorcycles are moving
+    # along the exact provider-described city street. Retain a strict
+    # provider-page slug rather than weakening generic ride matching.
+    "city_motorcycle_traffic": re.compile(
+        r"busy-city-street-with-motorcycles-and-cars", re.I),
     "helmet_removal": re.compile(r"removing-(?:his-|her-|their-)?helmet|"
                                  r"taking-off-(?:the-)?helmet", re.I),
     # Observed titles belong to distinct licensed videos, not to one event.

@@ -17,6 +17,31 @@ def ep(footage,title="Что важнее при выборе мотошлема
             ]}
 
 class VisualDirectionTests(unittest.TestCase):
+    def test_verified_new_cartoon_b_city_traffic_matches_actual_provider_slug(self):
+        import json
+        from pathlib import Path
+        from visual_director import verify_scene_script_anchors
+        catalog=json.loads((Path(__file__).parent/"episodes.json").read_text("utf8"))
+        episode=next(e for e in catalog["episodes"]
+                     if e["id"]=="moto-city-397665705424")
+        self.assertTrue(episode["auto_publish"])
+        self.assertEqual(
+            episode["assistant_checked_visual_evidence"]["mp4_sha256"],
+            "2a521a3aab3dbb755425c1eac0126f7e5048d98021692739ae91ffdbaf73c776")
+        self.assertEqual(
+            verify_scene_script_anchors(episode),["clip_0","clip_1"])
+        wrong=dict(episode,scene_script_anchors=[
+            dict(episode["scene_script_anchors"][0], action="riding"),
+            episode["scene_script_anchors"][1]])
+        with self.assertRaisesRegex(ValueError,"VISUAL_BEATS_OFF_SCRIPT"):
+            verify_scene_script_anchors(wrong)
+        changed=dict(episode,footage=[
+            dict(episode["footage"][0],
+                 source_page="https://www.pexels.com/video/other-city-street-35841419/"),
+            episode["footage"][1]])
+        with self.assertRaisesRegex(ValueError,"VISUAL_BEATS_OFF_SCRIPT"):
+            verify_scene_script_anchors(changed)
+
     def test_new_helmet_video_rejected_without_visible_helmet_donning(self):
         import json
         from pathlib import Path
