@@ -9199,6 +9199,173 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-roadtrip-d6d83e733c15",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Мотопутешествие и поездка — какой кадр сильнее? #shorts",
+      "narration": "Мотоцикл в разных сюжетах: райдер едет на туристическом мотоцикле. На второй съёмке байкер едет на мотоцикле. Это разные люди и кадры. Что сильнее цепляет?",
+      "description": "Две разные мотоистории: мотопутешествие и поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "МОТОПУТЕШЕСТВИЕ",
+      "caption_middle": "ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 131,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/2673735/",
+          "source_page": "https://www.pexels.com/video/a-motorcycle-rider-travels-on-a-concrete-road-2673735/",
+          "author": "K",
+          "license": "Pexels License",
+          "duration": 20,
+          "source_title": "a motorcycle rider travels on a concrete road",
+          "topics": [
+            "roadtrip",
+            "mountain"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/31862458/",
+          "source_page": "https://www.pexels.com/video/dynamic-motorcycle-ride-at-sunset-31862458/",
+          "author": "Hasan basri Yentekün",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "dynamic motorcycle ride at sunset",
+          "topics": [
+            "sunset",
+            "roadtrip"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.5
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "countryside-road-d6d83",
+        "bike": "touring-motorcycle",
+        "people": "touring-travelers-d6d83",
+        "story": "scenic-country-road-d6d83",
+        "visual": "three-clips-d6d83"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1",
+      "story_reserve_id": "r2-roadtrip-0038"
+    },
+    {
+      "id": "moto-motocross-cb6f76f37cf7",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Поездка и мотопрыжок — какой кадр сильнее? #shorts",
+      "narration": "Мотоцикл в разных сюжетах: байкер едет на мотоцикле. На второй съёмке райдер прыгает с трамплина. Это разные люди и кадры. Что сильнее цепляет?",
+      "description": "Две разные мотоистории: поездка и мотопрыжок. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ПОЕЗДКА",
+      "caption_middle": "МОТОПРЫЖОК",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "race-breakbeat",
+      "music_bpm": 142,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/9132992/",
+          "source_page": "https://www.pexels.com/video/people-riding-motocross-9132992/",
+          "author": "Tom Fisk",
+          "license": "Pexels License",
+          "duration": 8.88,
+          "source_title": "people riding motocross",
+          "topics": [
+            "motocross",
+            "racing",
+            "training"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/15298841/",
+          "source_page": "https://www.pexels.com/video/motocross-biker-makes-some-jumps-15298841/",
+          "author": "Michael Novogradac",
+          "license": "Pexels License",
+          "duration": 8.83,
+          "source_title": "motocross biker makes some jumps",
+          "topics": [
+            "motocross",
+            "racing"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 8.63
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 8.58
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "race-track-cb6f7",
+        "bike": "motocross-bike",
+        "people": "track-racers-cb6f7",
+        "story": "rider-at-prepared-track-cb6f7",
+        "visual": "three-clips-cb6f7"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1",
+      "story_reserve_id": "r2-motocross-0031"
     }
   ]
 }
