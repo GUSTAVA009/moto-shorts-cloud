@@ -107,12 +107,21 @@ def validate_catalog(data):
                                  + " was used in " + used_source_ids[video_id])
             used_source_ids[video_id] = slug
             authors.add(str(video.get("author", "")).strip().casefold())
-            if video.get("license") not in ("Pexels License", "CC0 1.0", "Mixkit Stock Video Free License"):
+            if video.get("license") not in ("Pexels License", "CC0 1.0", "Mixkit Stock Video Free License",
+                                             "LTX OpenRAIL-M"):
                 raise ValueError("No verified commercial-use footage license for " + slug)
-        # Existing historical episodes cannot be revised, but new episodes must
-        # use two or more credited creators, not a series of shots of one actor.
-        if len(previous) >= 3 and len(authors) < 2:
-            raise ValueError("New episode requires at least 2 footage contributors " + slug)
+        # Stock needs two credited filmmakers. Two AI-rendered original
+        # shots legitimately share ONE producer but MUST have separate,
+        # content-addressed MP4s, distinct actions and SAME job batch.
+        from source_story import same_owner_original_pair
+        independent_owner_pair = (
+            len(sources) == 2
+            and all(source_id(media).startswith("gustava-original-")
+                    for media in sources)
+            and same_owner_original_pair(sources[0], sources[1]))
+        if len(previous) >= 3 and len(authors) < 2 and not independent_owner_pair:
+            raise ValueError("New episode requires 2 filmmakers or 2 distinct "
+                             "original owner-generated action shots " + slug)
         previous.append(profile)
 
     return {

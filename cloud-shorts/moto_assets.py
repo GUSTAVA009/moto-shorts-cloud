@@ -19,6 +19,14 @@ MIXKIT_LICENSE = "Mixkit Stock Video Free License"
 MIXKIT_LICENSE_PAGE = "https://mixkit.co/license/modal/videoFree/"
 COMMONS_SHA1 = re.compile(r"[0-9a-f]{40}$")
 MAX_BYTES = 230_000_000
+ORIGINAL_FEED_URL = "https://84-252-66-87.sslip.io/yt-factory-originals/index.json"
+ORIGINAL_ASSET_ROOT = "https://84-252-66-87.sslip.io/yt-factory-originals"
+ORIGINAL_LICENSE = "LTX OpenRAIL-M"
+ORIGINAL_MODEL = "ltxv-2b-0.9.8-distilled-fp8"
+ORIGINAL_AUTHOR = "GUSTAVA Original Video Production"
+ORIGINAL_SHA = re.compile(r"^[a-f0-9]{64}$")
+ORIGINAL_ACTIONS = frozenset(("riding","jump","repair","helmet","mud",
+                             "city","forest","mountain","wheel","rain"))
 
 
 def commons_file_title(item):
@@ -36,6 +44,14 @@ def commons_file_title(item):
 
 def source_id(item):
     page = urllib.parse.urlsplit(str(item.get("source_page", "")))
+    if page.hostname == "84-252-66-87.sslip.io":
+        sha = str(item.get("original_sha256") or "")
+        if (not ORIGINAL_SHA.fullmatch(sha)
+                or str(item.get("key") or "") != "gustava_original_" + sha[:16]
+                or str(item.get("source_page") or "") !=
+                     ORIGINAL_ASSET_ROOT + "/meta/" + sha + ".json"):
+            raise ValueError("ORIGINAL_SOURCE_SHA_MANIFEST_ID_INVALID")
+        return "gustava-original-" + sha
     if page.hostname == "www.pexels.com":
         if page.scheme != "https" or not page.path.startswith("/video/"):
             raise ValueError("Video source must be an official Pexels page")
@@ -64,6 +80,20 @@ def validated_media(item):
     if (url.scheme != "https" or url.username or url.password or url.port or
             not item.get("author") or not str(item["author"]).strip()):
         raise ValueError("Missing creator provenance or unsafe media URL")
+    if sid.startswith("gustava-original-"):
+        sha = str(item.get("original_sha256") or "")
+        if (item.get("url") != ORIGINAL_ASSET_ROOT + "/clips/" + sha + ".mp4"
+                or item.get("license") != ORIGINAL_LICENSE
+                or item.get("generation_model") != ORIGINAL_MODEL
+                or item.get("author") != ORIGINAL_AUTHOR
+                or item.get("scene_action") not in ORIGINAL_ACTIONS
+                or not re.fullmatch(r"20[0-9]{12}-[0-9a-f]{6}",
+                                    str(item.get("generation_batch") or ""))
+                or not 150_000 <= int(item.get("file_size") or 0) <= 90_000_000
+                or not 6.0 <= float(item.get("duration") or 0) <= 7.0
+                or url.query or url.fragment):
+            raise ValueError("ORIGINAL_GENERATED_MEDIA_PROVENANCE_INVALID")
+        return sid
     if sid.startswith("commons-"):
         if item.get("license") != "CC0 1.0":
             raise ValueError("Commons license must be independently confirmed CC0 1.0")
