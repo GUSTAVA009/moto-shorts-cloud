@@ -8194,6 +8194,88 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-city-3a2aad34e115",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_original_qwen3_v1",
+      "selfhosted_voice_id": "gustava-original-v1",
+      "title": "Городская поездка или замена масла: какой момент интереснее? #shorts",
+      "narration": "Мотоцикл в двух сценах: байкер едет по городской улице. На другом видео механик меняет масло в мотоцикле. Это независимые съёмки. Что ближе тебе?",
+      "description": "Две разные мотоистории: городская поездка и замена масла. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_middle": "ЗАМЕНА МАСЛА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "night-drive",
+      "music_bpm": 106,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "topics": [
+            "city"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/35963831/",
+          "source_page": "https://www.pexels.com/video/busy-urban-street-with-motorcycles-and-cars-35963831/",
+          "author": "Minh Thong",
+          "license": "Pexels License",
+          "duration": 10.77,
+          "source_title": "busy urban street with motorcycles and cars"
+        },
+        {
+          "key": "clip_1",
+          "topics": [
+            "repair",
+            "vintage"
+          ],
+          "source_page": "https://mixkit.co/free-stock-video/mechanic-pouring-oil-into-an-engine-41937/",
+          "url": "https://assets.mixkit.co/videos/41937/41937-720.mp4",
+          "author": "Mixkit",
+          "license": "Mixkit Stock Video Free License",
+          "license_source_url": "https://mixkit.co/license/modal/videoFree/",
+          "duration": 8.133,
+          "source_title": "mechanic pouring oil into an engine",
+          "curation_note": "Official individual asset page checked Free License and MP4 HEAD 200 on 2026-11-02; NOT a website mass-download"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 10.52
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 7.88
+        }
+      ],
+      "visual_director_version": 3,
+      "editorial": {
+        "environment": "urban-streets-3a2aa",
+        "bike": "urban-motorbike",
+        "people": "city-riders-3a2aa",
+        "story": "urban-riding-3a2aa",
+        "visual": "three-clips-3a2aa"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Поделись роликом с другом, который любит мотоциклы."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
     }
   ]
 }
