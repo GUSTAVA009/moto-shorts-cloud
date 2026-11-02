@@ -7917,12 +7917,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 8.75
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         }
       ],
@@ -7998,12 +7998,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 10.75
         }
       ],
@@ -8081,12 +8081,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.1
         }
       ],
@@ -8165,12 +8165,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         }
       ],
@@ -8205,7 +8205,7 @@
       "voice_profile": "gustava_original_qwen3_v1",
       "selfhosted_voice_id": "gustava-original-v1",
       "title": "Городская поездка или замена масла: какой момент интереснее? #shorts",
-      "narration": "Мотоцикл в двух сценах: байкер едет по городской улице. На другом видео механик меняет масло в мотоцикле. Это независимые съёмки. Что ближе тебе?",
+      "narration": "Мотоцикл в двух сценах: байкер едет по городской улице. Вторая сцена: механик меняет масло в мотоцикле. Это независимые съёмки. Что ближе тебе?",
       "description": "Две разные мотоистории: городская поездка и замена масла. Независимые кадры, без выдуманного общего события.\n\n#shorts",
       "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
       "caption_middle": "ЗАМЕНА МАСЛА",
@@ -8247,12 +8247,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 10.52
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 7.88
         }
       ],
@@ -8275,7 +8275,27 @@
         "description": "Поделись роликом с другом, который любит мотоциклы."
       },
       "source_selection": "Independent official video APIs, no clip reuse",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "voice_revision_requested": true,
+      "voice_revision_reason": "raw_and_final_asr_fused_video_mechanic",
+      "voice_revision_evidence": {
+        "prior_run_id": "41373650226",
+        "prior_mp4_sha256": "cf3c18ae89f5d1dd8b37b009ea923dffae542bb40a2ff16dfaef162b50a5691c",
+        "prior_preview_fingerprint": "8ea4ff16627b5ef49c0a154f490d70214c351400986aabfb715c603e4cd43811",
+        "prior_original_narration": "Мотоцикл в двух сценах: байкер едет по городской улице. На другом видео механик меняет масло в мотоцикле. Это независимые съёмки. Что ближе тебе?",
+        "raw_coverage": 0.913,
+        "mixed_coverage": 0.913,
+        "expected_phrase": "На другом видео механик",
+        "recognized_phrase": "На другом видеомеханик",
+        "immutable_source_ids": [
+          "35963831",
+          "mixkit-41937"
+        ],
+        "independent_voice_reference_sha256": "ed27b23b9f86345c45263ab28957e96fd2d399379b3ea90ed9fbc75be183a3cc",
+        "editorial_remains_private": true,
+        "max_total_preview_attempts": 2
+      },
+      "voice_revision_priority": true
     }
   ]
 }
