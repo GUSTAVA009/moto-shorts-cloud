@@ -199,12 +199,12 @@ def story_model_client():
 
 
 # v2: keyless, addressable, 150,000-slot editorial reserve.
-def offline_original_story(theme, sources, previous_titles):
+def offline_original_story(theme, sources, previous_titles, rewrite_attempt=0):
     # The 150,000 variants are planning slots, not footage-specific scripts.
     # Keyless production authors truthful action beats from available media.
     if sources:
         from source_story import compose
-        return compose(sources, previous_titles)
+        return compose(sources, previous_titles, rewrite_attempt=rewrite_attempt)
     return choose_reserved_story(theme[0], sources, previous_titles)
 
 
@@ -247,10 +247,12 @@ def curated_mixkit_results(theme, used_ids=()):
     return found
 
 
-def original_story(theme, sources, previous_titles, client=None, fetch=http_json):
+def original_story(theme, sources, previous_titles, client=None, fetch=http_json,
+                   rewrite_attempt=0):
     provider = client if client is not None else story_model_client()
     if not provider:
-        return offline_original_story(theme, sources, previous_titles)
+        return offline_original_story(theme, sources, previous_titles,
+                                      rewrite_attempt=rewrite_attempt)
     endpoint, key, model = provider
     topics = [{"source_title": x.get("source_title", ""), "creator": x["author"]}
               for x in sources]
@@ -296,7 +298,8 @@ def original_story(theme, sources, previous_titles, client=None, fetch=http_json
                                   "Content-Type": "application/json"}, data)
     except (OSError, ValueError, TimeoutError) as exc:
         print("STORY_MODEL_UNAVAILABLE_OFFLINE_FALLBACK", type(exc).__name__, flush=True)
-        return offline_original_story(theme, sources, previous_titles)
+        return offline_original_story(theme, sources, previous_titles,
+                                      rewrite_attempt=rewrite_attempt)
     response = ((result.get("choices") or [{}])[0].get("message") or {}).get("content", "")
     obj = json.loads(response)
     required = ("title", "narration", "description", "caption_start",
@@ -321,13 +324,15 @@ def original_story(theme, sources, previous_titles, client=None, fetch=http_json
         except ValueError as mismatch:
             print("UNSUPPORTED_MODEL_NARRATION_REAUTHORED",
                   str(mismatch), flush=True)
-            return offline_original_story(theme, sources, previous_titles)
+            return offline_original_story(theme, sources, previous_titles,
+                                      rewrite_attempt=rewrite_attempt)
     if len(obj["narration"]) > 160:
         # One v3 short uses only TWO independent moving sources (8 s each).
         # Re-author faithfully from those exact sources rather than trigger
         # expensive Qwen synthesis of an impossible 20+ second visual track.
         print("TWO_SCENE_SCRIPT_REAUTHORED_FOR_ACTUAL_VIDEO_CAP",len(obj["narration"]),flush=True)
-        return offline_original_story(theme, sources, previous_titles)
+        return offline_original_story(theme, sources, previous_titles,
+                                      rewrite_attempt=rewrite_attempt)
     obj["_editorial_format"] = content_format
     return obj
 
@@ -534,11 +539,20 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
                 # Preserve the rolling-batch reservation ID, NOT its bland
                 # combinatorial narration, which does not describe the shots.
                 prose = offline_original_story(
-                    theme, media, [x["title"] for x in catalog["episodes"]])
+                    theme, media, [x["title"] for x in catalog["episodes"]],
+                    rewrite_attempt=attempt)
                 prose["_reserve_id"] = staged["_reserve_id"]
             else:
-                prose = prose_factory(theme, media,
-                                      [x["title"] for x in catalog["episodes"]])
+                previous_titles = [x["title"] for x in catalog["episodes"]]
+                if prose_factory is original_story:
+                    # The keyless author is deterministic. Without a bounded
+                    # rewrite seed, all three QA retries repeat the same
+                    # previously used narration and exhaust the factory.
+                    prose = prose_factory(theme, media, previous_titles,
+                                          rewrite_attempt=attempt)
+                else:
+                    # Keep test/custom provider contract unchanged.
+                    prose = prose_factory(theme, media, previous_titles)
             from source_story import require_filmable
             require_filmable(prose, media)
             return assemble_episode(catalog, theme, media, prose,
