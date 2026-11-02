@@ -117,7 +117,7 @@ def available_auditions(root=None):
 def audition_audio(role_id,root=None):
     if role_id not in ROLE_IDS:
         raise CastUnavailable("VOICE_CAST_UNKNOWN_ROLE")
-    row,file=_read_catalog(root)
+    roles=_read_catalog(root)
     # The catalog is revalidated on EACH authenticated read; no stale file
     # cache bypasses an on-disk replacement or SHA mismatch.
-    return file[1].read_bytes()
+    return roles[role_id][1].read_bytes()
