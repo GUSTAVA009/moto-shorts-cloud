@@ -1,11 +1,18 @@
 {
   "id": "moto-training-8b876c464b6c",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "41430343816",
   "attempt_count": 3,
   "preview_fingerprint": "9715f88d4e8ef7470eda4f980e98beb0559fc13717697d492dba274710b276f3",
   "deep_source_sha256": null,
   "selfhosted_voice_id": "gustava-cartoon-b-v1",
   "previous_run_id": "41429487873",
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 1.0,
+  "voice_profile": "gustava_cartoon_b_qwen3_v1",
+  "selfhosted_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 1.0
 }
