@@ -1092,6 +1092,16 @@
       "episode": "moto-roadtrip-1bf21da2eee6",
       "source": "https://www.pexels.com/video/adventurous-motorcycle-ride-on-rough-mountain-road-35261826/",
       "status": "reserved-or-rendered"
+    },
+    "9606869": {
+      "episode": "moto-repair-2d88e2e7eb73",
+      "source": "https://www.pexels.com/video/man-fixing-his-motorcycle-9606869/",
+      "status": "reserved-or-rendered"
+    },
+    "40347388": {
+      "episode": "moto-repair-2d88e2e7eb73",
+      "source": "https://www.pexels.com/video/man-riding-motorcycle-on-sunny-tree-lined-street-40347388/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1682,6 +1692,13 @@
       "people": "touring-travelers-1bf21",
       "story": "scenic-country-road-1bf21",
       "visual": "three-clips-1bf21"
+    },
+    "moto-repair-2d88e2e7eb73": {
+      "environment": "garage-workshop-2d88e",
+      "bike": "workshop-bike",
+      "people": "garage-mechanics-2d88e",
+      "story": "mechanic-bike-servicing-2d88e",
+      "visual": "three-clips-2d88e"
     }
   }
 }
