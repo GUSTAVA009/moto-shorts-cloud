@@ -655,7 +655,13 @@ OWNER_CARTOON_B_403_RESUME = {
 
 def eligible_verified_cartoon_b_403_resume(episode, receipt, new_fingerprint,
                                           old_conclusion, live_voice_ready):
-    """One PRIVATE run after confirmed old 403, preserving existing receipts."""
+    """One PRIVATE run after confirmed old 403, with unchanged visual/text fingerprint.
+
+    The live TTS binary was repaired, not the episode or renderer. Requiring
+    a changed episode fingerprint would incorrectly strand this exact run.
+    The old failed GH run and newly healthy owner endpoint are independent
+    evidence; both still have to match, and only attempt_count=1 can enter.
+    """
     fixed = OWNER_CARTOON_B_403_RESUME
     if (episode.get("id") != fixed["id"]
             or episode.get("auto_preview") is not True
@@ -671,7 +677,7 @@ def eligible_verified_cartoon_b_403_resume(episode, receipt, new_fingerprint,
             or receipt.get("attempt_count") != 1
             or receipt.get("selfhosted_voice_id") != fixed["voice_id"]
             or receipt.get("preview_fingerprint") != fixed["old_fingerprint"]
-            or new_fingerprint == fixed["old_fingerprint"]
+            or new_fingerprint != fixed["old_fingerprint"]
             or old_conclusion != "failure"
             or live_voice_ready is not True):
         return False
