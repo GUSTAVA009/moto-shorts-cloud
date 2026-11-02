@@ -1002,6 +1002,16 @@
       "episode": "moto-training-8b876c464b6c",
       "source": "https://www.pexels.com/video/urban-motorcycle-ride-through-a-busy-street-36067638/",
       "status": "reserved-or-rendered"
+    },
+    "5052603": {
+      "episode": "moto-forest-9d2ae18d45fe",
+      "source": "https://www.pexels.com/video/a-man-riding-a-motorcycle-5052603/",
+      "status": "reserved-or-rendered"
+    },
+    "13687335": {
+      "episode": "moto-forest-9d2ae18d45fe",
+      "source": "https://www.pexels.com/video/riding-motorcycle-on-road-in-forest-13687335/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1529,6 +1539,13 @@
       "people": "track-learners-8b876",
       "story": "closed-course-practice-8b876",
       "visual": "three-clips-8b876"
+    },
+    "moto-forest-9d2ae18d45fe": {
+      "environment": "forest-trail-9d2ae",
+      "bike": "forest-trailbike",
+      "people": "woods-rider-9d2ae",
+      "story": "forest-path-and-riding-9d2ae",
+      "visual": "three-clips-9d2ae"
     }
   }
 }
