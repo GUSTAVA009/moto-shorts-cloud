@@ -57,7 +57,7 @@ def select(catalog, receipt_entries, published, artifacts):
              and (int(ep.get("visual_director_version") or 0)<3
                   or (ep.get("visual_revision_status") == "assistant_checked_passed"
                       and bool(ep.get("scene_script_anchors")))
-                  or checked_review(ep)))
+                  or checked_review(ep))
              and is_motorcycle_episode(ep)}
     available={x["name"] for x in artifacts if not x.get("expired")}
     choices=[]
