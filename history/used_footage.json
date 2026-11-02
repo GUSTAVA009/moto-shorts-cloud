@@ -1062,6 +1062,16 @@
       "episode": "moto-roadtrip-d6d83e733c15",
       "source": "https://www.pexels.com/video/dynamic-motorcycle-ride-at-sunset-31862458/",
       "status": "reserved-or-rendered"
+    },
+    "9132992": {
+      "episode": "moto-motocross-cb6f76f37cf7",
+      "source": "https://www.pexels.com/video/people-riding-motocross-9132992/",
+      "status": "reserved-or-rendered"
+    },
+    "15298841": {
+      "episode": "moto-motocross-cb6f76f37cf7",
+      "source": "https://www.pexels.com/video/motocross-biker-makes-some-jumps-15298841/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1631,6 +1641,13 @@
       "people": "touring-travelers-d6d83",
       "story": "scenic-country-road-d6d83",
       "visual": "three-clips-d6d83"
+    },
+    "moto-motocross-cb6f76f37cf7": {
+      "environment": "race-track-cb6f7",
+      "bike": "motocross-bike",
+      "people": "track-racers-cb6f7",
+      "story": "rider-at-prepared-track-cb6f7",
+      "visual": "three-clips-cb6f7"
     }
   }
 }
