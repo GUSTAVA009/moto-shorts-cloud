@@ -2,6 +2,8 @@
   "episode": "moto-city-397665705424",
   "sha256": "2a521a3aab3dbb755425c1eac0126f7e5048d98021692739ae91ffdbaf73c776",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-moto-city-397665705424-2a521a3aab3d/moto-city-397665705424.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae872695b555ff1cf020972",
+  "due_at": "2026-11-02T14:00:00.000Z"
 }
