@@ -637,6 +637,70 @@ def eligible_abandoned_bootstrap_retry(episode, receipt, new_fingerprint, bootst
     )
 
 
+# One immutable production incident: the owner's Cartoon B reference was
+# missing from the *live* TTS binary when GitHub ran 41422504259. That Action
+# exited 403 before any MP4 or Buffer upload; its receipt stayed "reserved".
+# The owner subsequently deployed the exact SHA-pinned service on the VPS and
+# generated a new 7.76s WAV with independent Russian ASR coverage 1.0.
+# Never turn this narrow recovery into a general "retry a reserved job" rule.
+OWNER_CARTOON_B_403_RESUME = {
+    "id": "moto-training-8b876c464b6c",
+    "old_run": "41422504259",
+    "old_fingerprint":
+        "d5192b33112521a3bf5a186764d737721b7a4914d765bd205f1c70b6da1ae674",
+    "source_ids": ("9143349", "30283096"),
+    "voice_id": "gustava-cartoon-b-v1",
+}
+
+
+def eligible_verified_cartoon_b_403_resume(episode, receipt, new_fingerprint,
+                                          old_conclusion, live_voice_ready):
+    """One PRIVATE run after confirmed old 403, preserving existing receipts."""
+    fixed = OWNER_CARTOON_B_403_RESUME
+    if (episode.get("id") != fixed["id"]
+            or episode.get("auto_preview") is not True
+            or episode.get("auto_publish") is not False
+            or episode.get("voice_engine") != "gustava_selfhosted_qwen3"
+            or episode.get("selfhosted_voice_id") != fixed["voice_id"]
+            or episode.get("editorial_rejected") is True
+            or episode.get("visual_review_failed") is True
+            or not isinstance(receipt, dict)
+            or receipt.get("id") != fixed["id"]
+            or receipt.get("run_id") != fixed["old_run"]
+            or receipt.get("state") != "reserved"
+            or receipt.get("attempt_count") != 1
+            or receipt.get("selfhosted_voice_id") != fixed["voice_id"]
+            or receipt.get("preview_fingerprint") != fixed["old_fingerprint"]
+            or new_fingerprint == fixed["old_fingerprint"]
+            or old_conclusion != "failure"
+            or live_voice_ready is not True):
+        return False
+    footage = episode.get("footage")
+    if not isinstance(footage, list) or len(footage) != 2:
+        return False
+    try:
+        return tuple(source_id(media) for media in footage) == fixed["source_ids"]
+    except (ValueError, TypeError, KeyError):
+        return False
+
+
+def production_cartoon_b_http_ready():
+    """Read-only proof that the currently deployed B TTS route is present."""
+    req = urllib.request.Request(
+        "https://voice.hapychrust.ru/health",
+        headers={"Accept": "application/json",
+                 "User-Agent": "gustava-verified-private-403-recovery"})
+    try:
+        with urllib.request.urlopen(req, timeout=12) as response:
+            if response.status != 200:
+                return False
+            state = json.load(response)
+        return (state.get("cartoon_b_reference_ready") is True
+                and state.get("tts_ready_for_private_request") is True)
+    except (OSError, ValueError, TypeError):
+        return False
+
+
 def choose(catalog, output):
     data = json.loads(Path(catalog).read_text(encoding="utf8"))
     apply_verified_episode_revision(data)
@@ -747,6 +811,28 @@ def choose(catalog, output):
                 print("VERIFIED_INSTALL_FAILED_DEEP_RETRY", item["id"],
                       "previous", receipt.get("run_id"), flush=True)
                 break
+    # Recover EXACTLY ONE pinned Cartoon B episode after the verified live
+    # 403 incident. No other reservation, provider, clip or public video
+    # becomes eligible. A fresh run writes attempt_count=2 and cannot reenter.
+    if selected is None:
+        for item in listed:
+            if item.get("id") != OWNER_CARTOON_B_403_RESUME["id"]:
+                continue
+            _, receipt = records[item["id"]]
+            if (receipt is None or receipt.get("state") != "reserved"
+                    or receipt.get("run_id") != OWNER_CARTOON_B_403_RESUME["old_run"]
+                    or not unpublished(item["id"])):
+                continue
+            current_fingerprint = preview_fingerprint(item)
+            if eligible_verified_cartoon_b_403_resume(
+                    item, receipt, current_fingerprint,
+                    failed_action_conclusion(receipt.get("run_id")),
+                    production_cartoon_b_http_ready()):
+                selected = item
+                print("VERIFIED_LIVE_CARTOON_B_403_PRIVATE_RESUME",
+                      item["id"], "old_run", receipt["run_id"], flush=True)
+                break
+
     # Published/cleared originals are not retried. Failed unreleased, approved
     # Shorts can be improved only when the text or sound engine was revised.
     if selected is None:

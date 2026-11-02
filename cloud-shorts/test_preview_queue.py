@@ -4,6 +4,42 @@ import preview_queue as pq
 
 
 class TestPreviewQueue(unittest.TestCase):
+    def test_proven_cartoon_b_403_private_resume_only_after_live_service_fix(self):
+        """A completed 403 may not strand this single private original forever."""
+        import json
+        from pathlib import Path
+        episode = next(ep for ep in json.loads(
+            (Path(__file__).parent / "episodes.json").read_text("utf8"))["episodes"]
+            if ep["id"] == "moto-training-8b876c464b6c")
+        proof = pq.OWNER_CARTOON_B_403_RESUME
+        old = {
+            "id": episode["id"], "state": "reserved",
+            "run_id": proof["old_run"], "attempt_count": 1,
+            "preview_fingerprint": proof["old_fingerprint"],
+            "selfhosted_voice_id": "gustava-cartoon-b-v1",
+        }
+        check = pq.eligible_verified_cartoon_b_403_resume
+        self.assertTrue(check(episode, old, "new-code-fingerprint", "failure", True))
+        self.assertFalse(check(episode, old, "new-code-fingerprint", "failure", False))
+        self.assertFalse(check(episode, old, "new-code-fingerprint", "success", True))
+        self.assertFalse(check(episode, old, proof["old_fingerprint"], "failure", True))
+        self.assertFalse(check(episode, dict(old, attempt_count=2),
+                               "new-code-fingerprint", "failure", True))
+        self.assertFalse(check(episode, dict(old, run_id="not-the-failed-run"),
+                               "new-code-fingerprint", "failure", True))
+        self.assertFalse(check(episode, dict(old, state="preview_ready"),
+                               "new-code-fingerprint", "failure", True))
+        self.assertFalse(check(dict(episode,auto_publish=True), old,
+                               "new-code-fingerprint", "failure", True))
+        self.assertFalse(check(dict(episode,selfhosted_voice_id="gustava-original-v1"),
+                               old,"new-code-fingerprint","failure",True))
+        self.assertFalse(check(dict(episode,visual_review_failed=True),
+                               old,"new-code-fingerprint","failure",True))
+        replaced = dict(episode, footage=[
+            dict(episode["footage"][0],source_page="https://www.pexels.com/video/different-racing-99900121/"),
+            episode["footage"][1]])
+        self.assertFalse(check(replaced,old,"new-code-fingerprint","failure",True))
+
     def test_only_explicitly_approved_unused_episodes(self):
         episodes = [
             {"id": "first", "auto_preview": False},
