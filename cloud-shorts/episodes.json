@@ -8414,6 +8414,88 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-city-beee4f27fe15",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Городская поездка и мототрюк — какой кадр сильнее? #shorts",
+      "narration": "Мотоцикл в разных сюжетах: байкер едет по городской улице. На второй съёмке райдер выполняет трюк на мотоцикле. Это разные люди и кадры. Что сильнее цепляет?",
+      "description": "Две разные мотоистории: городская поездка и мототрюк. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_middle": "МОТОТРЮК",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "night-drive",
+      "music_bpm": 128,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "topics": [
+            "city"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5206883/",
+          "source_page": "https://www.pexels.com/video/a-motorbike-rider-on-stop-in-traffic-5206883/",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "duration": 29,
+          "source_title": "a motorbike rider on stop in traffic"
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/9607291/",
+          "source_page": "https://www.pexels.com/video/man-and-woman-doing-motorcycle-wheelie-9607291/",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 14,
+          "source_title": "man and woman doing motorcycle wheelie",
+          "topics": [
+            "motocross",
+            "racing",
+            "city"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.5
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.5
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "urban-streets-beee4",
+        "bike": "urban-motorbike",
+        "people": "city-riders-beee4",
+        "story": "urban-riding-beee4",
+        "visual": "three-clips-beee4"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
     }
   ]
 }
