@@ -947,6 +947,16 @@
       "episode": "moto-helmet-4b02a97554a0",
       "source": "https://www.pexels.com/video/two-people-riding-a-motorbike-on-a-dirt-road-in-a-mountain-area-15540590/",
       "status": "reserved-or-rendered"
+    },
+    "mixkit-41936": {
+      "episode": "moto-repair-6fa62866e984",
+      "source": "https://mixkit.co/free-stock-video/mechanic-changing-the-oil-of-a-motorcycle-41936/",
+      "status": "reserved-or-rendered"
+    },
+    "40373652": {
+      "episode": "moto-repair-6fa62866e984",
+      "source": "https://www.pexels.com/video/motorbike-ride-on-scenic-countryside-road-40373652/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1439,6 +1449,13 @@
       "people": "gear-specialists-4b02a",
       "story": "helmet-gear-choice-4b02a",
       "visual": "three-clips-4b02a"
+    },
+    "moto-repair-6fa62866e984": {
+      "environment": "garage-workshop-6fa62",
+      "bike": "workshop-bike",
+      "people": "garage-mechanics-6fa62",
+      "story": "mechanic-bike-servicing-6fa62",
+      "visual": "three-clips-6fa62"
     }
   }
 }
