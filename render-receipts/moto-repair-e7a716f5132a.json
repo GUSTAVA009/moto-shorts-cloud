@@ -1,0 +1,11 @@
+{
+  "id": "moto-repair-e7a716f5132a",
+  "state": "reserved",
+  "run_id": "41371989807",
+  "attempt_count": 1,
+  "preview_fingerprint": "5f69d404918142fae7d893e2e1e642717c517d5b4086bcd0991696074d828306",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-original-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
