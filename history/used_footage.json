@@ -1112,6 +1112,16 @@
       "episode": "moto-city-515641e586d4",
       "source": "https://www.pexels.com/video/people-repairing-a-motorcycle-8551236/",
       "status": "reserved-or-rendered"
+    },
+    "5803383": {
+      "episode": "moto-vintage-71bf7b721a9b",
+      "source": "https://www.pexels.com/video/man-fixing-a-motorcycle-5803383/",
+      "status": "reserved-or-rendered"
+    },
+    "9222538": {
+      "episode": "moto-vintage-71bf7b721a9b",
+      "source": "https://www.pexels.com/video/motocross-riders-jumping-a-tabletop-at-a-racetrack-9222538/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1716,6 +1726,13 @@
       "people": "city-riders-51564",
       "story": "urban-riding-51564",
       "visual": "three-clips-51564"
+    },
+    "moto-vintage-71bf7b721a9b": {
+      "environment": "vintage-workshop-71bf7",
+      "bike": "classic-motorcycle",
+      "people": "classic-restorers-71bf7",
+      "story": "vintage-bike-work-71bf7",
+      "visual": "three-clips-71bf7"
     }
   }
 }
