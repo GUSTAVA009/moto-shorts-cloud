@@ -1052,6 +1052,16 @@
       "episode": "moto-racing-025a888103d8",
       "source": "https://www.pexels.com/video/busy-street-traffic-from-motorcycle-perspective-30031070/",
       "status": "reserved-or-rendered"
+    },
+    "2673735": {
+      "episode": "moto-roadtrip-d6d83e733c15",
+      "source": "https://www.pexels.com/video/a-motorcycle-rider-travels-on-a-concrete-road-2673735/",
+      "status": "reserved-or-rendered"
+    },
+    "31862458": {
+      "episode": "moto-roadtrip-d6d83e733c15",
+      "source": "https://www.pexels.com/video/dynamic-motorcycle-ride-at-sunset-31862458/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1614,6 +1624,13 @@
       "people": "racing-crews-025a8",
       "story": "circuit-racing-025a8",
       "visual": "three-clips-025a8"
+    },
+    "moto-roadtrip-d6d83e733c15": {
+      "environment": "countryside-road-d6d83",
+      "bike": "touring-motorcycle",
+      "people": "touring-travelers-d6d83",
+      "story": "scenic-country-road-d6d83",
+      "visual": "three-clips-d6d83"
     }
   }
 }
