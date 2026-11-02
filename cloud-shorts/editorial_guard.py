@@ -107,7 +107,7 @@ def validate_catalog(data):
                                  + " was used in " + used_source_ids[video_id])
             used_source_ids[video_id] = slug
             authors.add(str(video.get("author", "")).strip().casefold())
-            if video.get("license") not in ("Pexels License", "CC0 1.0"):
+            if video.get("license") not in ("Pexels License", "CC0 1.0", "Mixkit Stock Video Free License"):
                 raise ValueError("No verified commercial-use footage license for " + slug)
         # Existing historical episodes cannot be revised, but new episodes must
         # use two or more credited creators, not a series of shots of one actor.
