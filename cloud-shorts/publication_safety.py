@@ -17,7 +17,10 @@ from deep_voice import (VOICE_ENGINE as REQUIRED_MALE_ENGINE,
 from selfhosted_voice import (VOICE_ENGINE as SELFHOSTED_ENGINE,
                               PROFILE_ID as SELFHOSTED_PROFILE,
                               VOICE_ID as SELFHOSTED_VOICE_ID,
-                              approved_profile as selfhosted_approved_profile)
+                              approved_profile as selfhosted_approved_profile,
+                              profile_for_episode as selfhosted_profile_for_episode,
+                              CARTOON_B_PROFILE_ID, CARTOON_B_VOICE_ID,
+                              CARTOON_B_REFERENCE_SHA)
 
 
 def file_sha256(path):
@@ -58,19 +61,30 @@ def publication_allowed(episode, meta, qa, video):
                    episode["deep_audio"]["source_audio_sha256"]):
             raise ValueError("ONLY_APPROVED_CREATE_AUDIO_DEEP: genuine voice source not verified")
     elif episode.get("voice_engine") == SELFHOSTED_ENGINE:
-        approved_ref = os.environ.get("GUSTAVA_VOICE_REFERENCE_SHA256", "")
-        if (os.environ.get("GUSTAVA_ORIGINAL_VOICE_APPROVED") != "1"
-                or not re.fullmatch(r"[0-9a-f]{64}", approved_ref)):
-            raise ValueError("SELFHOSTED_ORIGINAL_VOICE_NOT_APPROVED_FOR_PUBLICATION")
+        profile = selfhosted_profile_for_episode(episode)
+        if profile == CARTOON_B_PROFILE_ID:
+            # Explicit OWNER choice 2026-11-02: Cartoon B is the real narrator.
+            # B is APPROVED, but text, sound, footage and full-MP4 QA are NOT
+            # waived, nor is the previous Qwen/DEEP voice globally approved.
+            approved_ref = CARTOON_B_REFERENCE_SHA
+            expected_id = CARTOON_B_VOICE_ID
+        elif profile == SELFHOSTED_PROFILE:
+            approved_ref = os.environ.get("GUSTAVA_VOICE_REFERENCE_SHA256", "")
+            expected_id = SELFHOSTED_VOICE_ID
+            if (os.environ.get("GUSTAVA_ORIGINAL_VOICE_APPROVED") != "1"
+                    or not re.fullmatch(r"[0-9a-f]{64}", approved_ref)):
+                raise ValueError("SELFHOSTED_ORIGINAL_VOICE_NOT_APPROVED_FOR_PUBLICATION")
+        else:
+            raise ValueError("UNAPPROVED_VOICE_PROFILE_FOR_PUBLICATION")
         if (not selfhosted_approved_profile(episode)
                 or qa.get("male_voice_verified") is not True
-                or qa.get("voice_profile") != SELFHOSTED_PROFILE
-                or qa.get("voice_speaker") != SELFHOSTED_VOICE_ID
+                or qa.get("voice_profile") != profile
+                or qa.get("voice_speaker") != expected_id
                 or qa.get("voice_provider") != "owner_selfhosted_qwen3"
                 or qa.get("selfhosted_reference_sha256") != approved_ref
                 or not re.fullmatch(r"[0-9a-f]{64}",
                                     str(qa.get("voice_source_audio_sha256") or ""))):
-            raise ValueError("SELFHOSTED_GENUINE_ORIGINAL_VOICE_SOURCE_NOT_VERIFIED")
+            raise ValueError("SELFHOSTED_OWNER_VOICE_SOURCE_NOT_VERIFIED")
     else:
         raise ValueError("UNAPPROVED_TTS_PROVIDER_FOR_PUBLICATION")
     if qa.get("passed") is not True or qa.get("status") != "passed":
