@@ -8941,7 +8941,7 @@
       "scene_script_anchors": [
         {
           "source": "clip_0",
-          "action": "riding",
+          "action": "city_motorcycle_traffic",
           "spoken_anchor": "байкер едет по городской улице"
         },
         {
@@ -8978,7 +8978,17 @@
         "audio_peak": 0.492,
         "voice_id": "gustava-cartoon-b-v1",
         "voice_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
-        "note": "Frame-by-frame storyboard reviewed: first multiple motorcycles actually moving on a wide city road; second different helmeted rider riding a motorcycle on a city side street, continuously moving; no frozen frames, no fake event connection; 6.145s scene switch, exact spoken anchors. Original licensed filmmakers distinct. 100% word coverage raw and mixed ASR; clean stereo at -0.186dB balance/0.492 peak. All original release QA retained."
+        "note": "Frame-by-frame storyboard reviewed: first multiple motorcycles actually moving on a wide city road; second different helmeted rider riding a motorcycle on a city side street, continuously moving; no frozen frames, no fake event connection; 6.145s scene switch, exact spoken anchors. Original licensed filmmakers distinct. 100% word coverage raw and mixed ASR; clean stereo at -0.186dB balance/0.492 peak. All original release QA retained.",
+        "release_gate_repair": {
+          "old_run_id": "41435602690",
+          "old_error": "VISUAL_BEATS_OFF_SCRIPT",
+          "old_source_id": "35841419",
+          "old_source_page": "https://www.pexels.com/video/busy-city-street-with-motorcycles-and-cars-35841419/",
+          "observed": "Actual city street frames show independent motorcycles in motion at 0.4,1.8,3.5,5.1 sec, so the city traffic action is supported; no rendered bytes or narration changed.",
+          "new_action": "city_motorcycle_traffic",
+          "story_and_voice_unchanged": true,
+          "no_security_gate_disabled": true
+        }
       }
     },
     {
