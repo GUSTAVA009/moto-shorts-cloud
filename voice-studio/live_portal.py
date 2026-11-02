@@ -27,6 +27,9 @@ import io
 from voice_cast_library import (
     CastUnavailable, available_auditions, audition_audio,
 )
+from owner_voice_selection import (
+    SelectionUnavailable, owner_voice_list, owner_voice_bytes,
+)
 
 HOST = "127.0.0.1"
 PORT = 8078
@@ -138,25 +141,34 @@ return r.json()
 async function loadCast(){
  const panel=$('cast-list');panel.replaceChildren();
  try{
-  const info=await api('/api/portal/cast');
-  $('cast-count').textContent=info.count+' голосовых проб на сервере · '+info.short_russian_canary_passed+' прошли контрольную фразу · '+info.short_russian_canary_failed+' ошибки · допуск к выпуску: '+info.production_approved;
+  const info=await api('/api/portal/selected-voices');
+  $('cast-count').textContent='Выбраны тобой: '+info.selected_count+' · новые мультяшные пробы: '+info.original_cartoon_candidates+' · к автопубликации допущено: '+info.production_approved_count;
   for(const role of info.voices){
    const card=document.createElement('div');card.className='cast-card';
-   const name=document.createElement('strong');name.textContent=role.name_ru;card.appendChild(name);
+   const name=document.createElement('strong');
+   name.textContent=(role.owner_selected?'★ ':'☆ ')+role.label;
+   card.appendChild(name);
    const desc=document.createElement('small');
-   desc.textContent='Qwen '+role.speaker+' · '+(role.pitch_semitones>0?'+':'')+role.pitch_semitones+' полутонов · '+role.duration_seconds+' с · '+(role.short_russian_canary_passed?'контроль слов 100%':'ошибка слов '+Math.round(role.short_russian_coverage*100)+'%');
-   desc.className=role.short_russian_canary_passed?'ok':'error';
+   desc.textContent=(role.owner_selected?'Твой отобранный голос':'НОВЫЙ оригинальный мультяшный кандидат')+' · '+role.source_speaker+
+     ' · '+(role.pitch_semitones>0?'+':'')+role.pitch_semitones+' полутона · '+role.note;
+   desc.className=role.owner_selected?'ok':'';
    card.appendChild(desc);
-   const audio=document.createElement('audio');audio.controls=true;audio.preload='none';
-   audio.setAttribute('aria-label','Прослушать '+role.name_ru);
-   audio.src='/api/portal/cast/'+encodeURIComponent(role.id)+'/audio';
+   const audio=document.createElement('audio');
+   audio.controls=true;audio.preload='none';audio.setAttribute('aria-label','Прослушать '+role.label);
+   audio.src='/api/portal/selected-voices/'+encodeURIComponent(role.id)+'/audio';
    card.appendChild(audio);
-   const link=document.createElement('a');link.href=audio.src;link.download=role.id+'.mp3';
-   link.textContent='Скачать MP3';card.appendChild(link);
-   panel.appendChild(card);
+   const link=document.createElement('a');
+   link.href=audio.src;link.download=role.download_filename;
+   link.textContent='Скачать '+(role.mime_type==='audio/wav'?'WAV':'MP3');
+   card.appendChild(link);panel.appendChild(card);
+  }
+  if(info.original_cartoon_candidates===0){
+   const note=document.createElement('p');note.className='muted';
+   note.textContent='Новый оригинальный мультяшный голос пока не прошёл тест. Здесь не будет подмены старым Ryan.';
+   panel.appendChild(note);
   }
  }catch(error){
-  $('cast-count').textContent='Голоса ещё не доступны в этом кабинете: '+error.message;
+  $('cast-count').textContent='Отобранные голоса ещё не доступны: '+error.message;
  }
 }
 async function boot(){
@@ -254,8 +266,8 @@ APP_HTML = """<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta n
 <section id="status" class="panel"><h2>Состояние голосового сервера</h2><div class="kpis"><div class="kpi"><span>Qwen3-TTS · облако</span><b id="tts">Проверяем</b></div>
 <div class="kpi"><span>Закреплённый профиль</span><b id="voice">…</b></div><div class="kpi"><span>SHA эталона</span><b id="ref">…</b></div></div>
 <p id="factory-note" class="muted"></p></section>
-<section id="cast" class="panel"><h2>♫ Реальные голоса и персонажи</h2>
-<p class="muted">17 настоящих проб WAV/MP3 из 9 исходных Qwen3 CustomVoice тембров. Это <strong>кастинг</strong>, а не 17 отдельно обученных моделей. Основной GUSTAVA DEEP не заменяется. Русская дикция и коммерческий выпуск требуют отдельного допуска.</p>
+<section id="cast" class="panel"><h2>♫ Три любимых голоса и новый мультяшный</h2>
+<p class="muted">Оставлены только три точных образца, которые ты прислал: Байкерша, Мама, Бабушка. Остальные старые 14 голосов отклонены. Новые оригинальные мультяшные варианты появляются здесь только после реального синтеза и проверки русского текста. Основной GUSTAVA DEEP не заменяется.</p>
 <p id="cast-count" class="feedback" role="status">Загрузка голосов…</p>
 <div id="cast-list" class="cast-grid"></div></section>
 <div class="grid"><section id="studio" class="panel"><h2>◈ Создать предпросмотр</h2>
@@ -529,6 +541,23 @@ class PortalHandler(BaseHTTPRequestHandler):
             return self.json(200, {"tts_ready": runtime_health(), "voice_id": VOICE_ID,
                                    "reference_sha_prefix": REF_SHA[:16],
                                    "youtube_publication_confirmed": False})
+        if path == "/api/portal/selected-voices":
+            if not self.authorized():return
+            try:
+                return self.json(200,owner_voice_list())
+            except SelectionUnavailable:
+                return self.error(503,"OWNER_SELECTED_VOICES_UNAVAILABLE")
+        if path.startswith("/api/portal/selected-voices/"):
+            if not self.authorized():return
+            match=re.fullmatch(
+                r"/api/portal/selected-voices/([a-z0-9_]{3,64})/audio",path)
+            if not match:return self.error(404,"OWNER_SELECTED_VOICE_NOT_FOUND")
+            try:
+                content,mime,name=owner_voice_bytes(match.group(1))
+            except SelectionUnavailable:
+                return self.error(404,"OWNER_SELECTED_VOICE_NOT_FOUND")
+            return self.send(200,content,mime,
+                {"Content-Disposition":'inline; filename="'+name+'"'})
         if path == "/api/portal/cast":
             if not self.authorized():return
             try:
