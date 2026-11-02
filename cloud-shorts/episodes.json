@@ -8276,8 +8276,8 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1",
-      "voice_revision_requested": true,
-      "voice_revision_reason": "raw_and_final_asr_fused_video_mechanic",
+      "voice_revision_requested": false,
+      "voice_revision_reason": "completed_raw_and_final_asr_fused_video_mechanic",
       "voice_revision_evidence": {
         "prior_run_id": "41373650226",
         "prior_mp4_sha256": "cf3c18ae89f5d1dd8b37b009ea923dffae542bb40a2ff16dfaef162b50a5691c",
@@ -8295,7 +8295,7 @@
         "editorial_remains_private": true,
         "max_total_preview_attempts": 2
       },
-      "voice_revision_priority": true,
+      "voice_revision_priority": false,
       "align_middle_caption_to_second_scene": true,
       "visual_revision_requested": true,
       "visual_revision_reason": "spoken_scene_caption_mismatch",
