@@ -957,6 +957,16 @@
       "episode": "moto-repair-6fa62866e984",
       "source": "https://www.pexels.com/video/motorbike-ride-on-scenic-countryside-road-40373652/",
       "status": "reserved-or-rendered"
+    },
+    "35963831": {
+      "episode": "moto-city-3a2aad34e115",
+      "source": "https://www.pexels.com/video/busy-urban-street-with-motorcycles-and-cars-35963831/",
+      "status": "reserved-or-rendered"
+    },
+    "mixkit-41937": {
+      "episode": "moto-city-3a2aad34e115",
+      "source": "https://mixkit.co/free-stock-video/mechanic-pouring-oil-into-an-engine-41937/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1456,6 +1466,13 @@
       "people": "garage-mechanics-6fa62",
       "story": "mechanic-bike-servicing-6fa62",
       "visual": "three-clips-6fa62"
+    },
+    "moto-city-3a2aad34e115": {
+      "environment": "urban-streets-3a2aa",
+      "bike": "urban-motorbike",
+      "people": "city-riders-3a2aa",
+      "story": "urban-riding-3a2aa",
+      "visual": "three-clips-3a2aa"
     }
   }
 }
