@@ -1,0 +1,11 @@
+{
+  "id": "moto-motocross-223d9ab5c67d",
+  "state": "reserved",
+  "run_id": "41370745453",
+  "attempt_count": 1,
+  "preview_fingerprint": "b371f99d486f19f3b38ab630522ac5677d876f950fc16a106e0d59c9f49a4ba4",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-original-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
