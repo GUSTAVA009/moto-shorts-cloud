@@ -72,6 +72,26 @@ class VoiceCastContractTests(unittest.TestCase):
         self.assertTrue(self.cast["legacy_voice"]["protected"])
         self.assertIn("NEW independent vocal identity",p["design_prompt_en"])
 
+    def test_owner_exactly_selected_three_and_rejected_fourteen(self):
+        selected={"warm_biker_woman","mother","grandma"}
+        owner=self.cast["owner_selection"]
+        self.assertEqual(set(owner["accepted_role_ids"]),selected)
+        self.assertEqual(len(owner["rejected_legacy_role_ids"]),14)
+        self.assertFalse(set(owner["rejected_legacy_role_ids"])&selected)
+        self.assertTrue(owner["other_old_auditions_hidden_from_owner_default_ui"])
+        self.assertTrue(owner["selection_does_not_grant_publication"])
+        self.assertTrue(owner["primary_narrator_deep_profile_protected"])
+        for voice in self.cast["proposed_character_voices"]:
+            self.assertEqual(voice["owner_selected_for_character_cast"],
+                             voice["id"] in selected)
+            self.assertEqual(voice["owner_rejected_for_character_cast"],
+                             voice["id"] not in selected)
+            self.assertFalse(voice["production_enabled"])
+        # Older cartoon was a stock Ryan shifted -2, and was rejected.
+        cartoon=next(v for v in self.cast["proposed_character_voices"]
+                     if v["id"]=="cartoon_spring_nasal_original_v1")
+        self.assertFalse(cartoon["owner_selected_for_character_cast"])
+
     def test_narration_duration_not_globally_capped_or_detached_from_visuals(self):
         p = self.cast["assignment_policy"]
         self.assertTrue(p["no_global_tts_narration_duration_limit"])
