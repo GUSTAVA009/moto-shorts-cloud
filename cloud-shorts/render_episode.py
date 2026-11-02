@@ -137,7 +137,7 @@ def validate_episode(ep):
             raise ValueError("Duplicate source footage")
         ids.add(video_id)
         keys.add(media["key"])
-        if media.get("license") not in ("Pexels License", "CC0 1.0", "Mixkit Stock Video Free License") or not media.get("author"):
+        if media.get("license") not in ("Pexels License", "CC0 1.0", "Mixkit Stock Video Free License", "LTX OpenRAIL-M") or not media.get("author"):
             raise ValueError("Source provenance and free license must be recorded")
     shots = ep.get("shots", [])
     if len(shots) < 2 or len(shots) > 16:
@@ -291,6 +291,20 @@ def download(item, dst, required_seconds=None):
                         raise RuntimeError("Too much video data from a single source")
             if tmp.stat().st_size < 250_000:
                 raise RuntimeError("Source video download was empty or too small")
+            if urlhost == "84-252-66-87.sslip.io":
+                # The private owner-generated original is downloaded in FULL.
+                # Reject any changed video, substituted response or fake
+                # metadata before FFmpeg can compose a public Short.
+                import hashlib
+                actual = hashlib.sha256(tmp.read_bytes()).hexdigest()
+                expected = str(item["original_sha256"])
+                if (actual != expected
+                        or tmp.stat().st_size != int(item["file_size"])):
+                    raise RuntimeError("ORIGINAL_SOURCE_SHA_SIZE_MISMATCH")
+                actual_duration, streams = probe(tmp)
+                if (abs(actual_duration-float(item["duration"])) > 0.3
+                        or not any(s.get("codec_type")=="video" for s in streams)):
+                    raise RuntimeError("ORIGINAL_SOURCE_DURATION_MISMATCH")
         tmp.replace(dst)
     except Exception:
         tmp.unlink(missing_ok=True)
