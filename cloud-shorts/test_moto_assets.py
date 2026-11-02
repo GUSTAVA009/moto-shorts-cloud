@@ -17,6 +17,13 @@ PEXELS = {"source_page": "https://www.pexels.com/video/real-motorcycle-123456/",
 
 
 class MediaLicenseTests(unittest.TestCase):
+    def test_commons_license_recheck_identifies_its_bot_owner(self):
+        # Wikimedia's 2026 API rules require contact information; a generic
+        # bot name can be restricted even when its license checks are valid.
+        self.assertIn("https://github.com/GUSTAVA009/moto-shorts-cloud/issues/80",
+                      assets.UA)
+        self.assertTrue(assets.UA.startswith("GUSTAVA-MotoFactory-"))
+
     def test_existing_real_pexels_metadata_allowed(self):
         self.assertEqual(assets.validated_media(PEXELS), "123456")
 
