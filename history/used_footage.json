@@ -1072,6 +1072,16 @@
       "episode": "moto-motocross-cb6f76f37cf7",
       "source": "https://www.pexels.com/video/motocross-biker-makes-some-jumps-15298841/",
       "status": "reserved-or-rendered"
+    },
+    "3723677": {
+      "episode": "moto-rain-c43a0b888ffe",
+      "source": "https://www.pexels.com/video/men-riding-motorcycles-in-a-wet-road-3723677/",
+      "status": "reserved-or-rendered"
+    },
+    "17929886": {
+      "episode": "moto-rain-c43a0b888ffe",
+      "source": "https://www.pexels.com/video/a-man-riding-a-motorcycle-through-a-flooded-street-17929886/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1648,6 +1658,13 @@
       "people": "track-racers-cb6f7",
       "story": "rider-at-prepared-track-cb6f7",
       "visual": "three-clips-cb6f7"
+    },
+    "moto-rain-c43a0b888ffe": {
+      "environment": "wet-asphalt-road-c43a0",
+      "bike": "street-motorbike",
+      "people": "road-commuters-c43a0",
+      "story": "rainy-motorcycle-road-c43a0",
+      "visual": "three-clips-c43a0"
     }
   }
 }
