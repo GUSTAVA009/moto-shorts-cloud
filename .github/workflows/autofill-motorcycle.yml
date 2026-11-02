@@ -1,3 +1,4 @@
+# Owner-requested immediate production refill: 2026-11-02T10:54Z; original MP4 and QA required.
 name: GUSTAVA - Keep Fresh Motorcycle Shorts Queued
 on:
   workflow_dispatch:
