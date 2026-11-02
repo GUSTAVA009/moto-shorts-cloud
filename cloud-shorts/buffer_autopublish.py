@@ -193,7 +193,7 @@ def should_disclose_generated_content(episode):
     if (episode.get("voice_engine") not in ("aidocmaker_deep", "silero_mit_bass_baritone", "kokoro_ru_dima")
             or (episode.get("episode_series") or {}).get("historical_reconstruction")
             or not episode.get("footage")
-            or any(source.get("license") not in ("Pexels License", "CC0 1.0")
+            or any(source.get("license") not in ("Pexels License", "CC0 1.0", "Mixkit Stock Video Free License")
                    for source in episode["footage"])):
         return True
     # The video's moving pictures are genuine licensed stock; script drafting,
