@@ -1082,6 +1082,16 @@
       "episode": "moto-rain-c43a0b888ffe",
       "source": "https://www.pexels.com/video/a-man-riding-a-motorcycle-through-a-flooded-street-17929886/",
       "status": "reserved-or-rendered"
+    },
+    "5052421": {
+      "episode": "moto-roadtrip-1bf21da2eee6",
+      "source": "https://www.pexels.com/video/man-riding-a-motorcycle-5052421/",
+      "status": "reserved-or-rendered"
+    },
+    "35261826": {
+      "episode": "moto-roadtrip-1bf21da2eee6",
+      "source": "https://www.pexels.com/video/adventurous-motorcycle-ride-on-rough-mountain-road-35261826/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1665,6 +1675,13 @@
       "people": "road-commuters-c43a0",
       "story": "rainy-motorcycle-road-c43a0",
       "visual": "three-clips-c43a0"
+    },
+    "moto-roadtrip-1bf21da2eee6": {
+      "environment": "countryside-road-1bf21",
+      "bike": "touring-motorcycle",
+      "people": "touring-travelers-1bf21",
+      "story": "scenic-country-road-1bf21",
+      "visual": "three-clips-1bf21"
     }
   }
 }
