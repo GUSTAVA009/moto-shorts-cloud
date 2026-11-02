@@ -314,12 +314,19 @@ class NewMotoSourceTests(unittest.TestCase):
             if theme[0]=="snow":
                 return [files[1]]
             return []
+        # A deterministic historical baseline is essential here: this unit
+        # test isolates two hand-made scene candidates and must not depend on
+        # whatever the live autonomous factory appended minutes ago.
+        baseline=json.loads(json.dumps(self.catalog))
+        cut=next(i for i,e in enumerate(baseline["episodes"])
+                 if e["id"]=="moto-city-2ed049c15ee1")
+        baseline["episodes"]=baseline["episodes"][:cut+1]
         with patch.dict("os.environ",{"PEXELS_API_KEY":"",
                                        "OPENAI_API_KEY":"",
                                        "OPENROUTER_API_KEY":""}), \
              patch.object(s,"curated_pexels_results",side_effect=curated), \
              patch.object(s,"curated_mixkit_results",return_value=[]):
-            ep=s.create_one(self.catalog,source_fetch=lambda *a:[],
+            ep=s.create_one(baseline,source_fetch=lambda *a:[],
                             commons_fetch=lambda *a:[],prepared_scripts=[])
         self.assertEqual(len(ep["footage"]),2)
         self.assertEqual(set(require_filmable(ep,ep["footage"])),{"repair","snow"})
