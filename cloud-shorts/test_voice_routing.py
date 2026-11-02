@@ -11,8 +11,8 @@ class VoiceRoutingTests(unittest.TestCase):
         # A missing/blank variable must NEVER silently queue paid/manual Deep.
         self.assertEqual(r.new_episode_configuration({}),
                          {"voice_engine":h.VOICE_ENGINE,
-                          "voice_profile":h.PROFILE_ID,
-                          "selfhosted_voice_id":h.VOICE_ID})
+                          "voice_profile":h.CARTOON_B_PROFILE_ID,
+                          "selfhosted_voice_id":h.CARTOON_B_VOICE_ID})
         self.assertEqual(r.new_episode_configuration({"GUSTAVA_TTS_PROVIDER":""}),
                          r.new_episode_configuration({}))
         # Historical DEEP is only enabled by an explicit opt-in or existing episode.
@@ -29,9 +29,9 @@ class VoiceRoutingTests(unittest.TestCase):
     def test_cloud_cpu_is_explicit_single_channel_speaker(self):
         cfg=r.new_episode_configuration({"GUSTAVA_TTS_PROVIDER":h.VOICE_ENGINE})
         self.assertEqual(cfg,{"voice_engine":h.VOICE_ENGINE,
-                              "voice_profile":h.PROFILE_ID,
-                              "selfhosted_voice_id":h.VOICE_ID})
-        self.assertEqual(r.expected_profile(cfg),h.PROFILE_ID)
+                              "voice_profile":h.CARTOON_B_PROFILE_ID,
+                              "selfhosted_voice_id":h.CARTOON_B_VOICE_ID})
+        self.assertEqual(r.expected_profile(cfg),h.CARTOON_B_PROFILE_ID)
         self.assertIsNone(r.expected_profile(dict(cfg,selfhosted_voice_id="other")))
 
     def test_only_secure_owner_domain_and_key_enables_private_preview(self):
@@ -47,7 +47,9 @@ class VoiceRoutingTests(unittest.TestCase):
         self.assertFalse(r.ready(ep,dict(env,GUSTAVA_VOICE_API_URL=
             "https://random-tts.example/v1/audio/speech")))
         self.assertFalse(r.ready(dict(ep,auto_publish=True),env))
-        self.assertFalse(r.ready(ep,dict(env,GUSTAVA_VOICE_REFERENCE_SHA256="nope")))
+        # Cartoon B has its OWN immutable owner-accepted reference hash;
+        # the older GUSTAVA_VOICE_REFERENCE_SHA256 must not block B.
+        self.assertTrue(r.ready(ep,dict(env,GUSTAVA_VOICE_REFERENCE_SHA256="nope")))
 
     def test_all_external_paid_voice_engines_are_rejected(self):
         for forbidden in ("cartesia_sonic36","silero","kokoro","unknown","openvoice"):
@@ -57,10 +59,10 @@ class VoiceRoutingTests(unittest.TestCase):
                 self.assertFalse(r.ready({"voice_engine":forbidden}))
                 self.assertIsNone(r.expected_profile({"voice_engine":forbidden}))
 
-    def test_only_independently_qa_verified_original_profile_reaches_release(self):
+    def test_only_independently_qa_verified_cartoon_b_profile_reaches_release(self):
         ep=dict(r.new_episode_configuration({"GUSTAVA_TTS_PROVIDER":h.VOICE_ENGINE}))
         receipt={"voice_qa_passed":True,"mixed_audio_qa_passed":True,
-                 "male_voice_verified":True,"voice_profile":h.PROFILE_ID}
+                 "male_voice_verified":True,"voice_profile":h.CARTOON_B_PROFILE_ID}
         self.assertTrue(r.may_publish_with_verified_profile(ep,receipt))
         for bad in (
             dict(receipt,mixed_audio_qa_passed=False),
