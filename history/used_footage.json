@@ -1012,6 +1012,16 @@
       "episode": "moto-forest-9d2ae18d45fe",
       "source": "https://www.pexels.com/video/riding-motorcycle-on-road-in-forest-13687335/",
       "status": "reserved-or-rendered"
+    },
+    "10839343": {
+      "episode": "moto-motocross-5e6283c226ca",
+      "source": "https://www.pexels.com/video/race-on-motocross-track-10839343/",
+      "status": "reserved-or-rendered"
+    },
+    "9155464": {
+      "episode": "moto-motocross-5e6283c226ca",
+      "source": "https://www.pexels.com/video/people-riding-motocross-9155464/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1546,6 +1556,13 @@
       "people": "woods-rider-9d2ae",
       "story": "forest-path-and-riding-9d2ae",
       "visual": "three-clips-9d2ae"
+    },
+    "moto-motocross-5e6283c226ca": {
+      "environment": "race-track-5e628",
+      "bike": "motocross-bike",
+      "people": "track-racers-5e628",
+      "story": "rider-at-prepared-track-5e628",
+      "visual": "three-clips-5e628"
     }
   }
 }
