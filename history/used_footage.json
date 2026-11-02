@@ -902,6 +902,16 @@
       "episode": "moto-roadtrip-37613b8066e7",
       "source": "https://www.pexels.com/video/man-riding-motorcycle-4475335/",
       "status": "reserved-or-rendered"
+    },
+    "12990227": {
+      "episode": "moto-motocross-223d9ab5c67d",
+      "source": "https://www.pexels.com/video/motocross-race-on-dirt-track-12990227/",
+      "status": "reserved-or-rendered"
+    },
+    "9607287": {
+      "episode": "moto-motocross-223d9ab5c67d",
+      "source": "https://www.pexels.com/video/male-biker-doing-stunts-on-a-motorcycle-9607287/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1366,6 +1376,13 @@
       "people": "touring-travelers-37613",
       "story": "scenic-country-road-37613",
       "visual": "three-clips-37613"
+    },
+    "moto-motocross-223d9ab5c67d": {
+      "environment": "race-track-223d9",
+      "bike": "motocross-bike",
+      "people": "track-racers-223d9",
+      "story": "rider-at-prepared-track-223d9",
+      "visual": "three-clips-223d9"
     }
   }
 }
