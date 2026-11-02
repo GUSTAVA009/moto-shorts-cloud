@@ -22,7 +22,7 @@ OBJECTS = {
                    r"helmet|helmets|шлем|head.protection", re.I),
     ),
     "chain": (
-        re.compile(r"\bцеп\w*|\bchain\b", re.I),
+        re.compile(r"\bцеп(?:ь|и|ью|ей|ям|ями|ях|ной|ная|ную|ные|ного)\b|\bchain\b", re.I),
         re.compile(r"\bchain\b|цепь|sprocket", re.I),
     ),
     "tires": (
