@@ -132,11 +132,24 @@ def pexels_results(theme, page, api_key, fetch=http_json):
 
 
 def commons_results(theme, fetch=http_json):
+    # The old universal "motorcycle filetype:video" query returned the same
+    # generic motorcycle footage for repair, forest, helmet and city cycles.
+    # Rotate concrete action terms with the existing themed 90-min schedule.
+    # Commons itself remains the ONLY rights source; title/keywords alone
+    # never imply commercial licensing or actual visible action.
+    search_term = {
+        "forest":"motorcycle forest", "motocross":"motocross racing",
+        "repair":"motorcycle repair", "mountain":"motorcycle mountain",
+        "rain":"motorcycle rain", "desert":"motorcycle desert",
+        "city":"motorcycle traffic", "vintage":"motorcycle restoration",
+        "roadtrip":"motorcycle touring", "training":"motorcycle training",
+        "helmet":"motorcycle helmet", "dirt":"dirt bike muddy",
+        "racing":"motocross competition",
+    }.get(theme[0], "motorcycle")
     params = urllib.parse.urlencode({
         "action":"query", "format":"json", "formatversion":"2",
         "generator":"search",
-        "gsrsearch": ("motocross" if theme[0] in ("motocross", "training", "racing")
-                       else "motorcycle") + " filetype:video",
+        "gsrsearch":search_term + " filetype:video",
         "gsrnamespace":6, "gsrlimit":50, "prop":"imageinfo",
         "iiprop":"url|mime|size|sha1|extmetadata",
         "iiextmetadatafilter":"LicenseShortName|LicenseUrl|Copyrighted|Artist",
