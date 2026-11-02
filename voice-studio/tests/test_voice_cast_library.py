@@ -29,7 +29,10 @@ class CastLibraryTests(unittest.TestCase):
              "id":role,"name_ru":"Тест "+role,"speaker":"ryan",
              "mp3_file":name,"pitch_semitones":-2 if "cartoon" in role else 0,
              "seconds":5.7,"sha256_mp3":hashlib.sha256(raw).hexdigest(),
-             "asr_passed":None,"production_enabled":False})
+             "asr_passed":True,"production_enabled":False,
+             "sha256_wav":"1"*64,
+             "asr_check":{"engine":"faster-whisper-small-cpu-int8",
+                          "audio_sha256":"1"*64,"coverage":1.0,"precision":1.0}})
         self.write()
     def write(self):
         (self.root/"voice_pack_manifest.json").write_text(
@@ -38,6 +41,8 @@ class CastLibraryTests(unittest.TestCase):
         c=cast.available_auditions(self.root)
         self.assertEqual(c["count"],17)
         self.assertEqual(c["production_approved"],0)
+        self.assertEqual(c["short_russian_canary_passed"],17)
+        self.assertEqual(c["short_russian_canary_failed"],0)
         self.assertEqual(c["independent_stock_speakers"],9)
         self.assertTrue(all(not r["production_enabled"] for r in c["voices"]))
         for row in c["voices"]:
