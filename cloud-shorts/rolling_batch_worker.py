@@ -294,7 +294,10 @@ def main():
                       "Blockers: "+(", ".join(summary["factory_health"]["blockers"]) or "none"),
                       "Workflow success is NOT proof of YouTube publication."])
         Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text("\n".join(lines)+"\n",encoding="utf8")
-    return 0
+    # A green cron job while Buffer is EMPTY is misleading. Dispatches were
+    # performed above, but the pipeline is still not operational: report it
+    # as a failed production run, not as a completed factory recovery.
+    return 0 if summary["factory_health"]["operational"] else 1
 
 if __name__ == "__main__":
     raise SystemExit(main())
