@@ -18,6 +18,63 @@ class BufferBacklogTests(unittest.TestCase):
         self.artifacts = [{"name": "daily-preview-new-original-22-12345",
                            "expired": False}]
 
+    def test_full_605_artifacts_not_truncated_or_reused(self):
+        rows=[{"id":i+1,"name":"daily-preview-test-"+str(i+1),"expired":False}
+              for i in range(605)]
+        calls=[]
+        def api(path):
+            calls.append(path)
+            page=int(path.split("page=")[-1])
+            return {"total_count":len(rows),
+                    "artifacts":rows[(page-1)*100:page*100]}
+        result=f.complete_artifact_inventory(fetch=api)
+        self.assertEqual(len(result),605)
+        self.assertEqual([x["id"] for x in result],[x["id"] for x in rows])
+        self.assertEqual(len(calls),7)
+        self.assertEqual(calls[0],"actions/artifacts?per_page=100&page=1")
+        self.assertEqual(calls[-1],"actions/artifacts?per_page=100&page=7")
+
+    def test_complete_inventory_handles_exact_page_boundary_and_empty(self):
+        for count in (0,1,100,101,200,600):
+            rows=[{"id":i+100,"name":"clip-"+str(i),"expired":False}
+                  for i in range(count)]
+            def api(path):
+                page=int(path.split("page=")[-1])
+                return {"total_count":count,
+                        "artifacts":rows[(page-1)*100:page*100]}
+            result=f.complete_artifact_inventory(fetch=api)
+            self.assertEqual(len(result),count)
+
+    def test_truncated_changed_or_duplicate_artifact_inventory_fails_closed(self):
+        rows=[{"id":i+1,"name":"x-"+str(i),"expired":False} for i in range(105)]
+        def good_page(path):
+            n=int(path.split("page=")[-1])
+            return {"total_count":105,"artifacts":rows[(n-1)*100:n*100]}
+        def missing_page(path):
+            d=good_page(path)
+            if "page=2" in path:
+                d["artifacts"]=d["artifacts"][:2]
+            return d
+        def changed_count(path):
+            d=good_page(path)
+            if "page=2" in path:
+                d["total_count"]=106
+            return d
+        def duplicate_page(path):
+            d=good_page(path)
+            if "page=2" in path:
+                d["artifacts"][0]={"id":1,"name":"duplicate","expired":False}
+            return d
+        for api in (missing_page,changed_count,duplicate_page):
+            with self.subTest(api=api.__name__),self.assertRaises(RuntimeError):
+                f.complete_artifact_inventory(fetch=api)
+        with self.assertRaises(RuntimeError):
+            f.complete_artifact_inventory(fetch=lambda path:{
+                "total_count":10001,"artifacts":[]})
+        with self.assertRaises(RuntimeError):
+            f.complete_artifact_inventory(fetch=lambda path:{
+                "artifacts":[]})
+
     def test_approved_unique_original_is_selectable(self):
         item = f.select_for_buffer(self.catalog, self.receipts,
                                    self.artifacts, [])

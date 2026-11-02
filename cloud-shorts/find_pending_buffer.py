@@ -72,6 +72,54 @@ def explain_unavailable(catalog, receipts, artifacts, paths):
     }
 
 
+MAX_ARTIFACTS_FOR_SAFE_GLOBAL_AUDIT = 10000
+ARTIFACT_PAGE_SIZE = 100
+
+
+def complete_artifact_inventory(fetch=gh):
+    """Page through ALL real Actions artifacts or fail closed.
+
+    The 2026-11-02 selector aborted on the seventh page after >600 total
+    historical artifacts. Never silently search only the first 100, do not
+    mislabel truncation as "no publishable MP4", and NEVER fabricate a post.
+    GitHub's total_count is used to prove completeness. Concurrent page
+    shifting, missing IDs or changed total count abort, not republish.
+    """
+    def read_page(number):
+        result = fetch("actions/artifacts?per_page=100&page=" + str(number))
+        if not isinstance(result, dict) or not isinstance(result.get("artifacts"), list):
+            raise RuntimeError("ARTIFACT_INVENTORY_BAD_PAGE")
+        return result
+
+    first = read_page(1)
+    count = first.get("total_count")
+    if (type(count) is not int or count < 0
+            or count > MAX_ARTIFACTS_FOR_SAFE_GLOBAL_AUDIT):
+        raise RuntimeError("ARTIFACT_INVENTORY_SIZE_UNKNOWN_OR_TOO_LARGE")
+    entries = []
+    ids = set()
+    max_pages = (count + ARTIFACT_PAGE_SIZE - 1) // ARTIFACT_PAGE_SIZE
+
+    for page in range(1, max(1, max_pages) + 1):
+        data = first if page == 1 else read_page(page)
+        if data.get("total_count") != count:
+            raise RuntimeError("ARTIFACT_INVENTORY_CHANGED_DURING_PAGINATION")
+        batch = data["artifacts"]
+        expected = min(ARTIFACT_PAGE_SIZE, count - len(entries))
+        if len(batch) != expected:
+            raise RuntimeError("ARTIFACT_INVENTORY_INCOMPLETE_PAGE")
+        for row in batch:
+            if (not isinstance(row, dict) or type(row.get("id")) is not int
+                    or row["id"] <= 0 or not isinstance(row.get("name"), str)
+                    or row["id"] in ids):
+                raise RuntimeError("ARTIFACT_INVENTORY_DUPLICATE_OR_INVALID")
+            ids.add(row["id"])
+            entries.append(row)
+    if len(entries) != count:
+        raise RuntimeError("ARTIFACT_INVENTORY_NOT_FULLY_READ")
+    return entries
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
@@ -90,14 +138,7 @@ def main():
         decoded = ledger.decode_receipt(entry)
         receipts.append(decoded)
     catalog = json.loads(Path(__file__).with_name("episodes.json").read_text("utf8"))
-    artifacts = []
-    for page in range(1, 7):
-        result = gh("actions/artifacts?per_page=100&page=" + str(page))
-        artifacts.extend(result.get("artifacts", []))
-        if len(result.get("artifacts", [])) < 100:
-            break
-    else:
-        raise RuntimeError("More than 600 artifacts: refuse incomplete inventory")
+    artifacts = complete_artifact_inventory()
     selected = select_for_buffer(catalog, receipts, artifacts, all_paths)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     if selected:
