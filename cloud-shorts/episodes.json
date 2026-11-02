@@ -8645,6 +8645,416 @@
         "audio_peak_max": 0.723,
         "note": "Assistant inspected actual original MP4 frames, moving dirt motocross followed by urban motorcyclists. Story describes independent footage, not one event. Original owner Cartoon B reference hash pinned. Publication allowed only through existing QA and Buffer release gates."
       }
+    },
+    {
+      "id": "moto-forest-9d2ae18d45fe",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Поездка и лесной заезд — какой кадр сильнее? #shorts",
+      "narration": "Мотоцикл в разных сюжетах: байкер едет на мотоцикле. На второй съёмке райдер едет через лес. Это разные люди и кадры. Что сильнее цепляет?",
+      "description": "Две разные мотоистории: поездка и лесной заезд. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ПОЕЗДКА",
+      "caption_middle": "ЛЕСНОЙ ЗАЕЗД",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 113,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5052603/",
+          "source_page": "https://www.pexels.com/video/a-man-riding-a-motorcycle-5052603/",
+          "author": "Pavel Danilyuk",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "a man riding a motorcycle",
+          "topics": [
+            "roadtrip",
+            "forest"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/13687335/",
+          "source_page": "https://www.pexels.com/video/riding-motorcycle-on-road-in-forest-13687335/",
+          "author": "Matt Richmond",
+          "license": "Pexels License",
+          "duration": 10.38,
+          "source_title": "riding motorcycle on road in forest",
+          "topics": [
+            "forest",
+            "roadtrip"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 10.13
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "forest-trail-9d2ae",
+        "bike": "forest-trailbike",
+        "people": "woods-rider-9d2ae",
+        "story": "forest-path-and-riding-9d2ae",
+        "visual": "three-clips-9d2ae"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Поделись роликом с другом, который любит мотоциклы."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-motocross-5e6283c226ca",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Поездка по треку и поездка — какой кадр сильнее? #shorts",
+      "narration": "Мотоцикл в разных сюжетах: мотоциклист едет по треку. На второй съёмке байкер едет на мотоцикле. Это разные люди и кадры. Что сильнее цепляет?",
+      "description": "Две разные мотоистории: поездка по треку и поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ПОЕЗДКА ПО ТРЕКУ",
+      "caption_middle": "ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "race-breakbeat",
+      "music_bpm": 124,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/10839343/",
+          "source_page": "https://www.pexels.com/video/race-on-motocross-track-10839343/",
+          "author": "Midtrack -",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "race on motocross track",
+          "topics": [
+            "racing",
+            "motocross",
+            "training"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/9155464/",
+          "source_page": "https://www.pexels.com/video/people-riding-motocross-9155464/",
+          "author": "Tom Fisk",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "people riding motocross",
+          "topics": [
+            "motocross",
+            "racing"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "race-track-5e628",
+        "bike": "motocross-bike",
+        "people": "track-racers-5e628",
+        "story": "rider-at-prepared-track-5e628",
+        "visual": "three-clips-5e628"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-city-397665705424",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Два мотоэпизода: городская поездка и поездка. Что выберешь? #shorts",
+      "narration": "Мотоцикл под разными углами: байкер едет по городской улице. В другом ролике байкер едет на мотоцикле. Два отдельных момента. Какой пересмотрел бы ты?",
+      "description": "Две разные мотоистории: городская поездка и поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_middle": "ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "night-drive",
+      "music_bpm": 135,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/35841419/",
+          "source_page": "https://www.pexels.com/video/busy-city-street-with-motorcycles-and-cars-35841419/",
+          "author": "Minh Thong",
+          "license": "Pexels License",
+          "source_title": "busy city street with motorcycles and cars",
+          "topics": [
+            "city"
+          ],
+          "duration": 11.71
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/5206968/",
+          "source_page": "https://www.pexels.com/video/a-man-riding-a-motorcycle-5206968/",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "a man riding a motorcycle",
+          "topics": [
+            "city",
+            "roadtrip"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "urban-streets-39766",
+        "bike": "urban-motorbike",
+        "people": "city-riders-39766",
+        "story": "urban-riding-39766",
+        "visual": "three-clips-39766"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-roadtrip-a64f3c848121",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Мотопутешествие или городская поездка: какой момент интереснее? #shorts",
+      "narration": "Мотоцикл в двух сценах: райдер едет на туристическом мотоцикле. На другом видео байкер едет по городской улице. Это независимые съёмки. Что ближе тебе?",
+      "description": "Две разные мотоистории: мотопутешествие и городская поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "МОТОПУТЕШЕСТВИЕ",
+      "caption_middle": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 109,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5052822/",
+          "source_page": "https://www.pexels.com/video/long-video-shot-of-motorbike-touring-5052822/",
+          "author": "Pavel Danilyuk",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "long video shot of motorbike touring",
+          "topics": [
+            "roadtrip",
+            "mountain"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/9927896/",
+          "source_page": "https://www.pexels.com/video/man-riding-motorcycle-along-street-9927896/",
+          "author": "Nitin Khajotia",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "man riding motorcycle along street",
+          "topics": [
+            "city",
+            "roadtrip"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "countryside-road-a64f3",
+        "bike": "touring-motorcycle",
+        "people": "touring-travelers-a64f3",
+        "story": "scenic-country-road-a64f3",
+        "visual": "three-clips-a64f3"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие мотопутешествия."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-racing-025a888103d8",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Поездка и городская поездка — какой кадр сильнее? #shorts",
+      "narration": "Мотоцикл в разных сюжетах: байкер едет на мотоцикле. На второй съёмке байкер едет по городской улице. Это разные люди и кадры. Что сильнее цепляет?",
+      "description": "Две разные мотоистории: поездка и городская поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ПОЕЗДКА",
+      "caption_middle": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "race-breakbeat",
+      "music_bpm": 120,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5052768/",
+          "source_page": "https://www.pexels.com/video/riding-a-motorcycle-in-the-countryside-5052768/",
+          "author": "Pavel Danilyuk",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "riding a motorcycle in the countryside",
+          "topics": [
+            "roadtrip",
+            "forest"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/30031070/",
+          "source_page": "https://www.pexels.com/video/busy-street-traffic-from-motorcycle-perspective-30031070/",
+          "author": "Manish Khandagale",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "busy street traffic from motorcycle perspective",
+          "topics": [
+            "city",
+            "roadtrip"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "race-paddock-025a8",
+        "bike": "track-racing-bike",
+        "people": "racing-crews-025a8",
+        "story": "circuit-racing-025a8",
+        "visual": "three-clips-025a8"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Поделись роликом с другом, который любит мотоциклы."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
     }
   ]
 }
