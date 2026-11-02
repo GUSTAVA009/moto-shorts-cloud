@@ -7679,6 +7679,169 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1",
       "story_reserve_id": "r2-city-0021"
+    },
+    {
+      "id": "moto-roadtrip-37613b8066e7",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_original_qwen3_v1",
+      "selfhosted_voice_id": "gustava-original-v1",
+      "title": "Горный маршрут или поездка: какой момент интереснее? #shorts",
+      "narration": "Мотоцикл в двух сценах: райдер едет по горной дороге. На другом видео байкер едет на мотоцикле. Это независимые съёмки. Что ближе тебе?",
+      "description": "Две разные мотоистории: горный маршрут и поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ГОРНЫЙ МАРШРУТ",
+      "caption_middle": "ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 114,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "topics": [
+            "mountain",
+            "roadtrip"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/13470940/",
+          "source_page": "https://www.pexels.com/video/riding-motorcycle-on-mountain-road-13470940/",
+          "author": "Harshit Patel",
+          "license": "Pexels License",
+          "duration": 30.02,
+          "source_title": "riding motorcycle on mountain road"
+        },
+        {
+          "topics": [
+            "city",
+            "roadtrip"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/4475335/",
+          "source_page": "https://www.pexels.com/video/man-riding-motorcycle-4475335/",
+          "author": "Kelly",
+          "license": "Pexels License",
+          "duration": 51,
+          "source_title": "man riding motorcycle"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.5
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.5
+        }
+      ],
+      "visual_director_version": 3,
+      "editorial": {
+        "environment": "countryside-road-37613",
+        "bike": "touring-motorcycle",
+        "people": "touring-travelers-37613",
+        "story": "scenic-country-road-37613",
+        "visual": "three-clips-37613"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-motocross-223d9ab5c67d",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_original_qwen3_v1",
+      "selfhosted_voice_id": "gustava-original-v1",
+      "title": "Поездка по треку или мототрюк: какой момент интереснее? #shorts",
+      "narration": "Мотоцикл в двух сценах: мотоциклист едет по треку. На другом видео райдер выполняет трюк на мотоцикле. Это независимые съёмки. Что ближе тебе?",
+      "description": "Две разные мотоистории: поездка по треку и мототрюк. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ПОЕЗДКА ПО ТРЕКУ",
+      "caption_middle": "МОТОТРЮК",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "race-breakbeat",
+      "music_bpm": 125,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "topics": [
+            "racing",
+            "motocross"
+          ],
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/12990227/",
+          "source_page": "https://www.pexels.com/video/motocross-race-on-dirt-track-12990227/",
+          "author": "Tom Fisk",
+          "license": "Pexels License",
+          "duration": 32.53,
+          "source_title": "motocross race on dirt track"
+        },
+        {
+          "topics": [
+            "city",
+            "racing",
+            "motocross"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/9607287/",
+          "source_page": "https://www.pexels.com/video/male-biker-doing-stunts-on-a-motorcycle-9607287/",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 13,
+          "source_title": "male biker doing stunts on a motorcycle"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.5
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.5
+        }
+      ],
+      "visual_director_version": 3,
+      "editorial": {
+        "environment": "race-track-223d9",
+        "bike": "motocross-bike",
+        "people": "track-racers-223d9",
+        "story": "rider-at-prepared-track-223d9",
+        "visual": "three-clips-223d9"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие мотопутешествия."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
     }
   ]
 }
