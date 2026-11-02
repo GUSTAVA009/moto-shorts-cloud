@@ -9366,6 +9366,417 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1",
       "story_reserve_id": "r2-motocross-0031"
+    },
+    {
+      "id": "moto-rain-c43a0b888ffe",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Два мотоэпизода: поездка и городская поездка. Что выберешь? #shorts",
+      "narration": "Мотоцикл под разными углами: байкер едет на мотоцикле. В другом ролике байкер едет по городской улице. Два отдельных момента. Какой пересмотрел бы ты?",
+      "description": "Две разные мотоистории: поездка и городская поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ПОЕЗДКА",
+      "caption_middle": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 116,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/3723677/",
+          "source_page": "https://www.pexels.com/video/men-riding-motorcycles-in-a-wet-road-3723677/",
+          "author": "K",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "men riding motorcycles in a wet road",
+          "topics": [
+            "rain",
+            "city"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/17929886/",
+          "source_page": "https://www.pexels.com/video/a-man-riding-a-motorcycle-through-a-flooded-street-17929886/",
+          "author": "Shutterbug Aminul",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "a man riding a motorcycle through a flooded street",
+          "topics": [
+            "rain",
+            "city"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "wet-asphalt-road-c43a0",
+        "bike": "street-motorbike",
+        "people": "road-commuters-c43a0",
+        "story": "rainy-motorcycle-road-c43a0",
+        "visual": "three-clips-c43a0"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие мотопутешествия."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1",
+      "story_reserve_id": "r2-rain-0034"
+    },
+    {
+      "id": "moto-roadtrip-1bf21da2eee6",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Два мотоэпизода: поездка и горный маршрут. Что выберешь? #shorts",
+      "narration": "Мотоцикл под разными углами: байкер едет на мотоцикле. В другом ролике райдер едет по горной дороге. Два отдельных момента. Какой пересмотрел бы ты?",
+      "description": "Две разные мотоистории: поездка и горный маршрут. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ПОЕЗДКА",
+      "caption_middle": "ГОРНЫЙ МАРШРУТ",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 127,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5052421/",
+          "source_page": "https://www.pexels.com/video/man-riding-a-motorcycle-5052421/",
+          "author": "Pavel Danilyuk",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "man riding a motorcycle",
+          "topics": [
+            "sunset",
+            "roadtrip"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/35261826/",
+          "source_page": "https://www.pexels.com/video/adventurous-motorcycle-ride-on-rough-mountain-road-35261826/",
+          "author": "Shital Khadgi",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "adventurous motorcycle ride on rough mountain road",
+          "topics": [
+            "mountain",
+            "roadtrip"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "countryside-road-1bf21",
+        "bike": "touring-motorcycle",
+        "people": "touring-travelers-1bf21",
+        "story": "scenic-country-road-1bf21",
+        "visual": "three-clips-1bf21"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Поделись роликом с другом, который любит мотоциклы."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-repair-2d88e2e7eb73",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Два мотоэпизода: ремонт байка и городская поездка. Что выберешь? #shorts",
+      "narration": "Мотоцикл под разными углами: механик работает с мотоциклом. В другом ролике байкер едет по городской улице. Два отдельных момента. Какой пересмотрел бы ты?",
+      "description": "Две разные мотоистории: ремонт байка и городская поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "РЕМОНТ БАЙКА",
+      "caption_middle": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "garage-groove",
+      "music_bpm": 138,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/9606869/",
+          "source_page": "https://www.pexels.com/video/man-fixing-his-motorcycle-9606869/",
+          "author": "Anastasia Shuraeva",
+          "license": "Pexels License",
+          "duration": 13,
+          "source_title": "man fixing his motorcycle",
+          "topics": [
+            "repair",
+            "vintage"
+          ]
+        },
+        {
+          "topics": [
+            "city"
+          ],
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/40347388/",
+          "source_page": "https://www.pexels.com/video/man-riding-motorcycle-on-sunny-tree-lined-street-40347388/",
+          "author": "Tom Shutkin",
+          "license": "Pexels License",
+          "duration": 11.21,
+          "source_title": "man riding motorcycle on sunny tree lined street"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.5
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 10.96
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "garage-workshop-2d88e",
+        "bike": "workshop-bike",
+        "people": "garage-mechanics-2d88e",
+        "story": "mechanic-bike-servicing-2d88e",
+        "visual": "three-clips-2d88e"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1",
+      "story_reserve_id": "r2-repair-0032"
+    },
+    {
+      "id": "moto-city-515641e586d4",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Городская поездка и ремонт байка — какой кадр сильнее? #shorts",
+      "narration": "Мотоцикл в разных сюжетах: байкер едет по городской улице. На второй съёмке механик работает с мотоциклом. Это разные люди и кадры. Что сильнее цепляет?",
+      "description": "Две разные мотоистории: городская поездка и ремонт байка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_middle": "РЕМОНТ БАЙКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "night-drive",
+      "music_bpm": 112,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/40373638/",
+          "source_page": "https://www.pexels.com/video/bustling-street-scene-with-motorcycles-40373638/",
+          "author": "Tom Shutkin",
+          "license": "Pexels License",
+          "source_title": "bustling street scene with motorcycles",
+          "topics": [
+            "city"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/8551236/",
+          "source_page": "https://www.pexels.com/video/people-repairing-a-motorcycle-8551236/",
+          "author": "Kindel Media",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "people repairing a motorcycle",
+          "topics": [
+            "repair",
+            "vintage"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.5
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "urban-streets-51564",
+        "bike": "urban-motorbike",
+        "people": "city-riders-51564",
+        "story": "urban-riding-51564",
+        "visual": "three-clips-51564"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1",
+      "story_reserve_id": "r2-city-0036"
+    },
+    {
+      "id": "moto-vintage-71bf7b721a9b",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Два мотоэпизода: ремонт байка и мотопрыжок. Что выберешь? #shorts",
+      "narration": "Мотоцикл под разными углами: механик работает с мотоциклом. В другом ролике райдер прыгает с трамплина. Два отдельных момента. Какой пересмотрел бы ты?",
+      "description": "Две разные мотоистории: ремонт байка и мотопрыжок. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "РЕМОНТ БАЙКА",
+      "caption_middle": "МОТОПРЫЖОК",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "garage-groove",
+      "music_bpm": 123,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5803383/",
+          "source_page": "https://www.pexels.com/video/man-fixing-a-motorcycle-5803383/",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "duration": 8.96,
+          "source_title": "man fixing a motorcycle",
+          "topics": [
+            "repair",
+            "vintage"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/9222538/",
+          "source_page": "https://www.pexels.com/video/motocross-riders-jumping-a-tabletop-at-a-racetrack-9222538/",
+          "author": "Tom Fisk",
+          "license": "Pexels License",
+          "duration": 11.71,
+          "source_title": "motocross riders jumping a tabletop at a racetrack",
+          "topics": [
+            "motocross",
+            "racing"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 8.71
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "vintage-workshop-71bf7",
+        "bike": "classic-motorcycle",
+        "people": "classic-restorers-71bf7",
+        "story": "vintage-bike-work-71bf7",
+        "visual": "three-clips-71bf7"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие мотопутешествия."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1",
+      "story_reserve_id": "r2-vintage-0037"
     }
   ]
 }
