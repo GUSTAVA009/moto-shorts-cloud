@@ -1,0 +1,11 @@
+{
+  "id": "moto-repair-2d88e2e7eb73",
+  "state": "reserved",
+  "run_id": "41440517318",
+  "attempt_count": 1,
+  "preview_fingerprint": "ebac1d487ed069db757bb6744bf4c47b0f9539ba3396ecf73aa7e7a96ef16d96",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-cartoon-b-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
