@@ -1078,6 +1078,137 @@
         "mountain",
         "roadtrip"
       ]
+    },
+    {
+      "key": "px_9606869",
+      "url": "https://www.pexels.com/download/video/9606869/",
+      "source_page": "https://www.pexels.com/video/man-fixing-his-motorcycle-9606869/",
+      "author": "Anastasia Shuraeva",
+      "license": "Pexels License",
+      "duration": 13,
+      "source_title": "man fixing his motorcycle",
+      "topics": [
+        "repair",
+        "vintage"
+      ]
+    },
+    {
+      "key": "px_8551236",
+      "url": "https://www.pexels.com/download/video/8551236/",
+      "source_page": "https://www.pexels.com/video/people-repairing-a-motorcycle-8551236/",
+      "author": "Kindel Media",
+      "license": "Pexels License",
+      "duration": 11.71,
+      "source_title": "people repairing a motorcycle",
+      "topics": [
+        "repair",
+        "vintage"
+      ]
+    },
+    {
+      "key": "px_5803383",
+      "url": "https://www.pexels.com/download/video/5803383/",
+      "source_page": "https://www.pexels.com/video/man-fixing-a-motorcycle-5803383/",
+      "author": "cottonbro studio",
+      "license": "Pexels License",
+      "duration": 8.96,
+      "source_title": "man fixing a motorcycle",
+      "topics": [
+        "repair",
+        "vintage"
+      ]
+    },
+    {
+      "key": "px_2673735",
+      "url": "https://www.pexels.com/download/video/2673735/",
+      "source_page": "https://www.pexels.com/video/a-motorcycle-rider-travels-on-a-concrete-road-2673735/",
+      "author": "K",
+      "license": "Pexels License",
+      "duration": 20,
+      "source_title": "a motorcycle rider travels on a concrete road",
+      "topics": [
+        "roadtrip",
+        "mountain"
+      ]
+    },
+    {
+      "key": "px_9132992",
+      "url": "https://www.pexels.com/download/video/9132992/",
+      "source_page": "https://www.pexels.com/video/people-riding-motocross-9132992/",
+      "author": "Tom Fisk",
+      "license": "Pexels License",
+      "duration": 8.88,
+      "source_title": "people riding motocross",
+      "topics": [
+        "motocross",
+        "racing",
+        "training"
+      ]
+    },
+    {
+      "key": "px_7170230",
+      "url": "https://www.pexels.com/download/video/7170230/",
+      "source_page": "https://www.pexels.com/video/a-man-fixing-the-side-mirror-of-a-motorcycle-7170230/",
+      "author": "ArtHouse Studio",
+      "license": "Pexels License",
+      "duration": 8.17,
+      "source_title": "a man fixing the side mirror of a motorcycle",
+      "topics": [
+        "repair",
+        "vintage"
+      ]
+    },
+    {
+      "key": "px_15298841",
+      "url": "https://www.pexels.com/download/video/15298841/",
+      "source_page": "https://www.pexels.com/video/motocross-biker-makes-some-jumps-15298841/",
+      "author": "Michael Novogradac",
+      "license": "Pexels License",
+      "duration": 8.83,
+      "source_title": "motocross biker makes some jumps",
+      "topics": [
+        "motocross",
+        "racing"
+      ]
+    },
+    {
+      "key": "px_9222538",
+      "url": "https://www.pexels.com/download/video/9222538/",
+      "source_page": "https://www.pexels.com/video/motocross-riders-jumping-a-tabletop-at-a-racetrack-9222538/",
+      "author": "Tom Fisk",
+      "license": "Pexels License",
+      "duration": 11.71,
+      "source_title": "motocross riders jumping a tabletop at a racetrack",
+      "topics": [
+        "motocross",
+        "racing"
+      ]
+    },
+    {
+      "key": "px_3723677",
+      "url": "https://www.pexels.com/download/video/3723677/",
+      "source_page": "https://www.pexels.com/video/men-riding-motorcycles-in-a-wet-road-3723677/",
+      "author": "K",
+      "license": "Pexels License",
+      "duration": 11.71,
+      "source_title": "men riding motorcycles in a wet road",
+      "topics": [
+        "rain",
+        "city"
+      ]
+    },
+    {
+      "key": "px_17929886",
+      "url": "https://www.pexels.com/download/video/17929886/",
+      "source_page": "https://www.pexels.com/video/a-man-riding-a-motorcycle-through-a-flooded-street-17929886/",
+      "author": "Shutterbug Aminul",
+      "license": "Pexels License",
+      "duration": 11.71,
+      "source_title": "a man riding a motorcycle through a flooded street",
+      "topics": [
+        "rain",
+        "city"
+      ]
     }
   ]
 }
