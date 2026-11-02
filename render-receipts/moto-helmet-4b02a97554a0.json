@@ -1,0 +1,11 @@
+{
+  "id": "moto-helmet-4b02a97554a0",
+  "state": "reserved",
+  "run_id": "41373185728",
+  "attempt_count": 1,
+  "preview_fingerprint": "b4b36ac425fe45b2171ccc5ed1e18ba4cd03cb370e6148d06a54313f03f13489",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-original-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
