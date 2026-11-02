@@ -52,6 +52,17 @@ class VoiceCastContractTests(unittest.TestCase):
         self.assertTrue(self.cast["legacy_voice"]["protected"])
         self.assertFalse(p["unlicensed_youtube_voice_extraction_prohibited"] is False)
 
+    def test_new_original_cartoon_is_isolated_from_primary_deep(self):
+        items={x["id"]:x for x in self.cast["proposed_character_voices"]}
+        p=items["cartoon_spring_nasal_original_v1"]
+        self.assertEqual(p["pitch_semitones"], -2)
+        self.assertTrue(p["formant_preserving_pitch_shift_required"])
+        self.assertTrue(p["independent_voice_source_required"])
+        self.assertFalse(p["production_enabled"])
+        self.assertFalse(p["may_replace_gustava_deep_without_owner_approval"])
+        self.assertTrue(self.cast["legacy_voice"]["protected"])
+        self.assertIn("NEW independent vocal identity",p["design_prompt_en"])
+
     def test_narration_duration_not_globally_capped_or_detached_from_visuals(self):
         p = self.cast["assignment_policy"]
         self.assertTrue(p["no_global_tts_narration_duration_limit"])
