@@ -13,8 +13,8 @@ class VoiceCastContractTests(unittest.TestCase):
 
     def test_original_cast_is_distinct_and_not_fake_production(self):
         c = self.cast
-        self.assertEqual(c["kind"], "research_and_character_specs_only")
-        self.assertEqual(c["production_status"], "NOT_DEPLOYED")
+        self.assertEqual(c["kind"],"original_character_roles_with_live_private_audio_auditions")
+        self.assertEqual(c["production_status"],"17_REAL_AUDIO_AUDITIONS_PENDING_INDEPENDENT_RU_ASR_AND_OWNER_APPROVAL")
         cast = c["proposed_character_voices"]
         self.assertGreaterEqual(len(cast), 12)
         ids = [voice["id"] for voice in cast]
@@ -22,8 +22,15 @@ class VoiceCastContractTests(unittest.TestCase):
         self.assertTrue({"child_cartoon", "comic_bass_cartoon", "medium_warm",
                          "grandpa_biker", "son_teen", "father", "mother"}.issubset(ids))
         for role in cast:
-            self.assertEqual(role["status"], "design_spec_only")
+            self.assertEqual(role["status"],"real_private_audition_generated_pending_russian_asr_and_owner_approval")
             self.assertFalse(role["production_enabled"])
+            self.assertFalse(role["audition"]["russian_asr_approved"])
+            self.assertFalse(role["audition"]["owner_audition_approved"])
+            self.assertTrue(role["audition"]["original_role_voice_is_not_independently_trained"])
+            self.assertEqual(len(role["audition"]["wav_sha256"]),64)
+            self.assertEqual(len(role["audition"]["mp3_sha256"]),64)
+            self.assertTrue(role["audition"]["private_owner_portal_path"].startswith(
+                "/api/portal/cast/"+role["id"]+"/audio"))
             self.assertTrue(role["requires_original_voice_canary"])
             self.assertTrue(role["requires_russian_asr"])
             self.assertEqual(role["language"], "ru")
