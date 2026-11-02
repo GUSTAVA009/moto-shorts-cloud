@@ -8295,7 +8295,43 @@
         "editorial_remains_private": true,
         "max_total_preview_attempts": 2
       },
-      "voice_revision_priority": true
+      "voice_revision_priority": true,
+      "align_middle_caption_to_second_scene": true,
+      "visual_revision_requested": true,
+      "visual_revision_reason": "spoken_scene_caption_mismatch",
+      "visual_revision_evidence": {
+        "prior_run_id": "41374584510",
+        "prior_mp4_sha256": "d4773cab50f7eb67c8ab598b712fa70cac2b03bcf58ff677c3cdfac86a9362a7",
+        "prior_preview_fingerprint": "730b9c9054aacca1f6d789d7704e9d655292e49cdef68a2d8a36ad20fc374faa",
+        "old_caption_start_seconds": 3.9,
+        "old_second_scene_start_seconds": 6.445,
+        "old_second_scene_start_source_duration_seconds": 6.545,
+        "opening_trim_seconds": 0.1,
+        "old_caption_early_by_seconds": 2.545,
+        "source_ids": [
+          "35963831",
+          "mixkit-41937"
+        ],
+        "actual_mp4_frame_audit_seconds": [
+          0.1,
+          1.2,
+          2.4,
+          3.5,
+          4.7,
+          5.7,
+          6.4,
+          7.5,
+          8.7,
+          9.6,
+          10.8,
+          12.1
+        ],
+        "previous_voice_qa_passed": true,
+        "previous_final_mix_qa_passed": true,
+        "source_licenses_unchanged": true,
+        "never_publish_on_visual_retry": true,
+        "max_total_attempts": 3
+      }
     }
   ]
 }
