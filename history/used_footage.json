@@ -977,6 +977,16 @@
       "episode": "moto-motocross-87bc6da95d28",
       "source": "https://www.pexels.com/video/thrilling-desert-motocross-race-with-jumps-29466269/",
       "status": "reserved-or-rendered"
+    },
+    "5206883": {
+      "episode": "moto-city-beee4f27fe15",
+      "source": "https://www.pexels.com/video/a-motorbike-rider-on-stop-in-traffic-5206883/",
+      "status": "reserved-or-rendered"
+    },
+    "9607291": {
+      "episode": "moto-city-beee4f27fe15",
+      "source": "https://www.pexels.com/video/man-and-woman-doing-motorcycle-wheelie-9607291/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1490,6 +1500,13 @@
       "people": "track-racers-87bc6",
       "story": "rider-at-prepared-track-87bc6",
       "visual": "three-clips-87bc6"
+    },
+    "moto-city-beee4f27fe15": {
+      "environment": "urban-streets-beee4",
+      "bike": "urban-motorbike",
+      "people": "city-riders-beee4",
+      "story": "urban-riding-beee4",
+      "visual": "three-clips-beee4"
     }
   }
 }
