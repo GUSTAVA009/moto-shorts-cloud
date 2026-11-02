@@ -455,6 +455,32 @@ def review_and_promote(episode, run_id, directory):
     return True
 
 
+def dispatch_next_unreviewed_original(processed_id, get=api):
+    """Progress through ORIGINAL private MP4s without manual per-video PRs.
+
+    First persist the preceding SHA-bound approval/rejection. The immutable
+    rejection ledger prevents repeated review of the same failed movie,
+    and a same-candidate guard avoids a runaway workflow-dispatch loop.
+    This NEVER sends a Buffer post or grants editorial approval itself.
+    """
+    tree = get("git/trees/render-ledger?recursive=1")
+    if tree.get("truncated"):
+        raise RuntimeError("AUTO_FRAME_FOLLOWUP_INCOMPLETE_LEDGER")
+    entry = get("contents/cloud-shorts/episodes.json?ref=main")
+    catalog = decode_file(entry)
+    next_job = select_private(catalog, [
+        x["path"] for x in tree.get("tree", [])
+        if x.get("type") == "blob"], get=get)
+    if not next_job or next_job["id"] == processed_id:
+        print("AUTO_FRAME_FOLLOWUP_EMPTY_OR_SAME", processed_id, flush=True)
+        return False
+    get("actions/workflows/autonomous-editorial-review.yml/dispatches",
+        "POST", {"ref":"main"})
+    print("AUTO_FRAME_FOLLOWUP_DISPATCHED",
+          processed_id, "->", next_job["id"], flush=True)
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="task",required=True)
@@ -496,8 +522,9 @@ def main():
     if (not eligible_private_episode(episode,receipt)
             or receipt.get("run_id") != args.run_id):
         raise RuntimeError("AUTO_FRAME_REVIEW_RENDER_RECEIPT_CHANGED")
-    good=review_and_promote(episode,args.run_id,args.directory/args.episode)
-    return 0 if good else 0  # rejection is an honest private result, not a release
+    review_and_promote(episode,args.run_id,args.directory/args.episode)
+    dispatch_next_unreviewed_original(args.episode)
+    return 0  # An actual rejected movie stays private; next review is autonomous.
 
 
 if __name__ == "__main__":
