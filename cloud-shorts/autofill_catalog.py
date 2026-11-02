@@ -95,6 +95,34 @@ def pending_originals(catalog, reserved, autonomous=False):
                for e in catalog["episodes"])
 
 
+def one_commons_query_per_run(discover):
+    """Use one Commons metadata request across ALL ten script attempts.
+
+    create_one() formerly invoked Commons once *per candidate*, up to ten
+    different requests in one refill, despite its per-cycle comment.
+    Wikimedia now enforces identified bot rate limits. Cache candidates
+    and do not hammer Commons after a 429 or any failure.
+    """
+    queried = False
+    cached = None
+    problem = None
+
+    def bounded(theme):
+        nonlocal queried, cached, problem
+        if queried:
+            if problem is not None:
+                raise problem
+            return cached
+        queried = True
+        try:
+            cached = discover(theme)
+        except Exception as exc:
+            problem = exc
+            raise
+        return cached
+    return bounded
+
+
 def prepared_active_scripts(catalog, entry):
     """Load the active 10-script batch only after its tenth Buffer sent event."""
     if not entry:
@@ -137,6 +165,8 @@ def main():
     history = ledger.decode_history(ledger.api(ledger.HISTORY_PATH))
     batch_entry = ledger.api("automation/rolling-ten.json")
     prepared = prepared_active_scripts(catalog, batch_entry)
+    from cc0_source_pool import discover as discover_commons
+    discover_limited = one_commons_query_per_run(discover_commons)
     for index in range(MAX_ADD_PER_RUN):
         try:
             selection = candidate(catalog, seeds, reserved,
@@ -145,11 +175,10 @@ def main():
             if "CURATED_STORY_BANK_EXHAUSTED" not in str(exc):
                 raise
             from moto_autocreate import create_one
-            from cc0_source_pool import discover as discover_commons
             try:
                 selected = create_one(
                     catalog,
-                    commons_fetch=discover_commons,
+                    commons_fetch=discover_limited,
                     permanently_used=set(history["used"]),
                     prepared_scripts=prepared)
             except (RuntimeError, ValueError, OSError) as failure:
