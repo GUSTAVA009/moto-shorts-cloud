@@ -370,8 +370,8 @@ class NewMotoSourceTests(unittest.TestCase):
                 self.catalog, s.choose_theme(self.catalog["episodes"]),
                 media[:3], story(), len(self.catalog["episodes"]))
         self.assertEqual(ep["voice_engine"], cv.VOICE_ENGINE)
-        self.assertEqual(ep["voice_profile"], cv.PROFILE_ID)
-        self.assertEqual(ep["selfhosted_voice_id"],cv.VOICE_ID)
+        self.assertEqual(ep["voice_profile"], cv.CARTOON_B_PROFILE_ID)
+        self.assertEqual(ep["selfhosted_voice_id"],cv.CARTOON_B_VOICE_ID)
         self.assertTrue(ep["auto_preview"])
         self.assertFalse(ep["auto_publish"])
         self.assertNotIn("deep_audio", ep)
