@@ -58,7 +58,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "comic_bass_cartoon",
@@ -92,7 +94,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку! Механик проверяет тормоза! Готов к поездке!",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "medium_warm",
@@ -127,7 +131,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "grandpa_biker",
@@ -161,7 +167,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке!",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "son_teen",
@@ -195,7 +203,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку.  Механик проверяет тормоза.  Готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "father",
@@ -229,7 +239,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "mother",
@@ -263,7 +275,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": true,
+      "owner_rejected_for_character_cast": false
     },
     {
       "id": "grandma",
@@ -297,7 +311,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": true,
+      "owner_rejected_for_character_cast": false
     },
     {
       "id": "mechanic",
@@ -331,7 +347,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "sport_energy",
@@ -365,7 +383,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "soft_female",
@@ -399,7 +419,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "comic_villain",
@@ -433,7 +455,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке!",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "young_female",
@@ -467,7 +491,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке?",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "dry_humor",
@@ -501,7 +527,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "news_story",
@@ -535,7 +563,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке!",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     },
     {
       "id": "warm_biker_woman",
@@ -569,7 +599,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": true,
+      "owner_rejected_for_character_cast": false
     },
     {
       "id": "cartoon_spring_nasal_original_v1",
@@ -609,7 +641,9 @@
         "russian_short_canary_precision": 1,
         "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
-      }
+      },
+      "owner_selected_for_character_cast": false,
+      "owner_rejected_for_character_cast": true
     }
   ],
   "available_premade_audition_voices": [
@@ -878,6 +912,37 @@
     "2026-11-02: requested playful cartoon voice inspiration: propose a separate ORIGINAL persona pitched -2 semitones with formant preservation. Simple pitch-changing a recognizable SpongeBob recording is not an independent proprietary voice; do not copy copyrighted clips or deploy without authorized voice source, spoken Russian test, and owner listening approval.",
     "2026-11-02: 17 real WAV+MP3 audition recordings generated and inspected for signal quality on owner VPS. Role samples are 17 variations of nine Qwen3 CustomVoice stock speakers, NOT 17 independent fine-tuned voice models. Authenticated /api/portal/cast playback is available after portal deployment. All remain production_enabled=false until real Russian ASR and owner listening approval. No switching the approved Create Audio Voice DEEP or weakening YouTube Factory release gates.",
     "2026-11-02 independent real faster-whisper small CPU int8 check of 17 recorded mono 24kHz WAVs: 15 exact 100% lexical canaries pass; 2 fail (<97%): grandma 90%, young_female 60%. No speaker production approval or GUSTAVA DEEP substitution authorized.",
-    "2026-11-02: independently repaired two failed Qwen stock utterances by new actual model synth seed 5212 (no ASR bypass). Grandma and young_female now measured 100% matching canonical short Russian phrase. 17/17 passed on ONE canary only. Still all voices production_enabled=false, user timbre approval pending and original Create Audio Voice DEEP remains untouched."
-  ]
+    "2026-11-02: independently repaired two failed Qwen stock utterances by new actual model synth seed 5212 (no ASR bypass). Grandma and young_female now measured 100% matching canonical short Russian phrase. 17/17 passed on ONE canary only. Still all voices production_enabled=false, user timbre approval pending and original Create Audio Voice DEEP remains untouched.",
+    "2026-11-02: user rejected all legacy audition voices except THREE exact preferred mother, warm_biker_woman, grandma uploaded audio. Exact source SHA verified on owner VPS. This is not approval to replace existing main narrator DEEP or to publish words with pronunciation defects. Original separate cartoon VoiceDesign is under new development; older Ryan pitch -2 voice rejected."
+  ],
+  "owner_selection": {
+    "selected_on_utc": "2026-11-02",
+    "source": "user explicitly selected three attached audios",
+    "accepted_role_ids": [
+      "warm_biker_woman",
+      "mother",
+      "grandma"
+    ],
+    "rejected_legacy_role_ids": [
+      "child_cartoon",
+      "comic_bass_cartoon",
+      "medium_warm",
+      "grandpa_biker",
+      "son_teen",
+      "father",
+      "mechanic",
+      "sport_energy",
+      "soft_female",
+      "comic_villain",
+      "young_female",
+      "dry_humor",
+      "news_story",
+      "cartoon_spring_nasal_original_v1"
+    ],
+    "other_old_auditions_hidden_from_owner_default_ui": true,
+    "selection_does_not_grant_publication": true,
+    "primary_narrator_deep_profile_protected": true,
+    "selected_uploaded_clips_exactly_verified_against_private_vps": true,
+    "note_ru": "Три понравившихся роли: Байкерша, Мама, Бабушка. Исходная бабушка имеет ошибку произношения «Бакер»; сохранена как тембровый референс, для будущего синтеза только исправленная озвучка после полной проверки."
+  }
 }
