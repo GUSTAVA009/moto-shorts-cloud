@@ -9,6 +9,8 @@ on:
       - 'cloud-shorts/rolling_batch_worker.py'
       - 'cloud-shorts/test_rolling_batches.py'
       - 'cloud-shorts/moto_autocreate.py'
+      - 'cloud-shorts/source_story.py'
+      - 'cloud-shorts/test_source_story_unique_titles_20261102.py'
       - 'cloud-shorts/cc0_source_pool.py'
       - 'cloud-shorts/test_cc0_source_pool.py'
       - 'cloud-shorts/moto_assets.py'
