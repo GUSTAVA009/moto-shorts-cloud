@@ -25,6 +25,11 @@ class EditorialGuardTests(unittest.TestCase):
         ep = data["episodes"][-1]
         ep["footage"][0]["source_page"] = "https://www.pexels.com/video/person-riding-a-motocross-5803637/"
         ep["footage"][0]["url"] = "https://www.pexels.com/download/video/5803637/"
+        # The live catalog can now end with Mixkit Free footage: when testing
+        # a known old Pexels ID, use the corresponding Pexels license instead
+        # of accidentally failing earlier on cross-provider metadata.
+        ep["footage"][0]["license"] = "Pexels License"
+        ep["footage"][0].pop("license_source_url", None)
         with self.assertRaisesRegex(ValueError, "STOCK_REUSE_FORBIDDEN"):
             g.validate_catalog(data)
 
@@ -33,6 +38,11 @@ class EditorialGuardTests(unittest.TestCase):
         old = data["episodes"][0]["footage"][0]
         data["episodes"][-1]["footage"][0]["source_page"] = old["source_page"]
         data["episodes"][-1]["footage"][0]["url"] = old["url"]
+        data["episodes"][-1]["footage"][0]["license"] = old["license"]
+        if "license_source_url" in old:
+            data["episodes"][-1]["footage"][0]["license_source_url"] = old["license_source_url"]
+        else:
+            data["episodes"][-1]["footage"][0].pop("license_source_url", None)
         with self.assertRaisesRegex(ValueError, "STOCK_REUSE_FORBIDDEN"):
             g.validate_catalog(data)
 
