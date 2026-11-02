@@ -987,6 +987,16 @@
       "episode": "moto-city-beee4f27fe15",
       "source": "https://www.pexels.com/video/man-and-woman-doing-motorcycle-wheelie-9607291/",
       "status": "reserved-or-rendered"
+    },
+    "9143349": {
+      "episode": "moto-training-8b876c464b6c",
+      "source": "https://www.pexels.com/video/people-riding-dirt-bike-9143349/",
+      "status": "reserved-or-rendered"
+    },
+    "30283096": {
+      "episode": "moto-training-8b876c464b6c",
+      "source": "https://www.pexels.com/video/motorcycle-engine-assembly-process-30283096/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1507,6 +1517,13 @@
       "people": "city-riders-beee4",
       "story": "urban-riding-beee4",
       "visual": "three-clips-beee4"
+    },
+    "moto-training-8b876c464b6c": {
+      "environment": "practice-circuit-8b876",
+      "bike": "training-motorcycle",
+      "people": "track-learners-8b876",
+      "story": "closed-course-practice-8b876",
+      "visual": "three-clips-8b876"
     }
   }
 }
