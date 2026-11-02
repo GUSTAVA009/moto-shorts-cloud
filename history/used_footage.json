@@ -937,6 +937,16 @@
       "episode": "moto-city-21a5b6e0d121",
       "source": "https://www.pexels.com/video/woman-doing-stunts-on-a-motorcycle-9607279/",
       "status": "reserved-or-rendered"
+    },
+    "mixkit-43102": {
+      "episode": "moto-helmet-4b02a97554a0",
+      "source": "https://mixkit.co/free-stock-video/biker-walking-towards-his-motorcycle-43102/",
+      "status": "reserved-or-rendered"
+    },
+    "15540590": {
+      "episode": "moto-helmet-4b02a97554a0",
+      "source": "https://www.pexels.com/video/two-people-riding-a-motorbike-on-a-dirt-road-in-a-mountain-area-15540590/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1422,6 +1432,13 @@
       "people": "city-riders-21a5b",
       "story": "urban-riding-21a5b",
       "visual": "three-clips-21a5b"
+    },
+    "moto-helmet-4b02a97554a0": {
+      "environment": "riding-gear-workshop-4b02a",
+      "bike": "motorbike-safety-gear",
+      "people": "gear-specialists-4b02a",
+      "story": "helmet-gear-choice-4b02a",
+      "visual": "three-clips-4b02a"
     }
   }
 }
