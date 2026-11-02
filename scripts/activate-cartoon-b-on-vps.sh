@@ -20,6 +20,8 @@ REF_SHA=76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef
 RUN_TAG=20261102
 BASE="https://raw.githubusercontent.com/GUSTAVA009/moto-shorts-cloud/$SOURCE_COMMIT"
 STAGE=$(mktemp -d /tmp/hapych-cartoon-b.XXXXXXXX)
+CURRENT_CODE="$STAGE/current-tts-code.py"
+CURRENT_POLICY="$STAGE/current-sentinelx-config.yaml"
 OLD_CODE="$ROOT/owner_clone_service.py.before-cartoon-b-$RUN_TAG"
 OLD_POLICY="$POLICY.before-cartoon-b-$RUN_TAG"
 INSTALLED=0
@@ -30,12 +32,12 @@ rollback() {
   trap - EXIT
   if [ "$COMPLETED" != "1" ]; then
     echo "DEPLOY_NOT_VERIFIED: restoring previous TTS code and policy" >&2
-    if [ -f "$OLD_CODE" ] && [ "$INSTALLED" = "1" ]; then
-      cp -p "$OLD_CODE" "$TARGET" || true
+    if [ -f "$CURRENT_CODE" ] && [ "$INSTALLED" = "1" ]; then
+      cp -p "$CURRENT_CODE" "$TARGET" || true
       systemctl restart hapych-factory-tts || true
     fi
-    if [ -f "$OLD_POLICY" ]; then
-      cp -p "$OLD_POLICY" "$POLICY" || true
+    if [ -f "$CURRENT_POLICY" ]; then
+      cp -p "$CURRENT_POLICY" "$POLICY" || true
       systemctl restart sentinelx-cloud-core || true
     fi
   fi
@@ -72,6 +74,8 @@ assert selected[0].get("asr_short_canary_passed") is True, "OWNER_B_SOURCE_QA_MI
 print("CARTOON_B_SHA_AND_PROVENANCE_VERIFIED")
 PY
 
+cp -p "$TARGET" "$CURRENT_CODE"
+cp -p "$POLICY" "$CURRENT_POLICY"
 if [ ! -e "$OLD_CODE" ]; then
   cp -p "$TARGET" "$OLD_CODE"
 fi
