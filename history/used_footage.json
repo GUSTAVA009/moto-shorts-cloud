@@ -892,6 +892,16 @@
       "episode": "moto-city-2ed049c15ee1",
       "source": "https://www.pexels.com/video/person-riding-a-motorcycle-on-the-snow-6435404/",
       "status": "reserved-or-rendered"
+    },
+    "13470940": {
+      "episode": "moto-roadtrip-37613b8066e7",
+      "source": "https://www.pexels.com/video/riding-motorcycle-on-mountain-road-13470940/",
+      "status": "reserved-or-rendered"
+    },
+    "4475335": {
+      "episode": "moto-roadtrip-37613b8066e7",
+      "source": "https://www.pexels.com/video/man-riding-motorcycle-4475335/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1349,6 +1359,13 @@
       "people": "city-riders-2ed04",
       "story": "urban-riding-2ed04",
       "visual": "three-clips-2ed04"
+    },
+    "moto-roadtrip-37613b8066e7": {
+      "environment": "countryside-road-37613",
+      "bike": "touring-motorcycle",
+      "people": "touring-travelers-37613",
+      "story": "scenic-country-road-37613",
+      "visual": "three-clips-37613"
     }
   }
 }
