@@ -31,7 +31,7 @@ jobs:
           import ast,re
           from pathlib import Path
           src=Path("scripts/activate-cartoon-b-on-vps.sh").read_text("utf8")
-          scripts=re.findall(r"<<'PY'\\n(.*?)\\nPY",src,re.S)
+          scripts=re.findall(r"<<'PY'\n(.*?)\nPY",src,re.S)
           if len(scripts)!=3:
               raise SystemExit("Expected exactly three verified Python heredocs")
           for script in scripts:
