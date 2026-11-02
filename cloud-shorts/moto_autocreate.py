@@ -362,6 +362,11 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
            if prose.get("_creative_treatment") else {}),
         "footage": sources, "shots": cuts,
         "visual_director_version": 3,
+        # Every new two-source original must show the second action's caption
+        # only after the actual FFmpeg scene cut, NOT the obsolete 3.9s timer.
+        # Longer/multi-shot legacy stories keep their separate beat scheduler.
+        **({"align_middle_caption_to_second_scene": True}
+           if len(sources) == 2 and not prose.get("story_steps") else {}),
         "editorial": {
             "environment": theme[2] + "-" + short_hash[:5],
             "bike": theme[3],

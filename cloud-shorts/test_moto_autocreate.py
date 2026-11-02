@@ -282,6 +282,7 @@ class NewMotoSourceTests(unittest.TestCase):
         self.assertEqual(ep["voice_engine"],"gustava_selfhosted_qwen3")
         self.assertTrue(ep["auto_preview"])
         self.assertFalse(ep["auto_publish"])
+        self.assertTrue(ep["align_middle_caption_to_second_scene"])
         self.assertEqual(ep["music_style"],"race-breakbeat")
         self.assertEqual({media["source_page"] for media in ep["footage"]},
                          {tour["source_page"],race["source_page"]})

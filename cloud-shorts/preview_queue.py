@@ -267,6 +267,54 @@ def eligible_retry(episode, receipt, new_fingerprint):
             == "raw_and_final_asr_fused_video_mechanic"
             and not private_fused_word_repair):
         return False
+    # Exact real-MP4 proof for this PRIVATE content/timing correction.
+    # The prior passed audio QA but the "oil change" label appeared 2.545s
+    # before the real switch from moving city traffic to motor-oil footage.
+    city_caption_proof = episode.get("visual_revision_evidence") or {}
+    city_caption_repair = (
+        episode.get("id") == "moto-city-3a2aad34e115"
+        and episode.get("visual_revision_reason") == "spoken_scene_caption_mismatch"
+        and episode.get("visual_revision_requested") is True
+        and episode.get("auto_preview") is True
+        and episode.get("auto_publish") is False
+        and episode.get("align_middle_caption_to_second_scene") is True
+        and episode.get("voice_engine") == "gustava_selfhosted_qwen3"
+        and episode.get("voice_profile") == "gustava_original_qwen3_v1"
+        and episode.get("selfhosted_voice_id") == "gustava-original-v1"
+        and attempts == 2
+        and str(receipt.get("run_id")) == "41374584510"
+        and receipt.get("preview_fingerprint")
+            == "730b9c9054aacca1f6d789d7704e9d655292e49cdef68a2d8a36ad20fc374faa"
+        and receipt.get("voice_qa_passed") is True
+        and receipt.get("mixed_audio_qa_passed") is True
+        and receipt.get("voice_profile") == episode.get("voice_profile")
+        and receipt.get("selfhosted_reference_sha256")
+            == "ed27b23b9f86345c45263ab28957e96fd2d399379b3ea90ed9fbc75be183a3cc"
+        and isinstance(city_caption_proof, dict)
+        and city_caption_proof.get("prior_run_id") == "41374584510"
+        and city_caption_proof.get("prior_mp4_sha256")
+            == "d4773cab50f7eb67c8ab598b712fa70cac2b03bcf58ff677c3cdfac86a9362a7"
+        and city_caption_proof.get("prior_preview_fingerprint")
+            == receipt.get("preview_fingerprint")
+        and city_caption_proof.get("old_caption_start_seconds") == 3.9
+        and city_caption_proof.get("old_second_scene_start_seconds") == 6.445
+        and city_caption_proof.get("old_second_scene_start_source_duration_seconds") == 6.545
+        and city_caption_proof.get("opening_trim_seconds") == .1
+        and city_caption_proof.get("old_caption_early_by_seconds") == 2.545
+        and city_caption_proof.get("source_ids") == ["35963831","mixkit-41937"]
+        and city_caption_proof.get("previous_voice_qa_passed") is True
+        and city_caption_proof.get("previous_final_mix_qa_passed") is True
+        and city_caption_proof.get("source_licenses_unchanged") is True
+        and city_caption_proof.get("never_publish_on_visual_retry") is True
+        and city_caption_proof.get("max_total_attempts") == 3
+        and len(episode.get("footage") or []) == 2
+        and [source_id(x) for x in episode["footage"]]
+            == ["35963831","mixkit-41937"]
+    )
+    if (episode.get("id") == "moto-city-3a2aad34e115"
+            and episode.get("visual_revision_reason") == "spoken_scene_caption_mismatch"
+            and not city_caption_repair):
+        return False
     visual_repair = (episode.get("visual_revision_requested") is True
                      and (scene_source_repair
                      or episode.get("visual_revision_reason") in (
