@@ -190,6 +190,47 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
         missing["chapters"].pop()
         self.assertFalse(review.verified_model_response(missing,chapters))
 
+    def test_auto_review_progresses_after_rejection_without_manual_video_release(self):
+        episode=self.make_episode()
+        receipt=self.make_receipt()
+        slug=episode["id"]
+        run_id=receipt["run_id"]
+        ledger_paths=["render-receipts/"+slug+".json",
+                      review.REVIEW_REJECTION_PATH+"/prior-rejected-999.json"]
+        calls=[]
+        def fake_api(path,method="GET",data=None):
+            calls.append((method,path,data))
+            if path=="git/trees/render-ledger?recursive=1":
+                return {"truncated":False,
+                        "tree":[{"type":"blob","path":p} for p in ledger_paths]}
+            if path=="contents/cloud-shorts/episodes.json?ref=main":
+                return {"sha":"sha","content":base64.b64encode(
+                    json.dumps({"episodes":[episode]}).encode()).decode()}
+            if path.startswith("contents/render-receipts/"):
+                return {"sha":"sha","content":base64.b64encode(
+                    json.dumps(receipt).encode()).decode()}
+            if path.startswith("actions/runs/"):
+                return {"total_count":1,"artifacts":[{"expired":False,
+                    "name":"daily-preview-"+slug+"-"+run_id,
+                    "size_in_bytes":7000000}]}
+            if path=="actions/workflows/autonomous-editorial-review.yml/dispatches":
+                self.assertEqual(method,"POST")
+                self.assertEqual(data,{"ref":"main"})
+                return {}
+            raise AssertionError(path)
+        self.assertTrue(review.dispatch_next_unreviewed_original(
+            "prior-rejected",get=fake_api))
+        self.assertEqual(len([v for v in calls if v[0]=="POST"]),1)
+        calls.clear()
+        self.assertFalse(review.dispatch_next_unreviewed_original(
+            slug,get=fake_api))
+        self.assertFalse(any(v[0]=="POST" for v in calls))
+        ledger_paths.append(review.REVIEW_REJECTION_PATH+"/"+slug+"-"+run_id+".json")
+        calls.clear()
+        self.assertFalse(review.dispatch_next_unreviewed_original(
+            "prior-rejected",get=fake_api))
+        self.assertFalse(any(v[0]=="POST" for v in calls))
+
     def test_private_selection_requires_real_unexpired_artifact_and_no_post_receipt(self):
         ep=self.make_episode()
         receipt=self.make_receipt()
