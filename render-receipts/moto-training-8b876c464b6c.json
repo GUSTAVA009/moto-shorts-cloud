@@ -1,0 +1,11 @@
+{
+  "id": "moto-training-8b876c464b6c",
+  "state": "reserved",
+  "run_id": "41422504259",
+  "attempt_count": 1,
+  "preview_fingerprint": "d5192b33112521a3bf5a186764d737721b7a4914d765bd205f1c70b6da1ae674",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-cartoon-b-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
