@@ -221,6 +221,15 @@ def curated_pexels_results(theme, used_ids=()):
             continue
         validated_media(entry)
         unused.append(entry)
+    # The 2026-11-02 live render 41409763515 failed because a nominal
+    # 11.5s shot was cut from a shorter-than-requested source. Prefer
+    # official Pexels clips with independently documented durations >=12.25s
+    # before unknown-length sources, without pretending that unprobed footage
+    # has enough frames. A real render still ffprobes every segment.
+    unused.sort(key=lambda clip: (
+        not 12.25 <= float(clip.get("duration") or 0) <= 180,
+        -float(clip.get("duration") or 0),
+    ))
     return unused
 
 
