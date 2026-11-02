@@ -1042,6 +1042,16 @@
       "episode": "moto-roadtrip-a64f3c848121",
       "source": "https://www.pexels.com/video/man-riding-motorcycle-along-street-9927896/",
       "status": "reserved-or-rendered"
+    },
+    "5052768": {
+      "episode": "moto-racing-025a888103d8",
+      "source": "https://www.pexels.com/video/riding-a-motorcycle-in-the-countryside-5052768/",
+      "status": "reserved-or-rendered"
+    },
+    "30031070": {
+      "episode": "moto-racing-025a888103d8",
+      "source": "https://www.pexels.com/video/busy-street-traffic-from-motorcycle-perspective-30031070/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1597,6 +1607,13 @@
       "people": "touring-travelers-a64f3",
       "story": "scenic-country-road-a64f3",
       "visual": "three-clips-a64f3"
+    },
+    "moto-racing-025a888103d8": {
+      "environment": "race-paddock-025a8",
+      "bike": "track-racing-bike",
+      "people": "racing-crews-025a8",
+      "story": "circuit-racing-025a8",
+      "visual": "three-clips-025a8"
     }
   }
 }
