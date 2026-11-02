@@ -1022,6 +1022,16 @@
       "episode": "moto-motocross-5e6283c226ca",
       "source": "https://www.pexels.com/video/people-riding-motocross-9155464/",
       "status": "reserved-or-rendered"
+    },
+    "35841419": {
+      "episode": "moto-city-397665705424",
+      "source": "https://www.pexels.com/video/busy-city-street-with-motorcycles-and-cars-35841419/",
+      "status": "reserved-or-rendered"
+    },
+    "5206968": {
+      "episode": "moto-city-397665705424",
+      "source": "https://www.pexels.com/video/a-man-riding-a-motorcycle-5206968/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1563,6 +1573,13 @@
       "people": "track-racers-5e628",
       "story": "rider-at-prepared-track-5e628",
       "visual": "three-clips-5e628"
+    },
+    "moto-city-397665705424": {
+      "environment": "urban-streets-39766",
+      "bike": "urban-motorbike",
+      "people": "city-riders-39766",
+      "story": "urban-riding-39766",
+      "visual": "three-clips-39766"
     }
   }
 }
