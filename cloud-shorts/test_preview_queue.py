@@ -11,6 +11,17 @@ class TestPreviewQueue(unittest.TestCase):
         episode = next(ep for ep in json.loads(
             (Path(__file__).parent / "episodes.json").read_text("utf8"))["episodes"]
             if ep["id"] == "moto-training-8b876c464b6c")
+        # The 403 recovery is historical: the production catalog has since
+        # replaced frozen clip #30283096 with an independently moving source.
+        # Reconstruct the exact previous licensed source identity for this
+        # one-time regression guard instead of making the live catalog freeze.
+        episode = dict(episode, footage=[
+            episode["footage"][0],
+            dict(episode["footage"][1],
+                 source_page="https://www.pexels.com/video/motorcycle-engine-assembly-process-30283096/",
+                 url="https://www.pexels.com/download/video/30283096/",
+                 author="Emrul Kausar Emon", license="Pexels License"),
+        ])
         proof = pq.OWNER_CARTOON_B_403_RESUME
         old = {
             "id": episode["id"], "state": "reserved",
