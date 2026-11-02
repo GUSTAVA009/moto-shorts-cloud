@@ -9251,12 +9251,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         }
       ],
@@ -9286,7 +9286,7 @@
     {
       "id": "moto-motocross-cb6f76f37cf7",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -9335,12 +9335,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 8.63
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 8.58
         }
       ],
@@ -9365,7 +9365,57 @@
       },
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1",
-      "story_reserve_id": "r2-motocross-0031"
+      "story_reserve_id": "r2-motocross-0031",
+      "visual_revision_status": "assistant_checked_passed",
+      "caption_fit_required": true,
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "riding",
+          "spoken_anchor": "байкер едет на мотоцикле"
+        },
+        {
+          "source": "clip_1",
+          "action": "real_motocross_jump",
+          "spoken_anchor": "райдер прыгает с трамплина"
+        }
+      ],
+      "assistant_checked_visual_evidence": {
+        "review_run_id": "41438910472",
+        "mp4_sha256": "61b1cbff129d646b0ecae523a24095f3784ac63ab147d9055d9197c6b3418ca0",
+        "original_source_ids": [
+          "9132992",
+          "15298841"
+        ],
+        "source_authors": [
+          "Tom Fisk",
+          "Michael Novogradac"
+        ],
+        "visual_qa_version": 3,
+        "visual_qa_passed": true,
+        "raw_asr_coverage": 1,
+        "mixed_asr_coverage": 1,
+        "audio_expected_words": 23,
+        "audio_recognized_words": 23,
+        "video_duration_seconds": 12.1,
+        "visually_inspected_seconds": [
+          0.4,
+          1.6,
+          2.8,
+          4,
+          5.5,
+          6.5,
+          7.5,
+          8.7,
+          10,
+          11.6
+        ],
+        "second_scene_starts_seconds": 6.105,
+        "actual_observation": "First shot shows several dirt bikes visibly riding on a motocross course and over dirt mounds, second independent shot shows a rider taking a real airborne motocross jump at 8.7s. Two distinct creators, no reused video sections, captions match scene boundaries and narrated claims; both raw+mixed Russian ASR 23/23. Never treated as one event.",
+        "voice_id": "gustava-cartoon-b-v1",
+        "voice_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
+        "publication_restriction": "One new reviewed MP4 through existing full Buffer release and deduplication gates only"
+      }
     },
     {
       "id": "moto-rain-c43a0b888ffe",
@@ -9418,12 +9468,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         }
       ],
@@ -9501,12 +9551,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         }
       ],
@@ -9582,12 +9632,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 10.96
         }
       ],
@@ -9663,12 +9713,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         }
       ],
@@ -9746,12 +9796,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 8.71
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         }
       ],
