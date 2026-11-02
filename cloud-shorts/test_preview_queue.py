@@ -19,26 +19,26 @@ class TestPreviewQueue(unittest.TestCase):
             "selfhosted_voice_id": "gustava-cartoon-b-v1",
         }
         check = pq.eligible_verified_cartoon_b_403_resume
-        self.assertTrue(check(episode, old, "new-code-fingerprint", "failure", True))
-        self.assertFalse(check(episode, old, "new-code-fingerprint", "failure", False))
-        self.assertFalse(check(episode, old, "new-code-fingerprint", "success", True))
-        self.assertFalse(check(episode, old, proof["old_fingerprint"], "failure", True))
+        self.assertTrue(check(episode, old, proof["old_fingerprint"], "failure", True))
+        self.assertFalse(check(episode, old, proof["old_fingerprint"], "failure", False))
+        self.assertFalse(check(episode, old, proof["old_fingerprint"], "success", True))
+        self.assertFalse(check(episode, old, "changed-render-fingerprint", "failure", True))
         self.assertFalse(check(episode, dict(old, attempt_count=2),
-                               "new-code-fingerprint", "failure", True))
+                               proof["old_fingerprint"], "failure", True))
         self.assertFalse(check(episode, dict(old, run_id="not-the-failed-run"),
-                               "new-code-fingerprint", "failure", True))
+                               proof["old_fingerprint"], "failure", True))
         self.assertFalse(check(episode, dict(old, state="preview_ready"),
-                               "new-code-fingerprint", "failure", True))
+                               proof["old_fingerprint"], "failure", True))
         self.assertFalse(check(dict(episode,auto_publish=True), old,
-                               "new-code-fingerprint", "failure", True))
+                               proof["old_fingerprint"], "failure", True))
         self.assertFalse(check(dict(episode,selfhosted_voice_id="gustava-original-v1"),
-                               old,"new-code-fingerprint","failure",True))
+                               old,proof["old_fingerprint"],"failure",True))
         self.assertFalse(check(dict(episode,visual_review_failed=True),
-                               old,"new-code-fingerprint","failure",True))
+                               old,proof["old_fingerprint"],"failure",True))
         replaced = dict(episode, footage=[
             dict(episode["footage"][0],source_page="https://www.pexels.com/video/different-racing-99900121/"),
             episode["footage"][1]])
-        self.assertFalse(check(replaced,old,"new-code-fingerprint","failure",True))
+        self.assertFalse(check(replaced,old,proof["old_fingerprint"],"failure",True))
 
     def test_only_explicitly_approved_unused_episodes(self):
         episodes = [
