@@ -104,7 +104,7 @@ def publication_allowed(episode, meta, qa, video):
         safe_description = description
     if any(s in safe_description.lower() for s in ("https://", "www.")):
         raise ValueError("Unauthorized external links in description")
-    if not episode.get("footage") or any(s.get("license") not in ("Pexels License", "CC0 1.0")
+    if not episode.get("footage") or any(s.get("license") not in ("Pexels License", "CC0 1.0", "Mixkit Stock Video Free License")
                                       for s in episode["footage"]):
         raise ValueError("Unverified commercial footage rights")
     series = episode.get("episode_series")

@@ -224,6 +224,20 @@ def curated_pexels_results(theme, used_ids=()):
     return unused
 
 
+def curated_mixkit_results(theme, used_ids=()):
+    """Finite manually vetted Free-license stock. NEVER spider/mass-download."""
+    pool = json.loads((ROOT / "verified_mixkit_pool.json").read_text(encoding="utf8"))
+    if pool.get("version") != 1 or pool.get("mode") != "fixed_individual_free_assets":
+        raise ValueError("Unsafe Mixkit catalog mode: no automatic discovery")
+    found = []
+    for source in pool.get("sources", []):
+        if theme[0] not in source.get("topics", ()) or source_id(source) in used_ids:
+            continue
+        validated_media(source)  # live license is rechecked at actual render
+        found.append(source)
+    return found
+
+
 def original_story(theme, sources, previous_titles, client=None, fetch=http_json):
     provider = client if client is not None else story_model_client()
     if not provider:
@@ -415,6 +429,7 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
         # Public, author-and-license checked Pexels pages survive absent API keys.
         if not select_pair(found, used):
             found.extend(curated_pexels_results(theme, used))
+            found.extend(curated_mixkit_results(theme, used))
         # A touring-versus-race contrast needs both real settings. Combine
         # local vetted footage pools at zero additional API cost, still
         # excluding all previously consumed source IDs and reused filmmakers.
@@ -422,6 +437,7 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
             partner = next(t for t in THEMES if t[0] ==
                            ("racing" if theme[0] == "roadtrip" else "roadtrip"))
             found.extend(curated_pexels_results(partner, used))
+            found.extend(curated_mixkit_results(partner, used))
         if (not select_pair(found, used) and commons_calls == 0
                 and theme[0] == commons_target):
             commons_calls += 1
@@ -466,7 +482,8 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
         for candidate_theme in themes:
             if candidate_theme[3] == last_bike:
                 continue
-            for clip in curated_pexels_results(candidate_theme, used):
+            for clip in (curated_pexels_results(candidate_theme, used)
+                         + curated_mixkit_results(candidate_theme, used)):
                 if all(source_id(existing) != source_id(clip)
                        for _, existing in cross_topic_stock):
                     cross_topic_stock.append((candidate_theme, clip))

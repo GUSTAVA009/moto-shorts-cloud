@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "mode": "fixed_individual_free_assets",
+  "license_policy": "individually-verified Free only; no automated Mixkit search or mass download",
+  "legal_limit": "Mixkit.com Terms Section 9(10) prohibit scripts/bots to mass-download or scrape its library. This is a three-item manually chosen whitelist. No recurrent crawler.",
+  "sources": [
+    {
+      "key": "mixkit_41936",
+      "topics": [
+        "repair",
+        "vintage"
+      ],
+      "source_page": "https://mixkit.co/free-stock-video/mechanic-changing-the-oil-of-a-motorcycle-41936/",
+      "url": "https://assets.mixkit.co/videos/41936/41936-720.mp4",
+      "author": "Mixkit",
+      "license": "Mixkit Stock Video Free License",
+      "license_source_url": "https://mixkit.co/license/modal/videoFree/",
+      "duration": 18.018,
+      "source_title": "mechanic changing the oil of a motorcycle",
+      "curation_note": "Official individual asset page checked Free License and MP4 HEAD 200 on 2026-11-02; NOT a website mass-download"
+    },
+    {
+      "key": "mixkit_41937",
+      "topics": [
+        "repair",
+        "vintage"
+      ],
+      "source_page": "https://mixkit.co/free-stock-video/mechanic-pouring-oil-into-an-engine-41937/",
+      "url": "https://assets.mixkit.co/videos/41937/41937-720.mp4",
+      "author": "Mixkit",
+      "license": "Mixkit Stock Video Free License",
+      "license_source_url": "https://mixkit.co/license/modal/videoFree/",
+      "duration": 8.133,
+      "source_title": "mechanic pouring oil into an engine",
+      "curation_note": "Official individual asset page checked Free License and MP4 HEAD 200 on 2026-11-02; NOT a website mass-download"
+    },
+    {
+      "key": "mixkit_43102",
+      "topics": [
+        "helmet",
+        "motocross"
+      ],
+      "source_page": "https://mixkit.co/free-stock-video/biker-walking-towards-his-motorcycle-43102/",
+      "url": "https://assets.mixkit.co/videos/43102/43102-720.mp4",
+      "author": "Mixkit",
+      "license": "Mixkit Stock Video Free License",
+      "license_source_url": "https://mixkit.co/license/modal/videoFree/",
+      "duration": 14.223,
+      "source_title": "biker walking towards his motorcycle",
+      "curation_note": "Official individual asset page checked Free License and MP4 HEAD 200 on 2026-11-02; NOT a website mass-download"
+    }
+  ]
+}

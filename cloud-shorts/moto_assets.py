@@ -14,6 +14,9 @@ import urllib.request
 
 UA = "GUSTAVA-Enduro-Media-Audit/1.0 (royalty-free video validation)"
 PEXELS_ID = re.compile(r"-(\d{5,10})/?$")
+MIXKIT_PAGE = re.compile(r"^/free-stock-video/[a-z0-9-]+-(\d{4,7})/$")
+MIXKIT_LICENSE = "Mixkit Stock Video Free License"
+MIXKIT_LICENSE_PAGE = "https://mixkit.co/license/modal/videoFree/"
 COMMONS_SHA1 = re.compile(r"[0-9a-f]{40}$")
 MAX_BYTES = 230_000_000
 
@@ -40,6 +43,11 @@ def source_id(item):
         if not match:
             raise ValueError("Missing real Pexels video ID")
         return match.group(1)
+    if page.hostname == "mixkit.co":
+        match = MIXKIT_PAGE.fullmatch(page.path)
+        if page.scheme != "https" or page.query or page.fragment or not match:
+            raise ValueError("Mixkit provenance requires exact official Free clip page")
+        return "mixkit-" + match.group(1)
     if page.hostname == "commons.wikimedia.org":
         commons_file_title(item)
         sha = str(item.get("commons_sha1", "")).lower()
@@ -68,6 +76,16 @@ def validated_media(item):
         if not 300_000 <= int(item.get("file_size", 0)) <= MAX_BYTES:
             raise ValueError("Commons video file size is unknown or excessive")
         return sid
+    if sid.startswith("mixkit-"):
+        clip = sid.removeprefix("mixkit-")
+        if (item.get("license") != MIXKIT_LICENSE
+                or item.get("license_source_url") != MIXKIT_LICENSE_PAGE
+                or url.hostname != "assets.mixkit.co"
+                or url.path != "/videos/" + clip + "/" + clip + "-720.mp4"
+                or url.query or url.fragment
+                or not 5 <= float(item.get("duration", 0)) <= 180):
+            raise ValueError("Mixkit Free clip must be individually verified; never scrape a library")
+        return sid
     if item.get("license") != "Pexels License":
         raise ValueError("Pexels license not documented")
     if url.hostname == "www.pexels.com":
@@ -78,6 +96,32 @@ def validated_media(item):
             raise ValueError("Pexels CDN path mismatch")
     else:
         raise ValueError("Video download host not approved")
+    return sid
+
+
+def verified_mixkit(item, fetch=None):
+    """One preselected asset only; recheck the official Free grant before use.
+
+    This function does NOT search, enumerate, scrape, mass-download or
+    automatically discover Mixkit assets. Mixkit terms prohibit mass bots.
+    """
+    sid=validated_media(item)
+    if not sid.startswith("mixkit-"):
+        raise ValueError("NOT_A_MIXKIT_FREE_CLIP")
+    if fetch is None:
+        req=urllib.request.Request(item["source_page"], headers={"User-Agent":UA})
+        with urllib.request.urlopen(req,timeout=30) as response:
+            if response.geturl()!=item["source_page"]:
+                raise ValueError("MIXKIT_OFFICIAL_PAGE_REDIRECTED")
+            html=response.read(250_000).decode("utf8",errors="replace")
+    else:
+        html=fetch(item["source_page"])
+    clip=sid.removeprefix("mixkit-")
+    if (not isinstance(html,str)
+            or "Mixkit Stock Video Free License" not in html
+            or "videoFree" not in html
+            or "/videos/"+clip+"/"+clip+"-720.mp4" not in html):
+        raise ValueError("MIXKIT_INDIVIDUAL_COMMERCIAL_FREE_LICENSE_NOT_RECONFIRMED")
     return sid
 
 
