@@ -1,3 +1,4 @@
+# Owner-requested immediate Buffer release attempt for any NEW QA-passed, uniquely reviewed MP4 (2026-11-02).
 name: GUSTAVA - Verified Shorts to Buffer Queue
 on:
   workflow_dispatch:
