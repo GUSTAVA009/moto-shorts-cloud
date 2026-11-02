@@ -218,6 +218,55 @@ def eligible_retry(episode, receipt, new_fingerprint):
             == "actual_first_shot_missing_moto_action"
             and not scene_source_repair):
         return False
+    # Single SHA-pinned PRIVATE rewording after listening/independent ASR
+    # documented a real word fusion: «видеомеханик» instead of two words.
+    # Never reuse a public MP4, change sources, swap voice, or claim approval.
+    word_proof = episode.get("voice_revision_evidence") or {}
+    private_fused_word_repair = (
+        episode.get("id") == "moto-city-3a2aad34e115"
+        and episode.get("auto_preview") is True
+        and episode.get("auto_publish") is False
+        and episode.get("voice_engine") == "gustava_selfhosted_qwen3"
+        and episode.get("voice_profile") == "gustava_original_qwen3_v1"
+        and episode.get("selfhosted_voice_id") == "gustava-original-v1"
+        and episode.get("voice_revision_requested") is True
+        and episode.get("voice_revision_reason")
+            == "raw_and_final_asr_fused_video_mechanic"
+        and attempts == 1
+        and str(receipt.get("run_id")) == "41373650226"
+        and receipt.get("preview_fingerprint")
+            == "8ea4ff16627b5ef49c0a154f490d70214c351400986aabfb715c603e4cd43811"
+        and receipt.get("voice_profile") == episode.get("voice_profile")
+        and receipt.get("selfhosted_reference_sha256")
+            == "ed27b23b9f86345c45263ab28957e96fd2d399379b3ea90ed9fbc75be183a3cc"
+        and receipt.get("voice_qa_passed") is False
+        and receipt.get("mixed_audio_qa_passed") is False
+        and isinstance(word_proof, dict)
+        and word_proof.get("prior_run_id") == "41373650226"
+        and word_proof.get("prior_mp4_sha256")
+            == "cf3c18ae89f5d1dd8b37b009ea923dffae542bb40a2ff16dfaef162b50a5691c"
+        and word_proof.get("prior_preview_fingerprint")
+            == receipt.get("preview_fingerprint")
+        and word_proof.get("raw_coverage") == 0.913
+        and word_proof.get("mixed_coverage") == 0.913
+        and word_proof.get("expected_phrase") == "На другом видео механик"
+        and word_proof.get("recognized_phrase") == "На другом видеомеханик"
+        and word_proof.get("immutable_source_ids") == ["35963831", "mixkit-41937"]
+        and word_proof.get("independent_voice_reference_sha256")
+            == receipt.get("selfhosted_reference_sha256")
+        and word_proof.get("editorial_remains_private") is True
+        and word_proof.get("max_total_preview_attempts") == 2
+        and len(episode.get("footage") or []) == 2
+        and [source_id(x) for x in episode["footage"]]
+            == ["35963831", "mixkit-41937"]
+        and episode.get("narration")
+            == "Мотоцикл в двух сценах: байкер едет по городской улице. Вторая сцена: механик меняет масло в мотоцикле. Это независимые съёмки. Что ближе тебе?"
+        and 125 <= len(episode.get("narration", "")) <= 160
+    )
+    if (episode.get("voice_revision_reason")
+            == "raw_and_final_asr_fused_video_mechanic"
+            and not private_fused_word_repair):
+        return False
     visual_repair = (episode.get("visual_revision_requested") is True
                      and (scene_source_repair
                      or episode.get("visual_revision_reason") in (
@@ -269,7 +318,7 @@ def eligible_retry(episode, receipt, new_fingerprint):
     limit = (MAX_DOCUMENTARY_ATTEMPTS if
              episode.get("episode_series", {}).get("historical_reconstruction")
              else MAX_VISUAL_REPAIR_ATTEMPTS
-             if visual_repair or male_voice_repair or verified_mix_editorial_repair else MAX_ATTEMPTS)
+             if visual_repair or male_voice_repair or verified_mix_editorial_repair or private_fused_word_repair else MAX_ATTEMPTS)
     if not 1 <= attempts < limit:
         return False
     # Real-event documentaries may pass language QA but still have factually
