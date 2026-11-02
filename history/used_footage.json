@@ -1102,6 +1102,16 @@
       "episode": "moto-repair-2d88e2e7eb73",
       "source": "https://www.pexels.com/video/man-riding-motorcycle-on-sunny-tree-lined-street-40347388/",
       "status": "reserved-or-rendered"
+    },
+    "40373638": {
+      "episode": "moto-city-515641e586d4",
+      "source": "https://www.pexels.com/video/bustling-street-scene-with-motorcycles-40373638/",
+      "status": "reserved-or-rendered"
+    },
+    "8551236": {
+      "episode": "moto-city-515641e586d4",
+      "source": "https://www.pexels.com/video/people-repairing-a-motorcycle-8551236/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1699,6 +1709,13 @@
       "people": "garage-mechanics-2d88e",
       "story": "mechanic-bike-servicing-2d88e",
       "visual": "three-clips-2d88e"
+    },
+    "moto-city-515641e586d4": {
+      "environment": "urban-streets-51564",
+      "bike": "urban-motorbike",
+      "people": "city-riders-51564",
+      "story": "urban-riding-51564",
+      "visual": "three-clips-51564"
     }
   }
 }
