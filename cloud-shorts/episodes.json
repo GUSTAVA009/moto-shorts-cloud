@@ -7731,12 +7731,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         }
       ],
@@ -7783,17 +7783,17 @@
       "editorial_format": "source_anchored_action_contrast",
       "footage": [
         {
-          "topics": [
-            "racing",
-            "motocross"
-          ],
           "key": "clip_0",
-          "url": "https://www.pexels.com/download/video/12990227/",
-          "source_page": "https://www.pexels.com/video/motocross-race-on-dirt-track-12990227/",
-          "author": "Tom Fisk",
+          "topics": [
+            "motocross",
+            "racing"
+          ],
+          "url": "https://www.pexels.com/download/video/32399067/",
+          "source_page": "https://www.pexels.com/video/motocross-racer-tackling-dirt-track-curves-32399067/",
+          "author": "Harvey Tan Villarino",
           "license": "Pexels License",
-          "duration": 32.53,
-          "source_title": "motocross race on dirt track"
+          "duration": 7.07,
+          "source_title": "motocross racer tackling dirt track curves"
         },
         {
           "topics": [
@@ -7813,12 +7813,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
-          "seconds": 11.5
+          "start": 0,
+          "seconds": 6.82
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.5
         }
       ],
@@ -7841,7 +7841,30 @@
         "description": "Подпишись, если любишь настоящие мотопутешествия."
       },
       "source_selection": "Independent official video APIs, no clip reuse",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_requested": true,
+      "visual_revision_reason": "actual_first_shot_missing_moto_action",
+      "visual_revision_evidence": {
+        "prior_run_id": "41370745453",
+        "prior_mp4_sha256": "1726369965ae387dbb70bbc036c61fcba7fd3dc84de528e3456aac53fb8488e5",
+        "prior_preview_fingerprint": "b371f99d486f19f3b38ab630522ac5677d876f950fc16a106e0d59c9f49a4ba4",
+        "prior_source_id": "12990227",
+        "replacement_source_id": "32399067",
+        "first_shot_seconds": 5.905,
+        "reviewed_prior_frames_seconds": [
+          0.1,
+          0.9,
+          1.8,
+          3,
+          4.5,
+          5.5
+        ],
+        "verified_replacement_frames_seconds": [
+          0.6,
+          4.2
+        ],
+        "reason": "Portrait output initial 5.905 sec contains trees and fence without a visible rider; replacement official Pexels has a clearly visible motocross rider in action in both checked frames"
+      }
     }
   ]
 }
