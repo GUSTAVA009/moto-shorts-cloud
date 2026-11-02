@@ -447,9 +447,26 @@ class NewMotoSourceTests(unittest.TestCase):
         self.assertEqual(scene_for(race)[0],"ride")
         self.assertEqual(scene_for(stunt)[0],"stunt")
         self.assertEqual(select_pair([race,stunt],set()),[race,stunt])
+        # When the factory creates an episode, its newly reserved source is
+        # expected to appear ONCE in the episode catalog. The old assertion
+        # ("not in any episode") made every successful reservation fail CI.
+        # Reject reuse by distinct episodes, duplicate shots in one episode,
+        # and source-provenance changes without weakening the actual release QA.
+        sources_by_page={x["source_page"]:x for x in (race,stunt)}
+        usage={page:[] for page in sources_by_page}
         for ep in self.catalog["episodes"]:
             for src in ep.get("footage",[]):
-                self.assertNotIn(src.get("source_page"),[race["source_page"],stunt["source_page"]])
+                page=src.get("source_page")
+                if page not in usage:
+                    continue
+                original=sources_by_page[page]
+                self.assertEqual(src.get("author"),original["author"])
+                self.assertEqual(src.get("license"),"Pexels License")
+                self.assertEqual(src.get("url"),original["url"])
+                usage[page].append(ep["id"])
+        for page, episode_ids in usage.items():
+            self.assertLessEqual(len(episode_ids),1,
+                                 f"Source reused in multiple shots/episodes: {page}: {episode_ids}")
 
     def test_curated_verified_long_clips_precede_unknown_duration(self):
         theme=next(t for t in s.THEMES if t[0]=="motocross")
