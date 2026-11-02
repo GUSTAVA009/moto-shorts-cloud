@@ -27,7 +27,7 @@ jobs:
   independent-frame-review:
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 42
     steps:
       - uses: actions/checkout@v4
         with:
@@ -42,17 +42,39 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python3 cloud-shorts/autonomous_visual_review.py select --output "$GITHUB_OUTPUT"
-      - name: Check independent visual model availability
+      - name: Install independent keyless image-capable reviewer on isolated runner
         if: steps.pick.outputs.has_job == 'true'
+        timeout-minutes: 26
         env:
-          VISION_OPENAI_PRESENT: ${{ secrets.OPENAI_API_KEY != '' }}
-          VISION_OPENROUTER_PRESENT: ${{ secrets.OPENROUTER_API_KEY != '' }}
+          OLLAMA_HOST: 127.0.0.1:11434
         run: |
-          if [ "$VISION_OPENAI_PRESENT" != true ] && [ "$VISION_OPENROUTER_PRESENT" != true ]; then
-            echo '::error::AUTO_FRAME_REVIEW_PROVIDER_KEY_MISSING: no independent visual reviewer. Keeping original MP4 private; do not call the factory autonomous.'
-            exit 1
-          fi
-          echo 'INDEPENDENT_VISUAL_REVIEW_PROVIDER_AVAILABLE'
+          set -euo pipefail
+          # Never open the service to the Internet or another host.
+          # Official Ollama runtime + Apache-2.0 Qwen3.5 4B Vision/Language.
+          curl --retry 2 -fsSL https://ollama.com/install.sh -o "$RUNNER_TEMP/ollama-install.sh"
+          sh "$RUNNER_TEMP/ollama-install.sh"
+          nohup ollama serve > "$RUNNER_TEMP/ollama-server.log" 2>&1 &
+          for attempt in $(seq 1 45); do
+            if curl -fsS --max-time 2 http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
+              break
+            fi
+            sleep 2
+          done
+          curl -fsS --max-time 5 http://127.0.0.1:11434/api/tags >/dev/null
+          ollama pull qwen3.5:4b
+          python3 - <<'PY'
+          import json, urllib.request
+          req = urllib.request.Request(
+              'http://127.0.0.1:11434/api/show',
+              data=json.dumps({'model':'qwen3.5:4b'}).encode(),
+              headers={'Content-Type':'application/json'},
+              method='POST')
+          with urllib.request.urlopen(req,timeout=20) as response:
+              model=json.load(response)
+          if 'vision' not in model.get('capabilities', []):
+              raise SystemExit('AUTO_FRAME_REVIEW_MODEL_NOT_VISION_CAPABLE')
+          print('KEYLESS_LOCAL_MULTIMODAL_REVIEWER_READY qwen3.5:4b', flush=True)
+          PY
       - name: Download exact QA-verified original MP4 and QA evidence
         if: steps.pick.outputs.has_job == 'true'
         uses: actions/download-artifact@v4
@@ -69,6 +91,9 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          # The local multimodal API is on this very runner, not the user's
+          # desktop and not a remote endpoint that needs a paid vision key.
+          GUSTAVA_LOCAL_VISION_ENABLED: '1'
           EPISODE: ${{ steps.pick.outputs.episode }}
           RENDER_ID: ${{ steps.pick.outputs.render_id }}
         run: |
