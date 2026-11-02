@@ -429,5 +429,40 @@ class NewMotoSourceTests(unittest.TestCase):
         self.assertNotIn("https://",draft["narration"])
 
 
+    def test_new_owner_stock_has_proven_source_lengths_and_two_distinct_actions(self):
+        import json
+        from pathlib import Path
+        from source_story import select_pair, scene_for
+        from moto_assets import validated_media
+        catalog=json.loads((Path(__file__).parent/"verified_pexels_pool.json").read_text("utf8"))
+        found={x["key"]:x for x in catalog["sources"]}
+        race=found["px_9143349"]
+        stunt=found["px_9607291"]
+        self.assertEqual(race["duration"],22)
+        self.assertEqual(stunt["duration"],14)
+        self.assertGreaterEqual(min(race["duration"],stunt["duration"]),12.25)
+        self.assertNotEqual(race["author"],stunt["author"])
+        self.assertEqual(validated_media(race),"9143349")
+        self.assertEqual(validated_media(stunt),"9607291")
+        self.assertEqual(scene_for(race)[0],"ride")
+        self.assertEqual(scene_for(stunt)[0],"stunt")
+        self.assertEqual(select_pair([race,stunt],set()),[race,stunt])
+        for ep in self.catalog["episodes"]:
+            for src in ep.get("footage",[]):
+                self.assertNotIn(src.get("source_page"),[race["source_page"],stunt["source_page"]])
+
+    def test_curated_verified_long_clips_precede_unknown_duration(self):
+        theme=next(t for t in s.THEMES if t[0]=="motocross")
+        records=s.curated_pexels_results(theme)
+        ids=[c["key"] for c in records]
+        self.assertIn("px_9143349",ids)
+        self.assertIn("px_9607291",ids)
+        short=next((i for i,c in enumerate(records)
+                    if float(c.get("duration") or 0)<12.25),len(records))
+        self.assertLess(ids.index("px_9143349"),short)
+        self.assertLess(ids.index("px_9607291"),short)
+
+
+
 if __name__ == "__main__":
     unittest.main()
