@@ -24,6 +24,7 @@ import urllib.request
 from editorial_guard import validate_catalog, source_id
 from editorial_novelty import require_novel_visual_story
 from moto_assets import validated_media, build_commons_candidate
+from original_generated_source import original_results
 from render_episode import validate_episode
 from visual_director import verify_story_subject, source_evidence, OBJECTS
 from voice_routing import new_episode_configuration
@@ -403,7 +404,9 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
         },
         "tags": ["мото", "мотокросс", "shorts"],
         "cta": {"kind": cta_kind, "overlay": overlay, "description": sentence},
-        "source_selection": "Independent official video APIs, no clip reuse",
+        "source_selection": ("Owner-authored original LTX clips, immutable SHA verified"
+                             if all(s.get("license")=="LTX OpenRAIL-M" for s in media)
+                             else "Independent official video APIs, no clip reuse"),
         "generation_provenance": prose.get("_generation_source", "Original authoring by model from broad licensed scene context"),
         **({"story_reserve_id": prose["_reserve_id"]} if prose.get("_reserve_id") else {}),
     }
@@ -458,8 +461,11 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
                 found.extend(source_fetch(theme, page, key))
                 if select_pair(found, used):
                     break
-        # Public, author-and-license checked Pexels pages survive absent API keys.
+        # Priority one: fresh ORIGINAL scenes from the owner's idle-GPU LTX
+        # producer. The manifest is fixed HTTPS, SHA-bound and read-only.
+        # Every candidate still needs real per-frame independent editorial QA.
         if not select_pair(found, used):
+            found.extend(original_results(theme, used))
             found.extend(curated_pexels_results(theme, used))
             found.extend(curated_mixkit_results(theme, used))
         # A touring-versus-race contrast needs both real settings. Combine
@@ -514,7 +520,8 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
         for candidate_theme in themes:
             if candidate_theme[3] == last_bike:
                 continue
-            for clip in (curated_pexels_results(candidate_theme, used)
+            for clip in (original_results(candidate_theme, used)
+                         + curated_pexels_results(candidate_theme, used)
                          + curated_mixkit_results(candidate_theme, used)):
                 if all(source_id(existing) != source_id(clip)
                        for _, existing in cross_topic_stock):
