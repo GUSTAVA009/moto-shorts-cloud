@@ -35,6 +35,9 @@ REVIEW_REJECTION_PATH = "automation/visual-review-rejections"
 MODEL_BY_PROVIDER = {
     "openai": ("https://api.openai.com/v1/chat/completions", "gpt-4.1-mini"),
     "openrouter": ("https://openrouter.ai/api/v1/chat/completions", "openai/gpt-4o-mini"),
+    # An ephemeral GitHub-hosted CPU runner serves this model ONLY on loopback.
+    # No paid key, third-party video upload, Windows exposure or manual signoff.
+    "ollama": ("http://127.0.0.1:11434/api/chat", "qwen3.5:4b"),
 }
 
 
@@ -186,6 +189,11 @@ def select_private(catalog, ledger_paths, get=api):
 
 
 def model_credentials():
+    # This opt-in is set ONLY by the locked-down original-MP4 review workflow.
+    # An external endpoint/model URI is intentionally NOT configurable: it
+    # must not exfiltrate owner frames or turn a text-only LLM into a reviewer.
+    if os.environ.get("GUSTAVA_LOCAL_VISION_ENABLED") == "1":
+        return "ollama", "", *MODEL_BY_PROVIDER["ollama"]
     key = os.environ.get("OPENAI_API_KEY")
     if key:
         return "openai", key, *MODEL_BY_PROVIDER["openai"]
@@ -268,18 +276,64 @@ def request_vision(chapters, episode, provider, secret, url, model):
         for encoded in ch["images"]:
             content.append({"type":"image_url","image_url":{
                 "url":"data:image/jpeg;base64," + encoded, "detail":"high"}})
-    payload = {"model":model,"temperature":0,"max_tokens":700,
-               "response_format":{"type":"json_object"},
-               "messages":[{"role":"system","content":instruction},
-                           {"role":"user","content":content}]}
+    if provider == "ollama":
+        # Ollama's native API accepts actual image bytes per message, not
+        # OpenAI's data-URI content list. We preserve the two chapter boundaries
+        # so that a stationary tire cannot be mistaken for a riding biker.
+        if (url, model, secret) != (*MODEL_BY_PROVIDER["ollama"], ""):
+            raise RuntimeError("AUTO_FRAME_REVIEW_UNTRUSTED_OLLAMA_ENDPOINT")
+        user_text = content[0]["text"]
+        chapters_messages = []
+        index = 1
+        for chapter in chapters:
+            chapter_text = content[index]["text"]
+            index += 1
+            images = []
+            for _ in chapter["images"]:
+                data_uri = content[index]["image_url"]["url"]
+                prefix = "data:image/jpeg;base64,"
+                if not data_uri.startswith(prefix):
+                    raise ValueError("AUTO_FRAME_REVIEW_INVALID_JPEG_FORMAT")
+                images.append(data_uri[len(prefix):])
+                index += 1
+            chapters_messages.append({
+                "role":"user", "content":chapter_text, "images":images})
+        if len(chapters_messages) != 2 or index != len(content):
+            raise ValueError("AUTO_FRAME_REVIEW_CHAPTER_BOUNDARY_LOST")
+        payload = {
+            "model":model, "stream":False, "think":False, "format":"json",
+            "options":{"temperature":0,"num_ctx":8192,"num_predict":700},
+            "messages":[
+                {"role":"system","content":instruction},
+                {"role":"user","content":user_text},
+                *chapters_messages,
+                {"role":"user","content":
+                    "Ответь строго одним JSON-объектом по указанной схеме. "
+                    "Не подтверждай движение по одному неподвижному кадру; "
+                    "если действие невозможно доказать, ставь false."},
+            ],
+        }
+        headers = {"Content-Type":"application/json",
+                   "User-Agent":"gustava-local-independent-real-frame-review"}
+        timeout = 420
+    else:
+        payload = {"model":model,"temperature":0,"max_tokens":700,
+                   "response_format":{"type":"json_object"},
+                   "messages":[{"role":"system","content":instruction},
+                               {"role":"user","content":content}]}
+        headers = {"Authorization":"Bearer " + secret,
+                   "Content-Type":"application/json",
+                   "User-Agent":"gustava-independent-visual-qa"}
+        timeout = 105
     req = urllib.request.Request(
         url, data=json.dumps(payload,ensure_ascii=False).encode("utf8"),
-        method="POST", headers={"Authorization":"Bearer " + secret,
-                                "Content-Type":"application/json",
-                                "User-Agent":"gustava-independent-visual-qa"})
-    with urllib.request.urlopen(req,timeout=105) as resp:
+        method="POST", headers=headers)
+    with urllib.request.urlopen(req,timeout=timeout) as resp:
         data = json.load(resp)
-    output = ((data.get("choices") or [{}])[0].get("message") or {}).get("content")
+    if provider == "ollama":
+        output = (data.get("message") or {}).get("content")
+    else:
+        output = ((data.get("choices") or [{}])[0].get("message") or {}).get("content")
     if not isinstance(output,str) or len(output)>6000:
         raise RuntimeError("AUTO_FRAME_REVIEW_MODEL_OUTPUT_MISSING")
     result = json.loads(output)
