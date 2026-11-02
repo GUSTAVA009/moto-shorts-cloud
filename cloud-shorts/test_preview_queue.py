@@ -15,7 +15,7 @@ class TestPreviewQueue(unittest.TestCase):
         # replaced frozen clip #30283096 with an independently moving source.
         # Reconstruct the exact previous licensed source identity for this
         # one-time regression guard instead of making the live catalog freeze.
-        episode = dict(episode, footage=[
+        episode = dict(episode, auto_publish=False, footage=[
             episode["footage"][0],
             dict(episode["footage"][1],
                  source_page="https://www.pexels.com/video/motorcycle-engine-assembly-process-30283096/",
