@@ -4,7 +4,8 @@ import hashlib
 import json
 from pathlib import Path
 import unittest
-from unittest.mock import patch, SimpleNamespace
+from unittest.mock import patch
+from types import SimpleNamespace
 
 import autonomous_visual_review as review
 from selfhosted_voice import CARTOON_B_PROFILE_ID
