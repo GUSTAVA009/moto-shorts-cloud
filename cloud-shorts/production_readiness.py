@@ -4,7 +4,7 @@ An API candidate and script are not a finished MP4. Maintain truthful stages.
 """
 from __future__ import annotations
 import os
-from voice_failover import available_routes
+from voice_failover import available_routes, CARTOON_B_VOICE_ID
 
 from deep_voice import ready as deep_ready, VOICE_ENGINE as DEEP_ENGINE
 from selfhosted_voice import ready as local_ready, VOICE_ENGINE as LOCAL_ENGINE
@@ -24,6 +24,7 @@ def inventory(catalog, reserved_ids, environment=None):
     new=[ep for ep in waiting if ep.get("voice_engine")==LOCAL_ENGINE]
     new_ready=[ep for ep in new if local_ready(ep,env)]
     routes=available_routes(env,require_secret=False)
+    cartoon_routes=available_routes(env,require_secret=False,voice_id=CARTOON_B_VOICE_ID)
     rejected=[ep for ep in catalog.get("episodes",[])
               if ep.get("editorial_rejected") is True
               or ep.get("visual_review_failed") is True]
@@ -40,8 +41,9 @@ def inventory(catalog, reserved_ids, environment=None):
         "unrendered_selfhosted_not_configured":len(new)-len(new_ready),
         "rejected_visuals":len(rejected),
         "has_autonomous_deep_tts":False,
-        "has_selfhosted_api_configured":bool(routes),
+        "has_selfhosted_api_configured":bool(routes or cartoon_routes),
         "configured_voice_route_names":[route.name for route in routes],
+        "cartoon_b_route_names":[route.name for route in cartoon_routes],
         "voice_route_reachability_verified":False,
         "ready_unattended_voice_episodes":len(old_ready)+len(new_ready),
         "blockers":blockers,
