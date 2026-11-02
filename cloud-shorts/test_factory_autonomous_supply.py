@@ -24,7 +24,7 @@ class FactoryAutonomousSupplyTests(unittest.TestCase):
     def test_new_episode_never_defaults_to_manual_deep(self):
         cfg = voice_routing.new_episode_configuration({})
         self.assertEqual(cfg["voice_engine"],selfhosted_voice.VOICE_ENGINE)
-        self.assertEqual(cfg["selfhosted_voice_id"],selfhosted_voice.VOICE_ID)
+        self.assertEqual(cfg["selfhosted_voice_id"],selfhosted_voice.CARTOON_B_VOICE_ID)
         self.assertNotIn("deep_audio",cfg)
 
     def test_legacy_unvoiced_deep_does_not_deadlock_unattended_production(self):
