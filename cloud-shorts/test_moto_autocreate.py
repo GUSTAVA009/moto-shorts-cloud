@@ -31,6 +31,32 @@ def story():
 
 
 class NewMotoSourceTests(unittest.TestCase):
+    def test_real_rain_city_duplicate_narration_is_rewritten_not_repeated(self):
+        from unittest.mock import patch
+        from source_story import require_filmable
+        media = [
+            {"key": "clip_0", "source_page":
+             "https://www.pexels.com/video/men-riding-motorcycles-in-a-wet-road-3723677/",
+             "url":"https://www.pexels.com/download/video/3723677/",
+             "author":"K","license":"Pexels License","duration":11.71},
+            {"key": "clip_1", "source_page":
+             "https://www.pexels.com/video/a-man-riding-a-motorcycle-through-a-flooded-street-17929886/",
+             "url":"https://www.pexels.com/download/video/17929886/",
+             "author":"Shutterbug Aminul","license":"Pexels License","duration":11.71},
+        ]
+        with patch.dict("os.environ", {"OPENAI_API_KEY":"",
+                                         "OPENROUTER_API_KEY":""}):
+            drafts=[s.original_story(s.THEMES[4],media,[],
+                                     rewrite_attempt=i)
+                    for i in range(3)]
+        self.assertEqual(len({d["narration"] for d in drafts}),3)
+        for draft in drafts:
+            require_filmable(draft,media)
+            self.assertTrue(125<=len(draft["narration"])<=160)
+            self.assertTrue(draft["narration"].startswith("Мотоцикл")
+                            or draft["narration"].startswith("Два разных видео о мотоциклах"))
+            self.assertFalse(any(marker in draft["narration"].lower()
+                                 for marker in ("авария","погиб","рекорд")))
     @classmethod
     def setUpClass(cls):
         cls.catalog = json.loads(
