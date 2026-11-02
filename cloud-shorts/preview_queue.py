@@ -212,6 +212,12 @@ def eligible_retry(episode, receipt, new_fingerprint):
         and episode["footage"][0].get("license") == "Pexels License"
         and episode.get("shots", [{}])[0].get("seconds") == 6.82
     )
+    # Never downgrade an evidence-backed visual correction into a generic
+    # failed-audio retry if any part of its proof fails.
+    if (episode.get("visual_revision_reason")
+            == "actual_first_shot_missing_moto_action"
+            and not scene_source_repair):
+        return False
     visual_repair = (episode.get("visual_revision_requested") is True
                      and (scene_source_repair
                      or episode.get("visual_revision_reason") in (
