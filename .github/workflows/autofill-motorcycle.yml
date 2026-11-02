@@ -16,6 +16,8 @@ on:
       - 'cloud-shorts/cc0_source_pool.py'
       - 'cloud-shorts/test_cc0_source_pool.py'
       - 'cloud-shorts/moto_assets.py'
+      - 'cloud-shorts/original_generated_source.py'
+      - 'cloud-shorts/test_original_generated_source.py'
       - 'cloud-shorts/verified_pexels_pool.json'
       - 'cloud-shorts/test_curated_source_recovery.py'
       - 'cloud-shorts/test_moto_autocreate.py'
@@ -47,6 +49,7 @@ jobs:
         run: |
           python3 -m unittest discover -s cloud-shorts -p 'test_autofill_catalog.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_moto_assets.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_original_generated_source.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_moto_autocreate.py' -v
           python3 -m unittest discover -s cloud-shorts -p 'test_cc0_source_pool.py' -v
       - name: Create owner-voice-ready scripts without manual Deep narrations
@@ -55,6 +58,10 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          # New clips are rendered ONLY on the owner's existing LTX/RTX
+          # producer and hosted as SHA-checked, read-only original assets.
+          # Never fetch any untrusted/user-submitted third-party feed.
+          GUSTAVA_ORIGINAL_FEED_URL: https://84-252-66-87.sslip.io/yt-factory-originals/index.json
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GUSTAVA_SCRIPT_MODEL: ${{ vars.GUSTAVA_SCRIPT_MODEL }}
