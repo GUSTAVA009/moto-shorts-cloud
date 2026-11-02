@@ -1,3 +1,4 @@
+# Production start requested by owner on 2026-11-02: immediately render next eligible original with approved Cartoon B.
 name: Shorts Factory - Three Unique Cloud Previews Daily
 on:
   push:
