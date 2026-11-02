@@ -1032,6 +1032,16 @@
       "episode": "moto-city-397665705424",
       "source": "https://www.pexels.com/video/a-man-riding-a-motorcycle-5206968/",
       "status": "reserved-or-rendered"
+    },
+    "5052822": {
+      "episode": "moto-roadtrip-a64f3c848121",
+      "source": "https://www.pexels.com/video/long-video-shot-of-motorbike-touring-5052822/",
+      "status": "reserved-or-rendered"
+    },
+    "9927896": {
+      "episode": "moto-roadtrip-a64f3c848121",
+      "source": "https://www.pexels.com/video/man-riding-motorcycle-along-street-9927896/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1580,6 +1590,13 @@
       "people": "city-riders-39766",
       "story": "urban-riding-39766",
       "visual": "three-clips-39766"
+    },
+    "moto-roadtrip-a64f3c848121": {
+      "environment": "countryside-road-a64f3",
+      "bike": "touring-motorcycle",
+      "people": "touring-travelers-a64f3",
+      "story": "scenic-country-road-a64f3",
+      "visual": "three-clips-a64f3"
     }
   }
 }
