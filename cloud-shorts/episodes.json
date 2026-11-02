@@ -8649,7 +8649,7 @@
     {
       "id": "moto-forest-9d2ae18d45fe",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -8697,12 +8697,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 10.13
         }
       ],
@@ -8726,7 +8726,52 @@
         "description": "Поделись роликом с другом, который любит мотоциклы."
       },
       "source_selection": "Independent official video APIs, no clip reuse",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "assistant_checked_passed",
+      "caption_fit_required": true,
+      "scene_script_anchors": [
+        {
+          "source": "clip_0",
+          "action": "riding",
+          "spoken_anchor": "байкер едет на мотоцикле"
+        },
+        {
+          "source": "clip_1",
+          "action": "riding",
+          "spoken_anchor": "райдер едет через лес"
+        }
+      ],
+      "assistant_checked_visual_evidence": {
+        "review_run_id": "41433963854",
+        "mp4_sha256": "f9563b4ac7b61a2ddf60853a34c6d5e0b76435ee236584a567750f9d7945cb4d",
+        "original_sources": [
+          "5052603",
+          "13687335"
+        ],
+        "visual_qa_version": 3,
+        "visual_qa_passed": true,
+        "mixed_asr_coverage": 1,
+        "raw_asr_coverage": 1,
+        "video_duration_seconds": 11.633,
+        "frames_inspected_seconds": [
+          0.4,
+          1.5,
+          2.7,
+          4.1,
+          5.4,
+          6.1,
+          7.4,
+          8.8,
+          10,
+          11.1
+        ],
+        "cut_seconds": 5.865,
+        "audio_left_right_rms_difference_db": -0.2,
+        "audio_peak": 0.5463,
+        "voice_id": "gustava-cartoon-b-v1",
+        "voice_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
+        "note": "Original MP4 frame contact sheet inspected: first motorcyclist on a tree-lined road, then a second motorcyclist rides on a forest road. Motion in both segments; two independently filmed scenes described truthfully. Clean stereo audio and raw/mixed independent ASR 23/23 words. License sources pinned. Only this verified episode approved."
+      }
     },
     {
       "id": "moto-motocross-5e6283c226ca",
@@ -8780,12 +8825,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         }
       ],
@@ -8861,12 +8906,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         }
       ],
@@ -8943,12 +8988,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         }
       ],
@@ -9025,12 +9070,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 11.46
         }
       ],
