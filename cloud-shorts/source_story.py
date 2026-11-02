@@ -124,7 +124,7 @@ def require_filmable(prose, sources):
     return [scene[0] for scene in scenes]
 
 
-def touring_track_myth(sources, previous_titles):
+def touring_track_myth(sources, previous_titles, rewrite_attempt=0):
     """Original ironic stereotype-rebuttal, never a claimed single event.
 
     Owner reference: YouTube Short A80XBI_rnb0 (only title and public
@@ -150,19 +150,25 @@ def touring_track_myth(sources, previous_titles):
     # The Qwen3 cloud narrator may require ~12-15 s for 125-160 chars.
     # Two actual moving shots in v3 are limited to 8 s each; lengthy
     # narration cannot be solved by looping licensed footage.
-    narration = (
+    narration_options = (
         f"Мотоцикл в путешествии скучный? {a[3].capitalize()}. "
-        f"На другом видео {b[3]}. Разные люди и съёмки. Что ближе тебе?"
+        f"На другом видео {b[3]}. Разные люди и съёмки. Что ближе тебе?",
+        f"Мотоцикл и разные дороги: {a[3]}. В другом сюжете {b[3]}. "
+        f"Разные райдеры, не одна гонка. Что тебе интереснее?",
+        f"Мотоцикл для дальнего пути или трека? Сначала {a[3]}. "
+        f"Вторая съёмка: {b[3]}. Никакого общего события. Что выберешь?",
     )
-    if not 125 <= len(narration) <= 160:
+    options = [n for n in narration_options if 125 <= len(n) <= 160]
+    if not options:
         raise ValueError("MYTH_NARRATION_EXCEEDS_TWO_REAL_SCENE_CAPACITY")
+    narration = options[rewrite_attempt % len(options)]
     titles = (
         "Туристический байк скучный? Проверь стереотип #shorts",
         "Миф о туристических мотоциклах: дорога против трека #shorts",
         "Путешествие или трек? Два мира мотоциклов #shorts",
     )
     item = {
-        "title": titles[variant], "narration": narration,
+        "title": titles[(variant + rewrite_attempt) % len(titles)], "narration": narration,
         "description": (
             "Ироничный разбор мифа о туристических байках. "
             "Два независимых лицензированных эпизода: путешествие и поездка по треку. "
@@ -180,7 +186,7 @@ def touring_track_myth(sources, previous_titles):
         raise ValueError("MYTH_TITLE_PREVIOUSLY_USED")
     return item
 
-def compose(sources, previous_titles):
+def compose(sources, previous_titles, rewrite_attempt=0):
     """A short, grounded contrast, not a fabricated one-event storyline."""
     if len(sources) != 2:
         raise ValueError("TWO_DISTINCT_LICENSED_ACTIONS_REQUIRED")
@@ -188,7 +194,7 @@ def compose(sources, previous_titles):
     if a is None or b is None or a[0] == b[0]:
         raise ValueError("NO_ACTION_DIVERSITY: source footage not suitable for story")
     if {a[0], b[0]} == {"touring", "race"}:
-        return touring_track_myth(sources, previous_titles)
+        return touring_track_myth(sources, previous_titles, rewrite_attempt=rewrite_attempt)
     token = "|".join(str(s["source_page"]) for s in sources) + "|" + str(len(previous_titles))
     variant = hashlib.sha256(token.encode("utf8")).digest()[0] % 3
     openings = (
@@ -208,12 +214,20 @@ def compose(sources, previous_titles):
         f"Это разные люди и кадры. Что сильнее цепляет?",
         f"Мотоцикл под разными углами: {a[3]}. В другом ролике {b[3]}. "
         f"Два отдельных момента. Какой пересмотрел бы ты?",
+        f"Мотоцикл в двух независимых кадрах: {a[3]}. На втором видео {b[3]}. "
+        f"Люди не связаны друг с другом. Что интереснее?",
+        f"Два разных видео о мотоциклах: сначала {a[3]}. Затем {b[3]}. "
+        f"Это разные участники и съёмки. Какой момент сильнее?",
+        f"Мотоцикл в разных сюжетах: {a[3]}. На другой записи {b[3]}. "
+        f"Общее событие здесь не показано. Что ближе тебе?",
+        f"Мотоцикл в двух независимых сюжетах: сначала {a[3]}. "
+        f"Во втором кадре {b[3]}. Разные люди и съёмки. Что тебе ближе?",
     )
     filmable_options = [text for text in concise_options
                         if 125 <= len(text) <= 160]
     if not filmable_options:
         raise ValueError("NO_CONCISE_TWO_SCENE_NARRATION")
-    narration = filmable_options[variant % len(filmable_options)]
+    narration = filmable_options[(variant + rewrite_attempt) % len(filmable_options)]
     # Earlier versions generated exactly ONE title for every action pair.
     # On 2026-11-02 real refill 41410904531 rejected fresh, licensed
     # footage three times with SOURCE_STORY_TITLE_ALREADY_USED because the
@@ -230,7 +244,7 @@ def compose(sources, previous_titles):
     )
     used = {str(old).strip().casefold() for old in previous_titles}
     title = next((option for offset in range(len(title_options))
-                  for option in (title_options[(variant+offset)%len(title_options)],)
+                  for option in (title_options[(variant+rewrite_attempt+offset)%len(title_options)],)
                   if option.casefold() not in used and len(option)<=100), None)
     if title is None:
         raise ValueError("SOURCE_STORY_ALL_GROUNDED_TITLES_ALREADY_USED")
