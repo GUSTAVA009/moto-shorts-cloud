@@ -84,7 +84,7 @@ BANNED_CONTEXT = re.compile(r"\b(naked bike ride|shooting|killed|dead|fatal|suic
 
 def http_json(url, headers=None, payload=None):
     req = urllib.request.Request(url, headers={
-        "User-Agent": "GUSTAVA-Enduro-Editorial/1.0",
+        "User-Agent": "GUSTAVA-MotoFactory/2.0 (https://github.com/GUSTAVA009/moto-shorts-cloud/issues/80)",
         **(headers or {}),
     }, data=json.dumps(payload).encode("utf8") if payload is not None else None)
     with urllib.request.urlopen(req, timeout=35) as response:

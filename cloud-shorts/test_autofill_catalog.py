@@ -18,6 +18,30 @@ class CatalogAutofillTests(unittest.TestCase):
         cls.remaining = [x for x in cls.bank["episodes"]
                          if x["id"] not in {e["id"] for e in cls.catalog["episodes"]}]
 
+    def test_commons_is_queried_only_once_for_many_script_attempts(self):
+        calls = []
+        def fake_commons(theme):
+            calls.append(theme)
+            return [{"key":"cc0-proven","license":"CC0 1.0"}]
+        limited=af.one_commons_query_per_run(fake_commons)
+        self.assertEqual(limited(("repair",)),limited(("city",)))
+        self.assertEqual(calls,[("repair",)])
+        self.assertEqual(len(calls),1)
+
+    def test_commons_429_is_rethrown_not_spammed_inside_one_refill(self):
+        import urllib.error
+        calls = []
+        def throttle(theme):
+            calls.append(theme)
+            raise urllib.error.HTTPError("https://commons.wikimedia.org/w/api.php",
+                                         429,"Too Many Requests",{},None)
+        limited=af.one_commons_query_per_run(throttle)
+        for i in range(7):
+            with self.assertRaises(urllib.error.HTTPError) as err:
+                limited(("motocross",i))
+            self.assertEqual(err.exception.code,429)
+        self.assertEqual(len(calls),1)
+
     def test_all_original_seeds_validate_individually_and_in_catalog(self):
         catalog = copy.deepcopy(self.catalog)
         existing = {x["id"] for x in catalog["episodes"]}
