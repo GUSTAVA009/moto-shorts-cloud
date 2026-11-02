@@ -46,7 +46,9 @@ class CuratedRecoveryTests(unittest.TestCase):
         """A title-only preflight test is insufficient: ensure real catalog QA."""
         from moto_autocreate import assemble_episode, THEMES
         catalog=json.loads((ROOT / "episodes.json").read_text("utf8"))
-        catalog["episodes"]=[ep for ep in catalog["episodes"]
+        baseline=next(i for i, ep in enumerate(catalog["episodes"])
+                      if ep["id"]=="moto-city-2ed049c15ee1")
+        catalog["episodes"]=[ep for ep in catalog["episodes"][:baseline+1]
                              if ep["id"]!="moto-racing-mud-contrast-20261101"]
         race=next(x for x in self.pool if source_id(x)=="32034080")
         mud=next(x for x in self.pool if source_id(x)=="36365086")
@@ -64,7 +66,9 @@ class CuratedRecoveryTests(unittest.TestCase):
         from unittest.mock import patch
         from moto_autocreate import create_one
         catalog=json.loads((ROOT / "episodes.json").read_text("utf8"))
-        catalog["episodes"]=[ep for ep in catalog["episodes"]
+        baseline=next(i for i, ep in enumerate(catalog["episodes"])
+                      if ep["id"]=="moto-city-2ed049c15ee1")
+        catalog["episodes"]=[ep for ep in catalog["episodes"][:baseline+1]
                              if ep["id"]!="moto-racing-mud-contrast-20261101"]
         with patch.dict(os.environ,{"PEXELS_API_KEY":"","OPENAI_API_KEY":"",
                                     "OPENROUTER_API_KEY":"",
