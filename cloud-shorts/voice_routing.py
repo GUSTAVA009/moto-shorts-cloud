@@ -14,8 +14,9 @@ import selfhosted_voice
 def new_episode_configuration(environment=None):
     env = environment if environment is not None else os.environ
     # A blank Actions variable is NOT permission to fall back to manual Deep.
-    # Qwen3 is the owner-approved autonomous voice profile. If no owner
-    # endpoints are configured, the draft may be staged but cannot render.
+    # The OWNER selected Cartoon B as the operational narrator on 2026-11-02.
+    # New episodes get B, never the older Qwen imitation/DEEP by default.
+    # A draft cannot render until the SHA-attested B backend is actually online.
     provider = env.get("GUSTAVA_TTS_PROVIDER") or selfhosted_voice.VOICE_ENGINE
     if provider == deep_voice.VOICE_ENGINE:
         return {
@@ -25,8 +26,8 @@ def new_episode_configuration(environment=None):
     if provider == selfhosted_voice.VOICE_ENGINE:
         return {
             "voice_engine": selfhosted_voice.VOICE_ENGINE,
-            "voice_profile": selfhosted_voice.PROFILE_ID,
-            "selfhosted_voice_id": selfhosted_voice.VOICE_ID,
+            "voice_profile": selfhosted_voice.CARTOON_B_PROFILE_ID,
+            "selfhosted_voice_id": selfhosted_voice.CARTOON_B_VOICE_ID,
         }
     raise ValueError("UNAPPROVED_TTS_PROVIDER: only original DEEP or owner Qwen")
 
@@ -44,8 +45,7 @@ def expected_profile(episode):
     if episode.get("voice_engine") == deep_voice.VOICE_ENGINE:
         return deep_voice.PROFILE_ID
     if episode.get("voice_engine") == selfhosted_voice.VOICE_ENGINE:
-        return (selfhosted_voice.PROFILE_ID if
-                selfhosted_voice.approved_profile(episode) else None)
+        return selfhosted_voice.profile_for_episode(episode)
     return None
 
 

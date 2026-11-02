@@ -19,6 +19,9 @@ import urllib.request
 from pronunciation_ru import to_speech_text
 
 VOICE_ID = "gustava-original-v1"
+CARTOON_B_VOICE_ID = "gustava-cartoon-b-v1"
+CARTOON_B_REFERENCE_SHA = "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef"
+CARTOON_B_BACKEND = "qwen3_0.6b_base_cartoon_b_reference"
 CHANNEL_SLUG = "gustava"
 MAX_AUDIO_BYTES = 12_000_000
 
@@ -60,13 +63,24 @@ def approved_endpoint(url: str, host: str) -> str:
     return str(url)
 
 
-def available_routes(env=None, *, require_secret=False):
+def available_routes(env=None, *, require_secret=False, voice_id=None):
     env = os.environ if env is None else env
-    if not SHA_RE.fullmatch(str(env.get("GUSTAVA_VOICE_REFERENCE_SHA256") or "")):
+    if voice_id is None:
+        voice_id = VOICE_ID
+    if voice_id not in (VOICE_ID,CARTOON_B_VOICE_ID):
+        return ()
+    if (voice_id == VOICE_ID
+            and not SHA_RE.fullmatch(str(env.get("GUSTAVA_VOICE_REFERENCE_SHA256") or ""))):
         return ()
     found = []
     seen = set()
     for name, enable, prefix, canary, expected_backend in PROVIDERS:
+        # B is installed only on the owner cloud reference API, not Windows
+        # nor generic Chatterbox; never silently use a different actor.
+        if voice_id == CARTOON_B_VOICE_ID and name != "cloud":
+            continue
+        if voice_id == CARTOON_B_VOICE_ID:
+            expected_backend = CARTOON_B_BACKEND
         if env.get(enable) != "1" or (canary and env.get(canary) != "1"):
             continue
         key = str(env.get(prefix + "_API_KEY") or "")
@@ -131,13 +145,16 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def _post(route: Route, episode: dict, env, *, opener=None):
+def _post(route: Route, episode: dict, env, *, opener=None,
+          voice_id=VOICE_ID, reference_sha=None):
     # The visual title remains «трек»; only private TTS hears «трэк».
     text = to_speech_text(episode["narration"])
     request_id = episode["id"] + "-" + hashlib.sha256(
         text.encode("utf8")).hexdigest()[:20]
+    if voice_id != VOICE_ID:
+        request_id += "-" + hashlib.sha256(voice_id.encode("utf8")).hexdigest()[:8]
     payload = {
-        "text": text, "voice": VOICE_ID,
+        "text": text, "voice": voice_id,
         "channel_slug": CHANNEL_SLUG, "response_format": "wav",
     }
     key = route.key
@@ -165,11 +182,12 @@ def _post(route: Route, episode: dict, env, *, opener=None):
         raise RuntimeError("TTS_REJECTED_" + route.name + "_" + str(error.code)) from None
     except (urllib.error.URLError, TimeoutError, ConnectionError, OSError):
         raise ProviderUnavailable("TTS_CONNECTION_UNAVAILABLE_" + route.name) from None
-    reference = env["GUSTAVA_VOICE_REFERENCE_SHA256"]
+    reference = (reference_sha if reference_sha is not None
+                 else env["GUSTAVA_VOICE_REFERENCE_SHA256"])
     if (len(audio) > MAX_AUDIO_BYTES
             or headers.get("X-Audio-SHA256") != hashlib.sha256(audio).hexdigest()
             or headers.get("X-Reference-SHA256") != reference
-            or headers.get("X-Voice-ID") != VOICE_ID
+            or headers.get("X-Voice-ID") != voice_id
             or headers.get("X-Channel-ID") != CHANNEL_SLUG
             or (route.expected_backend is not None
                 and headers.get("X-TTS-Backend") != route.expected_backend)):
@@ -184,13 +202,22 @@ def synthesize(episode: dict, *, env=None, transport=None, validator=None):
     A returned WAV is validated by the caller's original voice QA gate.
     """
     env = os.environ if env is None else env
-    routes = available_routes(env, require_secret=True)
+    voice_id = episode.get("selfhosted_voice_id") or VOICE_ID
+    if voice_id not in (VOICE_ID,CARTOON_B_VOICE_ID):
+        raise ValueError("UNAPPROVED_TTS_VOICE_ID")
+    reference = (CARTOON_B_REFERENCE_SHA if voice_id == CARTOON_B_VOICE_ID
+                 else str(env.get("GUSTAVA_VOICE_REFERENCE_SHA256") or ""))
+    routes = available_routes(env, require_secret=True, voice_id=voice_id)
     if not routes:
         raise RuntimeError("NO_CONFIGURED_APPROVED_TTS_PROVIDER")
     unavailable = []
     for route in routes:
         try:
-            result = ((transport or _post)(route, episode, env))
+            result = (transport(route, episode, env) if transport is not None
+                      else _post(route, episode, env,
+                                 voice_id=voice_id,reference_sha=reference))
+            if result[1] != reference:
+                raise ValueError("TTS_WRONG_REFERENCE_FOR_SELECTED_VOICE")
             if validator is not None:
                 validator(result[0])  # Bad audio is an integrity failure.
             return result

@@ -83,13 +83,13 @@ class PublicationQualityTests(unittest.TestCase):
                 previous=self.qa[field]
                 self.qa[field]="forged"
                 try:
-                    with self.assertRaisesRegex(ValueError,"SELFHOSTED_GENUINE"):
+                    with self.assertRaisesRegex(ValueError,"SELFHOSTED_OWNER_VOICE_SOURCE_NOT_VERIFIED"):
                         p.publication_allowed(self.episode,self.meta,
                                               self.qa,self.video)
                 finally:
                     self.qa[field]=previous
             self.qa["voice_profile"]="unknown"
-            with self.assertRaisesRegex(ValueError,"SELFHOSTED_GENUINE"):
+            with self.assertRaisesRegex(ValueError,"SELFHOSTED_OWNER_VOICE_SOURCE_NOT_VERIFIED"):
                 p.publication_allowed(self.episode,self.meta,
                                       self.qa,self.video)
 

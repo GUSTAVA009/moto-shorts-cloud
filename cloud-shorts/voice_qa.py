@@ -174,7 +174,7 @@ def check(episode, wav, model="small"):
         try:
             proof = verify_selfhosted_profile(audio_path, episode)
             result["male_voice_verified"] = True
-            result["voice_profile"] = SELFHOSTED_PROFILE
+            result["voice_profile"] = proof["voice_profile"]
             result["voice_speaker"] = proof["voice_id"]
             result["voice_provider"] = "owner_selfhosted_qwen3"
             result["voice_source_audio_sha256"] = proof["source_audio_sha256"]

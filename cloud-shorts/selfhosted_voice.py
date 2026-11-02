@@ -25,6 +25,30 @@ from pronunciation_ru import to_speech_text, LEXICON_VERSION
 VOICE_ENGINE = "gustava_selfhosted_qwen3"
 VOICE_ID = "gustava-original-v1"
 PROFILE_ID = "gustava_original_qwen3_v1"
+CARTOON_B_VOICE_ID = voice_failover.CARTOON_B_VOICE_ID
+CARTOON_B_PROFILE_ID = "gustava_cartoon_b_qwen3_v1"
+CARTOON_B_REFERENCE_SHA = voice_failover.CARTOON_B_REFERENCE_SHA
+CARTOON_B_BACKEND = voice_failover.CARTOON_B_BACKEND
+
+
+def profile_for_episode(episode):
+    if episode.get("voice_engine") != VOICE_ENGINE:
+        return None
+    identity = (episode.get("voice_profile"),episode.get("selfhosted_voice_id"))
+    if identity == (PROFILE_ID,VOICE_ID):
+        return PROFILE_ID
+    if identity == (CARTOON_B_PROFILE_ID,CARTOON_B_VOICE_ID):
+        return CARTOON_B_PROFILE_ID
+    return None
+
+
+def reference_for_episode(episode, environment=None):
+    env = os.environ if environment is None else environment
+    if not approved_profile(episode):
+        return None
+    if episode["selfhosted_voice_id"] == CARTOON_B_VOICE_ID:
+        return CARTOON_B_REFERENCE_SHA
+    return str(env.get("GUSTAVA_VOICE_REFERENCE_SHA256") or "")
 MAX_BYTES = 12_000_000
 
 
@@ -33,9 +57,7 @@ def sha(raw):
 
 
 def approved_profile(episode):
-    return bool(episode.get("voice_engine") == VOICE_ENGINE
-                and episode.get("voice_profile") == PROFILE_ID
-                and episode.get("selfhosted_voice_id") == VOICE_ID)
+    return profile_for_episode(episode) is not None
 
 
 def valid_url(env=None):
@@ -59,7 +81,8 @@ def ready(episode, environment=None):
     env = os.environ if environment is None else environment
     return bool(approved_profile(episode)
                 and episode.get("auto_publish") is not True
-                and voice_failover.available_routes(env))
+                and voice_failover.available_routes(
+                    env, voice_id=episode["selfhosted_voice_id"]))
 
 
 def valid_source_wav(raw):
@@ -109,8 +132,8 @@ def verify_profile(wav,episode):
     expected={
         "episode_id":episode["id"],
         "voice_engine":VOICE_ENGINE,
-        "voice_profile":PROFILE_ID,
-        "voice_id":VOICE_ID,
+        "voice_profile":episode["voice_profile"],
+        "voice_id":episode["selfhosted_voice_id"],
         "text_sha256":sha(episode["narration"].encode("utf8")),
         "wav_sha256":sha(audio.read_bytes()),
     }
@@ -119,6 +142,8 @@ def verify_profile(wav,episode):
     if not all(re.fullmatch(r"[0-9a-f]{64}",str(report.get(k) or ""))
                for k in ("source_audio_sha256","reference_sha256")):
         raise ValueError("SELFHOSTED_VOICE_SOURCE_SHA_NOT_PINNED")
+    if report.get("reference_sha256") != reference_for_episode(episode):
+        raise ValueError("SELFHOSTED_AUDIO_REFERENCES_DIFFERENT_VOICE")
     stats=pcm_stats(audio)
     if abs(stats["duration_seconds"]-report.get("duration_seconds",-1))>.02:
         raise ValueError("SELFHOSTED_VOICE_DURATION_MISMATCH")
@@ -137,7 +162,7 @@ def render(episode,destination,requester=None):
     source,ref_sha=produced[:2]
     provider_route=produced[2] if len(produced)>2 else "verified_test_provider"
     valid_source_wav(source)
-    if ref_sha != os.environ.get("GUSTAVA_VOICE_REFERENCE_SHA256"):
+    if ref_sha != reference_for_episode(episode):
         raise ValueError("SELFHOSTED_TTS_REFERENCE_NOT_APPROVED")
     target.parent.mkdir(parents=True,exist_ok=True)
     raw=target.with_name(target.stem+".source.wav")
@@ -153,7 +178,8 @@ def render(episode,destination,requester=None):
         temp.replace(target)
         proof={
             "episode_id":episode["id"],"voice_engine":VOICE_ENGINE,
-            "voice_profile":PROFILE_ID,"voice_id":VOICE_ID,
+            "voice_profile":episode["voice_profile"],
+            "voice_id":episode["selfhosted_voice_id"],
             "text_sha256":sha(episode["narration"].encode("utf8")),
             "spoken_text_sha256":sha(to_speech_text(episode["narration"]).encode("utf8")),
             "speech_lexicon_version":LEXICON_VERSION,

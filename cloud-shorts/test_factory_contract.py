@@ -110,8 +110,12 @@ class FactoryContractTests(unittest.TestCase):
         self.assertFalse(cloud["guaranteed_zero_cost_multichannel_sla"])
         self.assertFalse(CONTRACT["voice"]["allow_fallback"])
         self.assertNotIn("cartesia_voice", CONTRACT)
-        self.assertEqual(new_episode_configuration({
-            "GUSTAVA_TTS_PROVIDER":VOICE_ENGINE})["selfhosted_voice_id"], VOICE_ID)
+        from selfhosted_voice import CARTOON_B_VOICE_ID, CARTOON_B_PROFILE_ID
+        future = new_episode_configuration({"GUSTAVA_TTS_PROVIDER":VOICE_ENGINE})
+        self.assertEqual(future["selfhosted_voice_id"], CARTOON_B_VOICE_ID)
+        self.assertEqual(future["voice_profile"], CARTOON_B_PROFILE_ID)
+        # The factory contract still records the historical profile unchanged.
+        self.assertNotEqual(CARTOON_B_VOICE_ID, VOICE_ID)
         wf = (ROOT / ".github/workflows/daily-preview.yml").read_text("utf8")
         self.assertIn("GUSTAVA_VOICE_API_KEY: ${{ secrets.GUSTAVA_VOICE_API_KEY }}", wf)
         self.assertIn("GUSTAVA_SELFHOSTED_TTS_ENABLED", wf)
