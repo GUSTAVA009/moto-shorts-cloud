@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'voice-studio/**'
+      - 'scripts/activate-cartoon-b-on-vps.sh'
       - '.github/workflows/voice-studio-ci.yml'
   push:
     branches: [main]
@@ -23,6 +24,20 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Validate operator-only Cartoon B deployment script without deployment
+        run: |
+          bash -n scripts/activate-cartoon-b-on-vps.sh
+          python - <<'PY'
+          import ast,re
+          from pathlib import Path
+          src=Path("scripts/activate-cartoon-b-on-vps.sh").read_text("utf8")
+          scripts=re.findall(r"<<'PY'\n(.*?)\nPY",src,re.S)
+          if len(scripts)!=3:
+              raise SystemExit("Expected exactly three verified Python heredocs")
+          for script in scripts:
+              ast.parse(script)
+          print("CARTOON_B_OPERATOR_DEPLOY_STATIC_VALIDATION_PASSED")
+          PY
       - name: Install self-hosted HTTP app dependencies only (no GPU, no Cartesia)
         run: python -m pip install -r voice-studio/requirements.txt
       - name: Compile frontend API and models
