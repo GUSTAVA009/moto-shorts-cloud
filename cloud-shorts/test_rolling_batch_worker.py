@@ -96,6 +96,42 @@ class RollingBatchWorkerTests(unittest.TestCase):
         state["last_replenish_request_at"]=(now-timedelta(minutes=5)).isoformat()
         self.assertFalse(w.should_replenish(state,[],10,now,0))
 
+    def test_live_mp4_reserve_inventory_reads_all_605_artifacts(self):
+        """A mature factory cannot stop at 6x100 historic GitHub artifacts."""
+        from unittest.mock import patch
+        ep={"id":"fresh-audited-01","auto_publish":True,
+            "reviewed_mp4_sha256":"a"*64,"reviewed_artifact_run_id":"42"}
+        artifact_rows=[{"id":i+1,"name":"art-"+str(i),"expired":False}
+                       for i in range(605)]
+        pages=[]
+        def fake_github(method,path):
+            self.assertEqual(method,"GET")
+            if path=="git/trees/render-ledger?recursive=1":
+                return {"truncated":False,"tree":[{
+                    "type":"blob","path":"render-receipts/fresh-audited-01.json"}]}
+            if path.startswith("actions/artifacts?per_page=100&page="):
+                page=int(path.rsplit("=",1)[-1])
+                pages.append(page)
+                start=(page-1)*100
+                return {"total_count":605,
+                        "artifacts":artifact_rows[start:start+100]}
+            self.fail("Unexpected API URL: "+path)
+        def count(catalog,receipts,artifacts,paths):
+            self.assertEqual(len(artifacts),605)
+            self.assertEqual([x["id"] for x in artifacts],
+                             list(range(1,606)))
+            self.assertEqual(receipts,[{"id":"fresh-audited-01",
+                                        "state":"preview_ready","run_id":"42"}])
+            return 1
+        with patch.object(w,"github",side_effect=fake_github), \
+             patch.object(w.ledger,"api",return_value={"sha":"immutable"}), \
+             patch.object(w.ledger,"decode_receipt",
+                          return_value={"id":"fresh-audited-01",
+                                        "state":"preview_ready","run_id":"42"}), \
+             patch.object(w,"count_unqueued_reviewed_mp4",side_effect=count):
+            self.assertEqual(w.live_unqueued_reviewed_mp4({"episodes":[ep]}),1)
+        self.assertEqual(pages,list(range(1,8)))
+
     def test_only_real_unqueued_deep_reviewed_mp4_counts_as_reserve(self):
         ep={"id":"fresh-moto-01", "auto_publish":True,
             "voice_engine":"aidocmaker_deep",
