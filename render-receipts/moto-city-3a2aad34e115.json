@@ -1,11 +1,18 @@
 {
   "id": "moto-city-3a2aad34e115",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "41374584510",
   "attempt_count": 2,
   "preview_fingerprint": "730b9c9054aacca1f6d789d7704e9d655292e49cdef68a2d8a36ad20fc374faa",
   "deep_source_sha256": null,
   "selfhosted_voice_id": "gustava-original-v1",
   "previous_run_id": "41373650226",
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 1.0,
+  "voice_profile": "gustava_original_qwen3_v1",
+  "selfhosted_reference_sha256": "ed27b23b9f86345c45263ab28957e96fd2d399379b3ea90ed9fbc75be183a3cc",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 1.0
 }
