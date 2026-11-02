@@ -3,7 +3,7 @@
   "created_utc": "2026-11-01",
   "project": "HAPYCH Voice / GUSTAVA Factory",
   "kind": "original_character_roles_with_live_private_audio_auditions",
-  "production_status": "15_SHORT_RUSSIAN_CANARIES_PASS_2_FAIL_OWNER_APPROVAL_PENDING",
+  "production_status": "17_SHORT_RUSSIAN_CANARIES_PASS_0_FAIL_OWNER_APPROVAL_PENDING",
   "source_voice_status": "NINE_INSTALLED_QWEN3_CUSTOMVOICE_SPEAKERS; 17 PITCH_ADJUSTED_ROLE_VARIANTS",
   "assignment_policy": {
     "any_production_approved_voice_may_be_assigned_to_any_owner_managed_channel": true,
@@ -275,7 +275,7 @@
         "XrExE9yKIg1WjnnlVkGX"
       ],
       "content_use": "family_dialogue",
-      "status": "real_audition_asr_failed_not_publishable",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -285,17 +285,17 @@
         "source_speaker": "ono_anna",
         "original_role_voice_is_not_independently_trained": true,
         "pitch_semitones": -1.5,
-        "duration_seconds": 6.24,
-        "wav_sha256": "dc4581ad64d3372cf9a650aa30410b11dfa74729cb74736b57c4ba9cb13e7e89",
-        "mp3_sha256": "430adbe98626781f83828d95eda72ba0c77e1d17d2b123c40272f728d631c5fd",
+        "duration_seconds": 8.4,
+        "wav_sha256": "10c3b0acb62bd5c9c7aec01f1ce63b54e1b7a098f1d1ee053cc29af89310a4f9",
+        "mp3_sha256": "0d5e98f5e5346692b0389f385fef973207bc94167e31695dc1dc3b124c96c79a",
         "private_owner_portal_path": "/api/portal/cast/grandma/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
         "owner_audition_approved": false,
-        "russian_short_canary_passed": false,
-        "russian_short_canary_coverage": 0.9,
-        "russian_short_canary_precision": 0.9,
-        "russian_short_canary_transcript": "Бакер едет по треку. Механик проверяет тормоза. Готов к поездке.",
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку, механик проверяет тормоза, готов к поездке.",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
@@ -445,7 +445,7 @@
         "cgSgspJ2msm6clMCkdW9"
       ],
       "content_use": "family_dialogue",
-      "status": "real_audition_asr_failed_not_publishable",
+      "status": "real_audition_short_asr_100pct_owner_review_pending",
       "language": "ru",
       "production_enabled": false,
       "requires_original_voice_canary": true,
@@ -455,17 +455,17 @@
         "source_speaker": "sohee",
         "original_role_voice_is_not_independently_trained": true,
         "pitch_semitones": 0.5,
-        "duration_seconds": 7.2,
-        "wav_sha256": "526b68a8d6af2c92e1ea74b4b09a32ff2dde1e06e49896c368c926e7c66e8631",
-        "mp3_sha256": "f5730c6f7ed358345451592e3a567c966ac11648d0155e07abe08906025ba8ea",
+        "duration_seconds": 8.16,
+        "wav_sha256": "5fbfade3e6c651e27cde738112e528f8a216b51eb4faaf13eafd7433894efb4f",
+        "mp3_sha256": "8d6df3250f3e1247337811ad720f4908f4060a02aaa8637a7dcea3cfc2abf8e6",
         "private_owner_portal_path": "/api/portal/cast/young_female/audio",
         "generated_at_utc": "2026-11-02",
         "russian_asr_approved": false,
         "owner_audition_approved": false,
-        "russian_short_canary_passed": false,
-        "russian_short_canary_coverage": 0.6,
-        "russian_short_canary_precision": 0.667,
-        "russian_short_canary_transcript": "Бакер едет по треку, механик проверяет тормоза, готовка поездки.",
+        "russian_short_canary_passed": true,
+        "russian_short_canary_coverage": 1,
+        "russian_short_canary_precision": 1,
+        "russian_short_canary_transcript": "Байкер едет по треку. Механик проверяет тормоза. Готов к поездке?",
         "russian_short_canary_engine": "faster-whisper-small-cpu-int8"
       }
     },
@@ -877,6 +877,7 @@
     "Current video PR #89 merged; render job 41332576263 was running during research; Buffer was empty before new QA.",
     "2026-11-02: requested playful cartoon voice inspiration: propose a separate ORIGINAL persona pitched -2 semitones with formant preservation. Simple pitch-changing a recognizable SpongeBob recording is not an independent proprietary voice; do not copy copyrighted clips or deploy without authorized voice source, spoken Russian test, and owner listening approval.",
     "2026-11-02: 17 real WAV+MP3 audition recordings generated and inspected for signal quality on owner VPS. Role samples are 17 variations of nine Qwen3 CustomVoice stock speakers, NOT 17 independent fine-tuned voice models. Authenticated /api/portal/cast playback is available after portal deployment. All remain production_enabled=false until real Russian ASR and owner listening approval. No switching the approved Create Audio Voice DEEP or weakening YouTube Factory release gates.",
-    "2026-11-02 independent real faster-whisper small CPU int8 check of 17 recorded mono 24kHz WAVs: 15 exact 100% lexical canaries pass; 2 fail (<97%): grandma 90%, young_female 60%. No speaker production approval or GUSTAVA DEEP substitution authorized."
+    "2026-11-02 independent real faster-whisper small CPU int8 check of 17 recorded mono 24kHz WAVs: 15 exact 100% lexical canaries pass; 2 fail (<97%): grandma 90%, young_female 60%. No speaker production approval or GUSTAVA DEEP substitution authorized.",
+    "2026-11-02: independently repaired two failed Qwen stock utterances by new actual model synth seed 5212 (no ASR bypass). Grandma and young_female now measured 100% matching canonical short Russian phrase. 17/17 passed on ONE canary only. Still all voices production_enabled=false, user timbre approval pending and original Create Audio Voice DEEP remains untouched."
   ]
 }
