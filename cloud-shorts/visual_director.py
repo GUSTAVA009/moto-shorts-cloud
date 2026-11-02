@@ -92,6 +92,10 @@ SCENE_ACTION_SLUGS = {
     "urban_motorcycle_traffic": re.compile(r"urban-street-ride-on-motorcycle-in-busy-city", re.I),
     "morning_motorcycle_sunrise": re.compile(r"sunrise-commute-motorcycle-ride-in-bustling-city", re.I),
     "motorcross_dirt_jump": re.compile(r"thrilling-dirt-bike-jump-on-outdoor-track", re.I),
+    # Real 2026-11-02 original render 41438910472: independent actual frames
+    # at ~8.7 seconds show the rider airborne after a dirt-track jump.
+    "real_motocross_jump": re.compile(
+        r"motocross-biker-makes-some-jumps", re.I),
     "motocross_race_second_course": re.compile(r"athlete-on-motocross-motorcycle", re.I),
     "motorcycle_desert_dirt_ride": re.compile(r"desert-dirt-biking-adventure-in-action", re.I),
     "motorcycle_obstacle_course": re.compile(r"off-road-motorcycle-obstacle-course-adventure", re.I),
