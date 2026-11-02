@@ -13,6 +13,12 @@ from urllib.parse import unquote, urlsplit
 # Ordered from specific to generic. Recognize ACTIONS only from the provider's
 # official file page URL, never our editorial profile or custom topic tags.
 SCENES = (
+    ("oil_change", r"(?:mechanic).*?(?:pouring|changing).*?(?:oil)|(?:oil).*?(?:engine|motorcycle)",
+     "при замене масла", "механик меняет масло в мотоцикле", "замена масла",
+     r"масл|мастер|двигател"),
+    ("approach", r"(?:biker|rider).*?(?:walking|approach).*?(?:motorcycle|motorbike)",
+     "перед поездкой", "байкер подходит к мотоциклу", "подход к мотоциклу",
+     r"подход|байкер|перед старт"),
     ("helmet", r"(?:putting on|putting his|putting her).*?helmet",
      "перед стартом", "райдер надевает мотошлем", "надевание шлема",
      r"шлем|надева"),
@@ -66,7 +72,7 @@ SCENES = (
 
 def scene_for(media):
     url = urlsplit(str(media.get("source_page") or ""))
-    if url.scheme != "https" or url.hostname not in ("www.pexels.com", "commons.wikimedia.org"):
+    if url.scheme != "https" or url.hostname not in ("www.pexels.com", "commons.wikimedia.org", "mixkit.co"):
         return None
     name = unquote(url.path).casefold().replace("-", " ").replace("_", " ")
     for scene in SCENES:
