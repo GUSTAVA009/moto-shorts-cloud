@@ -76,6 +76,10 @@ SCENE_ACTION_SLUGS = {
     # provider-page slug rather than weakening generic ride matching.
     "city_motorcycle_traffic": re.compile(
         r"busy-city-street-with-motorcycles-and-cars", re.I),
+    # Verified 2026-11-02 road-trip render 41435234920: actual motorcyclist
+    # moves on a tree-lined paved road, not stationary B-roll.
+    "touring_motorcycle_road": re.compile(
+        r"long-video-shot-of-motorbike-touring", re.I),
     "helmet_removal": re.compile(r"removing-(?:his-|her-|their-)?helmet|"
                                  r"taking-off-(?:the-)?helmet", re.I),
     # Observed titles belong to distinct licensed videos, not to one event.
