@@ -12,7 +12,7 @@ import re
 import urllib.parse
 import urllib.request
 
-UA = "GUSTAVA-Enduro-Media-Audit/1.0 (royalty-free video validation)"
+UA = "GUSTAVA-MotoFactory-MediaVerifier/2.0 (https://github.com/GUSTAVA009/moto-shorts-cloud/issues/80)"
 PEXELS_ID = re.compile(r"-(\d{5,10})/?$")
 MIXKIT_PAGE = re.compile(r"^/free-stock-video/[a-z0-9-]+-(\d{4,7})/$")
 MIXKIT_LICENSE = "Mixkit Stock Video Free License"
