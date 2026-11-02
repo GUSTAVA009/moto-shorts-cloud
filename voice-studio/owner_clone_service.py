@@ -41,11 +41,14 @@ ALLOWED_WORKFLOWS = (
     "GUSTAVA009/moto-shorts-cloud/.github/workflows/daily-preview.yml@refs/heads/main",
     "GUSTAVA009/moto-shorts-cloud/.github/workflows/render-new-short.yml@refs/heads/main",
     "GUSTAVA009/moto-shorts-cloud/.github/workflows/voice-live-smoke.yml@refs/heads/main",
+    # The visual reviewer may ask for the local model, never publish directly.
+    "GUSTAVA009/moto-shorts-cloud/.github/workflows/autonomous-editorial-review.yml@refs/heads/main",
 )
 TOKEN_RE = re.compile(r"gvk_[A-Za-z0-9_-]{40,64}\Z")
 REQ_RE = re.compile(r"[A-Za-z0-9_.:-]{8,96}\Z")
 SHA_RE = re.compile(r"[a-f0-9]{64}\Z")
 MAX_BODY = 3500
+MAX_VISION_BODY = 2_500_000
 MAX_WAV = 12_000_000
 LOCK = threading.Lock()
 JWK_CLIENT = None
@@ -293,14 +296,49 @@ class Handler(BaseHTTPRequestHandler):
             cartoon_b_paths()
         except (OSError,ValueError,RuntimeError):
             cartoon_b_ready = False
+        try:
+            from owner_visual_service import health as local_vision_health
+            visual_ready=local_vision_health()
+        except (ImportError,RuntimeError,OSError,ValueError):
+            visual_ready=False
         self.send_json(200 if ready else 503,
                        {"service":"HAPYCH Voice Studio",
                         "cartoon_b_reference_ready":cartoon_b_ready,
                         "tts_ready_for_private_request":ready,
+                        "visual_local_model_ready":visual_ready,
                         "publishing_authorized":False,
                         "public_api":False})
 
+    def do_visual_review(self):
+        # No open public inference API: identical scoped OIDC bearer required
+        # BEFORE reading any frames, and Python only contacts loopback Ollama.
+        try:
+            authorize(self.headers.get("Authorization",""))
+        except PermissionError:
+            return self.send_json(403,{"error":"OWNER_VISUAL_AUTHORIZATION_DENIED"})
+        try:
+            size=int(self.headers.get("Content-Length") or "0")
+            if not 100<=size<=MAX_VISION_BODY:
+                raise ValueError("OWNER_VISUAL_BODY_SIZE")
+            obj=json.loads(self.rfile.read(size))
+            from owner_visual_service import valid_request,generate_review
+            valid_request(obj)
+        except (ValueError,TypeError,KeyError,ImportError):
+            return self.send_json(422,{"error":"OWNER_VISUAL_INVALID_FRAME_REQUEST"})
+        try:
+            # The original TTS and the model reviewer share a CPU memory
+            # budget on the 8-GB VPS. Never load both models simultaneously.
+            with LOCK:
+                verdict=generate_review(obj)
+        except (ValueError,TypeError):
+            return self.send_json(422,{"error":"OWNER_VISUAL_MODEL_QA_REJECTED"})
+        except (RuntimeError,OSError,TimeoutError):
+            return self.send_json(503,{"error":"OWNER_VISUAL_MODEL_NOT_READY"})
+        return self.send_json(200,{"model":"qwen3.5:2b","result":verdict})
+
     def do_POST(self):
+        if self.path=="/v1/visual/review":
+            return self.do_visual_review()
         if self.path != "/v1/audio/speech":
             return self.send_json(404,{"error":"NOT_FOUND"})
         try:
