@@ -24,7 +24,9 @@ from deep_voice import ready as approved_legacy_deep, VOICE_ENGINE as DEEP_ENGIN
 from selfhosted_voice import VOICE_ENGINE as OWNER_TTS_ENGINE
 
 TARGET_PENDING_EPISODES = 10
-MAX_ADD_PER_RUN = 2
+# Fill up to ten genuinely distinct, rights-cleared originals per invocation.
+# The existing source/novelty validators and partial-stock stop still apply.
+MAX_ADD_PER_RUN = 10
 
 ROOT = Path(__file__).resolve().parent
 CATALOG_PATH = "cloud-shorts/episodes.json"
