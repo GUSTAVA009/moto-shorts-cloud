@@ -917,6 +917,16 @@
       "episode": "moto-motocross-223d9ab5c67d",
       "source": "https://www.pexels.com/video/motocross-racer-tackling-dirt-track-curves-32399067/",
       "status": "reserved-or-rendered"
+    },
+    "34948751": {
+      "episode": "moto-repair-e7a716f5132a",
+      "source": "https://www.pexels.com/video/high-quality-motorcycle-engine-assembly-34948751/",
+      "status": "reserved-or-rendered"
+    },
+    "36705180": {
+      "episode": "moto-repair-e7a716f5132a",
+      "source": "https://www.pexels.com/video/air-pumping-motorcycle-tire-with-portable-inflator-36705180/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1388,6 +1398,13 @@
       "people": "track-racers-223d9",
       "story": "rider-at-prepared-track-223d9",
       "visual": "three-clips-223d9"
+    },
+    "moto-repair-e7a716f5132a": {
+      "environment": "garage-workshop-e7a71",
+      "bike": "workshop-bike",
+      "people": "garage-mechanics-e7a71",
+      "story": "mechanic-bike-servicing-e7a71",
+      "visual": "three-clips-e7a71"
     }
   }
 }
