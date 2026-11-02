@@ -32,7 +32,7 @@ from kokoro_voice import render as make_kokoro_voice, MODEL_CARD as KOKORO_MODEL
 from selfhosted_voice import (render as make_selfhosted_voice,
                               VOICE_ENGINE as SELFHOSTED_ENGINE)
 from editorial_guard import validate_catalog
-from moto_assets import validated_media, verified_commons
+from moto_assets import validated_media, verified_commons, verified_mixkit
 from channel_focus import assert_motorcycle_episode
 from engagement_cta import validate_cta, overlay_filters, build_description
 
@@ -137,7 +137,7 @@ def validate_episode(ep):
             raise ValueError("Duplicate source footage")
         ids.add(video_id)
         keys.add(media["key"])
-        if media.get("license") not in ("Pexels License", "CC0 1.0") or not media.get("author"):
+        if media.get("license") not in ("Pexels License", "CC0 1.0", "Mixkit Stock Video Free License") or not media.get("author"):
             raise ValueError("Source provenance and free license must be recorded")
     shots = ep.get("shots", [])
     if len(shots) < 2 or len(shots) > 16:
@@ -207,8 +207,8 @@ def stream_pexels_excerpt(item, destination, required_seconds, ffmpeg="ffmpeg"):
     """
     checked_source(item)
     if urllib.parse.urlsplit(item["url"]).hostname not in (
-            "www.pexels.com", "videos.pexels.com"):
-        raise ValueError("Bounded stream only permitted from approved Pexels host")
+            "www.pexels.com", "videos.pexels.com", "assets.mixkit.co"):
+        raise ValueError("Bounded stream only permitted from approved vetted media host")
     duration = float(required_seconds)
     if not 2.0 <= duration <= 40.0:
         raise ValueError("Unsafe requested source excerpt duration")
@@ -271,7 +271,9 @@ def download(item, dst, required_seconds=None):
     tmp = dst.with_name(dst.stem + ".source.tmp.mp4")
     urlhost = urllib.parse.urlsplit(item["url"]).hostname
     try:
-        if urlhost in ("www.pexels.com", "videos.pexels.com"):
+        if urlhost in ("www.pexels.com", "videos.pexels.com", "assets.mixkit.co"):
+            if urlhost == "assets.mixkit.co":
+                verified_mixkit(item)  # one-off Free license check, no site crawling
             if required_seconds is None:
                 raise ValueError("Pexels clip duration must be bounded by episode shot list")
             # The download/video/<id> endpoint may return a >350MB 4K file.
