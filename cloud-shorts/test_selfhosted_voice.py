@@ -6,6 +6,7 @@ import tempfile
 import unittest
 import wave
 from pathlib import Path
+from unittest.mock import patch
 
 import selfhosted_voice as q
 
@@ -28,6 +29,9 @@ class OriginalPrivateCloudTtsTests(unittest.TestCase):
             "GUSTAVA_VOICE_KEY_PRESENT":"true",
             "GUSTAVA_VOICE_REFERENCE_SHA256":"a"*64
         }
+        self.patch_env=patch.dict(__import__("os").environ,self.env)
+        self.patch_env.start()
+        self.addCleanup(self.patch_env.stop)
         self.ep={"id":"motorcycle-00017","voice_engine":q.VOICE_ENGINE,
                  "voice_profile":q.PROFILE_ID,
                  "selfhosted_voice_id":q.VOICE_ID,
