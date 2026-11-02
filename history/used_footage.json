@@ -927,6 +927,16 @@
       "episode": "moto-repair-e7a716f5132a",
       "source": "https://www.pexels.com/video/air-pumping-motorcycle-tire-with-portable-inflator-36705180/",
       "status": "reserved-or-rendered"
+    },
+    "36926096": {
+      "episode": "moto-city-21a5b6e0d121",
+      "source": "https://www.pexels.com/video/busy-urban-street-scene-with-motorcyclists-36926096/",
+      "status": "reserved-or-rendered"
+    },
+    "9607279": {
+      "episode": "moto-city-21a5b6e0d121",
+      "source": "https://www.pexels.com/video/woman-doing-stunts-on-a-motorcycle-9607279/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1405,6 +1415,13 @@
       "people": "garage-mechanics-e7a71",
       "story": "mechanic-bike-servicing-e7a71",
       "visual": "three-clips-e7a71"
+    },
+    "moto-city-21a5b6e0d121": {
+      "environment": "urban-streets-21a5b",
+      "bike": "urban-motorbike",
+      "people": "city-riders-21a5b",
+      "story": "urban-riding-21a5b",
+      "visual": "three-clips-21a5b"
     }
   }
 }
