@@ -7,6 +7,7 @@ on:
       - '.github/workflows/voice-live-smoke.yml'
       - 'voice-studio/owner_clone_service.py'
       - 'cloud-shorts/voice_failover.py'
+      - 'cloud-shorts/pronunciation_ru.py'
 permissions:
   contents: read
   id-token: write
@@ -57,10 +58,15 @@ jobs:
           }
           print("LIVE_OIDC_CLAIM_BOOLEAN_DIAGNOSTIC",
                 json.dumps(checks,sort_keys=True))
+          from pronunciation_ru import to_speech_text
           episode={
-              "id":"private-oidc-canary-voice-20261101",
-              "narration":"Это настоящая проверка автоматической озвучки на сервере канала Густава. Русский голос должен оставаться разборчивым и непрерывным.",
+              "id":"private-oidc-canary-track-20261102",
+              "narration":"Мотоциклист едет по треку. На треке важны шлем, плавное торможение и внимательность. Это тест настоящего русского звучания.",
           }
+          spoken=to_speech_text(episode["narration"])
+          assert "по трэку" in spoken and "На трэке" in spoken
+          assert "по треку" in episode["narration"]
+          print("PRIVATE_TTS_PHONEME_PREPARED", "canonical=трек", "spoken=трэк")
           audio,ref_sha,route=v.synthesize(episode,env=os.environ,
               validator=valid_source_wav)
           with wave.open(io.BytesIO(audio),"rb") as w:
@@ -71,5 +77,15 @@ jobs:
           print("LIVE_CLOUD_QWEN_REAL_WAV_VERIFIED",
                 "route",route,"duration_sec",round(seconds,2),
                 "sha256",hashlib.sha256(audio).hexdigest())
+          from pathlib import Path
+          Path("private-ru-track-canary.wav").write_bytes(audio)
+          print("PRIVATE_RU_TRACK_CANARY_WAV_CREATED", "bytes",len(audio))
           print("NO_PUBLICATION_PERFORMED; this is NOT narrator editorial approval")
           PY
+      - name: Archive only this private pronunciation WAV for actual owner listening
+        uses: actions/upload-artifact@v4
+        with:
+          name: private-ru-track-canary-${{ github.run_id }}
+          path: private-ru-track-canary.wav
+          retention-days: 1
+          if-no-files-found: error
