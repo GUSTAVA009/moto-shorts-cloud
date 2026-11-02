@@ -176,6 +176,25 @@ class NewMotoSourceTests(unittest.TestCase):
                              fetch=lambda a,b,c: fake)
 
 
+    def test_commons_discovery_uses_distinct_action_specific_queries(self):
+        from urllib.parse import parse_qs, urlsplit
+        seen = []
+        def fake_fetch(url):
+            query = parse_qs(urlsplit(url).query)
+            seen.append(query)
+            return {"query":{"pages":[]}}
+        for kind in ("repair", "helmet", "motocross", "city", "forest"):
+            theme = next(t for t in s.THEMES if t[0] == kind)
+            self.assertEqual(s.commons_results(theme, fetch=fake_fetch), [])
+        phrases = [x["gsrsearch"][0] for x in seen]
+        self.assertEqual(len(phrases), len(set(phrases)))
+        self.assertIn("motorcycle repair filetype:video", phrases)
+        self.assertIn("motorcycle helmet filetype:video", phrases)
+        self.assertIn("motocross racing filetype:video", phrases)
+        self.assertTrue(all(x["gsrlimit"] == ["50"] for x in seen))
+        self.assertTrue(all(x["iiprop"] == ["url|mime|size|sha1|extmetadata"]
+                            for x in seen))
+
     def test_one_keyless_commons_call_per_full_autonomous_research_cycle(self):
         from unittest.mock import patch
         seen = []
