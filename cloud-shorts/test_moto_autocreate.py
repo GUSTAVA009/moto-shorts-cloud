@@ -447,7 +447,7 @@ class NewMotoSourceTests(unittest.TestCase):
         self.assertEqual(scene_for(race)[0],"ride")
         self.assertEqual(scene_for(stunt)[0],"stunt")
         self.assertEqual(select_pair([race,stunt],set()),[race,stunt])
-        for ep in self.initial_catalog["episodes"]:
+        for ep in self.catalog["episodes"]:
             for src in ep.get("footage",[]):
                 self.assertNotIn(src.get("source_page"),[race["source_page"],stunt["source_page"]])
 
