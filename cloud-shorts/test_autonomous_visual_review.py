@@ -145,6 +145,41 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
         repeated["footage"][1]["author"]=repeated["footage"][0]["author"]
         self.assertFalse(review.eligible_private_episode(repeated,receipt))
 
+    def test_same_owner_two_different_ltx_original_shots_are_reviewable(self):
+        ep = self.make_episode()
+        r = self.make_receipt()
+        base = "https://84-252-66-87.sslip.io/yt-factory-originals"
+        batch = "20261103034102-aabbcc"
+        originals=[]
+        for i,(sha,action) in enumerate((("a"*64,"riding"),("b"*64,"jump"))):
+            originals.append({
+                "key":"clip_"+str(i),
+                "author":"GUSTAVA Original Video Production",
+                "license":"LTX OpenRAIL-M",
+                "generation_model":"ltxv-2b-0.9.8-distilled-fp8",
+                "generation_batch":batch,
+                "scene_action":action,
+                "original_sha256":sha,
+                "file_size":1500000,
+                "duration":6.706,
+                "url":base+"/clips/"+sha+".mp4",
+                "source_page":base+"/meta/"+sha+".json",
+            })
+        ep["footage"]=originals
+        self.assertTrue(review.eligible_private_episode(ep,r))
+        for change in (
+            {"original_sha256":"a"*64},    # duplicated source SHA
+            {"generation_batch":"20261103034202-ffaaaa"},  # different job
+            {"scene_action":"riding"},      # repeated action
+            {"license":"Pexels License"},   # untruthful rights claim
+        ):
+            broken=deepcopy(ep)
+            broken["footage"][1].update(change)
+            self.assertFalse(review.eligible_private_episode(broken,r))
+        fake=deepcopy(ep)
+        fake["footage"][1]["source_page"]="https://external.test/forged.mp4"
+        self.assertFalse(review.eligible_private_episode(fake,r))
+
     def test_verified_external_evidence_never_impersonates_assistant(self):
         ep=self.make_episode()
         proof=self.make_proof(ep)

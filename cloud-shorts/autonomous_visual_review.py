@@ -80,9 +80,28 @@ def eligible_private_episode(episode, receipt):
             or not str(receipt.get("run_id") or "").isdigit()):
         return False
     footage = episode.get("footage") or []
-    if len(footage) != 2 or len({x.get("author", "").casefold() for x in footage}) != 2:
+    if len(footage) != 2:
         return False
-    scenes = [scene_for(media) for media in footage]
+    # Stock footage needs separately credited contributors. Original
+    # GUSTAVA LTX videos legitimately share one producer: require TWO
+    # independently rendered, uniquely SHA-addressed files with different
+    # visible action prompts in the SAME immutable generation batch.
+    # The real MP4 still needs independent six-frame action verification.
+    authors = {str(x.get("author") or "").strip().casefold()
+               for x in footage}
+    if len(authors) != 2:
+        from source_story import same_owner_original_pair
+        try:
+            if not same_owner_original_pair(footage[0], footage[1]):
+                return False
+        except (ValueError, TypeError, KeyError):
+            return False
+    try:
+        scenes = [scene_for(media) for media in footage]
+    except (ValueError, TypeError, KeyError):
+        # Forged/broken source metadata makes this candidate ineligible,
+        # without preventing review of OTHER legitimate owner MP4s.
+        return False
     return bool(all(scenes) and scenes[0][0] != scenes[1][0])
 
 
