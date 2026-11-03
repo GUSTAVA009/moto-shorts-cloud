@@ -60,6 +60,11 @@ def verified_feed():
     for item in data["sources"]:
         if not isinstance(item,dict):
             raise ValueError("ORIGINAL_FEED_INVALID_ENTRY")
+        # Public manifest entries must keep the immutable producer key.
+        # Only AFTER a valid source is moved into a storyboard may its
+        # internal key become clip_0 or clip_1.
+        if item.get("key") != "gustava_original_" + str(item.get("original_sha256") or "")[:16]:
+            raise ValueError("ORIGINAL_FEED_PRODUCER_KEY_CHANGED")
         key = source_id(item)
         if key in seen:
             raise ValueError("ORIGINAL_FEED_REPEATED_SHA")

@@ -47,7 +47,11 @@ def source_id(item):
     if page.hostname == "84-252-66-87.sslip.io":
         sha = str(item.get("original_sha256") or "")
         if (not ORIGINAL_SHA.fullmatch(sha)
-                or str(item.get("key") or "") != "gustava_original_" + sha[:16]
+                # Before catalog assembly: immutable original_* source key;
+                # after assembly: clip_0..clip_7 are internal storyboard keys,
+                # NOT provenance. Exact source_page, url and SHA remain pinned.
+                or (str(item.get("key") or "") != "gustava_original_" + sha[:16]
+                    and not re.fullmatch(r"clip_[0-7]", str(item.get("key") or "")))
                 or str(item.get("source_page") or "") !=
                      ORIGINAL_ASSET_ROOT + "/meta/" + sha + ".json"):
             raise ValueError("ORIGINAL_SOURCE_SHA_MANIFEST_ID_INVALID")
