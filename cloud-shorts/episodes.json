@@ -10251,7 +10251,7 @@
       "voice_profile": "gustava_cartoon_b_qwen3_v1",
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
       "title": "Городская поездка или лесной заезд: какой момент интереснее? #shorts",
-      "narration": "Мотоцикл в двух сценах: байкер едет по городской улице. На другом видео райдер едет через лес. Это независимые съёмки. Что ближе тебе?",
+      "narration": "Мотоцикл в двух сценах: байкер едет по городской улице. Во втором кадре райдер едет через лес. Это независимые съёмки. Что ближе тебе?",
       "description": "Две разные мотоистории: городская поездка и лесной заезд. Независимые кадры, без выдуманного общего события.\n\n#shorts",
       "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
       "caption_middle": "ЛЕСНОЙ ЗАЕЗД",
@@ -10328,7 +10328,31 @@
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
       "generation_provenance": "keyless_action_filmable_v1",
-      "story_reserve_id": "r2-forest-0030"
+      "story_reserve_id": "r2-forest-0030",
+      "voice_revision_requested": true,
+      "voice_revision_priority": true,
+      "voice_revision_reason": "private_original_cartoon_b_phonetic_rephrase",
+      "voice_revision_hash_history": [
+        "54977f2c546dbe8b9b340578a75130b5cbc50af68303b510a5be7b10feb8ae73",
+        "5cc2f5d826cb4e9965cc098d3c330cfeae1b0365476290fe9c25e34ed938e5bd"
+      ],
+      "voice_revision_evidence": {
+        "prior_run_id": "41617140798",
+        "prior_preview_fingerprint": "54f99013e99ec72324dffc2c87170830f0fe8a62dcf98c4c2dcc2999b8aff9c3",
+        "prior_mp4_sha256": "18ddc2186073db10be22f3dca39e5b8677ccc9b0f9b50ef9cb14e1a7898df65b",
+        "old_narration_sha256": "54977f2c546dbe8b9b340578a75130b5cbc50af68303b510a5be7b10feb8ae73",
+        "new_narration_sha256": "5cc2f5d826cb4e9965cc098d3c330cfeae1b0365476290fe9c25e34ed938e5bd",
+        "immutable_source_ids": [
+          "gustava-original-7ece13f72142b0154ff86a1a4a0f7a9eabff87deb81192189f26c1555143bf13",
+          "gustava-original-2f685622967c711dd93fcb02f67c4c8d00828bf65fd2878fbfc953628b3345da"
+        ],
+        "original_voice_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
+        "raw_coverage": 0.909,
+        "mixed_coverage": 1.0,
+        "prior_mixed_qa_passed": true,
+        "prior_attempt_count": 1,
+        "policy": "distinct_phonetic_progress_only"
+      }
     },
     {
       "id": "moto-motocross-2092b0ea5cc1",
