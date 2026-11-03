@@ -26,9 +26,11 @@ on:
       - 'cloud-shorts/test_autofill_catalog.py'
       - '.github/workflows/autofill-motorcycle.yml'
   schedule:
-    # Replenish 10 minutes before each production attempt, 90 minutes apart.
-    - cron: "35 0,3,6,9,12,15,18,21 * * *"
-    - cron: "05 2,5,8,11,14,17,20,23 * * *"
+    # Local LTX originals arrive independently whenever RTX is idle.
+    # Scan the immutable owner feed every 15 min, not 16 fixed slots/day.
+    # External Commons remains throttled to one scout window / 90 min,
+    # but owned generated videos have no stock-license sourcing quota.
+    - cron: "*/15 * * * *"
 
 permissions:
   contents: write
