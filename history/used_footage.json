@@ -1182,6 +1182,16 @@
       "episode": "moto-motocross-2092b0ea5cc1",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/49440940e5f040427c89ac0b44b940f1f3a4d92b9a32192d6e19afc655a81d00.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-aa92ed1dec280c1411c6a6c0269d5b8a4740b5a81020cca6d68724607ad954ac": {
+      "episode": "moto-city-a89311f06123",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/aa92ed1dec280c1411c6a6c0269d5b8a4740b5a81020cca6d68724607ad954ac.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-5b54e556e74e09ffb91a049a34552f7cfc1bcc58b2822fe753235417fae8d7c5": {
+      "episode": "moto-city-a89311f06123",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/5b54e556e74e09ffb91a049a34552f7cfc1bcc58b2822fe753235417fae8d7c5.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1835,6 +1845,13 @@
       "people": "track-racers-2092b",
       "story": "rider-at-prepared-track-2092b",
       "visual": "three-clips-2092b"
+    },
+    "moto-city-a89311f06123": {
+      "environment": "urban-streets-a8931",
+      "bike": "urban-motorbike",
+      "people": "city-riders-a8931",
+      "story": "urban-riding-a8931",
+      "visual": "three-clips-a8931"
     }
   }
 }
