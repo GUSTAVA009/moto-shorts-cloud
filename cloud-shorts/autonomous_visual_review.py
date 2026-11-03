@@ -96,7 +96,12 @@ def eligible_private_episode(episode, receipt):
                 return False
         except (ValueError, TypeError, KeyError):
             return False
-    scenes = [scene_for(media) for media in footage]
+    try:
+        scenes = [scene_for(media) for media in footage]
+    except (ValueError, TypeError, KeyError):
+        # Forged/broken source metadata makes this candidate ineligible,
+        # without preventing review of OTHER legitimate owner MP4s.
+        return False
     return bool(all(scenes) and scenes[0][0] != scenes[1][0])
 
 
