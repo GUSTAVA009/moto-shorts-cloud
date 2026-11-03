@@ -166,7 +166,7 @@ def eligible_private_original_cartoon_b_asr_retry(episode, receipt, new_fingerpr
     if (not isinstance(receipt,dict) or receipt.get("id") != episode.get("id")
             or receipt.get("state") != "preview_ready"
             or type(receipt.get("attempt_count")) is not int
-            or receipt["attempt_count"] != 1
+            or receipt["attempt_count"] < 1
             or receipt.get("voice_qa_passed") is not False
             or receipt.get("mixed_audio_qa_passed") is not False
             or episode.get("auto_preview") is not True
@@ -186,7 +186,8 @@ def eligible_private_original_cartoon_b_asr_retry(episode, receipt, new_fingerpr
             or proof.get("original_voice_reference_sha256") != CARTOON_B_REFERENCE_SHA
             or proof.get("prior_run_id") != str(receipt.get("run_id"))
             or proof.get("prior_preview_fingerprint") != receipt.get("preview_fingerprint")
-            or proof.get("maximum_attempts") != 2
+            or proof.get("policy") != "distinct_phonetic_progress_only"
+            or proof.get("prior_attempt_count") != receipt["attempt_count"]
             or not re.fullmatch(r"[a-f0-9]{64}",str(proof.get("prior_mp4_sha256") or ""))
             or not re.fullmatch(r"[a-f0-9]{64}",str(proof.get("old_narration_sha256") or ""))
             or proof.get("new_narration_sha256") !=
@@ -194,6 +195,13 @@ def eligible_private_original_cartoon_b_asr_retry(episode, receipt, new_fingerpr
             or not .90<=float(proof.get("raw_coverage") or 0)<.97
             or not .90<=float(proof.get("mixed_coverage") or 0)<.97
             or receipt.get("preview_fingerprint") == new_fingerprint):
+        return False
+    history = episode.get("voice_revision_hash_history") or []
+    if (not isinstance(history,list) or len(history)<2
+            or len(history)!=len(set(history))
+            or not all(re.fullmatch(r"[a-f0-9]{64}",str(x)) for x in history)
+            or history[-2] != proof.get("old_narration_sha256")
+            or history[-1] != proof.get("new_narration_sha256")):
         return False
     footage = episode.get("footage") or []
     try:

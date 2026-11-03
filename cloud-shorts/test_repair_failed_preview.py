@@ -79,6 +79,51 @@ class FailedPreviewRepairTests(unittest.TestCase):
         raw["selfhosted_reference_sha256"]="0"*64
         self.assertIsNone(r.repair_episode(catalog,slug,raw,mixed,receipt))
 
+    def test_owner_voice_second_failed_render_can_be_repaired_without_fixed_retry_cap(self):
+        from preview_queue import preview_fingerprint, eligible_retry
+        from selfhosted_voice import CARTOON_B_PROFILE_ID, CARTOON_B_REFERENCE_SHA
+        catalog=copy.deepcopy(self.base)
+        slug="moto-training-5d7cc0e964be"
+        old=next(x for x in catalog["episodes"] if x["id"]==slug)
+        self.assertTrue(old.get("voice_revision_requested"))
+        self.assertIn("совершает прыжок",old["narration"])
+        receipt={
+            "id":slug,"state":"preview_ready","attempt_count":2,
+            "run_id":"41551096759",
+            "previous_run_id":old["voice_revision_evidence"]["prior_run_id"],
+            "preview_fingerprint":preview_fingerprint(old),
+            "selfhosted_reference_sha256":CARTOON_B_REFERENCE_SHA,
+            "voice_qa_passed":False,"mixed_audio_qa_passed":False}
+        raw={"episode_id":slug,"passed":False,
+             "recognized_text":old["narration"].replace(
+                 "на мотоцикле","на мотоцикли"),
+             "lexical_coverage":.957,"voice_profile":CARTOON_B_PROFILE_ID,
+             "selfhosted_reference_sha256":CARTOON_B_REFERENCE_SHA,
+             "voice_speaker":"gustava-cartoon-b-v1"}
+        mixed={"episode_id":slug,"passed":False,
+               "lexical_coverage":.957,"source":"FINAL_MIXED_MP4",
+               "mp4_sha256":"d"*64}
+        candidate=r.repair_episode(catalog,slug,raw,mixed,receipt)
+        self.assertIsNotNone(candidate)
+        revised=next(x for x in candidate["episodes"] if x["id"]==slug)
+        self.assertIn("на байке",revised["narration"])
+        self.assertEqual(revised["voice_revision_evidence"]["prior_attempt_count"],2)
+        self.assertEqual(len(revised["voice_revision_hash_history"]),3)
+        self.assertTrue(eligible_retry(revised,receipt,
+                                       preview_fingerprint(revised)))
+        # Same failed run cannot be accepted twice merely by rerunning
+        # the repair scheduler or bumping an attempt count.
+        self.assertIsNone(r.repair_episode(candidate,slug,raw,mixed,receipt))
+        invalid=copy.deepcopy(revised)
+        invalid["voice_revision_hash_history"].append(
+            invalid["voice_revision_hash_history"][-1])
+        self.assertFalse(eligible_retry(invalid,receipt,preview_fingerprint(invalid)))
+        first=copy.deepcopy(old)
+        first["voice_revision_evidence"]["prior_run_id"]="not-previous-run"
+        fake_catalog=copy.deepcopy(catalog)
+        next(x for x in fake_catalog["episodes"] if x["id"]==slug).update(first)
+        self.assertIsNone(r.repair_episode(fake_catalog,slug,raw,mixed,receipt))
+
     def test_bounded_phonetic_rewrite_preserves_meaning(self):
         new = r.simple_rewrite("Райдер на мотоцикле едет в лесу.",
                                "Райдер но мотоцикли едет в лесу.")
