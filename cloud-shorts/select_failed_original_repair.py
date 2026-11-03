@@ -60,7 +60,10 @@ def eligible_episode(ep, receipt):
         and receipt.get("id") == ep["id"]
         and receipt.get("state") == "preview_ready"
         and receipt.get("voice_qa_passed") is False
-        and receipt.get("mixed_audio_qa_passed") is False
+        # A final mixed MP4 may pass ASR while SOURCE narration has a
+        # phonetic fusion, as proven by real run 41617140798. Correct the
+        # original voice phrase without lowering either QA threshold.
+        and type(receipt.get("mixed_audio_qa_passed")) is bool
         and receipt.get("selfhosted_reference_sha256") == CARTOON_B_REFERENCE_SHA
         and type(receipt.get("attempt_count")) is int
         and receipt.get("attempt_count") >= 1
