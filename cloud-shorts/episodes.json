@@ -11589,7 +11589,7 @@
     {
       "id": "moto-rain-bc1470b0427d",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -11672,7 +11672,48 @@
         "description": "Подпишись, если любишь настоящие мотопутешествия."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "b6ecebf1a1e6a3002c036f6a7b00981f1d8d05570f917b75217ae98b2ccd1872",
+      "reviewed_artifact_run_id": "41628727312",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-rain-bc1470b0427d",
+        "render_run_id": "41628727312",
+        "mp4_sha256": "b6ecebf1a1e6a3002c036f6a7b00981f1d8d05570f917b75217ae98b2ccd1872",
+        "asset_fingerprint": "6b4aa59e087170b242884950cd63fffd74f4e52f5520c6aa6d0eddac24a55534",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-03T12:02:05.652233+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на желтом мотоцикле едет по асфальтированной дороге в лесу, видны деревья и движение.",
+            "frames_sha256": [
+              "c9e369b00a92e132742df89b73fbc0e1205ec1672b9430023a39f45d1b4a4f45",
+              "f59f0c065b362fdedcdf84243b2c5f296661cb054628bc2ffeee6d07fc571347",
+              "7879f0a6c6fb89953e61d01859c1d4d79815b90353f68e50d1fa70f130327fa4"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на серебристом мотоцикле едет по мокрой дороге в дождливую погоду, видны капли воды и отражения.",
+            "frames_sha256": [
+              "77720622ea112577e83cabbbbaa48e9e5933854eb36743dd8a99f0243f564090",
+              "f3c0bd58dfd1f9848f40bda7149f0947ffa0b9eed0f4db31c06d4516088e7309",
+              "b80d297607c2c0973a03e693da4498c77f1c5e23644e589c138d07dae3e2fa2e"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-motocross-a995a43448ad",
