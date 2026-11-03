@@ -1322,6 +1322,16 @@
       "episode": "moto-rain-bc1470b0427d",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/57a2694384f8993f9530581fdb228ea9448eb517382bf0d445b8716541ef3019.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-9ad879db37849d68629b4b9b987bea29149099589eb8977752784e383188c22b": {
+      "episode": "moto-motocross-a995a43448ad",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/9ad879db37849d68629b4b9b987bea29149099589eb8977752784e383188c22b.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-03ecadbc225b7b2b133106527995e3c3ca138e325a3949a8289977522e52e438": {
+      "episode": "moto-motocross-a995a43448ad",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/03ecadbc225b7b2b133106527995e3c3ca138e325a3949a8289977522e52e438.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -2073,6 +2083,13 @@
       "people": "road-commuters-bc147",
       "story": "rainy-motorcycle-road-bc147",
       "visual": "three-clips-bc147"
+    },
+    "moto-motocross-a995a43448ad": {
+      "environment": "race-track-a995a",
+      "bike": "motocross-bike",
+      "people": "track-racers-a995a",
+      "story": "rider-at-prepared-track-a995a",
+      "visual": "three-clips-a995a"
     }
   }
 }
