@@ -11325,7 +11325,7 @@
     {
       "id": "moto-motocross-0356546ab3db",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -11408,7 +11408,48 @@
         "description": "Поделись роликом с другом, который любит мотоциклы."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "2a42a3b22eb2d02405c1366e4f38e65e124237f64d6186197cb9cf541e01b654",
+      "reviewed_artifact_run_id": "41627712381",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-motocross-0356546ab3db",
+        "render_run_id": "41627712381",
+        "mp4_sha256": "2a42a3b22eb2d02405c1366e4f38e65e124237f64d6186197cb9cf541e01b654",
+        "asset_fingerprint": "c61a742f546c8baf6c0ef98a3dc5d57592a8f88705da07e0a21846651ec60362",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-03T12:11:10.959768+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на мотоцикле проезжает по грязной дороге в лесу.",
+            "frames_sha256": [
+              "19c95b2bd9858fd66dda9824e31ae3e293ca1b689658386ab98454cac51e098c",
+              "86184117156a2723b391a07d430d8037d7b0daa4e4f988db8c7c72f8e87f532f",
+              "3c5c67958f75908fb37784602a492228fde13d7814f08890b530d840c30cd44d"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Рука в желтой перчатке работает с двигателем мотоцикла на рабочем столе.",
+            "frames_sha256": [
+              "ecffb4d243b1673dbc71c42a5fd41d46718f7700feed94ba0558fad158be041e",
+              "b74008908966d96bf940864d664438e19440510cde15156168842b8d0bcb2a20",
+              "400849d8a2699f904848ffea1ba6ee393aafcf730a7ee3fd9fd0ab6d642a3ca2"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-repair-306ed530d9b2",
