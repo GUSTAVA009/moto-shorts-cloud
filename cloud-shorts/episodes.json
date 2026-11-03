@@ -11233,6 +11233,94 @@
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
       "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-mountain-6f5c95f22f89",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Два мотоэпизода: надевание шлема и горный маршрут. Что выберешь? #shorts",
+      "narration": "Мотоцикл под разными углами: райдер надевает мотошлем. В другом ролике райдер едет по горной дороге. Два отдельных момента. Какой пересмотрел бы ты?",
+      "description": "Две разные мотоистории: надевание шлема и горный маршрут. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "НАДЕВАНИЕ ШЛЕМА",
+      "caption_middle": "ГОРНЫЙ МАРШРУТ",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 114,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/da5c87b4230b0db57278a67ccb45045e619492ae618c2aa5a55f8b7004dbe351.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/da5c87b4230b0db57278a67ccb45045e619492ae618c2aa5a55f8b7004dbe351.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261103104607-b63fb6",
+          "original_sha256": "da5c87b4230b0db57278a67ccb45045e619492ae618c2aa5a55f8b7004dbe351",
+          "file_size": 1430151,
+          "duration": 6.706,
+          "source_title": "rider putting on and fastening a motorcycle helmet",
+          "scene_action": "helmet",
+          "prompt": "Photorealistic documentary footage of a standing motorcyclist putting on a full-face motorcycle helmet, closing the chin strap with both hands near a parked dirt bike. Visible helmet and hands moving, clear focus on protective gear, no riding. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-03T10:47:26.375505+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/c93d9618fc7a636845b812ce18b2e5221734318a1ef3f4f8dc3faa14daf706ad.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/c93d9618fc7a636845b812ce18b2e5221734318a1ef3f4f8dc3faa14daf706ad.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261103104607-b63fb6",
+          "original_sha256": "c93d9618fc7a636845b812ce18b2e5221734318a1ef3f4f8dc3faa14daf706ad",
+          "file_size": 1519326,
+          "duration": 6.706,
+          "source_title": "motorcyclist navigating a winding mountain road",
+          "scene_action": "mountain",
+          "prompt": "Photorealistic chase-camera documentary footage of one helmeted motorcycle rider visibly steering around a sweeping mountain road curve with scenic mountain valley in the background. Realistic lean, road surface moving under the wheels, no crash. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-03T10:47:26.375505+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "rocky-mountain-road-6f5c9",
+        "bike": "adventure-tourer",
+        "people": "mountain-travelers-6f5c9",
+        "story": "mountain-journey-6f5c9",
+        "visual": "three-clips-6f5c9"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие мотопутешествия."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1"
     }
   ]
 }
