@@ -18,6 +18,13 @@ class SelectFailedOriginalVoiceTests(unittest.TestCase):
 
     def fixture(self):
         ep=copy.deepcopy(self.ep)
+        # The live factory has already autonomously approved and queued this
+        # episode in Buffer. Recreate the former PRIVATE failed MP4 in an
+        # isolated test dictionary, never change real public approval.
+        ep["auto_publish"]=False
+        for field in ("visual_revision_status","reviewed_mp4_sha256",
+                      "reviewed_artifact_run_id","automated_frame_review"):
+            ep.pop(field,None)
         # Reconstruct the genuine first-run, unrevised input. Current
         # episodes.json is the LIVE catalog and the real automatic
         # phonetic fix has already changed its revision fields.
