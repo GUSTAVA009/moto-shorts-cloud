@@ -1152,6 +1152,16 @@
       "episode": "moto-motocross-b13d49cd4c42",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/4cb4647c846989ed4d9d1a2510c1caf32eaf7be94641fab4a8d8a2c085e6bd36.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-8740ce7a07fc230873440cc796e4a274c0fe04c703e5802b644362bce6fbdff2": {
+      "episode": "moto-mountain-ee175923eae5",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/8740ce7a07fc230873440cc796e4a274c0fe04c703e5802b644362bce6fbdff2.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-52d88f3bd94be193be239562d6b3403dce1a08de790c7e84865333c157293d03": {
+      "episode": "moto-mountain-ee175923eae5",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/52d88f3bd94be193be239562d6b3403dce1a08de790c7e84865333c157293d03.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1784,6 +1794,13 @@
       "people": "track-racers-b13d4",
       "story": "rider-at-prepared-track-b13d4",
       "visual": "three-clips-b13d4"
+    },
+    "moto-mountain-ee175923eae5": {
+      "environment": "rocky-mountain-road-ee175",
+      "bike": "adventure-tourer",
+      "people": "mountain-travelers-ee175",
+      "story": "mountain-journey-ee175",
+      "visual": "three-clips-ee175"
     }
   }
 }
