@@ -1,0 +1,11 @@
+{
+  "id": "moto-rain-0f4b7970c947",
+  "state": "reserved",
+  "run_id": "41707554859",
+  "attempt_count": 1,
+  "preview_fingerprint": "c58c049cc9265b930fc29d6599a1b2f5285cfc6947929fd565d771f83d77a4f9",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-cartoon-b-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
