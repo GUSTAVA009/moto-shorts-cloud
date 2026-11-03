@@ -147,8 +147,10 @@ class PublicationQualityTests(unittest.TestCase):
             self.episode,self.meta,self.qa,self.video))
         bad=self.episode["footage"][1]
         bad["generation_batch"]="20261103034202-eeeeee"
-        with self.assertRaisesRegex(ValueError,"generated footage rights"):
-            p.publication_allowed(self.episode,self.meta,self.qa,self.video)
+        # Same rightful owner, two ORIGINAL independent events: the former
+        # artificial batch-timestamp restriction no longer blocks them.
+        self.assertTrue(p.publication_allowed(
+            self.episode,self.meta,self.qa,self.video))
         bad["generation_batch"]="20261103034102-aabbcc"
         bad["author"]="Falsely credited filmmaker"
         with self.assertRaisesRegex(ValueError,"generated footage rights"):

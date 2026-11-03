@@ -141,6 +141,15 @@ class FailedPreviewRepairTests(unittest.TestCase):
         catalog=copy.deepcopy(self.base)
         slug="moto-forest-5a24107fdebf"
         ep=next(x for x in catalog["episodes"] if x["id"]==slug)
+        # Reconstruct the REAL initial failed-run phrase. The mutable live
+        # catalog has ALREADY been repaired successfully, so it must not
+        # silently become our failing-before-repair test fixture.
+        ep["narration"]=ep["narration"].replace(
+            "Во втором кадре райдер","На другом видео райдер")
+        for field in ("voice_revision_requested","voice_revision_priority",
+                      "voice_revision_reason","voice_revision_evidence",
+                      "voice_revision_hash_history"):
+            ep.pop(field,None)
         self.assertIn("На другом видео райдер",ep["narration"])
         self.assertFalse(ep["auto_publish"])
         original_fp=preview_fingerprint(ep)

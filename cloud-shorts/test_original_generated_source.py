@@ -142,7 +142,9 @@ class OwnerOriginalMediaTests(unittest.TestCase):
                         self.assertEqual(original.original_results(
                             topic,{assets.source_id(first)}),[])
 
-    def test_batch_coherence_cannot_be_faked_with_another_job(self):
+    def test_owner_originals_from_separate_jobs_can_form_factual_contrast(self):
+        # Removed an artificial SAME-BATCH limit. Both clips still have
+        # valid owner provenance, independent SHA and distinct actions.
         original.verified_feed.cache_clear()
         changed=example("jump","b",batch="20261103035102-ddffee")
         feed=json.dumps({"version":1,"provider":"gustava-ltx-original",
@@ -150,9 +152,22 @@ class OwnerOriginalMediaTests(unittest.TestCase):
         with patch.dict(os.environ,{"GUSTAVA_ORIGINAL_FEED_URL":assets.ORIGINAL_FEED_URL}):
             with patch.object(original.urllib.request,"urlopen",
                               return_value=Response(feed,assets.ORIGINAL_FEED_URL)):
-                self.assertEqual(original.original_results("motocross"),[])
-                self.assertFalse(stories.same_owner_original_pair(self.first,changed))
-                self.assertEqual(stories.select_pair([self.first,changed],set()),[])
+                supply=original.original_results("motocross")
+                self.assertEqual(len(supply),2)
+                self.assertTrue(stories.same_owner_original_pair(self.first,changed))
+                self.assertEqual(stories.select_pair(supply,set()),supply)
+                self.assertEqual(
+                    original.original_results("motocross",
+                         {assets.source_id(self.first)}),[])
+                self.assertEqual(len(stories.require_filmable(
+                    stories.compose(supply,[]),supply)),2)
+
+    def test_unrelated_owner_original_actions_remain_ineligible(self):
+        original.verified_feed.cache_clear()
+        one=example("riding","a")
+        same=example("riding","b",batch="20261103035102-ddffee")
+        self.assertFalse(stories.same_owner_original_pair(one,same))
+        self.assertEqual(stories.select_pair([one,same],set()),[])
 
     def test_repeated_clip_and_same_action_never_create_one_original(self):
         for clips in ((self.first,self.first),(self.first,example("riding","b"))):

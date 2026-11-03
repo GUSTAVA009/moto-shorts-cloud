@@ -93,14 +93,21 @@ def scene_for(media):
 
 
 def same_owner_original_pair(first, second):
-    """One genuine owner produced pair: DISTINCT MP4 SHA, distinct scene action,
-    same immutable generation batch. Never impersonate two stock filmmakers."""
-    from moto_assets import source_id
+    """Two independent owner-original MP4s: rights, SHA and actions must match.
+
+    An earlier artificial SAME-BATCH restriction discarded a usable riding
+    shot if its companion jump shot failed generation: the next genuinely
+    owned jump could never pair with it. The two shots are separate events,
+    not a claim of filming the same event or using two stock filmmakers.
+    Actual actions remain subject to independent real-frame editorial QA.
+    """
+    from moto_assets import source_id, validated_media
     return (source_id(first).startswith("gustava-original-")
             and source_id(second).startswith("gustava-original-")
             and source_id(first) != source_id(second)
-            and first.get("generation_batch") == second.get("generation_batch")
-            and first.get("scene_action") != second.get("scene_action"))
+            and first.get("scene_action") != second.get("scene_action")
+            and validated_media(first) == source_id(first)
+            and validated_media(second) == source_id(second))
 
 
 def pair_permitted(first, second):

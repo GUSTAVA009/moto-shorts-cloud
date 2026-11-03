@@ -79,12 +79,17 @@ class PublisherShellTests(unittest.TestCase):
         self.assertIn('ep["id"] in published', workflow)
         self.assertIn('ep.get("auto_publish") is not False', workflow)
 
-    def test_depleted_buffer_reserve_reports_failure_not_green(self):
+    def test_depleted_buffer_reserve_reports_real_shortfall_without_false_publish(self):
         workflow = source(".github/workflows/buffer-backlog.yml")
-        self.assertIn("min_queue_reserve = 7", workflow)
-        self.assertIn("if len(queued) >= min_queue_reserve:", workflow)
-        self.assertIn("BUFFER_RESERVE_UNDER_MINIMUM", workflow)
-        self.assertIn("raise SystemExit(1)", workflow)
+        self.assertIn("target = 10", workflow)
+        self.assertIn("BUFFER_INVENTORY_SHORTFALL", workflow)
+        self.assertIn("Buffer ID created by this workflow: none", workflow)
+        self.assertIn("not production success", workflow)
+        # A 7-post stock threshold is not a license or quality requirement.
+        # No eligible MP4 must not abort the monitoring/supply controller.
+        self.assertNotIn("BUFFER_RESERVE_UNDER_MINIMUM", workflow)
+        self.assertNotIn("min_queue_reserve = 7", workflow)
+        self.assertIn("steps.pick.outputs.has_job != 'true'", workflow)
 
     def test_no_legacy_scheduled_publisher(self):
         self.assertFalse((ROOT / ".github/workflows/publora-backlog.yml").exists())

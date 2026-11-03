@@ -57,7 +57,10 @@ class VoiceAutorepairTests(unittest.TestCase):
                 self.assertEqual(qa.repair("test-motorcycle-short", runner=runner), 0)
                 audit = json.loads((Path(tmp) / "dist/new/test-motorcycle-short/repair_history.json").read_text())
         self.assertFalse(audit["quality_passed"])
-        self.assertEqual(len(audit["attempts"]), 3)
+        self.assertGreater(len(audit["attempts"]), 3)
+        self.assertEqual(len(audit["attempts"]),len(qa.PROFILES))
+        self.assertEqual(len({(x["speech_speed"],x["music_gain"])
+                              for x in audit["attempts"]}),len(qa.PROFILES))
 
     def test_technical_source_error_does_not_loop_or_publish(self):
         calls = []

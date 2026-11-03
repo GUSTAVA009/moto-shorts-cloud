@@ -169,13 +169,17 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
         self.assertTrue(review.eligible_private_episode(ep,r))
         for change in (
             {"original_sha256":"a"*64},    # duplicated source SHA
-            {"generation_batch":"20261103034202-ffaaaa"},  # different job
+            # Different owner-original jobs are now allowed: retaining
+            # this old restriction stranded legally owned clips.
             {"scene_action":"riding"},      # repeated action
             {"license":"Pexels License"},   # untruthful rights claim
         ):
             broken=deepcopy(ep)
             broken["footage"][1].update(change)
             self.assertFalse(review.eligible_private_episode(broken,r))
+        different_batch=deepcopy(ep)
+        different_batch["footage"][1]["generation_batch"]="20261103034202-ffaaaa"
+        self.assertTrue(review.eligible_private_episode(different_batch,r))
         fake=deepcopy(ep)
         fake["footage"][1]["source_page"]="https://external.test/forged.mp4"
         self.assertFalse(review.eligible_private_episode(fake,r))
