@@ -225,14 +225,16 @@ def main():
             "NEW_SCRIPTS_AWAITING_APPROVED_TTS: none of the three owner "
             "voice services is configured and no pinned DEEP is present. "
             "0 new MP4 generated; unattended voice must be connected.")
-    # GITHUB_TOKEN commits intentionally do not activate push workflows.
-    # Dispatch exactly one safe renderer. Further attempts run by schedule.
-    if os.getenv("GITHUB_EVENT_NAME") == "schedule":
-        print("STORY_READY_FOR_NEXT_SCHEDULED_PREVIEW", added[0], flush=True)
-    else:
-        github("POST", "actions/workflows/daily-preview.yml/dispatches",
-               {"ref": "main"})
-        print("DAILY_PREVIEW_DISPATCHED", added[0], flush=True)
+    # GITHUB_TOKEN catalog commits intentionally do NOT activate push
+    # workflows. Previously a scheduled source refill created real scripts
+    # but only waited for the next 90-minute render slot. Do not throttle
+    # the user's own new LTX originals: dispatch ONE idempotent renderer
+    # after every successful refill, including scheduled source scans.
+    # preview_queue reserves by SHA/episode and Actions concurrency holds
+    # exactly one renderer, so this cannot manually double-publish.
+    github("POST", "actions/workflows/daily-preview.yml/dispatches",
+           {"ref": "main"})
+    print("DAILY_PREVIEW_DISPATCHED", added[0], flush=True)
     return 0
 
 

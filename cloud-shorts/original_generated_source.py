@@ -84,12 +84,16 @@ def action_pairs(used=(), theme=None):
     for item in verified_feed():
         if source_id(item) in used:
             continue
-        if theme and theme not in ACTION_TOPICS[item["scene_action"]]:
-            continue
+        # Keep BOTH original shots of a batch until cohort validation.
+        # Filtering one shot prematurely discarded genuine repair+helmet,
+        # city+forest, wheel+riding etc, leaving a fictitious source shortage.
         batches.setdefault(item["generation_batch"],[]).append(item)
     pairs=[]
     for name, entries in batches.items():
         if len(entries)!=2 or entries[0]["scene_action"]==entries[1]["scene_action"]:
+            continue
+        if theme and not any(theme in ACTION_TOPICS[item["scene_action"]]
+                             for item in entries):
             continue
         pair=sorted(entries,key=lambda a:a["scene_action"])
         pairs.append((name,pair))

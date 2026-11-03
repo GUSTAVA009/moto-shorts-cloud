@@ -115,6 +115,33 @@ class OwnerOriginalMediaTests(unittest.TestCase):
                 self.assertTrue(125<=len(narration["narration"])<=300)
                 self.assertEqual(len(original.verified_feed()),2)
 
+    def test_original_mixed_topic_actions_retain_both_real_mp4s(self):
+        # These source pairs used to be silently dropped because neither
+        # action pair fits the same stock-catalog topic exactly.
+        for left,right,topic in (
+            ("repair","helmet","repair"),
+            ("city","forest","city"),
+            ("wheel","riding","training"),
+            ("rain","forest","rain"),
+        ):
+            with self.subTest(pair=(left,right)):
+                original.verified_feed.cache_clear()
+                first=example(left,"a")
+                second=example(right,"b")
+                feed=json.dumps({
+                    "version":1,"provider":"gustava-ltx-original",
+                    "sources":[first,second]}).encode("utf8")
+                with patch.dict(os.environ,{
+                        "GUSTAVA_ORIGINAL_FEED_URL":assets.ORIGINAL_FEED_URL}):
+                    with patch.object(original.urllib.request,"urlopen",
+                                      return_value=Response(feed,assets.ORIGINAL_FEED_URL)):
+                        selected=original.original_results(topic)
+                        self.assertEqual({x["scene_action"] for x in selected},
+                                         {left,right})
+                        self.assertEqual(len(selected),2)
+                        self.assertEqual(original.original_results(
+                            topic,{assets.source_id(first)}),[])
+
     def test_batch_coherence_cannot_be_faked_with_another_job(self):
         original.verified_feed.cache_clear()
         changed=example("jump","b",batch="20261103035102-ddffee")
