@@ -1372,6 +1372,16 @@
       "episode": "moto-training-dd89cab22ecf",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/82473ebff355b7ce7a4d693426b899bb91609d6cf9400ba3b18e2dde5465a9c5.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-2a58c54073f415897a06ce257e02f95e8158fcf497c17cb213e380eebd66039d": {
+      "episode": "moto-motocross-230c7463b50f",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/2a58c54073f415897a06ce257e02f95e8158fcf497c17cb213e380eebd66039d.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-cbd115bdd87ab6acda1f986c2f694917ffcd5190d75f13d449537b4a3d74b72a": {
+      "episode": "moto-motocross-230c7463b50f",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/cbd115bdd87ab6acda1f986c2f694917ffcd5190d75f13d449537b4a3d74b72a.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -2158,6 +2168,13 @@
       "people": "track-learners-dd89c",
       "story": "closed-course-practice-dd89c",
       "visual": "three-clips-dd89c"
+    },
+    "moto-motocross-230c7463b50f": {
+      "environment": "race-track-230c7",
+      "bike": "motocross-bike",
+      "people": "track-racers-230c7",
+      "story": "rider-at-prepared-track-230c7",
+      "visual": "three-clips-230c7"
     }
   }
 }
