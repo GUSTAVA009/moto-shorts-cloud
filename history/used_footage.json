@@ -1302,6 +1302,16 @@
       "episode": "moto-repair-306ed530d9b2",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/0bb29251a8a8c93c6d3b83c1b530ebc6ff44ddb7395cbc04b73086900483793f.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-6384ada938979bd86a16ffef66ac98e43ed31d2ef5ffbd1b913d11bdc4a77f24": {
+      "episode": "moto-forest-80af5048b88a",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/6384ada938979bd86a16ffef66ac98e43ed31d2ef5ffbd1b913d11bdc4a77f24.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-00261d06668d46564980f474059aa145fce6da8a392acb4028f3e98751479bec": {
+      "episode": "moto-forest-80af5048b88a",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/00261d06668d46564980f474059aa145fce6da8a392acb4028f3e98751479bec.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -2039,6 +2049,13 @@
       "people": "garage-mechanics-306ed",
       "story": "mechanic-bike-servicing-306ed",
       "visual": "three-clips-306ed"
+    },
+    "moto-forest-80af5048b88a": {
+      "environment": "forest-trail-80af5",
+      "bike": "forest-trailbike",
+      "people": "woods-rider-80af5",
+      "story": "forest-path-and-riding-80af5",
+      "visual": "three-clips-80af5"
     }
   }
 }
