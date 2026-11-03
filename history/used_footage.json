@@ -1232,6 +1232,16 @@
       "episode": "moto-forest-3dad89a4d33b",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/4ca10b437474aa8adb52032d8b0f597a39d7f729cb9bc52419b5cfe6ffbc13cb.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-b96747636a97e121457409b593959f7e32ed0c9acbacae48e58a173a16be9a8b": {
+      "episode": "moto-dirt-1576f583ff6d",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/b96747636a97e121457409b593959f7e32ed0c9acbacae48e58a173a16be9a8b.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-e593d475cf81bbaf72699174cc327fe66a4db1c956e73ef7b19db34d25f0b819": {
+      "episode": "moto-dirt-1576f583ff6d",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/e593d475cf81bbaf72699174cc327fe66a4db1c956e73ef7b19db34d25f0b819.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1920,6 +1930,13 @@
       "people": "woods-rider-3dad8",
       "story": "forest-path-and-riding-3dad8",
       "visual": "three-clips-3dad8"
+    },
+    "moto-dirt-1576f583ff6d": {
+      "environment": "muddy-trail-road-1576f",
+      "bike": "offroad-dirtbike",
+      "people": "trail-groups-1576f",
+      "story": "muddy-terrain-1576f",
+      "visual": "three-clips-1576f"
     }
   }
 }
