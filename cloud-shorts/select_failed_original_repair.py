@@ -12,7 +12,9 @@ import base64
 import json
 from pathlib import Path
 import re
+import hashlib
 
+from preview_queue import preview_fingerprint
 from autofill_catalog import github
 from moto_assets import source_id
 from selfhosted_voice import CARTOON_B_REFERENCE_SHA, CARTOON_B_PROFILE_ID
@@ -25,13 +27,32 @@ def decode_entry(entry):
 
 
 def eligible_episode(ep, receipt):
+    try:
+        count = receipt.get("attempt_count") if isinstance(receipt,dict) else None
+        proof = ep.get("voice_revision_evidence") or {}
+        if type(count) is not int or count<1:
+            return False
+        if count > 1:
+            # A previously revised script is eligible for one further
+            # DIFFERENT correction only after its new real MP4 failed ASR.
+            if (ep.get("voice_revision_requested") is not True
+                    or not isinstance(proof,dict)
+                    or proof.get("prior_run_id") != str(receipt.get("previous_run_id"))
+                    or proof.get("new_narration_sha256") != hashlib.sha256(
+                        str(ep.get("narration") or "").encode("utf8")).hexdigest()):
+                return False
+        elif ep.get("voice_revision_requested"):
+            return False
+        if receipt.get("preview_fingerprint") != preview_fingerprint(ep):
+            return False  # Do not re-repair an older run after catalog changed.
+    except (ValueError, TypeError, KeyError, RuntimeError):
+        return False
     return bool(
         ep.get("auto_preview") is True
         and ep.get("auto_publish") is False
         and ep.get("voice_engine") == "gustava_selfhosted_qwen3"
         and ep.get("voice_profile") == CARTOON_B_PROFILE_ID
         and ep.get("selfhosted_voice_id") == "gustava-cartoon-b-v1"
-        and not ep.get("voice_revision_requested")
         and len(ep.get("footage") or []) == 2
         and all(source_id(s).startswith("gustava-original-")
                 for s in ep["footage"])
@@ -42,7 +63,7 @@ def eligible_episode(ep, receipt):
         and receipt.get("mixed_audio_qa_passed") is False
         and receipt.get("selfhosted_reference_sha256") == CARTOON_B_REFERENCE_SHA
         and type(receipt.get("attempt_count")) is int
-        and receipt.get("attempt_count") == 1
+        and receipt.get("attempt_count") >= 1
         and re.fullmatch(r"[a-f0-9]{64}",str(receipt.get("preview_fingerprint") or ""))
         and str(receipt.get("run_id") or "").isdigit()
     )
