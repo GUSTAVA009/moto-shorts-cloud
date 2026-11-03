@@ -1132,6 +1132,16 @@
       "episode": "moto-training-5d7cc0e964be",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/f71fd1eacec23ff075b853ec9219f95f2ec3bbcf5ce2891768215bd56786e386.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-eff1f423b23fc15b454c2115ef49727767142b6b86e5c8c209cce1da62d4ae51": {
+      "episode": "moto-rain-531e9fb1aa3a",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/eff1f423b23fc15b454c2115ef49727767142b6b86e5c8c209cce1da62d4ae51.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-f3709c80cee01f141e51d1db1420fd3396c79aa20133f4d3abd061c85e80fefd": {
+      "episode": "moto-rain-531e9fb1aa3a",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/f3709c80cee01f141e51d1db1420fd3396c79aa20133f4d3abd061c85e80fefd.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1750,6 +1760,13 @@
       "people": "track-learners-5d7cc",
       "story": "closed-course-practice-5d7cc",
       "visual": "three-clips-5d7cc"
+    },
+    "moto-rain-531e9fb1aa3a": {
+      "environment": "wet-asphalt-road-531e9",
+      "bike": "street-motorbike",
+      "people": "road-commuters-531e9",
+      "story": "rainy-motorcycle-road-531e9",
+      "visual": "three-clips-531e9"
     }
   }
 }
