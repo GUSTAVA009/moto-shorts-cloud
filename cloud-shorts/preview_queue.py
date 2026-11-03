@@ -846,8 +846,9 @@ def choose(catalog, output):
         if selected is not None:
             print("PRIORITIZED_SHA_BOUND_CARTOON_B_SPEECH_RERENDER",
                   selected["id"], flush=True)
-    # Then give genuinely new originals priority over non-urgent legacy
-    # revisions. Preserve the old general retry order for historic cases.
+    # Genuine NEW originals have priority over ordinary historic private
+    # revisions (but NOT a SHA-proven, freshly corrected owner voice).
+    # Preserve the old general retry order for historic cases.
     if selected is None:
         selected = next((ep for ep in listed
                          if records[ep["id"]][0] is None
