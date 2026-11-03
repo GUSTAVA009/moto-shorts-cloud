@@ -1222,6 +1222,16 @@
       "episode": "moto-training-f42fe8baca99",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/64d8be851c9f782c78f3430abbf7c05fad26d990e61df5d4ba1e714d9e171312.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-4465d008faa994a53e26918d7a2630fc165d377255edd2d2296956df44a10088": {
+      "episode": "moto-forest-3dad89a4d33b",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/4465d008faa994a53e26918d7a2630fc165d377255edd2d2296956df44a10088.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-4ca10b437474aa8adb52032d8b0f597a39d7f729cb9bc52419b5cfe6ffbc13cb": {
+      "episode": "moto-forest-3dad89a4d33b",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/4ca10b437474aa8adb52032d8b0f597a39d7f729cb9bc52419b5cfe6ffbc13cb.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1903,6 +1913,13 @@
       "people": "track-learners-f42fe",
       "story": "closed-course-practice-f42fe",
       "visual": "three-clips-f42fe"
+    },
+    "moto-forest-3dad89a4d33b": {
+      "environment": "forest-trail-3dad8",
+      "bike": "forest-trailbike",
+      "people": "woods-rider-3dad8",
+      "story": "forest-path-and-riding-3dad8",
+      "visual": "three-clips-3dad8"
     }
   }
 }
