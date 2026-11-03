@@ -18,6 +18,14 @@ class SelectFailedOriginalVoiceTests(unittest.TestCase):
 
     def fixture(self):
         ep=copy.deepcopy(self.ep)
+        # Reconstruct the genuine first-run, unrevised input. Current
+        # episodes.json is the LIVE catalog and the real automatic
+        # phonetic fix has already changed its revision fields.
+        for field in ("voice_revision_requested","voice_revision_priority",
+                      "voice_revision_reason","voice_revision_evidence"):
+            ep.pop(field,None)
+        ep["narration"]=ep["narration"].replace(
+            "совершает прыжок","прыгает с трамплина")
         receipt={
             "id":ep["id"],"state":"preview_ready",
             "attempt_count":1,"run_id":"41549749487",
