@@ -124,6 +124,50 @@ class FailedPreviewRepairTests(unittest.TestCase):
         next(x for x in fake_catalog["episodes"] if x["id"]==slug).update(first)
         self.assertIsNone(r.repair_episode(fake_catalog,slug,raw,mixed,receipt))
 
+    def test_actual_fused_video_raider_raw_only_failure_is_autorepaired(self):
+        from preview_queue import preview_fingerprint, eligible_retry
+        from selfhosted_voice import CARTOON_B_PROFILE_ID, CARTOON_B_REFERENCE_SHA
+        catalog=copy.deepcopy(self.base)
+        slug="moto-forest-5a24107fdebf"
+        ep=next(x for x in catalog["episodes"] if x["id"]==slug)
+        self.assertIn("На другом видео райдер",ep["narration"])
+        self.assertFalse(ep["auto_publish"])
+        original_fp=preview_fingerprint(ep)
+        receipt={"id":slug,"state":"preview_ready","attempt_count":1,
+                 "run_id":"41617140798",
+                 "preview_fingerprint":original_fp,
+                 "voice_qa_passed":False,"mixed_audio_qa_passed":True,
+                 "selfhosted_reference_sha256":CARTOON_B_REFERENCE_SHA}
+        # Actual production 41617140798: original ASR 90.9%, final MP4
+        # ASR 100%. Changing music gain cannot correct the source fusion.
+        raw={"episode_id":slug,"passed":False,
+             "recognized_text":ep["narration"].replace(
+                 "видео райдер","видеорайдер"),
+             "lexical_coverage":.909,"voice_profile":CARTOON_B_PROFILE_ID,
+             "selfhosted_reference_sha256":CARTOON_B_REFERENCE_SHA,
+             "voice_speaker":"gustava-cartoon-b-v1"}
+        mixed={"episode_id":slug,"passed":True,"lexical_coverage":1.0,
+               "source":"FINAL_MIXED_MP4","mp4_sha256":"a"*64}
+        fixed=r.repair_episode(catalog,slug,raw,mixed,receipt)
+        self.assertIsNotNone(fixed)
+        new=next(x for x in fixed["episodes"] if x["id"]==slug)
+        self.assertIn("Во втором кадре райдер",new["narration"])
+        self.assertNotIn("видеорайдер",new["narration"])
+        self.assertFalse(new["auto_publish"])
+        self.assertEqual(new["voice_revision_evidence"]["prior_mixed_qa_passed"],True)
+        self.assertTrue(eligible_retry(new,receipt,preview_fingerprint(new)))
+        stale=copy.deepcopy(receipt)
+        stale["mixed_audio_qa_passed"]=False
+        self.assertFalse(eligible_retry(new,stale,preview_fingerprint(new)))
+        # Verbatim same previous run and revised script can't be queued again.
+        self.assertIsNone(r.repair_episode(fixed,slug,raw,mixed,receipt))
+        unrelated=copy.deepcopy(raw)
+        unrelated["recognized_text"]="несвязанный текст"
+        self.assertIsNone(r.repair_episode(catalog,slug,unrelated,mixed,receipt))
+        wrong=copy.deepcopy(raw)
+        wrong["selfhosted_reference_sha256"]="f"*64
+        self.assertIsNone(r.repair_episode(catalog,slug,wrong,mixed,receipt))
+
     def test_bounded_phonetic_rewrite_preserves_meaning(self):
         new = r.simple_rewrite("Райдер на мотоцикле едет в лесу.",
                                "Райдер но мотоцикли едет в лесу.")
