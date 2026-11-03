@@ -450,22 +450,28 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
         int(datetime.now(timezone.utc).timestamp() // 5400) % len(eligible_themes)
     ][0]
     commons_calls = 0
+    # Rapid ORIGINAL-source scans may run every 15 minutes. The public
+    # Commons API is rate-limited independently of our local LTX model:
+    # one permitted scout window per 90 min when the original bank is
+    # exhausted, not a fabricated license bypass or HTTP 429 loop.
+    external_scout_window = (os.getenv("GITHUB_EVENT_NAME") != "schedule"
+                             or int(datetime.now(timezone.utc).timestamp() // 900) % 6 == 0)
     for theme in themes:
         # Retain a staged subject for later instead of repeating the last
         # motorcycle type and failing the same editorial QA three times.
         if theme[3] == last_bike:
             continue
-        found = []
-        if key:
+        # TRUE first priority is the owner's newly generated LTX videos.
+        # Previously the code always called an external provider BEFORE
+        # looking for our already-created footage. That is neither needed
+        # for ownership/licensing nor sustainable at high Shorts cadence.
+        found = list(original_results(theme, used))
+        if not select_pair(found, used) and key:
             for page in (1, 2, 3):
                 found.extend(source_fetch(theme, page, key))
                 if select_pair(found, used):
                     break
-        # Priority one: fresh ORIGINAL scenes from the owner's idle-GPU LTX
-        # producer. The manifest is fixed HTTPS, SHA-bound and read-only.
-        # Every candidate still needs real per-frame independent editorial QA.
         if not select_pair(found, used):
-            found.extend(original_results(theme, used))
             found.extend(curated_pexels_results(theme, used))
             found.extend(curated_mixkit_results(theme, used))
         # A touring-versus-race contrast needs both real settings. Combine
@@ -477,7 +483,7 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
             found.extend(curated_pexels_results(partner, used))
             found.extend(curated_mixkit_results(partner, used))
         if (not select_pair(found, used) and commons_calls == 0
-                and theme[0] == commons_target):
+                and external_scout_window and theme[0] == commons_target):
             commons_calls += 1
             try:
                 found.extend(commons_fetch(theme))
