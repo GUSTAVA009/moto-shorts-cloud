@@ -9838,7 +9838,7 @@
       "voice_profile": "gustava_cartoon_b_qwen3_v1",
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
       "title": "Мотопрыжок и поездка — какой кадр сильнее? #shorts",
-      "narration": "Мотоцикл в разных сюжетах: райдер прыгает с трамплина. На второй съёмке байкер едет на мотоцикле. Это разные люди и кадры. Что сильнее цепляет?",
+      "narration": "Мотоцикл в разных сюжетах: райдер совершает прыжок. На второй съёмке байкер едет на мотоцикле. Это разные люди и кадры. Что сильнее цепляет?",
       "description": "Две разные мотоистории: мотопрыжок и поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
       "caption_start": "МОТОПРЫЖОК",
       "caption_middle": "ПОЕЗДКА",
@@ -9915,7 +9915,25 @@
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
       "generation_provenance": "keyless_action_filmable_v1",
-      "story_reserve_id": "r2-training-0039"
+      "story_reserve_id": "r2-training-0039",
+      "voice_revision_requested": true,
+      "voice_revision_priority": true,
+      "voice_revision_reason": "private_original_cartoon_b_phonetic_rephrase",
+      "voice_revision_evidence": {
+        "prior_run_id": "41549749487",
+        "prior_preview_fingerprint": "c997518afcbf5cb4b185b292f2e612fc9a08419826732ce02383711235a8e7ce",
+        "prior_mp4_sha256": "ba1891f3122b78f1012bd6fea05948325f3c799eaecaf2ac3e0d05d897bfeed0",
+        "old_narration_sha256": "bd8d4b91de56eff71d28f1b41158ec3f4c43665963646de056dcaa300681d4dc",
+        "new_narration_sha256": "d7a69ceaa994d58db27568c25bf032782ef3c7e22d359c00ad0647873ff70d7e",
+        "immutable_source_ids": [
+          "gustava-original-a4fae2e908f9b80c47131dd3192be20ac77a82dcb218be696f6dc0c4d31bbb8b",
+          "gustava-original-f71fd1eacec23ff075b853ec9219f95f2ec3bbcf5ce2891768215bd56786e386"
+        ],
+        "original_voice_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
+        "raw_coverage": 0.957,
+        "mixed_coverage": 0.957,
+        "maximum_attempts": 2
+      }
     }
   ]
 }
