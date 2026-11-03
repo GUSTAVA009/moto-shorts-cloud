@@ -16,7 +16,15 @@ import sys
 HERE = Path(__file__).resolve().parent
 # Narrator remains centered in stereo; lowering background only can never
 # fix a missing spoken consonant but does improve final mixed intelligibility.
-PROFILES = ((1.00, .12), (1.00, .08), (.98, .10))
+# No arbitrary three-attempt ceiling. Try genuinely different short
+# soundtrack/tempo treatments while the hard ASR quality gate stays intact.
+# The finite candidate space is a CPU/GPU-resource safety bound, not a
+# policy that prevents future meaning-preserving original voice rewrites.
+PROFILES = (
+    (1.00, .12), (1.00, .08), (.98, .10),
+    (1.01, .08), (.99, .07), (1.02, .06),
+    (.98, .06), (1.03, .05), (.97, .05),
+)
 MIN_COVERAGE = .97
 
 
