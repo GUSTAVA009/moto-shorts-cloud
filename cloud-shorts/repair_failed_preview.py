@@ -79,8 +79,11 @@ def repair_episode(catalog, ep_id, voice_qa, mixed_qa, receipt):
     if receipt.get("voice_qa_passed") is True and receipt.get("mixed_audio_qa_passed") is True:
         return None
     count = int(receipt.get("attempt_count") or 0)
-    if not 1 <= count < MAX_REVISION_ATTEMPTS:
+    if count < 1:
         return None
+    # Third-party/historic repair keeps its legacy bounded retry policy.
+    # Owner-authored Cartoon B originals use evidence-backed progress instead
+    # of an arbitrary numeric ceiling (each new phrase must be truly distinct).
     if voice_qa.get("episode_id") != ep_id or mixed_qa.get("episode_id") != ep_id:
         return None
     if voice_qa.get("passed") is True and mixed_qa.get("passed") is True:
@@ -94,10 +97,26 @@ def repair_episode(catalog, ep_id, voice_qa, mixed_qa, receipt):
         from selfhosted_voice import CARTOON_B_REFERENCE_SHA, CARTOON_B_PROFILE_ID
         from moto_assets import source_id
         from source_story import require_filmable
-        if (count != 1
+        # An already rewritten private episode may be repaired AGAIN only
+        # after its distinct second MP4 was really rendered and its own new
+        # raw+mixed ASR independently failed. Never retry the same fingerprint.
+        old_fingerprint = ledger.preview_fingerprint(old)
+        old_proof = old.get("voice_revision_evidence") or {}
+        old_history = list(old.get("voice_revision_hash_history") or [])
+        if count > 1:
+            old_hash = __import__("hashlib").sha256(
+                old["narration"].encode("utf8")).hexdigest()
+            if (old.get("voice_revision_requested") is not True
+                    or not isinstance(old_proof,dict)
+                    or old_proof.get("new_narration_sha256") != old_hash
+                    or old_proof.get("prior_run_id") != str(receipt.get("previous_run_id"))
+                    or old_proof.get("original_voice_reference_sha256") != CARTOON_B_REFERENCE_SHA
+                    or not re.fullmatch(r"[0-9a-f]{64}",str(old_proof.get("old_narration_sha256") or ""))):
+                return None
+            old_history.extend([old_proof["old_narration_sha256"],old_hash])
+        if (receipt.get("preview_fingerprint") != old_fingerprint
                 or old.get("voice_profile") != CARTOON_B_PROFILE_ID
                 or old.get("selfhosted_voice_id") != "gustava-cartoon-b-v1"
-                or old.get("voice_revision_requested") is True
                 or voice_qa.get("voice_profile") != CARTOON_B_PROFILE_ID
                 or voice_qa.get("selfhosted_reference_sha256") != CARTOON_B_REFERENCE_SHA
                 or voice_qa.get("voice_speaker") != "gustava-cartoon-b-v1"
@@ -116,6 +135,13 @@ def repair_episode(catalog, ep_id, voice_qa, mixed_qa, receipt):
         fresh = simple_rewrite(old["narration"],str(voice_qa.get("recognized_text") or ""))
         if not fresh or not 125<=len(fresh)<=300:
             return None
+        sha256 = __import__("hashlib").sha256
+        old_hash = sha256(old["narration"].encode("utf8")).hexdigest()
+        fresh_hash = sha256(fresh.encode("utf8")).hexdigest()
+        if fresh_hash in set(old_history) or fresh_hash == old_hash:
+            # No cycling through same two phrases merely to evade the
+            # previous failed run, regardless of attempt number.
+            return None
         sources=old["footage"]
         require_filmable({"narration":fresh},sources)
         candidate=copy.deepcopy(catalog)
@@ -124,6 +150,8 @@ def repair_episode(catalog, ep_id, voice_qa, mixed_qa, receipt):
         ep["voice_revision_requested"]=True
         ep["voice_revision_priority"]=True
         ep["voice_revision_reason"]="private_original_cartoon_b_phonetic_rephrase"
+        ep["voice_revision_hash_history"]=list(dict.fromkeys(
+            old_history + [old_hash, fresh_hash]))
         ep["voice_revision_evidence"]={
             "prior_run_id":str(receipt["run_id"]),
             "prior_preview_fingerprint":receipt["preview_fingerprint"],
@@ -136,13 +164,16 @@ def repair_episode(catalog, ep_id, voice_qa, mixed_qa, receipt):
             "original_voice_reference_sha256":CARTOON_B_REFERENCE_SHA,
             "raw_coverage":float(voice_qa["lexical_coverage"]),
             "mixed_coverage":float(mixed_qa["lexical_coverage"]),
-            "maximum_attempts":2,
+            "prior_attempt_count":count,
+            "policy":"distinct_phonetic_progress_only",
         }
         validate_episode(ep)
         validate_catalog(candidate)
         return candidate
     if not old or old.get("auto_publish") is not True or old.get("voice_engine") != "kokoro_ru_dima":
         return None
+    if count >= MAX_REVISION_ATTEMPTS:
+        return None  # Historic third-party Kokoro limit is unchanged.
     # Raw narration first; if it was fine, keep exact script and let an audio
     # specialist review a remaining mix defect rather than mis-editing words.
     if voice_qa.get("passed") is True:
