@@ -30,6 +30,46 @@ class FailedPreviewRepairTests(unittest.TestCase):
         item["narration"] = "Райдер на мотоцикле уверенно едет в лесу. " + item["narration"]
         return c
 
+    def test_auto_phonetic_repair_of_real_private_cartoon_b_original_jump(self):
+        from preview_queue import preview_fingerprint, eligible_retry
+        from selfhosted_voice import CARTOON_B_REFERENCE_SHA, CARTOON_B_PROFILE_ID
+        catalog=copy.deepcopy(self.base)
+        slug="moto-training-5d7cc0e964be"
+        episode=next(x for x in catalog["episodes"] if x["id"]==slug)
+        self.assertFalse(episode["auto_publish"])
+        self.assertIn("прыгает с трамплина",episode["narration"])
+        receipt={"id":slug,"state":"preview_ready","attempt_count":1,
+                 "run_id":"41549749487",
+                 "preview_fingerprint":preview_fingerprint(episode),
+                 "voice_qa_passed":False,"mixed_audio_qa_passed":False,
+                 "selfhosted_reference_sha256":CARTOON_B_REFERENCE_SHA}
+        raw={"episode_id":slug,"passed":False,
+             "recognized_text":episode["narration"].replace("трамплина","тромплина"),
+             "lexical_coverage":.957,"voice_profile":CARTOON_B_PROFILE_ID,
+             "selfhosted_reference_sha256":CARTOON_B_REFERENCE_SHA,
+             "voice_speaker":"gustava-cartoon-b-v1"}
+        mixed={"episode_id":slug,"passed":False,"lexical_coverage":.957,
+               "source":"FINAL_MIXED_MP4","mp4_sha256":"b"*64}
+        result=r.repair_episode(catalog,slug,raw,mixed,receipt)
+        self.assertIsNotNone(result)
+        updated=next(x for x in result["episodes"] if x["id"]==slug)
+        self.assertIn("совершает прыжок",updated["narration"])
+        self.assertNotIn("тромплина",updated["narration"])
+        self.assertFalse(updated["auto_publish"])
+        self.assertTrue(updated["voice_revision_requested"])
+        self.assertTrue(eligible_retry(updated,receipt,preview_fingerprint(updated)))
+        tampered=copy.deepcopy(updated)
+        tampered["voice_revision_evidence"]["prior_mp4_sha256"]="not-real-sha"
+        self.assertFalse(eligible_retry(tampered,receipt,preview_fingerprint(tampered)))
+        raw["recognized_text"]="другая непонятная речь"
+        self.assertIsNone(r.repair_episode(catalog,slug,raw,mixed,receipt))
+        raw["recognized_text"]=episode["narration"].replace("трамплина","тромплина")
+        receipt["attempt_count"]=2
+        self.assertIsNone(r.repair_episode(catalog,slug,raw,mixed,receipt))
+        receipt["attempt_count"]=1
+        raw["selfhosted_reference_sha256"]="0"*64
+        self.assertIsNone(r.repair_episode(catalog,slug,raw,mixed,receipt))
+
     def test_bounded_phonetic_rewrite_preserves_meaning(self):
         new = r.simple_rewrite("Райдер на мотоцикле едет в лесу.",
                                "Райдер но мотоцикли едет в лесу.")

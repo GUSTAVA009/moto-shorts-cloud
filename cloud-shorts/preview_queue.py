@@ -155,12 +155,71 @@ def decode_receipt(entry):
     return record
 
 
+def eligible_private_original_cartoon_b_asr_retry(episode, receipt, new_fingerprint):
+    """At most one SHA-pinned PRIVATE text correction from a truly failed QA.
+
+    The original written narration has one misheard nonword; the repair bot
+    rewrites it to a simple, equivalent action phrase, preserves both exact
+    original video source SHAs and the verified owner Cartoon B reference.
+    This is never a Buffer publishing operation.
+    """
+    if (not isinstance(receipt,dict) or receipt.get("id") != episode.get("id")
+            or receipt.get("state") != "preview_ready"
+            or type(receipt.get("attempt_count")) is not int
+            or receipt["attempt_count"] != 1
+            or receipt.get("voice_qa_passed") is not False
+            or receipt.get("mixed_audio_qa_passed") is not False
+            or episode.get("auto_preview") is not True
+            or episode.get("auto_publish") is not False
+            or episode.get("voice_engine") != "gustava_selfhosted_qwen3"
+            or episode.get("selfhosted_voice_id") != "gustava-cartoon-b-v1"
+            or episode.get("voice_revision_requested") is not True
+            or episode.get("voice_revision_reason")
+               != "private_original_cartoon_b_phonetic_rephrase"):
+        return False
+    proof = episode.get("voice_revision_evidence")
+    if not isinstance(proof,dict):
+        return False
+    from selfhosted_voice import CARTOON_B_REFERENCE_SHA, CARTOON_B_PROFILE_ID
+    if (episode.get("voice_profile") != CARTOON_B_PROFILE_ID
+            or receipt.get("selfhosted_reference_sha256") != CARTOON_B_REFERENCE_SHA
+            or proof.get("original_voice_reference_sha256") != CARTOON_B_REFERENCE_SHA
+            or proof.get("prior_run_id") != str(receipt.get("run_id"))
+            or proof.get("prior_preview_fingerprint") != receipt.get("preview_fingerprint")
+            or proof.get("maximum_attempts") != 2
+            or not re.fullmatch(r"[a-f0-9]{64}",str(proof.get("prior_mp4_sha256") or ""))
+            or not re.fullmatch(r"[a-f0-9]{64}",str(proof.get("old_narration_sha256") or ""))
+            or proof.get("new_narration_sha256") !=
+               hashlib.sha256(str(episode.get("narration") or "").encode("utf8")).hexdigest()
+            or not .90<=float(proof.get("raw_coverage") or 0)<.97
+            or not .90<=float(proof.get("mixed_coverage") or 0)<.97
+            or receipt.get("preview_fingerprint") == new_fingerprint):
+        return False
+    footage = episode.get("footage") or []
+    try:
+        if (len(footage)!=2
+                or not all(source_id(s).startswith("gustava-original-") for s in footage)
+                or [source_id(s) for s in footage]!=proof.get("immutable_source_ids")):
+            return False
+        from source_story import require_filmable
+        narration=episode.get("narration")
+        if not isinstance(narration,str) or not 125<=len(narration)<=300:
+            return False
+        require_filmable({"narration":narration},footage)
+    except (ValueError,TypeError,KeyError):
+        return False
+    return True
+
+
 def eligible_retry(episode, receipt, new_fingerprint):
     """Rerender only a genuinely revised, never-published failed preview."""
     if receipt is None or receipt.get("id") != episode["id"]:
         return False
     if receipt.get("state") != "preview_ready":
         return False
+    if episode.get("voice_revision_reason") == "private_original_cartoon_b_phonetic_rephrase":
+        return eligible_private_original_cartoon_b_asr_retry(
+            episode, receipt, new_fingerprint)
     attempts = int(receipt.get("attempt_count", 1))
     # Exact earlier preview: at 3.900s the mud caption appeared while
     # 5.881s of racing video remained. A successful private QA pass did not

@@ -25,6 +25,9 @@ from autofill_catalog import github
 CATALOG = "cloud-shorts/episodes.json"
 MAX_REVISION_ATTEMPTS = 3
 SAFE_REWRITES = (
+    # Owner Cartoon B often pronounces unstressed vowels like an English O.
+    # Rephrase a physically visible jump without copying a wrong ASR word.
+    ("прыгает с трамплина", "совершает прыжок"),
     ("с осмотра", "с простой проверки"),
     ("на мотоцикле", "на байке"),
     ("выбирай темп", "подбирай скорость"),
@@ -84,6 +87,60 @@ def repair_episode(catalog, ep_id, voice_qa, mixed_qa, receipt):
         return None
     episodes = catalog.get("episodes", [])
     old = next((x for x in episodes if x["id"] == ep_id), None)
+    if old and old.get("auto_publish") is False and old.get("voice_engine") == "gustava_selfhosted_qwen3":
+        # A single unattended private Cartoon B rephrase after a genuine
+        # raw+mixed ASR mismatch. No false positive on previously sent posts
+        # or unknown footage; no threshold weakening or voice replacement.
+        from selfhosted_voice import CARTOON_B_REFERENCE_SHA, CARTOON_B_PROFILE_ID
+        from moto_assets import source_id
+        from source_story import require_filmable
+        if (count != 1
+                or old.get("voice_profile") != CARTOON_B_PROFILE_ID
+                or old.get("selfhosted_voice_id") != "gustava-cartoon-b-v1"
+                or old.get("voice_revision_requested") is True
+                or voice_qa.get("voice_profile") != CARTOON_B_PROFILE_ID
+                or voice_qa.get("selfhosted_reference_sha256") != CARTOON_B_REFERENCE_SHA
+                or voice_qa.get("voice_speaker") != "gustava-cartoon-b-v1"
+                or voice_qa.get("passed") is not False
+                or mixed_qa.get("passed") is not False
+                or mixed_qa.get("source") != "FINAL_MIXED_MP4"
+                or not .90 <= float(voice_qa.get("lexical_coverage") or 0) < .97
+                or not .90 <= float(mixed_qa.get("lexical_coverage") or 0) < .97
+                or not re.fullmatch(r"[0-9a-f]{64}",str(mixed_qa.get("mp4_sha256") or ""))
+                or not re.fullmatch(r"[0-9a-f]{64}",str(receipt.get("preview_fingerprint") or ""))
+                or not str(receipt.get("run_id") or "").isdigit()
+                or not (len(old.get("footage") or []) == 2 and
+                        all(source_id(f).startswith("gustava-original-")
+                            for f in old["footage"]))):
+            return None
+        fresh = simple_rewrite(old["narration"],str(voice_qa.get("recognized_text") or ""))
+        if not fresh or not 125<=len(fresh)<=300:
+            return None
+        sources=old["footage"]
+        require_filmable({"narration":fresh},sources)
+        candidate=copy.deepcopy(catalog)
+        ep=next(x for x in candidate["episodes"] if x["id"] == ep_id)
+        ep["narration"]=fresh
+        ep["voice_revision_requested"]=True
+        ep["voice_revision_priority"]=True
+        ep["voice_revision_reason"]="private_original_cartoon_b_phonetic_rephrase"
+        ep["voice_revision_evidence"]={
+            "prior_run_id":str(receipt["run_id"]),
+            "prior_preview_fingerprint":receipt["preview_fingerprint"],
+            "prior_mp4_sha256":mixed_qa["mp4_sha256"],
+            "old_narration_sha256":__import__("hashlib").sha256(
+                old["narration"].encode("utf8")).hexdigest(),
+            "new_narration_sha256":__import__("hashlib").sha256(
+                fresh.encode("utf8")).hexdigest(),
+            "immutable_source_ids":[source_id(s) for s in sources],
+            "original_voice_reference_sha256":CARTOON_B_REFERENCE_SHA,
+            "raw_coverage":float(voice_qa["lexical_coverage"]),
+            "mixed_coverage":float(mixed_qa["lexical_coverage"]),
+            "maximum_attempts":2,
+        }
+        validate_episode(ep)
+        validate_catalog(candidate)
+        return candidate
     if not old or old.get("auto_publish") is not True or old.get("voice_engine") != "kokoro_ru_dima":
         return None
     # Raw narration first; if it was fine, keep exact script and let an audio
