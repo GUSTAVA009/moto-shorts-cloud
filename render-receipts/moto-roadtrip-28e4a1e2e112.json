@@ -1,0 +1,11 @@
+{
+  "id": "moto-roadtrip-28e4a1e2e112",
+  "state": "reserved",
+  "run_id": "41618568806",
+  "attempt_count": 1,
+  "preview_fingerprint": "6b939f5958ede7e65cf21d942790bb2a252252898721fee13ac0f4f1afdb5cf5",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-cartoon-b-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
