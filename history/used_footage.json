@@ -1192,6 +1192,16 @@
       "episode": "moto-city-a89311f06123",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/5b54e556e74e09ffb91a049a34552f7cfc1bcc58b2822fe753235417fae8d7c5.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-cd1b05a9b7e522d3c0ffe8b6a3ed12080132b1cf6d75ad21777f96f23d7ea17b": {
+      "episode": "moto-vintage-d50aea907b74",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/cd1b05a9b7e522d3c0ffe8b6a3ed12080132b1cf6d75ad21777f96f23d7ea17b.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-47b8293b3ed999f1db654a5ae286f38ee8c9076fc113f1d35c77b176bc76c63a": {
+      "episode": "moto-vintage-d50aea907b74",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/47b8293b3ed999f1db654a5ae286f38ee8c9076fc113f1d35c77b176bc76c63a.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1852,6 +1862,13 @@
       "people": "city-riders-a8931",
       "story": "urban-riding-a8931",
       "visual": "three-clips-a8931"
+    },
+    "moto-vintage-d50aea907b74": {
+      "environment": "vintage-workshop-d50ae",
+      "bike": "classic-motorcycle",
+      "people": "classic-restorers-d50ae",
+      "story": "vintage-bike-work-d50ae",
+      "visual": "three-clips-d50ae"
     }
   }
 }
