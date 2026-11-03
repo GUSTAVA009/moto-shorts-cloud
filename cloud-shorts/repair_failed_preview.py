@@ -98,13 +98,13 @@ def repair_episode(catalog, ep_id, voice_qa, mixed_qa, receipt):
                 or old.get("voice_profile") != CARTOON_B_PROFILE_ID
                 or old.get("selfhosted_voice_id") != "gustava-cartoon-b-v1"
                 or old.get("voice_revision_requested") is True
-                or raw.get("voice_profile") != CARTOON_B_PROFILE_ID
-                or raw.get("selfhosted_reference_sha256") != CARTOON_B_REFERENCE_SHA
-                or raw.get("voice_speaker") != "gustava-cartoon-b-v1"
-                or raw.get("passed") is not False
+                or voice_qa.get("voice_profile") != CARTOON_B_PROFILE_ID
+                or voice_qa.get("selfhosted_reference_sha256") != CARTOON_B_REFERENCE_SHA
+                or voice_qa.get("voice_speaker") != "gustava-cartoon-b-v1"
+                or voice_qa.get("passed") is not False
                 or mixed_qa.get("passed") is not False
                 or mixed_qa.get("source") != "FINAL_MIXED_MP4"
-                or not .90 <= float(raw.get("lexical_coverage") or 0) < .97
+                or not .90 <= float(voice_qa.get("lexical_coverage") or 0) < .97
                 or not .90 <= float(mixed_qa.get("lexical_coverage") or 0) < .97
                 or not re.fullmatch(r"[0-9a-f]{64}",str(mixed_qa.get("mp4_sha256") or ""))
                 or not re.fullmatch(r"[0-9a-f]{64}",str(receipt.get("preview_fingerprint") or ""))
@@ -113,7 +113,7 @@ def repair_episode(catalog, ep_id, voice_qa, mixed_qa, receipt):
                         all(source_id(f).startswith("gustava-original-")
                             for f in old["footage"]))):
             return None
-        fresh = simple_rewrite(old["narration"],str(raw.get("recognized_text") or ""))
+        fresh = simple_rewrite(old["narration"],str(voice_qa.get("recognized_text") or ""))
         if not fresh or not 125<=len(fresh)<=300:
             return None
         sources=old["footage"]
@@ -134,7 +134,7 @@ def repair_episode(catalog, ep_id, voice_qa, mixed_qa, receipt):
                 fresh.encode("utf8")).hexdigest(),
             "immutable_source_ids":[source_id(s) for s in sources],
             "original_voice_reference_sha256":CARTOON_B_REFERENCE_SHA,
-            "raw_coverage":float(raw["lexical_coverage"]),
+            "raw_coverage":float(voice_qa["lexical_coverage"]),
             "mixed_coverage":float(mixed_qa["lexical_coverage"]),
             "maximum_attempts":2,
         }
