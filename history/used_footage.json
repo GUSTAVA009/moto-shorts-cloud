@@ -1122,6 +1122,16 @@
       "episode": "moto-vintage-71bf7b721a9b",
       "source": "https://www.pexels.com/video/motocross-riders-jumping-a-tabletop-at-a-racetrack-9222538/",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-a4fae2e908f9b80c47131dd3192be20ac77a82dcb218be696f6dc0c4d31bbb8b": {
+      "episode": "moto-training-5d7cc0e964be",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/a4fae2e908f9b80c47131dd3192be20ac77a82dcb218be696f6dc0c4d31bbb8b.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-f71fd1eacec23ff075b853ec9219f95f2ec3bbcf5ce2891768215bd56786e386": {
+      "episode": "moto-training-5d7cc0e964be",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/f71fd1eacec23ff075b853ec9219f95f2ec3bbcf5ce2891768215bd56786e386.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1733,6 +1743,13 @@
       "people": "classic-restorers-71bf7",
       "story": "vintage-bike-work-71bf7",
       "visual": "three-clips-71bf7"
+    },
+    "moto-training-5d7cc0e964be": {
+      "environment": "practice-circuit-5d7cc",
+      "bike": "training-motorcycle",
+      "people": "track-learners-5d7cc",
+      "story": "closed-course-practice-5d7cc",
+      "visual": "three-clips-5d7cc"
     }
   }
 }
