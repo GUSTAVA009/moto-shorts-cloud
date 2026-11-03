@@ -1,0 +1,11 @@
+{
+  "id": "moto-motocross-b13d49cd4c42",
+  "state": "reserved",
+  "run_id": "41574055671",
+  "attempt_count": 1,
+  "preview_fingerprint": "4a6ec5215f47b15f9d9a907c3299a6d851b583575011370b7bfb5e3e527a7f6e",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-cartoon-b-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
