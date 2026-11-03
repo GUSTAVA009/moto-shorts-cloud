@@ -1352,6 +1352,16 @@
       "episode": "moto-vintage-0361a9dddf1c",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/096a08359564af1b05605ec61175b1d56411dfa47350eda839c47e0e0de53163.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-a9557d896c2291682071850260810d09877c95e9825adedd1a97f83ea03f9a94": {
+      "episode": "moto-roadtrip-6ff84db884ab",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/a9557d896c2291682071850260810d09877c95e9825adedd1a97f83ea03f9a94.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-7ef4a9a997fa617e72e203fc5bd6456320225df47c7fa926e260cd27b6994015": {
+      "episode": "moto-roadtrip-6ff84db884ab",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/7ef4a9a997fa617e72e203fc5bd6456320225df47c7fa926e260cd27b6994015.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -2124,6 +2134,13 @@
       "people": "classic-restorers-0361a",
       "story": "vintage-bike-work-0361a",
       "visual": "three-clips-0361a"
+    },
+    "moto-roadtrip-6ff84db884ab": {
+      "environment": "countryside-road-6ff84",
+      "bike": "touring-motorcycle",
+      "people": "touring-travelers-6ff84",
+      "story": "scenic-country-road-6ff84",
+      "visual": "three-clips-6ff84"
     }
   }
 }
