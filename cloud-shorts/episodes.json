@@ -9831,7 +9831,7 @@
     {
       "id": "moto-training-5d7cc0e964be",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -9933,6 +9933,47 @@
         "raw_coverage": 0.957,
         "mixed_coverage": 0.957,
         "maximum_attempts": 2
+      },
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "67b48d2158ebc2c04c0270f132b1619d37ba6e3561c19f6183283b71978915eb",
+      "reviewed_artifact_run_id": "41551096759",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-training-5d7cc0e964be",
+        "render_run_id": "41551096759",
+        "mp4_sha256": "67b48d2158ebc2c04c0270f132b1619d37ba6e3561c19f6183283b71978915eb",
+        "asset_fingerprint": "fe9d1f5051079e6a1ceeae28e5a906e9d6b11a62b3bb66e2052620b6ed3b7915",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-03T10:15:35.629570+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер в полной экипировке находится в воздухе над землей, мотоцикл полностью оторван от поверхности — видно отсутствие контакта колес с землей и характерную позу для прыжка.",
+            "frames_sha256": [
+              "6f36abab9a48334c306f778541d1c391718b060e8f26a4cfa7d14267a1d8e6dc",
+              "64c0ce7cdc2166b329050969855daa9e912e0d24ef1fdc827edd9625568745bf",
+              "828038b763df7224aba650e3eb4520cc4cf39851f141c11c587eccc2c085b596"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Райдер едет на мотоцикле по песчаной поверхности, колеса касаются земли, видна динамика движения — размытие фона и положение тела райдера.",
+            "frames_sha256": [
+              "ce64064fabe3513e513965cb5305b5894f0d260f3c3e10a89b57bed85b6cff06",
+              "59dc10a2ae117742578e27488bcb54fecfbefe491a09cfe71cd880368768f5cc",
+              "45d1c67898260caed76f810eb5f43fce0fb8a67ca1690c1db955296504f86b71"
+            ]
+          }
+        ]
       }
     },
     {
