@@ -123,6 +123,41 @@ class PublicationQualityTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "CHANNEL_TOPIC_BLOCKED"):
             p.publication_allowed(self.episode, self.meta, self.qa, self.video)
 
+    def test_verified_owner_LTX_license_is_allowed_without_stock_creator_quota(self):
+        from moto_assets import ORIGINAL_ASSET_ROOT
+        originals=[]
+        for i,(sha,action) in enumerate((("a"*64,"riding"),("b"*64,"jump"))):
+            originals.append({
+                "key":"clip_"+str(i),
+                "author":"GUSTAVA Original Video Production",
+                "license":"LTX OpenRAIL-M",
+                "generation_model":"ltxv-2b-0.9.8-distilled-fp8",
+                "generation_batch":"20261103034102-aabbcc",
+                "scene_action":action,
+                "original_sha256":sha,
+                "file_size":1500000,
+                "duration":6.706,
+                "url":ORIGINAL_ASSET_ROOT+"/clips/"+sha+".mp4",
+                "source_page":ORIGINAL_ASSET_ROOT+"/meta/"+sha+".json",
+            })
+        # Isolate the final footage-rights gate on this historical test
+        # fixture; real V3 episodes ALSO require Qwen SHA-bound frame proof.
+        self.episode["footage"]=originals
+        self.assertTrue(p.publication_allowed(
+            self.episode,self.meta,self.qa,self.video))
+        bad=self.episode["footage"][1]
+        bad["generation_batch"]="20261103034202-eeeeee"
+        with self.assertRaisesRegex(ValueError,"generated footage rights"):
+            p.publication_allowed(self.episode,self.meta,self.qa,self.video)
+        bad["generation_batch"]="20261103034102-aabbcc"
+        bad["author"]="Falsely credited filmmaker"
+        with self.assertRaisesRegex(ValueError,"generated footage rights"):
+            p.publication_allowed(self.episode,self.meta,self.qa,self.video)
+        bad["author"]="GUSTAVA Original Video Production"
+        bad["license"]="Unknown"
+        with self.assertRaisesRegex(ValueError,"mixed original and stock"):
+            p.publication_allowed(self.episode,self.meta,self.qa,self.video)
+
     def test_unlicensed_footage_blocked(self):
         self.episode["footage"][0]["license"] = "Unknown"
         with self.assertRaisesRegex(ValueError, "rights"):

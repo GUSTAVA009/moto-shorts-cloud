@@ -120,8 +120,31 @@ def publication_allowed(episode, meta, qa, video):
         safe_description = description
     if any(s in safe_description.lower() for s in ("https://", "www.")):
         raise ValueError("Unauthorized external links in description")
-    if not episode.get("footage") or any(s.get("license") not in ("Pexels License", "CC0 1.0", "Mixkit Stock Video Free License")
-                                      for s in episode["footage"]):
+    sources = episode.get("footage") or []
+    if not sources:
+        raise ValueError("Unverified commercial footage rights")
+    if any(s.get("license") == "LTX OpenRAIL-M" for s in sources):
+        # Final release previously accepted only Pexels/Commons/Mixkit,
+        # making EVERY correctly generated owner LTX video impossible
+        # to publish even after true six-frame review. Self-made LTX
+        # scenes are not third-party stock and have one honest producer.
+        # Do not waive rights: verify each immutable SHA-bound owner
+        # MP4 origin/model/license, both distinct actions, same batch.
+        from moto_assets import validated_media
+        from source_story import same_owner_original_pair
+        if len(sources) != 2 or not all(
+                s.get("license") == "LTX OpenRAIL-M" for s in sources):
+            raise ValueError("Unverified mixed original and stock footage rights")
+        try:
+            for media in sources:
+                validated_media(media)
+            if not same_owner_original_pair(sources[0],sources[1]):
+                raise ValueError("Original video source pair provenance changed")
+        except (ValueError,KeyError,TypeError) as exc:
+            raise ValueError("Unverified original generated footage rights") from exc
+    elif any(s.get("license") not in (
+            "Pexels License", "CC0 1.0", "Mixkit Stock Video Free License")
+             for s in sources):
         raise ValueError("Unverified commercial footage rights")
     series = episode.get("episode_series")
     if series and series.get("historical_reconstruction"):
