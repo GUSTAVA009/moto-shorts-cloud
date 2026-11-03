@@ -1,0 +1,7 @@
+{
+  "episode": "moto-training-f42fe8baca99",
+  "run_id": "41618954653",
+  "reason": "FRAME_MODEL_REJECTED_ACTION_OR_NARRATION",
+  "status": "needs_new_verified_visuals",
+  "recorded_at": "2026-11-03T10:41:00.042053+00:00"
+}
