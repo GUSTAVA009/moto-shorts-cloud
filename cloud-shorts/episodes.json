@@ -9827,6 +9827,95 @@
       "source_selection": "Independent official video APIs, no clip reuse",
       "generation_provenance": "keyless_action_filmable_v1",
       "story_reserve_id": "r2-vintage-0037"
+    },
+    {
+      "id": "moto-training-5d7cc0e964be",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Мотопрыжок и поездка — какой кадр сильнее? #shorts",
+      "narration": "Мотоцикл в разных сюжетах: райдер прыгает с трамплина. На второй съёмке байкер едет на мотоцикле. Это разные люди и кадры. Что сильнее цепляет?",
+      "description": "Две разные мотоистории: мотопрыжок и поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "МОТОПРЫЖОК",
+      "caption_middle": "ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 134,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/a4fae2e908f9b80c47131dd3192be20ac77a82dcb218be696f6dc0c4d31bbb8b.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/a4fae2e908f9b80c47131dd3192be20ac77a82dcb218be696f6dc0c4d31bbb8b.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261102235727-bc858a",
+          "original_sha256": "a4fae2e908f9b80c47131dd3192be20ac77a82dcb218be696f6dc0c4d31bbb8b",
+          "file_size": 1954590,
+          "duration": 6.706,
+          "source_title": "motorcyclist jumping over a small motocross dirt mound",
+          "scene_action": "jump",
+          "prompt": "Photorealistic sports documentary footage of an experienced helmeted motocross rider launching a dirt bike off a short track jump, briefly airborne then landing and continuing forward. Smooth panning camera following the motorcycle, clear airborne phase and spinning wheels. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-02T23:58:38.489985+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/f71fd1eacec23ff075b853ec9219f95f2ec3bbcf5ce2891768215bd56786e386.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/f71fd1eacec23ff075b853ec9219f95f2ec3bbcf5ce2891768215bd56786e386.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261102235727-bc858a",
+          "original_sha256": "f71fd1eacec23ff075b853ec9219f95f2ec3bbcf5ce2891768215bd56786e386",
+          "file_size": 1699134,
+          "duration": 6.706,
+          "source_title": "bayker riding on a dirt track",
+          "scene_action": "riding",
+          "prompt": "Photorealistic dynamic handheld documentary footage of a helmeted male motorcyclist actually riding a modern dirt bike at speed around a dry training circuit. Camera tracks the moving wheels and rider, dust trails behind; visible forward motion, safe closed course, real bike geometry. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-02T23:58:38.489985+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "practice-circuit-5d7cc",
+        "bike": "training-motorcycle",
+        "people": "track-learners-5d7cc",
+        "story": "closed-course-practice-5d7cc",
+        "visual": "three-clips-5d7cc"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Поделись роликом с другом, который любит мотоциклы."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1",
+      "story_reserve_id": "r2-training-0039"
     }
   ]
 }
