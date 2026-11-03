@@ -180,6 +180,26 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
         fake["footage"][1]["source_page"]="https://external.test/forged.mp4"
         self.assertFalse(review.eligible_private_episode(fake,r))
 
+    def test_real_qwen_colon_model_name_can_pass_SHA_bound_visual_proof(self):
+        ep=self.make_episode()
+        proof=self.make_proof(ep)
+        proof["model_provider"]="ollama"
+        proof["model"]="qwen3.5:4b"
+        ep.update({"auto_publish":True,
+                   "visual_revision_status":"automated_frame_review_passed",
+                   "automated_frame_review":proof,
+                   "reviewed_mp4_sha256":proof["mp4_sha256"],
+                   "reviewed_artifact_run_id":proof["render_run_id"]})
+        self.assertTrue(review.checked_review(ep,proof["mp4_sha256"]))
+        for fake in ("qwen3.5:other", "qwen3.5:4b;rm", "custom:external"):
+            broken=deepcopy(ep)
+            broken["automated_frame_review"]["model"]=fake
+            self.assertFalse(review.checked_review(broken,proof["mp4_sha256"]))
+        wrong=deepcopy(ep)
+        wrong["automated_frame_review"]["model_provider"]="openai"
+        self.assertFalse(review.checked_review(wrong,proof["mp4_sha256"]))
+        self.assertFalse(review.checked_review(ep,"f"*64))
+
     def test_verified_external_evidence_never_impersonates_assistant(self):
         ep=self.make_episode()
         proof=self.make_proof(ep)
