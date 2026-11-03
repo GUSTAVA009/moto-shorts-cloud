@@ -27,7 +27,7 @@ ACTION_TOPICS = {
     "wheel": ("repair", "vintage"),
     "rain": ("rain", "city"),
 }
-MAX_ENTRIES = 400
+MAX_ENTRIES = 2000
 
 
 @lru_cache(maxsize=1)
@@ -46,8 +46,8 @@ def verified_feed():
     with urllib.request.urlopen(request, timeout=18) as response:
         if response.geturl() != configured:
             raise ValueError("ORIGINAL_FEED_REDIRECT_FORBIDDEN")
-        raw = response.read(3_000_001)
-    if len(raw) > 3_000_000:
+        raw = response.read(12_000_001)
+    if len(raw) > 12_000_000:
         raise ValueError("ORIGINAL_FEED_OVERSIZED")
     data = json.loads(raw)
     if (not isinstance(data,dict) or data.get("version") != 1
