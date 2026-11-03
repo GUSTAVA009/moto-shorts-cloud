@@ -4,6 +4,41 @@ import preview_queue as pq
 
 
 class TestPreviewQueue(unittest.TestCase):
+    def test_owner_voice_repair_cannot_starve_behind_endless_new_drafts(self):
+        fresh=[{"id":"new-"+str(i),"auto_preview":True}
+               for i in range(20)]
+        repaired={"id":"moto-own-private-phonetic-correction",
+                  "auto_preview":True,"auto_publish":False,
+                  "voice_revision_priority":True,
+                  "voice_revision_requested":True,
+                  "voice_revision_reason":
+                      "private_original_cartoon_b_phonetic_rephrase"}
+        receipt={"id":repaired["id"],"state":"preview_ready",
+                 "old_fp":"original","voice_qa_passed":False,
+                 "mixed_audio_qa_passed":True}
+        records={s["id"]:(None,None) for s in fresh}
+        records[repaired["id"]]=({"sha":"actual-old-run"},receipt)
+        attempted=[]
+        def eligible(ep,r,fp):
+            attempted.append((ep["id"],r["state"],fp))
+            return (ep["id"]==repaired["id"] and
+                    r["voice_qa_passed"] is False and
+                    r["mixed_audio_qa_passed"] is True and fp=="new-fp")
+        chosen=pq.next_approved_owner_voice_repair(
+            fresh+[repaired],records,lambda _:True,
+            fingerprint=lambda _:"new-fp",eligible=eligible)
+        self.assertEqual(chosen,repaired)
+        self.assertEqual(attempted,[(repaired["id"],"preview_ready","new-fp")])
+        self.assertIsNone(pq.next_approved_owner_voice_repair(
+            fresh+[repaired],records,lambda _:False,
+            fingerprint=lambda _:"new-fp",eligible=eligible))
+        self.assertIsNone(pq.next_approved_owner_voice_repair(
+            fresh+[dict(repaired,auto_publish=True)],records,
+            lambda _:True,fingerprint=lambda _:"new-fp",eligible=eligible))
+        self.assertIsNone(pq.next_approved_owner_voice_repair(
+            fresh+[dict(repaired,voice_revision_requested=False)],records,
+            lambda _:True,fingerprint=lambda _:"new-fp",eligible=eligible))
+
     def test_proven_cartoon_b_403_private_resume_only_after_live_service_fix(self):
         """A completed 403 may not strand this single private original forever."""
         import json
