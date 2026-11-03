@@ -36,6 +36,15 @@ class FailedPreviewRepairTests(unittest.TestCase):
         catalog=copy.deepcopy(self.base)
         slug="moto-training-5d7cc0e964be"
         episode=next(x for x in catalog["episodes"] if x["id"]==slug)
+        # This is a regression test for the ORIGINAL failure, not the
+        # current mutable episode record. The live repair has ALREADY
+        # changed the sentence, so restore the initial 2026-11-03
+        # failed speech before testing the safe rewrite in isolation.
+        episode["narration"]=episode["narration"].replace(
+            "совершает прыжок","прыгает с трамплина")
+        for field in ("voice_revision_requested","voice_revision_priority",
+                      "voice_revision_reason","voice_revision_evidence"):
+            episode.pop(field,None)
         self.assertFalse(episode["auto_publish"])
         self.assertIn("прыгает с трамплина",episode["narration"])
         receipt={"id":slug,"state":"preview_ready","attempt_count":1,
