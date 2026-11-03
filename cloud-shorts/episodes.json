@@ -9934,6 +9934,94 @@
         "mixed_coverage": 0.957,
         "maximum_attempts": 2
       }
+    },
+    {
+      "id": "moto-rain-531e9fb1aa3a",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Городская поездка и дождевая поездка — какой кадр сильнее? #shorts",
+      "narration": "Мотоцикл в разных сюжетах: байкер едет по городской улице. На второй съёмке байкер едет под дождём. Это разные люди и кадры. Что сильнее цепляет?",
+      "description": "Две разные мотоистории: городская поездка и дождевая поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_middle": "ДОЖДЕВАЯ ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 108,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/eff1f423b23fc15b454c2115ef49727767142b6b86e5c8c209cce1da62d4ae51.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/eff1f423b23fc15b454c2115ef49727767142b6b86e5c8c209cce1da62d4ae51.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261103011149-e44195",
+          "original_sha256": "eff1f423b23fc15b454c2115ef49727767142b6b86e5c8c209cce1da62d4ae51",
+          "file_size": 1710463,
+          "duration": 6.706,
+          "source_title": "motorcyclist riding on a city street",
+          "scene_action": "city",
+          "prompt": "Photorealistic street documentary shot of a helmeted biker riding a standard road motorcycle along an urban street with moving traffic. Side-tracking camera keeps the real rider in focus as road markings and buildings move past, daylight and natural road surface. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-03T01:13:07.910532+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/f3709c80cee01f141e51d1db1420fd3396c79aa20133f4d3abd061c85e80fefd.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/f3709c80cee01f141e51d1db1420fd3396c79aa20133f4d3abd061c85e80fefd.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261103011149-e44195",
+          "original_sha256": "f3709c80cee01f141e51d1db1420fd3396c79aa20133f4d3abd061c85e80fefd",
+          "file_size": 1306705,
+          "duration": 6.706,
+          "source_title": "motorcyclist riding in light rain",
+          "scene_action": "rain",
+          "prompt": "Photorealistic street documentary footage of a helmeted biker riding a motorcycle on a wet city road in light rain, wheel spray visible behind the moving motorcycle, natural gray daylight, camera pans smoothly to follow the rider. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-03T01:13:07.910532+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "wet-asphalt-road-531e9",
+        "bike": "street-motorbike",
+        "people": "road-commuters-531e9",
+        "story": "rainy-motorcycle-road-531e9",
+        "visual": "three-clips-531e9"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1"
     }
   ]
 }
