@@ -25,6 +25,10 @@ from autofill_catalog import github
 CATALOG = "cloud-shorts/episodes.json"
 MAX_REVISION_ATTEMPTS = 3
 SAFE_REWRITES = (
+    # A frequent Russian voice fusion in ACTUAL owner Cartoon B: expected
+    # "На другом видео райдер" was recognized as "На другом видеорайдер".
+    # Rephrase the SOURCE action, never copy the fused fake ASR word.
+    ("на другом видео", "во втором кадре"),
     # Owner Cartoon B often pronounces unstressed vowels like an English O.
     # Rephrase a physically visible jump without copying a wrong ASR word.
     ("прыгает с трамплина", "совершает прыжок"),
@@ -121,10 +125,16 @@ def repair_episode(catalog, ep_id, voice_qa, mixed_qa, receipt):
                 or voice_qa.get("selfhosted_reference_sha256") != CARTOON_B_REFERENCE_SHA
                 or voice_qa.get("voice_speaker") != "gustava-cartoon-b-v1"
                 or voice_qa.get("passed") is not False
-                or mixed_qa.get("passed") is not False
+                # A genuine failed original voice may coexist with a 100%
+                # FINAL mixed MP4 ASR. Mixing cannot fix fused source words.
+                # Rerender a distinct accurate spoken phrase instead of
+                # wasting three mix-gain retries and blocking forever.
+                or type(mixed_qa.get("passed")) is not bool
                 or mixed_qa.get("source") != "FINAL_MIXED_MP4"
                 or not .90 <= float(voice_qa.get("lexical_coverage") or 0) < .97
-                or not .90 <= float(mixed_qa.get("lexical_coverage") or 0) < .97
+                or not .90 <= float(mixed_qa.get("lexical_coverage") or 0) <= 1.0
+                or receipt.get("voice_qa_passed") is not False
+                or receipt.get("mixed_audio_qa_passed") is not mixed_qa.get("passed")
                 or not re.fullmatch(r"[0-9a-f]{64}",str(mixed_qa.get("mp4_sha256") or ""))
                 or not re.fullmatch(r"[0-9a-f]{64}",str(receipt.get("preview_fingerprint") or ""))
                 or not str(receipt.get("run_id") or "").isdigit()
@@ -164,6 +174,7 @@ def repair_episode(catalog, ep_id, voice_qa, mixed_qa, receipt):
             "original_voice_reference_sha256":CARTOON_B_REFERENCE_SHA,
             "raw_coverage":float(voice_qa["lexical_coverage"]),
             "mixed_coverage":float(mixed_qa["lexical_coverage"]),
+            "prior_mixed_qa_passed":mixed_qa["passed"],
             "prior_attempt_count":count,
             "policy":"distinct_phonetic_progress_only",
         }
