@@ -1282,6 +1282,16 @@
       "episode": "moto-mountain-6f5c95f22f89",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/c93d9618fc7a636845b812ce18b2e5221734318a1ef3f4f8dc3faa14daf706ad.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-58d7205cacf5e7342ab1996ac249dea94360e5aacf24c68273b09d5df8f124e3": {
+      "episode": "moto-motocross-0356546ab3db",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/58d7205cacf5e7342ab1996ac249dea94360e5aacf24c68273b09d5df8f124e3.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-35c9a56c2fb682308316b24fbf07f3ccfbe3608e75db832bf5ec4622035031c9": {
+      "episode": "moto-motocross-0356546ab3db",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/35c9a56c2fb682308316b24fbf07f3ccfbe3608e75db832bf5ec4622035031c9.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -2005,6 +2015,13 @@
       "people": "mountain-travelers-6f5c9",
       "story": "mountain-journey-6f5c9",
       "visual": "three-clips-6f5c9"
+    },
+    "moto-motocross-0356546ab3db": {
+      "environment": "race-track-03565",
+      "bike": "motocross-bike",
+      "people": "track-racers-03565",
+      "story": "rider-at-prepared-track-03565",
+      "visual": "three-clips-03565"
     }
   }
 }
