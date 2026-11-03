@@ -1,11 +1,18 @@
 {
   "id": "moto-dirt-1576f583ff6d",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "41619662645",
   "attempt_count": 1,
   "preview_fingerprint": "181a4490db1c68451c9e47f09474e1dfdfd1c88954a11c6ec4771a9e073e6613",
   "deep_source_sha256": null,
   "selfhosted_voice_id": "gustava-cartoon-b-v1",
   "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": false,
+  "voice_qa_coverage": 0.905,
+  "voice_profile": "gustava_cartoon_b_qwen3_v1",
+  "selfhosted_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": false,
+  "mixed_audio_qa_coverage": 0.905
 }
