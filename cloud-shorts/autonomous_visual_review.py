@@ -121,7 +121,15 @@ def checked_review(episode, mp4_sha=None):
             or proof.get("episode_id") != episode.get("id")
             or proof.get("asset_fingerprint") != visual_asset_fingerprint(episode)
             or proof.get("model_provider") not in MODEL_BY_PROVIDER
-            or not re.fullmatch(r"[a-zA-Z0-9._/-]{5,80}", str(proof.get("model") or ""))
+            # Our REAL local Ollama model is named qwen3.5:4b. The old
+            # generic model-name regex excluded ':' and vetoed a valid
+            # Qwen PASS after actual six-frame review. Require exact
+            # allowlisted local model instead of widening remote inputs.
+            or not ((proof.get("model_provider") == "ollama"
+                      and proof.get("model") == MODEL_BY_PROVIDER["ollama"][1])
+                     or (proof.get("model_provider") != "ollama"
+                         and re.fullmatch(r"[a-zA-Z0-9._/-]{5,80}",
+                                          str(proof.get("model") or ""))))
             or not re.fullmatch(r"[0-9a-f]{64}", str(proof.get("mp4_sha256") or ""))
             or not str(proof.get("render_run_id") or "").isdigit()
             or str(episode.get("reviewed_artifact_run_id") or "") !=
