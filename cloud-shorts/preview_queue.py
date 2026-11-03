@@ -168,7 +168,7 @@ def eligible_private_original_cartoon_b_asr_retry(episode, receipt, new_fingerpr
             or type(receipt.get("attempt_count")) is not int
             or receipt["attempt_count"] < 1
             or receipt.get("voice_qa_passed") is not False
-            or receipt.get("mixed_audio_qa_passed") is not False
+            or type(receipt.get("mixed_audio_qa_passed")) is not bool
             or episode.get("auto_preview") is not True
             or episode.get("auto_publish") is not False
             or episode.get("voice_engine") != "gustava_selfhosted_qwen3"
@@ -193,7 +193,9 @@ def eligible_private_original_cartoon_b_asr_retry(episode, receipt, new_fingerpr
             or proof.get("new_narration_sha256") !=
                hashlib.sha256(str(episode.get("narration") or "").encode("utf8")).hexdigest()
             or not .90<=float(proof.get("raw_coverage") or 0)<.97
-            or not .90<=float(proof.get("mixed_coverage") or 0)<.97
+            or not .90<=float(proof.get("mixed_coverage") or 0)<=1.0
+            or proof.get("prior_mixed_qa_passed") is not
+               receipt.get("mixed_audio_qa_passed")
             or receipt.get("preview_fingerprint") == new_fingerprint):
         return False
     history = episode.get("voice_revision_hash_history") or []

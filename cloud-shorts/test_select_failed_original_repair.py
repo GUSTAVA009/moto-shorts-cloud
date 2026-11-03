@@ -18,6 +18,13 @@ class SelectFailedOriginalVoiceTests(unittest.TestCase):
 
     def fixture(self):
         ep=copy.deepcopy(self.ep)
+        # The live factory has already autonomously approved and queued this
+        # episode in Buffer. Recreate the former PRIVATE failed MP4 in an
+        # isolated test dictionary, never change real public approval.
+        ep["auto_publish"]=False
+        for field in ("visual_revision_status","reviewed_mp4_sha256",
+                      "reviewed_artifact_run_id","automated_frame_review"):
+            ep.pop(field,None)
         # Reconstruct the genuine first-run, unrevised input. Current
         # episodes.json is the LIVE catalog and the real automatic
         # phonetic fix has already changed its revision fields.
@@ -61,6 +68,21 @@ class SelectFailedOriginalVoiceTests(unittest.TestCase):
                                            requested_run_id="41441218792"))
         self.assertIsNotNone(pick.select_one([ep],paths,api,
                                               requested_run_id="41549749487"))
+
+    def test_raw_only_ASR_failure_remains_eligible_when_final_mix_passes(self):
+        ep,receipt,calls,api=self.fixture()
+        receipt["mixed_audio_qa_passed"]=True
+        paths=["render-receipts/"+ep["id"]+".json"]
+        self.assertTrue(pick.eligible_episode(ep,receipt))
+        self.assertEqual(pick.select_one([ep],paths,api)["run_id"],"41549749487")
+        receipt["voice_qa_passed"]=True
+        self.assertFalse(pick.eligible_episode(ep,receipt))
+        receipt["voice_qa_passed"]=False
+        receipt["mixed_audio_qa_passed"]="true"  # fake non-bool from API
+        self.assertFalse(pick.eligible_episode(ep,receipt))
+        receipt["mixed_audio_qa_passed"]=True
+        receipt["preview_fingerprint"]="f"*64
+        self.assertFalse(pick.eligible_episode(ep,receipt))
 
     def test_no_public_or_mismatched_or_already_revised_original_repair(self):
         ep,receipt,calls,api=self.fixture()
