@@ -1,11 +1,18 @@
 {
   "id": "moto-rain-0f4b7970c947",
-  "state": "reserved",
+  "state": "preview_ready",
   "run_id": "41707554859",
   "attempt_count": 1,
   "preview_fingerprint": "c58c049cc9265b930fc29d6599a1b2f5285cfc6947929fd565d771f83d77a4f9",
   "deep_source_sha256": null,
   "selfhosted_voice_id": "gustava-cartoon-b-v1",
   "previous_run_id": null,
-  "notes": "Revised preview only; never retry a public or uncertain upload."
+  "notes": "Revised preview only; never retry a public or uncertain upload.",
+  "voice_qa_passed": true,
+  "voice_qa_coverage": 1.0,
+  "voice_profile": "gustava_cartoon_b_qwen3_v1",
+  "selfhosted_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
+  "male_voice_verified": true,
+  "mixed_audio_qa_passed": true,
+  "mixed_audio_qa_coverage": 1.0
 }
