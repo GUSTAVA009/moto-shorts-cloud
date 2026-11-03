@@ -2,6 +2,8 @@
   "episode": "moto-training-5d7cc0e964be",
   "sha256": "67b48d2158ebc2c04c0270f132b1619d37ba6e3561c19f6183283b71978915eb",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-moto-training-5d7cc0e964be-67b48d2158eb/moto-training-5d7cc0e964be.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6ae9b484f5576ea189fe2be3",
+  "due_at": "2026-11-03T11:00:00.000Z"
 }
