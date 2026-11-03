@@ -1162,6 +1162,16 @@
       "episode": "moto-mountain-ee175923eae5",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/52d88f3bd94be193be239562d6b3403dce1a08de790c7e84865333c157293d03.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-7ece13f72142b0154ff86a1a4a0f7a9eabff87deb81192189f26c1555143bf13": {
+      "episode": "moto-forest-5a24107fdebf",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/7ece13f72142b0154ff86a1a4a0f7a9eabff87deb81192189f26c1555143bf13.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-2f685622967c711dd93fcb02f67c4c8d00828bf65fd2878fbfc953628b3345da": {
+      "episode": "moto-forest-5a24107fdebf",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/2f685622967c711dd93fcb02f67c4c8d00828bf65fd2878fbfc953628b3345da.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -1801,6 +1811,13 @@
       "people": "mountain-travelers-ee175",
       "story": "mountain-journey-ee175",
       "visual": "three-clips-ee175"
+    },
+    "moto-forest-5a24107fdebf": {
+      "environment": "forest-trail-5a241",
+      "bike": "forest-trailbike",
+      "people": "woods-rider-5a241",
+      "story": "forest-path-and-riding-5a241",
+      "visual": "three-clips-5a241"
     }
   }
 }
