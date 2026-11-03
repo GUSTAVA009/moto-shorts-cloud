@@ -1,0 +1,11 @@
+{
+  "id": "moto-city-a89311f06123",
+  "state": "reserved",
+  "run_id": "41617874747",
+  "attempt_count": 1,
+  "preview_fingerprint": "7f4829d6d6d628b3d963d9ee9133bc7a4a18fb109ea99e6c93df495a079f46ac",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-cartoon-b-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
