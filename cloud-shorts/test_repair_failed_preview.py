@@ -36,6 +36,13 @@ class FailedPreviewRepairTests(unittest.TestCase):
         catalog=copy.deepcopy(self.base)
         slug="moto-training-5d7cc0e964be"
         episode=next(x for x in catalog["episodes"] if x["id"]==slug)
+        # The real automatic Qwen review has ALREADY published this episode.
+        # Reconstruct a PRIVATE copy of the failed historical source MP4;
+        # never modify the actual released catalog entry.
+        episode["auto_publish"]=False
+        for field in ("visual_revision_status","reviewed_mp4_sha256",
+                      "reviewed_artifact_run_id","automated_frame_review"):
+            episode.pop(field,None)
         # This is a regression test for the ORIGINAL failure, not the
         # current mutable episode record. The live repair has ALREADY
         # changed the sentence, so restore the initial 2026-11-03
@@ -85,6 +92,10 @@ class FailedPreviewRepairTests(unittest.TestCase):
         catalog=copy.deepcopy(self.base)
         slug="moto-training-5d7cc0e964be"
         old=next(x for x in catalog["episodes"] if x["id"]==slug)
+        old["auto_publish"]=False
+        for field in ("visual_revision_status","reviewed_mp4_sha256",
+                      "reviewed_artifact_run_id","automated_frame_review"):
+            old.pop(field,None)
         self.assertTrue(old.get("voice_revision_requested"))
         self.assertIn("совершает прыжок",old["narration"])
         receipt={
