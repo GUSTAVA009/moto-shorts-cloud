@@ -77,28 +77,56 @@ def verified_feed():
 
 
 def action_pairs(used=(), theme=None):
-    """No fake two-creator stock attribution; require two original videos
-    of DISTINCT actions belonging to SAME signed-production batch."""
+    """Use every owned, unpublished original once, even across render batches.
+
+    Preserve the preference for TWO shots from one production batch, but
+    remove the unnecessary rule that two independently owned action clips
+    must share a batch timestamp. It stranded good shots after one failure.
+    Actual MP4 SHA, provenance, different visible actions and independent
+    final-video frame review still apply. No duplicate footage in one short.
+    """
     used = set(used)
-    batches = {}
-    for item in verified_feed():
-        if source_id(item) in used:
+    available = [item for item in verified_feed()
+                 if source_id(item) not in used]
+    available.sort(key=lambda item: (
+        item.get("generation_batch", ""), item.get("scene_action", ""),
+        item["original_sha256"]))
+    grouped = {}
+    for item in available:
+        grouped.setdefault(item["generation_batch"], []).append(item)
+    pairs = []
+    committed = set()
+
+    def compatible(first, second):
+        return (source_id(first) != source_id(second)
+                and first["scene_action"] != second["scene_action"]
+                and (not theme
+                     or any(theme in ACTION_TOPICS[i["scene_action"]]
+                            for i in (first, second))))
+    # First preserve intentionally matched, distinct-action filming prompts.
+    for batch, clips in sorted(grouped.items()):
+        for first in clips:
+            if source_id(first) in committed:
+                continue
+            second = next((item for item in clips
+                           if source_id(item) not in committed
+                           and compatible(first, item)), None)
+            if second is not None:
+                pairs.append([first, second])
+                committed.update((source_id(first), source_id(second)))
+    # Remaining owned shots can be assembled as independent contrasting
+    # scenes. Their narration explicitly describes two unrelated videos.
+    pending = [item for item in available if source_id(item) not in committed]
+    for index, first in enumerate(pending):
+        if source_id(first) in committed:
             continue
-        # Keep BOTH original shots of a batch until cohort validation.
-        # Filtering one shot prematurely discarded genuine repair+helmet,
-        # city+forest, wheel+riding etc, leaving a fictitious source shortage.
-        batches.setdefault(item["generation_batch"],[]).append(item)
-    pairs=[]
-    for name, entries in batches.items():
-        if len(entries)!=2 or entries[0]["scene_action"]==entries[1]["scene_action"]:
-            continue
-        if theme and not any(theme in ACTION_TOPICS[item["scene_action"]]
-                             for item in entries):
-            continue
-        pair=sorted(entries,key=lambda a:a["scene_action"])
-        pairs.append((name,pair))
-    pairs.sort(key=lambda e:e[0])
-    return [pair for _,pair in pairs]
+        second = next((other for other in pending[index + 1:]
+                       if source_id(other) not in committed
+                       and compatible(first, other)), None)
+        if second is not None:
+            pairs.append([first, second])
+            committed.update((source_id(first), source_id(second)))
+    return pairs
 
 
 def original_results(theme,used_ids=()):
