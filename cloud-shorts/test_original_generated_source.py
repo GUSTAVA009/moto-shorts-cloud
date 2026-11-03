@@ -52,6 +52,23 @@ class OwnerOriginalMediaTests(unittest.TestCase):
     def tearDown(self):
         original.verified_feed.cache_clear()
 
+    def test_storyboard_clip_key_keeps_original_source_sha_identity(self):
+        for i,src in enumerate((self.first,self.second)):
+            episode_source=dict(src,key="clip_"+str(i))
+            self.assertEqual(assets.source_id(episode_source),
+                             assets.source_id(src))
+            self.assertEqual(assets.validated_media(episode_source),
+                             assets.source_id(src))
+        with self.assertRaisesRegex(ValueError,"SHA_MANIFEST_ID_INVALID"):
+            assets.validated_media(dict(self.first,key="stock_lookalike"))
+
+    def test_clickbait_verb_ceplyaet_does_not_invent_motorcycle_chain(self):
+        from visual_director import main_subject
+        self.assertIsNone(main_subject({"title":
+            "Мотопрыжок или поездка: какой кадр цепляет сильнее? #shorts"}))
+        self.assertEqual(main_subject({"title":"Проверь цепь мотоцикла"}),
+                         "chain")
+
     def test_fixed_owner_origin_licenses_and_sha_are_never_inferred(self):
         for item in (self.first,self.second):
             self.assertEqual(assets.source_id(item),
