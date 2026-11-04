@@ -1702,6 +1702,16 @@
       "episode": "moto-rain-2d1cc47e686f",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/b06011eb0815fab0d8208ce41cc6b2f55b8bb2a96ede54a9b7c802023e9d8f4c.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-1adcaac83c1beb84c3e874ccf12ebf430a7664123e6fab7160bc838d139061c3": {
+      "episode": "moto-racing-0ae4b51c81b9",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/1adcaac83c1beb84c3e874ccf12ebf430a7664123e6fab7160bc838d139061c3.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-41682373e85a21e98b34cdd725518b6d4be8c1f9fb92063e932b2baa404189c8": {
+      "episode": "moto-racing-0ae4b51c81b9",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/41682373e85a21e98b34cdd725518b6d4be8c1f9fb92063e932b2baa404189c8.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -2719,6 +2729,13 @@
       "people": "road-commuters-2d1cc",
       "story": "rainy-motorcycle-road-2d1cc",
       "visual": "three-clips-2d1cc"
+    },
+    "moto-racing-0ae4b51c81b9": {
+      "environment": "race-paddock-0ae4b",
+      "bike": "track-racing-bike",
+      "people": "racing-crews-0ae4b",
+      "story": "circuit-racing-0ae4b",
+      "visual": "three-clips-0ae4b"
     }
   }
 }
