@@ -34,6 +34,26 @@ class BufferBacklogTests(unittest.TestCase):
         self.assertEqual(calls[0],"actions/artifacts?per_page=100&page=1")
         self.assertEqual(calls[-1],"actions/artifacts?per_page=100&page=7")
 
+    def test_a_real_new_artifact_mid_scan_restarts_from_page_one(self):
+        original=[{"id":i+1,"name":f"clip-{i+1}","expired":False}
+                  for i in range(105)]
+        fresh={"id":9999,"name":"daily-preview-new-original-9999","expired":False}
+        calls=[]
+        def changing_api(path):
+            calls.append(path)
+            page=int(path.split("page=")[-1])
+            # A new MP4 lands immediately after page 1 of the first scan.
+            if len(calls)==1:
+                return {"total_count":105,"artifacts":original[:100]}
+            latest=[fresh]+original
+            return {"total_count":106,
+                    "artifacts":latest[(page-1)*100:page*100]}
+        inventory=f.complete_artifact_inventory(fetch=changing_api)
+        self.assertEqual(len(inventory),106)
+        self.assertEqual(len({x["id"] for x in inventory}),106)
+        self.assertEqual(inventory[0]["id"],9999)
+        self.assertEqual(calls.count("actions/artifacts?per_page=100&page=1"),2)
+
     def test_complete_inventory_handles_exact_page_boundary_and_empty(self):
         for count in (0,1,100,101,200,600):
             rows=[{"id":i+100,"name":"clip-"+str(i),"expired":False}
