@@ -1732,6 +1732,16 @@
       "episode": "moto-motocross-81ce238deb27",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/22a8fc3975ce6ef7ad5e97516b3ac4b5547f308e0fc31483a960a9969af94509.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-d6754c4f0d0f418c3bc08ee46d1ae02cea27ae564f080323b9c6ff4be347933b": {
+      "episode": "moto-repair-14d6fd94332e",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/d6754c4f0d0f418c3bc08ee46d1ae02cea27ae564f080323b9c6ff4be347933b.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-eb9ef3978a1408cff9c507e0c1c27dd760d03b32fc918132f933d9d02d791f04": {
+      "episode": "moto-repair-14d6fd94332e",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/eb9ef3978a1408cff9c507e0c1c27dd760d03b32fc918132f933d9d02d791f04.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -2770,6 +2780,13 @@
       "people": "track-racers-81ce2",
       "story": "rider-at-prepared-track-81ce2",
       "visual": "three-clips-81ce2"
+    },
+    "moto-repair-14d6fd94332e": {
+      "environment": "garage-workshop-14d6f",
+      "bike": "workshop-bike",
+      "people": "garage-mechanics-14d6f",
+      "story": "mechanic-bike-servicing-14d6f",
+      "visual": "three-clips-14d6f"
     }
   }
 }
