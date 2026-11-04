@@ -2,6 +2,8 @@
   "episode": "moto-motocross-6ff4c380d642",
   "sha256": "56dd17fe1b42bf6fe80b5cd81a6be15e587bba77a70afe5633e42107a8df08b8",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-moto-motocross-6ff4c380d642-56dd17fe1b42/moto-motocross-6ff4c380d642.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6aeb45ed2652cc015f7303a1",
+  "due_at": "2026-11-04T15:30:00.000Z"
 }
