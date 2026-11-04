@@ -1692,6 +1692,16 @@
       "episode": "moto-dirt-06c34c6ce2ab",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/97bea12fa2b19ea812f156fcc8801ddf6ec59ede5cc0d7cbaa7570339301710d.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-db37e1afcc4e3664d6c2ea5f9fc9463d08b1bc21d27d29432cb1f6757d5b07bf": {
+      "episode": "moto-rain-2d1cc47e686f",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/db37e1afcc4e3664d6c2ea5f9fc9463d08b1bc21d27d29432cb1f6757d5b07bf.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-b06011eb0815fab0d8208ce41cc6b2f55b8bb2a96ede54a9b7c802023e9d8f4c": {
+      "episode": "moto-rain-2d1cc47e686f",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/b06011eb0815fab0d8208ce41cc6b2f55b8bb2a96ede54a9b7c802023e9d8f4c.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -2702,6 +2712,13 @@
       "people": "trail-groups-06c34",
       "story": "muddy-terrain-06c34",
       "visual": "three-clips-06c34"
+    },
+    "moto-rain-2d1cc47e686f": {
+      "environment": "wet-asphalt-road-2d1cc",
+      "bike": "street-motorbike",
+      "people": "road-commuters-2d1cc",
+      "story": "rainy-motorcycle-road-2d1cc",
+      "visual": "three-clips-2d1cc"
     }
   }
 }
