@@ -1902,6 +1902,16 @@
       "episode": "moto-repair-8485ca4615a1",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/4683c5a04ba9a00b38cdda830aac71ff8c9bcb8bf2533a9f5111430c48e5005e.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-6009834ca4cf3a693f8b4d550086bc0479cb1b0daa24a66ab4665eb838165374": {
+      "episode": "moto-mountain-e5ce6d468060",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/6009834ca4cf3a693f8b4d550086bc0479cb1b0daa24a66ab4665eb838165374.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-28933f4f1048d520d16b48c785e1692539e5b727f3e93f39b2cd4a68268e94d4": {
+      "episode": "moto-mountain-e5ce6d468060",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/28933f4f1048d520d16b48c785e1692539e5b727f3e93f39b2cd4a68268e94d4.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3059,6 +3069,13 @@
       "people": "garage-mechanics-8485c",
       "story": "mechanic-bike-servicing-8485c",
       "visual": "three-clips-8485c"
+    },
+    "moto-mountain-e5ce6d468060": {
+      "environment": "rocky-mountain-road-e5ce6",
+      "bike": "adventure-tourer",
+      "people": "mountain-travelers-e5ce6",
+      "story": "mountain-journey-e5ce6",
+      "visual": "three-clips-e5ce6"
     }
   }
 }
