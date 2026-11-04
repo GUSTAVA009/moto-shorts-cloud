@@ -33,7 +33,7 @@ def parse_date(value):
 
 
 def choose_slot(posts, now=None, timezone_name=TZ_NAME,
-                max_posts_per_day=BASE_POSTS_PER_DAY):
+                max_posts_per_day=BASE_POSTS_PER_DAY, min_lead_minutes=MIN_LEAD_MINUTES):
     """Choose the next local daily slot, accounting for scheduled and sent posts.
 
     Does not modify a scheduled post, does not bypass post QA or duplicate checks.
@@ -41,6 +41,8 @@ def choose_slot(posts, now=None, timezone_name=TZ_NAME,
     if (type(max_posts_per_day) is not int or
             not BASE_POSTS_PER_DAY <= max_posts_per_day <= MAX_POSTS_PER_DAY):
         raise ValueError("UNSAFE_MONTHLY_CATCHUP_DAILY_LIMIT")
+    if type(min_lead_minutes) is not int or not 8 <= min_lead_minutes <= 180:
+        raise ValueError("UNSAFE_BUFFER_MINIMUM_LEAD_TIME")
     tz = ZoneInfo(timezone_name)
     now = parse_date(now or datetime.now(timezone.utc))
     seen = []
@@ -57,7 +59,7 @@ def choose_slot(posts, now=None, timezone_name=TZ_NAME,
         for hour, minute in LOCAL_TIMES:
             local = datetime.combine(target_day, time(hour=hour, minute=minute), tzinfo=tz)
             candidate = local.astimezone(timezone.utc)
-            if candidate <= now + timedelta(minutes=MIN_LEAD_MINUTES):
+            if candidate <= now + timedelta(minutes=min_lead_minutes):
                 continue
             if any(abs((candidate - other).total_seconds()) <
                    MIN_SPACING_MINUTES * 60 for other in seen):

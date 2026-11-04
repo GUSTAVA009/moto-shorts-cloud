@@ -89,6 +89,16 @@ class NinetyMinuteSlotsTests(unittest.TestCase):
         now = datetime(2026, 10, 30, 20, 0, tzinfo=timezone.utc)
         self.assertEqual(choose_slot([], now), "2026-10-30T21:30:00Z")
 
+    def test_real_buffer_queue_keeps_post_visible_with_ninety_minute_lead(self):
+        now = datetime(2026, 11, 4, 19, 46, tzinfo=timezone.utc)
+        # The previous 8-minute lead sent the next 20:00 UTC Short
+        # before a human could see ten scheduled posts in Buffer.
+        self.assertEqual(
+            choose_slot([], now, min_lead_minutes=90),
+            "2026-11-04T21:30:00Z")
+        with self.assertRaisesRegex(ValueError, "UNSAFE_BUFFER_MINIMUM_LEAD_TIME"):
+            choose_slot([], now, min_lead_minutes=0)
+
     def test_bad_due_at_rejected_not_silently_ignored(self):
         with self.assertRaises(ValueError):
             choose_slot([{"dueAt": "not-an-iso-date"}],

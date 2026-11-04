@@ -246,9 +246,12 @@ def publish(episode, video, metadata, voice, mixed):
             }), flush=True)
         except (ValueError, TypeError, KeyError) as exc:
             raise RuntimeError("MONTHLY_SENT_LEDGER_UNTRUSTWORTHY") from exc
+    # Buffer may move scheduled posts to sending ahead of dueAt.
+    # An 8-minute lead emptied the queue before the owner could see it.
+    # Keep new Shorts visibly scheduled at least 90 minutes ahead.
     due_at = choose_slot(posts + sent_posts,
                           timezone_name=os.getenv("GUSTAVA_POST_TIMEZONE", "Europe/Moscow"),
-                          max_posts_per_day=quota)
+                          max_posts_per_day=quota, min_lead_minutes=90)
     sha = file_sha256(video)
     url = release_url(episode["id"], video, sha)
     state = {"episode": episode["id"], "sha256": sha, "media_url": url,
