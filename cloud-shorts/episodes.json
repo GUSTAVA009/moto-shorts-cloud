@@ -12463,7 +12463,7 @@
     {
       "id": "moto-motocross-00a3c6c610d3",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -12546,7 +12546,48 @@
         "description": "Поделись роликом с другом, который любит мотоциклы."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "639a4a229ce189e28f0a8e288e1a6b74ffdc9aa758743d23d5881f79b2e21612",
+      "reviewed_artifact_run_id": "41708643780",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-motocross-00a3c6c610d3",
+        "render_run_id": "41708643780",
+        "mp4_sha256": "639a4a229ce189e28f0a8e288e1a6b74ffdc9aa758743d23d5881f79b2e21612",
+        "asset_fingerprint": "150cf0f83c24f299ca9769df58498cf3943fd4d59f3fec8e839865367656c293",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T00:38:44.381311+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер в синей экипировке на мотокроссовом байке находится в воздухе над землей, что подтверждает прыжок с трамплина.",
+            "frames_sha256": [
+              "3588664f9eb26b42ae35199ae4a2d1e9155f4ea8d85618bfef14da98854a730e",
+              "b797c1c33d247eb28a22b4358abbacc55efa9962972ba4e96ebc75df87c59aa5",
+              "956b4f6e1ec844a5b2ca97d483c06faada8dd96e020b855b8685d51c67959069"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Байкер на серебристом мотоцикле движется по песчаной трассе, что подтверждает действие 'поездка'.",
+            "frames_sha256": [
+              "e3629c6cbdbde82fd32393bbed198162660d265a5fcc350e3c2710ba56aae83f",
+              "c8e6a99b74e43f867ec8eb8dade785bae779300de909253a4c89a8f07ac25ff6",
+              "09c83b6b99c08b8cb5195774cf434fa85b485b2e54e1a7e645522c4eec62a253"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-racing-839f1e2b4cdd",
