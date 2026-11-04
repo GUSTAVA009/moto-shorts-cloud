@@ -108,10 +108,13 @@ jobs:
         run: |
           # GitHub's hosted runner normally already ships ffmpeg/fonts. Avoid
           # hanging apt whenever these exact production capabilities exist.
+          # grep -q can exit early and send ffmpeg SIGPIPE 141 with Bash
+          # pipefail, falsely reporting a missing rubberband filter.
+          # Never stall every video on an unnecessary unbounded apt install.
           if ! command -v ffmpeg >/dev/null 2>&1 || \
              [ ! -f /usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf ] || \
-             ! ffmpeg -hide_banner -filters 2>/dev/null | grep -q rubberband; then
-            sudo apt-get install -y -o Dpkg::Use-Pty=0 --no-install-recommends ffmpeg fonts-dejavu-core
+             ! ffmpeg -hide_banner -filters 2>/dev/null | grep rubberband >/dev/null; then
+            timeout 90s sudo apt-get install -y -o Dpkg::Use-Pty=0 --no-install-recommends ffmpeg fonts-dejavu-core
           fi
           ffmpeg -hide_banner -filters | grep rubberband
           # Production is pinned to the ORIGINAL pre-rendered AI Doc Maker DEEP
