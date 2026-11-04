@@ -12891,7 +12891,7 @@
     {
       "id": "moto-motocross-6ff4c380d642",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -12974,7 +12974,48 @@
         "description": "Подпишись, если любишь настоящие мотопутешествия."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "56dd17fe1b42bf6fe80b5cd81a6be15e587bba77a70afe5633e42107a8df08b8",
+      "reviewed_artifact_run_id": "41797109780",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-motocross-6ff4c380d642",
+        "render_run_id": "41797109780",
+        "mp4_sha256": "56dd17fe1b42bf6fe80b5cd81a6be15e587bba77a70afe5633e42107a8df08b8",
+        "asset_fingerprint": "993c5a38dfed71de5ce50f18e3235ed4b8bdca6c90cd6df272633ed4f03009b8",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T14:47:25.536707+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Мотоцикл в движении по песчаной дороге, байкер управляет им.",
+            "frames_sha256": [
+              "b44094d75055660492c5e190b4dec40881885552c059783690652e7114576ccb",
+              "f1f7d6331da20407643a8ee1be0640ee413506502183f786f5347aeb0cd98b5d",
+              "18399a2de2ae5aa26521de3a95f3e4bf2938f111c09f9dd59ecf92685d397efb"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Ручка человека взаимодействует с центральным механизмом мотоциклетного колеса, что соответствует ремонту.",
+            "frames_sha256": [
+              "e6a243e6cb36c8b92c5bdf9f0c4e21880681f65945e4427eb384765b19c865da",
+              "f92c3c60c484de5537e45fdb13910d02298b05c257f6a5c44339c44063172733",
+              "d132e0bfbb395cda59af315a6bd09e6b928a442ba00a3c9f98b359b7dc16251b"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-repair-3b2a3549941b",
