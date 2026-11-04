@@ -1672,6 +1672,16 @@
       "episode": "moto-mountain-bdf2739f5a13",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/67842285bcdd032cee0f3edc2e5a8b6ac758c09b6fbeda8d4022660990b9bda1.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-9ecd05f25507f628e44f92721e501f3887ef0aa1131c491d0cc17508ebfaf098": {
+      "episode": "moto-helmet-e9d8f59713f0",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/9ecd05f25507f628e44f92721e501f3887ef0aa1131c491d0cc17508ebfaf098.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-266bff56305fa91598b4923bfb7efedbc3ee2c695970f792e390fc320e6cf314": {
+      "episode": "moto-helmet-e9d8f59713f0",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/266bff56305fa91598b4923bfb7efedbc3ee2c695970f792e390fc320e6cf314.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -2668,6 +2678,13 @@
       "people": "mountain-travelers-bdf27",
       "story": "mountain-journey-bdf27",
       "visual": "three-clips-bdf27"
+    },
+    "moto-helmet-e9d8f59713f0": {
+      "environment": "riding-gear-workshop-e9d8f",
+      "bike": "motorbike-safety-gear",
+      "people": "gear-specialists-e9d8f",
+      "story": "helmet-gear-choice-e9d8f",
+      "visual": "three-clips-e9d8f"
     }
   }
 }
