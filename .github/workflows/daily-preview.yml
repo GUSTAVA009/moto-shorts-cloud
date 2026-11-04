@@ -113,12 +113,16 @@ jobs:
           # not invoked; installing them blocked every real Short because
           # kokoro==0.9.4 does not exist in the provider package index.
           python3 -m pip install --disable-pip-version-check Pillow==11.3.0
-          # CPU-only fallback Whisper uses PyTorch; never pull CUDA builds.
-          python3 -m pip install --disable-pip-version-check torch --index-url https://download.pytorch.org/whl/cpu
+          # faster-whisper's primary CTranslate2 CPU decoder needs no PyTorch.
+          # A heavyweight CPU torch download previously blocked the whole
+          # serialized production queue. If any decoder fails, QA stays closed.
       - name: Install independent Russian ASR (pinned decoder)
         if: steps.pick.outputs.has_job == 'true'
         run: |
-          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1 av==18.1.0 openai-whisper
+          # Install one real CPU ASR engine quickly; never fake its transcript.
+          # Optional secondary OpenAI Whisper remains available only when
+          # already present; missing fallback alone cannot authorize release.
+          python3 -m pip install --disable-pip-version-check faster-whisper==1.2.1 av==18.1.0
           python3 - <<'PY'
           import av
           assert av.__version__.startswith('18.1.')

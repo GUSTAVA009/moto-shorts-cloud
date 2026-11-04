@@ -1,0 +1,60 @@
+name: GUSTAVA - Resume Stalled Original Shorts Renderer
+on:
+  push:
+    paths:
+      - '.github/workflows/factory-resume.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: write
+jobs:
+  resume:
+    if: github.repository == 'GUSTAVA009/moto-shorts-cloud'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Cancel obsolete runners and trigger latest safe renderer
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.error, urllib.request, time
+          repo=os.environ["GITHUB_REPOSITORY"]
+          sha=os.environ["GITHUB_SHA"]
+          token=os.environ["GITHUB_TOKEN"]
+          base="https://api.github.com/repos/"+repo+"/"
+          def call(path, method="GET", payload=None):
+              data=(json.dumps(payload).encode() if payload is not None else None)
+              req=urllib.request.Request(base+path,data=data,method=method,headers={
+                  "Accept":"application/vnd.github+json",
+                  "Authorization":"Bearer "+token,
+                  "User-Agent":"gustava-conservative-stalled-preview-recovery",
+                  "X-GitHub-Api-Version":"2022-11-28",
+                  "Content-Type":"application/json"})
+              with urllib.request.urlopen(req,timeout=30) as resp:
+                  return json.load(resp) if resp.status!=204 else None
+          workflow="actions/workflows/daily-preview.yml"
+          for runner in call(workflow+"/runs?per_page=45").get("workflow_runs",[]):
+              if runner["status"] not in ("in_progress","queued","pending"):
+                  continue
+              if runner.get("head_sha")==sha:
+                  continue
+              try:
+                  call("actions/runs/"+str(runner["id"])+"/cancel","POST")
+                  print("STALE_PREVIEW_CANCEL_REQUESTED",runner["id"],runner["status"],flush=True)
+              except urllib.error.HTTPError as exc:
+                  if exc.code not in (404,409,422):
+                      raise
+                  print("STALE_CANCEL_REJECTED",runner["id"],exc.code,flush=True)
+          time.sleep(5)
+          current=call(workflow+"/runs?per_page=15").get("workflow_runs",[])
+          active=[x for x in current if x.get("head_sha")==sha
+                  and x["status"] in ("in_progress","queued","pending")]
+          if active:
+              print("LATEST_PREVIEW_ALREADY_QUEUED",active[0]["id"],flush=True)
+          else:
+              call(workflow+"/dispatches","POST",{"ref":"main"})
+              print("LATEST_SAFE_PREVIEW_DISPATCHED",sha[:12],flush=True)
+          PY
