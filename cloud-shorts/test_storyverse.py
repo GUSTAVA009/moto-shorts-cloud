@@ -74,6 +74,16 @@ class StoryverseTest(unittest.TestCase):
         with self.assertRaisesRegex(StoryverseError, "Outline only"):
             plan_episode(self.series, "02")
 
+    def test_silent_characters_and_locked_sprites_mandatory(self):
+        self.assertTrue(self.series["visual_style"]["characters_do_not_speak"])
+        self.assertTrue(self.series["visual_style"]["mouth_animation_forbidden"])
+        self.assertTrue(self.series["voice_contract"]["voice_is_offscreen_narrator_only"])
+        self.assertTrue(self.series["publish_contract"]["require_qa_no_facial_morphs"])
+        bad = copy.deepcopy(self.series)
+        bad["visual_style"]["mouth_animation_forbidden"] = False
+        with self.assertRaisesRegex(StoryverseError, "Silent stable-character"):
+            validate_series(bad)
+
     def test_format_specific(self):
         vid = self.series["production_format"]
         self.assertEqual((vid["resolution"], vid["fps"], vid["duration_seconds"]), ("1080x1920", 30, 114))

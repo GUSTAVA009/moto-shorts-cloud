@@ -14,7 +14,14 @@
     "backgrounds": "Original cinematic low-poly 3D environments, expressive lighting and continuous geography",
     "always_original_characters": true,
     "do_not_duplicate_reference_character_assets": true,
-    "character_continuity_required": true
+    "character_continuity_required": true,
+    "characters_do_not_speak": true,
+    "mouth_animation_forbidden": true,
+    "lip_sync_forbidden": true,
+    "fixed_character_sprite_assets_required": true,
+    "characters_move_only_via_silent_actions": true,
+    "renderer_required": "deterministic_2d_puppets_on_layered_2_5d_backgrounds",
+    "never_generate_character_faces_per_shot": true
   },
   "production_format": {
     "aspect_ratio": "9:16",
@@ -45,7 +52,9 @@
     "voice_profile": "gustava_create_audio_deep_v1",
     "russian": true,
     "fallback_forbidden": true,
-    "sha_pinned_approved_source_required": true
+    "sha_pinned_approved_source_required": true,
+    "voice_is_offscreen_narrator_only": true,
+    "character_dialogue_forbidden": true
   },
   "publish_contract": {
     "no_reference_frames_or_audio": true,
@@ -54,7 +63,11 @@
     "real_visual_audio_qa_required": true,
     "character_continuity_qa": true,
     "buffer_post_id_required": true,
-    "do_not_publish_creative_brief": true
+    "do_not_publish_creative_brief": true,
+    "require_qa_no_facial_morphs": true,
+    "require_qa_no_speaking_characters": true,
+    "require_editorial_check_of_scene_action": true,
+    "require_recheck_of_full_mixed_audio": true
   },
   "episodes": [
     {

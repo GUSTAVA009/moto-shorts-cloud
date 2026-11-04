@@ -49,6 +49,18 @@ def validate_series(obj: dict) -> None:
         raise StoryverseError("Visual/audio QA is mandatory")
     if obj["visual_style"].get("character_continuity_required") is not True:
         raise StoryverseError("Cannot render characters without continuity")
+    for key in ("characters_do_not_speak", "mouth_animation_forbidden", "lip_sync_forbidden",
+                "fixed_character_sprite_assets_required", "never_generate_character_faces_per_shot"):
+        if obj["visual_style"].get(key) is not True:
+            raise StoryverseError("Silent stable-character style required: " + key)
+    if obj["voice_contract"].get("voice_is_offscreen_narrator_only") is not True:
+        raise StoryverseError("Voice must be offscreen DEEP narration only")
+    if obj["voice_contract"].get("character_dialogue_forbidden") is not True:
+        raise StoryverseError("No speaking characters")
+    for key in ("require_qa_no_facial_morphs", "require_qa_no_speaking_characters",
+                "require_editorial_check_of_scene_action", "require_recheck_of_full_mixed_audio"):
+        if obj["publish_contract"].get(key) is not True:
+            raise StoryverseError("Required release gate missing: " + key)
     episodes = obj.get("episodes") or []
     if len(episodes) != 10:
         raise StoryverseError("Exactly ten original episode concepts required")
