@@ -91,33 +91,49 @@ def complete_artifact_inventory(fetch=gh):
             raise RuntimeError("ARTIFACT_INVENTORY_BAD_PAGE")
         return result
 
-    first = read_page(1)
-    count = first.get("total_count")
-    if (type(count) is not int or count < 0
-            or count > MAX_ARTIFACTS_FOR_SAFE_GLOBAL_AUDIT):
-        raise RuntimeError("ARTIFACT_INVENTORY_SIZE_UNKNOWN_OR_TOO_LARGE")
-    entries = []
-    ids = set()
-    max_pages = (count + ARTIFACT_PAGE_SIZE - 1) // ARTIFACT_PAGE_SIZE
+    def collect_snapshot():
+        first = read_page(1)
+        count = first.get("total_count")
+        if (type(count) is not int or count < 0
+                or count > MAX_ARTIFACTS_FOR_SAFE_GLOBAL_AUDIT):
+            raise RuntimeError("ARTIFACT_INVENTORY_SIZE_UNKNOWN_OR_TOO_LARGE")
+        entries = []
+        ids = set()
+        max_pages = (count + ARTIFACT_PAGE_SIZE - 1) // ARTIFACT_PAGE_SIZE
 
-    for page in range(1, max(1, max_pages) + 1):
-        data = first if page == 1 else read_page(page)
-        if data.get("total_count") != count:
-            raise RuntimeError("ARTIFACT_INVENTORY_CHANGED_DURING_PAGINATION")
-        batch = data["artifacts"]
-        expected = min(ARTIFACT_PAGE_SIZE, count - len(entries))
-        if len(batch) != expected:
-            raise RuntimeError("ARTIFACT_INVENTORY_INCOMPLETE_PAGE")
-        for row in batch:
-            if (not isinstance(row, dict) or type(row.get("id")) is not int
-                    or row["id"] <= 0 or not isinstance(row.get("name"), str)
-                    or row["id"] in ids):
-                raise RuntimeError("ARTIFACT_INVENTORY_DUPLICATE_OR_INVALID")
-            ids.add(row["id"])
-            entries.append(row)
-    if len(entries) != count:
-        raise RuntimeError("ARTIFACT_INVENTORY_NOT_FULLY_READ")
-    return entries
+        for page in range(1, max(1, max_pages) + 1):
+            data = first if page == 1 else read_page(page)
+            if data.get("total_count") != count:
+                raise RuntimeError("ARTIFACT_INVENTORY_CHANGED_DURING_PAGINATION")
+            batch = data["artifacts"]
+            expected = min(ARTIFACT_PAGE_SIZE, count - len(entries))
+            if len(batch) != expected:
+                raise RuntimeError("ARTIFACT_INVENTORY_INCOMPLETE_PAGE")
+            for row in batch:
+                if (not isinstance(row, dict) or type(row.get("id")) is not int
+                        or row["id"] <= 0 or not isinstance(row.get("name"), str)
+                        or row["id"] in ids):
+                    raise RuntimeError("ARTIFACT_INVENTORY_DUPLICATE_OR_INVALID")
+                ids.add(row["id"])
+                entries.append(row)
+        if len(entries) != count:
+            raise RuntimeError("ARTIFACT_INVENTORY_NOT_FULLY_READ")
+        return entries
+    # New, genuine MP4s can change GitHub Actions artifact total_count while
+    # scanning the paginated list. Re-scan from page 1, never combine shifted
+    # pages or skip immutable receipt checks.
+    transient = {
+        "ARTIFACT_INVENTORY_CHANGED_DURING_PAGINATION",
+        "ARTIFACT_INVENTORY_DUPLICATE_OR_INVALID",
+        "ARTIFACT_INVENTORY_INCOMPLETE_PAGE",
+    }
+    for attempt in range(4):
+        try:
+            return collect_snapshot()
+        except RuntimeError as exc:
+            if str(exc) not in transient or attempt == 3:
+                raise
+    raise RuntimeError("ARTIFACT_INVENTORY_NEVER_STABILIZED")
 
 
 def main():
