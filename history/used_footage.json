@@ -1612,6 +1612,16 @@
       "episode": "moto-mountain-4d673359723f",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/2bfd41ddf6fe4d9d1948a02f3710e4e0888a1e79c4042a91652558570acb9672.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-1e73a562499f1d9642172062e0a1c31ad285e7445ee4ef223b6c9b42ea320a89": {
+      "episode": "moto-rain-e5e1b47f354d",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/1e73a562499f1d9642172062e0a1c31ad285e7445ee4ef223b6c9b42ea320a89.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-aaa6996be291ad144c417c9bfdda6ff4291dd92bebc118d7ed51e9761a0138ab": {
+      "episode": "moto-rain-e5e1b47f354d",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/aaa6996be291ad144c417c9bfdda6ff4291dd92bebc118d7ed51e9761a0138ab.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -2566,6 +2576,13 @@
       "people": "mountain-travelers-4d673",
       "story": "mountain-journey-4d673",
       "visual": "three-clips-4d673"
+    },
+    "moto-rain-e5e1b47f354d": {
+      "environment": "wet-asphalt-road-e5e1b",
+      "bike": "street-motorbike",
+      "people": "road-commuters-e5e1b",
+      "story": "rainy-motorcycle-road-e5e1b",
+      "visual": "three-clips-e5e1b"
     }
   }
 }
