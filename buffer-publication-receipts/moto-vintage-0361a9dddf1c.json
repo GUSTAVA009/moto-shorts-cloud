@@ -2,6 +2,8 @@
   "episode": "moto-vintage-0361a9dddf1c",
   "sha256": "7ab64af031d8474d48893f3ce5632d02ae53142a10e0d04debbd4b05311c28d2",
   "media_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-moto-vintage-0361a9dddf1c-7ab64af031d8/moto-vintage-0361a9dddf1c.mp4",
-  "state": "reserved",
-  "warning": "Never retry unknown Buffer createPost"
+  "state": "queued",
+  "warning": "Never retry unknown Buffer createPost",
+  "buffer_post_id": "6aea83dc16e63068f1866e0e",
+  "due_at": "2026-11-04T06:30:00.000Z"
 }
