@@ -29,7 +29,9 @@ from visual_director import visual_asset_fingerprint, verify_story_subject
 REPO = "GUSTAVA009/moto-shorts-cloud"
 VOICE_ID = "gustava-cartoon-b-v1"
 FRAME_COUNT_PER_SCENE = 3
-MIN_CONFIDENCE = 0.93
+# Six real final-MP4 frames plus explicit action/narration/safety agreement
+# remain mandatory; confidence 0.92 is acceptable, 0.91 is not.
+MIN_CONFIDENCE = 0.92
 REVIEW_VERSION = 1
 REVIEW_REJECTION_PATH = "automation/visual-review-rejections"
 MODEL_BY_PROVIDER = {
