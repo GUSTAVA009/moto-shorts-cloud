@@ -1,0 +1,110 @@
+name: STORYVERSE - Publish owner-approved episode once
+on:
+  push:
+    branches:
+      - feature/storyverse-reference-r39b
+    paths:
+      - .github/workflows/storyverse-publish-once.yml
+permissions:
+  contents: read
+concurrency:
+  group: storyverse-owner-release-e01
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      MP4_URL: https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/storyverse-lift-e01-97e02b5ccaac/storyverse-lift-e01.mp4
+      MP4_SHA: 97e02b5ccaac06c2affd27350044acbebc6384fd53df4734d0f8f2789ab72d76
+    steps:
+      - name: Download owner-approved original video and verify file hash
+        shell: bash
+        run: |
+          curl -fL --retry 3 --retry-all-errors --connect-timeout 20 --max-time 200 -o storyverse-e01.mp4 "$MP4_URL"
+          echo "$MP4_SHA  storyverse-e01.mp4" | sha256sum -c -
+          test "$(stat -c %s storyverse-e01.mp4)" -eq 37991199
+          echo "EXACT_OWNER_APPROVED_MP4_VERIFIED"
+      - name: Publish now to verified GUSTAVA YouTube channel (not another channel)
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os,json,urllib.request,urllib.error,datetime,time
+          token=os.getenv("BUFFER_API_KEY","")
+          if len(token)<30:raise RuntimeError("BUFFER_KEY_NOT_AVAILABLE")
+          org="6ae237b760e9c8dd49173dc8"
+          channel_id="6ae238b32f1f5ed648ff9011"
+          expected_service_id="UCS0QCodPcFBTjMt4ioEWOUw"
+          title="Лифт на минус четвёртый 😨 | Хроники после полуночи #Shorts"
+          description=("На сорок первый день без света старый лифт ожил. "
+             "Лера услышала из шахты три удара и спустилась туда, где этажей вообще не должно быть…\n\n"
+             "Оригинальная вымышленная мульт-история с русским закадровым рассказом. "
+             "Какая загадка должна быть следующей?\n\n"
+             "#Shorts #Истории #Мультфильм #Тайна")
+          def buffer(query,variables=None):
+              data=json.dumps({"query":query,"variables":variables or {}},ensure_ascii=False).encode("utf-8")
+              req=urllib.request.Request("https://api.buffer.com",data=data,method="POST",
+                  headers={"Authorization":"Bearer "+token,"Content-Type":"application/json"})
+              with urllib.request.urlopen(req,timeout=50) as response:out=json.load(response)
+              if out.get("errors"):raise RuntimeError("BUFFER_GRAPHQL_ERROR "+str(out["errors"])[:250])
+              return out.get("data") or {}
+          identity=buffer('query {channel(input:{id:"'+channel_id+
+             '"}) {id name service serviceId isQueuePaused isDisconnected}}')
+          ch=identity.get("channel") or {}
+          print("PINNED_DESTINATION",ch.get("name"),ch.get("service"),ch.get("serviceId"),flush=True)
+          if (ch.get("id")!=channel_id or ch.get("service")!="youtube" or
+              ch.get("serviceId")!=expected_service_id or
+              ch.get("isQueuePaused")!=False or ch.get("isDisconnected")!=False):
+              raise RuntimeError("WRONG_OR_UNAVAILABLE_CHANNEL")
+          duplicate_query=('query {posts(first:100,input:{organizationId:"'+org+
+             '",filter:{channelIds:["'+channel_id+'"],status:[scheduled,sending,sent,error],'
+             'dueAt:{start:"2026-11-01T00:00:00.000Z"}}})'
+             '{edges{node{id text status dueAt externalLink}} pageInfo{hasNextPage}}}')
+          pre=buffer(duplicate_query).get("posts") or {}
+          if (pre.get("pageInfo") or {}).get("hasNextPage"):
+              raise RuntimeError("UNVERIFIED_POST_INVENTORY")
+          posts=[x["node"] for x in pre.get("edges") or []]
+          if any("Лифт на минус четвёртый" in (p.get("text") or "") for p in posts):
+              raise RuntimeError("VIDEO_ALREADY_IN_BUFFER_OR_SENT")
+          post_input={
+            "channelId":channel_id,"text":title+"\n\n"+description,
+            "schedulingType":"automatic","mode":"shareNow","aiAssisted":True,
+            "metadata":{"youtube":{"title":title,"categoryId":"24",
+                                   "madeForKids":False,"privacy":"public",
+                                   "isAiGenerated":True}},
+            "assets":[{"video":{"url":os.environ["MP4_URL"]}}]
+          }
+          q="""mutation($input:CreatePostInput!){
+               createPost(input:$input){
+                  ... on PostActionSuccess{post{id channelId dueAt status externalLink}}
+                  ... on MutationError{message}
+               }}"""
+          try:
+              result=(buffer(q,{"input":post_input}).get("createPost") or {})
+          except Exception:
+              print("BUFFER_SUBMISSION_OUTCOME_UNKNOWN; do not automatically retry",flush=True)
+              raise
+          record=result.get("post")
+          if not record or record.get("channelId")!=channel_id:
+              raise RuntimeError("BUFFER_CREATE_REJECTED "+str(result.get("message","unexplained"))[:450])
+          receipt={
+            "job_id":"20261105-003602-f4f0e73",
+            "buffer_post_id":record["id"],"channel_id":expected_service_id,
+            "target":"https://www.youtube.com/@gustava009",
+            "mp4_sha256":os.environ["MP4_SHA"],
+            "status_at_acceptance":record.get("status"),
+            "external_link_at_acceptance":record.get("externalLink"),
+            "submitted_at":datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          }
+          with open("buffer_storyverse_e01_receipt.json","w",encoding="utf8") as f:
+              json.dump(receipt,f,ensure_ascii=False,indent=2)
+          print("BUFFER_ACCEPTED",json.dumps(receipt,ensure_ascii=False),flush=True)
+          PY
+      - name: Preserve permanent receipt for delivery verification
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: buffer-storyverse-e01-publish-receipt
+          path: buffer_storyverse_e01_receipt.json
+          retention-days: 90
