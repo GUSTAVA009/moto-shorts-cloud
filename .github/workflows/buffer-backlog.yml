@@ -2,9 +2,6 @@
 name: GUSTAVA - Verified Shorts to Buffer Queue
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ['Shorts Factory - Three Unique Cloud Previews Daily']
-    types: [completed]
   push:
     branches: [main]
     paths:
@@ -24,20 +21,23 @@ on:
       - 'cloud-shorts/test_publish_workflows.py'
   schedule:
     # Independently check for verified unpublished MP4 every 90 minutes;
-    # successful preview workflow_run also initiates immediate queued delivery.
+    # independent successful frame reviewer explicitly dispatches delivery.
     - cron: "05 1,4,7,10,13,16,19,22 * * *"
     - cron: "35 2,5,8,11,14,17,20,23 * * *"
 permissions:
   contents: write
   actions: write
 concurrency:
-  group: gustava-buffer-verified-publishing
+  # GitHub Actions replaces pending runs in a constant group even when
+  # cancel-in-progress is false. Use commit-bound groups; per-video
+  # immutable Buffer receipts enforce duplicate-free delivery across groups.
+  group: gustava-buffer-verified-publishing-${{ github.sha }}
   cancel-in-progress: false
 jobs:
   publish:
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    if: github.repository == 'GUSTAVA009/moto-shorts-cloud'
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - name: Audit code syntax and publishing safeguards
@@ -78,8 +78,13 @@ jobs:
           EPISODE: ${{ steps.pick.outputs.episode }}
         run: |
           set -euo pipefail
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg >/dev/null
+          # A hosted GitHub runner already includes ffmpeg/ffprobe. Repeated
+          # apt update stalled publication before any MP4 could reach Buffer.
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            timeout 90s sudo apt-get update -qq
+            timeout 90s sudo apt-get install -y -qq ffmpeg
+          fi
+          ffmpeg -hide_banner -version | head -n 1
           test -s "staged/$EPISODE/$EPISODE.mp4"
           test -s "staged/$EPISODE/voice_qa.json"
           test -s "staged/$EPISODE/mixed_audio_qa.json"

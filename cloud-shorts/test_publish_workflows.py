@@ -25,6 +25,12 @@ class PublisherShellTests(unittest.TestCase):
         self.assertIn("- 'cloud-shorts/episodes.json'", workflow)
         self.assertIn("Select one original, QA-passed, never-published video", workflow)
         self.assertIn("find_pending_buffer.py", workflow)
+        # A constant group silently cancels every old pending approval.
+        self.assertIn('group: gustava-buffer-verified-publishing-${{ github.sha }}', workflow)
+        self.assertNotIn("workflow_run:", workflow)
+        # Do not block every real upload on a redundant Ubuntu apt update.
+        self.assertIn("command -v ffmpeg", workflow)
+        self.assertNotIn("          sudo apt-get update -qq\n          sudo apt-get install", workflow)
 
     def test_deep_render_worker_does_not_install_retired_tts_or_nonexistent_kokoro(self):
         workflow = source(".github/workflows/daily-preview.yml")
