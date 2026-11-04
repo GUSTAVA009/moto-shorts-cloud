@@ -1,8 +1,8 @@
-name: GUSTAVA - Resume Stalled Original Shorts Renderer
+# Safe manual-only recovery. NEVER cancel a healthy render just because
+# scripts or the episodes catalog advanced to another commit SHA.
+# Existing renderer has a job timeout and a serialized concurrency group.
+name: GUSTAVA - Safely Resume Original Shorts Renderer
 on:
-  push:
-    paths:
-      - '.github/workflows/factory-resume.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -11,64 +11,36 @@ jobs:
   resume:
     if: github.repository == 'GUSTAVA009/moto-shorts-cloud'
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 5
     steps:
-      - name: Cancel obsolete runners and trigger latest safe renderer
+      - name: Dispatch ONLY if no original preview is already running or queued
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          GITHUB_SHA: ${{ github.sha }}
         run: |
           python3 - <<'PY'
-          import json, os, urllib.error, urllib.request, time
-          repo=os.environ["GITHUB_REPOSITORY"]
-          sha=os.environ["GITHUB_SHA"]
-          token=os.environ["GITHUB_TOKEN"]
-          base="https://api.github.com/repos/"+repo+"/"
+          import json, os, urllib.request
+          repo = os.environ["GITHUB_REPOSITORY"]
+          token = os.environ["GITHUB_TOKEN"]
+          root = "https://api.github.com/repos/" + repo + "/"
           def call(path, method="GET", payload=None):
-              data=(json.dumps(payload).encode() if payload is not None else None)
-              req=urllib.request.Request(base+path,data=data,method=method,headers={
-                  "Accept":"application/vnd.github+json",
-                  "Authorization":"Bearer "+token,
-                  "User-Agent":"gustava-conservative-stalled-preview-recovery",
-                  "X-GitHub-Api-Version":"2022-11-28",
-                  "Content-Type":"application/json"})
-              with urllib.request.urlopen(req,timeout=30) as resp:
-                  return json.load(resp) if resp.status!=204 else None
-          workflow="actions/workflows/daily-preview.yml"
-          for runner in call(workflow+"/runs?per_page=45").get("workflow_runs",[]):
-              if runner["status"] not in ("in_progress","queued","pending"):
-                  continue
-              if runner.get("head_sha")==sha:
-                  continue
-              try:
-                  call("actions/runs/"+str(runner["id"])+"/cancel","POST")
-                  print("STALE_PREVIEW_CANCEL_REQUESTED",runner["id"],runner["status"],flush=True)
-              except urllib.error.HTTPError as exc:
-                  if exc.code not in (404,409,422):
-                      raise
-                  print("STALE_CANCEL_REJECTED",runner["id"],exc.code,flush=True)
-          time.sleep(8)
-          # A hung apt/pip subprocess can ignore GitHub's graceful cancel.
-          # Force-cancel ONLY outdated preview runs, never the new SHA.
-          for runner in call(workflow+"/runs?per_page=45").get("workflow_runs",[]):
-              if runner["status"] not in ("in_progress","queued","pending"):
-                  continue
-              if runner.get("head_sha")==sha:
-                  continue
-              try:
-                  call("actions/runs/"+str(runner["id"])+"/force-cancel","POST")
-                  print("STALE_PREVIEW_FORCE_CANCEL_REQUESTED",runner["id"],flush=True)
-              except urllib.error.HTTPError as exc:
-                  if exc.code not in (403,404,409,422):
-                      raise
-                  print("STALE_FORCE_CANCEL_REJECTED",runner["id"],exc.code,flush=True)
-          current=call(workflow+"/runs?per_page=15").get("workflow_runs",[])
-          active=[x for x in current if x.get("head_sha")==sha
-                  and x["status"] in ("in_progress","queued","pending")]
+              data = json.dumps(payload).encode() if payload is not None else None
+              req = urllib.request.Request(root + path, data=data, method=method,
+                  headers={"Authorization":"Bearer " + token,
+                           "Accept":"application/vnd.github+json",
+                           "Content-Type":"application/json",
+                           "X-GitHub-Api-Version":"2022-11-28",
+                           "User-Agent":"gustava-nondestructive-render-resume"})
+              with urllib.request.urlopen(req, timeout=30) as resp:
+                  return json.load(resp) if resp.status != 204 else {}
+          workflow = "actions/workflows/daily-preview.yml"
+          runs = call(workflow + "/runs?per_page=100").get("workflow_runs", [])
+          active = [run for run in runs
+                    if run.get("status") in ("in_progress","queued","pending")]
           if active:
-              print("LATEST_PREVIEW_ALREADY_QUEUED",active[0]["id"],flush=True)
+              print("RENDER_ALREADY_RUNNING_KEEP_UNINTERRUPTED",
+                    [(x["id"], x["status"]) for x in active[:5]], flush=True)
           else:
-              call(workflow+"/dispatches","POST",{"ref":"main"})
-              print("LATEST_SAFE_PREVIEW_DISPATCHED",sha[:12],flush=True)
+              call(workflow + "/dispatches", "POST", {"ref":"main"})
+              print("SAFE_RENDER_DISPATCHED_WITHOUT_CANCEL", flush=True)
           PY
