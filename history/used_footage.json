@@ -1712,6 +1712,16 @@
       "episode": "moto-racing-0ae4b51c81b9",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/41682373e85a21e98b34cdd725518b6d4be8c1f9fb92063e932b2baa404189c8.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-4ce23ee326529d486730e204a03970e471864ba9fee2f369170450beb6fa6b47": {
+      "episode": "moto-forest-42430f2d2a5c",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/4ce23ee326529d486730e204a03970e471864ba9fee2f369170450beb6fa6b47.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-790a9dc4aac2820fc3de2f2488978adc3ccb75b4f53dc1ecce830e25c92e6afc": {
+      "episode": "moto-forest-42430f2d2a5c",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/790a9dc4aac2820fc3de2f2488978adc3ccb75b4f53dc1ecce830e25c92e6afc.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -2736,6 +2746,13 @@
       "people": "racing-crews-0ae4b",
       "story": "circuit-racing-0ae4b",
       "visual": "three-clips-0ae4b"
+    },
+    "moto-forest-42430f2d2a5c": {
+      "environment": "forest-trail-42430",
+      "bike": "forest-trailbike",
+      "people": "woods-rider-42430",
+      "story": "forest-path-and-riding-42430",
+      "visual": "three-clips-42430"
     }
   }
 }
