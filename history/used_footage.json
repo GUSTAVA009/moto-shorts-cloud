@@ -1562,6 +1562,16 @@
       "episode": "moto-motocross-5b3016409a2e",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/d2a6e118f48209f4c59343b24a8ee3bcb1ccbfada1d51b3a6406ac6006069b35.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-640776a978b23b74d7353163b937c9483c0f1adf1a7a3a66af8682ead954d853": {
+      "episode": "moto-racing-71084387ee4d",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/640776a978b23b74d7353163b937c9483c0f1adf1a7a3a66af8682ead954d853.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-8a570206c551b9ecdd4ca4917d66d44f8b5ce075a3de3f5367e9d2a876f92f83": {
+      "episode": "moto-racing-71084387ee4d",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/8a570206c551b9ecdd4ca4917d66d44f8b5ce075a3de3f5367e9d2a876f92f83.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -2481,6 +2491,13 @@
       "people": "track-racers-5b301",
       "story": "rider-at-prepared-track-5b301",
       "visual": "three-clips-5b301"
+    },
+    "moto-racing-71084387ee4d": {
+      "environment": "race-paddock-71084",
+      "bike": "track-racing-bike",
+      "people": "racing-crews-71084",
+      "story": "circuit-racing-71084",
+      "visual": "three-clips-71084"
     }
   }
 }
