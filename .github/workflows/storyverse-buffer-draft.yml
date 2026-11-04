@@ -1,0 +1,120 @@
+name: GUSTAVA - Stage one Storyverse preview in Buffer drafts
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  draft-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      CHANNEL_ID: "6ae238b32f1f5ed648ff9011"
+      ORG_ID: "6ae237b760e9c8dd49173dc8"
+      YOUTUBE_ID: "UCS0QCodPcFBTjMt4ioEWOUw"
+      VIDEO_URL: "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/storyverse-preview-20261105-003602-f4f0e73/gustava-storyverse-20261105-003602-f4f0e73.mp4"
+      VIDEO_SHA256: "97e02b5ccaac06c2affd27350044acbebc6384fd53df4734d0f8f2789ab72d76"
+      STORYVERSE_MARKER: "GUSTAVA-STORYVERSE-20261105-003602-f4f0e73"
+    steps:
+      - name: Verify exact technical preview bytes; NEVER scheduled or published
+        run: |
+          python3 - <<'PY'
+          import hashlib,os,urllib.request
+          url=os.environ['VIDEO_URL']
+          req=urllib.request.Request(url,headers={'User-Agent':'GUSTAVA-Buffer-Draft-Only'})
+          with urllib.request.urlopen(req,timeout=90) as res:
+              if res.status!=200:raise RuntimeError('MP4 release not available')
+              raw=res.read(85000001)
+          if len(raw)!=37991199 or hashlib.sha256(raw).hexdigest()!=os.environ['VIDEO_SHA256']:
+              raise RuntimeError('MP4 fails exact owner file hash/size comparison')
+          print('PREVIEW_MP4_BYTES_VERIFIED',len(raw))
+          PY
+      - name: Create one Buffer DRAFT with the MP4; no auto-post and no queue schedule
+        run: |
+          python3 - <<'PY'
+          import json,os,urllib.request,urllib.error
+          from pathlib import Path
+          key=os.environ.get('BUFFER_API_KEY','')
+          if len(key)<30:raise RuntimeError('BUFFER_API_KEY unavailable, no post created')
+          channel=os.environ['CHANNEL_ID']
+          org=os.environ['ORG_ID']
+          marker=os.environ['STORYVERSE_MARKER']
+          def graphql(query,variables=None):
+              body=json.dumps({'query':query,'variables':variables or {}},ensure_ascii=False).encode()
+              req=urllib.request.Request('https://api.buffer.com',data=body,method='POST',
+                  headers={'Authorization':'Bearer '+key,'Content-Type':'application/json',
+                           'User-Agent':'GUSTAVA-Storyverse-Draft-Only'})
+              with urllib.request.urlopen(req,timeout=55) as res:
+                  response=json.load(res)
+              if response.get('errors'):
+                  raise RuntimeError('Buffer GraphQL error: '+str(response['errors'])[:450])
+              return response.get('data') or {}
+          q=('query { channel(input:{id:"'+channel+'"
+               '}) {id name service serviceId isDisconnected} '
+               'posts(first:100,input:{organizationId:"'+org+'",filter:{channelIds:["'+channel+
+               '"]}}) {edges {node {id status text}} pageInfo {hasNextPage}} }')
+          data=graphql(q)
+          linked=data.get('channel') or {}
+          if linked.get('id')!=channel or linked.get('service')!='youtube' or linked.get('serviceId')!=os.environ['YOUTUBE_ID'] or linked.get('isDisconnected') is not False:
+              raise RuntimeError('The expected Buffer YouTube channel is not connected')
+          listing=data.get('posts') or {}
+          if (listing.get('pageInfo') or {}).get('hasNextPage'):
+              raise RuntimeError('Buffer post listing truncated. Refuse possible duplicate')
+          posts=[x.get('node') or {} for x in listing.get('edges') or []]
+          old=[x for x in posts if marker in (x.get('text') or '')]
+          if old:
+              if len(old)!=1:raise RuntimeError('Several matching Buffer entries; manual resolution needed')
+              post=old[0]
+              if post.get('status')!='draft':raise RuntimeError('Matching Buffer item not in draft state')
+              receipt={'created':False,'buffer_post_id':post['id'],'status':'draft','channel_id':channel,
+                       'marker':marker,'note':'Existing unpublished draft; no new post'}
+          else:
+              title='Лифт на минус четвёртый | Хроники после полуночи'
+              text=(
+                  'ТЕХНИЧЕСКИЙ ПРЕДПРОСМОТР — НЕ ПУБЛИКОВАТЬ ДО ИСПРАВЛЕНИЯ ПЕРСОНАЖЕЙ.\\n'
+                  'Оригинальный мультфильм GUSTAVA: девушка обнаруживает невозможный этаж лифта '
+                  'и спасает людей из затопленного убежища.\\n'
+                  'Визуальный QA пока НЕ ПРОЙДЕН (меняется внешность героев).\\n'
+                  +marker
+              )
+              mutation="""mutation($input:CreatePostInput!) {
+                createPost(input:$input) {
+                  ... on PostActionSuccess {post {id status channelId dueAt text}}
+                  ... on MutationError {message}
+                }
+              }"""
+              payload={
+                  'text':text,'channelId':channel,'schedulingType':'automatic',
+                  'mode':'addToQueue','saveToDraft':True,'aiAssisted':True,
+                  'metadata':{'youtube':{'title':title,'categoryId':'1',
+                                         'isAiGenerated':True,'madeForKids':False,'privacy':'private'}},
+                  'assets':[{'video':{'url':os.environ['VIDEO_URL']}}]
+              }
+              res=graphql(mutation,{'input':payload}).get('createPost') or {}
+              post=res.get('post') or {}
+              if not post.get('id'):
+                  raise RuntimeError('Buffer did not accept media draft: '+str(res.get('message','unknown'))[:400])
+              if post.get('channelId')!=channel or post.get('status')!='draft':
+                  # If Buffer unexpectedly scheduled this item, delete ONLY this new post.
+                  delete="""mutation($input:DeletePostInput!){
+                    deletePost(input:$input) {... on DeletePostSuccess{id} ... on MutationError{message}}
+                  }"""
+                  removed=graphql(delete,{'input':{'id':post['id']}}).get('deletePost') or {}
+                  raise RuntimeError('Buffer returned non-draft; newly created item removal '+str(removed.get('id')==post['id']))
+              receipt={'created':True,'buffer_post_id':post['id'],'status':post['status'],
+                       'channel_id':channel,'marker':marker,
+                       'note':'Unpublished draft with actual MP4; NOT in scheduled queue'}
+          Path('buffer_draft_receipt.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8')
+          print('BUFFER_DRAFT_RECEIPT',json.dumps(receipt,ensure_ascii=False))
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as fd:
+              fd.write('## Storyverse Buffer DRAFT, NOT scheduled\\n\\n'
+                       'Video SHA256 verified; Buffer post ID **'+receipt['buffer_post_id']+
+                       '**; status **draft**. Visual QA is NOT approved. Do not publish.\\n')
+          PY
+      - name: Store verifiable Buffer receipt
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: storyverse-buffer-draft-receipt
+          path: buffer_draft_receipt.json
+          retention-days: 30
