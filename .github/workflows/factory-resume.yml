@@ -48,7 +48,7 @@ jobs:
                   if exc.code not in (404,409,422):
                       raise
                   print("STALE_CANCEL_REJECTED",runner["id"],exc.code,flush=True)
-          time.sleep(5)
+          time.sleep(8)
           current=call(workflow+"/runs?per_page=15").get("workflow_runs",[])
           active=[x for x in current if x.get("head_sha")==sha
                   and x["status"] in ("in_progress","queued","pending")]
