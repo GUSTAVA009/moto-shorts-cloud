@@ -16798,7 +16798,7 @@
     {
       "id": "moto-motocross-85c22459dc63",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -16881,7 +16881,48 @@
         "description": "Поставь лайк, если тебе нравится эта мототема."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "6d2c3257730041f546c79647170bf47056194d2569a8f6cb4d152cfa1ba00d8f",
+      "reviewed_artifact_run_id": "41908869846",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-motocross-85c22459dc63",
+        "render_run_id": "41908869846",
+        "mp4_sha256": "6d2c3257730041f546c79647170bf47056194d2569a8f6cb4d152cfa1ba00d8f",
+        "asset_fingerprint": "9bdc16208eed877adbe34673ec2365bfc444724fc4e23f67495cb5426d5be136",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T20:49:50.656109+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Байкер на серебристом мотоцикле едет по песчаной дороге, видны детали байка и движения.",
+            "frames_sha256": [
+              "02900e82b1bd806f329551f9580c18c3a8847196331127109625267175b7cb5c",
+              "83d257045de8a249573cebd7f1b8a0e941ee07756cf6aff9be537a09362cd281",
+              "4d90d0d736a3a56f8fc811f977632a3a27a9ff588773fad91b6851ae6cac1fa8"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на желтом мотоцикле едет по асфальтированной дороге в лесу, видны детали движения и окружения.",
+            "frames_sha256": [
+              "18427245a14b2876651f5735fdc6cdbfa4f3d852093f0ed91cdfd12dcd59574b",
+              "081118ae1326d48e653debbfe157764474aeca78c4bb762ac6c972ae79b79dfd",
+              "816f5049c69a48e6503226fb68638505ac03b2e15b042ce372ab87bd9cb42712"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-racing-6c26230b7583",
