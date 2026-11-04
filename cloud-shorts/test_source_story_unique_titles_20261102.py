@@ -44,6 +44,18 @@ class SourceAnchoredUniqueTitleTests(unittest.TestCase):
             prior_titles.append(draft["title"])
             prior_narrations.append(draft["narration"])
 
+    def test_owner_originals_prefer_two_visible_moving_motorcycles(self):
+        from source_story import select_pair
+        all_episodes=json.loads((ROOT/"episodes.json").read_text("utf8"))["episodes"]
+        originals=[f for episode in all_episodes for f in episode.get("footage",())
+                   if f.get("license")=="LTX OpenRAIL-M"]
+        isolated=next(f for f in originals if f.get("scene_action")=="wheel")
+        riding=next(f for f in originals if f.get("scene_action")=="riding")
+        forest=next(f for f in originals if f.get("scene_action")=="forest")
+        selected=select_pair([isolated,riding,forest],used_ids=())
+        self.assertEqual([f["scene_action"] for f in selected],["riding","forest"])
+        self.assertNotIn(isolated,selected)
+
     def test_variations_do_not_hide_wrong_source_or_repetitions(self):
         initial=compose(self.pair,[])
         self.assertTrue(initial["title"])

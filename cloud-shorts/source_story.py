@@ -133,6 +133,26 @@ def select_pair(sources, used_ids):
             continue
         validated_media(media)
         eligible.append((media, scene))
+    # A major source of 0/10 Buffer stock was otherwise technically valid
+    # videos of an isolated tire/bolt/helmet. The actual six-frame reviewer
+    # correctly rejected them because no motorcycle was visible in chapter 2.
+    # When actual, owner-generated moving-motorcycle sources are available,
+    # choose TWO of those first. All source SHA, ownership and independent
+    # action checks remain mandatory. Pexels-only unit tests retain their
+    # established sorting and license behavior.
+    fully_visible_owner_actions = {
+        "ride", "jump", "mud", "city", "forest", "mountain", "rain",
+    }
+    for index, (first, a) in enumerate(eligible):
+        if (first.get("license") != "LTX OpenRAIL-M"
+                or a[0] not in fully_visible_owner_actions):
+            continue
+        for second, b in eligible[index + 1:]:
+            if (second.get("license") == "LTX OpenRAIL-M"
+                    and b[0] in fully_visible_owner_actions
+                    and a[0] != b[0]
+                    and pair_permitted(first, second)):
+                return [first, second]
     # Prefer a journey + track pairing; source title alone never proves an
     # organized race or multiple competitors are visible in the frames.
     for index, (first, a) in enumerate(eligible):
