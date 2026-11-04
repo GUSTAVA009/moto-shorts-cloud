@@ -65,6 +65,11 @@ _ASR_SPELLING_EQUIVALENTS = {
 
 def tokens(text):
     normalized = str(text).casefold().replace("ё", "е")
+    # This exact ASR orthography is acoustically indistinguishable:
+    # "вначале" and "в начале". Compare the spoken phrase rather than
+    # rejecting a complete WAV as if the word "начале" was omitted.
+    # Do not normalize isolated "в" or unrelated missing words.
+    normalized = re.sub(r"\bв\s+начале\b", "вначале", normalized)
     # "восьмидесятых" and the ASR transcription "80-х" mean the same decade,
     # not a fabricated or mispronounced number.
     normalized = re.sub(r"\bвосьмидесятых\b", "80", normalized)
