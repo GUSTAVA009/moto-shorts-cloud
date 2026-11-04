@@ -49,6 +49,20 @@ jobs:
                       raise
                   print("STALE_CANCEL_REJECTED",runner["id"],exc.code,flush=True)
           time.sleep(8)
+          # A hung apt/pip subprocess can ignore GitHub's graceful cancel.
+          # Force-cancel ONLY outdated preview runs, never the new SHA.
+          for runner in call(workflow+"/runs?per_page=45").get("workflow_runs",[]):
+              if runner["status"] not in ("in_progress","queued","pending"):
+                  continue
+              if runner.get("head_sha")==sha:
+                  continue
+              try:
+                  call("actions/runs/"+str(runner["id"])+"/force-cancel","POST")
+                  print("STALE_PREVIEW_FORCE_CANCEL_REQUESTED",runner["id"],flush=True)
+              except urllib.error.HTTPError as exc:
+                  if exc.code not in (403,404,409,422):
+                      raise
+                  print("STALE_FORCE_CANCEL_REJECTED",runner["id"],exc.code,flush=True)
           current=call(workflow+"/runs?per_page=15").get("workflow_runs",[])
           active=[x for x in current if x.get("head_sha")==sha
                   and x["status"] in ("in_progress","queued","pending")]
