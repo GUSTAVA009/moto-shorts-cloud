@@ -37,6 +37,21 @@ OBJECTS = {
 
 MIN_SCENE_SECONDS = 3.3
 MAX_SCENE_SECONDS = 12.0
+# A slow, continuous cinematic treatment of owner-generated 6.7s LTX footage.
+# Frames remain in source order: no still-image hold, looping, copy/reuse,
+# clip recutting or false claim that two shots depict one continuous event.
+# At 15% retime, two moving 6.7s clips can cover a ~14.3s spoken Short.
+ORIGINAL_LTX_CONTINUOUS_MOTION_SCALE = 1.15
+
+
+def source_motion_scale(source):
+    """Only SHA-attested, owner-authored LTX video may be gently retimed."""
+    if (source.get("license") == "LTX OpenRAIL-M"
+            and str(source.get("generation_model") or "").startswith("ltxv-")
+            and re.fullmatch(r"[0-9a-f]{64}",
+                             str(source.get("original_sha256") or ""))):
+        return ORIGINAL_LTX_CONTINUOUS_MOTION_SCALE
+    return 1.0
 
 # A noun in the title is NOT evidence of the described action. An instructional
 # helmet Short needs actual sources of FITTING, FASTENING and VISOR operation.
@@ -306,9 +321,13 @@ def directed_plan(episode, source_durations, seconds):
     src_by_key={s["key"]:s for s in episode["footage"]}
     caps=[]
     for key in order:
-        duration=float(source_durations[key])
-        available=max(0.,duration-first[key]-.18)
-        caps.append(min(scene_duration_limit(episode,src_by_key[key]),available))
+        source=src_by_key[key]
+        scale=source_motion_scale(source)
+        # Source starts remain in original media seconds; presentation
+        # timestamps expand in real moving frames, not from frozen padding.
+        duration=float(source_durations[key])*scale
+        available=max(0.,duration-first[key]*scale-.18)
+        caps.append(min(scene_duration_limit(episode,source),available))
     if sum(caps)<target-.12 or any(cap<MIN_SCENE_SECONDS for cap in caps):
         raise RuntimeError("VISUAL_DURATION_SHORTAGE: need more suitable licensed source footage")
     # A voice-first two-action Short may carry an explicitly reviewed

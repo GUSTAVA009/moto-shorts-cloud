@@ -1,5 +1,6 @@
 """Regression for the specific unrelated-helmet and A/B/A/B Shorts failures."""
 import unittest
+import json
 from visual_director import verify_story_subject, directed_plan, MIN_SCENE_SECONDS
 
 def video(key,name,duration=20):
@@ -17,6 +18,27 @@ def ep(footage,title="Что важнее при выборе мотошлема
             ]}
 
 class VisualDirectionTests(unittest.TestCase):
+    def test_two_hash_attested_original_clips_can_cover_real_speech_without_loops(self):
+        from visual_director import source_motion_scale, directed_plan
+        import copy
+        from pathlib import Path
+        catalog=json.loads((Path(__file__).parent/"episodes.json").read_text("utf8"))
+        owner=next(ep for ep in catalog["episodes"]
+                   if ep["id"]=="moto-helmet-e9d8f59713f0")
+        self.assertEqual(len(owner["footage"]),2)
+        self.assertEqual(source_motion_scale(owner["footage"][0]),1.15)
+        plan=directed_plan(owner,{"clip_0":6.706,"clip_1":6.706},14.4)
+        self.assertEqual([x["source"] for x in plan],["clip_0","clip_1"])
+        self.assertTrue(all(x["seconds"]>=3.3 for x in plan))
+        self.assertEqual(len({x["source"] for x in plan}),2)
+        self.assertAlmostEqual(sum(x["seconds"] for x in plan),14.4,places=1)
+        untrusted=dict(owner["footage"][0],original_sha256="bad")
+        self.assertEqual(source_motion_scale(untrusted),1.0)
+        other=copy.deepcopy(owner)
+        other["footage"][0]=untrusted
+        with self.assertRaisesRegex(RuntimeError,"VISUAL_DURATION_SHORTAGE"):
+            directed_plan(other,{"clip_0":6.706,"clip_1":6.706},14.4)
+
     def test_actual_cartoon_b_motocross_jump_source_has_visible_airborne_action(self):
         import json
         from pathlib import Path

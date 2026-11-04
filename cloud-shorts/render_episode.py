@@ -20,7 +20,7 @@ import urllib.request
 from apply_exact_qa_episode_repair import change as apply_verified_episode_revision
 from soundtrack import generate as make_music
 from audio_accents import create as make_audio_accents, cover_times
-from visual_director import verify_story_subject, directed_plan
+from visual_director import verify_story_subject, directed_plan, source_motion_scale
 from caption_layout import layout_caption
 from tts_voice import render as make_voice
 from silero_voice import render as make_silero_voice, MODEL_ID as SILERO_MODEL_ID, SPEAKER as SILERO_SPEAKER
@@ -339,11 +339,19 @@ def assemble_clips(ep, sources, work, target_seconds):
     for idx,shot in enumerate(plan,1):
         src=sources[shot["source"]]
         out=work/("scene_%02d.mp4"%idx)
+        source_meta=next(item for item in ep["footage"]
+                         if item["key"] == shot["source"])
+        scale=source_motion_scale(source_meta)
+        # Retiming moves source frames in order; no artificial repeats/holds.
+        # A distinct 6.7s LTX clip at 1.15x can cover ~7.5s of output.
+        stretch=(f"setpts={scale:.3f}*(PTS-STARTPTS),"
+                 if scale!=1.0 else "")
         run([
             "ffmpeg","-hide_banner","-loglevel","error","-y",
             "-ss","%.3f"%shot["start"],"-i",src,
             "-t","%.3f"%shot["seconds"],
-            "-vf","fps=30,scale=720:1280:force_original_aspect_ratio=increase:"
+            "-vf",stretch+
+                  "fps=30,scale=720:1280:force_original_aspect_ratio=increase:"
                   "flags=lanczos,crop=720:1280,setsar=1,format=yuv420p",
             "-an","-c:v","libx264","-crf","23","-preset","veryfast",
             "-r","30","-pix_fmt","yuv420p",out,
@@ -579,7 +587,15 @@ def render(ep, output_dir):
     else:
         raise ValueError("Unknown or noncommercial voice engine")
     # Speech drives the duration; no long silent post-narration section.
-    requested = max(9.0, min(float(ep.get("max_duration_seconds", 19.5)), voice_duration + 1.25))
+    # 0.95s of finish room, less unnecessary post-speech holding. We still
+    # keep the 0.75s hard minimum and the 160ms spoken onset alignment.
+    # Standard licensed long takes keep their original 1.25s tail.
+    all_owner_ltx = (len(ep.get("footage") or [])==2 and
+                     all(source_motion_scale(src)>1.0
+                         for src in ep.get("footage") or []))
+    tail = 0.95 if all_owner_ltx else 1.25
+    requested = max(9.0, min(float(ep.get("max_duration_seconds", 19.5)),
+                             voice_duration + tail))
     if voice_duration > requested - 0.75:
         raise RuntimeError("Voice too long for video, shorten the original narration")
     silent, total = assemble_clips(ep, sources, work, requested)
