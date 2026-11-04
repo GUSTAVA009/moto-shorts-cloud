@@ -17144,7 +17144,7 @@
     {
       "id": "moto-motocross-d80a71bdbfcf",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -17227,7 +17227,48 @@
         "description": "Поделись роликом с другом, который любит мотоциклы."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "cf7a882a43c7244b26294db61fa8ec43e8cfe5e346598614c5486567f2b45caf",
+      "reviewed_artifact_run_id": "41909963042",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-motocross-d80a71bdbfcf",
+        "render_run_id": "41909963042",
+        "mp4_sha256": "cf7a882a43c7244b26294db61fa8ec43e8cfe5e346598614c5486567f2b45caf",
+        "asset_fingerprint": "2e73efdb71ab7720bea5d603a85b5afa0115f71bbe1072ab407d42e9a3ed607b",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T21:05:45.347806+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Байкер в синей экипировке едет на мотоцикле по песчаной трассе; видны колеса и движение.",
+            "frames_sha256": [
+              "9129d7473f24b7f32a2444f01c3199f0b1f38e6126cf3373c3e0a30495e6aa75",
+              "eceb52b67f3081e8d0f6da16519b469ff1d49f54c78cf5aaf24ffc648f94dd50",
+              "03bb1d4f6243f3513d3faa1a62e213bde8444ea86c14f2d204b0b3a3fcd55dea"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер в тёмной экипировке проезжает грязный участок с водой; видны колеса и движение.",
+            "frames_sha256": [
+              "3850c22260411be1dcf5d2d611ad2c0e1fb4b0479fea0f54a582ced063d058db",
+              "d271d0ffd7cb9940ff5fb6b455246536423add56fe7fada25f2571b638379515",
+              "26fe022a41caec517d1d76877ec1438098a28b9d16e761896e449b81fa2328eb"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-repair-8485ca4615a1",
