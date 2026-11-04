@@ -195,7 +195,7 @@ jobs:
             exit 1
           fi
 
-      - name: Dispatch idempotent Buffer publisher only after genuine passing MP4
+      - name: Dispatch independent frame review before any Buffer publication
         if: ${{ success() && steps.pick.outputs.has_job == 'true' }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -212,16 +212,16 @@ jobs:
               raise SystemExit("Cannot dispatch publisher without GitHub token")
           req=urllib.request.Request(
               "https://api.github.com/repos/"+repo+
-              "/actions/workflows/buffer-backlog.yml/dispatches",
+              "/actions/workflows/autonomous-editorial-review.yml/dispatches",
               data=json.dumps({"ref":"main"}).encode("utf8"),
               headers={"Authorization":"Bearer "+token,
                        "Accept":"application/vnd.github+json",
-                       "User-Agent":"gustava-verified-mp4-publisher"},
+                       "User-Agent":"gustava-frame-first-release"},
               method="POST")
           with urllib.request.urlopen(req,timeout=35) as response:
               if response.status != 204:
-                  raise RuntimeError("GitHub did not accept Buffer dispatch")
-          print("BUFFER_VERIFIED_DISPATCH_CONFIRMED",os.environ["EPISODE"],flush=True)
+                  raise RuntimeError("GitHub did not accept frame review dispatch")
+          print("INDEPENDENT_FRAME_REVIEW_DISPATCH_CONFIRMED",os.environ["EPISODE"],flush=True)
           PY
       - name: Refill the verified preview reserve after each successful MP4
         if: ${{ success() && steps.pick.outputs.has_job == 'true' }}
