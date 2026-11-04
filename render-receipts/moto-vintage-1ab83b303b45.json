@@ -1,0 +1,11 @@
+{
+  "id": "moto-vintage-1ab83b303b45",
+  "state": "reserved",
+  "run_id": "41799490968",
+  "attempt_count": 1,
+  "preview_fingerprint": "9c01b712633822dcf0e3b6073e26eb7190ac6da5c075ca635227fa4aa3e5b637",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-cartoon-b-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
