@@ -43,7 +43,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: moto-shorts-unique-preview-queue
+  group: moto-shorts-unique-preview-queue-v2-single-worker
   cancel-in-progress: false
 
 jobs:
