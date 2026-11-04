@@ -12199,7 +12199,7 @@
     {
       "id": "moto-motocross-230c7463b50f",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -12282,7 +12282,48 @@
         "description": "Поставь лайк, если тебе нравится эта мототема."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "30b3e1507c687f1268beeb17a8303a952f85db5edcbce7b1399cf309a689212e",
+      "reviewed_artifact_run_id": "41707169772",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-motocross-230c7463b50f",
+        "render_run_id": "41707169772",
+        "mp4_sha256": "30b3e1507c687f1268beeb17a8303a952f85db5edcbce7b1399cf309a689212e",
+        "asset_fingerprint": "390aef856c3302c8e7f9cd45382b3f1016ea431089683009433773fc7f012563",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T00:51:27.502005+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер в полной экипировке едет на мотоцикле по грязной лесной дороге.",
+            "frames_sha256": [
+              "24d87c12aa6e01ffddc5b397189bb024daaefc04d15c44a94200ab154a311510",
+              "1fc7dbe17910fa44e2011afed03feabc5fd9bed0af5d563b9fb1b6bbc29609dc",
+              "3bfe8482b40c72fc882b2eae244f83e552e8e021f93055b7c132d4e8db1b10b6"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Рука механика в перчатке работает с передней вилкой мотоцикла в гараже.",
+            "frames_sha256": [
+              "07056906a51b21d046deae55e7f8f2bef840a704665bacc817c8b3e52285d575",
+              "dac5d52d307df201022f2cf17328a568687e630f2ca2423ab5037b1646b7ed13",
+              "dad3a44b06345ecc1eff68ecff7ffe2543d7f1bb9296e02be7c844f0f98bb63e"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-rain-0f4b7970c947",
