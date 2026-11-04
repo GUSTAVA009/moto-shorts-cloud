@@ -17232,7 +17232,7 @@
     {
       "id": "moto-repair-8485ca4615a1",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -17315,7 +17315,48 @@
         "description": "Поставь лайк, если тебе нравится эта мототема."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "a2d1aac0f8a62212ba64764fbfb8fc1dc4e4f3c207cfa8e22a48ae5a06432477",
+      "reviewed_artifact_run_id": "41910373628",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-repair-8485ca4615a1",
+        "render_run_id": "41910373628",
+        "mp4_sha256": "a2d1aac0f8a62212ba64764fbfb8fc1dc4e4f3c207cfa8e22a48ae5a06432477",
+        "asset_fingerprint": "ec59724736915c419bda784da820b26d7f45f37d923b5b3d998412c579734393",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T21:02:12.331231+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Байкер в полной экипировке едет по городской улице на спортивном мотоцикле с желтым и белым油箱ом; видны колеса, руль, двигатель и движение по асфальту.",
+            "frames_sha256": [
+              "2bd85a2bdfe76cb8ea3149d437e2e4d61d278bfa047340f5ef03c57afb7051f3",
+              "650fe35eda07c081d8fd5e2f8472148f995668dbf9f2c87e655e0377b1003d11",
+              "8c83b8789c54ec799307f30782f77679ca9e0fd38b741e7df584efb70c11ae8b"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Байкер в полной экипировке едет по песчаной трассе на спортивном мотоцикле с серебристым油箱ом; видны колеса, руль, двигатель и движение по песку.",
+            "frames_sha256": [
+              "5141523bd633841ee0e8aa5b13ad837e5317fb5465e0e22201a0743094b7b6b7",
+              "3c4927cb6a9f6a642023e7f0c00e42d55040faaa6ff3e8fd94c6deb66a3d1de5",
+              "d3728dff06987f2d45c72366161cbf037cf77d19378ecc047291e2e6bc5137ae"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-mountain-e5ce6d468060",
