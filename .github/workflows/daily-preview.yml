@@ -16,6 +16,8 @@ on:
       - 'cloud-shorts/selfhosted_voice.py'
       - 'cloud-shorts/voice_failover.py'
       - 'cloud-shorts/voice_routing.py'
+      - 'cloud-shorts/voice_qa.py'
+      - 'cloud-shorts/test_voice_qa.py'
   schedule:
     # Review-only cut revision: final helmet-removal scene should begin after the strap adjustment.
     # Revalidate scene-first Deep voice chapter anchors after the ASR-corrected word "Остаётся".
