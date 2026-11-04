@@ -140,8 +140,12 @@ def select_pair(sources, used_ids):
     # choose TWO of those first. All source SHA, ownership and independent
     # action checks remain mandatory. Pexels-only unit tests retain their
     # established sorting and license behavior.
+    # Verified failed final MP4s: 'rain' often showed a car instead of a
+    # bike; 'mountain' was a motionless distant object. Those scene labels
+    # alone cannot fill a positive moving-motorcycle preflight.
+    # They remain usable only after normal strict final-frame verification.
     fully_visible_owner_actions = {
-        "ride", "jump", "mud", "city", "forest", "mountain", "rain",
+        "ride", "jump", "mud", "city", "forest",
     }
     for index, (first, a) in enumerate(eligible):
         if (first.get("license") != "LTX OpenRAIL-M"
