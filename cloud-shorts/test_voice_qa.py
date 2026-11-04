@@ -13,6 +13,21 @@ class VoiceQATests(unittest.TestCase):
         self.assertTrue(result["passed"])
         self.assertEqual(result["lexical_coverage"], 1.0)
 
+    def test_asr_vnachale_split_is_not_a_lost_word(self):
+        reference = (
+            "Мотоцикл — два момента: вначале райдер проезжает грязный участок, "
+            "далее механик работает с мотоциклом. Видео сняты отдельно. Что зацепило?"
+        )
+        heard = (
+            "Мотоцикл 2 момента. В начале райдер проезжает грязный участок. "
+            "Далее механик работает с мотоциклом. Видео сняты отдельно. Что зацепило?"
+        )
+        self.assertEqual(tokens_reference := q.tokens(reference), q.tokens(heard))
+        self.assertTrue(q.score(reference, heard)["passed"])
+        self.assertEqual(q.score(reference, heard)["lexical_coverage"], 1.0)
+        self.assertFalse(q.score(reference, heard.replace("работает", ""))["passed"])
+        self.assertFalse(q.score(reference, heard.replace("Что зацепило?", ""))["passed"])
+
     def test_motocross_latin_asr_spelling_is_not_a_swallowed_word(self):
         reference = ("На гоночной трассе всё решают секунды. Мотоцикл едет быстро. "
                      "Эти кадры сняты на разных площадках. Любишь смотреть мотокросс?")
