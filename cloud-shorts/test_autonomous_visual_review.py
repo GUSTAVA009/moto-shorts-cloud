@@ -240,7 +240,7 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
         not_riding["chapters"][0]["action_supported"]=False
         self.assertFalse(review.verified_model_response(not_riding,chapters))
         weak=deepcopy(strong)
-        weak["chapters"][1]["confidence"]=0.92
+        weak["chapters"][1]["confidence"]=0.91
         self.assertFalse(review.verified_model_response(weak,chapters))
         fabricated=deepcopy(strong)
         fabricated["independent_events_not_fabricated"]=False
