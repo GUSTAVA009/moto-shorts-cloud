@@ -11935,7 +11935,7 @@
     {
       "id": "moto-vintage-0361a9dddf1c",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -12018,7 +12018,48 @@
         "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "7ab64af031d8474d48893f3ce5632d02ae53142a10e0d04debbd4b05311c28d2",
+      "reviewed_artifact_run_id": "41705957865",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-vintage-0361a9dddf1c",
+        "render_run_id": "41705957865",
+        "mp4_sha256": "7ab64af031d8474d48893f3ce5632d02ae53142a10e0d04debbd4b05311c28d2",
+        "asset_fingerprint": "9196e9b656d7a8884e59fd12fe7cec6519a4ce9cceb5fcbf7771994bdcf876ca",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T01:00:10.305857+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на мотоцикле регулирует шлем.",
+            "frames_sha256": [
+              "d22ea9aae9097396ab9d2126126bf7b616a5b92cce8f67588fb889ddaccfb36e",
+              "04cbc43f1823ec3574f3b9291e75163f1ee371000887f66055737de948bc43aa",
+              "6e60f625d68a4a69533d0d5cb324b67ca9a58391fe6045e4f6ff9c1b06bc9dd5"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Рука в перчатке работает с передним амортизатором мотоцикла.",
+            "frames_sha256": [
+              "3a3941b1dc05b117edc3a5168d5b52e1fa898de16f0fbb65c130ec1699a7bf96",
+              "2cb3510bc5838085910d42e6b5b06dd5356bf0d1bd913c7df11e9cffc0c49c54",
+              "79cbb41827c75dc4973d2b3b908b52d579971f035498a321d8aa031872bfa74e"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-roadtrip-6ff84db884ab",
