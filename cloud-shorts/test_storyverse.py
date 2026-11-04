@@ -84,6 +84,15 @@ class StoryverseTest(unittest.TestCase):
         with self.assertRaisesRegex(StoryverseError, "Silent stable-character"):
             validate_series(bad)
 
+    def test_uncanny_faces_are_forbidden_and_visual_rejection_blocks_release(self):
+        self.assertTrue(self.series["visual_style"]["giant_fixed_staring_eyes_forbidden"])
+        self.assertTrue(self.series["visual_style"]["blank_doll_like_expressions_forbidden"])
+        self.assertTrue(self.series["publish_contract"]["owner_rejected_uncanny_visuals_block_future_uploads"])
+        bad = copy.deepcopy(self.series)
+        bad["visual_style"]["uncanny_valley_faces_forbidden"] = False
+        with self.assertRaisesRegex(StoryverseError, "No creepy character design"):
+            validate_series(bad)
+
     def test_format_specific(self):
         vid = self.series["production_format"]
         self.assertEqual((vid["resolution"], vid["fps"], vid["duration_seconds"]), ("1080x1920", 30, 114))

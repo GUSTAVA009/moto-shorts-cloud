@@ -53,6 +53,16 @@ def validate_series(obj: dict) -> None:
                 "fixed_character_sprite_assets_required", "never_generate_character_faces_per_shot"):
         if obj["visual_style"].get(key) is not True:
             raise StoryverseError("Silent stable-character style required: " + key)
+    for key in ("uncanny_valley_faces_forbidden", "giant_fixed_staring_eyes_forbidden",
+                "blank_doll_like_expressions_forbidden",
+                "disproportionate_baby_head_silhouettes_forbidden",
+                "warm_human_readable_visual_language_required",
+                "action_must_be_visible_not_narration_only",
+                "camera_and_environment_depth_required"):
+        if obj["visual_style"].get(key) is not True:
+            raise StoryverseError("No creepy character design: " + key)
+    if obj["publish_contract"].get("owner_rejected_uncanny_visuals_block_future_uploads") is not True:
+        raise StoryverseError("Visual rejection must block future uploads")
     if obj["voice_contract"].get("voice_is_offscreen_narrator_only") is not True:
         raise StoryverseError("Voice must be offscreen DEEP narration only")
     if obj["voice_contract"].get("character_dialogue_forbidden") is not True:
