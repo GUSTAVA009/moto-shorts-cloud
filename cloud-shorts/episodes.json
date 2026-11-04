@@ -16493,7 +16493,7 @@
     {
       "id": "moto-helmet-bd438f44d783",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -16576,7 +16576,48 @@
         "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "c0aae958eaa8c9a04c48c997e90e66fe029b552d887fd09587127909163abec0",
+      "reviewed_artifact_run_id": "41907044520",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-helmet-bd438f44d783",
+        "render_run_id": "41907044520",
+        "mp4_sha256": "c0aae958eaa8c9a04c48c997e90e66fe029b552d887fd09587127909163abec0",
+        "asset_fingerprint": "1d0b2bea2cbad72c332d98a0172b8144ca4c30e9c3f9ee476ddf0ae6e4785722",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T20:43:38.953169+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер надевает мотошлем на себя, видны руки и часть мотоцикла в кадре.",
+            "frames_sha256": [
+              "94a1ca01eb49a0ee904056003f9a5c1a74ff6ed8ec617e02ae1ea07b459684c6",
+              "a65bc9a54b11b199979b7c3a39d845de75dfd54f4f3dee468f8453446a8bfdd7",
+              "053d0b63c60d91ccc4818f223c476e4acad385092decacbc68dc63ce6a3e932b"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Рука механика работает с двигателем мотоцикла, видны детали и инструменты.",
+            "frames_sha256": [
+              "3d27ddc92de026c7a01df361b81e077e1f6211f156bd95428d7766bd194ae9e8",
+              "f5aeb46ff6ce6289bb94ede53120c6042c29bd29ac16466fcb9af28c62b29f0e",
+              "59475d7ea75ec2e6f633d419168c397efacf9b334b376c4940590109ffffa011"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-dirt-2b547f927a3e",
