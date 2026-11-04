@@ -54,14 +54,17 @@ class PublisherShellTests(unittest.TestCase):
         self.assertNotIn("publishnow", workflow)
         self.assertIn("upload-artifact@v4", workflow)
 
-    def test_passed_mp4_dispatches_verified_sender_without_deep_workflow_chain(self):
+    def test_passed_mp4_dispatches_frame_review_before_verified_sender(self):
         preview = source(".github/workflows/daily-preview.yml")
+        review = source(".github/workflows/autonomous-editorial-review.yml")
         self.assertIn("actions: write", preview)
         self.assertIn("success() && steps.pick.outputs.has_job == 'true'", preview)
-        self.assertIn("/actions/workflows/buffer-backlog.yml/dispatches", preview)
+        self.assertIn("/actions/workflows/autonomous-editorial-review.yml/dispatches", preview)
         self.assertIn('"ref":"main"', preview)
-        self.assertIn("BUFFER_VERIFIED_DISPATCH_CONFIRMED", preview)
+        self.assertIn("INDEPENDENT_FRAME_REVIEW_DISPATCH_CONFIRMED", preview)
         self.assertNotIn("buffer_autopublish.py --episode", preview)
+        self.assertNotIn("/actions/workflows/buffer-backlog.yml/dispatches", preview)
+        self.assertIn("autonomous_visual_review.py review", review)
 
     def test_buffer_chains_only_after_confirmed_provider_post_id(self):
         workflow = source(".github/workflows/buffer-backlog.yml")
