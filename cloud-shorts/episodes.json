@@ -15532,7 +15532,7 @@
     {
       "id": "moto-motocross-81ce238deb27",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -15615,7 +15615,48 @@
         "description": "Поделись роликом с другом, который любит мотоциклы."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "60706e7d11977aef7fa04d1044d214103ab78375a6920ac0f0e5f5e1f9516125",
+      "reviewed_artifact_run_id": "41896075759",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-motocross-81ce238deb27",
+        "render_run_id": "41896075759",
+        "mp4_sha256": "60706e7d11977aef7fa04d1044d214103ab78375a6920ac0f0e5f5e1f9516125",
+        "asset_fingerprint": "bd3eff4dcc4054d71b49d3cc4197a4e8b70a83864beb281ca8a87d68fd536938",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T20:06:38.185142+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Байкер на мотоцикле движется по песчаной трассе; видны колеса и корпус байка в движении.",
+            "frames_sha256": [
+              "a5fb79f3cc64e076a1cb50f57670e122c49c16be823bdf239965d279ebcae828",
+              "985329452ce01d08502a58f33dfd2ad7d1735ffc7a4a558c6e09b958aa3b3d0c",
+              "4b0f4ba973177d3b8d78720b528b676813af3a7035ab95b37dd166c60c5fe083"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Руки мастера работают с колесом мотоцикла (сборка/ремонт); колесо неподвижно, но видны детали байка.",
+            "frames_sha256": [
+              "847a563ec9a51bfd0c5e0c6501b7b52a1a116598c1a88853b87b790e76c85484",
+              "3c85fd05e7d6f88b142fbd49efc13b9b6c503065e0d9ba31dc7c9be2f3d47577",
+              "fb939c5e528287f1c441eaf7720f4ca3d1b4c7c38a797a0bda0553cf3767c58e"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-repair-14d6fd94332e",
