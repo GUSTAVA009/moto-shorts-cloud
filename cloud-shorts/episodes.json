@@ -9885,12 +9885,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -10033,12 +10033,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -10121,12 +10121,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -10209,12 +10209,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -10298,12 +10298,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -10348,7 +10348,7 @@
         ],
         "original_voice_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
         "raw_coverage": 0.909,
-        "mixed_coverage": 1,
+        "mixed_coverage": 1.0,
         "prior_mixed_qa_passed": true,
         "prior_attempt_count": 1,
         "policy": "distinct_phonetic_progress_only"
@@ -10411,12 +10411,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -10499,12 +10499,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -10587,12 +10587,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -10675,12 +10675,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -10763,12 +10763,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -10851,12 +10851,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -10939,12 +10939,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -11027,12 +11027,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -11115,12 +11115,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -11203,12 +11203,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -11291,12 +11291,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -11379,12 +11379,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -11508,12 +11508,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -11596,12 +11596,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -11684,12 +11684,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -11813,12 +11813,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -11901,12 +11901,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -11989,12 +11989,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -12118,12 +12118,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -12206,12 +12206,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -12294,12 +12294,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -12423,12 +12423,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -12511,12 +12511,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -12640,12 +12640,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -12769,12 +12769,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -12857,12 +12857,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -12945,12 +12945,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -13074,12 +13074,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -13162,12 +13162,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -13250,12 +13250,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -13338,12 +13338,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -13426,12 +13426,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -13514,12 +13514,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -13602,12 +13602,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -13690,12 +13690,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -13778,12 +13778,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -13866,12 +13866,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -13954,12 +13954,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -14042,12 +14042,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -14130,12 +14130,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -14218,12 +14218,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -14306,12 +14306,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -14394,12 +14394,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -14482,12 +14482,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -14570,12 +14570,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -14658,12 +14658,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -14786,12 +14786,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -14875,12 +14875,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -14964,12 +14964,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -15053,12 +15053,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -15142,12 +15142,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -15231,12 +15231,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -15320,12 +15320,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -15409,12 +15409,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -15498,12 +15498,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -15586,12 +15586,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -15674,12 +15674,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -15762,12 +15762,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -15850,12 +15850,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -15938,12 +15938,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -16026,12 +16026,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -16114,12 +16114,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -16202,12 +16202,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
@@ -16290,12 +16290,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0,
+          "start": 0.0,
           "seconds": 6.46
         }
       ],
