@@ -1,0 +1,315 @@
+{
+  "schema_version": 1,
+  "series_id": "gustava-original-chronicles-s1",
+  "series_name": "Хроники после полуночи",
+  "reference_url": "https://www.youtube.com/shorts/r39bw-GBNKU",
+  "reference_use": "storytelling_format_analysis_only_no_source_media_no_character_copy_no_reproduced_audio",
+  "status": "creative_package_not_video",
+  "target_channel_handle": "@gustava009",
+  "other_channel_separate": "@motobratr1",
+  "visual_style": {
+    "id": "ORIGINAL_2_5D_MYSTERY_CARTOON",
+    "name": "Оригинальные 2D-герои на атмосферных 3D-локациях",
+    "character_model": "Rounded ivory cartoon faces, unique black outline, expressive minimal eyes, thin black stick limbs, distinct costumes unique to our series",
+    "backgrounds": "Original cinematic low-poly 3D environments, expressive lighting and continuous geography",
+    "always_original_characters": true,
+    "do_not_duplicate_reference_character_assets": true,
+    "character_continuity_required": true
+  },
+  "production_format": {
+    "aspect_ratio": "9:16",
+    "resolution": "1080x1920",
+    "fps": 30,
+    "codec": "H.264/AAC",
+    "duration_seconds": 114,
+    "scenes": 19,
+    "seconds_per_scene": 6,
+    "subtitles": "RU word-aligned large white captions with thick black outlines, captions inside mobile safe zone",
+    "optional_story_markers": "Day counters, clocks and survival meters when justified by story"
+  },
+  "narrative_contract": {
+    "hook_seconds_max": 2,
+    "has_protagonist": true,
+    "has_goal": true,
+    "has_stakes": true,
+    "has_causally_connected_actions": true,
+    "has_twist": true,
+    "has_payoff": true,
+    "cliffhanger_allowed_only_after_payoff": true,
+    "no_ab_choice_format": true,
+    "no_random_montage": true,
+    "never_claim_fiction_as_real_news": true
+  },
+  "voice_contract": {
+    "voice_id": "deep",
+    "voice_profile": "gustava_create_audio_deep_v1",
+    "russian": true,
+    "fallback_forbidden": true,
+    "sha_pinned_approved_source_required": true
+  },
+  "publish_contract": {
+    "no_reference_frames_or_audio": true,
+    "no_local_private_footage": true,
+    "source_rights_required": true,
+    "real_visual_audio_qa_required": true,
+    "character_continuity_qa": true,
+    "buffer_post_id_required": true,
+    "do_not_publish_creative_brief": true
+  },
+  "episodes": [
+    {
+      "episode_id": "01",
+      "title": "Лифт на минус четвёртый",
+      "genre": "городская мистика",
+      "original_premise": "Лифт, молчавший 41 день, везёт девушку на несуществующий этаж; там ждут спасения дети.",
+      "status": "pilot_script_complete"
+    },
+    {
+      "episode_id": "02",
+      "title": "Бумажный маяк",
+      "genre": "приключение",
+      "original_premise": "На острове после отключения маяк внезапно загорается бумажным отражателем. Кто его включил?",
+      "status": "original_idea_only"
+    },
+    {
+      "episode_id": "03",
+      "title": "Трамвай без проводов",
+      "genre": "городской триллер",
+      "original_premise": "После наводнения трамвай едет по затопленной улице без электросети, спасая больницу.",
+      "status": "original_idea_only"
+    },
+    {
+      "episode_id": "04",
+      "title": "Пять минут до прилива",
+      "genre": "выживание",
+      "original_premise": "Две сестры остаются в морской обсерватории, когда прилив отрезает единственную дорогу.",
+      "status": "original_idea_only"
+    },
+    {
+      "episode_id": "05",
+      "title": "Радио из заброшенного автобуса",
+      "genre": "мистическая драма",
+      "original_premise": "В пустыне старый автобус передаёт список имён, которых ещё нет в городском архиве.",
+      "status": "original_idea_only"
+    },
+    {
+      "episode_id": "06",
+      "title": "Последняя теплица",
+      "genre": "постапокалипсис",
+      "original_premise": "После песчаной бури единственная теплица города загорается ночью без электричества.",
+      "status": "original_idea_only"
+    },
+    {
+      "episode_id": "07",
+      "title": "Дверь на полдень",
+      "genre": "детектив",
+      "original_premise": "На станции метро на девяносто секунд появляется дверь, которой нет ни на одном плане.",
+      "status": "original_idea_only"
+    },
+    {
+      "episode_id": "08",
+      "title": "Ночное сообщение с крыши",
+      "genre": "технотриллер",
+      "original_premise": "После исчезновения связи на крышах вспыхивают одинаковые тайные сигналы.",
+      "status": "original_idea_only"
+    },
+    {
+      "episode_id": "09",
+      "title": "Платформа ноль",
+      "genre": "приключение",
+      "original_premise": "В горной долине дорожный указатель ведёт к давно забытой эвакуационной станции.",
+      "status": "original_idea_only"
+    },
+    {
+      "episode_id": "10",
+      "title": "Город считает до ста",
+      "genre": "фантастика",
+      "original_premise": "На фасадах домов запускается один и тот же обратный отсчёт: кто пытается предупредить людей?",
+      "status": "original_idea_only"
+    }
+  ],
+  "pilot": {
+    "episode_id": "01",
+    "fictional": true,
+    "title": "Лифт на минус четвёртый",
+    "duration_seconds": 114,
+    "characters": {
+      "lera": "Young fictional heroine, lavender coat, red scarf, ivory cartoon face, black outline, fine black line limbs; same appearance each shot",
+      "brother": "Young fictional man, blue coat, black hat, ivory cartoon face, black outline, fine black line limbs; same appearance each shot",
+      "children": "Eight unique small illustrated children, counts and costumes stay consistent"
+    },
+    "shots": [
+      {
+        "scene": 1,
+        "start_sec": 0,
+        "end_sec": 6,
+        "narration_ru": "На сорок первый день без света в доме номер девять внезапно загудел лифт.",
+        "visual_action_ru": "Тёмный жилой квартал. На крыше одной башни вспыхивает сигнальная лампа лифта.",
+        "camera_ru": "Общий план, быстрый наезд",
+        "sfx_ru": "Гул двигателя"
+      },
+      {
+        "scene": 2,
+        "start_sec": 6,
+        "end_sec": 12,
+        "narration_ru": "Все этажи были обесточены. Но кабина каждую ночь останавливалась ровно в два четырнадцать.",
+        "visual_action_ru": "Пустая лестница, старое табло показывает 02:14, стрелка направлена вниз.",
+        "camera_ru": "Крупный план табло",
+        "sfx_ru": "Щелчок реле"
+      },
+      {
+        "scene": 3,
+        "start_sec": 12,
+        "end_sec": 18,
+        "narration_ru": "Лера услышала из шахты три коротких удара. Это был старый сигнал её брата.",
+        "visual_action_ru": "Лера в лиловой куртке и красном шарфе прижимается ухом к двери шахты.",
+        "camera_ru": "Статичный средний план, эмоция",
+        "sfx_ru": "Три удара"
+      },
+      {
+        "scene": 4,
+        "start_sec": 18,
+        "end_sec": 24,
+        "narration_ru": "Он пропал неделю назад, когда пошёл проверять затопленный подвал соседнего корпуса.",
+        "visual_action_ru": "Воспоминание: брат в синей куртке спускается с фонарём к подтопленной лестнице.",
+        "camera_ru": "Логичная вставка действия",
+        "sfx_ru": "Капли"
+      },
+      {
+        "scene": 5,
+        "start_sec": 24,
+        "end_sec": 30,
+        "narration_ru": "На панели светился минус четвёртый этаж. По чертежам такого этажа не существовало.",
+        "visual_action_ru": "Табло показывает -4, рядом старый план здания имеет лишь -1.",
+        "camera_ru": "Два объекта в общем кадре",
+        "sfx_ru": "Электрический сигнал"
+      },
+      {
+        "scene": 6,
+        "start_sec": 30,
+        "end_sec": 36,
+        "narration_ru": "Лера открыла щиток, подключила фонарь и закрепила верёвку на дверной раме.",
+        "visual_action_ru": "Лера зажигает фонарь и крепит длинную красную верёвку возле двери.",
+        "camera_ru": "Непрерывная работа рук",
+        "sfx_ru": "Фонарь, металл"
+      },
+      {
+        "scene": 7,
+        "start_sec": 36,
+        "end_sec": 42,
+        "narration_ru": "Двери разошлись сами. На полу виднелись мокрые отпечатки совсем маленьких ботинок.",
+        "visual_action_ru": "Двери открываются в пустую кабину. На полу детские следы воды.",
+        "camera_ru": "Низкая камера следует за следами",
+        "sfx_ru": "Скрип"
+      },
+      {
+        "scene": 8,
+        "start_sec": 42,
+        "end_sec": 48,
+        "narration_ru": "Она вошла внутрь. Лифт вздрогнул и медленно пополз вниз без единого нажатия.",
+        "visual_action_ru": "Лера в лифте, её руки вдали от кнопок, кабина уходит вниз.",
+        "camera_ru": "Внутренний план и вибрация",
+        "sfx_ru": "Тросы"
+      },
+      {
+        "scene": 9,
+        "start_sec": 48,
+        "end_sec": 54,
+        "narration_ru": "За металлической стеной послышался детский шёпот. А затем — знакомый стук.",
+        "visual_action_ru": "Лера наклоняет голову к стене кабины, в просвете видна тусклая лампа.",
+        "camera_ru": "Средний план, реакция",
+        "sfx_ru": "Шёпот, стук"
+      },
+      {
+        "scene": 10,
+        "start_sec": 54,
+        "end_sec": 60,
+        "narration_ru": "На минус четвёртом кабина раскрылась прямо перед бетонной дверью подземного убежища.",
+        "visual_action_ru": "Лифт останавливается у массивной двери, вода мерцает на полу.",
+        "camera_ru": "Плавный отъезд камеры",
+        "sfx_ru": "Мотор, капли"
+      },
+      {
+        "scene": 11,
+        "start_sec": 60,
+        "end_sec": 66,
+        "narration_ru": "За ней сидели восемь детей. Их вывели сюда во время аварии, но вода перекрыла лестницу.",
+        "visual_action_ru": "Восемь детей сидят на сухом помосте, лестницу затопило.",
+        "camera_ru": "Общий план показывает проблему",
+        "sfx_ru": "Плеск"
+      },
+      {
+        "scene": 12,
+        "start_sec": 66,
+        "end_sec": 72,
+        "narration_ru": "Брат Леры остался с ними. Он питал лифт от старой аварийной батареи.",
+        "visual_action_ru": "Брат в синей куртке стоит возле красной аккумуляторной батареи, встречает Леру.",
+        "camera_ru": "Встречные планы героев",
+        "sfx_ru": "Гудение питания"
+      },
+      {
+        "scene": 13,
+        "start_sec": 72,
+        "end_sec": 78,
+        "narration_ru": "Теперь заряда хватало только на один подъём. Если двери закроются — кто-то останется.",
+        "visual_action_ru": "Индикатор почти нулевого заряда, тесное убежище и пустой лифт.",
+        "camera_ru": "Индикатор и лица",
+        "sfx_ru": "Тревожный сигнал"
+      },
+      {
+        "scene": 14,
+        "start_sec": 78,
+        "end_sec": 84,
+        "narration_ru": "Лера завела детей в кабину, а брат нашёл аварийный рычаг снаружи шахты.",
+        "visual_action_ru": "Лера ведёт детей к кабине; брат находит красный рычаг.",
+        "camera_ru": "Одна непрерывная сцена",
+        "sfx_ru": "Шаги"
+      },
+      {
+        "scene": 15,
+        "start_sec": 84,
+        "end_sec": 90,
+        "narration_ru": "Кто-то должен был остаться у рычага. Но Лера посмотрела на верёвку и придумала выход.",
+        "visual_action_ru": "Лера смотрит на верёвку, затем на рычаг; дети ждут в лифте.",
+        "camera_ru": "Крупный план взгляда и рук",
+        "sfx_ru": "Музыка нарастает"
+      },
+      {
+        "scene": 16,
+        "start_sec": 90,
+        "end_sec": 96,
+        "narration_ru": "Она привязала рычаг к поручню кабины. Когда двери закрылись, верёвка натянулась.",
+        "visual_action_ru": "Верёвка соединяет рычаг с поручнем внутри кабины, механизм запускается.",
+        "camera_ru": "Отслеживание верёвки",
+        "sfx_ru": "Натяжение троса"
+      },
+      {
+        "scene": 17,
+        "start_sec": 96,
+        "end_sec": 102,
+        "narration_ru": "В последний миг они оба прыгнули внутрь. Лифт дёрнулся и пошёл наверх.",
+        "visual_action_ru": "Лера и брат запрыгивают к детям, двери закрываются, кабина поднимается.",
+        "camera_ru": "Читаемый экшен без резких смен",
+        "sfx_ru": "Рывок кабины"
+      },
+      {
+        "scene": 18,
+        "start_sec": 102,
+        "end_sec": 108,
+        "narration_ru": "Через минуту на улице стояли все десять. Батарея села, но дети выбрались.",
+        "visual_action_ru": "Восемь детей, Лера и брат стоят возле выхода, все целы.",
+        "camera_ru": "Общий план облегчения",
+        "sfx_ru": "Тихий ветер"
+      },
+      {
+        "scene": 19,
+        "start_sec": 108,
+        "end_sec": 114,
+        "narration_ru": "А в доме напротив табло тоже вспыхнуло: минус четвёртый. Там тоже кто-то ждал.",
+        "visual_action_ru": "В соседней башне загорается табло -4. Лера замечает огонь и оборачивается.",
+        "camera_ru": "Финальный отъезд на две башни",
+        "sfx_ru": "Один низкий удар"
+      }
+    ]
+  }
+}
