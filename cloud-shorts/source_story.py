@@ -161,7 +161,7 @@ def require_filmable(prose, sources):
     return [scene[0] for scene in scenes]
 
 
-def touring_track_myth(sources, previous_titles, rewrite_attempt=0):
+def touring_track_myth(sources, previous_titles, rewrite_attempt=0, previous_narrations=()):
     """Original ironic stereotype-rebuttal, never a claimed single event.
 
     Owner reference: YouTube Short A80XBI_rnb0 (only title and public
@@ -198,6 +198,12 @@ def touring_track_myth(sources, previous_titles, rewrite_attempt=0):
     options = [n for n in narration_options if 125 <= len(n) <= 160]
     if not options:
         raise ValueError("MYTH_NARRATION_EXCEEDS_TWO_REAL_SCENE_CAPACITY")
+    # Only select truly unused voice lines, without weakening QA or faking
+    # stock diversity. If this action pair is exhausted, another pair is needed.
+    used_narrations = {" ".join(str(n).casefold().split()) for n in previous_narrations}
+    options = [n for n in options if " ".join(n.casefold().split()) not in used_narrations]
+    if not options:
+        raise ValueError("MYTH_NARRATIONS_EXHAUSTED")
     narration = options[rewrite_attempt % len(options)]
     titles = (
         "Туристический байк скучный? Проверь стереотип #shorts",
@@ -223,7 +229,7 @@ def touring_track_myth(sources, previous_titles, rewrite_attempt=0):
         raise ValueError("MYTH_TITLE_PREVIOUSLY_USED")
     return item
 
-def compose(sources, previous_titles, rewrite_attempt=0):
+def compose(sources, previous_titles, rewrite_attempt=0, previous_narrations=()):
     """A short, grounded contrast, not a fabricated one-event storyline."""
     if len(sources) != 2:
         raise ValueError("TWO_DISTINCT_LICENSED_ACTIONS_REQUIRED")
@@ -231,7 +237,9 @@ def compose(sources, previous_titles, rewrite_attempt=0):
     if a is None or b is None or a[0] == b[0]:
         raise ValueError("NO_ACTION_DIVERSITY: source footage not suitable for story")
     if {a[0], b[0]} == {"touring", "race"}:
-        return touring_track_myth(sources, previous_titles, rewrite_attempt=rewrite_attempt)
+        return touring_track_myth(sources, previous_titles,
+                                  rewrite_attempt=rewrite_attempt,
+                                  previous_narrations=previous_narrations)
     token = "|".join(str(s["source_page"]) for s in sources) + "|" + str(len(previous_titles))
     variant = hashlib.sha256(token.encode("utf8")).digest()[0] % 3
     openings = (
@@ -297,22 +305,75 @@ def compose(sources, previous_titles, rewrite_attempt=0):
         "Какое движение ты заметил первым?",
         "Что показалось самым сложным?",
     )
+    clarifiers = (
+        "Это разные съёмки.",
+        "Это отдельные записи, не один заезд.",
+        "Оба действия показаны в разных видео.",
+        "Кадры сняты отдельно, а не подряд.",
+        "Это два эпизода из разных съёмок.",
+        "Каждый из этих кадров снят отдельно.",
+        "Один эпизод не продолжает другой.",
+        "Сцены независимы друг от друга.",
+    )
     expanded = [
         f"{hook} {transition.lower()} {a[3]}. "
-        f"{connector} {b[3]}. Это разные съёмки. {question}"
+        f"{connector} {b[3]}. {clarifier} {question}"
         for hook in hooks for transition in transitions
-        for connector in connectors for question in questions
+        for connector in connectors for clarifier in clarifiers
+        for question in questions
     ]
     expanded = [t for t in expanded if 125 <= len(t) <= 160]
     filmable_options += expanded
+    # Longer phrasing can be filtered out for brief action labels.
+    # Build naturally short, still grounded utterances to sustain new videos
+    # instead of cycling the same 7 narration strings.
+    compact_hooks = (
+        "Мотоцикл в двух кадрах:", "Мотоцикл и разные задачи:",
+        "Мотоцикл — два момента:", "Мотоцикл и разные сцены:",
+        "Мотоцикл в действии:", "Мотоцикл с двух сторон:",
+        "Мотоцикл — смотри на детали:", "Мотоцикл и два эпизода:",
+        "Мотоцикл: совсем разные ситуации:", "Мотоцикл — разные движения:",
+        "Мотоцикл — не одна история:", "Мотоцикл и смена обстановки:",
+    )
+    compact_first = ("сначала", "в первой съёмке", "на одном видео",
+                     "в первом эпизоде", "вначале")
+    compact_second = ("далее", "а отдельно", "во втором видео",
+                      "на другой записи", "затем отдельно")
+    compact_notes = (
+        "Это не один заезд.", "Видео сняты отдельно.",
+        "Съёмки не связаны.", "Эпизоды разные.",
+        "Это разные моменты.", "Один кадр не продолжает другой.",
+        "Здесь две независимые записи.",
+    )
+    compact_ends = (
+        "Что зацепило?", "Что запомнил?", "Что интереснее?",
+        "Где больше динамики?", "Куда бы посмотрел?",
+        "Что захотелось пересмотреть?", "На что обратил внимание?",
+    )
+    filmable_options += [
+        f"{hook} {first} {a[3]}, {second} {b[3]}. {note} {ending}"
+        for hook in compact_hooks for first in compact_first
+        for second in compact_second for note in compact_notes
+        for ending in compact_ends
+        if 125 <= len(f"{hook} {first} {a[3]}, {second} {b[3]}. {note} {ending}") <= 160
+    ]
     if not filmable_options:
         raise ValueError("NO_GROUNDED_NARRATION_VARIANTS")
     # Vary by catalog position and rewrite attempt. All expressions still
     # describe exactly the two evidenced actions; no fictional incident.
-    narration = filmable_options[
-        (variant * 3 + len(previous_titles) * 17 + rewrite_attempt * 37)
-        % len(filmable_options)
-    ]
+    # After many production batches the modulo formula began choosing an
+    # already-used script for 3 retries. Select an unused candidate instead.
+    # Preserve the permanent dedup/filmability checks downstream.
+    used_narrations = {" ".join(str(n).casefold().split()) for n in previous_narrations}
+    start = ((variant * 3 + len(previous_titles) * 17 + rewrite_attempt * 37)
+             % len(filmable_options))
+    narration = next(
+        (candidate for offset in range(len(filmable_options))
+         for candidate in [filmable_options[(start + offset) % len(filmable_options)]]
+         if " ".join(candidate.casefold().split()) not in used_narrations),
+        None)
+    if narration is None:
+        raise ValueError("SOURCE_STORY_NARRATIONS_EXHAUSTED")
     # Earlier versions generated exactly ONE title for every action pair.
     # On 2026-11-02 real refill 41410904531 rejected fresh, licensed
     # footage three times with SOURCE_STORY_TITLE_ALREADY_USED because the
@@ -326,6 +387,26 @@ def compose(sources, previous_titles, rewrite_attempt=0):
         f"Два разных райдера: {a[4]} и {b[4]}. Твой выбор? #shorts",
         f"{a[4].capitalize()} / {b[4]} — две разные мотосцены #shorts",
         f"Мото на деле: {a[4]} и {b[4]}. Где больше драйва? #shorts",
+    )
+    # Additional action-specific titles break the seven-title ceiling. A
+    # distinct title is still never permission to reuse footage or narration.
+    title_options += (
+        f"От {a[4]} до {b[4]} — две мотосцены #shorts",
+        f"{a[4].capitalize()} против {b[4]}: две разные задачи #shorts",
+        f"Что меняется между {a[4]} и {b[4]}? #shorts",
+        f"Неожиданный контраст: {a[4]} и {b[4]} #shorts",
+        f"Мотокадры из разных условий: {a[4]} и {b[4]} #shorts",
+        f"Внимание к деталям: {a[4]} и {b[4]} #shorts",
+        f"Не одинаковая езда: {a[4]} и {b[4]} #shorts",
+        f"{a[4].capitalize()}, потом {b[4]} — разные действия #shorts",
+        f"Две стороны мото: {a[4]} и {b[4]} #shorts",
+        f"Один байк? Нет: {a[4]} и {b[4]} #shorts",
+        f"{a[4].capitalize()} и {b[4]}: реальные движения #shorts",
+        f"Разные условия, разная езда: {a[4]} и {b[4]} #shorts",
+        f"Два эпизода, две задачи: {a[4]} / {b[4]} #shorts",
+        f"Погляди на действия: {a[4]} и {b[4]} #shorts",
+        f"Разные дороги: {a[4]} и {b[4]} #shorts",
+        f"Мотоциклы в движении: {a[4]} и {b[4]} #shorts",
     )
     used = {str(old).strip().casefold() for old in previous_titles}
     title = next((option for offset in range(len(title_options))

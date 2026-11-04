@@ -213,12 +213,13 @@ def story_model_client():
 
 
 # v2: keyless, addressable, 150,000-slot editorial reserve.
-def offline_original_story(theme, sources, previous_titles, rewrite_attempt=0):
+def offline_original_story(theme, sources, previous_titles, rewrite_attempt=0, previous_narrations=()):
     # The 150,000 variants are planning slots, not footage-specific scripts.
     # Keyless production authors truthful action beats from available media.
     if sources:
         from source_story import compose
-        return compose(sources, previous_titles, rewrite_attempt=rewrite_attempt)
+        return compose(sources, previous_titles, rewrite_attempt=rewrite_attempt,
+                       previous_narrations=previous_narrations)
     return choose_reserved_story(theme[0], sources, previous_titles)
 
 
@@ -262,11 +263,12 @@ def curated_mixkit_results(theme, used_ids=()):
 
 
 def original_story(theme, sources, previous_titles, client=None, fetch=http_json,
-                   rewrite_attempt=0):
+                   rewrite_attempt=0, previous_narrations=()):
     provider = client if client is not None else story_model_client()
     if not provider:
         return offline_original_story(theme, sources, previous_titles,
-                                      rewrite_attempt=rewrite_attempt)
+                                      rewrite_attempt=rewrite_attempt,
+                                      previous_narrations=previous_narrations)
     endpoint, key, model = provider
     topics = [{"source_title": x.get("source_title", ""), "creator": x["author"]}
               for x in sources]
@@ -313,7 +315,8 @@ def original_story(theme, sources, previous_titles, client=None, fetch=http_json
     except (OSError, ValueError, TimeoutError) as exc:
         print("STORY_MODEL_UNAVAILABLE_OFFLINE_FALLBACK", type(exc).__name__, flush=True)
         return offline_original_story(theme, sources, previous_titles,
-                                      rewrite_attempt=rewrite_attempt)
+                                      rewrite_attempt=rewrite_attempt,
+                                      previous_narrations=previous_narrations)
     response = ((result.get("choices") or [{}])[0].get("message") or {}).get("content", "")
     obj = json.loads(response)
     required = ("title", "narration", "description", "caption_start",
@@ -339,14 +342,16 @@ def original_story(theme, sources, previous_titles, client=None, fetch=http_json
             print("UNSUPPORTED_MODEL_NARRATION_REAUTHORED",
                   str(mismatch), flush=True)
             return offline_original_story(theme, sources, previous_titles,
-                                      rewrite_attempt=rewrite_attempt)
+                                      rewrite_attempt=rewrite_attempt,
+                                      previous_narrations=previous_narrations)
     if len(obj["narration"]) > 160:
         # One v3 short uses only TWO independent moving sources (8 s each).
         # Re-author faithfully from those exact sources rather than trigger
         # expensive Qwen synthesis of an impossible 20+ second visual track.
         print("TWO_SCENE_SCRIPT_REAUTHORED_FOR_ACTUAL_VIDEO_CAP",len(obj["narration"]),flush=True)
         return offline_original_story(theme, sources, previous_titles,
-                                      rewrite_attempt=rewrite_attempt)
+                                      rewrite_attempt=rewrite_attempt,
+                                      previous_narrations=previous_narrations)
     obj["_editorial_format"] = content_format
     return obj
 
@@ -557,6 +562,7 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
             "does not contain two fresh visibly distinct actions from two "
             "creators; never fabricate an engaging story from generic B-roll")
     theme, media = chosen
+    previous_narrations = [ep["narration"] for ep in catalog["episodes"]]
     problem = None
     for attempt in range(3):
         try:
@@ -566,7 +572,8 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
                 # combinatorial narration, which does not describe the shots.
                 prose = offline_original_story(
                     theme, media, [x["title"] for x in catalog["episodes"]],
-                    rewrite_attempt=attempt)
+                    rewrite_attempt=attempt,
+                    previous_narrations=previous_narrations)
                 prose["_reserve_id"] = staged["_reserve_id"]
             else:
                 previous_titles = [x["title"] for x in catalog["episodes"]]
@@ -575,7 +582,8 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
                     # rewrite seed, all three QA retries repeat the same
                     # previously used narration and exhaust the factory.
                     prose = prose_factory(theme, media, previous_titles,
-                                          rewrite_attempt=attempt)
+                                          rewrite_attempt=attempt,
+                                          previous_narrations=previous_narrations)
                 else:
                     # Keep test/custom provider contract unchanged.
                     prose = prose_factory(theme, media, previous_titles)

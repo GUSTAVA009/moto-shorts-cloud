@@ -26,8 +26,23 @@ class SourceAnchoredUniqueTitleTests(unittest.TestCase):
             self.assertIn("независим",draft["description"].casefold())
             seen.append(draft["title"])
         self.assertEqual(len(set(seen)),7)
-        with self.assertRaisesRegex(ValueError,"ALL_GROUNDED_TITLES_ALREADY_USED"):
-            compose(self.pair,seen)
+        # Extended titles must remain distinct after the former seven-title cap.
+        for _ in range(8):
+            draft=compose(self.pair,seen)
+            self.assertNotIn(draft["title"],seen)
+            seen.append(draft["title"])
+        self.assertEqual(len(set(seen)),15)
+
+    def test_exhausted_old_narrations_get_a_truly_new_filmable_line(self):
+        prior_titles=[]
+        prior_narrations=[]
+        for _ in range(18):
+            draft=compose(self.pair,prior_titles,
+                          previous_narrations=prior_narrations)
+            self.assertNotIn(draft["narration"],prior_narrations)
+            self.assertEqual(set(require_filmable(draft,self.pair)),{"ride","stunt"})
+            prior_titles.append(draft["title"])
+            prior_narrations.append(draft["narration"])
 
     def test_variations_do_not_hide_wrong_source_or_repetitions(self):
         initial=compose(self.pair,[])
