@@ -49,10 +49,11 @@ jobs:
               if response.get('errors'):
                   raise RuntimeError('Buffer GraphQL error: '+str(response['errors'])[:450])
               return response.get('data') or {}
-          q=('query { channel(input:{id:"'+channel+'"
-               '}) {id name service serviceId isDisconnected} '
-               'posts(first:100,input:{organizationId:"'+org+'",filter:{channelIds:["'+channel+
-               '"]}}) {edges {node {id status text}} pageInfo {hasNextPage}} }')
+          q=('''query {
+             channel(input:{id:"CHANNEL"}) {id name service serviceId isDisconnected}
+             posts(first:100,input:{organizationId:"ORG",filter:{channelIds:["CHANNEL"]}})
+             {edges {node {id status text}} pageInfo {hasNextPage}}
+          }''').replace('CHANNEL',channel).replace('ORG',org)
           data=graphql(q)
           linked=data.get('channel') or {}
           if linked.get('id')!=channel or linked.get('service')!='youtube' or linked.get('serviceId')!=os.environ['YOUTUBE_ID'] or linked.get('isDisconnected') is not False:
