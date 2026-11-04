@@ -1,0 +1,11 @@
+{
+  "id": "moto-racing-0ae4b51c81b9",
+  "state": "reserved",
+  "run_id": "41895810453",
+  "attempt_count": 1,
+  "preview_fingerprint": "64e471b272e203c406793d17605b7d4efa983c01324700b7e2e87f45a65d00c8",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-cartoon-b-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
