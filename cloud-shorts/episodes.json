@@ -12375,7 +12375,7 @@
     {
       "id": "moto-forest-37dd9c92e5a0",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -12458,7 +12458,48 @@
         "description": "Подпишись, если любишь настоящие мотопутешествия."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "8ecc8453349a3cf6cb99e61343cd0ba4d9f198518ee18f403be6962b61afe725",
+      "reviewed_artifact_run_id": "41708135264",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-forest-37dd9c92e5a0",
+        "render_run_id": "41708135264",
+        "mp4_sha256": "8ecc8453349a3cf6cb99e61343cd0ba4d9f198518ee18f403be6962b61afe725",
+        "asset_fingerprint": "6c1e23653aff8c6652454479fe093920866c36638d7725afe3c4f568a0d91ecb",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T00:42:40.462268+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на мотоцикле движется по асфальтированной дороге в лесу, видны колеса и движение вперед.",
+            "frames_sha256": [
+              "985cb1c33b79de06324e2adbb6f6ae25672692eb2b8613b11ed0b3a9a30574ee",
+              "73a8c848a7a292ceac09628ea90f5ade5aa0e6ecf35039f4147ed0ac82b513fc",
+              "e34e6c9e9a606ed81b7e6bedd1d4a6c5d8b84ef6ac2d8cc076a55ec0aa33c296"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Райдер на мотоцикле находится в воздухе над землей, что подтверждает прыжок с трамплина.",
+            "frames_sha256": [
+              "97d9200bddd7f68f5b22fe1e6a3183440cac9d8d2b032291c31965e67255af0c",
+              "ff4b34187fe7ee343219e876f5d5d4eb04e173f36a743b213f69272ec7710a8e",
+              "f50d494b49328a3c534c28b6f79196566a05de5266036c104d11aac7ef946cda"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-motocross-00a3c6c610d3",
