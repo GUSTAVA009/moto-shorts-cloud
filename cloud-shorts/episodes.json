@@ -16927,7 +16927,7 @@
     {
       "id": "moto-racing-6c26230b7583",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -17010,7 +17010,48 @@
         "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "81fa86279e46186947f6993b4181127dde4249f82734a2acdb1dafe4fd13a275",
+      "reviewed_artifact_run_id": "41909209392",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-racing-6c26230b7583",
+        "render_run_id": "41909209392",
+        "mp4_sha256": "81fa86279e46186947f6993b4181127dde4249f82734a2acdb1dafe4fd13a275",
+        "asset_fingerprint": "63d74a6278d3ca34e8bca6907c8e15b0efc8720f9020a012d1a371df8fac2c74",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T21:13:22.043169+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на мотоцикле находится в воздухе над землей, обе колеса оторваны от поверхности — видно прыжок с трамплина.",
+            "frames_sha256": [
+              "3903177c1226c02f77b4984cc4053be621e23e8d6ed010ab69f193913be3a19b",
+              "0560f2aff4d6081d5c0a75720f12722cf7c9042779f0e283de8a3b2998a50d1f",
+              "2acefa4fb8e812d2a2785492aa3f4fcc03bc3c8044ab8e0e3034b8f05b4df977"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Райдер едет по асфальтированной трассе, колеса касаются земли, движение подтверждается позицией и окружением.",
+            "frames_sha256": [
+              "8b8bd21d62c4a4de040b23d9197c1a7e84332dd7a2147abc3564ed6986a18ebb",
+              "4d343a59dbfb6bbc01f7196eb5f49b1d7f2ff21450f6bd222be2915f6d4604f5",
+              "ac5a1e91289a4205ad65cfa9f17868a21e0fc0bebbae2f0d725be320df129fe5"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-forest-2cf31e0c8a04",
