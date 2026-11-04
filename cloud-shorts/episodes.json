@@ -16317,7 +16317,7 @@
     {
       "id": "moto-roadtrip-702a7353d2fa",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -16400,7 +16400,48 @@
         "description": "Поделись роликом с другом, который любит мотоциклы."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "650f77420b63bf67b548a9856d1210a828685590a512930f31eabd7751254cb9",
+      "reviewed_artifact_run_id": "41906112507",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-roadtrip-702a7353d2fa",
+        "render_run_id": "41906112507",
+        "mp4_sha256": "650f77420b63bf67b548a9856d1210a828685590a512930f31eabd7751254cb9",
+        "asset_fingerprint": "7e8c6646706e6d458d6ddeb3e9f36cc10b1f729b32fa9e634d180fdde978229f",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T21:35:37.354492+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на мотоцикле движется по асфальтированной дороге в лесу, видны деревья и зелёная растительность.",
+            "frames_sha256": [
+              "360dc9a2fd796cb39e011c3f203e6040ce92bfdadca9a1fb5c75de9b140500a0",
+              "4bb1e5e226f0bb7de82306b7a72a5c533d24fe8ef861592b9415acca6361ca8d",
+              "a4d6a08f4fcc98bfabea19b6050b2205bd88286ca9c804f30e627a7fb8d231a1"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.92,
+            "observed": "Райдер на мотоцикле движется по мокрой дороге под дождём, видны капли воды и размытый фон.",
+            "frames_sha256": [
+              "23bc6edc664a8f0db985f94a5cfb82a48ec06d1d49ba2993f33beab04fd78067",
+              "87fd8884fb3934fd07035861e65c6bd278880b03fed563623eac480b3e738701",
+              "07bc79fb14f6be45b724f58ebdc8ae75aaee3290cba656a0383ade30a4dc1a68"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-training-9ce2559aa461",
