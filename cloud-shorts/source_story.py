@@ -264,7 +264,55 @@ def compose(sources, previous_titles, rewrite_attempt=0):
                         if 125 <= len(text) <= 160]
     if not filmable_options:
         raise ValueError("NO_CONCISE_TWO_SCENE_NARRATION")
-    narration = filmable_options[(variant + rewrite_attempt) % len(filmable_options)]
+    # The original 7 generic narrations were exhausted by a large licensed
+    # footage catalog. New assets then failed every rewrite although their
+    # actions and creators were distinct. Expand the grounded dramatic beats,
+    # rather than lowering catalog uniqueness or skipping voice/visual QA.
+    hooks = (
+        "Мотоцикл меняет характер каждого кадра:",
+        "Мотоцикл: две сцены, но разные задачи:",
+        "Не всякая мотоистория про скорость:",
+        "Мотоцикл: обрати внимание на действия:",
+        "Два эпизода с байками без постановки:",
+        "Мотоцикл в деле: заметь контраст:",
+        "Мотоцикл здесь показывает две ситуации:",
+        "Мотоцикл: смотри не на фон, а на езду:",
+        "За каждым мотокадром своё действие:",
+        "Мотоцикл бывает интересен по-разному:",
+    )
+    transitions = (
+        "На первом видео", "В первом эпизоде", "Сначала",
+    )
+    connectors = (
+        "А в другом кадре", "На другой записи", "Во втором эпизоде",
+        "Совсем в другом месте", "А затем, в отдельной съёмке",
+    )
+    questions = (
+        "Что захотелось пересмотреть?",
+        "Где больше точности движения?",
+        "Какой эпизод тебе ближе?",
+        "Какой момент кажется интереснее?",
+        "Какая сцена выглядит убедительнее?",
+        "Какая часть больше цепляет внимание?",
+        "Какое движение ты заметил первым?",
+        "Что показалось самым сложным?",
+    )
+    expanded = [
+        f"{hook} {transition.lower()} {a[3]}. "
+        f"{connector} {b[3]}. Это разные съёмки. {question}"
+        for hook in hooks for transition in transitions
+        for connector in connectors for question in questions
+    ]
+    expanded = [t for t in expanded if 125 <= len(t) <= 160]
+    filmable_options += expanded
+    if not filmable_options:
+        raise ValueError("NO_GROUNDED_NARRATION_VARIANTS")
+    # Vary by catalog position and rewrite attempt. All expressions still
+    # describe exactly the two evidenced actions; no fictional incident.
+    narration = filmable_options[
+        (variant * 3 + len(previous_titles) * 17 + rewrite_attempt * 37)
+        % len(filmable_options)
+    ]
     # Earlier versions generated exactly ONE title for every action pair.
     # On 2026-11-02 real refill 41410904531 rejected fresh, licensed
     # footage three times with SOURCE_STORY_TITLE_ALREADY_USED because the
