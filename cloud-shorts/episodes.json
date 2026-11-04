@@ -15925,7 +15925,7 @@
     {
       "id": "moto-forest-ae4a355fa3d8",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -16008,7 +16008,47 @@
         "description": "Поделись роликом с другом, который любит мотоциклы."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-forest-ae4a355fa3d8",
+        "render_run_id": "41901153327",
+        "mp4_sha256": "de4954c5cf4cfeaf508cbba0613b1cc92badb4194f13ee9cffa829f3143e11dc",
+        "asset_fingerprint": "8d8d700b3013c6a61de38a6d4e9074cef4b4c2074afcd624934110c2ef74898d",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-04T20:09:00.029250+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на мотоцикле движется по асфальтированной дороге в лесу, видны деревья и трава.",
+            "frames_sha256": [
+              "3eb37ce8882672122e03252ba4f1abd6239eb6b0a3c21631cdc2e0c099b10e03",
+              "affb2039aa5b3775fb72ea4bda87f17261357c519f77b2e1006a18d4241de453",
+              "38b5128924f9730a9269a8026cf5c8326a2ec8f962750120bd8e2561cc0b7120"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Райдер на мотоцикле находится в воздухе над землёй, выполняя прыжок с трамплина.",
+            "frames_sha256": [
+              "abb393aba00b7e87047202ee2aef9d1f3e560f8244d50224f159489814619915",
+              "a4058d1265cd2bbc2513dd00fecc463f5a17b8f20b6177f80bbb4a9e576ec9e4",
+              "19cf660d39ea8547929a04e55f33fec2012432073a57a79709b53fa5439014f7"
+            ]
+          }
+        ]
+      },
+      "reviewed_mp4_sha256": "de4954c5cf4cfeaf508cbba0613b1cc92badb4194f13ee9cffa829f3143e11dc",
+      "reviewed_artifact_run_id": "41901153327"
     },
     {
       "id": "moto-motocross-c4430ffd727a",
