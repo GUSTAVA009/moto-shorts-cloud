@@ -214,10 +214,13 @@ def publish(episode, video, metadata, voice, mixed):
     rec = "buffer-publication-receipts/" + episode["id"] + ".json"
     if ledger.api(rec) or ledger.api("publication-receipts/" + episode["id"] + ".json"):
         return {"skipped": "Publication already reserved or submitted"}
+    print("BUFFER_STEP_QA_START", episode["id"], flush=True)
     voice["mixed_audio"] = mixed
     publication_allowed(episode, metadata, voice, video)
     validate_video(video)
+    print("BUFFER_STEP_MP4_QA_PASSED", episode["id"], flush=True)
     posts, sent_posts = verify_channel(include_sent=True)
+    print("BUFFER_STEP_LIVE_INVENTORY_VERIFIED", len(posts), flush=True)
     if len(posts) >= 10:
         return {"skipped": "Buffer queue near capacity (10 queued, Free plan maximum); retry after the next publication"}
     if any(p.get("text", "").strip() == metadata["description"].strip() for p in posts):
@@ -253,10 +256,13 @@ def publish(episode, video, metadata, voice, mixed):
                           timezone_name=os.getenv("GUSTAVA_POST_TIMEZONE", "Europe/Moscow"),
                           max_posts_per_day=quota, min_lead_minutes=90)
     sha = file_sha256(video)
+    print("BUFFER_STEP_RELEASE_START", episode["id"], sha[:12], flush=True)
     url = release_url(episode["id"], video, sha)
+    print("BUFFER_STEP_RELEASE_READY", episode["id"], flush=True)
     state = {"episode": episode["id"], "sha256": sha, "media_url": url,
              "state": "reserved", "warning": "Never retry unknown Buffer createPost"}
     ledger.store(rec, state, "Reserve Buffer delivery for " + episode["id"])
+    print("BUFFER_STEP_IDEMPOTENT_RESERVATION_WRITTEN", episode["id"], flush=True)
     title = metadata["title"][:100]
     desc = metadata["description"]
     category = "2" if re.search(r"мото|байк|гонк", title + " " + desc, re.I) else "28"
@@ -274,6 +280,7 @@ def publish(episode, video, metadata, voice, mixed):
         ... on MutationError {message}
       }
     }"""
+    print("BUFFER_STEP_CREATE_POST_SENT", episode["id"], flush=True)
     response = buffer(q, {"input": payload}).get("createPost") or {}
     post = response.get("post")
     if not post or post.get("channelId") != CHANNEL:
@@ -282,6 +289,7 @@ def publish(episode, video, metadata, voice, mixed):
     original = ledger.api(rec)
     ledger.store(rec, state, "Confirm Buffer queue " + episode["id"],
                  old_sha=original["sha"])
+    print("BUFFER_STEP_QUEUE_CONFIRMED_WITH_POST_ID", post["id"], flush=True)
     return {"queued": True, "episode": episode["id"], "buffer_post_id": post["id"],
             "due_at": post.get("dueAt")}
 
