@@ -1,0 +1,97 @@
+{
+  "status": "technically_pass",
+  "artistic_qa": "Requires viewer judgement; keyframes produced and inspected",
+  "duration_seconds": 95.766667,
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "video_codec": "h264",
+  "audio_codec": "aac",
+  "audio_channels": 2,
+  "voice_id": "deep",
+  "voice_source": "AI Voice Generator direct generated segments, no Silero substitution",
+  "caption_cues": 65,
+  "moving_scenes": 19,
+  "full_decode_pass": true,
+  "motion_per_scene": [
+    {
+      "scene": 0,
+      "motion_mad": 44.336
+    },
+    {
+      "scene": 1,
+      "motion_mad": 29.564
+    },
+    {
+      "scene": 2,
+      "motion_mad": 46.39
+    },
+    {
+      "scene": 3,
+      "motion_mad": 43.843
+    },
+    {
+      "scene": 4,
+      "motion_mad": 24.427
+    },
+    {
+      "scene": 5,
+      "motion_mad": 41.102
+    },
+    {
+      "scene": 6,
+      "motion_mad": 44.735
+    },
+    {
+      "scene": 7,
+      "motion_mad": 9.459
+    },
+    {
+      "scene": 8,
+      "motion_mad": 23.179
+    },
+    {
+      "scene": 9,
+      "motion_mad": 37.628
+    },
+    {
+      "scene": 10,
+      "motion_mad": 24.99
+    },
+    {
+      "scene": 11,
+      "motion_mad": 34.861
+    },
+    {
+      "scene": 12,
+      "motion_mad": 20.079
+    },
+    {
+      "scene": 13,
+      "motion_mad": 4.54
+    },
+    {
+      "scene": 14,
+      "motion_mad": 23.733
+    },
+    {
+      "scene": 15,
+      "motion_mad": 33.522
+    },
+    {
+      "scene": 16,
+      "motion_mad": 36.129
+    },
+    {
+      "scene": 17,
+      "motion_mad": 40.489
+    },
+    {
+      "scene": 18,
+      "motion_mad": 37.945
+    }
+  ],
+  "bytes": 49315354,
+  "sha256": "a9e6b66e686f96090d92832d1573ed83ab4f7779c82e34cc434c6d2cd3035878",
+  "published_to_youtube": false
+}
