@@ -107,36 +107,13 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           python3 cloud-shorts/buffer_delivery_gate.py dispatch
-      - name: Report depleted Buffer stock without aborting the supply controller
+      - name: Report no eligible MP4 without spending Buffer API quota
         if: steps.pick.outputs.has_job != 'true'
-        env:
-          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
-          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID || 'UCS0QCodPcFBTjMt4ioEWOUw' }}
         run: |
-          python3 - <<'PY'
-          import os
-          import sys
-          sys.path.insert(0, "cloud-shorts")
-          from buffer_autopublish import verify_channel
-          queued, sent = verify_channel(include_sent=True)
-          # The old arbitrary 7-post THRESHOLD turned an inventory
-          # audit into a hard failure, without producing a single MP4.
-          # Report REAL counts; allow the independent rolling production
-          # controller to dispatch source/render/vision work.
-          target = 10
-          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf8") as out:
-              out.write("\n## Verified Buffer channel — not production success\n")
-              out.write("Queued real posts: " + str(len(queued)) + "\n")
-              out.write("Owner target: " + str(target) + "\n")
-              out.write("Approved new original MP4 ready for release: 0\n")
-              out.write("Buffer ID created by this workflow: none\n")
-              out.write("Source, speech and independent frame QA remain required.\n")
-          if len(queued) < target:
-              print("::warning::BUFFER_INVENTORY_SHORTFALL: "
-                    f"{len(queued)}/{target} scheduled; no new independently "
-                    "reviewed original MP4 exists. This is NOT a successful "
-                    "factory batch or a scheduled post.",flush=True)
-          else:
-              print("BUFFER_STOCK_HEALTHY_BUT_NO_NEW_VIDEO",len(queued),
-                    flush=True)
-          PY
+          # Buffer API has returned HTTP 429. A zero-candidate check MUST
+          # NEVER query the provider just to rediscover an empty stock.
+          # Only the daily inventory auditor owns truthful live queue counts.
+          echo '## Factory delivery: no eligible reviewed MP4' >> "$GITHUB_STEP_SUMMARY"
+          echo 'No Buffer createPost attempt made. Live queue size is unknown here.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The daily read-only inventory audit reports real scheduled counts.' >> "$GITHUB_STEP_SUMMARY"
+          echo '::warning::NO_ELIGIBLE_REVIEWED_MP4: no Buffer API request was made.'
