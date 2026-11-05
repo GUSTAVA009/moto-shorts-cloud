@@ -1,0 +1,26 @@
+bus_engine
+Title: Bus Motor/Engine Sound Loop
+Creator: qubodup
+License: cc0
+Source: https://freesound.org/people/qubodup/sounds/54909
+
+
+bus_door
+Title: busdoor.mp3
+Creator: BabelFishTank
+License: cc0
+Source: https://freesound.org/people/BabelFishTank/sounds/534977
+
+
+snow_steps
+Title: footsteps boots snow approach to close nice crisp clean.wav
+Creator: kyles
+License: cc0
+Source: https://freesound.org/people/kyles/sounds/450843
+
+
+winter_wind
+Title: G56-24-Winter Wind 2.wav
+Creator: craigsmith
+License: cc0
+Source: https://freesound.org/people/craigsmith/sounds/438879

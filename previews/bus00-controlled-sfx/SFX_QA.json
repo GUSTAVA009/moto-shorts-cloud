@@ -1,0 +1,17 @@
+{
+  "status": "PROTOTYPE_NOT_FOR_AUTOPUBLISH",
+  "reason": "12-second controlled Blender 3D scene proof; full 90-110-second episode not rebuilt yet",
+  "audio_source": "GUSTAVA DEEP one centered voice plus 4 recorded CC0 environmental effects via Real SFX and 1 original earshot sound",
+  "dur": 12.1,
+  "bytes": 2583823,
+  "video_resolution": [
+    720,
+    1280
+  ],
+  "fps": 24,
+  "sha256": "53eaddd76a7533ed3df0eb6a1b89870f257d85d032e63b81f2660fd41f9b4671",
+  "real_sfx_validation": " 0 t=  0.000  CC0 real recorded cold w not judged (no clear onset to measure)\n 1 t=  0.100  CC0 real bus engine appr not judged (no clear onset to measure)\n 2 t=  6.870  CC0 real mechanical bus  onset    +3 ms  ok\n 3 t=  8.792  CC0 actual boots compres not judged (no clear onset to measure)\n 4 t= 10.480  Earshot bank created tim not judged (a louder or similar neighbour sounds there)\n5 cues: 5 present, 1 judged (0 off), 4 not judged: 3 no clear onset to measure; 1 a louder or similar neighbour sounds there\ntrack peak -16.9 dBFS (16 kHz view)\nmono: the SFX track loses 0.3 dB when folded to mono (0 = the channels agree, 3 = unrelated, 6+ = parts cancel)\nloop seam: the track starts at -120 dBFS and ends at -78 dBFS (clean: it loops without a click or a cut tail)\n",
+  "real_sfx_error": "",
+  "source_license_details": "cc0_sound_library/CREDITS_AND_LICENSES.json",
+  "youtube_post_id": null
+}
