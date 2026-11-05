@@ -1,0 +1,37 @@
+{
+  "render": "BUS_00_PROOF_12SEC_REAL_SFX_CC0.mp4",
+  "status": "sound_design_test_not_full_animated_episode",
+  "voice": "GUSTAVA DEEP, original generated preview",
+  "sample_rate": 48000,
+  "channels": 2,
+  "duration": 12.0,
+  "effects": [
+    {
+      "asset": "bus_engine.wav",
+      "event": "bus approaching",
+      "at_sec": 0.0,
+      "license": "CC0"
+    },
+    {
+      "asset": "bus_door.wav",
+      "event": "opening passenger door",
+      "at_sec": 6.72,
+      "license": "CC0"
+    },
+    {
+      "asset": "snow_steps.wav",
+      "event": "steps on snow",
+      "at_sec": 8.2,
+      "license": "CC0"
+    },
+    {
+      "asset": "winter_wind.wav",
+      "event": "winter atmosphere",
+      "at_sec": 0.0,
+      "license": "CC0"
+    }
+  ],
+  "source_credits": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\BUS_00_REBUILD_CONTROLLED\\cc0_sound_library\\CREDITS_AND_LICENSES.json",
+  "sha256": "462c4dfb1b9a22e097369bcb1f85162fac7f4eb00b6d06daca7c388f583a9a99",
+  "bytes": 2631779
+}
