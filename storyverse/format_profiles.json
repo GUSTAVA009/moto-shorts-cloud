@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Original animated Shorts in two accepted visual formats, not a one-click approval to publish",
+  "accepted_formats": {
+    "PAINTERLY_2D": {
+      "intent": "Atmospheric cinematic illustrated stories; layered snow, volumetric glow, deep blue-purple palette",
+      "pipeline": [
+        "character sheet",
+        "coherent painted environment",
+        "rigged foreground props and doors",
+        "multiplane animation",
+        "frame-accurate SFX",
+        "visual review"
+      ],
+      "production_ready": false,
+      "known_limit": "A static illustration with camera zoom and weather effects is insufficient for character acting"
+    },
+    "HYBRID_2D3D": {
+      "intent": "Simple fixed-design 2D characters integrated with one physically consistent reusable Blender 3D world",
+      "pipeline": [
+        "one fixed world",
+        "one vehicle model with sliding doors",
+        "skeletal character with contact points",
+        "collision and camera-frustum gates",
+        "animation render",
+        "audio event sync",
+        "visual review"
+      ],
+      "production_ready": false,
+      "known_limit": "Passing geometry and decode tests does not guarantee visual acceptability"
+    }
+  },
+  "global": {
+    "visible_branding": false,
+    "episode_numbers_on_screen": false,
+    "scene_numbers_on_screen": false,
+    "debug_overlays": false,
+    "narrator": "GUSTAVA DEEP voice_id=deep; never silently replace",
+    "audio_master": "audible onset must match first movement frame; trim source silence",
+    "publish_only_after": "human visual approval, validated MP4, licensed audio, matching narration and action",
+    "no_unrelated_local_video_access": true
+  },
+  "critical_gate_cases": [
+    "Door must be fully clear before the hero crosses threshold",
+    "Camera cannot crop face, body or produce unidentified foreground object during a required action",
+    "Foot placement must touch actual ground/platform",
+    "SFX door onset = geometric first moving frame, footsteps = first walking frame",
+    "Eye/hand/arm count stable and character identity consistent"
+  ]
+}
