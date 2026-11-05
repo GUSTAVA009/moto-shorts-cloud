@@ -1,0 +1,130 @@
+{
+  "pack": "20 painterly A stories",
+  "total_scenes": 120,
+  "available_files": 120,
+  "episodes_complete": 20,
+  "episodes_with_any_audio": 20,
+  "issues": [],
+  "episodes": [
+    {
+      "slug": "01_last_lantern",
+      "title": "Последний фонарь",
+      "parts": 6,
+      "audio_seconds": 132.31
+    },
+    {
+      "slug": "02_train_to_nowhere",
+      "title": "Поезд, которого нет в расписании",
+      "parts": 6,
+      "audio_seconds": 121.22
+    },
+    {
+      "slug": "03_frozen_radio",
+      "title": "Радио из завтрашнего дня",
+      "parts": 6,
+      "audio_seconds": 115.39
+    },
+    {
+      "slug": "04_house_of_memories",
+      "title": "Дом, который помнит всех",
+      "parts": 6,
+      "audio_seconds": 119.3
+    },
+    {
+      "slug": "05_bridge_of_echoes",
+      "title": "Мост, который отвечает",
+      "parts": 6,
+      "audio_seconds": 120.12
+    },
+    {
+      "slug": "06_lake_under_ice",
+      "title": "Голос подо льдом",
+      "parts": 6,
+      "audio_seconds": 119.16
+    },
+    {
+      "slug": "07_clock_in_the_forest",
+      "title": "Часы посреди леса",
+      "parts": 6,
+      "audio_seconds": 114.62
+    },
+    {
+      "slug": "08_school_bell",
+      "title": "Звонок в закрытой школе",
+      "parts": 6,
+      "audio_seconds": 113.62
+    },
+    {
+      "slug": "09_midnight_cinema",
+      "title": "Кинотеатр последнего сеанса",
+      "parts": 6,
+      "audio_seconds": 113.09
+    },
+    {
+      "slug": "10_post_office_snow",
+      "title": "Посылка из зимнего прошлого",
+      "parts": 6,
+      "audio_seconds": 114.74
+    },
+    {
+      "slug": "11_garden_in_frost",
+      "title": "Сад, цветущий в мороз",
+      "parts": 6,
+      "audio_seconds": 113.57
+    },
+    {
+      "slug": "12_observatory_stars",
+      "title": "Когда звёзды пошли назад",
+      "parts": 6,
+      "audio_seconds": 117.41
+    },
+    {
+      "slug": "13_hotel_room_zero",
+      "title": "Номер, которого нет",
+      "parts": 6,
+      "audio_seconds": 114.77
+    },
+    {
+      "slug": "14_phone_in_snow",
+      "title": "Телефон, звонящий в сугробе",
+      "parts": 6,
+      "audio_seconds": 118.06
+    },
+    {
+      "slug": "15_snow_birds",
+      "title": "Птицы, которые не улетают",
+      "parts": 6,
+      "audio_seconds": 116.78
+    },
+    {
+      "slug": "16_camera_tomorrow",
+      "title": "Фотография завтрашнего дня",
+      "parts": 6,
+      "audio_seconds": 113.09
+    },
+    {
+      "slug": "17_bell_under_mountain",
+      "title": "Колокол под горой",
+      "parts": 6,
+      "audio_seconds": 114.89
+    },
+    {
+      "slug": "18_staircase_between_houses",
+      "title": "Лестница между домами",
+      "parts": 6,
+      "audio_seconds": 117.05
+    },
+    {
+      "slug": "19_museum_of_stars",
+      "title": "Музей упавших звёзд",
+      "parts": 6,
+      "audio_seconds": 120.12
+    },
+    {
+      "slug": "20_city_not_on_map",
+      "title": "Город, которого нет на карте",
+      "parts": 6,
+      "audio_seconds": 118.78
+    }
+  ]
+}
