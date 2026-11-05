@@ -1,0 +1,26 @@
+{
+  "episode": "01_last_lantern",
+  "voice": "GUSTAVA DEEP",
+  "voice_parts": 6,
+  "real_MP4": true,
+  "image_source": "ByteDance SDXL-Lightning (OpenRAIL++ license) locally generated images",
+  "animation": "deterministic Ken Burns motion on 6 unique painted images + generated moving snow",
+  "fps": 30,
+  "duration_seconds": 120.0,
+  "resolution": "1080x1920",
+  "audio": "AAC stereo",
+  "qa_codec": "pass",
+  "qa_visual": "pending human approval",
+  "publish_ready": false,
+  "size": 75806542,
+  "sha256": "943c11bafc886d15406579229e949d2f9fbb900a09b0d67ca1625366f48f0925",
+  "path": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\01_last_lantern\\01_last_lantern_PAINTERLY_A_DEEP_120s.mp4",
+  "scene_timings_s": [
+    18.578995102485035,
+    19.875204063123523,
+    18.51418465445311,
+    19.162289134772355,
+    20.48010157808815,
+    23.38922546707782
+  ]
+}
