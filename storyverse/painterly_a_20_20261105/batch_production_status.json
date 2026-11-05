@@ -1,0 +1,129 @@
+{
+  "total_stories": 20,
+  "storyboards_ready": 20,
+  "scenes_ready": 120,
+  "complete_videos": 20,
+  "items": [
+    {
+      "slug": "01_last_lantern",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\01_last_lantern\\01_last_lantern_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "02_train_to_nowhere",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\02_train_to_nowhere\\02_train_to_nowhere_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "03_frozen_radio",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\03_frozen_radio\\03_frozen_radio_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "04_house_of_memories",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\04_house_of_memories\\04_house_of_memories_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "05_bridge_of_echoes",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\05_bridge_of_echoes\\05_bridge_of_echoes_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "06_lake_under_ice",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\06_lake_under_ice\\06_lake_under_ice_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "07_clock_in_the_forest",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\07_clock_in_the_forest\\07_clock_in_the_forest_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "08_school_bell",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\08_school_bell\\08_school_bell_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "09_midnight_cinema",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\09_midnight_cinema\\09_midnight_cinema_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "10_post_office_snow",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\10_post_office_snow\\10_post_office_snow_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "11_garden_in_frost",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\11_garden_in_frost\\11_garden_in_frost_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "12_observatory_stars",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\12_observatory_stars\\12_observatory_stars_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "13_hotel_room_zero",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\13_hotel_room_zero\\13_hotel_room_zero_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "14_phone_in_snow",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\14_phone_in_snow\\14_phone_in_snow_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "15_snow_birds",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\15_snow_birds\\15_snow_birds_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "16_camera_tomorrow",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\16_camera_tomorrow\\16_camera_tomorrow_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "17_bell_under_mountain",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\17_bell_under_mountain\\17_bell_under_mountain_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "18_staircase_between_houses",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\18_staircase_between_houses\\18_staircase_between_houses_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "19_museum_of_stars",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\19_museum_of_stars\\19_museum_of_stars_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    },
+    {
+      "slug": "20_city_not_on_map",
+      "images": 6,
+      "video": "C:\\Users\\alex-\\GUSTAVA-AI-HUB\\productions\\PAINTERLY_A_NEXT_120_20261105\\episodes\\20_city_not_on_map\\20_city_not_on_map_PAINTERLY_A_DEEP_120s.mp4",
+      "video_verified": true
+    }
+  ],
+  "last_check": "2026-11-05 15:46:45"
+}
