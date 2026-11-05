@@ -91,10 +91,13 @@ class PublisherShellTests(unittest.TestCase):
 
     def test_depleted_buffer_reserve_reports_real_shortfall_without_false_publish(self):
         workflow = source(".github/workflows/buffer-backlog.yml")
-        self.assertIn("target = 10", workflow)
-        self.assertIn("BUFFER_INVENTORY_SHORTFALL", workflow)
-        self.assertIn("Buffer ID created by this workflow: none", workflow)
-        self.assertIn("not production success", workflow)
+        # 429 throttle: a no-video publisher run must not waste a Buffer
+        # API call simply to restate a known source stock shortfall.
+        self.assertIn("NO_ELIGIBLE_REVIEWED_MP4", workflow)
+        self.assertIn("No Buffer createPost attempt made", workflow)
+        self.assertIn("Live queue size is unknown here", workflow)
+        self.assertIn("no Buffer API request was made", workflow)
+        self.assertNotIn("queued, sent = verify_channel(include_sent=True)", workflow)
         # A 7-post stock threshold is not a license or quality requirement.
         # No eligible MP4 must not abort the monitoring/supply controller.
         self.assertNotIn("BUFFER_RESERVE_UNDER_MINIMUM", workflow)
