@@ -1,5 +1,5 @@
 {
-  "status": "technically_pass",
+  "status": "REJECTED_VISUAL_ARTIFACTS_DO_NOT_PUBLISH",
   "artistic_qa": "Requires viewer judgement; keyframes produced and inspected",
   "duration_seconds": 95.766667,
   "width": 1080,
