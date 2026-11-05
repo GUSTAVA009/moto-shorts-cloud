@@ -1,0 +1,80 @@
+{
+  "door_keyframe_tests": [
+    {
+      "frame": 1,
+      "sec": 0.042,
+      "gap_m": 0.06,
+      "actor_foot_center_z": 0.0,
+      "actor_faces_camera_dot": 1.0,
+      "actor_x": 5.55
+    },
+    {
+      "frame": 164,
+      "sec": 6.833,
+      "gap_m": 0.06,
+      "actor_foot_center_z": 0.0,
+      "actor_faces_camera_dot": 1.0,
+      "actor_x": 5.55
+    },
+    {
+      "frame": 181,
+      "sec": 7.542,
+      "gap_m": 1.008,
+      "actor_foot_center_z": 0.0,
+      "actor_faces_camera_dot": 1.0,
+      "actor_x": 5.55
+    },
+    {
+      "frame": 199,
+      "sec": 8.292,
+      "gap_m": 2.04,
+      "actor_foot_center_z": 0.0,
+      "actor_faces_camera_dot": 1.0,
+      "actor_x": 5.526
+    },
+    {
+      "frame": 208,
+      "sec": 8.667,
+      "gap_m": 2.04,
+      "actor_foot_center_z": 0.0,
+      "actor_faces_camera_dot": 1.0,
+      "actor_x": 5.179
+    },
+    {
+      "frame": 238,
+      "sec": 9.917,
+      "gap_m": 2.04,
+      "actor_foot_center_z": 0.0,
+      "actor_faces_camera_dot": 0.999,
+      "actor_x": 3.523
+    },
+    {
+      "frame": 266,
+      "sec": 11.083,
+      "gap_m": 2.04,
+      "actor_foot_center_z": 0.1,
+      "actor_faces_camera_dot": 1.0,
+      "actor_x": 1.63
+    },
+    {
+      "frame": 278,
+      "sec": 11.583,
+      "gap_m": 2.04,
+      "actor_foot_center_z": 0.525,
+      "actor_faces_camera_dot": 1.0,
+      "actor_x": 1.141
+    },
+    {
+      "frame": 288,
+      "sec": 12.0,
+      "gap_m": 2.04,
+      "actor_foot_center_z": 0.52,
+      "actor_faces_camera_dot": 1.0,
+      "actor_x": 0.85
+    }
+  ],
+  "actor_tests": [],
+  "warnings": [],
+  "status": "pass_static_geometry",
+  "notes": "Requires screen-by-screen visual review; cannot guarantee absence of all foreground art defects."
+}

@@ -1,0 +1,25 @@
+{
+  "status": "technical_pass_pending_final_visual_approval",
+  "source": "same persistent Blender scene, regenerated with sliding bus doors and safe camera",
+  "fixed": [
+    "hinged door obstruction",
+    "entrance side pillar",
+    "foreground camera push-through",
+    "episode/day badge"
+  ],
+  "duration": 12.0,
+  "fps": 24,
+  "resolution": "720x1280",
+  "voice": "GUSTAVA DEEP (original version)",
+  "sound_events": {
+    "engine_start": 1.51,
+    "door_starts_moving": 6.833333333333333,
+    "door_sound_start": 6.833,
+    "door_fully_open": 8.291666666666666,
+    "walk_sound_start": 8.041666666666666
+  },
+  "visual_source": "FORMAT_B_V4_SAFE_CAMERA.blend",
+  "sha256": "bdfde017b10d3f885410e3ee38bf807aac35cde7a913cab416a59a4f725a2b83",
+  "size": 2718761,
+  "note": "Technical integrity and geometry tests are not a guarantee of artistic quality."
+}
