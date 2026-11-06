@@ -19,9 +19,9 @@ class CapacityReportTests(unittest.TestCase):
         report = summarize(catalog, {"a"}, {"p1"}, queue, sent, today,
                            model=False, pexels=False)
         self.assertEqual(report["published_today_reported_by_buffer"], 1)
-        self.assertEqual(report["monthly_minimum_short"],400)
-        self.assertEqual(report["daily_target"],14)
-        self.assertEqual(report["monthly_delivery_observations"]["baseline_daily_target"],14)
+        self.assertEqual(report["monthly_minimum_short"],420)
+        self.assertEqual(report["daily_target"],15)
+        self.assertEqual(report["monthly_delivery_observations"]["baseline_daily_target"],15)
         self.assertEqual(report["scheduled_for_today"], 1)
         self.assertEqual(report["new_unique_scripts_ready_to_render"], 1)
         self.assertIn("BELOW_DAILY_TARGET_SCHEDULED_OR_SENT_TODAY", report["hard_blockers"])
@@ -29,8 +29,8 @@ class CapacityReportTests(unittest.TestCase):
         self.assertEqual(report["script_reserve_capacity"], 150000)
         self.assertEqual(report["script_reserve_remaining"], 150000)
         self.assertGreaterEqual(report["unconsumed_curated_pexels_clips"], 0)
-        self.assertEqual(report["minimum_new_distinct_action_clips_per_day"], 28)
-        self.assertEqual(report["minimum_seven_day_source_buffer_clips"], 196)
+        self.assertEqual(report["minimum_new_distinct_action_clips_per_day"], 30)
+        self.assertEqual(report["minimum_seven_day_source_buffer_clips"], 210)
         self.assertGreaterEqual(
             report["public_footage_source_id_coverage_days_upper_bound"],0)
 
@@ -61,7 +61,7 @@ class CapacityReportTests(unittest.TestCase):
         self.assertEqual(report["published_today_reported_by_buffer"], 0)
         self.assertGreater(len(report["hard_blockers"]), 0)
         self.assertTrue(report["keyless_editorial_script_reserve"])
-        if report["unconsumed_curated_pexels_clips"] < 196:
+        if report["unconsumed_curated_pexels_clips"] < 210:
             self.assertTrue(any(
                 "LICENSED_ACTION_MATCHED_FOOTAGE_BELOW_400_MONTH_PACE" in error
                 for error in report["hard_blockers"]))
