@@ -1,8 +1,12 @@
 {
   "channel_id": "UCS0QCodPcFBTjMt4ioEWOUw",
   "episode": "bolt-precision-20261106",
+  "privacy_requested": "public",
   "run_id": "42261544288",
+  "scheduled_at": null,
   "sha256": "a449ad6c50133c679efe128459e0089a6bdcba2f5a5f41c9183c718552d3097f",
-  "status": "reserved",
-  "warning": "Do not retry if upload outcome is uncertain; reconcile with YouTube Studio."
+  "status": "uploaded",
+  "video_id": "g6xJwn-NGvE",
+  "warning": "Do not retry if upload outcome is uncertain; reconcile with YouTube Studio.",
+  "youtube_url": "https://www.youtube.com/watch?v=g6xJwn-NGvE"
 }
