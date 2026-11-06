@@ -18792,7 +18792,7 @@
     {
       "id": "moto-motocross-2d3769309a4e",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -18875,7 +18875,48 @@
         "description": "Подпишись, если любишь настоящие мотопутешествия."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "2a3afbd13135ce58fd81ce46b4ce5ac3c5498276214bf24b346e4409bfb02ba8",
+      "reviewed_artifact_run_id": "42231313301",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-motocross-2d3769309a4e",
+        "render_run_id": "42231313301",
+        "mp4_sha256": "2a3afbd13135ce58fd81ce46b4ce5ac3c5498276214bf24b346e4409bfb02ba8",
+        "asset_fingerprint": "985bcf68e79db9c27c97b2a4247195d8cdd7ff471bfc0fab9b2b36d4f38dd4dc",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-06T14:15:38.501393+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Мотоцикл с райдером в полной экипировке движется по песчаной трассе; видны колеса и динамика движения.",
+            "frames_sha256": [
+              "cf7408fbbdc6d52ca71cacac645d266e409099bbde6084949c3c9211cf103c86",
+              "30a8c3998d38591d6199d256ed4387ad455c4ff01f8b7a9686677eb0c550188c",
+              "a16de098cf887f44b7b82e88d97aef8af8a732e110cf47633f1350985c300fac"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Мотоцикл в воздухе над землей, райдер в синей экипировке; подтвержден прыжок с трамплина.",
+            "frames_sha256": [
+              "2103525b8d634502f6b62833c675054d89d3ada6b1f7be238da7cbb222754864",
+              "b068c3fec8c72176dc585e79c755424ec0d720dd6f29bc99826b2cc02e230839",
+              "10a38a5fb3b3f013c6a8882848c5b1e9b81505b67ca24aca31579e6c9c0067eb"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-repair-93c6fe48233f",
