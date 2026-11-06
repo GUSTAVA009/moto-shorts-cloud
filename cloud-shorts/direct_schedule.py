@@ -77,6 +77,10 @@ def next_verified_slot(api, now=None):
     if now.tzinfo is None:
         raise ValueError("SCHEDULER_REQUIRES_TIMEZONE")
     events = youtube_inventory(api)
+    from ten_daily_slots import parse_date
+    queued = sum(parse_date(row["dueAt"]) > now for row in events)
+    if queued >= 10:
+        raise RuntimeError("YOUTUBE_SCHEDULE_RESERVE_FULL: 10 confirmed future posts already queued")
     # Standard 15 releases/day; a sixteenth catch-up requires explicit approval.
     return choose_slot(events, now=now, max_posts_per_day=BASE_POSTS_PER_DAY,
                        min_lead_minutes=90)
