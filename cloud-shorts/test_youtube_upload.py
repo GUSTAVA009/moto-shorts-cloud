@@ -26,6 +26,16 @@ class DirectUploadTests(unittest.TestCase):
         self.assertNotIn("https://", result)
         self.assertNotIn("Pexels", result)
 
+    def test_preserve_exact_deep_provider_attribution_but_strip_other_links(self):
+        from deep_voice import PUBLIC_ATTRIBUTION
+        desc = ("Правильный момент затяжки берут из сервиса.\n\n"
+                + PUBLIC_ATTRIBUTION
+                + "\nhttps://example.com/unverified-link\n#мото #Shorts")
+        result = yt.clean_description(desc)
+        self.assertIn(PUBLIC_ATTRIBUTION, result)
+        self.assertNotIn("example.com", result)
+        self.assertIn("#Shorts", result)
+
     def test_metadata_private_default(self):
         meta = {"title":"Сложный подъём! #shorts",
                 "description":"А ты бы рискнул?"}
