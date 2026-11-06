@@ -1,0 +1,135 @@
+name: GUSTAVA - Direct YouTube 15/day verified queue
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'cloud-shorts/episodes.json'
+      - 'cloud-shorts/direct_*.py'
+      - '.github/workflows/youtube-direct-queue.yml'
+  schedule:
+    # Sixteen 90-minute checks, max 15 ordinary releases/day in YouTube.
+    - cron: '05 0,3,6,9,12,15,18,21 * * *'
+    - cron: '35 1,4,7,10,13,16,19,22 * * *'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: youtube-direct-uploads
+  cancel-in-progress: false
+
+jobs:
+  scheduled-upload:
+    # Explicit opt-in after an actual OAuth test; never guess credentials.
+    if: github.repository == 'GUSTAVA009/moto-shorts-cloud' && vars.YOUTUBE_DIRECT_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run no-network direct uploader regression checks
+        run: |
+          python3 -m unittest discover -s cloud-shorts -p 'test_direct*.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_upload_guard.py' -v
+      - name: Select one unposted approved MP4, excluding old Buffer and YouTube receipts
+        id: pick
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GUSTAVA_ORIGINAL_VOICE_APPROVED: ${{ vars.GUSTAVA_ORIGINAL_VOICE_APPROVED }}
+          GUSTAVA_VOICE_REFERENCE_SHA256: ${{ vars.GUSTAVA_VOICE_REFERENCE_SHA256 }}
+        run: python3 cloud-shorts/direct_queue_select.py --output "$GITHUB_OUTPUT"
+      - name: Download exact immutable render artifact
+        if: steps.pick.outputs.has_job == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ steps.pick.outputs.artifact_name }}
+          path: staged
+          run-id: ${{ steps.pick.outputs.render_id }}
+          repository: ${{ github.repository }}
+          github-token: ${{ github.token }}
+      - name: Require licensed visual review, voice and final mixed audio and MP4 QA
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          EPISODE: ${{ steps.pick.outputs.episode }}
+          GUSTAVA_ORIGINAL_VOICE_APPROVED: ${{ vars.GUSTAVA_ORIGINAL_VOICE_APPROVED }}
+          GUSTAVA_VOICE_REFERENCE_SHA256: ${{ vars.GUSTAVA_VOICE_REFERENCE_SHA256 }}
+        run: |
+          set -euo pipefail
+          python3 cloud-shorts/direct_upload_ready.py --episode "$EPISODE" \
+            --staged "staged/$EPISODE" --output "staged/$EPISODE/reviewed-direct-metadata.json"
+          python3 cloud-shorts/youtube_upload.py --video "staged/$EPISODE/$EPISODE.mp4" \
+            --metadata "staged/$EPISODE/reviewed-direct-metadata.json" \
+            --privacy private --schedule-next --dry-run
+      - name: Check OAuth configuration without exposing secrets
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+        run: |
+          python3 - <<'PY'
+          import os
+          required = ("YOUTUBE_CLIENT_ID", "YOUTUBE_CLIENT_SECRET",
+                      "YOUTUBE_REFRESH_TOKEN")
+          missing = [n for n in required if not os.getenv(n)]
+          if missing or os.getenv("YOUTUBE_EXPECTED_CHANNEL_ID") != "UCS0QCodPcFBTjMt4ioEWOUw":
+              raise SystemExit("YOUTUBE_OAUTH_OR_PINNED_CHANNEL_NOT_READY: " + ",".join(missing))
+          print("CHANNEL_PIN_AND_SECRET_PRESENCE_VALIDATED")
+          PY
+      - name: Reserve SHA and episode before any possible YouTube upload
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          EPISODE: ${{ steps.pick.outputs.episode }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+        run: |
+          python3 cloud-shorts/upload_guard.py reserve \
+            --video "staged/$EPISODE/$EPISODE.mp4" \
+            --channel "$YOUTUBE_EXPECTED_CHANNEL_ID" --episode "$EPISODE" \
+            --output upload-guard-reservation.json
+      - name: Install official Google API client
+        if: steps.pick.outputs.has_job == 'true'
+        run: python3 -m pip install --disable-pip-version-check google-api-python-client google-auth
+      - name: Upload PRIVATE with provider-verified future publishAt
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+          EPISODE: ${{ steps.pick.outputs.episode }}
+        run: |
+          python3 cloud-shorts/youtube_upload.py \
+            --video "staged/$EPISODE/$EPISODE.mp4" \
+            --metadata "staged/$EPISODE/reviewed-direct-metadata.json" \
+            --privacy private --schedule-next --receipt youtube-upload-receipt.json
+      - name: Persist actual YouTube ID and verified scheduled time
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 cloud-shorts/upload_guard.py finish \
+            --reservation upload-guard-reservation.json \
+            --receipt youtube-upload-receipt.json
+      - name: Archive receipt, never OAuth secrets
+        if: steps.pick.outputs.has_job == 'true' && success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: youtube-direct15-receipt-${{ github.run_id }}
+          path: youtube-upload-receipt.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Report verified-empty source queue honestly
+        if: steps.pick.outputs.has_job != 'true'
+        run: |
+          echo '## Direct YouTube: no eligible reviewed MP4' >> "$GITHUB_STEP_SUMMARY"
+          echo 'No upload was attempted. 15/day is a target, not evidence of publication.' >> "$GITHUB_STEP_SUMMARY"
