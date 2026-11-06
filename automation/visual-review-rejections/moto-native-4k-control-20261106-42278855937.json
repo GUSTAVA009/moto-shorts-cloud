@@ -1,0 +1,7 @@
+{
+  "episode": "moto-native-4k-control-20261106",
+  "run_id": "42278855937",
+  "reason": "FRAME_MODEL_REJECTED_ACTION_OR_NARRATION",
+  "status": "needs_new_verified_visuals",
+  "recorded_at": "2026-11-06T19:29:05.544456+00:00"
+}
