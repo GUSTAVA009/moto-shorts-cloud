@@ -908,10 +908,33 @@ def choose(catalog, output):
         records[item["id"]] = (entry, decode_receipt(entry))
     # New, independently verified cross-niche pilots have priority for the
     # limited 14-day test. Never force a completed or reserved video to rerender.
-    selected = next((ep for ep in listed
-                     if ep.get("research_pillar") in ("engineering", "nature", "science",
-                                                      "history", "space", "surprising_facts")
-                     and records[ep["id"]][0] is None), None)
+    # Urgent owner-requested genuine 4K debut: previous exact source+voice
+    # was reserved but died before any render at FFmpeg apt bootstrap.
+    # Do not strand this private untouched clip behind unrelated drafts.
+    # GitHub must prove the exact old install step FAILED before retry.
+    selected = None
+    for ep in listed:
+        if ep.get("id") != "moto-native-4k-control-20261106":
+            continue
+        _, receipt = records[ep["id"]]
+        if (isinstance(receipt, dict)
+                and receipt.get("state") == "reserved"
+                and str(receipt.get("run_id")) == "42272301505"
+                and receipt.get("attempt_count") == 1
+                and unpublished(ep["id"])):
+            current_fp = preview_fingerprint(ep)
+            if eligible_abandoned_bootstrap_retry(
+                    ep, receipt, current_fp,
+                    verified_failed_preflight(receipt["run_id"])):
+                selected = ep
+                print("FIRST_GENUINE_4K_RETRY_GITHUB_VERIFIED",
+                      ep["id"],flush=True)
+                break
+    if selected is None:
+        selected = next((ep for ep in listed
+                         if ep.get("research_pillar") in ("engineering", "nature", "science",
+                                                          "history", "space", "surprising_facts")
+                         and records[ep["id"]][0] is None), None)
     # Genuine NEW originals have priority over recycling older private
     # revisions. A newly sourced story with hash-pinned DEEP must not wait
     # behind old clips repeatedly submitted for visual fixes.

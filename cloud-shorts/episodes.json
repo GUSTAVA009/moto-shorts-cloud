@@ -20992,7 +20992,11 @@
             "motorcycle",
             "offroad",
             "action"
-          ]
+          ],
+          "native_4k_sha256": "7244d8f3124c77b3f6baa469c43f4ed6f4bf41502a035cd87ddbd5d4e28bdfb9",
+          "native_4k_bytes": 72024309,
+          "native_4k_width": 2160,
+          "native_4k_height": 3840
         },
         {
           "key": "clip_1",
@@ -21006,7 +21010,11 @@
             "motorcycle",
             "motocross",
             "stunt"
-          ]
+          ],
+          "native_4k_sha256": "c2e1d6d4be0e000e9ab36392a522cc931eaa3c62e7179b2afafba9e02c6ab26d",
+          "native_4k_bytes": 22123010,
+          "native_4k_width": 2160,
+          "native_4k_height": 3840
         }
       ],
       "shots": [
@@ -21063,6 +21071,21 @@
           2160,
           3840
         ]
+      },
+      "source_revision_requested": true,
+      "source_revision_reason": "native_4k_full_download_verified",
+      "source_revision_proof": {
+        "prior_run_id": "42273013206",
+        "prior_failure": "NATIVE_2K_SOURCE_REQUIRED",
+        "prior_resolution": [
+          448,
+          800
+        ],
+        "full_res_sha256": [
+          "7244d8f3124c77b3f6baa469c43f4ed6f4bf41502a035cd87ddbd5d4e28bdfb9",
+          "c2e1d6d4be0e000e9ab36392a522cc931eaa3c62e7179b2afafba9e02c6ab26d"
+        ],
+        "owner_verified_source": true
       }
     }
   ]

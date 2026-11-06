@@ -176,6 +176,32 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
         repeated["footage"][1]["author"]=repeated["footage"][0]["author"]
         self.assertFalse(review.eligible_private_episode(repeated,receipt))
 
+    def test_verified_real_deep_4k_mp4_enters_independent_review_not_voice_bypass(self):
+        from pathlib import Path
+        approved=next(x for x in json.loads(
+            (Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))["episodes"]
+            if x["id"]=="moto-native-4k-control-20261106")
+        voice_sha=approved["deep_audio"]["source_audio_sha256"]
+        receipt={"id":approved["id"],"state":"preview_ready",
+                 "run_id":"42273013206","deep_source_sha256":voice_sha,
+                 "voice_qa_passed":True,"mixed_audio_qa_passed":True}
+        self.assertTrue(review.has_approved_original_deep(approved))
+        self.assertTrue(review.eligible_private_episode(approved,receipt))
+        self.assertFalse(review.eligible_private_episode(
+            approved,dict(receipt,deep_source_sha256="0"*64)))
+        self.assertFalse(review.eligible_private_episode(
+            approved,dict(receipt,voice_qa_passed=False)))
+        self.assertFalse(review.eligible_private_episode(
+            approved,dict(receipt,mixed_audio_qa_passed=False)))
+        self.assertFalse(review.eligible_private_episode(
+            dict(approved,auto_publish=True),receipt))
+        self.assertFalse(review.eligible_private_episode(
+            dict(approved,voice_profile="unapproved"),receipt))
+        self.assertFalse(review.eligible_private_episode(
+            dict(approved,voice_engine="unapproved"),receipt))
+        self.assertFalse(review.eligible_private_episode(
+            dict(approved,visual_review_failed=True),receipt))
+
     def test_same_owner_two_different_ltx_original_shots_are_reviewable(self):
         ep = self.make_episode()
         r = self.make_receipt()
