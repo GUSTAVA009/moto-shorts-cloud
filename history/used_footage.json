@@ -2112,6 +2112,16 @@
       "episode": "moto-roadtrip-e6c6548242d5",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/45d0f283f3f96cfea433dc9c42467a882791e1dce29efc14eeed1ed2257b0c0b.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-b141d71b4bf689716b020ee595f46eb9128b3ea96b1e80b2ede7e64eaceb2eed": {
+      "episode": "moto-training-4ffea32594c2",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/b141d71b4bf689716b020ee595f46eb9128b3ea96b1e80b2ede7e64eaceb2eed.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-cd831a8a9abe1607bf81122e7b86d09308af94abd5af7d926c066fd667844222": {
+      "episode": "moto-training-4ffea32594c2",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/cd831a8a9abe1607bf81122e7b86d09308af94abd5af7d926c066fd667844222.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3416,6 +3426,13 @@
       "people": "touring-travelers-e6c65",
       "story": "scenic-country-road-e6c65",
       "visual": "three-clips-e6c65"
+    },
+    "moto-training-4ffea32594c2": {
+      "environment": "practice-circuit-4ffea",
+      "bike": "training-motorcycle",
+      "people": "track-learners-4ffea",
+      "story": "closed-course-practice-4ffea",
+      "visual": "three-clips-4ffea"
     }
   }
 }
