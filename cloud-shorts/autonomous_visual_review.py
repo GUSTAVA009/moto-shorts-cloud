@@ -409,6 +409,20 @@ def reject_once(episode, run_id, reason):
     print("AUTONOMOUS_EDITORIAL_REJECTED",slug,reason,flush=True)
 
 
+def dispatch_approved_direct_youtube(episode_id, get=api):
+    """Wake the owner's official API queue only AFTER actual MP4 frame approval.
+
+    The direct workflow separately verifies pinned OAuth, full ASR, SHA,
+    scheduled slot and duplicate ledger. It is opt-in and cannot send an
+    unapproved or previously published video. NEVER dispatch Buffer here.
+    """
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]{2,46}",str(episode_id or "")):
+        raise ValueError("INVALID_REVIEWED_MOTORCYCLE_EPISODE")
+    get("actions/workflows/youtube-direct-queue.yml/dispatches",
+        "POST", {"ref":"main"})
+    print("AUTONOMOUS_VERIFIED_DIRECT_QUEUE_DISPATCHED",episode_id,flush=True)
+
+
 def review_and_promote(episode, run_id, directory):
     if not has_original_cartoon_b(episode) or episode.get("auto_publish") is not False:
         raise RuntimeError("AUTO_FRAME_REVIEW_NOT_PRIVATE_CARTOON_B")
@@ -479,8 +493,8 @@ def review_and_promote(episode, run_id, directory):
         ).decode("ascii")})
     print("AUTONOMOUS_FRAME_REVIEW_PASSED",episode["id"],
           sha,"independent model",provider,flush=True)
-    api("actions/workflows/buffer-backlog.yml/dispatches","POST",{"ref":"main"})
-    print("AUTONOMOUS_VERIFIED_BUFFER_DISPATCHED",episode["id"],flush=True)
+    dispatch_approved_direct_youtube(episode["id"])
+
     return True
 
 
