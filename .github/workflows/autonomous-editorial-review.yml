@@ -1,13 +1,13 @@
 # Independent visual review of ORIGINAL real MP4s. No manual per-video toggles.
 # Never approves source-only drafts, expired artifacts or mismatched footage.
-name: GUSTAVA - Autonomous Frame Reviewed Shorts to Buffer
+name: GUSTAVA - Autonomous Frame Reviewed Shorts to Direct YouTube
 on:
   workflow_dispatch:
   workflow_run:
     workflows: ['Shorts Factory - Three Unique Cloud Previews Daily']
     types: [completed]
   schedule:
-    - cron: '12,42 * * * *'
+    - cron: '12 */3 * * *' # Fallback only; successful renders dispatch review immediately
   push:
     branches: [main]
     paths:
@@ -27,7 +27,7 @@ jobs:
   independent-frame-review:
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 42
+    timeout-minutes: 19
     steps:
       - uses: actions/checkout@v4
         with:
@@ -42,9 +42,15 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: python3 cloud-shorts/autonomous_visual_review.py select --output "$GITHUB_OUTPUT"
+      - name: Reuse pinned independent vision model across hosted runs
+        if: steps.pick.outputs.has_job == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: gustava-ollama-qwen3.5-4b-v1
       - name: Install independent keyless image-capable reviewer on isolated runner
         if: steps.pick.outputs.has_job == 'true'
-        timeout-minutes: 26
+        timeout-minutes: 10
         env:
           OLLAMA_HOST: 127.0.0.1:11434
         run: |
@@ -97,9 +103,8 @@ jobs:
           EPISODE: ${{ steps.pick.outputs.episode }}
           RENDER_ID: ${{ steps.pick.outputs.render_id }}
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg >/dev/null
-          python3 cloud-shorts/autonomous_visual_review.py review \
+          command -v ffmpeg >/dev/null || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null)
+          timeout --signal=TERM --kill-after=15s 420s python3 cloud-shorts/autonomous_visual_review.py review \
             --episode "$EPISODE" --run-id "$RENDER_ID" --directory staged
       - name: Record unattended review stage truthfully
         if: always()
@@ -109,5 +114,5 @@ jobs:
           if [ "$HAS_JOB" = 'true' ]; then
             echo 'Actual MP4 inspected or review blocked; automatic public release requires passed frame, voice, visual and exact SHA checks.' >> "$GITHUB_STEP_SUMMARY"
           else
-            echo 'No eligible new unreviewed original MP4. No Buffer post was created.' >> "$GITHUB_STEP_SUMMARY"
+            echo 'No eligible new unreviewed original MP4. No direct YouTube post was created.' >> "$GITHUB_STEP_SUMMARY"
           fi
