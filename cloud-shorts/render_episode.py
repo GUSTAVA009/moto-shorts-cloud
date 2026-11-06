@@ -217,8 +217,8 @@ def stream_pexels_excerpt(item, destination, required_seconds, ffmpeg="ffmpeg"):
         "-user_agent", "Mozilla/5.0 GUSTAVA-Motorcycle-Shorts/1.0",
         "-i", item["url"], "-map", "0:v:0", "-an",
         "-t", f"{duration:.2f}",
-        "-vf", "fps=30,scale=1280:1280:force_original_aspect_ratio=decrease:force_divisible_by=2",
-        "-c:v", "libx264", "-preset", "veryfast", "-crf", "25",
+        "-vf", "fps=30",  # preserve original high-resolution pixels; NEVER 1280-downscale
+        "-c:v", "libx264", "-preset", "medium", "-crf", "17",
         "-pix_fmt", "yuv420p", "-movflags", "+faststart",
         "-f", "mp4", str(destination)
     ]
