@@ -141,12 +141,16 @@ def main():
     parser.add_argument("--privacy", choices=["private", "unlisted", "public"], default="private")
     parser.add_argument("--receipt", type=Path, default=Path("upload_receipt.json"))
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--check-schedule", action="store_true",
+                        help="Verify live YouTube queue and OAuth without uploading")
     parser.add_argument("--schedule-next", action="store_true",
                         help="Private-first upload, scheduled from real YouTube inventory")
     args = parser.parse_args()
     body, sha = preflight(args.video, args.metadata, args.privacy)
     if args.schedule_next and args.privacy != "private":
         raise ValueError("Scheduled videos must remain private until publishAt")
+    if args.check_schedule and not args.schedule_next:
+        raise ValueError("Schedule check requires --schedule-next")
     print("VALIDATED", args.video.name, sha[:14], body["snippet"]["title"])
     print("DESCRIPTION_LINKS", bool(re.search(r"https?://|www\.", body["snippet"]["description"])))
     if args.dry_run:
@@ -155,6 +159,13 @@ def main():
     approved_metadata = json.loads(args.metadata.read_text(encoding="utf-8-sig"))
     if approved_metadata.get("reviewed_for_direct_youtube_upload") is not True:
         raise RuntimeError("LIVE_UPLOAD_REQUIRES_INDEPENDENT_MP4_QA_PROOF")
+    if args.check_schedule:
+        from direct_schedule import next_verified_slot
+        api = authenticated_api()
+        verify_channel(api)
+        slot = next_verified_slot(api)
+        print("YOUTUBE_QUEUE_HAS_ROOM_FOR_ONE_VERIFIED_SLOT", slot)
+        return
     # Prevent known duplicates in this invocation's persisted workspace.
     channel = required_env("YOUTUBE_EXPECTED_CHANNEL_ID")
     if args.receipt.exists():
