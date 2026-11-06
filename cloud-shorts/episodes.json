@@ -20967,12 +20967,12 @@
       "voice_engine": "aidocmaker_deep",
       "voice_profile": "gustava_create_audio_deep_v1",
       "visual_director_version": 3,
-      "title": "Мотокросс: контроль важнее скорости #shorts",
-      "narration": "На рыхлой трассе мотоцикл может потерять сцепление за долю секунды. Поэтому райдеры действуют плавно и смотрят вперёд. А прыжок начинается не в воздухе, а с подготовки на треке. Скорость без контроля ничего не стоит.",
-      "description": "Рыхлый грунт и подготовка к прыжку требуют разного мастерства, но одного принципа: контролируй мотоцикл, а не гонись за эффектным кадром. Независимые кадры двух авторов, не одно событие.\n\n#мотокросс #мото #shorts",
-      "caption_start": "СЦЕПЛЕНИЕ ТРЕБУЕТ ВНИМАНИЯ",
-      "caption_middle": "ПРЫЖОК НАЧИНАЕТСЯ ДО ВЗЛЁТА",
-      "caption_end": "СКОРОСТЬ НЕ ЗАМЕНЯЕТ КОНТРОЛЬ",
+      "title": "Мотокросс: грязная трасса и переворот в воздухе #shorts",
+      "narration": "По грунтовой дороге едут два мотоцикла. Они проезжают лужу и поднимают брызги. А дальше прыжок с трамплина. Мотоцикл взлетает и делает переворот в воздухе. Смотри, как это выглядит!",
+      "description": "По грунтовой трассе мотоциклы проходят лужу. На другой площадке райдер выполняет переворот в воздухе. Два независимых видео, без выдуманной общей истории.\n\n#мотокросс #мото #shorts",
+      "caption_start": "ДВА МОТОЦИКЛА НА ГРУНТЕ",
+      "caption_middle": "ПРЫЖОК С ТРАМПЛИНА",
+      "caption_end": "ПЕРЕВОРОТ В ВОЗДУХЕ",
       "max_duration_seconds": 18.5,
       "opening_trim_seconds": 0,
       "music_style": "action",
@@ -21055,13 +21055,13 @@
       "deep_audio": {
         "provider": "aidocmaker.com",
         "voice_id": "deep",
-        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/183f2362-8f1e-49f7-8e8d-58ffe4cdaae7.mp3",
-        "transcript_sha256": "8711ec80a63438f0355fdf9e0ca23185b93be4e86db47e85b9def534fc1a27a8",
-        "source_audio_sha256": "10624b0af55a9c4804cc622d6ca3e6a585e2d23250489373b94c92ce6be96abf",
-        "context_id": "26115d22dcad4c2b90a07e70bb3c8b9b",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/a2102c2d-d585-463f-a193-4c56dea4b9a7.mp3",
+        "source_audio_sha256": "84411b636109859ca471c14c40bdc9e1b3e64e19505c6d660cdb1c8ce2ad4fb1",
+        "transcript_sha256": "f1dc654517237ec5a7741307bf43a55e746d856e40d45721633bbe93ecb2d129",
+        "context_id": "5f3be9d89d5b459b8f0a20442847eb53",
         "licence_mode": "public_provider_attribution"
       },
-      "release_priority": "first_native_4k_moto_approved",
+      "release_priority": "first_native_4k_revised_visuals",
       "source_resolution_assertions": {
         "clip_0": [
           2160,
@@ -21086,6 +21086,41 @@
           "c2e1d6d4be0e000e9ab36392a522cc931eaa3c62e7179b2afafba9e02c6ab26d"
         ],
         "owner_verified_source": true
+      },
+      "align_middle_caption_to_second_scene": true,
+      "voice_revision_requested": true,
+      "voice_revision_reason": "verified_frame_model_rejected_prior_abstract_narration",
+      "voice_revision_evidence": {
+        "prior_run_id": "42274119556",
+        "prior_mp4_sha256": "a8c8658f028defa3feef2279bc0ad05125f1c09165079e8da3df6cb031907ed0",
+        "prior_deep_audio_sha256": "10624b0af55a9c4804cc622d6ca3e6a585e2d23250489373b94c92ce6be96abf",
+        "new_deep_audio_sha256": "84411b636109859ca471c14c40bdc9e1b3e64e19505c6d660cdb1c8ce2ad4fb1",
+        "prior_asr_and_mixed_coverage": 1.0,
+        "new_voice_offline_asr_coverage": 1.0,
+        "source_ids_unchanged": [
+          "5803634",
+          "34110751"
+        ],
+        "previous_review_result": "FRAME_MODEL_REJECTED_ACTION_OR_NARRATION",
+        "rejection_run_id": "42275342843",
+        "new_editorial_policy": "only directly observed dirt-ride, water-splash, airborne motorbike action",
+        "no_publication_of_prior_video": true
+      },
+      "visual_revision_reason": "spoken_scene_caption_mismatch",
+      "visual_revision_evidence": {
+        "prior_run_id": "42274119556",
+        "prior_mp4_sha256": "a8c8658f028defa3feef2279bc0ad05125f1c09165079e8da3df6cb031907ed0",
+        "old_caption_start_seconds": 3.9,
+        "old_second_scene_start_seconds": 7.789,
+        "new_caption_alignment": "true_captured_second_scene_cut",
+        "prior_independent_frame_rejection": "FRAME_MODEL_REJECTED_ACTION_OR_NARRATION",
+        "source_licenses_unchanged": true,
+        "source_sha256s": [
+          "7244d8f3124c77b3f6baa469c43f4ed6f4bf41502a035cd87ddbd5d4e28bdfb9",
+          "c2e1d6d4be0e000e9ab36392a522cc931eaa3c62e7179b2afafba9e02c6ab26d"
+        ],
+        "prior_first_and_final_asr_coverage": 1.0,
+        "no_reuse_of_rejected_mp4": true
       }
     },
     {

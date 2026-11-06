@@ -4,31 +4,75 @@ import preview_queue as pq
 
 
 class TestPreviewQueue(unittest.TestCase):
+    def test_exact_2k_independent_rejection_requires_real_revised_deep_and_shots(self):
+        import json
+        from pathlib import Path
+        ep=next(e for e in json.loads(
+            (Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))["episodes"]
+            if e["id"]=="moto-native-4k-control-20261106")
+        old={
+            "id":ep["id"],"state":"preview_ready","run_id":"42274119556",
+            "attempt_count":2,
+            "preview_fingerprint":"dcd28ed8a9fdf67d00a13ec41b18cb1e7cbffe8bd9b1133f14e1186d4d70bc24",
+            "deep_source_sha256":"10624b0af55a9c4804cc622d6ca3e6a585e2d23250489373b94c92ce6be96abf",
+            "voice_qa_passed":True,"mixed_audio_qa_passed":True,
+        }
+        rejected={
+            "episode":ep["id"],"run_id":"42274119556",
+            "status":"needs_new_verified_visuals",
+            "reason":"FRAME_MODEL_REJECTED_ACTION_OR_NARRATION",
+        }
+        fp=pq.preview_fingerprint(ep)
+        f=pq.eligible_verified_native4k_frame_repair
+        self.assertTrue(f(ep,old,fp,rejected))
+        self.assertTrue(pq.eligible_retry(ep,old,fp))
+        self.assertFalse(f(ep,old,fp,dict(rejected,reason="approved")))
+        self.assertFalse(f(ep,old,fp,dict(rejected,run_id="false")))
+        self.assertFalse(f(ep,dict(old,attempt_count=3),fp,rejected))
+        self.assertFalse(f(ep,dict(old,voice_qa_passed=False),fp,rejected))
+        self.assertFalse(f(ep,old,old["preview_fingerprint"],rejected))
+        self.assertFalse(f(dict(ep,auto_publish=True),old,fp,rejected))
+        self.assertFalse(f(dict(ep,align_middle_caption_to_second_scene=False),old,fp,rejected))
+        self.assertFalse(f(dict(ep,deep_audio={
+            "source_audio_sha256":"0"*64}),old,fp,rejected))
+        self.assertFalse(f(dict(ep,footage=list(reversed(ep["footage"]))),
+                           old,fp,rejected))
+
+
     def test_one_verified_native4k_ffmpeg_install_failure_can_retry(self):
         import json
         from pathlib import Path
         episode=next(ep for ep in json.loads(
             (Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))["episodes"]
             if ep["id"]=="moto-native-4k-control-20261106")
+        # The original install-only recovery is immutable history. The
+        # current episode has a different real MP4, source-bound voice and
+        # video revision: it must NOT qualify for this old exception.
+        historical_sha="10624b0af55a9c4804cc622d6ca3e6a585e2d23250489373b94c92ce6be96abf"
+        historical=dict(
+            episode,release_priority="first_native_4k_moto_approved",
+            deep_audio=dict(episode["deep_audio"],
+                            source_audio_sha256=historical_sha))
         fp="verified-same-render-spec"
         receipt={
             "id":episode["id"],"state":"reserved",
             "run_id":"42272301505","attempt_count":1,
             "preview_fingerprint":fp,
-            "deep_source_sha256":episode["deep_audio"]["source_audio_sha256"],
+            "deep_source_sha256":historical_sha,
         }
         f=pq.eligible_verified_native4k_install_retry
-        self.assertTrue(f(episode,receipt,fp,True))
+        self.assertTrue(f(historical,receipt,fp,True))
+        self.assertFalse(f(episode,receipt,fp,True))
         for changed_ep,changed_receipt,changed_fp,verified in (
-            (episode,receipt,fp,False),
-            (episode,dict(receipt,run_id="42272575559"),fp,True),
-            (episode,dict(receipt,attempt_count=2),fp,True),
-            (episode,dict(receipt,state="preview_ready"),fp,True),
-            (episode,receipt,"other-render-fingerprint",True),
-            (dict(episode,auto_publish=True),receipt,fp,True),
-            (dict(episode,voice_engine="unapproved"),receipt,fp,True),
-            (dict(episode,deep_audio={"source_audio_sha256":"0"*64}),receipt,fp,True),
-            (dict(episode,footage=list(reversed(episode["footage"]))),receipt,fp,True),
+            (historical,receipt,fp,False),
+            (historical,dict(receipt,run_id="42272575559"),fp,True),
+            (historical,dict(receipt,attempt_count=2),fp,True),
+            (historical,dict(receipt,state="preview_ready"),fp,True),
+            (historical,receipt,"other-render-fingerprint",True),
+            (dict(historical,auto_publish=True),receipt,fp,True),
+            (dict(historical,voice_engine="unapproved"),receipt,fp,True),
+            (dict(historical,deep_audio={"source_audio_sha256":"0"*64}),receipt,fp,True),
+            (dict(historical,footage=list(reversed(episode["footage"]))),receipt,fp,True),
         ):
             self.assertFalse(f(changed_ep,changed_receipt,changed_fp,verified))
 
