@@ -108,6 +108,28 @@ jobs:
               raise SystemExit("Google OAuth secrets not yet installed: " + ", ".join(missing))
           print("OAuth secret presence checked; no values displayed")
           PY
+      - name: Install free official Google API client
+        run: python3 -m pip install --disable-pip-version-check google-api-python-client google-auth
+      - name: Verify LIVE OAuth and safe scheduling before reserving video
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+        run: |
+          set -euo pipefail
+          mode=(--check-auth)
+          if [[ "${{ inputs.schedule_next }}" == "true" ]]; then
+            if [[ "${{ inputs.privacy }}" != "private" ]]; then
+              echo "::error::Scheduling requires a private upload."
+              exit 1
+            fi
+            mode=(--schedule-next --check-schedule)
+          fi
+          python3 cloud-shorts/youtube_upload.py \
+            --video "staged/$EPISODE/$EPISODE.mp4" \
+            --metadata "staged/$EPISODE/reviewed-direct-metadata.json" \
+            --privacy "${{ inputs.privacy }}" "${mode[@]}"
       - name: Reserve video hash in durable GitHub upload ledger
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -119,22 +141,21 @@ jobs:
             --video "staged/$EPISODE/$EPISODE.mp4" \
             --channel "$YOUTUBE_EXPECTED_CHANNEL_ID" --episode "$EPISODE" \
             --output upload-guard-reservation.json
-      - name: Install free official Google API client
-        run: python3 -m pip install --disable-pip-version-check google-api-python-client google-auth
       - name: Upload to precisely authorized YouTube channel (OAuth)
         env:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
-          YOUTUBE_API_AUDITED: ${{ vars.YOUTUBE_API_AUDITED }}
         run: |
+          set -euo pipefail
+          mode=()
+          if [[ "${{ inputs.schedule_next }}" == "true" ]]; then mode=(--schedule-next); fi
           python3 cloud-shorts/youtube_upload.py \
             --video "staged/$EPISODE/$EPISODE.mp4" \
             --metadata "staged/$EPISODE/reviewed-direct-metadata.json" \
             --privacy "${{ inputs.privacy }}" \
-            --receipt youtube-upload-receipt.json \
-            ${{ inputs.schedule_next && '--schedule-next' || '' }}
+            --receipt youtube-upload-receipt.json "${mode[@]}"
       - name: Finalize durable upload receipt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
