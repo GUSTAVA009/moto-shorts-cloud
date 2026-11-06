@@ -19842,7 +19842,7 @@
     {
       "id": "moto-forest-c8d89922f6f9",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -19925,7 +19925,48 @@
         "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "25db9b94975f63be67e41ae41d6435c62b946b0b0a4531ccfdddefe6bbe048f8",
+      "reviewed_artifact_run_id": "42235576633",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-forest-c8d89922f6f9",
+        "render_run_id": "42235576633",
+        "mp4_sha256": "25db9b94975f63be67e41ae41d6435c62b946b0b0a4531ccfdddefe6bbe048f8",
+        "asset_fingerprint": "77435bd019f621189e3465a2f20a4274ce603acdf91dff6fbac4df808fd8e4bf",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-06T14:54:58.752996+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на мотоцикле движется по асфальтированной дороге в лесной зоне с густыми деревьями на фоне.",
+            "frames_sha256": [
+              "931431500fc6cbf3e253e0dd0ebd8bd68f5452029fee64cf7457d1014f9e47b0",
+              "113b04fd32df194220c030232a30acba31ff2c41d08c59968612a725a39cf37e",
+              "096e839ae485e83b25df990e8a7fd3822798d8d2d1c04613e9859d9c059ed3bf"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.92,
+            "observed": "Райдер на мотоцикле движется по городской дороге; видны другие автомобили и городская застройка на фоне.",
+            "frames_sha256": [
+              "76c2e9b3625e35b26873eac003e366d76d839c2a8ee190e1889a4c7a2290d0e1",
+              "dfb65b32f224f2944c436fe1d0d8fe73149337a16bb99581c0cd212478337916",
+              "ad54b639e55e81e4c833769588fbcb080f1d33a9fad37095a30b1119b49c082c"
+            ]
+          }
+        ]
+      }
     }
   ]
 }
