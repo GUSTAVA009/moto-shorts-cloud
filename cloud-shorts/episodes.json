@@ -17965,7 +17965,7 @@
     {
       "id": "moto-roadtrip-a0cc06670fba",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -18048,7 +18048,48 @@
         "description": "Подпишись, если любишь настоящие мотопутешествия."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "3cf50ec4361972e8344a03eade1860becb45461b60110225b70ee1ef16e759dc",
+      "reviewed_artifact_run_id": "42146798773",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-roadtrip-a0cc06670fba",
+        "render_run_id": "42146798773",
+        "mp4_sha256": "3cf50ec4361972e8344a03eade1860becb45461b60110225b70ee1ef16e759dc",
+        "asset_fingerprint": "501f3091ab91c678841a91f0dc30aac2dda43f9aea720e3e3448cb1d9370e585",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-06T02:23:26.622452+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на мотоцикле в воздухе над землей, колеса не касаются поверхности — подтвержден прыжок с трамплина.",
+            "frames_sha256": [
+              "515c01a306abf7b23c09e699a39ad3cea3af4177a497e14b62da7b789deb127b",
+              "c695eadf860d8af102cfa01c6d4fae8e01d719c6522bf93389f111cc74ea3204",
+              "998c81e85aa6047bc89869c59e76df25ffea134942236a55a529ca451fd1183b"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Райдер едет на мотоцикле по песчаной дороге, колеса в контакте с землей, движение подтверждено динамикой и позицией.",
+            "frames_sha256": [
+              "3cb830b114fa6ceddcf9b96396a8fe77201f25ad8806dfb60203d689f48b7291",
+              "30d7fe912b5f32c1024e9c7789dbeb2d3ac0a1ac0849744901944129f6e88e12",
+              "8f7cf24d30ab8c099d0fb935ce48371c6ae22c5f4d80b7499ad1492d61cae22f"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-training-fd7420d37b31",
