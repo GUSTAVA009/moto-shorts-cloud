@@ -1,0 +1,7 @@
+{
+  "episode": "moto-repair-d7d9d291ff83",
+  "run_id": "42264451498",
+  "reason": "FRAME_MODEL_REJECTED_ACTION_OR_NARRATION",
+  "status": "needs_new_verified_visuals",
+  "recorded_at": "2026-11-06T18:37:17.825769+00:00"
+}
