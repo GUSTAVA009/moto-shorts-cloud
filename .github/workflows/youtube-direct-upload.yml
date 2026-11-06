@@ -60,6 +60,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install caption-measurement dependency for global regression suite
+        run: python3 -m pip install --quiet --disable-pip-version-check Pillow
       - name: Validate uploader without any keys or uploads
         run: python3 -m unittest discover -s cloud-shorts -p 'test_*.py' -v
 
