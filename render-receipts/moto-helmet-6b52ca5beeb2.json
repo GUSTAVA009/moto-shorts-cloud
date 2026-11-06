@@ -1,0 +1,11 @@
+{
+  "id": "moto-helmet-6b52ca5beeb2",
+  "state": "reserved",
+  "run_id": "42147269979",
+  "attempt_count": 1,
+  "preview_fingerprint": "4acb7df6f4734fc63200bf90449075c41973333475c8210793f2f33f89741553",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-cartoon-b-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
