@@ -263,7 +263,12 @@ jobs:
               with urllib.request.urlopen(req, timeout=30) as response:
                   return json.load(response)
           raw=get("contents/cloud-shorts/episodes.json?ref=main")
-          catalog=json.loads(base64.b64decode(raw["content"]))
+          import sys
+          sys.path.insert(0,"cloud-shorts")
+          from github_catalog import decode_catalog
+          # GitHub omits Content above 1MB: never assume the reserve is empty.
+          # Resolve only the exact authenticated Git object SHA and verify bytes.
+          catalog=decode_catalog(raw,lambda sha:get("git/blobs/"+sha))
           tree=get("git/trees/render-ledger?recursive=1")
           if tree.get("truncated"):
               raise RuntimeError("Refill aborted: incomplete permanent receipt ledger")
@@ -340,7 +345,9 @@ jobs:
           from autofill_catalog import github
           from preview_batch_supply import pending_verified_previews
           raw=github("GET", "contents/cloud-shorts/episodes.json?ref=main")
-          catalog=json.loads(base64.b64decode(raw["content"]))
+          from github_catalog import decode_catalog
+          catalog=decode_catalog(
+              raw,lambda sha:github("GET","git/blobs/"+sha))
           tree=github("GET", "git/trees/render-ledger?recursive=1")
           if tree.get("truncated"):
               raise SystemExit("BATCH_SUPPLY_LEDGER_TRUNCATED: cannot safely dispatch")
