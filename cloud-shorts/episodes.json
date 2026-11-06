@@ -18921,7 +18921,7 @@
     {
       "id": "moto-repair-93c6fe48233f",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -19004,7 +19004,48 @@
         "description": "Поделись роликом с другом, который любит мотоциклы."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "a6318f7a43173f0e3d7577dfc0645aa91b100d3bfda1118660d39aa74fbb8bd1",
+      "reviewed_artifact_run_id": "42231792569",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-repair-93c6fe48233f",
+        "render_run_id": "42231792569",
+        "mp4_sha256": "a6318f7a43173f0e3d7577dfc0645aa91b100d3bfda1118660d39aa74fbb8bd1",
+        "asset_fingerprint": "4e03bd99c2a607b0f1293846400c7ca3746e34f9a4a0d02b5f0ea3ab3ce0a324",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-06T14:51:54.946515+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Байкер на красном мотоцикле едет по городской улице в трёх кадрах.",
+            "frames_sha256": [
+              "a06835bac3f76bde39022a7def971aece34cc35770505956570e9b36c677e9f7",
+              "3d5ab216f01216e0c02140904f2027757e19e0f2e7d1c79cb306a12c54d86f23",
+              "c15535a543d35bea910ba52a0370df9cb369e276103010c5a775147dccd1fdc0"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Байкер на белом мотоцикле едет по песчаной дороге в трёх кадрах.",
+            "frames_sha256": [
+              "d612553e5ce7216592da9455679f644f0594cfd5796e71dfb4921b319ec177b6",
+              "5d94e4c77c9270b9047f6d9eb2f5191018a788a5535a364ecafd3e69ca3b086f",
+              "774a44116949f3fd41fea4c39969e6611cde8d968315e26ea0ab902a03120647"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-mountain-0b392cd485fd",
