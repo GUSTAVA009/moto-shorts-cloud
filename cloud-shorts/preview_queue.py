@@ -602,10 +602,11 @@ def eligible_abandoned_owner_phonetic_retry(episode, receipt, new_fingerprint,
             or proof.get("prior_artifact_id") != 13525589657
             or proof.get("public_upload_permitted") is not False
             or proof.get("max_total_preview_attempts") != 2
-            or len(sources) != 2
-            or proof.get("unchanged_source_ids") != [source_id(x) for x in sources]):
+            or len(sources) != 2):
         return False
     try:
+        if proof.get("unchanged_source_ids") != [source_id(x) for x in sources]:
+            return False
         from source_story import require_filmable
         require_filmable({"narration": improved}, sources)
         from selfhosted_voice import CARTOON_B_REFERENCE_SHA
