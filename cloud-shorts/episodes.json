@@ -19402,7 +19402,7 @@
     {
       "id": "moto-vintage-23e924094fc0",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -19485,7 +19485,48 @@
         "description": "Поставь лайк, если тебе нравится эта мототема."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "9dd9207c6ecd114f3c5bb47650f67dd6c5723720bdc701f7159935c13ea7d43a",
+      "reviewed_artifact_run_id": "42233477729",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-vintage-23e924094fc0",
+        "render_run_id": "42233477729",
+        "mp4_sha256": "9dd9207c6ecd114f3c5bb47650f67dd6c5723720bdc701f7159935c13ea7d43a",
+        "asset_fingerprint": "ac2e6debf187a5eb1509b4bb152be6ad23b7cd1d461d3c94ce4e0b84cddb19ad",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-06T17:53:40.441347+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Байкер на белом спортивном мотоцикле едет по городской улице с движущимся фоном (автомобили, тротуар).",
+            "frames_sha256": [
+              "6392aefecaef2117b5b030319c3d51414eb6a42e43c0a42a282810e48efdfec2",
+              "269e8e38dafe9cf95395c70ea2a11899979278724423667e6a2dfcf47bcb216a",
+              "acc761433e335fb7be06fd47a732f3e9d816d5a57f2308967381b3cf2cf21e83"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Райдер на кроссовом мотоцикле проезжает по грязной и влажной дороге в лесу.",
+            "frames_sha256": [
+              "f2a1012a00bd4009aa22a7a16e152f3319c621dc56b96ff3e883ccc0f74eed82",
+              "5a6de6ee96e2d6104dd5c59e2bf46d60049d9fa204fda5198d28ceb9c8eb1794",
+              "592f2a2917ab4a21f81f630b1f60811cc2805cf171af303d01ab5e6b624e6c79"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-roadtrip-e6c6548242d5",
