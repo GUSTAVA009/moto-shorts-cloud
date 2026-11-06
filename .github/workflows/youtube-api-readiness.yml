@@ -20,7 +20,6 @@ jobs:
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
-          YOUTUBE_API_AUDITED: ${{ vars.YOUTUBE_API_AUDITED }}
         run: |
           python3 - <<'PY'
           import os
@@ -30,7 +29,6 @@ jobs:
           ]
           expected = os.getenv("YOUTUBE_EXPECTED_CHANNEL_ID", "")
           channel_ok = expected == "UCS0QCodPcFBTjMt4ioEWOUw"
-          audited = os.getenv("YOUTUBE_API_AUDITED", "").lower() == "true"
           lines = [
               "## Direct YouTube API publishing readiness (read-only)",
               "",
@@ -38,9 +36,8 @@ jobs:
               "",
               "- OAuth secrets: " + ("configured" if not missing else "missing " + ", ".join(missing)),
               "- Exact channel ID: " + ("verified" if channel_ok else "missing or mismatched"),
-              "- Official public-upload API compliance audit flag: " + ("declared complete (verify evidence)" if audited else "not declared; public uploads stay blocked"),
               "- Private upload readiness: " + ("configuration present (not token-tested)" if not missing and channel_ok else "blocked"),
-              "- Public upload readiness: " + ("requires real OAuth and audit verification" if audited and not missing and channel_ok else "blocked"),
+              "- Public upload readiness: " + ("configuration present; real OAuth, quota, and processing still unverified" if not missing and channel_ok else "blocked: OAuth/channel setup missing"),
               "- Existing Publora scheduled uploads are independent and MUST NOT be uploaded again via API.",
           ]
           with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf8") as fp:
@@ -48,5 +45,5 @@ jobs:
           print("MISSING_OAUTH_SECRET_NAMES:", ", ".join(missing) if missing else "none")
           print("TARGET_CHANNEL_MATCHED:", channel_ok)
           print("CHECKED: " + ("private-configuration-present" if not missing and channel_ok else "private-configuration-blocked"))
-          print("PUBLIC_API_UPLOAD: " + ("audit-flag-present" if audited else "blocked-pending-audit"))
+          print("PUBLIC_API_UPLOAD: " + ("configuration-present-not-token-tested" if not missing and channel_ok else "blocked-missing-setup"))
           PY

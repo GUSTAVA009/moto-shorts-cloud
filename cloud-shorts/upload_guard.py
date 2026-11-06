@@ -22,6 +22,7 @@ import urllib.request
 LEDGER_BRANCH = "upload-ledger"
 API_BASE = "https://api.github.com"
 CHANNEL_RE = re.compile(r"^UC[-_A-Za-z0-9]{22}$")
+EPISODE_RE = re.compile(r"^[a-z0-9][a-z0-9_-]{0,99}$")
 
 
 def file_hash(path):
@@ -40,11 +41,18 @@ def ledger_path(channel_id, video_sha):
     return f"upload-receipts/{channel_id}/{video_sha}.json"
 
 
-def make_reservation(channel_id, video_sha, run_id):
+def episode_path(episode_id):
+    if not EPISODE_RE.fullmatch(str(episode_id or "")):
+        raise ValueError("Invalid episode slug")
+    return "upload-receipts/by-episode/" + episode_id + ".json"
+
+
+def make_reservation(channel_id, video_sha, run_id, episode=None):
     if not str(run_id).isdigit():
         raise ValueError("Missing/invalid GitHub run id")
     return {
         "status": "reserved", "channel_id": channel_id,
+        "episode": episode,
         "sha256": video_sha, "run_id": str(run_id),
         "warning": "Do not retry if upload outcome is uncertain; reconcile with YouTube Studio."
     }
@@ -116,8 +124,11 @@ def put_entry(path, obj, message, previous_sha=None):
         ) from None
 
 
-def reserve(video, channel, result_path):
+def reserve(video, channel, result_path, episode=None):
     sha = file_hash(video)
+    episode_key = episode_path(episode) if episode else None
+    if episode_key and get_entry(episode_key):
+        raise RuntimeError("EPISODE_ALREADY_RESERVED: never upload the same story twice")
     path = ledger_path(channel, sha)
     existing = get_entry(path)
     if existing:
@@ -126,8 +137,12 @@ def reserve(video, channel, result_path):
             "Check upload-ledger branch before retrying."
         )
     run_id = os.environ.get("GITHUB_RUN_ID", "")
-    obj = make_reservation(channel, sha, run_id)
+    obj = make_reservation(channel, sha, run_id, episode=episode)
     put_entry(path, obj, "Reserve YouTube upload " + sha[:14])
+    if episode_key:
+        # If this second write fails, the immutable hash reservation still
+        # prevents a possibly duplicate upload. Reconcile manually.
+        put_entry(episode_key, obj, "Reserve exact episode " + episode)
     result = {"path": path, **obj}
     Path(result_path).write_text(json.dumps(result, indent=2), encoding="utf8")
     print("UPLOAD_RESERVED", sha[:14], channel, "run", run_id)
@@ -146,12 +161,27 @@ def finish(reservation_path, receipt_path):
         raise RuntimeError("Reservation state changed; manual review required")
     stored.update({
         "status": "uploaded", "video_id": video_id,
+        "scheduled_at": receipt.get("scheduled_at"),
         "youtube_url": "https://www.youtube.com/watch?v=" + video_id,
         "privacy_requested": receipt.get("privacy_requested", "private"),
     })
     put_entry(reservation["path"], stored,
               "Confirm YouTube upload " + video_id,
               previous_sha=current["sha"])
+    episode = reservation.get("episode")
+    if episode:
+        ep_path = episode_path(episode)
+        original = get_entry(ep_path)
+        if not original:
+            raise RuntimeError("EPISODE_RESERVATION_MISSING: do not retry YouTube upload")
+        episode_snapshot = json.loads(base64.b64decode(original["content"]))
+        if (episode_snapshot.get("run_id") != reservation.get("run_id") or
+                episode_snapshot.get("sha256") != reservation.get("sha256") or
+                episode_snapshot.get("status") != "reserved"):
+            raise RuntimeError("EPISODE_LEDGER_CONFLICT")
+        episode_snapshot.update(stored)
+        put_entry(ep_path, episode_snapshot, "Confirm episode " + episode,
+                  previous_sha=original["sha"])
     print("UPLOAD_CONFIRMED", stored["youtube_url"])
 
 
@@ -162,13 +192,14 @@ if __name__ == "__main__":
     a.add_argument("--video", required=True, type=Path)
     a.add_argument("--channel", required=True)
     a.add_argument("--output", required=True, type=Path)
+    a.add_argument("--episode", help="Immutable approved episode ID")
     b = sub.add_parser("finish")
     b.add_argument("--reservation", required=True, type=Path)
     b.add_argument("--receipt", required=True, type=Path)
     args = p.parse_args()
     try:
         if args.mode == "reserve":
-            reserve(args.video, args.channel, args.output)
+            reserve(args.video, args.channel, args.output, args.episode)
         else:
             finish(args.reservation, args.receipt)
     except Exception as exc:

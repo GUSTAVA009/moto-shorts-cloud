@@ -9,6 +9,12 @@ on:
       - cloud-shorts/oauth_bootstrap.py
       - cloud-shorts/upload_guard.py
       - cloud-shorts/test_upload_guard.py
+      - cloud-shorts/direct_schedule.py
+      - cloud-shorts/direct_upload_ready.py
+      - cloud-shorts/direct_queue_select.py
+      - cloud-shorts/test_direct_schedule.py
+      - cloud-shorts/test_direct_upload_ready.py
+      - cloud-shorts/test_direct_queue_select.py
       - .github/workflows/youtube-direct-upload.yml
   workflow_dispatch:
     inputs:
@@ -17,18 +23,22 @@ on:
         required: true
         type: string
       episode:
-        description: "Select exactly the reviewed episode"
+        description: "Exact catalog episode ID; QA gate validates it"
         required: true
-        type: choice
-        options: [jump-second-01, forest-group-02]
+        type: string
       artifact_kind:
         description: "Which cloud preview workflow produced the MP4?"
         required: true
         type: choice
         default: new
         options: [new, daily]
+      schedule_next:
+        description: "Schedule 90+ minutes ahead, max 15/day, only with privacy=private"
+        required: true
+        type: boolean
+        default: false
       privacy:
-        description: "New YouTube API apps without audit are restricted to private"
+        description: "YouTube visibility (official API; subject to YouTube policies)"
         required: true
         default: private
         type: choice
@@ -73,20 +83,22 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ inputs.video_run_id }}
           github-token: ${{ github.token }}
-      - name: Validate final file and clean YouTube description, without Google access
+      - name: Independently validate approved episode, original footage, voice and MP4
+        env:
+          GUSTAVA_ORIGINAL_VOICE_APPROVED: ${{ vars.GUSTAVA_ORIGINAL_VOICE_APPROVED }}
+          GUSTAVA_VOICE_REFERENCE_SHA256: ${{ vars.GUSTAVA_VOICE_REFERENCE_SHA256 }}
         run: |
+          python3 cloud-shorts/direct_upload_ready.py --episode "$EPISODE" \
+            --staged "staged/$EPISODE" --output "staged/$EPISODE/reviewed-direct-metadata.json"
           python3 cloud-shorts/youtube_upload.py \
             --video "staged/$EPISODE/$EPISODE.mp4" \
-            --metadata "staged/$EPISODE/publication.json" \
-            --privacy "${{ inputs.privacy }}" \
-            --dry-run
-      - name: Validate OAuth setup and audit before reserving an upload
+            --metadata "staged/$EPISODE/reviewed-direct-metadata.json" \
+            --privacy "${{ inputs.privacy }}" --dry-run
+      - name: Validate OAuth setup before reserving an upload
         env:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
-          YOUTUBE_API_AUDITED: ${{ vars.YOUTUBE_API_AUDITED }}
-          REQUESTED_PRIVACY: ${{ inputs.privacy }}
         run: |
           python3 - <<'PY'
           import os
@@ -94,10 +106,30 @@ jobs:
           missing = [key for key in required if not os.environ.get(key)]
           if missing:
               raise SystemExit("Google OAuth secrets not yet installed: " + ", ".join(missing))
-          if os.environ["REQUESTED_PRIVACY"] != "private" and os.environ.get("YOUTUBE_API_AUDITED", "").lower() != "true":
-              raise SystemExit("Google API project not audited. Only private uploads are enabled.")
-          print("OAuth secret presence and privacy gate checked; no values displayed")
+          print("OAuth secret presence checked; no values displayed")
           PY
+      - name: Install free official Google API client
+        run: python3 -m pip install --disable-pip-version-check google-api-python-client google-auth
+      - name: Verify LIVE OAuth and safe scheduling before reserving video
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+        run: |
+          set -euo pipefail
+          mode=(--check-auth)
+          if [[ "${{ inputs.schedule_next }}" == "true" ]]; then
+            if [[ "${{ inputs.privacy }}" != "private" ]]; then
+              echo "::error::Scheduling requires a private upload."
+              exit 1
+            fi
+            mode=(--schedule-next --check-schedule)
+          fi
+          python3 cloud-shorts/youtube_upload.py \
+            --video "staged/$EPISODE/$EPISODE.mp4" \
+            --metadata "staged/$EPISODE/reviewed-direct-metadata.json" \
+            --privacy "${{ inputs.privacy }}" "${mode[@]}"
       - name: Reserve video hash in durable GitHub upload ledger
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -107,23 +139,23 @@ jobs:
         run: |
           python3 cloud-shorts/upload_guard.py reserve \
             --video "staged/$EPISODE/$EPISODE.mp4" \
-            --channel "$YOUTUBE_EXPECTED_CHANNEL_ID" \
+            --channel "$YOUTUBE_EXPECTED_CHANNEL_ID" --episode "$EPISODE" \
             --output upload-guard-reservation.json
-      - name: Install free official Google API client
-        run: python3 -m pip install --disable-pip-version-check google-api-python-client google-auth
       - name: Upload to precisely authorized YouTube channel (OAuth)
         env:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
           YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
-          YOUTUBE_API_AUDITED: ${{ vars.YOUTUBE_API_AUDITED }}
         run: |
+          set -euo pipefail
+          mode=()
+          if [[ "${{ inputs.schedule_next }}" == "true" ]]; then mode=(--schedule-next); fi
           python3 cloud-shorts/youtube_upload.py \
             --video "staged/$EPISODE/$EPISODE.mp4" \
-            --metadata "staged/$EPISODE/publication.json" \
+            --metadata "staged/$EPISODE/reviewed-direct-metadata.json" \
             --privacy "${{ inputs.privacy }}" \
-            --receipt youtube-upload-receipt.json
+            --receipt youtube-upload-receipt.json "${mode[@]}"
       - name: Finalize durable upload receipt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

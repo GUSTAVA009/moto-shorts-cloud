@@ -2,7 +2,7 @@
 """Upload reviewed Shorts through the official YouTube Data API, not Publora.
 
 Secrets belong in GitHub Actions secrets, never this repository.
-Projects without a YouTube API audit may only upload private videos.
+Public and scheduled uploads follow YouTube's current Data API policies.
 """
 from __future__ import annotations
 import argparse
@@ -13,6 +13,7 @@ from pathlib import Path
 import re
 import sys
 import time
+from datetime import datetime, timezone
 
 SCOPES = [
     "https://www.googleapis.com/auth/youtube.upload",
@@ -55,7 +56,7 @@ def build_body(metadata, privacy):
     tags = metadata.get("tags") or ["мото", "shorts"]
     if not isinstance(tags, list) or not all(isinstance(x, str) for x in tags):
         raise ValueError("Tags must be strings")
-    return {
+    body = {
         "snippet": {
             "title": title,
             "description": description,
@@ -65,6 +66,11 @@ def build_body(metadata, privacy):
         },
         "status": {"privacyStatus": privacy, "selfDeclaredMadeForKids": False},
     }
+    if "contains_synthetic_media" in metadata:
+        if type(metadata["contains_synthetic_media"]) is not bool:
+            raise ValueError("Synthetic media disclosure must be boolean")
+        body["status"]["containsSyntheticMedia"] = metadata["contains_synthetic_media"]
+    return body
 
 def preflight(video, metadata, privacy):
     if not video.is_file() or video.suffix.lower() != ".mp4":
@@ -135,15 +141,38 @@ def main():
     parser.add_argument("--privacy", choices=["private", "unlisted", "public"], default="private")
     parser.add_argument("--receipt", type=Path, default=Path("upload_receipt.json"))
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--check-auth", action="store_true",
+                        help="Check OAuth matches pinned channel, without upload")
+    parser.add_argument("--check-schedule", action="store_true",
+                        help="Verify live YouTube queue and OAuth without uploading")
+    parser.add_argument("--schedule-next", action="store_true",
+                        help="Private-first upload, scheduled from real YouTube inventory")
     args = parser.parse_args()
     body, sha = preflight(args.video, args.metadata, args.privacy)
+    if args.schedule_next and args.privacy != "private":
+        raise ValueError("Scheduled videos must remain private until publishAt")
+    if args.check_schedule and not args.schedule_next:
+        raise ValueError("Schedule check requires --schedule-next")
     print("VALIDATED", args.video.name, sha[:14], body["snippet"]["title"])
     print("DESCRIPTION_LINKS", bool(re.search(r"https?://|www\.", body["snippet"]["description"])))
     if args.dry_run:
         print("DRY_RUN_OK; no credentials needed; nothing uploaded")
         return
-    if args.privacy != "private" and os.environ.get("YOUTUBE_API_AUDITED", "").lower() != "true":
-        raise RuntimeError("YouTube API audit not confirmed; only private uploads allowed")
+    approved_metadata = json.loads(args.metadata.read_text(encoding="utf-8-sig"))
+    if approved_metadata.get("reviewed_for_direct_youtube_upload") is not True:
+        raise RuntimeError("LIVE_UPLOAD_REQUIRES_INDEPENDENT_MP4_QA_PROOF")
+    if args.check_auth:
+        api = authenticated_api()
+        verify_channel(api)
+        print("YOUTUBE_OAUTH_PINNED_CHANNEL_VERIFIED_NO_UPLOAD")
+        return
+    if args.check_schedule:
+        from direct_schedule import next_verified_slot
+        api = authenticated_api()
+        verify_channel(api)
+        slot = next_verified_slot(api)
+        print("YOUTUBE_QUEUE_HAS_ROOM_FOR_ONE_VERIFIED_SLOT", slot)
+        return
     # Prevent known duplicates in this invocation's persisted workspace.
     channel = required_env("YOUTUBE_EXPECTED_CHANNEL_ID")
     if args.receipt.exists():
@@ -153,10 +182,17 @@ def main():
             return
     api = authenticated_api()
     channel = verify_channel(api)
+    scheduled_at = None
+    if args.schedule_next:
+        from direct_schedule import next_verified_slot
+        scheduled_at = next_verified_slot(api)
+        body["status"]["publishAt"] = scheduled_at
+        print("YOUTUBE_SCHEDULE_SLOT_VERIFIED", scheduled_at)
     video_id = upload(api, body, args.video)
     receipt = {
         "sha256": sha, "channel_id": channel, "video_id": video_id,
         "privacy_requested": args.privacy, "public_visibility_verified": False,
+        "scheduled_at": scheduled_at, "schedule_readback_verified": False,
         "youtube_url": "https://www.youtube.com/watch?v=" + video_id,
     }
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
@@ -164,7 +200,31 @@ def main():
     tmp.write_text(json.dumps(receipt, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(args.receipt)
     print("UPLOAD_ACKNOWLEDGED", receipt["youtube_url"])
-    print("Check actual privacy in YouTube Studio: unverified apps can be private-only.")
+    if scheduled_at:
+        # Never retry an upload on an uncertain outcome. The upload-guard
+        # reservation remains locked when the schedule cannot be confirmed.
+        for _ in range(3):
+            result = api.videos().list(part="id,status", id=video_id).execute()
+            entries = result.get("items", [])
+            if len(entries) == 1 and entries[0].get("id") == video_id:
+                status = entries[0].get("status") or {}
+                actual = status.get("publishAt")
+                try:
+                    a = datetime.fromisoformat(actual.replace("Z", "+00:00"))
+                    expected = datetime.fromisoformat(scheduled_at.replace("Z", "+00:00"))
+                    matched = (a.astimezone(timezone.utc) == expected.astimezone(timezone.utc))
+                except (ValueError, AttributeError, TypeError):
+                    matched = False
+                if status.get("privacyStatus") == "private" and matched:
+                    receipt["schedule_readback_verified"] = True
+                    tmp.write_text(json.dumps(receipt, ensure_ascii=False, indent=2), encoding="utf-8")
+                    tmp.replace(args.receipt)
+                    print("YOUTUBE_SCHEDULE_READBACK_VERIFIED", video_id, scheduled_at)
+                    break
+            time.sleep(2)
+        if not receipt["schedule_readback_verified"]:
+            raise RuntimeError("YOUTUBE_SCHEDULE_READBACK_UNCERTAIN: reconcile Video ID before any retry")
+    print("Check processing status at YouTube; public visibility is not yet proven.")
 
 if __name__ == "__main__":
     try:
