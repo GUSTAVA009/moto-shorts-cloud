@@ -36,13 +36,13 @@ def available_portrait_crop(width,height):
         return (height*9//16,height)
     return (width,width*16//9)
 
-def require_native_source(path):
+def require_native_source(path, min_width=MIN_WIDTH, min_height=MIN_HEIGHT):
     width,height=visual_dimensions(path)
     crop_w,crop_h=available_portrait_crop(width,height)
-    if crop_w<MIN_WIDTH or crop_h<MIN_HEIGHT:
+    if crop_w<min_width or crop_h<min_height:
         raise ValueError(
             f"NATIVE_2K_SOURCE_REQUIRED: actual {width}x{height}; "
-            f"portrait crop {crop_w}x{crop_h}, minimum {MIN_WIDTH}x{MIN_HEIGHT}; "
+            f"portrait crop {crop_w}x{crop_h}, minimum {min_width}x{min_height}; "
             "NO_FAKE_UPSCALE")
     return width,height
 
@@ -53,3 +53,12 @@ def require_native_final(path):
             f"FINAL_SHORTS_2K_OR_4K_REQUIRED: got {width}x{height}; "
             "required native 1440x2560 or 2160x3840; NO_FAKE_UPSCALE")
     return width,height
+
+
+def export_dimensions(profile="2k"):
+    """Explicit export target. 4K requires an actual 2160x3840 source crop."""
+    if profile=="2k":
+        return MIN_WIDTH,MIN_HEIGHT
+    if profile=="4k":
+        return MAX_WIDTH,MAX_HEIGHT
+    raise ValueError("UNSUPPORTED_NATIVE_SHORTS_EXPORT_PROFILE")
