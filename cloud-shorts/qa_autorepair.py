@@ -99,6 +99,7 @@ def repair(episode_id, profiles=PROFILES, runner=evaluate):
     dist = HERE / "dist" / "new" / episode_id
     dist.mkdir(parents=True, exist_ok=True)
     audit = []
+    stable_raw_signature = []
     for attempt, (speed, gain) in enumerate(profiles, start=1):
         try:
             voice, mixed = runner(episode_id, work, dist, speed, gain)
@@ -122,6 +123,25 @@ def repair(episode_id, profiles=PROFILES, runner=evaluate):
         })
         print("AUTOREPAIR_ATTEMPT", episode_id, attempt, audit[-1], flush=True)
         if ok:
+            break
+        # Changing ONLY music gain cannot repair an actual omitted/wrong word
+        # in the source narration WAV. Give the narrator two DSP profiles
+        # plus one genuinely different speech speed (.98), then stop rather
+        # than running the SAME ASR error nine times. This NEVER grants a QA pass.
+        recognized = str(voice.get("recognized_text") or "").strip()
+        coverage = voice.get("lexical_coverage")
+        if (voice.get("passed") is False
+                and isinstance(coverage, (float, int))
+                and coverage < MIN_COVERAGE and recognized):
+            stable_raw_signature.append((round(float(coverage),3), recognized))
+        else:
+            stable_raw_signature.clear()
+        if (len(stable_raw_signature) >= 3
+                and len(set(stable_raw_signature[-3:])) == 1
+                and len({x["speech_speed"] for x in audit[-3:]}) >= 2):
+            audit[-1]["stopped_reason"] = "SAME_FAILED_SOURCE_ASR_AFTER_DIFFERENT_SPEED"
+            print("QA_REPAIR_FAIL_FAST_STABLE_RAW_ASR",
+                  episode_id, "attempts",attempt,flush=True)
             break
     else:
         print("AUTOREPAIR_LIMIT_REACHED", episode_id, flush=True)
