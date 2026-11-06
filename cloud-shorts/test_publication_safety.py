@@ -93,6 +93,11 @@ class PublicationQualityTests(unittest.TestCase):
                 p.publication_allowed(self.episode,self.meta,
                                       self.qa,self.video)
 
+    def test_owner_rejected_branded_slide_format_is_blocked_for_every_provider(self):
+        self.episode["editorial_format"]="owner_original_single_source_explainer_v4"
+        with self.assertRaisesRegex(ValueError,"OWNER_REJECTED_BRANDED_STATIC_SLIDE_FORMAT"):
+            p.publication_allowed(self.episode,self.meta,self.qa,self.video)
+
     def test_valid_motorcycle_clip(self):
         self.assertTrue(p.publication_allowed(self.episode, self.meta, self.qa, self.video))
 
