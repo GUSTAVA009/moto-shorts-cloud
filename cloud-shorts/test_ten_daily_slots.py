@@ -12,7 +12,7 @@ class NinetyMinuteSlotsTests(unittest.TestCase):
         self.assertEqual(len(LOCAL_TIMES), 16)
         self.assertEqual(len(set(LOCAL_TIMES)), 16)
         self.assertEqual(TARGET_PER_DAY, 16)
-        self.assertEqual(BASE_POSTS_PER_DAY,14)
+        self.assertEqual(BASE_POSTS_PER_DAY,15)
         self.assertEqual(MAX_POSTS_PER_DAY,16)
 
     def test_12_per_day_baseline_does_not_confuse_buffer_queue_cap_ten(self):
