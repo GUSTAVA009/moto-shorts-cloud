@@ -1,6 +1,6 @@
-"""Owner's MINIMUM 400 finished unique Shorts/month production target.
+"""Owner approved 15 unique Shorts daily (minimum 420 per 28-day month).
 
-Baseline is 14/day for 30-31 day months; 15/day for a 28-day February.
+Baseline is 15/day in every calendar month.
 An observed monthly deficit can trigger a capped 16-per-day catch-up budget,
 provided independent voice, footage, video and Buffer QA gates all pass.
 No scripts, API responses or scheduled uploads count as confirmed deliveries.
@@ -11,8 +11,8 @@ from datetime import datetime, timezone
 from math import ceil
 from zoneinfo import ZoneInfo
 
-MINIMUM_MONTHLY_SHORTS = 400
-BASE_DAILY_SHORTS = 14
+MINIMUM_MONTHLY_SHORTS = 420
+BASE_DAILY_SHORTS = 15
 MAX_DAILY_CATCHUP_SHORTS = 16
 MINS_BETWEEN_RELEASES = 90
 TIMEZONE = "Europe/Moscow"
@@ -63,7 +63,7 @@ def month_capacity(now: datetime, seen_buffer_ids=None, recent_sent=None):
     today = sum(dt.astimezone(ZoneInfo(TIMEZONE)).date() == local.date()
                 for _, dt in inside)
     remaining = max(0, MINIMUM_MONTHLY_SHORTS - observed)
-    # February needs 15/day; a fixed 14/day baseline misses 400 in 28 days.
+    # Owner's fixed 15/day is independent of month length.
     baseline = max(BASE_DAILY_SHORTS, ceil(MINIMUM_MONTHLY_SHORTS / days))
     necessary_daily = ceil(remaining / rest) if rest else remaining
     recommended = min(MAX_DAILY_CATCHUP_SHORTS,
