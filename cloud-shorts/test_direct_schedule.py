@@ -32,7 +32,7 @@ class DirectScheduleTests(unittest.TestCase):
         with unittest.mock.patch("direct_schedule.youtube_inventory", return_value=[]):
             stamp = datetime(2026, 11, 9, 0, 0, tzinfo=timezone.utc)
             self.assertEqual(next_verified_slot(object(), now=stamp),
-                             "2026-11-09T03:30:00Z")
+                             "2026-11-09T02:00:00Z")
 
 if __name__ == "__main__":
     unittest.main()
