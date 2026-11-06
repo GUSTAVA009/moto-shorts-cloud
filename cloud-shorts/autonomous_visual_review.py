@@ -233,7 +233,7 @@ def decode_file(entry):
     if entry.get("size") is not None and len(raw) != entry["size"]:
         raise RuntimeError("REVIEW_LEDGER_SIZE_MISMATCH")
     if (hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") +
-                     b"\\x00" + raw).hexdigest() != entry["sha"]):
+                     b"\x00" + raw).hexdigest() != entry["sha"]):
         raise RuntimeError("REVIEW_LEDGER_GIT_CONTENT_SHA_MISMATCH")
     try:
         return json.loads(raw)
