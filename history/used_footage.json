@@ -1922,6 +1922,16 @@
       "episode": "moto-rain-b4ed9b5be812",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/324f85e8f584d75dc300592d13c6d5fcc1c2088359670818db0c7eebd9b48b71.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-f227dcded0bf9e847af8ddc44058fbc001d5716b427681cc410a508ac42cda48": {
+      "episode": "moto-forest-89a509b6e546",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/f227dcded0bf9e847af8ddc44058fbc001d5716b427681cc410a508ac42cda48.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-7cff960c95e40f2df335bb27329b79832bfd0c6ea927e5362449e3ff6f1d6e13": {
+      "episode": "moto-forest-89a509b6e546",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/7cff960c95e40f2df335bb27329b79832bfd0c6ea927e5362449e3ff6f1d6e13.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3093,6 +3103,13 @@
       "people": "road-commuters-b4ed9",
       "story": "rainy-motorcycle-road-b4ed9",
       "visual": "three-clips-b4ed9"
+    },
+    "moto-forest-89a509b6e546": {
+      "environment": "forest-trail-89a50",
+      "bike": "forest-trailbike",
+      "people": "woods-rider-89a50",
+      "story": "forest-path-and-riding-89a50",
+      "visual": "three-clips-89a50"
     }
   }
 }
