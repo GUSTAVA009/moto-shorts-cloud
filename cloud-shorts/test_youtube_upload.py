@@ -9,6 +9,13 @@ from pathlib import Path
 import youtube_upload as yt
 
 class DirectUploadTests(unittest.TestCase):
+    def test_no_obsolete_private_only_audit_gate(self):
+        import inspect
+        source = inspect.getsource(yt.main)
+        self.assertNotIn("YOUTUBE_API_AUDITED", source)
+        self.assertNotIn("only private uploads allowed", source)
+
+
     def test_remove_source_urls_and_attribution(self):
         original = ("Выехал на 5 минут! 😅\n"
                     "Видео: cottonbro studio / Pexels. Монтаж и русская озвучка.\n"
