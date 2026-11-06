@@ -132,16 +132,33 @@ def publication_allowed(episode, meta, qa, video):
         # MP4 origin/model/license, both distinct actions, same batch.
         from moto_assets import validated_media
         from source_story import same_owner_original_pair
-        if len(sources) != 2 or not all(
-                s.get("license") == "LTX OpenRAIL-M" for s in sources):
-            raise ValueError("Unverified mixed original and stock footage rights")
-        try:
-            for media in sources:
-                validated_media(media)
-            if not same_owner_original_pair(sources[0],sources[1]):
-                raise ValueError("Original video source pair provenance changed")
-        except (ValueError,KeyError,TypeError) as exc:
-            raise ValueError("Unverified original generated footage rights") from exc
+        if episode.get("editorial_format") == "owner_original_single_source_explainer_v4":
+            # Distinct production mode: one actual owner-generated moving source,
+            # followed by independently generated vector instructions; never
+            # fabricate a second video to satisfy the legacy pair-only gate.
+            if (len(sources) != 1
+                    or sources[0].get("license") != "LTX OpenRAIL-M"
+                    or episode.get("original_graphics_author") !=
+                       "GUSTAVA original procedural vector animation"
+                    or episode.get("source_illustrative_only") is not True
+                    or episode.get("synthetic_video_disclosure_required") is not True
+                    or episode.get("final_video_sha256") != file_sha256(video)):
+                raise ValueError("Original explainer source/graphics rights or SHA mismatch")
+            try:
+                validated_media(sources[0])
+            except (ValueError, KeyError, TypeError) as exc:
+                raise ValueError("Owner original LTX source provenance invalid") from exc
+        else:
+            if len(sources) != 2 or not all(
+                    s.get("license") == "LTX OpenRAIL-M" for s in sources):
+                raise ValueError("Unverified mixed original and stock footage rights")
+            try:
+                for media in sources:
+                    validated_media(media)
+                if not same_owner_original_pair(sources[0],sources[1]):
+                    raise ValueError("Original video source pair provenance changed")
+            except (ValueError,KeyError,TypeError) as exc:
+                raise ValueError("Unverified original generated footage rights") from exc
     elif any(s.get("license") not in (
             "Pexels License", "CC0 1.0", "Mixkit Stock Video Free License")
              for s in sources):
