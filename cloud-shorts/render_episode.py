@@ -337,8 +337,10 @@ def assemble_clips(ep, sources, work, target_seconds):
     # Owner-quality contract: reject low-resolution real source pixels BEFORE
     # a 448x800 source can be dressed up as fake "4K" via FFmpeg scaling.
     from production_quality import require_native_source
+    from production_quality import export_dimensions
+    export_w,export_h=export_dimensions(os.environ.get("GUSTAVA_EXPORT_PROFILE","2k"))
     for source_path in sources.values():
-        require_native_source(source_path)
+        require_native_source(source_path,export_w,export_h)
     plan=directed_plan(ep,durations,target_seconds)
     segments=[]
     for idx,shot in enumerate(plan,1):
@@ -356,9 +358,9 @@ def assemble_clips(ep, sources, work, target_seconds):
             "-ss","%.3f"%shot["start"],"-i",src,
             "-t","%.3f"%shot["seconds"],
             "-vf",stretch+
-                  "fps=30,scale=720:1280:force_original_aspect_ratio=increase:"
-                  "flags=lanczos,crop=720:1280,setsar=1,format=yuv420p",
-            "-an","-c:v","libx264","-crf","23","-preset","veryfast",
+                  f"fps=30,scale={export_w}:{export_h}:force_original_aspect_ratio=increase:"
+                  f"flags=lanczos,crop={export_w}:{export_h},setsar=1,format=yuv420p",
+            "-an","-c:v","libx264","-crf","17","-preset","medium",
             "-r","30","-pix_fmt","yuv420p",out,
         ],180)
         if not motion_verified(out):
@@ -478,6 +480,9 @@ def caption_schedule(ep, total, planned_scenes=None):
 
 
 def draw_captions(ep, work, total):
+    from production_quality import export_dimensions
+    width,_=export_dimensions(os.environ.get("GUSTAVA_EXPORT_PROFILE","2k"))
+    scale=width//720
     if not FONT.is_file():
         raise RuntimeError("Expected Cyrillic font not present")
     plan = None
@@ -502,9 +507,9 @@ def draw_captions(ep, work, total):
         layout = layout_caption(text, font_path=FONT)
         lines = caption_text_lines(layout)
         filters.append(
-            ("drawbox=x=23:y=%d:w=674:h=%d:color=black@0.50:t=fill:"
+            ("drawbox=x=%d:y=%d:w=%d:h=%d:color=black@0.50:t=fill:"
              "enable='between(t,%.3f,%.3f)'") %
-            (layout["box_y"], layout["box_height"], at, until)
+            (23*scale, layout["box_y"]*scale, 674*scale, layout["box_height"]*scale, at, until)
         )
         for line_index, one_line in enumerate(lines):
             caption_file = work / ("subtitle_%02d_%d.txt" % (index, line_index))
@@ -515,7 +520,7 @@ def draw_captions(ep, work, total):
                 ("drawtext=fontfile=%s:textfile=%s:fontsize=%d:fontcolor=white:"
                  "shadowcolor=black@0.95:shadowx=2:shadowy=2:"
                  "x=(w-text_w)/2:y=%d:enable='between(t,%.3f,%.3f)'") %
-                (FONT, caption_file, layout["font_size"], y, at, until)
+                (FONT, caption_file, layout["font_size"]*scale, y*scale, at, until)
             )
         caption_checks.append({"label": label, "font_size": layout["font_size"],
                                "line_count": layout["line_count"],
@@ -534,12 +539,12 @@ def draw_captions(ep, work, total):
         disclosure = work / "historical_illustration_label.txt"
         disclosure.write_text("ИЛЛЮСТРАТИВНЫЕ КАДРЫ", encoding="utf8")
         filters.extend([
-            "drawbox=x=25:y=238:w=480:h=52:color=black@0.60:t=fill",
-            "drawtext=fontfile=%s:textfile=%s:fontsize=22:fontcolor=white:"
-            "borderw=1:bordercolor=black@0.8:x=44:y=252" % (FONT, disclosure),
+            f"drawbox=x={25*scale}:y={238*scale}:w={480*scale}:h={52*scale}:color=black@0.60:t=fill",
+            "drawtext=fontfile=%s:textfile=%s:fontsize=%d:fontcolor=white:"
+            "borderw=1:bordercolor=black@0.8:x=%d:y=%d" % (FONT, disclosure, 22*scale, 44*scale, 252*scale),
         ])
     # Quiet lower-third CTA rotates per episode; story and final question remain readable.
-    filters.extend(overlay_filters(ep, work, total, FONT))
+    # Do not burn generic CTA stickers into a high-resolution action video.
     (work / "caption_fit.json").write_text(json.dumps({
         "version": 1, "passed": bool(caption_checks),
         "entries": caption_checks,
@@ -663,7 +668,7 @@ def render(ep, output_dir):
         "-i", silent, "-i", wav, "-i", soundtrack, "-i", accents,
         "-filter_complex", filter_graph,
         "-map", "[v]", "-map", "[a]",
-        "-c:v", "libx264", "-preset", "veryfast", "-crf", "22",
+        "-c:v", "libx264", "-preset", "medium", "-crf", "17",
         "-pix_fmt", "yuv420p", "-r", "30",
         "-c:a", "aac", "-b:a", "160k", "-ar", "48000", "-ac", "2",
         "-movflags", "+faststart", "-t", f"{total:.3f}", output,
@@ -671,9 +676,8 @@ def render(ep, output_dir):
     duration, streams = probe(output)
     if not (7 <= duration <= 37) or not (output.stat().st_size > 500_000):
         raise RuntimeError("Final MP4 unexpected size/duration")
-    if not any(s["codec_type"] == "video" and s.get("width") == 720
-               and s.get("height") == 1280 for s in streams):
-        raise RuntimeError("Final MP4 must be 720x1280 vertical")
+    from production_quality import require_native_final
+    require_native_final(output)
     if not any(s["codec_type"] == "audio" for s in streams):
         raise RuntimeError("Final video missing narration/music audio")
     # QA was previously blind to text extending outside the portrait frame.
