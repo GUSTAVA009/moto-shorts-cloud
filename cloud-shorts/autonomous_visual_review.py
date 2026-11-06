@@ -62,6 +62,27 @@ def has_original_cartoon_b(episode):
             and len(CARTOON_B_REFERENCE_SHA) == 64)
 
 
+def has_approved_original_deep(episode):
+    """Original pinned DEEP is eligible for independent REAL-frame review."""
+    from deep_voice import ready
+    return ready(episode) and episode.get("voice_profile") == "gustava_create_audio_deep_v1"
+
+
+def has_verified_review_voice(episode):
+    return has_original_cartoon_b(episode) or has_approved_original_deep(episode)
+
+
+def receipt_voice_identity_matches(episode, receipt):
+    if not isinstance(receipt, dict):
+        return False
+    if has_original_cartoon_b(episode):
+        return receipt.get("selfhosted_voice_id") == VOICE_ID
+    if has_approved_original_deep(episode):
+        return (receipt.get("deep_source_sha256") ==
+                (episode.get("deep_audio") or {}).get("source_audio_sha256"))
+    return False
+
+
 def eligible_private_episode(episode, receipt):
     """No historic/provider drafts, tutorials or already-released videos."""
     if (episode.get("auto_preview") is not True
@@ -73,11 +94,11 @@ def eligible_private_episode(episode, receipt):
             or episode.get("editorial_format") not in (
                 "source_anchored_action_contrast", "original_action_microguide_v1")
             or int(episode.get("visual_director_version") or 0) != 3
-            or not has_original_cartoon_b(episode)
+            or not has_verified_review_voice(episode)
             or not isinstance(receipt, dict)
             or receipt.get("id") != episode.get("id")
             or receipt.get("state") != "preview_ready"
-            or receipt.get("selfhosted_voice_id") != VOICE_ID
+            or not receipt_voice_identity_matches(episode, receipt)
             or receipt.get("voice_qa_passed") is not True
             or receipt.get("mixed_audio_qa_passed") is not True
             or not str(receipt.get("run_id") or "").isdigit()):
@@ -200,7 +221,7 @@ def select_private(catalog, ledger_paths, get=api):
                 or "publication-receipts/" + slug + ".json" in paths):
             continue
         if (episode.get("auto_publish") is not False
-                or not has_original_cartoon_b(episode)):
+                or not has_verified_review_voice(episode)):
             continue
         receipt = decode_file(get("contents/" + receipt_path + "?ref=render-ledger"))
         if not eligible_private_episode(episode, receipt):
@@ -436,8 +457,8 @@ def dispatch_approved_direct_youtube(episode_id, get=api):
 
 
 def review_and_promote(episode, run_id, directory):
-    if not has_original_cartoon_b(episode) or episode.get("auto_publish") is not False:
-        raise RuntimeError("AUTO_FRAME_REVIEW_NOT_PRIVATE_CARTOON_B")
+    if not has_verified_review_voice(episode) or episode.get("auto_publish") is not False:
+        raise RuntimeError("AUTO_FRAME_REVIEW_NOT_PRIVATE_APPROVED_VOICE")
     movie = directory / (episode["id"] + ".mp4")
     visual_path = directory / "visual_qa.json"
     raw_path = directory / "voice_qa.json"
@@ -451,15 +472,27 @@ def review_and_promote(episode, run_id, directory):
     mixed = json.loads(mixed_path.read_text("utf8"))
     visual = json.loads(visual_path.read_text("utf8"))
     metadata = json.loads(publication_path.read_text("utf8"))
-    from selfhosted_voice import CARTOON_B_REFERENCE_SHA,CARTOON_B_PROFILE_ID
     if (not narration_passes(raw,mixed,episode["id"])
             or mixed.get("mp4_sha256") != sha
-            or raw.get("voice_profile") != CARTOON_B_PROFILE_ID
-            or raw.get("selfhosted_reference_sha256") != CARTOON_B_REFERENCE_SHA
             or raw.get("male_voice_verified") is not True
             or metadata.get("episode_id") != episode["id"]
             or metadata.get("title") != episode.get("title")):
         raise RuntimeError("AUTO_FRAME_REVIEW_REAL_AUDIO_METADATA_QA_FAILED")
+    if has_original_cartoon_b(episode):
+        from selfhosted_voice import CARTOON_B_REFERENCE_SHA,CARTOON_B_PROFILE_ID
+        if (raw.get("voice_profile") != CARTOON_B_PROFILE_ID
+                or raw.get("selfhosted_reference_sha256") != CARTOON_B_REFERENCE_SHA):
+            raise RuntimeError("AUTO_FRAME_REVIEW_CARTOON_B_VOICE_PIN_MISMATCH")
+    elif has_approved_original_deep(episode):
+        from deep_voice import PROFILE_ID
+        if (raw.get("voice_profile") != PROFILE_ID
+                or raw.get("voice_speaker") != "deep"
+                or raw.get("voice_provider") != "aidocmaker.com"
+                or raw.get("voice_source_audio_sha256") !=
+                   episode["deep_audio"]["source_audio_sha256"]):
+            raise RuntimeError("AUTO_FRAME_REVIEW_GUSTAVA_DEEP_VOICE_PIN_MISMATCH")
+    else:
+        raise RuntimeError("AUTO_FRAME_REVIEW_UNAPPROVED_NARRATOR")
     verify_story_subject(episode)
     chapters = actual_frames(movie,visual,episode)
     provider,secret,url,model = model_credentials()
@@ -487,7 +520,9 @@ def review_and_promote(episode, run_id, directory):
                  if x.get("id")==episode["id"]),None)
     if (live is None or not eligible_private_episode(live,{
             "id":episode["id"],"state":"preview_ready",
-            "selfhosted_voice_id":VOICE_ID,"run_id":str(run_id),
+            "selfhosted_voice_id":VOICE_ID if has_original_cartoon_b(live) else None,
+            "deep_source_sha256":(live.get("deep_audio") or {}).get("source_audio_sha256"),
+            "run_id":str(run_id),
             "voice_qa_passed":True,"mixed_audio_qa_passed":True})
             or visual_asset_fingerprint(live) != proof["asset_fingerprint"]):
         raise RuntimeError("AUTO_FRAME_REVIEW_CATALOG_CHANGED_STOP")
