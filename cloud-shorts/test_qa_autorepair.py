@@ -62,6 +62,24 @@ class VoiceAutorepairTests(unittest.TestCase):
         self.assertEqual(len({(x["speech_speed"],x["music_gain"])
                               for x in audit["attempts"]}),len(qa.PROFILES))
 
+    def test_stable_real_raw_asr_error_stops_after_new_speech_speed(self):
+        called=[]
+        def runner(episode, work, dist, speed, gain):
+            called.append((speed,gain))
+            v=self.report(coverage=.957,passed=False)
+            m=self.report(coverage=.957,passed=False)
+            v["recognized_text"]="Мотоцикл в потоки машин"
+            m["recognized_text"]="Мотоцикл в потоки машин"
+            return v,m
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch.object(qa,"HERE",Path(tmp)):
+                self.assertEqual(qa.repair("test-motorcycle-short",runner=runner),0)
+                audit=json.loads((Path(tmp)/"dist/new/test-motorcycle-short/repair_history.json").read_text())
+        self.assertFalse(audit["quality_passed"])
+        self.assertEqual(len(called),3)
+        self.assertEqual(audit["attempts"][-1]["stopped_reason"],
+                         "SAME_FAILED_SOURCE_ASR_AFTER_DIFFERENT_SPEED")
+
     def test_technical_source_error_does_not_loop_or_publish(self):
         calls = []
         def runner(episode, work, dist, speed, gain):
