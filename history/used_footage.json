@@ -2222,6 +2222,16 @@
       "episode": "moto-native-4k-control-20261106",
       "source": "https://www.pexels.com/video/dynamic-motocross-stunts-at-melbourne-show-34110751/",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-3211b48538c2b62dfbbf88fb817cadb84b3e621ced60893fcd6279ada1a1e6e0": {
+      "episode": "moto-motocross-26a235709254",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/3211b48538c2b62dfbbf88fb817cadb84b3e621ced60893fcd6279ada1a1e6e0.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-af5623bc71d4810d843d20b5969f1d392f20be72826c93491d5b0eb2da2b9a8c": {
+      "episode": "moto-motocross-26a235709254",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/af5623bc71d4810d843d20b5969f1d392f20be72826c93491d5b0eb2da2b9a8c.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3603,6 +3613,13 @@
       "story": "traction-control-to-prepared-stunt",
       "visual": "loose-trail-moving-riders-and-airborne-backflip",
       "bike": "motocross-trail-and-stunt-dirtbikes"
+    },
+    "moto-motocross-26a235709254": {
+      "environment": "race-track-26a23",
+      "bike": "motocross-bike",
+      "people": "track-racers-26a23",
+      "story": "rider-at-prepared-track-26a23",
+      "visual": "three-clips-26a23"
     }
   }
 }
