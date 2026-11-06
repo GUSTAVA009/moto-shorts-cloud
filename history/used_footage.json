@@ -2002,6 +2002,16 @@
       "episode": "moto-forest-1a7c6a661009",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/8a2cc6b672e8aafb9b3c10cfcecc3e1237f6f4f1cc1851b4d06f0515c2929ce1.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-8105bf7446f66764c92a5aac5cce25d25ecfc5986aa209d3bcde36fc058f265a": {
+      "episode": "moto-motocross-506c0e3f46d6",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/8105bf7446f66764c92a5aac5cce25d25ecfc5986aa209d3bcde36fc058f265a.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-2ee191087c517cfc9b3bb481888c3788bde7fb400aa7ad81a7c81de45d099adb": {
+      "episode": "moto-motocross-506c0e3f46d6",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/2ee191087c517cfc9b3bb481888c3788bde7fb400aa7ad81a7c81de45d099adb.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3229,6 +3239,13 @@
       "people": "woods-rider-1a7c6",
       "story": "forest-path-and-riding-1a7c6",
       "visual": "three-clips-1a7c6"
+    },
+    "moto-motocross-506c0e3f46d6": {
+      "environment": "race-track-506c0",
+      "bike": "motocross-bike",
+      "people": "track-racers-506c0",
+      "story": "rider-at-prepared-track-506c0",
+      "visual": "three-clips-506c0"
     }
   }
 }
