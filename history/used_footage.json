@@ -2212,6 +2212,16 @@
       "episode": "moto-vintage-1211a46b1a90",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/46719937a3955ef8ff0d155460ab54e772104fbadf20256d284ec748ae88ce59.json",
       "status": "reserved-or-rendered"
+    },
+    "5803634": {
+      "episode": "moto-native-4k-control-20261106",
+      "source": "https://www.pexels.com/video/people-riding-a-dirt-bike-5803634/",
+      "status": "reserved-or-rendered"
+    },
+    "34110751": {
+      "episode": "moto-native-4k-control-20261106",
+      "source": "https://www.pexels.com/video/dynamic-motocross-stunts-at-melbourne-show-34110751/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3586,6 +3596,13 @@
       "people": "classic-restorers-1211a",
       "story": "vintage-bike-work-1211a",
       "visual": "three-clips-1211a"
+    },
+    "moto-native-4k-control-20261106": {
+      "environment": "forest-dirttrack-and-melbourne-stunt-ramp",
+      "people": "offroad-trail-group-and-aerial-show-riders",
+      "story": "traction-control-to-prepared-stunt",
+      "visual": "loose-trail-moving-riders-and-airborne-backflip",
+      "bike": "motocross-trail-and-stunt-dirtbikes"
     }
   }
 }
