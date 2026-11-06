@@ -1,0 +1,64 @@
+name: GUSTAVA - One-time private YouTube API canary
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Type GUSTAVA_PRIVATE_CANARY_ONLY (creates at most one PRIVATE test video; never publishes)"
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gustava-one-private-canary
+  cancel-in-progress: false
+
+jobs:
+  private-canary:
+    if: >-
+      github.repository == 'GUSTAVA009/moto-shorts-cloud' &&
+      inputs.confirmation == 'GUSTAVA_PRIVATE_CANARY_ONLY' &&
+      vars.YOUTUBE_DIRECT_ENABLED != 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CANARY_CONFIRMATION: ${{ inputs.confirmation }}
+      YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+      YOUTUBE_DIRECT_ENABLED: ${{ vars.YOUTUBE_DIRECT_ENABLED }}
+      YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+      YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+      YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate one-time private canary source without OAuth
+        run: |
+          set -euo pipefail
+          python3 -m py_compile cloud-shorts/youtube_private_canary.py
+          command -v ffmpeg
+          command -v ffprobe
+      - name: Generate six-second original PRIVATE test signal (no licensed assets)
+        run: |
+          set -euo pipefail
+          ffmpeg -hide_banner -loglevel error -y \
+            -f lavfi -i "testsrc2=size=720x1280:rate=24" \
+            -t 6 -an -c:v libx264 -preset veryfast -crf 30 \
+            -pix_fmt yuv420p -movflags +faststart \
+            diagnostic-private-canary.mp4
+          ffprobe -hide_banner -v error -show_entries stream=width,height,codec_name \
+            -of default=noprint_wrappers=1 diagnostic-private-canary.mp4
+          test "$(stat -c %s diagnostic-private-canary.mp4)" -gt 30000
+      - name: Install official Google OAuth + YouTube API client
+        run: python3 -m pip install --quiet --disable-pip-version-check google-api-python-client google-auth
+      - name: Upload/locate and verify one PRIVATE YouTube canary
+        run: |
+          set -euo pipefail
+          python3 cloud-shorts/youtube_private_canary.py
+      - name: Save receipt with video ID (never tokens)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gustava-youtube-private-canary-result-${{ github.run_id }}
+          path: youtube-private-canary-receipt.json
+          if-no-files-found: error
+          retention-days: 30
