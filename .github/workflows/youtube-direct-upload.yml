@@ -28,7 +28,7 @@ on:
         default: new
         options: [new, daily]
       privacy:
-        description: "New YouTube API apps without audit are restricted to private"
+        description: "YouTube visibility (official API; subject to YouTube policies)"
         required: true
         default: private
         type: choice
@@ -80,13 +80,11 @@ jobs:
             --metadata "staged/$EPISODE/publication.json" \
             --privacy "${{ inputs.privacy }}" \
             --dry-run
-      - name: Validate OAuth setup and audit before reserving an upload
+      - name: Validate OAuth setup before reserving an upload
         env:
           YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
           YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
           YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
-          YOUTUBE_API_AUDITED: ${{ vars.YOUTUBE_API_AUDITED }}
-          REQUESTED_PRIVACY: ${{ inputs.privacy }}
         run: |
           python3 - <<'PY'
           import os
@@ -94,9 +92,7 @@ jobs:
           missing = [key for key in required if not os.environ.get(key)]
           if missing:
               raise SystemExit("Google OAuth secrets not yet installed: " + ", ".join(missing))
-          if os.environ["REQUESTED_PRIVACY"] != "private" and os.environ.get("YOUTUBE_API_AUDITED", "").lower() != "true":
-              raise SystemExit("Google API project not audited. Only private uploads are enabled.")
-          print("OAuth secret presence and privacy gate checked; no values displayed")
+          print("OAuth secret presence checked; no values displayed")
           PY
       - name: Reserve video hash in durable GitHub upload ledger
         env:
