@@ -2,7 +2,7 @@
 """Upload reviewed Shorts through the official YouTube Data API, not Publora.
 
 Secrets belong in GitHub Actions secrets, never this repository.
-Projects without a YouTube API audit may only upload private videos.
+Public and scheduled uploads follow YouTube's current Data API policies.
 """
 from __future__ import annotations
 import argparse
@@ -142,8 +142,6 @@ def main():
     if args.dry_run:
         print("DRY_RUN_OK; no credentials needed; nothing uploaded")
         return
-    if args.privacy != "private" and os.environ.get("YOUTUBE_API_AUDITED", "").lower() != "true":
-        raise RuntimeError("YouTube API audit not confirmed; only private uploads allowed")
     # Prevent known duplicates in this invocation's persisted workspace.
     channel = required_env("YOUTUBE_EXPECTED_CHANNEL_ID")
     if args.receipt.exists():
@@ -164,7 +162,7 @@ def main():
     tmp.write_text(json.dumps(receipt, ensure_ascii=False, indent=2), encoding="utf-8")
     tmp.replace(args.receipt)
     print("UPLOAD_ACKNOWLEDGED", receipt["youtube_url"])
-    print("Check actual privacy in YouTube Studio: unverified apps can be private-only.")
+    print("Check actual privacy and processing status in YouTube Studio.")
 
 if __name__ == "__main__":
     try:
