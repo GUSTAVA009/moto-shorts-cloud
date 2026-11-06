@@ -17568,6 +17568,886 @@
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
       "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-rain-b4ed9b5be812",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Городская поездка против лесной заезд: две разные задачи #shorts",
+      "narration": "Мотоцикл — два момента: на одном видео байкер едет по городской улице, на другой записи райдер едет через лес. Здесь две независимые записи. Что интереснее?",
+      "description": "Две разные мотоистории: городская поездка и лесной заезд. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_middle": "ЛЕСНОЙ ЗАЕЗД",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 115,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/858c55b42a8febd1df50b5be558b6dc8da35f4db140ddae823c2349bb9e6f46c.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/858c55b42a8febd1df50b5be558b6dc8da35f4db140ddae823c2349bb9e6f46c.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261103214608-c44141",
+          "original_sha256": "858c55b42a8febd1df50b5be558b6dc8da35f4db140ddae823c2349bb9e6f46c",
+          "file_size": 1268338,
+          "duration": 6.706,
+          "source_title": "motorcyclist riding on a city street",
+          "scene_action": "city",
+          "prompt": "Photorealistic street documentary shot of a helmeted biker riding a standard road motorcycle along an urban street with moving traffic. Side-tracking camera keeps the real rider in focus as road markings and buildings move past, daylight and natural road surface. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-03T21:47:27.148499+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/324f85e8f584d75dc300592d13c6d5fcc1c2088359670818db0c7eebd9b48b71.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/324f85e8f584d75dc300592d13c6d5fcc1c2088359670818db0c7eebd9b48b71.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104001608-1ab38b",
+          "original_sha256": "324f85e8f584d75dc300592d13c6d5fcc1c2088359670818db0c7eebd9b48b71",
+          "file_size": 2129332,
+          "duration": 6.706,
+          "source_title": "motorcycle rider riding through a woodland road",
+          "scene_action": "forest",
+          "prompt": "Photorealistic steady-cam documentary footage of a helmeted dirt bike rider riding forward along a paved lane through dense green forest. Wheels rotate continuously, roadside trees pass naturally, tracking camera, bright overcast daylight. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T00:17:26.225717+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "wet-asphalt-road-b4ed9",
+        "bike": "street-motorbike",
+        "people": "road-commuters-b4ed9",
+        "story": "rainy-motorcycle-road-b4ed9",
+        "visual": "three-clips-b4ed9"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие мотопутешествия."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-forest-89a509b6e546",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "От лесной заезд до мотопрыжок — две мотосцены #shorts",
+      "narration": "Мотоцикл — два момента: на одном видео райдер едет через лес, а отдельно райдер прыгает с трамплина. Съёмки не связаны. Что захотелось пересмотреть?",
+      "description": "Две разные мотоистории: лесной заезд и мотопрыжок. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ЛЕСНОЙ ЗАЕЗД",
+      "caption_middle": "МОТОПРЫЖОК",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 126,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/f227dcded0bf9e847af8ddc44058fbc001d5716b427681cc410a508ac42cda48.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/f227dcded0bf9e847af8ddc44058fbc001d5716b427681cc410a508ac42cda48.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261103235607-4f3bf3",
+          "original_sha256": "f227dcded0bf9e847af8ddc44058fbc001d5716b427681cc410a508ac42cda48",
+          "file_size": 2389586,
+          "duration": 6.706,
+          "source_title": "motorcycle rider riding through a woodland road",
+          "scene_action": "forest",
+          "prompt": "Photorealistic steady-cam documentary footage of a helmeted dirt bike rider riding forward along a paved lane through dense green forest. Wheels rotate continuously, roadside trees pass naturally, tracking camera, bright overcast daylight. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-03T23:57:26.177612+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/7cff960c95e40f2df335bb27329b79832bfd0c6ea927e5362449e3ff6f1d6e13.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/7cff960c95e40f2df335bb27329b79832bfd0c6ea927e5362449e3ff6f1d6e13.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261103235607-4f3bf3",
+          "original_sha256": "7cff960c95e40f2df335bb27329b79832bfd0c6ea927e5362449e3ff6f1d6e13",
+          "file_size": 2359591,
+          "duration": 6.706,
+          "source_title": "motorcyclist jumping over a small motocross dirt mound",
+          "scene_action": "jump",
+          "prompt": "Photorealistic sports documentary footage of an experienced helmeted motocross rider launching a dirt bike off a short track jump, briefly airborne then landing and continuing forward. Smooth panning camera following the motorcycle, clear airborne phase and spinning wheels. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-03T23:57:26.177612+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "forest-trail-89a50",
+        "bike": "forest-trailbike",
+        "people": "woods-rider-89a50",
+        "story": "forest-path-and-riding-89a50",
+        "visual": "three-clips-89a50"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Поделись роликом с другом, который любит мотоциклы."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-city-f6f1bb80e7bd",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Что меняется между городская поездка и лесной заезд? #shorts",
+      "narration": "Мотоцикл — два момента: на одном видео байкер едет по городской улице, затем отдельно райдер едет через лес. Один кадр не продолжает другой. Что зацепило?",
+      "description": "Две разные мотоистории: городская поездка и лесной заезд. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_middle": "ЛЕСНОЙ ЗАЕЗД",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "night-drive",
+      "music_bpm": 137,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/927a3e5547b9417be195bd05629e4f9d49ef75641b730ae2da40a7a55dead1f7.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/927a3e5547b9417be195bd05629e4f9d49ef75641b730ae2da40a7a55dead1f7.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261103222607-2ac9c1",
+          "original_sha256": "927a3e5547b9417be195bd05629e4f9d49ef75641b730ae2da40a7a55dead1f7",
+          "file_size": 1825781,
+          "duration": 6.706,
+          "source_title": "motorcyclist riding on a city street",
+          "scene_action": "city",
+          "prompt": "Photorealistic street documentary shot of a helmeted biker riding a standard road motorcycle along an urban street with moving traffic. Side-tracking camera keeps the real rider in focus as road markings and buildings move past, daylight and natural road surface. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-03T22:27:26.087814+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/5f47503760fddc18ab9fd8a43d27b40161c25dce62ba2b460373db55c61a0f47.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/5f47503760fddc18ab9fd8a43d27b40161c25dce62ba2b460373db55c61a0f47.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104004608-f2f7f1",
+          "original_sha256": "5f47503760fddc18ab9fd8a43d27b40161c25dce62ba2b460373db55c61a0f47",
+          "file_size": 2059568,
+          "duration": 6.706,
+          "source_title": "motorcycle rider riding through a woodland road",
+          "scene_action": "forest",
+          "prompt": "Photorealistic steady-cam documentary footage of a helmeted dirt bike rider riding forward along a paved lane through dense green forest. Wheels rotate continuously, roadside trees pass naturally, tracking camera, bright overcast daylight. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T00:47:26.471697+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "urban-streets-f6f1b",
+        "bike": "urban-motorbike",
+        "people": "city-riders-f6f1b",
+        "story": "urban-riding-f6f1b",
+        "visual": "three-clips-f6f1b"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-vintage-4bc40cc51128",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Городская поездка и грязевая трасса — какой кадр сильнее? #shorts",
+      "narration": "Мотоцикл и разные сцены: вначале байкер едет по городской улице, а отдельно райдер проезжает грязный участок. Это разные моменты. Где больше динамики?",
+      "description": "Две разные мотоистории: городская поездка и грязевая трасса. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_middle": "ГРЯЗЕВАЯ ТРАССА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "garage-groove",
+      "music_bpm": 111,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/beb56f7704ac445b1983abdb6833d85b5d571e5093653d64782437d192f85212.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/beb56f7704ac445b1983abdb6833d85b5d571e5093653d64782437d192f85212.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104000608-efeb21",
+          "original_sha256": "beb56f7704ac445b1983abdb6833d85b5d571e5093653d64782437d192f85212",
+          "file_size": 2144551,
+          "duration": 6.706,
+          "source_title": "motorcyclist riding on a city street",
+          "scene_action": "city",
+          "prompt": "Photorealistic street documentary shot of a helmeted biker riding a standard road motorcycle along an urban street with moving traffic. Side-tracking camera keeps the real rider in focus as road markings and buildings move past, daylight and natural road surface. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T00:07:26.166066+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/14cb0b394442b51188b006d102f29b9caa6c028997bf4e6e6bc68f8a57eb5fe1.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/14cb0b394442b51188b006d102f29b9caa6c028997bf4e6e6bc68f8a57eb5fe1.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104012608-e73bf1",
+          "original_sha256": "14cb0b394442b51188b006d102f29b9caa6c028997bf4e6e6bc68f8a57eb5fe1",
+          "file_size": 2439474,
+          "duration": 6.706,
+          "source_title": "off-road dirt bike riding through mud",
+          "scene_action": "mud",
+          "prompt": "Photorealistic action-camera footage of one helmeted dirt bike rider actually driving through a shallow muddy trail in a forest, muddy water splashes from both spinning wheels, camera follows the moving bike with realistic smooth tracking and natural wet sunlight. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T01:27:26.175863+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "vintage-workshop-4bc40",
+        "bike": "classic-motorcycle",
+        "people": "classic-restorers-4bc40",
+        "story": "vintage-bike-work-4bc40",
+        "visual": "three-clips-4bc40"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-roadtrip-a0cc06670fba",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Что меняется между мотопрыжок и поездка? #shorts",
+      "narration": "Мотоцикл — два момента: на одном видео райдер прыгает с трамплина, затем отдельно байкер едет на мотоцикле. Это разные моменты. Что зацепило?",
+      "description": "Две разные мотоистории: мотопрыжок и поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "МОТОПРЫЖОК",
+      "caption_middle": "ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 122,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/cd6c8c225d35522d0404ac95d4956e053ae46043a0c180ad712dc5db9683a119.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/cd6c8c225d35522d0404ac95d4956e053ae46043a0c180ad712dc5db9683a119.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104002608-7fefe4",
+          "original_sha256": "cd6c8c225d35522d0404ac95d4956e053ae46043a0c180ad712dc5db9683a119",
+          "file_size": 2071478,
+          "duration": 6.706,
+          "source_title": "motorcyclist jumping over a small motocross dirt mound",
+          "scene_action": "jump",
+          "prompt": "Photorealistic sports documentary footage of an experienced helmeted motocross rider launching a dirt bike off a short track jump, briefly airborne then landing and continuing forward. Smooth panning camera following the motorcycle, clear airborne phase and spinning wheels. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T00:27:26.862573+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/f513189f4e7628d4d92cd06c7bad4a36158b95955ce371ddfb02a641d84ec7eb.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/f513189f4e7628d4d92cd06c7bad4a36158b95955ce371ddfb02a641d84ec7eb.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104002608-7fefe4",
+          "original_sha256": "f513189f4e7628d4d92cd06c7bad4a36158b95955ce371ddfb02a641d84ec7eb",
+          "file_size": 1617161,
+          "duration": 6.706,
+          "source_title": "bayker riding on a dirt track",
+          "scene_action": "riding",
+          "prompt": "Photorealistic dynamic handheld documentary footage of a helmeted male motorcyclist actually riding a modern dirt bike at speed around a dry training circuit. Camera tracks the moving wheels and rider, dust trails behind; visible forward motion, safe closed course, real bike geometry. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T00:27:26.862573+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "countryside-road-a0cc0",
+        "bike": "touring-motorcycle",
+        "people": "touring-travelers-a0cc0",
+        "story": "scenic-country-road-a0cc0",
+        "visual": "three-clips-a0cc0"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие мотопутешествия."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-training-fd7420d37b31",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Лесной заезд против мотопрыжок: две разные задачи #shorts",
+      "narration": "Мотоцикл — два момента: на одном видео райдер едет через лес, во втором видео райдер прыгает с трамплина. Один кадр не продолжает другой. Что запомнил?",
+      "description": "Две разные мотоистории: лесной заезд и мотопрыжок. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ЛЕСНОЙ ЗАЕЗД",
+      "caption_middle": "МОТОПРЫЖОК",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 133,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/c26ba01e94f6855e0a04150c64a5b10d3da3a324aee7a05887eccffbcb64f1f3.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/c26ba01e94f6855e0a04150c64a5b10d3da3a324aee7a05887eccffbcb64f1f3.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104013608-b19057",
+          "original_sha256": "c26ba01e94f6855e0a04150c64a5b10d3da3a324aee7a05887eccffbcb64f1f3",
+          "file_size": 2425312,
+          "duration": 6.706,
+          "source_title": "motorcycle rider riding through a woodland road",
+          "scene_action": "forest",
+          "prompt": "Photorealistic steady-cam documentary footage of a helmeted dirt bike rider riding forward along a paved lane through dense green forest. Wheels rotate continuously, roadside trees pass naturally, tracking camera, bright overcast daylight. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T01:37:25.919221+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/866c2e19828d844137a734efc9c5fc9cdd91692bced9605cf50f4f7a06a87597.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/866c2e19828d844137a734efc9c5fc9cdd91692bced9605cf50f4f7a06a87597.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104013608-b19057",
+          "original_sha256": "866c2e19828d844137a734efc9c5fc9cdd91692bced9605cf50f4f7a06a87597",
+          "file_size": 1657478,
+          "duration": 6.706,
+          "source_title": "motorcyclist jumping over a small motocross dirt mound",
+          "scene_action": "jump",
+          "prompt": "Photorealistic sports documentary footage of an experienced helmeted motocross rider launching a dirt bike off a short track jump, briefly airborne then landing and continuing forward. Smooth panning camera following the motorcycle, clear airborne phase and spinning wheels. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T01:37:25.919221+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "practice-circuit-fd742",
+        "bike": "training-motorcycle",
+        "people": "track-learners-fd742",
+        "story": "closed-course-practice-fd742",
+        "visual": "three-clips-fd742"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Поделись роликом с другом, который любит мотоциклы."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-helmet-6b52ca5beeb2",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Надевание шлема против ремонт байка: две разные задачи #shorts",
+      "narration": "Мотоцикл — два момента: в первом эпизоде райдер надевает мотошлем, затем отдельно механик работает с мотоциклом. Видео сняты отдельно. Что интереснее?",
+      "description": "Две разные мотоистории: надевание шлема и ремонт байка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "НАДЕВАНИЕ ШЛЕМА",
+      "caption_middle": "РЕМОНТ БАЙКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 107,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/b8021e4b9cb1257636a1b497509d9b1fde579520f8d769eb593b15d03ff41cb3.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/b8021e4b9cb1257636a1b497509d9b1fde579520f8d769eb593b15d03ff41cb3.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261103225607-70fb28",
+          "original_sha256": "b8021e4b9cb1257636a1b497509d9b1fde579520f8d769eb593b15d03ff41cb3",
+          "file_size": 1248631,
+          "duration": 6.706,
+          "source_title": "rider putting on and fastening a motorcycle helmet",
+          "scene_action": "helmet",
+          "prompt": "Photorealistic documentary footage of a standing motorcyclist putting on a full-face motorcycle helmet, closing the chin strap with both hands near a parked dirt bike. Visible helmet and hands moving, clear focus on protective gear, no riding. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-03T22:57:26.200205+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/759add6b8a06c6b3c4a3f83a232849f647979b069e495bde222ed435159bcdbb.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/759add6b8a06c6b3c4a3f83a232849f647979b069e495bde222ed435159bcdbb.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261103225607-70fb28",
+          "original_sha256": "759add6b8a06c6b3c4a3f83a232849f647979b069e495bde222ed435159bcdbb",
+          "file_size": 633393,
+          "duration": 6.706,
+          "source_title": "mechanic tightening an actual motorcycle engine bolt",
+          "scene_action": "repair",
+          "prompt": "Photorealistic close-up garage documentary video: trained mechanic wearing work gloves uses a socket wrench to tighten one bolt on the side of a parked motorcycle engine. Visible hand and tool motion, real workshop, the motorcycle remains stationary. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-03T22:57:26.200205+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "riding-gear-workshop-6b52c",
+        "bike": "motorbike-safety-gear",
+        "people": "gear-specialists-6b52c",
+        "story": "helmet-gear-choice-6b52c",
+        "visual": "three-clips-6b52c"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-dirt-dd7f99d1cb42",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Грязевая трасса против ремонт байка: две разные задачи #shorts",
+      "narration": "Мотоцикл и разные сцены: в первом эпизоде райдер проезжает грязный участок, на другой записи механик работает с мотоциклом. Съёмки не связаны. Что интереснее?",
+      "description": "Две разные мотоистории: грязевая трасса и ремонт байка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ГРЯЗЕВАЯ ТРАССА",
+      "caption_middle": "РЕМОНТ БАЙКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 118,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/7bacb23419fffa4ccc2c5ad739ab5b695496519806f2247f6e0e8f4e0c27052c.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/7bacb23419fffa4ccc2c5ad739ab5b695496519806f2247f6e0e8f4e0c27052c.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104030608-f02141",
+          "original_sha256": "7bacb23419fffa4ccc2c5ad739ab5b695496519806f2247f6e0e8f4e0c27052c",
+          "file_size": 2205428,
+          "duration": 6.706,
+          "source_title": "off-road dirt bike riding through mud",
+          "scene_action": "mud",
+          "prompt": "Photorealistic action-camera footage of one helmeted dirt bike rider actually driving through a shallow muddy trail in a forest, muddy water splashes from both spinning wheels, camera follows the moving bike with realistic smooth tracking and natural wet sunlight. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T03:07:26.222940+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/946e66dfad7b38de33f02c45658e4fb8637f43083cab81a7868a0ec8d21f3bee.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/946e66dfad7b38de33f02c45658e4fb8637f43083cab81a7868a0ec8d21f3bee.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104030608-f02141",
+          "original_sha256": "946e66dfad7b38de33f02c45658e4fb8637f43083cab81a7868a0ec8d21f3bee",
+          "file_size": 721844,
+          "duration": 6.706,
+          "source_title": "mechanic tightening an actual motorcycle engine bolt",
+          "scene_action": "repair",
+          "prompt": "Photorealistic close-up garage documentary video: trained mechanic wearing work gloves uses a socket wrench to tighten one bolt on the side of a parked motorcycle engine. Visible hand and tool motion, real workshop, the motorcycle remains stationary. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T03:07:26.222940+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "muddy-trail-road-dd7f9",
+        "bike": "offroad-dirtbike",
+        "people": "trail-groups-dd7f9",
+        "story": "muddy-terrain-dd7f9",
+        "visual": "three-clips-dd7f9"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-forest-1a7c6a661009",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Два мотоэпизода: лесной заезд и городская поездка. Что выберешь? #shorts",
+      "narration": "Мотоцикл — два момента: в первом эпизоде райдер едет через лес, во втором видео байкер едет по городской улице. Это не один заезд. Что зацепило?",
+      "description": "Две разные мотоистории: лесной заезд и городская поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ЛЕСНОЙ ЗАЕЗД",
+      "caption_middle": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 129,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/8053d6458661be74364ebd73334449f96803421fd2b3e2b2428eada056e0b50f.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/8053d6458661be74364ebd73334449f96803421fd2b3e2b2428eada056e0b50f.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104015607-32bf00",
+          "original_sha256": "8053d6458661be74364ebd73334449f96803421fd2b3e2b2428eada056e0b50f",
+          "file_size": 3111065,
+          "duration": 6.706,
+          "source_title": "motorcycle rider riding through a woodland road",
+          "scene_action": "forest",
+          "prompt": "Photorealistic steady-cam documentary footage of a helmeted dirt bike rider riding forward along a paved lane through dense green forest. Wheels rotate continuously, roadside trees pass naturally, tracking camera, bright overcast daylight. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T01:57:26.405185+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/8a2cc6b672e8aafb9b3c10cfcecc3e1237f6f4f1cc1851b4d06f0515c2929ce1.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/8a2cc6b672e8aafb9b3c10cfcecc3e1237f6f4f1cc1851b4d06f0515c2929ce1.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104022608-01afb1",
+          "original_sha256": "8a2cc6b672e8aafb9b3c10cfcecc3e1237f6f4f1cc1851b4d06f0515c2929ce1",
+          "file_size": 1445043,
+          "duration": 6.706,
+          "source_title": "motorcyclist riding on a city street",
+          "scene_action": "city",
+          "prompt": "Photorealistic street documentary shot of a helmeted biker riding a standard road motorcycle along an urban street with moving traffic. Side-tracking camera keeps the real rider in focus as road markings and buildings move past, daylight and natural road surface. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T02:27:26.577357+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "forest-trail-1a7c6",
+        "bike": "forest-trailbike",
+        "people": "woods-rider-1a7c6",
+        "story": "forest-path-and-riding-1a7c6",
+        "visual": "three-clips-1a7c6"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "subscribe",
+        "overlay": "ПОДПИШИСЬ НА МОТОИСТОРИИ",
+        "description": "Подпишись, если любишь настоящие мотопутешествия."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-motocross-506c0e3f46d6",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Неожиданный контраст: мотопрыжок и поездка #shorts",
+      "narration": "Мотоцикл — два момента: в первом эпизоде райдер прыгает с трамплина, а отдельно байкер едет на мотоцикле. Съёмки не связаны. Что зацепило?",
+      "description": "Две разные мотоистории: мотопрыжок и поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "МОТОПРЫЖОК",
+      "caption_middle": "ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "race-breakbeat",
+      "music_bpm": 140,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/8105bf7446f66764c92a5aac5cce25d25ecfc5986aa209d3bcde36fc058f265a.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/8105bf7446f66764c92a5aac5cce25d25ecfc5986aa209d3bcde36fc058f265a.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104020608-0eabc9",
+          "original_sha256": "8105bf7446f66764c92a5aac5cce25d25ecfc5986aa209d3bcde36fc058f265a",
+          "file_size": 1745992,
+          "duration": 6.706,
+          "source_title": "motorcyclist jumping over a small motocross dirt mound",
+          "scene_action": "jump",
+          "prompt": "Photorealistic sports documentary footage of an experienced helmeted motocross rider launching a dirt bike off a short track jump, briefly airborne then landing and continuing forward. Smooth panning camera following the motorcycle, clear airborne phase and spinning wheels. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T02:07:25.856689+00:00"
+        },
+        {
+          "key": "clip_1",
+          "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/2ee191087c517cfc9b3bb481888c3788bde7fb400aa7ad81a7c81de45d099adb.json",
+          "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/2ee191087c517cfc9b3bb481888c3788bde7fb400aa7ad81a7c81de45d099adb.mp4",
+          "author": "GUSTAVA Original Video Production",
+          "license": "LTX OpenRAIL-M",
+          "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+          "generation_batch": "20261104020608-0eabc9",
+          "original_sha256": "2ee191087c517cfc9b3bb481888c3788bde7fb400aa7ad81a7c81de45d099adb",
+          "file_size": 1457282,
+          "duration": 6.706,
+          "source_title": "bayker riding on a dirt track",
+          "scene_action": "riding",
+          "prompt": "Photorealistic dynamic handheld documentary footage of a helmeted male motorcyclist actually riding a modern dirt bike at speed around a dry training circuit. Camera tracks the moving wheels and rider, dust trails behind; visible forward motion, safe closed course, real bike geometry. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+          "created_at": "2026-11-04T02:07:25.856689+00:00"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 6.46
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 6.46
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "race-track-506c0",
+        "bike": "motocross-bike",
+        "people": "track-racers-506c0",
+        "story": "rider-at-prepared-track-506c0",
+        "visual": "three-clips-506c0"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Поделись роликом с другом, который любит мотоциклы."
+      },
+      "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
+      "generation_provenance": "keyless_action_filmable_v1"
     }
   ]
 }
