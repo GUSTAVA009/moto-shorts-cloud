@@ -83,6 +83,11 @@ def preflight(video, metadata, privacy):
         raise ValueError("An existing MP4 is required")
     if not (100_000 <= video.stat().st_size <= 150 * 1024 * 1024):
         raise ValueError("MP4 must be 100 KB to 150 MB for this Shorts workflow")
+    # Do not permit manual direct uploads of newly synthesized low-res content.
+    # The separate 6s PRIVATE OAuth canary has its own uploader and remains
+    # out of scope; this is the production Short publisher.
+    from production_quality import require_native_final
+    require_native_final(video)
     data = json.loads(metadata.read_text(encoding="utf-8-sig"))
     return build_body(data, privacy), fingerprint(video)
 
