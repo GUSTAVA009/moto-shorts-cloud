@@ -2,6 +2,7 @@
 """Vendor-independent release gate for an actual reviewed MP4 (no upload)."""
 import argparse
 import json
+import re
 from pathlib import Path
 
 from publication_safety import publication_allowed
@@ -15,6 +16,25 @@ def check(episode_id, staged, catalog=None):
     if catalog is None:
         catalog = json.loads((HERE / "episodes.json").read_text(encoding="utf8"))
     entries = [e for e in catalog.get("episodes", []) if e.get("id") == episode_id]
+    if not entries:
+        # Independent, SHA-pinned owner render is not necessarily a
+        # two-stock-clips factory draft. Never loosen historical catalog tests
+        # by injecting this distinct production type into episodes.json.
+        if not re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,99}", episode_id):
+            raise ValueError("UNVERIFIED_EPISODE_ID")
+        manifest_file = HERE / "release_manifests" / (episode_id + ".json")
+        if not manifest_file.is_file():
+            raise ValueError("UNVERIFIED_EPISODE_ID")
+        manifest = json.loads(manifest_file.read_text(encoding="utf8"))
+        ep = manifest.get("episode") or {}
+        if (manifest.get("episode_id") != episode_id
+                or ep.get("id") != episode_id
+                or ep.get("editorial_format") != "owner_original_single_source_explainer_v4"
+                or manifest.get("final_mp4_sha256") != ep.get("final_video_sha256")
+                or not re.fullmatch(r"[0-9a-f]{64}", str(manifest.get("final_mp4_sha256") or ""))):
+            raise ValueError("IMMUTABLE_OWNER_RELEASE_MANIFEST_MISMATCH")
+        entries = [ep]
+        catalog = {"episodes": [*catalog.get("episodes", []), ep]}
     if len(entries) != 1:
         raise ValueError("UNVERIFIED_EPISODE_ID")
     episode = entries[0]
