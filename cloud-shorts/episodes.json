@@ -20282,17 +20282,17 @@
       "voice_engine": "gustava_selfhosted_qwen3",
       "voice_profile": "gustava_cartoon_b_qwen3_v1",
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
-      "title": "Что больше цепляет: поездка или грязевая трасса? #shorts",
-      "narration": "Мотоцикл и разные сцены: в первой съёмке байкер едет на мотоцикле, на другой записи райдер проезжает грязный участок. Это разные моменты. Что зацепило?",
-      "description": "Две разные мотоистории: поездка и грязевая трасса. Независимые кадры, без выдуманного общего события.\n\n#shorts",
-      "caption_start": "ПОЕЗДКА",
-      "caption_middle": "ГРЯЗЕВАЯ ТРАССА",
-      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "title": "Мотоцикл в грязи: почему сцепление меняется #shorts",
+      "narration": "Мотоцикл: сначала байкер едет на мотоцикле. В другом кадре райдер проезжает грязный участок. В грязи сцепление меняется; избегай резких движений.",
+      "description": "В грязи сцепление меняется; избегай резких движений. Два независимых иллюстративных видео; не один заезд.\n\n#мото #shorts",
+      "caption_start": "ГРЯЗЬ МЕНЯЕТ ПРАВИЛА",
+      "caption_middle": "СЦЕПЛЕНИЕ ДРУГОЕ",
+      "caption_end": "ДЕЙСТВУЙ ПЛАВНО",
       "max_duration_seconds": 34,
       "opening_trim_seconds": 0.1,
       "music_style": "race-breakbeat",
       "music_bpm": 116,
-      "editorial_format": "source_anchored_action_contrast",
+      "editorial_format": "original_action_microguide_v1",
       "footage": [
         {
           "key": "clip_0",
@@ -20359,7 +20359,8 @@
         "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "Unattended source-grounded microguide, immutable owner LTX originals",
+      "creative_treatment": "microguide_mud_ride"
     },
     {
       "id": "moto-repair-d7d9d291ff83",
@@ -20370,17 +20371,17 @@
       "voice_engine": "gustava_selfhosted_qwen3",
       "voice_profile": "gustava_cartoon_b_qwen3_v1",
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
-      "title": "Городская поездка и поездка — какой кадр сильнее? #shorts",
-      "narration": "Мотоцикл и разные сцены: сначала байкер едет по городской улице, затем отдельно байкер едет на мотоцикле. Это не один заезд. Что интереснее?",
-      "description": "Две разные мотоистории: городская поездка и поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
-      "caption_start": "ГОРОДСКАЯ ПОЕЗДКА",
-      "caption_middle": "ПОЕЗДКА",
-      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "title": "Город и мототрек: где нужна особая внимательность #shorts",
+      "narration": "Мотоцикл: сначала байкер едет по городской улице. В другом кадре байкер едет на мотоцикле. В городе непредсказуемый поток: нужен запас обзора.",
+      "description": "В городе непредсказуемый поток: нужен запас обзора. Два независимых иллюстративных видео; не один заезд.\n\n#мото #shorts",
+      "caption_start": "ГОРОД И ТРЕК",
+      "caption_middle": "РАЗНЫЕ РИСКИ",
+      "caption_end": "НЕ СПЕШИ",
       "max_duration_seconds": 34,
       "opening_trim_seconds": 0.1,
       "music_style": "garage-groove",
       "music_bpm": 127,
-      "editorial_format": "source_anchored_action_contrast",
+      "editorial_format": "original_action_microguide_v1",
       "footage": [
         {
           "key": "clip_0",
@@ -20447,7 +20448,8 @@
         "description": "Подпишись, если любишь настоящие мотопутешествия."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "Unattended source-grounded microguide, immutable owner LTX originals",
+      "creative_treatment": "microguide_city_ride"
     },
     {
       "id": "moto-mountain-b71a6680ce84",
@@ -20458,17 +20460,17 @@
       "voice_engine": "gustava_selfhosted_qwen3",
       "voice_profile": "gustava_cartoon_b_qwen3_v1",
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
-      "title": "Что меняется между надевание шлема и горный маршрут? #shorts",
-      "narration": "Мотоцикл и разные сцены: сначала райдер надевает мотошлем, а отдельно райдер едет по горной дороге. Видео сняты отдельно. На что обратил внимание?",
-      "description": "Две разные мотоистории: надевание шлема и горный маршрут. Независимые кадры, без выдуманного общего события.\n\n#shorts",
-      "caption_start": "НАДЕВАНИЕ ШЛЕМА",
-      "caption_middle": "ГОРНЫЙ МАРШРУТ",
-      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "title": "Шлем перед горной мотопоездкой: важна посадка #shorts",
+      "narration": "Мотоцикл: сначала райдер надевает мотошлем. В другом кадре райдер едет по горной дороге. Экипировку подгоняют до горного старта, не в пути.",
+      "description": "Экипировку подгоняют до горного старта, не в пути. Два независимых иллюстративных видео; не один заезд.\n\n#мото #shorts",
+      "caption_start": "ПЕРЕД СТАРТОМ",
+      "caption_middle": "ПРОВЕРЬ ШЛЕМ",
+      "caption_end": "ДО ГОРНОЙ ДОРОГИ",
       "max_duration_seconds": 34,
       "opening_trim_seconds": 0.1,
       "music_style": "action",
       "music_bpm": 138,
-      "editorial_format": "source_anchored_action_contrast",
+      "editorial_format": "original_action_microguide_v1",
       "footage": [
         {
           "key": "clip_0",
@@ -20535,7 +20537,8 @@
         "description": "Поделись роликом с другом, который любит мотоциклы."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "Unattended source-grounded microguide, immutable owner LTX originals",
+      "creative_treatment": "microguide_helmet_mountain"
     },
     {
       "id": "moto-rain-d47296323581",
