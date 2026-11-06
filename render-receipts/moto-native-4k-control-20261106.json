@@ -1,11 +1,11 @@
 {
   "id": "moto-native-4k-control-20261106",
   "state": "reserved",
-  "run_id": "42272301505",
-  "attempt_count": 1,
-  "preview_fingerprint": "80aefd6d7eb8280438fe873b324bad4458a46f09257a3245b8773a3b90921617",
+  "run_id": "42274119556",
+  "attempt_count": 2,
+  "preview_fingerprint": "dcd28ed8a9fdf67d00a13ec41b18cb1e7cbffe8bd9b1133f14e1186d4d70bc24",
   "deep_source_sha256": "10624b0af55a9c4804cc622d6ca3e6a585e2d23250489373b94c92ce6be96abf",
   "selfhosted_voice_id": null,
-  "previous_run_id": null,
+  "previous_run_id": "42272301505",
   "notes": "Revised preview only; never retry a public or uncertain upload."
 }
