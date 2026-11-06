@@ -20857,8 +20857,8 @@
       "voice_profile": "gustava_cartoon_b_qwen3_v1",
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
       "title": "Городской асфальт и грязная колея: разные риски #shorts",
-      "narration": "Мотоцикл: сначала байкер едет по городской улице. В другом кадре райдер проезжает грязный участок. В грязи и потоке машин риски разные — смотри вперёд.",
-      "description": "В грязи и потоке машин риски разные — смотри вперёд. Два независимых иллюстративных видео; не один заезд.\n\n#мото #shorts",
+      "narration": "Мотоцикл: сначала байкер едет по городской улице. В другом кадре райдер проезжает грязный участок. В городе следи за машинами, а в грязи действуй плавно.",
+      "description": "Городская улица и грязный участок требуют разной реакции: следи за машинами и избегай резких движений на скользком покрытии. Два независимых иллюстративных видео, не один заезд.\n\n#мото #shorts",
       "caption_start": "РАЗНЫЕ ДОРОГИ",
       "caption_middle": "СЦЕПЛЕНИЕ И ОБЗОР",
       "caption_end": "БУДЬ ВНИМАТЕЛЕН",
@@ -20934,7 +20934,28 @@
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
       "generation_provenance": "Unattended source-grounded microguide, immutable owner LTX originals",
-      "creative_treatment": "microguide_city_mud"
+      "creative_treatment": "microguide_city_mud",
+      "voice_revision_requested": true,
+      "voice_revision_priority": true,
+      "voice_revision_reason": "verified_failed_private_qwen_phonetic_rephrase",
+      "voice_revision_evidence": {
+        "failed_run_id": "42265495571",
+        "failed_preview_fingerprint": "41ceab71295cd87ef386492dc42948980fde37da104bd4c7ce7e99d6ada8a796",
+        "prior_artifact_id": 13525589657,
+        "old_narration_sha256": "525df6f98bb9891e1df052d0ce26531ac9150cc5122bf9f9d55d062703de9922",
+        "new_narration_sha256": "2715c3f835380ef9c2f84c20286b7d6de6410fdbd2d465b12003adf8ac7f6af5",
+        "raw_asr_coverage": 0.957,
+        "mixed_asr_coverage": 0.957,
+        "expected_word": "потоке",
+        "heard_word": "потоки",
+        "unchanged_source_ids": [
+          "gustava-original-f15909e115b8da53bb9b1149ce0a9dc2cb6543ed1bdc36035e7902579408459d",
+          "gustava-original-46719937a3955ef8ff0d155460ab54e772104fbadf20256d284ec748ae88ce59"
+        ],
+        "narrator_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
+        "public_upload_permitted": false,
+        "max_total_preview_attempts": 2
+      }
     }
   ]
 }
