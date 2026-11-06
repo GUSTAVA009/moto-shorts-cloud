@@ -136,7 +136,7 @@ def propose(episode, already_used):
         "title":title,
         "narration":narrations[0],
         "description":(
-           insight+" Два независимых иллюстративных видео; не один заезд.\n\n#мото #Shorts"
+           insight+" Два независимых иллюстративных видео; не один заезд.\n\n#мото #shorts"
         ),
         "caption_start":a,"caption_middle":b,"caption_end":c,
         "editorial_format":"original_action_microguide_v1",

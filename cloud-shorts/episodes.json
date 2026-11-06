@@ -9885,12 +9885,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -10033,12 +10033,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -10121,12 +10121,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -10209,12 +10209,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -10298,12 +10298,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -10348,7 +10348,7 @@
         ],
         "original_voice_reference_sha256": "76d834646534a0463889a824895a1e54ce5ed672b2dda46babba151b32a63aef",
         "raw_coverage": 0.909,
-        "mixed_coverage": 1.0,
+        "mixed_coverage": 1,
         "prior_mixed_qa_passed": true,
         "prior_attempt_count": 1,
         "policy": "distinct_phonetic_progress_only"
@@ -10411,12 +10411,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -10499,12 +10499,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -10587,12 +10587,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -10675,12 +10675,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -10763,12 +10763,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -10851,12 +10851,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -10939,12 +10939,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -11027,12 +11027,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -11115,12 +11115,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -11203,12 +11203,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -11291,12 +11291,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -11379,12 +11379,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -11508,12 +11508,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -11596,12 +11596,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -11684,12 +11684,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -11813,12 +11813,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -11901,12 +11901,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -11989,12 +11989,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -12118,12 +12118,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -12206,12 +12206,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -12294,12 +12294,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -12423,12 +12423,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -12511,12 +12511,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -12640,12 +12640,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -12769,12 +12769,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -12857,12 +12857,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -12945,12 +12945,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -13074,12 +13074,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -13162,12 +13162,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -13250,12 +13250,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -13338,12 +13338,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -13426,12 +13426,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -13514,12 +13514,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -13602,12 +13602,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -13690,12 +13690,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -13778,12 +13778,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -13866,12 +13866,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -13954,12 +13954,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -14042,12 +14042,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -14130,12 +14130,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -14218,12 +14218,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -14306,12 +14306,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -14394,12 +14394,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -14482,12 +14482,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -14570,12 +14570,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -14658,12 +14658,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -14786,12 +14786,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -14875,12 +14875,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -14964,12 +14964,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -15053,12 +15053,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -15142,12 +15142,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -15231,12 +15231,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -15320,12 +15320,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -15409,12 +15409,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -15498,12 +15498,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -15586,12 +15586,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -15715,12 +15715,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -15803,12 +15803,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -15891,12 +15891,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -15979,12 +15979,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -16107,12 +16107,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -16195,12 +16195,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -16283,12 +16283,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -16371,12 +16371,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -16805,12 +16805,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -16893,12 +16893,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -17022,12 +17022,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -17151,12 +17151,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -17280,12 +17280,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -17409,12 +17409,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -17538,12 +17538,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -17626,12 +17626,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -17714,12 +17714,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -17802,12 +17802,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -17890,12 +17890,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -18019,12 +18019,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -18148,12 +18148,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -18236,12 +18236,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -18324,12 +18324,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -18453,12 +18453,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -18541,12 +18541,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -18629,12 +18629,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -18758,12 +18758,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -18846,12 +18846,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -18975,12 +18975,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -19104,12 +19104,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -19192,12 +19192,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -19280,12 +19280,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -19368,12 +19368,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -19456,12 +19456,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -19544,12 +19544,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -19632,12 +19632,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -19720,12 +19720,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -19808,12 +19808,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -19937,12 +19937,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -20066,12 +20066,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -20154,12 +20154,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -20242,12 +20242,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -20330,12 +20330,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -20418,12 +20418,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -20506,12 +20506,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -20594,12 +20594,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -20636,7 +20636,7 @@
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
       "title": "Лесная тропа — не площадка для мотопрыжка #shorts",
       "narration": "Мотоцикл: сначала райдер едет через лес. В другом кадре райдер прыгает с трамплина. Трамплины отрабатывают на треке, а не на лесной тропе.",
-      "description": "Трамплины отрабатывают на треке, а не на лесной тропе. Два независимых иллюстративных видео; не один заезд.\n\n#мото #Shorts",
+      "description": "Трамплины отрабатывают на треке, а не на лесной тропе. Два независимых иллюстративных видео; не один заезд.\n\n#мото #shorts",
       "caption_start": "НЕ ПУТАЙ УСЛОВИЯ",
       "caption_middle": "ТРАССА И ТРОПА",
       "caption_end": "БЕЗ ТРЮКОВ В ЛЕСУ",
@@ -20682,12 +20682,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -20725,7 +20725,7 @@
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
       "title": "Почему мотоцикл в лесу требует другого внимания? #shorts",
       "narration": "Мотоцикл: сначала байкер едет по городской улице. В другом кадре райдер едет через лес. Обзор и сцепление разные: не спеши, оставь запас для реакции.",
-      "description": "Обзор и сцепление разные: не спеши, оставь запас для реакции. Два независимых иллюстративных видео; не один заезд.\n\n#мото #Shorts",
+      "description": "Обзор и сцепление разные: не спеши, оставь запас для реакции. Два независимых иллюстративных видео; не один заезд.\n\n#мото #shorts",
       "caption_start": "РАЗНЫЙ ОБЗОР",
       "caption_middle": "ПОКРЫТИЕ МЕНЯЕТСЯ",
       "caption_end": "СМОТРИ ВПЕРЁД",
@@ -20771,12 +20771,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
@@ -20814,7 +20814,7 @@
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
       "title": "Городской асфальт и грязная колея: разные риски #shorts",
       "narration": "Мотоцикл: сначала байкер едет по городской улице. В другом кадре райдер проезжает грязный участок. В грязи и потоке машин риски разные — смотри вперёд.",
-      "description": "В грязи и потоке машин риски разные — смотри вперёд. Два независимых иллюстративных видео; не один заезд.\n\n#мото #Shorts",
+      "description": "В грязи и потоке машин риски разные — смотри вперёд. Два независимых иллюстративных видео; не один заезд.\n\n#мото #shorts",
       "caption_start": "РАЗНЫЕ ДОРОГИ",
       "caption_middle": "СЦЕПЛЕНИЕ И ОБЗОР",
       "caption_end": "БУДЬ ВНИМАТЕЛЕН",
@@ -20860,12 +20860,12 @@
       "shots": [
         {
           "source": "clip_0",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         },
         {
           "source": "clip_1",
-          "start": 0.0,
+          "start": 0,
           "seconds": 6.46
         }
       ],
