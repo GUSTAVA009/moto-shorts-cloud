@@ -1,0 +1,11 @@
+{
+  "id": "moto-forest-e00ff7b3a17b",
+  "state": "reserved",
+  "run_id": "42263666045",
+  "attempt_count": 1,
+  "preview_fingerprint": "14f541a14151fee246e75d9b778ee2d263c8d56580274f87a1f9c4f799c85f1b",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-cartoon-b-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
