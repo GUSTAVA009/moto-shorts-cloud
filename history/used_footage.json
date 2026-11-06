@@ -2082,6 +2082,16 @@
       "episode": "moto-forest-b0268d0a1165",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/f2d7c2ee6653fde4dbb0c6ebd4536e0c273290bdc069f1f04a01cf68670015a6.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-3cce90cdea42e2e81ce0e5a4393684d4a01ecf92f59fe6d300251c14350459d7": {
+      "episode": "moto-city-14d40ef2f631",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/3cce90cdea42e2e81ce0e5a4393684d4a01ecf92f59fe6d300251c14350459d7.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-a59af4b2cadefdf05b159eeddd8b66edc8a879123707f6233f7e7a3a55438f2b": {
+      "episode": "moto-city-14d40ef2f631",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/a59af4b2cadefdf05b159eeddd8b66edc8a879123707f6233f7e7a3a55438f2b.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3365,6 +3375,13 @@
       "people": "woods-rider-b0268",
       "story": "forest-path-and-riding-b0268",
       "visual": "three-clips-b0268"
+    },
+    "moto-city-14d40ef2f631": {
+      "environment": "urban-streets-14d40",
+      "bike": "urban-motorbike",
+      "people": "city-riders-14d40",
+      "story": "urban-riding-14d40",
+      "visual": "three-clips-14d40"
     }
   }
 }
