@@ -47,3 +47,50 @@ jobs:
           print("CHECKED: " + ("private-configuration-present" if not missing and channel_ok else "private-configuration-blocked"))
           print("PUBLIC_API_UPLOAD: " + ("configuration-present-not-token-tested" if not missing and channel_ok else "blocked-missing-setup"))
           PY
+
+      - name: Verify real Google OAuth refresh and exact GUSTAVA channel (read-only)
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet --disable-pip-version-check google-auth google-api-python-client
+          python3 - <<'PY'
+          import os, sys
+          from google.oauth2.credentials import Credentials
+          from google.auth.transport.requests import Request
+          from googleapiclient.discovery import build
+
+          exact = "UCS0QCodPcFBTjMt4ioEWOUw"
+          required = ("YOUTUBE_CLIENT_ID", "YOUTUBE_CLIENT_SECRET", "YOUTUBE_REFRESH_TOKEN")
+          if any(not os.getenv(key) for key in required):
+              raise SystemExit("GOOGLE_OAUTH_SECRETS_MISSING")
+          if os.getenv("YOUTUBE_EXPECTED_CHANNEL_ID") != exact:
+              raise SystemExit("PINNED_YOUTUBE_CHANNEL_MISMATCH")
+          try:
+              creds = Credentials(
+                  token=None,
+                  refresh_token=os.environ["YOUTUBE_REFRESH_TOKEN"],
+                  token_uri="https://oauth2.googleapis.com/token",
+                  client_id=os.environ["YOUTUBE_CLIENT_ID"],
+                  client_secret=os.environ["YOUTUBE_CLIENT_SECRET"],
+                  scopes=["https://www.googleapis.com/auth/youtube.upload",
+                          "https://www.googleapis.com/auth/youtube.readonly"],
+              )
+              creds.refresh(Request())
+              api = build("youtube", "v3", credentials=creds, cache_discovery=False)
+              items = api.channels().list(part="id", mine=True).execute().get("items", [])
+              if [entry.get("id") for entry in items] != [exact]:
+                  raise RuntimeError("YOUTUBE_OAUTH_AUTHORIZED_WRONG_CHANNEL")
+          except Exception as exc:
+              # Never output access token, refresh token, client secret or
+              # returned credentials into public Actions logs.
+              print("GUSTAVA_DIRECT_OAUTH_FAILED", type(exc).__name__)
+              sys.exit(1)
+          print("GUSTAVA_DIRECT_OAUTH_LIVE_VERIFIED", exact)
+          print("No upload or channel mutation was performed.")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf8") as out:
+              out.write("\n**Live Google token refresh + authenticated channel ID: VERIFIED.**\n")
+          PY
