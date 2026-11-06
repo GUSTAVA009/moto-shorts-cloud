@@ -20956,6 +20956,113 @@
         "public_upload_permitted": false,
         "max_total_preview_attempts": 2
       }
+    },
+    {
+      "id": "moto-native-4k-control-20261106",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "visual_director_version": 3,
+      "title": "Мотокросс: контроль важнее скорости #shorts",
+      "narration": "На рыхлой трассе мотоцикл может потерять сцепление за долю секунды. Поэтому райдеры действуют плавно и смотрят вперёд. А прыжок начинается не в воздухе, а с подготовки на треке. Скорость без контроля ничего не стоит.",
+      "description": "Рыхлый грунт и подготовка к прыжку требуют разного мастерства, но одного принципа: контролируй мотоцикл, а не гонись за эффектным кадром. Независимые кадры двух авторов, не одно событие.\n\n#мотокросс #мото #shorts",
+      "caption_start": "СЦЕПЛЕНИЕ ТРЕБУЕТ ВНИМАНИЯ",
+      "caption_middle": "ПРЫЖОК НАЧИНАЕТСЯ ДО ВЗЛЁТА",
+      "caption_end": "СКОРОСТЬ НЕ ЗАМЕНЯЕТ КОНТРОЛЬ",
+      "max_duration_seconds": 18.5,
+      "opening_trim_seconds": 0,
+      "music_style": "action",
+      "music_bpm": 129,
+      "clean_speech_intro_seconds": 0.4,
+      "caption_fit_required": true,
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5803634/",
+          "source_page": "https://www.pexels.com/video/people-riding-a-dirt-bike-5803634/",
+          "source_title": "People Riding a Dirt Bike",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "duration": 23.92,
+          "topics": [
+            "motorcycle",
+            "offroad",
+            "action"
+          ]
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/34110751/",
+          "source_page": "https://www.pexels.com/video/dynamic-motocross-stunts-at-melbourne-show-34110751/",
+          "source_title": "Dynamic Motocross Stunts at Melbourne Show",
+          "author": "Joolsmagools",
+          "license": "Pexels License",
+          "duration": 12,
+          "topics": [
+            "motorcycle",
+            "motocross",
+            "stunt"
+          ]
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 2.2,
+          "seconds": 9.6
+        },
+        {
+          "source": "clip_1",
+          "start": 3,
+          "seconds": 6
+        }
+      ],
+      "active_ride_scene_seconds": 10,
+      "editorial": {
+        "environment": "forest-dirttrack-and-melbourne-stunt-ramp",
+        "people": "offroad-trail-group-and-aerial-show-riders",
+        "story": "traction-control-to-prepared-stunt",
+        "visual": "loose-trail-moving-riders-and-airborne-backflip",
+        "bike": "motocross-trail-and-stunt-dirtbikes"
+      },
+      "editorial_format": "original_action_microguide_v1",
+      "tags": [
+        "мотокросс",
+        "мото",
+        "безопасность",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ОПЫТ",
+        "description": "Напиши в комментариях, что считаешь главным на трассе."
+      },
+      "source_selection": "Two individually verified native 2160x3840 Pexels video source MP4s; edited for actionable motorcycle narrative; independent creators, no single-event claim.",
+      "generation_provenance": "Owner brief built for original official GUSTAVA Deep voice and automatic quality-gated GitHub 2K production.",
+      "mix_category": "engineering",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/183f2362-8f1e-49f7-8e8d-58ffe4cdaae7.mp3",
+        "transcript_sha256": "8711ec80a63438f0355fdf9e0ca23185b93be4e86db47e85b9def534fc1a27a8",
+        "source_audio_sha256": "10624b0af55a9c4804cc622d6ca3e6a585e2d23250489373b94c92ce6be96abf",
+        "context_id": "26115d22dcad4c2b90a07e70bb3c8b9b",
+        "licence_mode": "public_provider_attribution"
+      },
+      "release_priority": "first_native_4k_moto_approved",
+      "source_resolution_assertions": {
+        "clip_0": [
+          2160,
+          3840
+        ],
+        "clip_1": [
+          2160,
+          3840
+        ]
+      }
     }
   ]
 }
