@@ -1,0 +1,8 @@
+{
+  "channel_id": "UCS0QCodPcFBTjMt4ioEWOUw",
+  "episode": "bolt-precision-20261106",
+  "run_id": "42261544288",
+  "sha256": "a449ad6c50133c679efe128459e0089a6bdcba2f5a5f41c9183c718552d3097f",
+  "status": "reserved",
+  "warning": "Do not retry if upload outcome is uncertain; reconcile with YouTube Studio."
+}
