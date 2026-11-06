@@ -1,0 +1,51 @@
+name: GUSTAVA - Autonomous Motorcycle Story Recovery (no templates)
+on:
+  workflow_dispatch:
+  schedule:
+    # Wake before several production slots. Never fabricate finished MP4s.
+    - cron: "18 0,3,6,9,12,15,18,21 * * *"
+    - cron: "48 1,4,7,10,13,16,19,22 * * *"
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/autonomous-moto-microguides.yml'
+      - 'cloud-shorts/repair_generic_microguides.py'
+      - 'cloud-shorts/test_repair_generic_microguides.py'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: gustava-original-microguide-refill
+  cancel-in-progress: false
+
+jobs:
+  repair-repetitive-scripts:
+    if: github.repository == 'GUSTAVA009/moto-shorts-cloud'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate immutable media rights and truly different motorcycle microguides
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s cloud-shorts -p 'test_repair_generic_microguides.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_editorial_novelty.py' -v
+          python3 -m unittest discover -s cloud-shorts -p 'test_moto_assets.py' -v
+      - name: Recover only NEVER RENDERED owner-source motorcycle drafts
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          python3 cloud-shorts/repair_generic_microguides.py
+      - name: Honesty about factory outputs
+        if: always()
+        run: |
+          {
+            echo '### Original motorcycle story recovery'
+            echo 'Only previously unrendered/private LTX-source drafts may be revised.'
+            echo 'Videos still require independent Russian voice QA, frame review, real MP4, and verified YouTube ID.'
+            echo 'No staged script is a video and this workflow does not publish.'
+          } >> "$GITHUB_STEP_SUMMARY"
