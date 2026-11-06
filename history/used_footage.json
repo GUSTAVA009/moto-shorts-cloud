@@ -2192,6 +2192,16 @@
       "episode": "moto-mountain-b71a6680ce84",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/44e3fa00afc1f9e3cf25e432711da3f75413341b4eca0c567f830bf9778435c8.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-7f755fc67e9f24841e83ced05bcdfe0361636d8da0daf2461ce29147e1b512d4": {
+      "episode": "moto-city-20ed6e73f1f6",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/7f755fc67e9f24841e83ced05bcdfe0361636d8da0daf2461ce29147e1b512d4.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-6357da1f05d02d3379fd17f86cf91db472752fb881cd5e4c5c5c711f0784b708": {
+      "episode": "moto-city-20ed6e73f1f6",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/6357da1f05d02d3379fd17f86cf91db472752fb881cd5e4c5c5c711f0784b708.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3552,6 +3562,13 @@
       "people": "mountain-travelers-b71a6",
       "story": "mountain-journey-b71a6",
       "visual": "three-clips-b71a6"
+    },
+    "moto-city-20ed6e73f1f6": {
+      "environment": "urban-streets-20ed6",
+      "bike": "urban-motorbike",
+      "people": "city-riders-20ed6",
+      "story": "urban-riding-20ed6",
+      "visual": "three-clips-20ed6"
     }
   }
 }
