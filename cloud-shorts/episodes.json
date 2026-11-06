@@ -20059,17 +20059,17 @@
       "voice_engine": "gustava_selfhosted_qwen3",
       "voice_profile": "gustava_cartoon_b_qwen3_v1",
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
-      "title": "Внимание к деталям: мотопрыжок и поездка #shorts",
-      "narration": "Мотоцикл — два момента: вначале райдер прыгает с трамплина, во втором видео байкер едет на мотоцикле. Видео сняты отдельно. Что интереснее?",
-      "description": "Две разные мотоистории: мотопрыжок и поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
-      "caption_start": "МОТОПРЫЖОК",
-      "caption_middle": "ПОЕЗДКА",
-      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "title": "Прыжок на мотоцикле: подготовка важнее смелости #shorts",
+      "narration": "Мотоцикл: сначала райдер прыгает с трамплина. В другом кадре байкер едет на мотоцикле. Трюк требует тренировки на закрытой трассе, не спеши.",
+      "description": "Трюк требует тренировки на закрытой трассе, не спеши. Два независимых иллюстративных видео; не один заезд.\n\n#мото #shorts",
+      "caption_start": "НЕ ПРОСТО ПРЫЖОК",
+      "caption_middle": "ТРЕК И ПОДГОТОВКА",
+      "caption_end": "НЕ ПОВТОРЯЙ НА ДОРОГЕ",
       "max_duration_seconds": 34,
       "opening_trim_seconds": 0.1,
       "music_style": "race-breakbeat",
       "music_bpm": 120,
-      "editorial_format": "source_anchored_action_contrast",
+      "editorial_format": "original_action_microguide_v1",
       "footage": [
         {
           "key": "clip_0",
@@ -20136,7 +20136,8 @@
         "description": "Подпишись, если любишь настоящие мотопутешествия."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "Unattended source-grounded microguide, immutable owner LTX originals",
+      "creative_treatment": "microguide_jump_ride"
     },
     {
       "id": "moto-racing-6b4c3667fd5d",
