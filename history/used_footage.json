@@ -2132,6 +2132,16 @@
       "episode": "moto-helmet-902c14e30dad",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/0857d2a5f232ea9d2457d464003a88823d889bbfc95a94234399996ce6b8a001.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-8d67561bc9fd406f5d8b5ef90897d438c1e154756b7589f8cb89898b2a027162": {
+      "episode": "moto-dirt-dde92fdd3c45",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/8d67561bc9fd406f5d8b5ef90897d438c1e154756b7589f8cb89898b2a027162.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-86e47c074eece3c270cf3647c0f06c4ca82079db8a7d9d8643e5d8d9a587fe14": {
+      "episode": "moto-dirt-dde92fdd3c45",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/86e47c074eece3c270cf3647c0f06c4ca82079db8a7d9d8643e5d8d9a587fe14.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3450,6 +3460,13 @@
       "people": "gear-specialists-902c1",
       "story": "helmet-gear-choice-902c1",
       "visual": "three-clips-902c1"
+    },
+    "moto-dirt-dde92fdd3c45": {
+      "environment": "muddy-trail-road-dde92",
+      "bike": "offroad-dirtbike",
+      "people": "trail-groups-dde92",
+      "story": "muddy-terrain-dde92",
+      "visual": "three-clips-dde92"
     }
   }
 }
