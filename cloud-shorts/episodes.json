@@ -19754,7 +19754,7 @@
     {
       "id": "moto-dirt-dde92fdd3c45",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -19837,7 +19837,48 @@
         "description": "Поставь лайк, если тебе нравится эта мототема."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "68f5ff492859375d3531b430fd753972314d45dec67a62f3cbc46c737ee08d64",
+      "reviewed_artifact_run_id": "42235165517",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-dirt-dde92fdd3c45",
+        "render_run_id": "42235165517",
+        "mp4_sha256": "68f5ff492859375d3531b430fd753972314d45dec67a62f3cbc46c737ee08d64",
+        "asset_fingerprint": "57016486cc564a7fb6f8e998fccb0253d6df31cec6b6be5a20cd811600e41f07",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-06T15:00:51.571961+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на мотоцикле проезжает по грязной дороге в лесу; видны колеса и движение.",
+            "frames_sha256": [
+              "d5027e9c77370ec5db7a43b57fdad7be1fc7b8dbc858598536967229dad2e279",
+              "d24835a73101cc81844c17a909a4cd14d7ddda63c262544804309a500f9b46e4",
+              "44ed6dc2b1f8787cbbee75fa868b6c84f3f4a15a3d138e35b3ed522fb6163535"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Рука механика работает с двигателем мотоцикла на фоне разобранного байка; видны детали двигателя и инструменты.",
+            "frames_sha256": [
+              "0dfe6bce04e1780cc246e60d7226feb14d6ae78a5f4f20efb0fa0b6f9cb370f6",
+              "4207fbd381cb8b66561be754870c7e971b2cf0ef3c52c130df43ef79662db613",
+              "0d5e47cf9f9efac56c332f0fc18d2a7533031f51c01764c3993cae65307a5c4b"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-forest-c8d89922f6f9",
