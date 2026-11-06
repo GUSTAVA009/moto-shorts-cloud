@@ -63,6 +63,10 @@ def check(episode_id, staged, catalog=None):
     voice["mixed_audio"] = mixed
     publication_allowed(episode, meta, voice, video)
     validate_video(video)
+    # This is on the only enabled production publication route. A QA label
+    # cannot upgrade 720p pixels to a genuine 2K/4K master.
+    from production_quality import require_native_final
+    require_native_final(video)
     approved = dict(meta)
     approved["contains_synthetic_media"] = should_disclose_generated_content(episode)
     approved["reviewed_for_direct_youtube_upload"] = True
