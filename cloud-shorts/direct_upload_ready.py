@@ -38,6 +38,12 @@ def check(episode_id, staged, catalog=None):
     if len(entries) != 1:
         raise ValueError("UNVERIFIED_EPISODE_ID")
     episode = entries[0]
+    # Owner rejected the 2026-11-06 single moving 6.9s shot plus 12s
+    # branded vector slides. Metadata/ASR passes cannot override that
+    # actual editorial rejection. Do not release any more V4 variants;
+    # future formats need a new independently frame-reviewed policy.
+    if episode.get("editorial_format") == "owner_original_single_source_explainer_v4":
+        raise ValueError("OWNER_REJECTED_BRANDED_STATIC_SLIDE_FORMAT")
     if episode.get("auto_publish") is not True:
         raise ValueError("EPISODE_NOT_APPROVED_FOR_PUBLICATION")
     if is_repeated_visual_formula(episode, catalog["episodes"]):

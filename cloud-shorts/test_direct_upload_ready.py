@@ -12,6 +12,13 @@ class DirectUploadReadyTests(unittest.TestCase):
                 check("not-approved", Path(tmp), {"episodes": [{"id": "not-approved",
                                                             "auto_publish": False}]})
 
+    def test_owner_rejected_single_source_branded_slide_deck_cannot_publish(self):
+        with TemporaryDirectory() as tmp:
+            episode={"id":"bolt-precision-20261106","auto_publish":True,
+                     "editorial_format":"owner_original_single_source_explainer_v4"}
+            with self.assertRaisesRegex(ValueError,"OWNER_REJECTED_BRANDED_STATIC_SLIDE_FORMAT"):
+                check(episode["id"],Path(tmp),{"episodes":[episode]})
+
     def test_missing_media_or_qa_is_not_publishable(self):
         with TemporaryDirectory() as tmp:
             with self.assertRaisesRegex(ValueError, "MISSING"):

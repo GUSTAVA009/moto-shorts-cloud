@@ -52,6 +52,8 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
                 "mp4_sha256":"a"*64,
                 "asset_fingerprint":visual_asset_fingerprint(ep),
                 "model_provider":"openai","model":"gpt-4.1-mini",
+                "no_embedded_channel_branding":True,
+                "no_static_slide_majority":True,
                 "chapters":[{"source":f["key"],"visible_motorcycle":True,
                              "action_supported":True,"confidence":0.99,
                              "observed":"Actual motorcycle action in real scene",
@@ -88,7 +90,9 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
                       "confidence":0.95,"observed":"Rider seen airborne over the jump"}],
                   "narration_fully_supported":True,
                   "independent_events_not_fabricated":True,
-                  "safe_for_release":True}
+                  "safe_for_release":True,
+                  "no_embedded_channel_branding":True,
+                  "no_static_slide_majority":True}
         sent=[]
         def fake_urlopen(request, timeout=0):
             sent.append((request,timeout))
@@ -124,8 +128,35 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
                  "confidence":0.98,"observed":"A jump is clearly visible"}],
               "narration_fully_supported":True,
               "independent_events_not_fabricated":True,
-              "safe_for_release":True}
+              "safe_for_release":True,
+                  "no_embedded_channel_branding":True,
+                  "no_static_slide_majority":True}
         self.assertFalse(review.verified_model_response(weak,chapters))
+
+    def test_owner_rejected_brand_and_static_slide_majority_fail_closed(self):
+        chapters=[{"source":"clip_0"},{"source":"clip_1"}]
+        strong={"chapters":[
+                {"visible_motorcycle":True,"action_supported":True,
+                 "confidence":0.98,"observed":"Rider visibly moving through a forest"},
+                {"visible_motorcycle":True,"action_supported":True,
+                 "confidence":0.97,"observed":"Motocross motorcycle jumping on a prepared track"}],
+            "narration_fully_supported":True,
+            "independent_events_not_fabricated":True,
+            "safe_for_release":True,
+            "no_embedded_channel_branding":True,
+            "no_static_slide_majority":True}
+        self.assertTrue(review.verified_model_response(strong,chapters))
+        for field in ("no_embedded_channel_branding","no_static_slide_majority"):
+            altered=dict(strong,**{field:False})
+            self.assertFalse(review.verified_model_response(altered,chapters))
+            altered=dict(strong)
+            del altered[field]
+            self.assertFalse(review.verified_model_response(altered,chapters))
+
+    def test_original_educational_microguide_is_eligible_for_independent_frames(self):
+        ep=self.make_episode()
+        ep["editorial_format"]="original_action_microguide_v1"
+        self.assertTrue(review.eligible_private_episode(ep,self.make_receipt()))
 
     def test_only_genuine_private_cartoon_b_with_two_distinct_actions(self):
         ep=self.make_episode()
@@ -234,7 +265,9 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
                              "confidence":0.96,"observed":"Rider airborne mid-jump"}],
                 "narration_fully_supported":True,
                 "independent_events_not_fabricated":True,
-                "safe_for_release":True}
+                "safe_for_release":True,
+                  "no_embedded_channel_branding":True,
+                  "no_static_slide_majority":True}
         self.assertTrue(review.verified_model_response(strong,chapters))
         not_riding=deepcopy(strong)
         not_riding["chapters"][0]["action_supported"]=False
