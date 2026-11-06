@@ -82,6 +82,22 @@ jobs:
               raise SystemExit("YOUTUBE_OAUTH_OR_PINNED_CHANNEL_NOT_READY: " + ",".join(missing))
           print("CHANNEL_PIN_AND_SECRET_PRESENCE_VALIDATED")
           PY
+      - name: Install official Google API client
+        if: steps.pick.outputs.has_job == 'true'
+        run: python3 -m pip install --disable-pip-version-check google-api-python-client google-auth
+      - name: Confirm real YouTube schedule and quota headroom before any reservation
+        if: steps.pick.outputs.has_job == 'true'
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+          EPISODE: ${{ steps.pick.outputs.episode }}
+        run: |
+          python3 cloud-shorts/youtube_upload.py \
+            --video "staged/$EPISODE/$EPISODE.mp4" \
+            --metadata "staged/$EPISODE/reviewed-direct-metadata.json" \
+            --privacy private --schedule-next --check-schedule
       - name: Reserve SHA and episode before any possible YouTube upload
         if: steps.pick.outputs.has_job == 'true'
         env:
@@ -95,9 +111,6 @@ jobs:
             --video "staged/$EPISODE/$EPISODE.mp4" \
             --channel "$YOUTUBE_EXPECTED_CHANNEL_ID" --episode "$EPISODE" \
             --output upload-guard-reservation.json
-      - name: Install official Google API client
-        if: steps.pick.outputs.has_job == 'true'
-        run: python3 -m pip install --disable-pip-version-check google-api-python-client google-auth
       - name: Upload PRIVATE with provider-verified future publishAt
         if: steps.pick.outputs.has_job == 'true'
         env:
