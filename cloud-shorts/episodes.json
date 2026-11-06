@@ -18229,7 +18229,7 @@
     {
       "id": "moto-dirt-dd7f99d1cb42",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -18312,7 +18312,48 @@
         "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "764e11f38da068e2fa858a20920b3011a0d3eaa3fdc72fe0c2c2b0e36c6c4262",
+      "reviewed_artifact_run_id": "42147724619",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-dirt-dd7f99d1cb42",
+        "render_run_id": "42147724619",
+        "mp4_sha256": "764e11f38da068e2fa858a20920b3011a0d3eaa3fdc72fe0c2c2b0e36c6c4262",
+        "asset_fingerprint": "6bea14bf864c5d2e8f499539dd2158fd59525478723e638ff20ea8d9f058b48f",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-06T02:10:13.293841+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Мотоцикл с райдером движется по грязной лесной тропе.",
+            "frames_sha256": [
+              "13ee1539969d9f093725af08e74d96a5ed467376f592fb74f2f7d3b30010873d",
+              "45cb486c9fd05babc86486039c8b65a574a9ba489893122c566f85c84941f2ad",
+              "fb1252a1c3d74798ff341525d0f9c98a52a33a96513fbc7c131d633f390f9411"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Рука механика работает над двигателем мотоцикла в мастерской.",
+            "frames_sha256": [
+              "4b71d68eaed499c7965d9782e7e4541726de8328a3f307d315609ce20f9471ed",
+              "ded05baa8788aa4239f0d1e66363f1b902ca39bd3b0ad610c47bb53ce6162cac",
+              "05170a658faa070312dc77c96e3be0a734adcf1beb9c1508f4fed4a7d589e1a6"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-forest-1a7c6a661009",
