@@ -5,6 +5,7 @@ import unittest
 import os
 import tempfile
 from pathlib import Path
+from unittest.mock import patch
 
 import youtube_upload as yt
 
@@ -57,7 +58,10 @@ class DirectUploadTests(unittest.TestCase):
             video.write_bytes(b"12345"*21000)
             meta=root/"publication.json"
             meta.write_text(json.dumps({"title":"Покатушка на мото","description":"Описание"}),encoding="utf8")
-            body,fingerprint=yt.preflight(video,meta,"private")
+            # Fake-byte metadata fixture: mock only native 2K probe here;
+            # real media resolution contract has independent exact-pixel tests.
+            with patch("production_quality.require_native_final",return_value=(1440,2560)):
+                body,fingerprint=yt.preflight(video,meta,"private")
             self.assertEqual(len(fingerprint),64)
             self.assertEqual(body["snippet"]["title"],"Покатушка на мото")
 
