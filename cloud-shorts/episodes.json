@@ -18575,7 +18575,7 @@
     {
       "id": "moto-racing-027ccd66bb20",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -18658,7 +18658,48 @@
         "description": "Поставь лайк, если тебе нравится эта мототема."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "8fb0389fabb112bdbf5742820f6495474475c3e7e19ee7cd3462d31dd07044e8",
+      "reviewed_artifact_run_id": "42230714953",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-racing-027ccd66bb20",
+        "render_run_id": "42230714953",
+        "mp4_sha256": "8fb0389fabb112bdbf5742820f6495474475c3e7e19ee7cd3462d31dd07044e8",
+        "asset_fingerprint": "6e9dac04b7e77d5cc849cd6f64b581a0e3105277f5f322e290f0d5180b511a32",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-06T14:12:17.807839+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Райдер на мотоцикле движется по асфальтированной дороге в лесу, видны три кадра с последовательным приближением к камере.",
+            "frames_sha256": [
+              "7425ea1c5f279d2b24f876d7f5498a3a77509817e1966a696f3c31253175a59a",
+              "672cc7bf5c82c39b72e043771699883d93b77fc50e8cd017c078e26b25fa437b",
+              "2120bfbbfa6d8802ab6200c76897bc0b17c366427b477dce0593766b302e8813"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Райдер на мотоцикле находится в воздухе над трамплином с красной и синей лентой, видны три кадра с последовательным прыжком.",
+            "frames_sha256": [
+              "f0eb62dceb2f5a7dd4c4063b1b59cdb764c56ced920008c404b7c3548632968c",
+              "9c15b4abbe5b03dfb9b13529bb3439731ce7f44af7b817b60043ee6195266db8",
+              "580562d8ae1d76af041e50c08066a93b36e36d803f4c3f45ecfb205a91732a86"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-forest-6675e447f666",
