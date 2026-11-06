@@ -334,6 +334,11 @@ def assemble_clips(ep, sources, work, target_seconds):
         if not any(x.get("codec_type")=="video" for x in streams):
             raise RuntimeError("VISUAL_SOURCE_WITHOUT_VIDEO")
         durations[key]=d
+    # Owner-quality contract: reject low-resolution real source pixels BEFORE
+    # a 448x800 source can be dressed up as fake "4K" via FFmpeg scaling.
+    from production_quality import require_native_source
+    for source_path in sources.values():
+        require_native_source(source_path)
     plan=directed_plan(ep,durations,target_seconds)
     segments=[]
     for idx,shot in enumerate(plan,1):
