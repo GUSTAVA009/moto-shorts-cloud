@@ -85,6 +85,15 @@ def scene_for(media):
         return next((s for s in SCENES if s[0]==kind),None)
     if url.scheme != "https" or url.hostname not in ("www.pexels.com", "commons.wikimedia.org", "mixkit.co"):
         return None
+    # This exact Pexels 4K file was inspected at 0.4s, 2.6s, 3.3s,
+    # 4.0s and 5.5s: an airborne motorcycle/backflip is visibly present.
+    # Generic source pages saying "stunts" are NOT otherwise presumed jumps.
+    if (url.hostname == "www.pexels.com"
+            and url.path == "/video/dynamic-motocross-stunts-at-melbourne-show-34110751/"
+            and media.get("url") == "https://www.pexels.com/download/video/34110751/"
+            and media.get("author") == "Joolsmagools"
+            and media.get("license") == "Pexels License"):
+        return next(x for x in SCENES if x[0] == "jump")
     name = unquote(url.path).casefold().replace("-", " ").replace("_", " ")
     for scene in SCENES:
         if re.search(scene[1], name):
