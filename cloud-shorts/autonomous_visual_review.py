@@ -204,9 +204,41 @@ def api(path, method="GET", data=None):
 
 
 def decode_file(entry):
-    if not entry or not entry.get("sha") or not entry.get("content"):
+    """Read immutable GitHub file content even when Contents API omits >1MB.
+
+    GitHub's Contents endpoint returns encoding='none', content='' for
+    files above 1 MB. Retrieve the same exact SHA-addressed Git blob,
+    verify size, digest and JSON; do not infer success from missing bytes.
+    """
+    if not isinstance(entry, dict) or not re.fullmatch(
+            r"[a-f0-9]{40}",str(entry.get("sha") or "")):
         raise RuntimeError("REVIEW_LEDGER_CORRUPT_OR_MISSING")
-    return json.loads(base64.b64decode("".join(entry["content"].split()), validate=True))
+    source = entry
+    if not entry.get("content"):
+        if (entry.get("encoding") != "none"
+                or type(entry.get("size")) is not int
+                or not 1_000_000 <= entry["size"] <= 12_000_000):
+            raise RuntimeError("REVIEW_LEDGER_CORRUPT_OR_MISSING")
+        source = api("git/blobs/" + entry["sha"])
+        if (not isinstance(source,dict)
+                or source.get("sha") != entry["sha"]
+                or source.get("encoding") != "base64"
+                or source.get("size") != entry["size"]
+                or not source.get("content")):
+            raise RuntimeError("REVIEW_SHA_PINNED_GIT_BLOB_MISMATCH")
+    try:
+        raw = base64.b64decode("".join(source["content"].split()),validate=True)
+    except (ValueError, TypeError, base64.binascii.Error) as exc:
+        raise RuntimeError("REVIEW_LEDGER_INVALID_BASE64") from exc
+    if entry.get("size") is not None and len(raw) != entry["size"]:
+        raise RuntimeError("REVIEW_LEDGER_SIZE_MISMATCH")
+    if (hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") +
+                     b"\x00" + raw).hexdigest() != entry["sha"]):
+        raise RuntimeError("REVIEW_LEDGER_GIT_CONTENT_SHA_MISMATCH")
+    try:
+        return json.loads(raw)
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise RuntimeError("REVIEW_LEDGER_INVALID_JSON") from exc
 
 
 def select_private(catalog, ledger_paths, get=api):
