@@ -1,0 +1,11 @@
+{
+  "id": "moto-mountain-0b392cd485fd",
+  "state": "reserved",
+  "run_id": "42232132876",
+  "attempt_count": 1,
+  "preview_fingerprint": "6c7d7e207330300e70d19b2788c79393135f9beedf1d2ba14bfc4ff4fa730a2e",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-cartoon-b-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
