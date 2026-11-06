@@ -36,6 +36,11 @@ def file_sha256(path):
 def publication_allowed(episode, meta, qa, video):
     if not episode.get("auto_publish") is True:
         raise ValueError("This episode was not explicitly queued for automatic release")
+    # A successful file decode/ASR is not visual approval. The owner
+    # explicitly rejected the branded single-shot-plus-slide format.
+    # Apply at the vendor-independent boundary so Buffer cannot bypass it.
+    if episode.get("editorial_format") == "owner_original_single_source_explainer_v4":
+        raise ValueError("OWNER_REJECTED_BRANDED_STATIC_SLIDE_FORMAT")
     if episode.get("visual_review_failed") is True or episode.get("visual_revision_requested") is True:
         raise ValueError("OWNER_REJECTED_VISUALS: reject unfinished or rejected visual material")
     if int(episode.get("visual_director_version") or 0) >= 3:
