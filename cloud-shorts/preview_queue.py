@@ -547,6 +547,75 @@ def eligible_abandoned_audio_config_retry(episode, receipt, new_fingerprint, old
     return old_conclusion in ("failure", "cancelled", "timed_out")
 
 
+def eligible_abandoned_owner_phonetic_retry(episode, receipt, new_fingerprint,
+                                           old_conclusion):
+    """One real failed PRIVATE MP4 may be revoiced after an exact ASR word error.
+
+    The prior Qwen recording said `потоки` instead of `потоке` both in raw
+    narration and the final MP4. Do not mask a real utterance error by
+    relaxing the 97% QA threshold or repeating identical DSP adjustments.
+    """
+    if (episode.get("id") != "moto-vintage-1211a46b1a90"
+            or not isinstance(receipt, dict)
+            or receipt.get("state") != "reserved"
+            or receipt.get("id") != episode.get("id")
+            or receipt.get("run_id") != "42265495571"
+            or receipt.get("preview_fingerprint")
+               != "41ceab71295cd87ef386492dc42948980fde37da104bd4c7ce7e99d6ada8a796"
+            or type(receipt.get("attempt_count")) is not int
+            or receipt["attempt_count"] != 1
+            or old_conclusion != "failure"
+            or episode.get("auto_preview") is not True
+            or episode.get("auto_publish") is not False
+            or episode.get("voice_engine") != "gustava_selfhosted_qwen3"
+            or episode.get("voice_profile") != "gustava_cartoon_b_qwen3_v1"
+            or episode.get("selfhosted_voice_id") != "gustava-cartoon-b-v1"
+            or episode.get("voice_revision_requested") is not True
+            or episode.get("voice_revision_reason")
+               != "verified_failed_private_qwen_phonetic_rephrase"
+            or new_fingerprint == receipt.get("preview_fingerprint")):
+        return False
+    proof = episode.get("voice_revision_evidence")
+    if not isinstance(proof, dict):
+        return False
+    original = (
+        "Мотоцикл: сначала байкер едет по городской улице. "
+        "В другом кадре райдер проезжает грязный участок. "
+        "В грязи и потоке машин риски разные — смотри вперёд.")
+    improved = (
+        "Мотоцикл: сначала байкер едет по городской улице. "
+        "В другом кадре райдер проезжает грязный участок. "
+        "В городе следи за машинами, а в грязи действуй плавно.")
+    sources = episode.get("footage") or []
+    if (episode.get("narration") != improved
+            or not 125 <= len(improved) <= 160
+            or proof.get("old_narration_sha256") !=
+               hashlib.sha256(original.encode("utf8")).hexdigest()
+            or proof.get("new_narration_sha256") !=
+               hashlib.sha256(improved.encode("utf8")).hexdigest()
+            or proof.get("failed_run_id") != receipt["run_id"]
+            or proof.get("failed_preview_fingerprint") != receipt["preview_fingerprint"]
+            or proof.get("raw_asr_coverage") != .957
+            or proof.get("mixed_asr_coverage") != .957
+            or proof.get("expected_word") != "потоке"
+            or proof.get("heard_word") != "потоки"
+            or proof.get("prior_artifact_id") != 13525589657
+            or proof.get("public_upload_permitted") is not False
+            or proof.get("max_total_preview_attempts") != 2
+            or len(sources) != 2
+            or proof.get("unchanged_source_ids") != [source_id(x) for x in sources]):
+        return False
+    try:
+        from source_story import require_filmable
+        require_filmable({"narration": improved}, sources)
+        from selfhosted_voice import CARTOON_B_REFERENCE_SHA
+        if proof.get("narrator_reference_sha256") != CARTOON_B_REFERENCE_SHA:
+            return False
+    except (KeyError, TypeError, ValueError):
+        return False
+    return True
+
+
 def eligible_private_qwen_concise_retry(episode, receipt, new_fingerprint, old_conclusion):
     """Exactly one PRIVATE retry after original speech exceeded real shot caps.
 
@@ -835,7 +904,8 @@ def choose(catalog, output):
         for item in listed:
             if not (item.get("source_revision_requested") is True
                     or item.get("technical_revision_requested") is True
-                    or item.get("visual_duration_revision_requested") is True):
+                    or item.get("visual_duration_revision_requested") is True
+                    or item.get("voice_revision_requested") is True):
                 continue
             _, receipt = records[item["id"]]
             if not receipt or receipt.get("state") != "reserved":
@@ -851,6 +921,8 @@ def choose(catalog, output):
                     or eligible_abandoned_visual_duration_retry(
                         item, receipt, new_fp, outcome)
                     or eligible_private_qwen_concise_retry(
+                        item, receipt, new_fp, outcome)
+                    or eligible_abandoned_owner_phonetic_retry(
                         item, receipt, new_fp, outcome)):
                 selected = item
                 break
