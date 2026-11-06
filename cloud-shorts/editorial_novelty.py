@@ -42,7 +42,30 @@ def is_scenic_only_montage(episode):
     return scenic >= 2 and actions == 0
 
 
+GENERIC_PAIR_INTRO = "две разные мотоистории:"
+GENERIC_PAIR_DISCLAIMER = "независимые кадры, без выдуманного общего события"
+
+
+def is_generic_unrelated_comparison(episode):
+    """Catch repeated A/B ride montages regardless of changing titles/footage.
+
+    This is editorial evidence from our own public description, not a claim
+    about the external media's creative originality or licence.
+    """
+    description = str(episode.get("description") or "").casefold()
+    return (episode.get("editorial_format") == "source_anchored_action_contrast"
+            and GENERIC_PAIR_INTRO in description
+            and GENERIC_PAIR_DISCLAIMER in description)
+
+
 def is_repeated_visual_formula(candidate, previous_episodes):
+    # Owner requires 15 genuinely different Shorts/day, never near-identical
+    # independent two-clip comparisons with a recycled "what would you pick".
+    if is_generic_unrelated_comparison(candidate):
+        return sum(
+            is_generic_unrelated_comparison(ep)
+            for ep in previous_episodes if ep.get("id") != candidate.get("id")
+        ) >= 2
     if not is_scenic_only_montage(candidate):
         return False
     previously = [
@@ -58,6 +81,12 @@ def require_novel_visual_story(candidate, previous_episodes):
     if candidate.get("editorial_rejected") is True:
         raise ValueError("OWNER_REJECTED_VISUAL_STORY")
     if is_repeated_visual_formula(candidate, previous_episodes):
+        if is_generic_unrelated_comparison(candidate):
+            raise ValueError(
+                "REPEATED_TWO_CLIP_COMPARISON: unrelated A/B clips with recycled "
+                "question captions are not an original story. Produce a "
+                "self-contained event, explanation or meaningful resolution."
+            )
         raise ValueError(
             "REPEATED_SCENIC_MONTAGE: fresh video URLs, route names and "
             "captions are not a new event. Find source footage of a distinct "
