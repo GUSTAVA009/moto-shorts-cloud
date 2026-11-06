@@ -9,18 +9,18 @@
     "timezone": "Europe/Moscow"
   },
   "production": {
-    "target_new_unique_shorts_per_day": 14,
+    "target_new_unique_shorts_per_day": 15,
     "reviewed_mp4_reserve_target": 10,
     "script_reserve_minimum": 100000,
     "never_count_script_as_mp4": true,
     "require_unique_licensed_visuals": true,
     "allow_private_local_pc_videos": false,
-    "minimum_finished_shorts_per_calendar_month": 400,
+    "minimum_finished_shorts_per_calendar_month": 420,
     "minimum_monthly_goal_per_active_factory_channel": true,
     "monthly_required_deliverable": "unique_licensed_QA_approved_rendered_MP4_not_scenarios",
     "shortest_month_28_days_baseline": 420,
     "monthly_backlog_catchup_slots_max_per_day": 16,
-    "daily_target_depends_on_calendar_month": true,
+    "daily_target_depends_on_calendar_month": false,
     "default_unattended_voice_engine": "gustava_selfhosted_qwen3",
     "manual_assistant_audio_creation_is_not_factory_operation": true,
     "legacy_deep_requires_existing_sha_pinned_recording": true,
@@ -48,9 +48,13 @@
     "allow_only_approved_mp4": true,
     "do_not_mark_success_from_workflow_only": true,
     "public_release_only_after_individual_visual_review": true,
-    "baseline_posts_per_day": 14,
+    "baseline_posts_per_day": 15,
     "monthly_minimum_verified_buffer_sent": 400,
-    "verified_youTube_public_URL_separate_from_buffer_sent": true
+    "verified_youTube_public_URL_separate_from_buffer_sent": true,
+    "preferred_provider": "youtube_data_api",
+    "confirm_public_youtube_video_id": true,
+    "legacy_buffer_receipts_still_block_duplicates": true,
+    "maximum_unverified_schedule": 0
   },
   "voice": {
     "provider": "aidocmaker.com",
@@ -260,5 +264,18 @@
     "youtube_creators_used_as_research_not_unconsented_voice_clones": true,
     "paid_voice_providers_opt_in_only": true,
     "no_automatic_deep_substitution_or_publication_gate_bypass": true
+  },
+  "direct_youtube": {
+    "enabled_only_with_verified_oauth_and_explicit_toggle": true,
+    "target_scheduled_uploads": 10,
+    "replenish_at_or_below": 9,
+    "verified_mp4_reserve_target": 10,
+    "require_approval_voice_rights_and_qa": true,
+    "require_idempotent_receipt_and_confirmed_video_id": true,
+    "channel_id": "UCS0QCodPcFBTjMt4ioEWOUw",
+    "schedule_window_minutes": 90,
+    "daily_target": 15,
+    "absolute_daily_max": 16,
+    "never_schedule_if_existing_live_inventory_incomplete": true
   }
 }
