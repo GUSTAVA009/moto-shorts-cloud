@@ -776,6 +776,38 @@ def eligible_abandoned_bootstrap_retry(episode, receipt, new_fingerprint, bootst
     )
 
 
+def eligible_verified_native4k_install_retry(episode, receipt, current_fingerprint,
+                                            bootstrap_proved):
+    """One exact stalled 4K DEEP upload after FFmpeg-install-only failure.
+
+    The previous runner died at optional apt install before render/QA/MP4.
+    This code path only accepts same immutable script/source/voice fingerprint
+    and exact failed job evidence from GitHub. No blind second publication.
+    """
+    return bool(
+        bootstrap_proved is True
+        and episode.get("id") == "moto-native-4k-control-20261106"
+        and episode.get("auto_preview") is True
+        and episode.get("auto_publish") is False
+        and episode.get("voice_engine") == REQUIRED_MALE_ENGINE
+        and episode.get("voice_profile") == "gustava_create_audio_deep_v1"
+        and episode.get("release_priority") == "first_native_4k_moto_approved"
+        and (episode.get("deep_audio") or {}).get("source_audio_sha256")
+           == "10624b0af55a9c4804cc622d6ca3e6a585e2d23250489373b94c92ce6be96abf"
+        and [source_id(x) for x in (episode.get("footage") or [])]
+           == ["5803634","34110751"]
+        and isinstance(receipt, dict)
+        and receipt.get("state") == "reserved"
+        and receipt.get("id") == episode["id"]
+        and str(receipt.get("run_id")) == "42272301505"
+        and receipt.get("deep_source_sha256")
+           == (episode.get("deep_audio") or {}).get("source_audio_sha256")
+        and type(receipt.get("attempt_count")) is int
+        and receipt.get("attempt_count") == 1
+        and receipt.get("preview_fingerprint") == current_fingerprint
+    )
+
+
 # One immutable production incident: the owner's Cartoon B reference was
 # missing from the *live* TTS binary when GitHub ran 41422504259. That Action
 # exited 403 before any MP4 or Buffer upload; its receipt stayed "reserved".
@@ -954,7 +986,9 @@ def choose(catalog, output):
             if receipt.get("preview_fingerprint") == new_fp:
                 continue
             proof = verified_failed_preflight(receipt.get("run_id"))
-            if eligible_abandoned_bootstrap_retry(item, receipt, new_fp, proof):
+            if (eligible_abandoned_bootstrap_retry(item, receipt, new_fp, proof)
+                    or eligible_verified_native4k_install_retry(
+                        item, receipt, new_fp, proof)):
                 selected = item
                 print("VERIFIED_INSTALL_FAILED_DEEP_RETRY", item["id"],
                       "previous", receipt.get("run_id"), flush=True)
