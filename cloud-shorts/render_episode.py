@@ -569,6 +569,10 @@ def render(ep, output_dir):
             verified_commons(src)
         target = work / (video_id + ".mp4")
         download(src, target, required_seconds=required_source_seconds(ep, src["key"]))
+        # Reject 448x800 original before synthesis/ASR or expensive FFmpeg.
+        from production_quality import require_native_source, export_dimensions
+        required=export_dimensions(os.environ.get("GUSTAVA_EXPORT_PROFILE","2k"))
+        require_native_source(target, *required)
         sources[src["key"]] = target
 
     wav = work / "new_narration.wav"
