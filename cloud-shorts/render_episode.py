@@ -264,6 +264,57 @@ def stream_pexels_excerpt(item, destination, required_seconds, ffmpeg="ffmpeg"):
           "seconds", size, "bytes", flush=True)
 
 
+def download_verified_native_4k_pexels(item, destination):
+    """Retrieve the ORIGINAL 4K object: streaming FFmpeg got Pexels' 448p variant.
+
+    Do not trust dimension labels or upscale. This path is allowed only for
+    the exact two previously downloaded owner-reviewed Pexels originals,
+    pinned by immutable SHA, byte size and native portrait dimensions.
+    """
+    import hashlib
+    expected_sha = str(item.get("native_4k_sha256") or "")
+    expected_size = item.get("native_4k_bytes")
+    native_w = item.get("native_4k_width")
+    native_h = item.get("native_4k_height")
+    if (not re.fullmatch(r"[0-9a-f]{64}", expected_sha)
+            or type(expected_size) is not int
+            or not 1_000_000 <= expected_size <= MAX_FULL_SOURCE_BYTES
+            or (native_w, native_h) != (2160, 3840)
+            or item.get("key") not in ("clip_0","clip_1")):
+        raise ValueError("NATIVE_PEXELS_SOURCE_FINGERPRINT_INCOMPLETE")
+    req = urllib.request.Request(
+        item["url"], headers={"User-Agent":"Mozilla/5.0",
+                              "Accept":"video/mp4,*/*"})
+    try:
+        with urllib.request.urlopen(req, timeout=95) as incoming:
+            final = urllib.parse.urlsplit(incoming.geturl())
+            if final.scheme != "https" or final.hostname != "videos.pexels.com":
+                raise ValueError("NATIVE_PEXELS_UNEXPECTED_REDIRECT_HOST")
+            h = hashlib.sha256()
+            total = 0
+            with Path(destination).open("wb") as out:
+                while True:
+                    chunk = incoming.read(1024*1024)
+                    if not chunk:
+                        break
+                    total += len(chunk)
+                    if total > expected_size:
+                        raise ValueError("NATIVE_PEXELS_SOURCE_SIZE_MISMATCH")
+                    h.update(chunk)
+                    out.write(chunk)
+            if total != expected_size or h.hexdigest() != expected_sha:
+                raise ValueError("NATIVE_PEXELS_ORIGINAL_SHA256_MISMATCH")
+    except (OSError, urllib.error.URLError) as exc:
+        raise RuntimeError("NATIVE_PEXELS_FULL_SOURCE_DOWNLOAD_FAILED") from exc
+    _, tracks=probe(destination)
+    if not any(t.get("codec_type")=="video"
+               and t.get("width")==native_w and t.get("height")==native_h
+               for t in tracks):
+        raise ValueError("NATIVE_PEXELS_ACTUAL_4K_FFPROBE_MISMATCH")
+    print("NATIVE_PEXELS_FULL_ORIGINAL_VERIFIED",item["key"],
+          native_w,native_h,total,expected_sha[:18],flush=True)
+
+
 def download(item, dst, required_seconds=None):
     checked_source(item)
     if dst.is_file() and dst.stat().st_size > 250_000:
@@ -276,10 +327,15 @@ def download(item, dst, required_seconds=None):
                 verified_mixkit(item)  # one-off Free license check, no site crawling
             if required_seconds is None:
                 raise ValueError("Pexels clip duration must be bounded by episode shot list")
-            # The download/video/<id> endpoint may return a >350MB 4K file.
-            # FFmpeg seeks/decodes the short source segment remotely and saves
-            # an independently QA-checked, low-bandwidth local 720/1280p MP4.
-            stream_pexels_excerpt(item, tmp, required_seconds)
+            if any(k in item for k in ("native_4k_sha256","native_4k_bytes",
+                                      "native_4k_width","native_4k_height")):
+                # Pexels FFmpeg requests resolved a different 448x800
+                # rendition; fetch the exact independent 2160x3840 source.
+                download_verified_native_4k_pexels(item,tmp)
+            else:
+                # Ordinary low-bandwidth previews are still bounded and
+                # MUST NOT be presented as a native 2K/4K finished Short.
+                stream_pexels_excerpt(item, tmp, required_seconds)
         else:
             # Wikimedia Commons CC0 paths are size-audited before admission.
             request = urllib.request.Request(item["url"],
