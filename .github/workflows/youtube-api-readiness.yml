@@ -5,12 +5,15 @@ on:
     paths:
       - .github/workflows/youtube-api-readiness.yml
   workflow_dispatch:
+  schedule:
+    - cron: '17 4 * * *'  # Daily read-only OAuth smoke test (UTC)
 
 permissions:
   contents: read
 
 jobs:
   diagnostics:
+    if: github.repository == 'GUSTAVA009/moto-shorts-cloud'
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
