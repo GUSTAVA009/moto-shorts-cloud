@@ -35,7 +35,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   publish:
-    if: github.repository == 'GUSTAVA009/moto-shorts-cloud'
+    # Prevent Buffer and the direct YouTube pipeline from posting the same episode.
+    if: github.repository == 'GUSTAVA009/moto-shorts-cloud' && vars.YOUTUBE_DIRECT_ENABLED != 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
