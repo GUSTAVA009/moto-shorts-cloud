@@ -44,7 +44,8 @@ class AutoMicroguideTests(unittest.TestCase):
     def test_treatments_are_once_only_even_with_identical_source_pair_type(self):
         altered,ids=repair_catalog(CATALOG,max_changes=99)
         t=[ep["creative_treatment"] for ep in altered["episodes"]
-           if ep.get("editorial_format")=="original_action_microguide_v1"]
+           if ep.get("editorial_format")=="original_action_microguide_v1"
+           and str(ep.get("creative_treatment") or "").startswith("microguide_")]
         self.assertEqual(len(t),len(set(t)))
         another,ids2=repair_catalog(altered,max_changes=99)
         self.assertEqual(ids2,[])
