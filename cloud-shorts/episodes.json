@@ -17836,7 +17836,7 @@
     {
       "id": "moto-vintage-4bc40cc51128",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "gustava_selfhosted_qwen3",
@@ -17919,7 +17919,48 @@
         "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "b6568981e1e46f8977755da205e806d591cc54cb208af8b75ce4d8e26123e1b2",
+      "reviewed_artifact_run_id": "42146534954",
+      "automated_frame_review": {
+        "version": 1,
+        "status": "passed",
+        "episode_id": "moto-vintage-4bc40cc51128",
+        "render_run_id": "42146534954",
+        "mp4_sha256": "b6568981e1e46f8977755da205e806d591cc54cb208af8b75ce4d8e26123e1b2",
+        "asset_fingerprint": "c756c2f50584ce03822813851f7d1cc252402ac968044c4b801d9c9ca34f7eff",
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-06T01:58:41.695759+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Мотоцикл с райдером в шлеме движется по асфальтированной городской улице.",
+            "frames_sha256": [
+              "720837c1ff193102357b10dffe4c8fb1f66feeab06116e78f4626566d6ca492a",
+              "268f43c04e4d09c354ef490f053a50ba6ccb35e12b91079706de85ef9643b2d5",
+              "ea563786a067bb21b743a785679aae2562879f6c49f85dfdfec12a8f688e3cb9"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Мотоцикл с райдером в синей куртке и шлеме проезжает по грязной лесной трассе.",
+            "frames_sha256": [
+              "cf565b386cfa1fdd0be50d34e368bf6104d6c8eca1e96e139242bf710596bff6",
+              "9f97ceff5a350ab04db980c0fa89bb87b24bae6ae9f43f0a99e2c32dca7d1495",
+              "d8d7b068b42e239e3c918270e5853363dd1829196c6a43de152ded1aa59ee541"
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "moto-roadtrip-a0cc06670fba",
