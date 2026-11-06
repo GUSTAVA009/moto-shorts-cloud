@@ -776,6 +776,31 @@ def production_cartoon_b_http_ready():
         return False
 
 
+def next_approved_owner_voice_repair(listed, records, unpublished,
+                                     fingerprint=preview_fingerprint,
+                                     eligible=eligible_retry):
+    """Give genuinely revised PRIVATE Cartoon B speech one fair render slot.
+
+    Old priority handled this only AFTER ALL unrendered scripts. The
+    15-minute source refill now continually adds originals, so even
+    correctly repaired clips otherwise starve forever behind drafts.
+    A SHA-pinned proof and a new distinct script are mandatory.
+    """
+    for ep in listed:
+        if (ep.get("voice_revision_priority") is not True
+                or ep.get("voice_revision_requested") is not True
+                or ep.get("auto_publish") is not False
+                or ep.get("voice_revision_reason")
+                   != "private_original_cartoon_b_phonetic_rephrase"):
+            continue
+        receipt = records.get(ep["id"], (None, None))[1]
+        if (receipt is not None
+                and unpublished(ep["id"])
+                and eligible(ep,receipt,fingerprint(ep))):
+            return ep
+    return None
+
+
 def choose(catalog, output):
     data = json.loads(Path(catalog).read_text(encoding="utf8"))
     apply_verified_episode_revision(data)
@@ -810,9 +835,20 @@ def choose(catalog, output):
                      if ep.get("research_pillar") in ("engineering", "nature", "science",
                                                       "history", "space", "surprising_facts")
                      and records[ep["id"]][0] is None), None)
-    # Genuine NEW originals have priority over recycling older private
-    # revisions. A newly sourced story with hash-pinned DEEP must not wait
-    # behind old clips repeatedly submitted for visual fixes.
+    # Owner's new LTX source supply is continuous, so if we put ALL new
+    # draft episodes first, an actual already-approved phonetic repair
+    # would NEVER be rendered while 9+ new drafts keep arriving.
+    # This special case requires real immutable ASR/SHA/fingerprint proof,
+    # stays PRIVATE and grants no Buffer approval.
+    if selected is None:
+        selected = next_approved_owner_voice_repair(
+            listed, records, unpublished)
+        if selected is not None:
+            print("PRIORITIZED_SHA_BOUND_CARTOON_B_SPEECH_RERENDER",
+                  selected["id"], flush=True)
+    # Genuine NEW originals have priority over ordinary historic private
+    # revisions (but NOT a SHA-proven, freshly corrected owner voice).
+    # Preserve the old general retry order for historic cases.
     if selected is None:
         selected = next((ep for ep in listed
                          if records[ep["id"]][0] is None
