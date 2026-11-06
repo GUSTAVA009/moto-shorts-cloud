@@ -141,6 +141,8 @@ def main():
     parser.add_argument("--privacy", choices=["private", "unlisted", "public"], default="private")
     parser.add_argument("--receipt", type=Path, default=Path("upload_receipt.json"))
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--check-auth", action="store_true",
+                        help="Check OAuth matches pinned channel, without upload")
     parser.add_argument("--check-schedule", action="store_true",
                         help="Verify live YouTube queue and OAuth without uploading")
     parser.add_argument("--schedule-next", action="store_true",
@@ -159,6 +161,11 @@ def main():
     approved_metadata = json.loads(args.metadata.read_text(encoding="utf-8-sig"))
     if approved_metadata.get("reviewed_for_direct_youtube_upload") is not True:
         raise RuntimeError("LIVE_UPLOAD_REQUIRES_INDEPENDENT_MP4_QA_PROOF")
+    if args.check_auth:
+        api = authenticated_api()
+        verify_channel(api)
+        print("YOUTUBE_OAUTH_PINNED_CHANNEL_VERIFIED_NO_UPLOAD")
+        return
     if args.check_schedule:
         from direct_schedule import next_verified_slot
         api = authenticated_api()
