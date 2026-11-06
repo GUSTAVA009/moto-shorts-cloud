@@ -808,6 +808,66 @@ def eligible_verified_native4k_install_retry(episode, receipt, current_fingerpri
     )
 
 
+def eligible_verified_native4k_frame_repair(episode, receipt, new_fingerprint, rejection):
+    """One private rerender of the actual rejected 2K movie, never an upload.
+
+    The image reviewer inspected six frames and rejected video/narration
+    agreement. A real new DEEP MP3, source-identical footage and a retimed
+    second-scene caption are required, not a changed test flag or a prompt.
+    """
+    if not (episode.get("id") == "moto-native-4k-control-20261106"
+            and episode.get("auto_preview") is True
+            and episode.get("auto_publish") is False
+            and episode.get("voice_engine") == REQUIRED_MALE_ENGINE
+            and episode.get("voice_profile") == "gustava_create_audio_deep_v1"
+            and episode.get("voice_revision_requested") is True
+            and episode.get("voice_revision_reason") ==
+                "verified_frame_model_rejected_prior_abstract_narration"
+            and episode.get("align_middle_caption_to_second_scene") is True
+            and episode.get("visual_revision_reason") == "spoken_scene_caption_mismatch"
+            and episode.get("caption_middle") == "ПРЫЖОК С ТРАМПЛИНА"
+            and isinstance(receipt, dict)
+            and receipt.get("state") == "preview_ready"
+            and receipt.get("id") == episode["id"]
+            and receipt.get("run_id") == "42274119556"
+            and receipt.get("attempt_count") == 2
+            and receipt.get("voice_qa_passed") is True
+            and receipt.get("mixed_audio_qa_passed") is True
+            and receipt.get("deep_source_sha256") ==
+                "10624b0af55a9c4804cc622d6ca3e6a585e2d23250489373b94c92ce6be96abf"
+            and receipt.get("preview_fingerprint") != new_fingerprint
+            and (episode.get("deep_audio") or {}).get("source_audio_sha256") ==
+                "84411b636109859ca471c14c40bdc9e1b3e64e19505c6d660cdb1c8ce2ad4fb1"
+            and isinstance(rejection, dict)
+            and rejection.get("episode") == episode["id"]
+            and rejection.get("run_id") == receipt["run_id"]
+            and rejection.get("status") == "needs_new_verified_visuals"
+            and rejection.get("reason") == "FRAME_MODEL_REJECTED_ACTION_OR_NARRATION"):
+        return False
+    evidence = episode.get("visual_revision_evidence") or {}
+    voice_evidence = episode.get("voice_revision_evidence") or {}
+    footage = episode.get("footage") or []
+    return bool(
+        evidence.get("prior_run_id") == receipt["run_id"]
+        and voice_evidence.get("prior_run_id") == receipt["run_id"]
+        and evidence.get("prior_mp4_sha256") ==
+            "a8c8658f028defa3feef2279bc0ad05125f1c09165079e8da3df6cb031907ed0"
+        and voice_evidence.get("prior_mp4_sha256") == evidence["prior_mp4_sha256"]
+        and evidence.get("old_caption_start_seconds") == 3.9
+        and evidence.get("old_second_scene_start_seconds") == 7.789
+        and voice_evidence.get("prior_deep_audio_sha256") ==
+            receipt["deep_source_sha256"]
+        and voice_evidence.get("new_deep_audio_sha256") ==
+            episode["deep_audio"]["source_audio_sha256"]
+        and len(footage) == 2
+        and [source_id(x) for x in footage] == ["5803634", "34110751"]
+        and [x.get("native_4k_sha256") for x in footage] == [
+            "7244d8f3124c77b3f6baa469c43f4ed6f4bf41502a035cd87ddbd5d4e28bdfb9",
+            "c2e1d6d4be0e000e9ab36392a522cc931eaa3c62e7179b2afafba9e02c6ab26d",
+        ]
+    )
+
+
 # One immutable production incident: the owner's Cartoon B reference was
 # missing from the *live* TTS binary when GitHub ran 41422504259. That Action
 # exited 403 before any MP4 or Buffer upload; its receipt stayed "reserved".
@@ -913,7 +973,41 @@ def choose(catalog, output):
     # Do not strand this private untouched clip behind unrelated drafts.
     # GitHub must prove the exact old install step FAILED before retry.
     selected = None
+    # A real six-frame independent review rejected the existing 2K movie.
+    # Prefer the ONE revised private render before draining unrelated ideas.
+    # The rejection proof and render+voice SHA are immutable; no publication
+    # attempt may be made by this selector itself.
     for ep in listed:
+        if ep.get("id") != "moto-native-4k-control-20261106":
+            continue
+        _, receipt = records[ep["id"]]
+        if (not isinstance(receipt, dict)
+                or receipt.get("run_id") != "42274119556"
+                or receipt.get("state") != "preview_ready"
+                or not unpublished(ep["id"])):
+            continue
+        reject_file = api(
+            "automation/visual-review-rejections/"
+            "moto-native-4k-control-20261106-42274119556.json")
+        if not reject_file:
+            continue
+        try:
+            rejection = json.loads(base64.b64decode(
+                "".join(reject_file["content"].split()), validate=True))
+        except (KeyError, TypeError, ValueError, binascii.Error) as exc:
+            raise RuntimeError("INVALID_PREVIOUS_FRAME_REJECTION_RECEIPT") from exc
+        fingerprint = preview_fingerprint(ep)
+        if (eligible_verified_native4k_frame_repair(
+                ep, receipt, fingerprint, rejection)
+                and eligible_retry(ep, receipt, fingerprint)):
+            selected = ep
+            print("FIRST_2K_FRAME_REVIEWED_PRIVATE_REVISION",
+                  ep["id"], "attempt", receipt["attempt_count"] + 1,
+                  flush=True)
+            break
+    for ep in listed:
+        if selected is not None:
+            break
         if ep.get("id") != "moto-native-4k-control-20261106":
             continue
         _, receipt = records[ep["id"]]
