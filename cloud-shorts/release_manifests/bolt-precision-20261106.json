@@ -1,0 +1,181 @@
+{
+  "episode_id": "bolt-precision-20261106",
+  "episode": {
+    "id": "bolt-precision-20261106",
+    "title": "Один болт — две ошибки. Почему точность важнее силы #Shorts",
+    "narration": "На мотоцикле даже обычный болт требует внимания. Перетянешь — можно повредить резьбу. Недотянешь — соединение рискует ослабнуть. Поэтому мастер смотрит момент затяжки в сервисном руководстве и использует подходящий инструмент. Здесь важнее точность, а не сила.",
+    "description": "Перетяжка может повредить резьбу, а недостаточная затяжка — ослабить соединение. Поясняем принцип и напоминаем: правильный момент крепежа берут из сервисного руководства конкретного мотоцикла.\n\nVoiceover Generated with AIDOCMAKER.COM: https://www.aidocmaker.com\n\n#мото #мототехника #Shorts",
+    "tags": [
+      "мото",
+      "мототехника",
+      "ремонт мотоцикла",
+      "Shorts",
+      "GUSTAVA"
+    ],
+    "voice_engine": "aidocmaker_deep",
+    "voice_profile": "gustava_create_audio_deep_v1",
+    "deep_audio": {
+      "provider": "aidocmaker.com",
+      "voice_id": "deep",
+      "transcript_sha256": "6a685d847f2eb1085623ebbb5de4ffb596026bb856155c567a3a622d161c4d61",
+      "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/902a0e74-f04d-4b71-8fdf-b934e6e7fd46.mp3",
+      "source_audio_sha256": "a9716a7ed1649dcd3117b8f4117325d928d31ab05eb21a591893fb30e3450231"
+    },
+    "auto_publish": true,
+    "editorial_format": "owner_original_single_source_explainer_v4",
+    "channel_niche": "motorcycle",
+    "research_pillar": "motorcycle",
+    "editorial": {
+      "subject": "motorcycle repair fastener",
+      "bike": "motorcycle"
+    },
+    "footage": [
+      {
+        "key": "gustava_original_e42e5399b7df7d8d",
+        "source_page": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/e42e5399b7df7d8df559378e93c7114215248c93e1b63f91dee1a718b8fc7009.json",
+        "url": "https://84-252-66-87.sslip.io/yt-factory-originals/clips/e42e5399b7df7d8df559378e93c7114215248c93e1b63f91dee1a718b8fc7009.mp4",
+        "author": "GUSTAVA Original Video Production",
+        "license": "LTX OpenRAIL-M",
+        "generation_model": "ltxv-2b-0.9.8-distilled-fp8",
+        "generation_batch": "20261106114608-57685d",
+        "original_sha256": "e42e5399b7df7d8df559378e93c7114215248c93e1b63f91dee1a718b8fc7009",
+        "file_size": 858198,
+        "duration": 6.706,
+        "source_title": "mechanic tightening an actual motorcycle engine bolt",
+        "scene_action": "repair",
+        "prompt": "Photorealistic close-up garage documentary video: trained mechanic wearing work gloves uses a socket wrench to tighten one bolt on the side of a parked motorcycle engine. Visible hand and tool motion, real workshop, the motorcycle remains stationary. Natural physics and coherent bike anatomy, no logos, no writing, no cuts, no captions, no artificial blur.",
+        "created_at": "2026-11-06T11:47:39.761224+00:00"
+      }
+    ],
+    "original_graphics_author": "GUSTAVA original procedural vector animation",
+    "original_music_origin": "Original algorithmic synthesis, no sampled external recordings",
+    "synthetic_video_disclosure_required": true,
+    "source_illustrative_only": true,
+    "final_video_sha256": "a449ad6c50133c679efe128459e0089a6bdcba2f5a5f41c9183c718552d3097f",
+    "visual_director_version": 4,
+    "visual_revision_status": "assistant_checked_passed",
+    "scene_script_anchors": [
+      {
+        "script": "болт требует внимания",
+        "scene": "original_workshop_illustration",
+        "start": 0
+      },
+      {
+        "script": "перетянешь",
+        "scene": "thread_damage_animated_caption",
+        "start": 2.7
+      },
+      {
+        "script": "недотянешь",
+        "scene": "original_vector_bolt_diagram",
+        "start": 6.9
+      },
+      {
+        "script": "момент затяжки",
+        "scene": "original_vector_wrench",
+        "start": 11.4
+      },
+      {
+        "script": "точность",
+        "scene": "original_animated_conclusion",
+        "start": 15.95
+      }
+    ],
+    "caption_fit_required": false
+  },
+  "publication": {
+    "episode_id": "bolt-precision-20261106",
+    "title": "Один болт — две ошибки. Почему точность важнее силы #Shorts",
+    "description": "Перетяжка может повредить резьбу, а недостаточная затяжка — ослабить соединение. Поясняем принцип и напоминаем: правильный момент крепежа берут из сервисного руководства конкретного мотоцикла.\n\nVoiceover Generated with AIDOCMAKER.COM: https://www.aidocmaker.com\n\n#мото #мототехника #Shorts",
+    "tags": [
+      "мото",
+      "мототехника",
+      "ремонт мотоцикла",
+      "Shorts",
+      "GUSTAVA"
+    ]
+  },
+  "voice_qa": {
+    "episode_id": "bolt-precision-20261106",
+    "passed": true,
+    "status": "passed",
+    "voice_profile": "gustava_create_audio_deep_v1",
+    "voice_speaker": "deep",
+    "voice_provider": "aidocmaker.com",
+    "male_voice_verified": true,
+    "voice_source_audio_sha256": "a9716a7ed1649dcd3117b8f4117325d928d31ab05eb21a591893fb30e3450231",
+    "lexical_coverage": 1,
+    "ending_coverage": 1,
+    "final_word_present": true,
+    "expected_transcript": "На мотоцикле даже обычный болт требует внимания. Перетянешь — можно повредить резьбу. Недотянешь — соединение рискует ослабнуть. Поэтому мастер смотрит момент затяжки в сервисном руководстве и использует подходящий инструмент. Здесь важнее точность, а не сила.",
+    "recognized_transcript": "На мотоцикле даже обычный болт требует внимания. Перетянешь можно повредить резьбу. Не дотянешь соединение рискует ослабнуть. Поэтому мастер смотрит момент затяжки в сервисном руководстве и использует подходящий инструмент. Здесь важнее точность, а не сила.",
+    "asr_model": "faster-whisper-base-russian"
+  },
+  "mixed_audio_qa": {
+    "episode_id": "bolt-precision-20261106",
+    "source": "FINAL_MIXED_MP4",
+    "passed": true,
+    "lexical_coverage": 1,
+    "final_word_present": true,
+    "numerics_match": true,
+    "mp4_sha256": "a449ad6c50133c679efe128459e0089a6bdcba2f5a5f41c9183c718552d3097f",
+    "recognized_transcript": "На мотоцикле даже обычный болт требует внимания. Перетянешь можно повредить резьбу. Не дотянешь соединение рискует ослабнуть. Поэтому мастер смотрит момент затяжки в сервисном руководстве и использует подходящий инструмент. Здесь важнее точность, а не сила.",
+    "asr_model": "faster-whisper-base-russian"
+  },
+  "visual_qa": {
+    "episode": "bolt-precision-20261106",
+    "version": 4,
+    "passed": true,
+    "mp4_sha256": "a449ad6c50133c679efe128459e0089a6bdcba2f5a5f41c9183c718552d3097f",
+    "source_sequence": [
+      "gustava_original_e42e5399b7df7d8d",
+      "original_vector_thread",
+      "original_vector_torque",
+      "original_vector_conclusion"
+    ],
+    "scene_chapters": [
+      {
+        "source": "gustava_original_e42e5399b7df7d8d",
+        "start": 0,
+        "seconds": 6.9
+      },
+      {
+        "source": "original_vector_thread",
+        "start": 6.9,
+        "seconds": 4.5
+      },
+      {
+        "source": "original_vector_torque",
+        "start": 11.4,
+        "seconds": 4.55
+      },
+      {
+        "source": "original_vector_conclusion",
+        "start": 15.95,
+        "seconds": 3.25
+      }
+    ],
+    "single_realistic_synthetic_original_source": true,
+    "source_reused_in_short": false,
+    "source_illustrative_only": true,
+    "technical_decode_passed": true,
+    "long_freezes_found": false,
+    "aspect_ratio": "9:16",
+    "captions_fully_in_safe_zone": true,
+    "human_recording_not_claimed": true,
+    "frame_review_9_samples": "assistant visually examined generated contact sheet; no external footage"
+  },
+  "final_mp4_sha256": "a449ad6c50133c679efe128459e0089a6bdcba2f5a5f41c9183c718552d3097f",
+  "final_mp4_bytes": 3160453,
+  "source_url": "https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/gustava-original-bolt-precision-20261106/bolt-precision-20261106.mp4",
+  "rights": {
+    "original_generated_footage": "LTX OpenRAIL-M",
+    "license_model": "ltxv-2b-0.9.8-distilled-fp8",
+    "owner_original_schematic": true,
+    "original_music": true,
+    "provider_voice_deep_provenance": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/902a0e74-f04d-4b71-8fdf-b934e6e7fd46.mp3",
+    "free_tier_attribution_required": "Voiceover Generated with AIDOCMAKER.COM: https://www.aidocmaker.com"
+  },
+  "youtube_upload_status": "NOT_UPLOADED",
+  "synthetic_media_disclosure": true
+}

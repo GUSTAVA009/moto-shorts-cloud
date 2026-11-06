@@ -374,12 +374,68 @@ def directed_plan(episode, source_durations, seconds):
     return plan
 
 
+def verified_owner_vector_explainer(episode, mp4_path):
+    """V4: an immutable generated source plus actual owner-built vector chapters.
+
+    Unlike historical two-source live-action stories, this has ONE photo-like
+    illustrative source and original motion graphics with their own evidence.
+    A QA document alone is not legal/visual proof; bind to exact video digest.
+    """
+    if episode.get("editorial_format") != "owner_original_single_source_explainer_v4":
+        raise ValueError("V4_EDITORIAL_FORMAT_MISMATCH")
+    sources = episode.get("footage") or []
+    if len(sources) != 1 or sources[0].get("license") != "LTX OpenRAIL-M":
+        raise ValueError("V4_REQUIRES_ONE_OWNER_GENERATED_SOURCE")
+    if (episode.get("source_illustrative_only") is not True
+            or episode.get("synthetic_video_disclosure_required") is not True
+            or episode.get("original_graphics_author") !=
+               "GUSTAVA original procedural vector animation"):
+        raise ValueError("V4_SOURCE_OR_GRAPHICS_PROVENANCE_MISSING")
+    video = Path(mp4_path)
+    digest = hashlib.sha256(video.read_bytes()).hexdigest()
+    if episode.get("final_video_sha256") != digest:
+        raise ValueError("V4_FINAL_MP4_SHA_MISMATCH")
+    file = video.parent / "visual_qa.json"
+    if not file.is_file():
+        raise ValueError("V4_ACTUAL_MP4_VISUAL_REVIEW_MISSING")
+    info = json.loads(file.read_text(encoding="utf8"))
+    chapters = info.get("scene_chapters") or []
+    exact = [sources[0].get("key"), "original_vector_thread",
+             "original_vector_torque", "original_vector_conclusion"]
+    if (info.get("version") != 4 or info.get("episode") != episode["id"]
+            or info.get("passed") is not True or info.get("mp4_sha256") != digest
+            or info.get("source_sequence") != exact
+            or [x.get("source") for x in chapters] != exact
+            or info.get("source_illustrative_only") is not True
+            or info.get("human_recording_not_claimed") is not True
+            or info.get("source_reused_in_short") is not False
+            or info.get("technical_decode_passed") is not True
+            or info.get("long_freezes_found") is not False
+            or info.get("captions_fully_in_safe_zone") is not True):
+        raise ValueError("V4_VISUAL_QA_NOT_IMMUTABLY_CONFIRMED")
+    timeline = 0.0
+    for scene in chapters:
+        try:
+            start = float(scene["start"])
+            seconds = float(scene["seconds"])
+        except (KeyError, ValueError, TypeError) as exc:
+            raise ValueError("V4_SCENE_TIME_MISSING") from exc
+        if abs(start - timeline) > 0.08 or seconds < 2.4:
+            raise ValueError("V4_SCENE_SEQUENCE_INVALID")
+        timeline += seconds
+    if not 18.5 <= timeline <= 20.0:
+        raise ValueError("V4_TOTAL_DURATION_INVALID")
+    return info
+
+
 def verified_visual_artifact(episode, mp4_path):
     """Read renderer's QA proof before publishing any new director-v2 episode.
 
     For historical unmodified releases keep legacy compatibility but still
     reject an object guide whose footage is unrelated to its main subject.
     """
+    if int(episode.get("visual_director_version") or 0) == 4:
+        return verified_owner_vector_explainer(episode, mp4_path)
     evidence=verify_story_subject(episode)
     path=Path(mp4_path).parent/"visual_qa.json"
     required=episode.get("visual_director_version",0) >= 2

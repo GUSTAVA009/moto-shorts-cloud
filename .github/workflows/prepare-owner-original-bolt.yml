@@ -1,0 +1,78 @@
+name: GUSTAVA - Prepare owner-original bolt Short for direct YouTube
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gustava-original-bolt-precision-20261106
+  cancel-in-progress: false
+
+jobs:
+  stage-reviewed-original:
+    if: github.repository == 'GUSTAVA009/moto-shorts-cloud'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ffmpeg to independently decode actual MP4
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+      - name: Download exact immutable original release and QA manifest (no secrets)
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json, pathlib, urllib.request
+          ep = "bolt-precision-20261106"
+          manifest = json.loads(
+              pathlib.Path("cloud-shorts/release_manifests",ep+".json").read_text("utf8"))
+          url = manifest["source_url"]
+          allowed = ("https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/"
+                     "gustava-original-bolt-precision-20261106/bolt-precision-20261106.mp4")
+          if url != allowed or manifest.get("episode_id") != ep:
+              raise SystemExit("RELEASE_ASSET_SOURCE_OR_EPISODE_MISMATCH")
+          dst = pathlib.Path("staged") / ep
+          dst.mkdir(parents=True,exist_ok=True)
+          target = dst / (ep+".mp4")
+          req=urllib.request.Request(url,headers={"User-Agent":"GUSTAVA-verified-owner-render"})
+          with urllib.request.urlopen(req,timeout=75) as inp, target.open("wb") as output:
+              while True:
+                  block=inp.read(1048576)
+                  if not block:break
+                  output.write(block)
+          data=target.read_bytes()
+          if (len(data)!=manifest["final_mp4_bytes"] or
+                  hashlib.sha256(data).hexdigest()!=manifest["final_mp4_sha256"]):
+              raise SystemExit("RENDER_MEDIA_CONTENT_SHA256_INVALID")
+          for name,key in (
+              ("publication.json","publication"),("voice_qa.json","voice_qa"),
+              ("mixed_audio_qa.json","mixed_audio_qa"),("visual_qa.json","visual_qa")):
+              obj=manifest[key]
+              if obj.get("episode_id",obj.get("episode"))!=ep:
+                  raise SystemExit("QA_EPISODE_BINDING_FAILED_"+key)
+              (dst/name).write_text(json.dumps(obj,ensure_ascii=False,indent=2)+"\n","utf8")
+          print("REAL_ORIGINAL_MP4_SHA256_MATCH",manifest["final_mp4_sha256"])
+          PY
+      - name: Verify original Deep voice, mixed MP4, copyright provenance, frames and codecs
+        env:
+          GUSTAVA_ORIGINAL_VOICE_APPROVED: ${{ vars.GUSTAVA_ORIGINAL_VOICE_APPROVED }}
+          GUSTAVA_VOICE_REFERENCE_SHA256: ${{ vars.GUSTAVA_VOICE_REFERENCE_SHA256 }}
+        run: |
+          set -euo pipefail
+          EPISODE=bolt-precision-20261106
+          python3 cloud-shorts/direct_upload_ready.py --episode "$EPISODE" \
+            --staged "staged/$EPISODE" --output "staged/$EPISODE/reviewed-direct-metadata.json"
+          python3 cloud-shorts/youtube_upload.py \
+            --video "staged/$EPISODE/$EPISODE.mp4" \
+            --metadata "staged/$EPISODE/reviewed-direct-metadata.json" \
+            --privacy private --schedule-next --dry-run
+      - name: Archive reviewed immutable original for ONE direct YouTube dispatch
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-preview-bolt-precision-20261106-${{ github.run_id }}
+          path: staged/
+          retention-days: 30
+          if-no-files-found: error

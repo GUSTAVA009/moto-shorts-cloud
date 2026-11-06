@@ -37,8 +37,14 @@ def fingerprint(path):
 
 def clean_description(value):
     """No external links in public description. Source provenance stays internal."""
+    from deep_voice import PUBLIC_ATTRIBUTION as APPROVED_DEEP_CREDIT
     out = []
     for line in str(value).splitlines():
+        # The official DEEP voice provider requires this exact attribution.
+        # Never strip it with the generic external-link safeguard.
+        if line.strip() == APPROVED_DEEP_CREDIT:
+            out.append(APPROVED_DEEP_CREDIT)
+            continue
         if re.search(r"(?i)https?://|www\.|pexels\.com", line):
             continue
         if re.search(r"(?i)^\s*(кадры|видео|источники|footage|source|credits)\s*:.*(pexels|cottonbro)", line):
