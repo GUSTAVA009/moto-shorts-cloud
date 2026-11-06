@@ -18,6 +18,29 @@ def scenic(slug, ids):
 
 
 class EditorialNoveltyTests(unittest.TestCase):
+    def test_block_many_independent_ab_motorcycle_clips(self):
+        catalog = json.loads((Path(__file__).parent / "episodes.json").read_text("utf8"))["episodes"]
+        repeated = [ep for ep in catalog if n.is_generic_unrelated_comparison(ep)]
+        self.assertGreaterEqual(len(repeated), 25)
+        recent = next(ep for ep in repeated if ep["id"] == "moto-forest-c8d89922f6f9")
+        self.assertTrue(n.is_repeated_visual_formula(recent, catalog))
+        with self.assertRaisesRegex(ValueError, "REPEATED_TWO_CLIP_COMPARISON"):
+            n.require_novel_visual_story(recent, catalog)
+
+    def test_original_single_event_is_not_automatically_rejected(self):
+        candidate = {"id": "real-action-story",
+                     "editorial_format": "source_anchored_action_story",
+                     "description": "One verified mechanic solves a real breakdown",
+                     "footage": [{"source_title":"workshop repair motorcycle engine"}]}
+        previous = [
+            {"id": str(i), "editorial_format": "source_anchored_action_contrast",
+             "description": ("Две разные мотоистории: лес и дорога. "
+                             "Независимые кадры, без выдуманного общего события")}
+            for i in range(4)
+        ]
+        self.assertFalse(n.is_repeated_visual_formula(candidate, previous))
+        n.require_novel_visual_story(candidate, previous)
+
     def test_new_pexels_ids_cannot_repeat_mountain_forest_montage(self):
         past = [scenic("older-mountain", [90000001,90000002]),
                 scenic("older-forest", [90000003,90000004])]
