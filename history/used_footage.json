@@ -1972,6 +1972,16 @@
       "episode": "moto-training-fd7420d37b31",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/866c2e19828d844137a734efc9c5fc9cdd91692bced9605cf50f4f7a06a87597.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-b8021e4b9cb1257636a1b497509d9b1fde579520f8d769eb593b15d03ff41cb3": {
+      "episode": "moto-helmet-6b52ca5beeb2",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/b8021e4b9cb1257636a1b497509d9b1fde579520f8d769eb593b15d03ff41cb3.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-759add6b8a06c6b3c4a3f83a232849f647979b069e495bde222ed435159bcdbb": {
+      "episode": "moto-helmet-6b52ca5beeb2",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/759add6b8a06c6b3c4a3f83a232849f647979b069e495bde222ed435159bcdbb.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3178,6 +3188,13 @@
       "people": "track-learners-fd742",
       "story": "closed-course-practice-fd742",
       "visual": "three-clips-fd742"
+    },
+    "moto-helmet-6b52ca5beeb2": {
+      "environment": "riding-gear-workshop-6b52c",
+      "bike": "motorbike-safety-gear",
+      "people": "gear-specialists-6b52c",
+      "story": "helmet-gear-choice-6b52c",
+      "visual": "three-clips-6b52c"
     }
   }
 }
