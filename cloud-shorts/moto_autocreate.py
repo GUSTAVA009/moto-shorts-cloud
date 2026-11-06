@@ -459,7 +459,8 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
     # Commons API is rate-limited independently of our local LTX model:
     # one permitted scout window per 90 min when the original bank is
     # exhausted, not a fabricated license bypass or HTTP 429 loop.
-    external_scout_window = (os.getenv("GITHUB_EVENT_NAME") != "schedule"
+    external_scout_window = (commons_fetch is not commons_results
+                             or os.getenv("GITHUB_EVENT_NAME") != "schedule"
                              or int(datetime.now(timezone.utc).timestamp() // 900) % 6 == 0)
     for theme in themes:
         # Retain a staged subject for later instead of repeating the last
