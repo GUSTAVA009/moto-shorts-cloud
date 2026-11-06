@@ -1,18 +1,11 @@
 {
   "id": "moto-native-4k-control-20261106",
-  "state": "preview_ready",
-  "run_id": "42274119556",
-  "attempt_count": 2,
-  "preview_fingerprint": "dcd28ed8a9fdf67d00a13ec41b18cb1e7cbffe8bd9b1133f14e1186d4d70bc24",
-  "deep_source_sha256": "10624b0af55a9c4804cc622d6ca3e6a585e2d23250489373b94c92ce6be96abf",
+  "state": "reserved",
+  "run_id": "42278855937",
+  "attempt_count": 3,
+  "preview_fingerprint": "8f1fae32683d52599cb6a7e53cd096126eda8f2644a67e5f8780885c53a813fc",
+  "deep_source_sha256": "84411b636109859ca471c14c40bdc9e1b3e64e19505c6d660cdb1c8ce2ad4fb1",
   "selfhosted_voice_id": null,
-  "previous_run_id": "42272301505",
-  "notes": "Revised preview only; never retry a public or uncertain upload.",
-  "voice_qa_passed": true,
-  "voice_qa_coverage": 1.0,
-  "voice_profile": "gustava_create_audio_deep_v1",
-  "selfhosted_reference_sha256": null,
-  "male_voice_verified": true,
-  "mixed_audio_qa_passed": true,
-  "mixed_audio_qa_coverage": 1.0
+  "previous_run_id": "42274119556",
+  "notes": "Revised preview only; never retry a public or uncertain upload."
 }
