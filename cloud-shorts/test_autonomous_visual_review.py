@@ -9,6 +9,14 @@ import unittest
 from unittest.mock import patch
 from types import SimpleNamespace
 
+def git_fixture(obj):
+    """Make a faithful Contents API object, not an impossible sha placeholder."""
+    raw=json.dumps(obj).encode("utf8")
+    digest=hashlib.sha1(b"blob "+str(len(raw)).encode("ascii")+b"\x00"+raw).hexdigest()
+    return {"sha":digest,"size":len(raw),"encoding":"base64",
+            "content":base64.b64encode(raw).decode("ascii")}
+
+
 import autonomous_visual_review as review
 from selfhosted_voice import CARTOON_B_PROFILE_ID
 from visual_director import visual_asset_fingerprint
@@ -322,11 +330,9 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
                 return {"truncated":False,
                         "tree":[{"type":"blob","path":p} for p in ledger_paths]}
             if path=="contents/cloud-shorts/episodes.json?ref=main":
-                return {"sha":"sha","content":base64.b64encode(
-                    json.dumps({"episodes":[episode]}).encode()).decode()}
+                return git_fixture({"episodes":[episode]})
             if path.startswith("contents/render-receipts/"):
-                return {"sha":"sha","content":base64.b64encode(
-                    json.dumps(receipt).encode()).decode()}
+                return git_fixture(receipt)
             if path.startswith("actions/runs/"):
                 return {"total_count":1,"artifacts":[{"expired":False,
                     "name":"daily-preview-"+slug+"-"+run_id,
@@ -352,12 +358,12 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
     def test_private_selection_requires_real_unexpired_artifact_and_no_post_receipt(self):
         ep=self.make_episode()
         receipt=self.make_receipt()
-        encoded=base64.b64encode(json.dumps(receipt).encode()).decode()
+
         slug=ep["id"]
         name="daily-preview-"+slug+"-41438910472"
         def fetch(path,method="GET",data=None):
             if path.startswith("contents/render-receipts/"):
-                return {"sha":"abc","content":encoded}
+                return git_fixture(receipt)
             if path.startswith("actions/runs/"):
                 return {"total_count":1,"artifacts":[{
                     "id":111,"expired":False,"name":name,"size_in_bytes":3000000}]}
@@ -371,6 +377,30 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
         self.assertIsNone(review.select_private({"episodes":[ep]},
             paths+[review.REVIEW_REJECTION_PATH+"/"+slug+"-41438910472.json"],
             get=fetch))
+
+    def test_large_1mb_catalog_resolves_exact_git_blob_with_sha_and_size(self):
+        payload=json.dumps({"episodes":[],"pad":"x"*1100000}).encode("utf8")
+        digest=hashlib.sha1(b"blob "+str(len(payload)).encode("ascii")+
+                            b"\x00"+payload).hexdigest()
+        entry={"sha":digest,"encoding":"none","size":len(payload),"content":""}
+        blob={"sha":digest,"encoding":"base64","size":len(payload),
+              "content":base64.b64encode(payload).decode("ascii")}
+        with patch.object(review,"api",return_value=blob) as mocked:
+            self.assertEqual(review.decode_file(entry)["episodes"],[])
+            mocked.assert_called_once_with("git/blobs/"+digest)
+        with patch.object(review,"api",return_value=dict(blob,size=len(payload)+1)):
+            with self.assertRaisesRegex(RuntimeError,"BLOB_MISMATCH"):
+                review.decode_file(entry)
+        tampered=bytearray(payload)
+        tampered[-1]=ord("y")
+        bad_blob=dict(blob,content=base64.b64encode(tampered).decode("ascii"))
+        with patch.object(review,"api",return_value=bad_blob):
+            with self.assertRaisesRegex(RuntimeError,"GIT_CONTENT_SHA_MISMATCH"):
+                review.decode_file(entry)
+        with patch.object(review,"api") as mocked:
+            with self.assertRaisesRegex(RuntimeError,"CORRUPT_OR_MISSING"):
+                review.decode_file(dict(entry,size=700000))
+            mocked.assert_not_called()
 
     def test_actual_mp4_frames_are_sampled_from_both_nonrepeated_scenes(self):
         ep=self.make_episode()
