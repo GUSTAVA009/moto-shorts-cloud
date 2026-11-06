@@ -4,6 +4,35 @@ import preview_queue as pq
 
 
 class TestPreviewQueue(unittest.TestCase):
+    def test_one_verified_native4k_ffmpeg_install_failure_can_retry(self):
+        import json
+        from pathlib import Path
+        episode=next(ep for ep in json.loads(
+            (Path(__file__).parent/"episodes.json").read_text(encoding="utf8"))["episodes"]
+            if ep["id"]=="moto-native-4k-control-20261106")
+        fp="verified-same-render-spec"
+        receipt={
+            "id":episode["id"],"state":"reserved",
+            "run_id":"42272301505","attempt_count":1,
+            "preview_fingerprint":fp,
+            "deep_source_sha256":episode["deep_audio"]["source_audio_sha256"],
+        }
+        f=pq.eligible_verified_native4k_install_retry
+        self.assertTrue(f(episode,receipt,fp,True))
+        for changed_ep,changed_receipt,changed_fp,verified in (
+            (episode,receipt,fp,False),
+            (episode,dict(receipt,run_id="42272575559"),fp,True),
+            (episode,dict(receipt,attempt_count=2),fp,True),
+            (episode,dict(receipt,state="preview_ready"),fp,True),
+            (episode,receipt,"other-render-fingerprint",True),
+            (dict(episode,auto_publish=True),receipt,fp,True),
+            (dict(episode,voice_engine="unapproved"),receipt,fp,True),
+            (dict(episode,deep_audio={"source_audio_sha256":"0"*64}),receipt,fp,True),
+            (dict(episode,footage=list(reversed(episode["footage"]))),receipt,fp,True),
+        ):
+            self.assertFalse(f(changed_ep,changed_receipt,changed_fp,verified))
+
+
     def test_proven_cartoon_b_403_private_resume_only_after_live_service_fix(self):
         """A completed 403 may not strand this single private original forever."""
         import json
