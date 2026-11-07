@@ -2262,6 +2262,16 @@
       "episode": "moto-city-9561eabb9e24",
       "source": "https://www.pexels.com/video/urban-motorcycle-ride-in-narrow-alleyway-37154727/",
       "status": "reserved-or-rendered"
+    },
+    "28322546": {
+      "episode": "moto-roadtrip-83f0461a1801",
+      "source": "https://www.pexels.com/video/a-person-riding-a-motorcycle-on-the-road-28322546/",
+      "status": "reserved-or-rendered"
+    },
+    "20642963": {
+      "episode": "moto-roadtrip-83f0461a1801",
+      "source": "https://www.pexels.com/video/a-person-riding-a-motorcycle-on-the-street-20642963/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3671,6 +3681,13 @@
       "people": "city-riders-9561e",
       "story": "urban-riding-9561e",
       "visual": "three-clips-9561e"
+    },
+    "moto-roadtrip-83f0461a1801": {
+      "environment": "countryside-road-83f04",
+      "bike": "touring-motorcycle",
+      "people": "touring-travelers-83f04",
+      "story": "scenic-country-road-83f04",
+      "visual": "three-clips-83f04"
     }
   }
 }
