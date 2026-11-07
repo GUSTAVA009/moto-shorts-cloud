@@ -11,6 +11,7 @@
   ],
   "contains_synthetic_media": false,
   "reviewed_for_direct_youtube_upload": true,
-  "owner_reviewed": true,
+  "assistant_visual_reviewed": true,
+  "owner_authorized_publication": true,
   "license_sources_count": 3
 }
