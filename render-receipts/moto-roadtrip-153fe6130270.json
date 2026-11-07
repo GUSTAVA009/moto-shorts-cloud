@@ -1,0 +1,11 @@
+{
+  "id": "moto-roadtrip-153fe6130270",
+  "state": "reserved",
+  "run_id": "42400239823",
+  "attempt_count": 1,
+  "preview_fingerprint": "c1d22c500deb6bc34896327a362737a4417e2372e68eabf0b1139c803bfb5bd9",
+  "deep_source_sha256": "45093f8f58be65041d91e2bff9752fdc6b9026ef1f774c1c94cc57434cb7ee19",
+  "selfhosted_voice_id": null,
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
