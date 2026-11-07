@@ -189,7 +189,7 @@ class EpisodeTests(unittest.TestCase):
         self.assertEqual(r.checked_source(item), "5803097")
 
     def test_no_banned_words_in_public_fields(self):
-        ep = json.loads((Path(__file__).parent / "episodes.json").read_text())["episodes"][0]
+        ep = json.loads((Path(__file__).parent / "episodes.json").read_text(encoding="utf-8"))["episodes"][0]
         changed = dict(ep, caption_end="ХАПЫЧ навсегда")
         with self.assertRaises(ValueError):
             r.validate_episode(changed)

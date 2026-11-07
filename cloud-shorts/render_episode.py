@@ -265,23 +265,18 @@ def stream_pexels_excerpt(item, destination, required_seconds, ffmpeg="ffmpeg"):
 
 
 def download_verified_native_4k_pexels(item, destination):
-    """Retrieve the ORIGINAL 4K object: streaming FFmpeg got Pexels' 448p variant.
+    """Download SHA-pinned ORIGINAL native 2K/4K Pexels object, never 448p.
 
-    Do not trust dimension labels or upscale. This path is allowed only for
-    the exact two previously downloaded owner-reviewed Pexels originals,
-    pinned by immutable SHA, byte size and native portrait dimensions.
+    The legacy function name is retained for existing callers and fixtures.
+    Independent ffprobe confirms original decoded pixels after the download.
     """
     import hashlib
-    expected_sha = str(item.get("native_4k_sha256") or "")
-    expected_size = item.get("native_4k_bytes")
-    native_w = item.get("native_4k_width")
-    native_h = item.get("native_4k_height")
-    if (not re.fullmatch(r"[0-9a-f]{64}", expected_sha)
-            or type(expected_size) is not int
-            or not 1_000_000 <= expected_size <= MAX_FULL_SOURCE_BYTES
-            or (native_w, native_h) != (2160, 3840)
-            or item.get("key") not in ("clip_0","clip_1")):
-        raise ValueError("NATIVE_PEXELS_SOURCE_FINGERPRINT_INCOMPLETE")
+    from native_source_preflight import source_proof
+    proof=source_proof(item,os.environ.get("GUSTAVA_EXPORT_PROFILE","2k"))
+    expected_sha=proof["sha256"]
+    expected_size=proof["bytes"]
+    native_w=proof["width"]
+    native_h=proof["height"]
     req = urllib.request.Request(
         item["url"], headers={"User-Agent":"Mozilla/5.0",
                               "Accept":"video/mp4,*/*"})
@@ -327,10 +322,13 @@ def download(item, dst, required_seconds=None):
                 verified_mixkit(item)  # one-off Free license check, no site crawling
             if required_seconds is None:
                 raise ValueError("Pexels clip duration must be bounded by episode shot list")
-            if any(k in item for k in ("native_4k_sha256","native_4k_bytes",
-                                      "native_4k_width","native_4k_height")):
-                # Pexels FFmpeg requests resolved a different 448x800
-                # rendition; fetch the exact independent 2160x3840 source.
+            if any(k in item for k in (
+                    "native_4k_sha256","native_4k_bytes",
+                    "native_4k_width","native_4k_height",
+                    "native_2k_sha256","native_2k_bytes",
+                    "native_2k_width","native_2k_height")):
+                # Pexels FFmpeg can resolve a low-res rendition. Verify the
+                # exact independently SHA-pinned 2K/4K original instead.
                 download_verified_native_4k_pexels(item,tmp)
             else:
                 # Ordinary low-bandwidth previews are still bounded and

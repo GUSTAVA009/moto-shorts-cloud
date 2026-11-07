@@ -72,6 +72,7 @@ jobs:
         id: pick
         env:
           GUSTAVA_PROVIDER_PREFLIGHT: "1"
+          GUSTAVA_NATIVE_SOURCE_PREFLIGHT: "1"
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_RUN_ID: ${{ github.run_id }}
@@ -180,6 +181,7 @@ jobs:
           HAS_JOB: ${{ steps.pick.outputs.has_job }}
           EPISODE: ${{ steps.pick.outputs.episode }}
           PROVIDER_BLOCKER: ${{ steps.pick.outputs.provider_blocker }}
+          SOURCE_BLOCKER: ${{ steps.pick.outputs.source_blocker }}
         run: |
           if [ "$HAS_JOB" = "true" ]; then
             # Never label a failed ASR run as a successful production.
@@ -214,6 +216,9 @@ jobs:
             if [ -n "$PROVIDER_BLOCKER" ]; then
               echo "::error::FACTORY_PAUSED_PROVIDER_DOWN: $PROVIDER_BLOCKER"
               echo "Source/TTS provider unreachable. No episode reserved, 0 MP4 created or published. Automatic schedule retries; no owner voice substitution." >> "$GITHUB_STEP_SUMMARY"
+            elif [ -n "$SOURCE_BLOCKER" ]; then
+              echo "::error::FACTORY_PAUSED_NATIVE_2K_SOURCE_REQUIRED: $SOURCE_BLOCKER"
+              echo "No native 1440x2560/2160x3840 SHA-verified licensed footage available for queued unique scripts; no episode consumed." >> "$GITHUB_STEP_SUMMARY"
             else
               echo "::error::QUEUE_EMPTY — 0 videos generated because episode catalog has no new verified story."
               echo "QUEUE_EMPTY: zero new videos generated. Add new unique rights-cleared scripts and footage; do not report as publishing success." >> "$GITHUB_STEP_SUMMARY"

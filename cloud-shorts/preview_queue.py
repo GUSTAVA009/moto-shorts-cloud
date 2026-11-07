@@ -945,6 +945,8 @@ def choose(catalog, output):
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
     listed = []
+    native_blocked=0
+    require_native=os.environ.get("GUSTAVA_NATIVE_SOURCE_PREFLIGHT")=="1"
     for ep in data["episodes"]:
         if not may_enter_preview_queue(ep) or not voice_ready(ep):
             continue
@@ -956,8 +958,20 @@ def choose(catalog, output):
         except ValueError as exc:
             print("VISUAL_STORY_REJECTED_BEFORE_RESERVATION",ep["id"],str(exc)[:300],flush=True)
             continue
+        if require_native:
+            from native_source_preflight import require_native_sources
+            try:
+                require_native_sources(
+                    ep,os.environ.get("GUSTAVA_EXPORT_PROFILE","2k"))
+            except ValueError as exc:
+                native_blocked+=1
+                if native_blocked<=5:
+                    print("NATIVE_2K_SOURCE_NOT_READY_NO_RESERVATION",
+                          ep["id"],str(exc),flush=True)
+                continue
         listed.append(ep)
-    print("GUSTAVA_APPROVED_VOICE_AND_VISUAL_READY_EPISODES",len(listed),flush=True)
+    print("GUSTAVA_APPROVED_VOICE_AND_VISUAL_READY_EPISODES",len(listed),
+          "native_source_blocked",native_blocked,flush=True)
     def unpublished(slug):
         # Legacy uploads and Buffer reservations both block rerenders.
         return (api("publication-receipts/" + slug + ".json") is None
@@ -1144,8 +1158,14 @@ def choose(catalog, output):
                     selected = item
                     break
     if selected is None:
-        output.write_text("has_job=false\n", encoding="utf8")
-        print("QUEUE_EMPTY: no new or revised legally cleared video to render")
+        detail=("source_blocker=NATIVE_2K_SOURCE_METADATA_UNVERIFIED\n"
+                if native_blocked else "")
+        output.write_text("has_job=false\n"+detail,encoding="utf8")
+        if native_blocked:
+            print("FACTORY_WAITING_FOR_NATIVE_2K_SOURCE_PROVENANCE",
+                  native_blocked,"no false 448x800 upscale",flush=True)
+        else:
+            print("QUEUE_EMPTY: no new or revised legally cleared video to render")
         return
     item = selected
     slug = item["id"]
