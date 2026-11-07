@@ -2232,6 +2232,16 @@
       "episode": "moto-motocross-26a235709254",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/af5623bc71d4810d843d20b5969f1d392f20be72826c93491d5b0eb2da2b9a8c.json",
       "status": "reserved-or-rendered"
+    },
+    "gustava-original-71f8d9b0c5d037a6c5787ac6be900c46fa1c0302cb3c97cc3fc245e18f820c69": {
+      "episode": "moto-helmet-08c8a10975d3",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/71f8d9b0c5d037a6c5787ac6be900c46fa1c0302cb3c97cc3fc245e18f820c69.json",
+      "status": "reserved-or-rendered"
+    },
+    "gustava-original-ee8f08e54f52f08a92d6cdf5b8de03d5878d0afa2e378309f2094d099ac2b9da": {
+      "episode": "moto-helmet-08c8a10975d3",
+      "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/ee8f08e54f52f08a92d6cdf5b8de03d5878d0afa2e378309f2094d099ac2b9da.json",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3620,6 +3630,13 @@
       "people": "track-racers-26a23",
       "story": "rider-at-prepared-track-26a23",
       "visual": "three-clips-26a23"
+    },
+    "moto-helmet-08c8a10975d3": {
+      "environment": "riding-gear-workshop-08c8a",
+      "bike": "motorbike-safety-gear",
+      "people": "gear-specialists-08c8a",
+      "story": "helmet-gear-choice-08c8a",
+      "visual": "three-clips-08c8a"
     }
   }
 }
