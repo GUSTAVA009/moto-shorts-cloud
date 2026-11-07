@@ -1,0 +1,146 @@
+name: Owner-approved one-time GUSTAVA vintage Shorts release
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/owner-vintage-release-20261107.yml
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: youtube-direct-uploads
+  cancel-in-progress: false
+
+jobs:
+  owner-approved-publication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      EPISODE: moto-vintage-1211a46b1a90
+      TARGET_CHANNEL: UCS0QCodPcFBTjMt4ioEWOUw
+      PINNED_SHA256: c89f4560f9ff411447fa4be6eec25fbaa9120507737b5dc1d6450663f2901ed3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download the exact existing video, never rerender
+        uses: actions/download-artifact@v4
+        with:
+          name: daily-preview-moto-vintage-1211a46b1a90-42268426076
+          repository: ${{ github.repository }}
+          run-id: "42268426076"
+          path: staged
+          github-token: ${{ github.token }}
+      - name: Install media decoder and official YouTube client
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python3 -m pip install --disable-pip-version-check google-api-python-client google-auth
+      - name: Pin MP4 bytes, original sources, sound and explicitly accepted 720p size
+        run: |
+          python3 - <<'PY'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+          ep=os.environ["EPISODE"]
+          folder=Path("staged")/ep
+          video=folder/(ep+".mp4")
+          def read(name): return json.loads((folder/name).read_text(encoding="utf8"))
+          assert video.is_file(),"MP4_MISSING"
+          sha=hashlib.sha256(video.read_bytes()).hexdigest()
+          assert sha==os.environ["PINNED_SHA256"],"UNEXPECTED_MP4_SHA256"
+          meta=read("publication.json")
+          voice=read("voice_qa.json")
+          mix=read("mixed_audio_qa.json")
+          sources=read("license_sources.json")
+          assert meta.get("episode_id")==ep and meta.get("youtube_published") is False,"INVALID_OR_ALREADY_PUBLISHED_METADATA"
+          assert voice.get("passed") is True and mix.get("passed") is True and mix.get("mp4_sha256")==sha,"AUDIO_SHA_OR_QA_MISMATCH"
+          assert sources.get("episode")==ep and len(sources.get("license_sources",[]))==2,"MISSING_ORIGINAL_SOURCE_PROVENANCE"
+          for src in sources["license_sources"]:
+              assert src.get("license")=="LTX OpenRAIL-M" and src.get("author")=="GUSTAVA Original Video Production","SOURCE_LICENSE_NOT_VERIFIED"
+              assert len(str(src.get("original_sha256","")))==64 and src.get("generation_model"),"SOURCE_SHA_OR_MODEL_MISSING"
+          data=json.loads(subprocess.check_output(["ffprobe","-v","error","-show_entries","format=duration:stream=codec_type,width,height","-of","json",str(video)],text=True))
+          v=next(s for s in data["streams"] if s["codec_type"]=="video")
+          assert (v["width"],v["height"])==(720,1280),"VIDEO_FORMAT_NOT_OWNER_APPROVED"
+          assert 13.0<=float(data["format"]["duration"])<=13.3,"DURATION_MISMATCH"
+          assert "Город" in meta.get("title","") and meta.get("description") and meta.get("tags"),"TITLE_OR_DESCRIPTION_MISSING"
+          meta["contains_synthetic_media"]=True
+          meta["owner_manual_quality_override"]=True
+          (folder/"owner-release-metadata.json").write_text(json.dumps(meta,ensure_ascii=False,indent=2),encoding="utf8")
+          print("PINNED_OWNER_APPROVED_MEDIA_CHECKS_PASSED",ep,sha,"720x1280")
+          PY
+      - name: Verify live OAuth targets only GUSTAVA channel before reservation
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+        run: |
+          test "$YOUTUBE_EXPECTED_CHANNEL_ID" = "$TARGET_CHANNEL"
+          PYTHONPATH=cloud-shorts python3 - <<'PY'
+          from youtube_upload import authenticated_api,verify_channel
+          verify_channel(authenticated_api())
+          print("OWNER_CHANNEL_OAUTH_VERIFIED_NO_UPLOAD")
+          PY
+      - name: Reserve immutable episode ID and video hash to prevent any duplicate
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: |
+          python3 cloud-shorts/upload_guard.py reserve \
+            --video "staged/$EPISODE/$EPISODE.mp4" \
+            --channel "$TARGET_CHANNEL" \
+            --episode "$EPISODE" \
+            --output owner-upload-reservation.json
+      - name: Upload owner's single explicitly approved MP4 publicly
+        env:
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+          YOUTUBE_EXPECTED_CHANNEL_ID: ${{ vars.YOUTUBE_EXPECTED_CHANNEL_ID }}
+        run: |
+          PYTHONPATH=cloud-shorts python3 - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          from youtube_upload import authenticated_api,verify_channel,build_body,upload
+          ep=os.environ["EPISODE"]
+          video=Path("staged")/ep/(ep+".mp4")
+          meta=json.loads((video.parent/"owner-release-metadata.json").read_text(encoding="utf8"))
+          if meta.get("owner_manual_quality_override") is not True or meta.get("contains_synthetic_media") is not True:
+              raise RuntimeError("OWNER_APPROVAL_OR_SYNTHETIC_DISCLOSURE_MISSING")
+          sha=hashlib.sha256(video.read_bytes()).hexdigest()
+          if sha!=os.environ["PINNED_SHA256"]:
+              raise RuntimeError("IMMUTABLE_VIDEO_CHANGED_AFTER_RESERVATION")
+          api=authenticated_api()
+          channel=verify_channel(api)
+          if channel!=os.environ["TARGET_CHANNEL"]:
+              raise RuntimeError("WRONG_YOUTUBE_CHANNEL")
+          body=build_body(meta,"public")
+          if body["status"].get("containsSyntheticMedia") is not True:
+              raise RuntimeError("SYNTHETIC_DISCLOSURE_NOT_SET")
+          video_id=upload(api,body,video)
+          receipt={
+              "sha256":sha,"channel_id":channel,"video_id":video_id,
+              "privacy_requested":"public","public_visibility_verified":False,
+              "scheduled_at":None,"schedule_readback_verified":False,
+              "youtube_url":"https://www.youtube.com/watch?v="+video_id,
+          }
+          Path("owner-upload-receipt.json").write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding="utf8")
+          print("OWNER_RELEASE_UPLOAD_ACKNOWLEDGED",receipt["youtube_url"])
+          PY
+      - name: Confirm episode/hash receipt in protected upload ledger
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 cloud-shorts/upload_guard.py finish \
+            --reservation owner-upload-reservation.json \
+            --receipt owner-upload-receipt.json
+      - name: Preserve YouTube video ID as a run artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: owner-vintage-youtube-receipt
+          path: owner-upload-receipt.json
+          retention-days: 30
+          if-no-files-found: error
