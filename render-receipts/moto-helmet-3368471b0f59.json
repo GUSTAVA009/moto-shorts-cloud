@@ -1,0 +1,11 @@
+{
+  "id": "moto-helmet-3368471b0f59",
+  "state": "reserved",
+  "run_id": "42354884536",
+  "attempt_count": 1,
+  "preview_fingerprint": "505959b3201ed07be3eaa90309da588c60c742cb6c2798eb5608d638c6849257",
+  "deep_source_sha256": "f476470efa76814f942219bb02aa6756ec57c6d20864cda24c687fd2c61090bf",
+  "selfhosted_voice_id": null,
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
