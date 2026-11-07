@@ -22173,6 +22173,100 @@
         "immutable_narration": true,
         "max_total_attempts": 2
       }
+    },
+    {
+      "id": "moto-racing-1a27db9dcf31",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Почему на грунте и асфальте мотоцикл едет по-разному? #shorts",
+      "narration": "Что меняется, когда мотоцикл выезжает с грунта на твёрдую дорогу? На первой съёмке мотоциклист едет по лесной тропе. На второй байкер едет по асфальтированной дороге. Покрытие разное, поэтому и темп нужно выбирать по дороге, а не по газу.",
+      "description": "Независимые лицензированные кадры реальной езды на разных типах покрытия. Разбор выбора темпа и контроля мотоцикла, без выдуманных аварий или связанного события.\n\n#shorts",
+      "caption_start": "КАКОЕ ПОКРЫТИЕ?",
+      "caption_middle": "ДРУГОЕ ПОКРЫТИЕ",
+      "caption_end": "ВЫБИРАЙ ТЕМП",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "race-breakbeat",
+      "music_bpm": 140,
+      "editorial_format": "original_action_microguide_v1",
+      "creative_treatment": "verified_terrain_change_explainer",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5803627/",
+          "source_page": "https://www.pexels.com/video/person-riding-a-dirt-bike-5803627/",
+          "source_title": "Person Riding a Dirt Bike",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "duration": 5.0,
+          "topics": [
+            "motocross",
+            "racing",
+            "dirt"
+          ],
+          "native_4k_sha256": "55511bb4fe332fafc2a11500b9355d74e720b73ff53ceb72f83696e8c7488e68",
+          "native_4k_bytes": 12393416,
+          "native_4k_width": 2160,
+          "native_4k_height": 3840,
+          "verified_riding_context": "trail"
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/28332401/",
+          "source_page": "https://www.pexels.com/video/a-person-riding-a-motorcycle-on-the-road-28332401/",
+          "source_title": "A person riding a motorcycle on the road",
+          "author": "Ravi Kant",
+          "license": "Pexels License",
+          "topics": [
+            "roadtrip",
+            "forest"
+          ],
+          "duration": 10,
+          "native_4k_sha256": "81908a2a62dbfabc01e3e0eee9672ba10ee12e64ab15120977d50cca50fd5fc4",
+          "native_4k_bytes": 46238155,
+          "native_4k_width": 2160,
+          "native_4k_height": 3840,
+          "verified_riding_context": "road"
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 4.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 9.75
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "race-paddock-1a27d",
+        "bike": "track-racing-bike",
+        "people": "racing-crews-1a27d",
+        "story": "circuit-racing-1a27d",
+        "visual": "three-clips-1a27d"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "SHA-pinned_real_frames_riding_terrain_educational_v1"
     }
   ]
 }
