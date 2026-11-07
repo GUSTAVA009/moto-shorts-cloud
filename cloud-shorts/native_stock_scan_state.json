@@ -160,6 +160,54 @@
     "6801391": {
       "result": "verified_2k",
       "date": "2026-11-07"
+    },
+    "29466269": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "30031070": {
+      "result": "source_above_90MB_cap",
+      "date": "2026-11-07"
+    },
+    "30075959": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "30283096": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "31623275": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "31881759": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "31894372": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "32034080": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "32191741": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "32554208": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "32659150": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "32659157": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
     }
   }
 }
