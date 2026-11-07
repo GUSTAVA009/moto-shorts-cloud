@@ -20,16 +20,16 @@ class FactoryMotionSourceTests(unittest.TestCase):
             encoding="utf8"))["sources"]
         cls.evidence=load_evidence()
 
-    def test_all_30_sources_have_sha_pinned_evidence_and_14_confirmed_moving(self):
+    def test_all_37_sources_have_sha_pinned_evidence_and_16_confirmed_moving(self):
         sources=[s for s in self.pool
                  if (s.get("native_4k_sha256") or s.get("native_2k_sha256"))
                  and s["url"].rstrip("/").split("/")[-1] in self.evidence]
-        self.assertEqual(len(sources),30)
+        self.assertEqual(len(sources),37)
         approved=[s for s in sources if source_dynamic_action_verified(
             s,self.evidence)]
-        self.assertEqual(len(approved),14)
+        self.assertEqual(len(approved),16)
         # Provenance alone does not make a parked bike a riding action.
-        self.assertEqual(len(sources)-len(approved),16)
+        self.assertEqual(len(sources)-len(approved),21)
 
     def test_three_previous_broken_mp4_sources_cannot_get_action_preflight(self):
         catalog=json.loads((HERE/"episodes.json").read_text(encoding="utf8"))
@@ -88,14 +88,15 @@ class FactoryMotionSourceTests(unittest.TestCase):
         used={x["url"].rstrip("/").split("/")[-1] for x in ep["footage"]}
         self.assertIn("26447454",used)
         self.assertNotIn("5803517",used)
-        self.assertEqual(ep["editorial_format"],"original_action_microguide_v1")
+        self.assertIn(ep["editorial_format"],(
+            "source_anchored_action_contrast","original_action_microguide_v1"))
         self.assertIs(ep["auto_publish"],False)
 
     def test_autonomous_script_stock_excludes_ungrounded_footage(self):
         with patch.dict(os.environ,{
                "GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED":"1"}):
             selected=native_source_candidates(self.pool,"2k")
-            self.assertEqual(len(selected),14)
+            self.assertEqual(len(selected),16)
             self.assertTrue(all(source_dynamic_action_verified(s)
                                 for s in selected))
             self.assertFalse(any(x["url"].endswith("/5806214/")
@@ -103,7 +104,7 @@ class FactoryMotionSourceTests(unittest.TestCase):
         with patch.dict(os.environ,{
                "GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED":"0"}):
             selected=native_source_candidates(self.pool,"2k")
-            self.assertGreater(len(selected),14)
+            self.assertGreater(len(selected),16)
 
     def test_eligible_episode_still_needs_two_native_sources_and_action_proof(self):
         active=[s for s in self.pool if source_dynamic_action_verified(

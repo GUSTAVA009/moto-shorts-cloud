@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sources_checked": 30,
+  "sources_checked": 37,
   "reports": [
     {
       "source_id": "13687335",
@@ -353,6 +353,56 @@
       "candidate_dynamic_action": true
     },
     {
+      "source_id": "40310204",
+      "sha256": "dcf2f5e57fd505da331926e8f16888b0a43fa4a2030b5856aff029bc76b607aa",
+      "width": 1440,
+      "height": 2560,
+      "duration": 13.02,
+      "frame_sha256": [
+        "96c3a19570b2d03e9604f71936af3d9adefaa1c347239d59d52b83f0674e3dcd",
+        "09027d7fb0610ffe0ab2dd65185fa468748bb8f0b2521e754d351da30d6a41a2",
+        "c4c875204264eeddea7fad5d6f69b354adaaff1a93ef89b1e176a3ca1e86d8ce"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "maintenance",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Райдеры обслуживают мотоциклы в закрытом пространстве: один снимает фото/видео на штативе, другой сидит на байке.",
+      "supported_narration_claims": [
+        "Мотоцикл стоит на месте (не едет).",
+        "Есть профессиональное оборудование для съемки (свет, штатив).",
+        "Действие происходит в помещении или под крышей."
+      ],
+      "why_not_action": "Нет движения мотоцикла по дороге или прыжка; байка стоит на месте, люди взаимодействуют с ней статично.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5198953",
+      "sha256": "570bf9995c07a5e9e311ebb4fba66d6ed9df1a507d8d314389f6a94be3261ea9",
+      "width": 2160,
+      "height": 4096,
+      "duration": 9.76,
+      "frame_sha256": [
+        "6675af5d3208c1bf1ca778c55f8856d461312f3fe4509ac6d850284e956bb2df",
+        "c64ee385d7f3021c818410a50f635b4810663cd43a9915d87e6d644b98766231",
+        "30bf7871b081831f7dcd90af7d01b1f56256b732293320cac86b0a611897b434"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "standing",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.15,
+      "observed": "Райдер в шлеме стоит на мотоцикле на мокрой дороге под мостом, рядом едут машины.",
+      "supported_narration_claims": [
+        "Мотоцикл находится на дороге.",
+        "Вокруг есть другие автомобили.",
+        "Погода пасмурная и дождливая."
+      ],
+      "why_not_action": "Нет видимых признаков движения: колеса не размыты, положение райдера и байка статично во всех кадрах.",
+      "candidate_dynamic_action": false
+    },
+    {
       "source_id": "5198981",
       "sha256": "0042693f5c60af80600ee4de58aaca2ea510376ee88ca303d7ebd307492c1b20",
       "width": 1440,
@@ -375,6 +425,106 @@
         "Райдер одет в черную кожаную куртку."
       ],
       "why_not_action": "Нет видимых признаков движения: байк не едет, не прыгает, не обслуживается; райдер стоит на месте.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5198992",
+      "sha256": "56d9e5720306b41e2c90ce2c8e9b622bb7871e6ad598e6a04de1377498ec0ba2",
+      "width": 2160,
+      "height": 4096,
+      "duration": 15.04,
+      "frame_sha256": [
+        "c894caac4d056d23d18085350bc0afd1668e01718164665d27c65d982e8c2bd8",
+        "638943febbfce0389bb7baa209de4cefe9c5a91202cb012ee5249ae8b43de47a",
+        "55e397a9c13b9774a59573e65ca0ce81017178468f3ed563aed9a9c834facf19"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Мотоцикл с двумя пассажирами движется по узкой улице в заброшенном промышленном районе.",
+      "supported_narration_claims": [
+        "Мотоцикл находится в движении (кадры 1 и 2).",
+        "Видно два человека на мотоцикле.",
+        "Фон — руины старых кирпичных зданий."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "5199341",
+      "sha256": "e1077aef8fb24528e24d0153f0d9050a8ea85642e76e876eca828d6ff0de21c8",
+      "width": 1440,
+      "height": 2732,
+      "duration": 31.2,
+      "frame_sha256": [
+        "5933e21bd2869c542f6078721a1bcd9973c2c6ac2f0b738183c9869384b2002c",
+        "fc840076023d66529422be01b896769fcfaf2645d263b89d84d9e64a91a85829",
+        "936282e7a670f8f0c835a40f8a346eadd2b3a5563c4e49b7015a354047553686"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "maintenance",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Мужчина в темной куртке стоит у белого мотоцикла Honda CB1100 и держится за руль, проверяя его.",
+      "supported_narration_claims": [
+        "Мотоцикл белый, модель Honda CB1100.",
+        "Мужчина держится за руль мотоцикла.",
+        "Мужчина стоит рядом с мотоциклом."
+      ],
+      "why_not_action": "Нет движения мотоцикла или прыжка; мужчина просто стоит и держит руль.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5199342",
+      "sha256": "8c8fa1a06967c3b5c644d05cda18f3a34f2a9b2798ecff23fcc39f7c0de96289",
+      "width": 2160,
+      "height": 4096,
+      "duration": 15.6,
+      "frame_sha256": [
+        "e7464cbef92b67f838e802f77b97b97d3bda3b51a047a78afc118d2785ef98aa",
+        "a92274e36e7eaf920de2eea7f35b00f836cc18b91d2dbca84be9de821a9a90af",
+        "ae89908db335bafe370227a619714a6b3372041866ad123cab39fce3bd741aa7"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "maintenance",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Рейдер использует ключ для работы с рулевой колонкой мотоцикла.",
+      "supported_narration_claims": [
+        "Рука держит инструмент (ключ) в кадре.",
+        "Инструмент касается деталей рулевой колонки.",
+        "Мотоцикл стоит на месте, нет движения по дороге."
+      ],
+      "why_not_action": "Нет признаков езды или прыжка; мотоцикл неподвижен, человек работает с ним.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5199365",
+      "sha256": "a3c468da63aea1cfde88800873b162313e488bde4b64a7dacaf3ac5c9c46e630",
+      "width": 2160,
+      "height": 4096,
+      "duration": 23.92,
+      "frame_sha256": [
+        "cae7056257857c1960f19701ffb58632142f5a3ee6bc99d31da8fa28930330af",
+        "2fdf6f38f116398574e034fcf26042a4116d1743cc878a11b2a0b8c6dc97bb76",
+        "9e775d6d10b6b5768f7c80db9dba80f0844dcefc814be7bcf9af4894e6995a3f"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "standing",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.95,
+      "observed": "Мужчина сидит на мотоцикле в городской улице и курит.",
+      "supported_narration_claims": [
+        "Мотоцикл стоит на месте (нет движения колес).",
+        "Райдер находится в статичной позе.",
+        "В кадрах нет действий по обслуживанию или езде."
+      ],
+      "why_not_action": "Нет визуальных признаков движения мотоцикла, прыжка или обслуживания; райдер просто сидит и курит.",
       "candidate_dynamic_action": false
     },
     {
@@ -626,6 +776,31 @@
       ],
       "why_not_action": "Нет видимого движения мотоцикла или действий по его обслуживанию/наденью шлема. Райдер статичен во всех кадрах.",
       "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5803627",
+      "sha256": "55511bb4fe332fafc2a11500b9355d74e720b73ff53ceb72f83696e8c7488e68",
+      "width": 2160,
+      "height": 3840,
+      "duration": 4.76,
+      "frame_sha256": [
+        "2a97195a4838abb7c44639276ab704b5a6d4e37728c6552a2a831f07098cb364",
+        "0d1f743844f4a14eb9c948b9256d9ad2cf93ef6c0f3c7b86f9f731c24c9566b9",
+        "ce55b4f5d5dba7d118cab2d08eaaf2bf7edbbe78e8a60e7e43057dedf37047fc"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Райдер на мотокроссе едет по лесной тропе, пробираясь через поворот.",
+      "supported_narration_claims": [
+        "Мотоцикл находится в движении по грунтовой дороге.",
+        "Видна задняя часть байка и ноги райдера.",
+        "Трасса проходит вдоль земляного склона."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
     },
     {
       "source_id": "5806212",
