@@ -74,6 +74,25 @@ SCENES = (
 )
 
 
+RIDING_CONTEXT_SCENES = {
+    # Contexts are calculated from real, SHA-pinned source frames, NOT from
+    # unreliable Pexels title tags. These represent different visible terrain
+    # challenges despite both clips showing genuine riding action.
+    "sand": ("ride_sand", r"песчан\\w*", "по песку",
+             "райдер едет по песчаной трассе", "песчаная трасса", r"песчан|песк"),
+    "trail": ("ride_trail", r"лесн\\w*", "по грунту",
+              "мотоциклист едет по лесной тропе", "лесная тропа", r"лесн|троп|грунт"),
+    "garage": ("ride_garage", r"паркинг", "в паркинге",
+               "байкер едет в подземном паркинге", "подземная парковка", r"паркинг|парковк"),
+    "city": ("ride_city", r"городск", "по городу",
+             "мотоцикл едет по городской улице", "город", r"город|улиц"),
+    "alley": ("ride_alley", r"переул", "по узкой улице",
+              "мотоцикл едет по узкой улице", "узкая улица", r"узк|улиц"),
+    "road": ("ride_road", r"асфальт", "по асфальту",
+             "байкер едет по асфальтированной дороге", "асфальт", r"асфальт|дорог"),
+}
+
+
 def scene_for(media):
     url = urlsplit(str(media.get("source_page") or ""))
     if url.hostname == "84-252-66-87.sslip.io":
@@ -86,6 +105,13 @@ def scene_for(media):
         return next((s for s in SCENES if s[0]==kind),None)
     if url.scheme != "https" or url.hostname not in ("www.pexels.com", "commons.wikimedia.org", "mixkit.co"):
         return None
+    # Opt-in context, bound independently to the actual original SHA and
+    # three model-inspected source frames. A forged source label is ignored.
+    context=media.get("verified_riding_context")
+    if url.hostname=="www.pexels.com" and context in RIDING_CONTEXT_SCENES:
+        from source_action_evidence import verified_riding_context
+        if verified_riding_context(media)==context:
+            return RIDING_CONTEXT_SCENES[context]
     # Some Pexels pages are named "riding on a hill" even though THREE
     # SHA-bound real source frames confirm a motorcycle airborne. Trust only
     # the approved original-pixel visual evidence, never self-assigned tags.
@@ -197,6 +223,15 @@ def select_pair(sources, used_ids):
                 return [first, second]
     for index, (first, a) in enumerate(eligible):
         for second, b in eligible[index + 1:]:
+            if a[0].startswith("ride_") and b[0].startswith("ride_"):
+                # A video of a city street plus a garage is two clips of
+                # similar paving, not a useful terrain-change microguide.
+                # Require proof of genuinely different, teachable surfaces.
+                rough={"ride_sand","ride_trail"}
+                paved={"ride_city","ride_garage","ride_road","ride_alley"}
+                if not ((a[0] in rough and b[0] in paved)
+                        or (a[0] in paved and b[0] in rough)):
+                    continue
             if (a[0] != b[0] and pair_permitted(first,second)):
                 return [first, second]
     return []
@@ -332,6 +367,63 @@ def grounded_riding_jump_story(sources, previous_titles,
     return result
 
 
+def grounded_surface_microguide(sources,previous_titles,
+                                rewrite_attempt=0,previous_narrations=()):
+    """Original educational contrast between two *verified riding settings*.
+
+    Real source frames prove both motorcycles MOVE, and prove the distinct
+    terrain or traffic setting. Separate filmmakers, no staged continuity.
+    """
+    a,b=(scene_for(x) for x in sources)
+    if not a or not b or not a[0].startswith("ride_") or not b[0].startswith("ride_"):
+        raise ValueError("SURFACE_STORY_REQUIRES_TWO_VERIFIED_RIDING_CONTEXTS")
+    rough={"ride_sand","ride_trail"}
+    paved={"ride_garage","ride_city","ride_road","ride_alley"}
+    if not ((a[0] in rough and b[0] in paved)
+            or (a[0] in paved and b[0] in rough)):
+        raise ValueError("SURFACE_STORY_REQUIRES_REAL_ROUGH_TO_PAVED_CHANGE")
+    order=(a,b)
+    opener=(
+        "Что меняется, когда мотоцикл выезжает с грунта на твёрдую дорогу? "
+        "На первой съёмке "+a[3]+". На второй "+b[3]+". "
+        "Покрытие разное, поэтому и темп нужно выбирать по дороге, а не по газу."
+    )
+    alternative=(
+        "Одинаковый газ не делает разные дороги одинаковыми. "
+        "В первом кадре "+a[3]+". А во втором "+b[3]+". "
+        "Рыхлый грунт и твёрдое покрытие требуют разного контроля мотоцикла."
+    )
+    options=[x for x in (opener,alternative) if 125<=len(x)<=300]
+    prior={" ".join(str(x).lower().split()) for x in previous_narrations}
+    options=[x for x in options if " ".join(x.lower().split()) not in prior]
+    if not options:
+        raise ValueError("NO_NEW_VERIFIED_TERRAIN_EXPLAINER")
+    titles=[
+        "Почему на грунте и асфальте мотоцикл едет по-разному? #shorts",
+        "Смена покрытия: что меняется для мотоциклиста? #shorts",
+    ]
+    titles=[x for x in titles if x.casefold() not in
+            {str(y).casefold() for y in previous_titles}]
+    if not titles:
+        raise ValueError("GROUNDING_TERRAIN_TITLE_EXHAUSTED")
+    result={
+        "title":titles[rewrite_attempt%len(titles)],
+        "narration":options[rewrite_attempt%len(options)],
+        "description":(
+            "Независимые лицензированные кадры реальной езды на разных "
+            "типах покрытия. Разбор выбора темпа и контроля мотоцикла, "
+            "без выдуманных аварий или связанного события.\n\n#shorts"),
+        "caption_start":"КАКОЕ ПОКРЫТИЕ?",
+        "caption_middle":"ДРУГОЕ ПОКРЫТИЕ",
+        "caption_end":"ВЫБИРАЙ ТЕМП",
+        "_editorial_format":"original_action_microguide_v1",
+        "_creative_treatment":"verified_terrain_change_explainer",
+        "_generation_source":"SHA-pinned_real_frames_riding_terrain_educational_v1",
+    }
+    require_filmable(result,sources)
+    return result
+
+
 def compose(sources, previous_titles, rewrite_attempt=0, previous_narrations=()):
     """A short, grounded contrast, not a fabricated one-event storyline."""
     if len(sources) != 2:
@@ -339,6 +431,10 @@ def compose(sources, previous_titles, rewrite_attempt=0, previous_narrations=())
     a, b = (scene_for(s) for s in sources)
     if a is None or b is None or a[0] == b[0]:
         raise ValueError("NO_ACTION_DIVERSITY: source footage not suitable for story")
+    if (a[0].startswith("ride_") and b[0].startswith("ride_")
+            and os.environ.get("GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED")=="1"):
+        return grounded_surface_microguide(
+            sources,previous_titles,rewrite_attempt,previous_narrations)
     if ((a[0],b[0]) == ("ride","jump")
             and os.environ.get("GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED")=="1"):
         return grounded_riding_jump_story(

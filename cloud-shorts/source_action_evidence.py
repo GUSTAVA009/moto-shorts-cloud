@@ -90,6 +90,34 @@ def source_dynamic_action_verified(source, reports=None):
         and 15<=len(row["observed"])<=240)
 
 
+def verified_riding_context(source, reports=None):
+    """A real-frame evidence-derived setting, never a guessed page tag.
+
+    Two riding clips can tell a useful original how-it-changes-by-surface
+    story. This is NOT a claim that their riders or events are related.
+    Only accept a setting when the same SHA-pinned, independently reviewed
+    original is verified to show actual riding.
+    """
+    if reports is None:
+        reports=load_evidence()
+    if not source_dynamic_action_verified(source,reports):
+        return None
+    row=reports.get(_source_id(source),{})
+    if row.get("action")!="riding":
+        return None
+    seen=str(row.get("observed") or "").casefold()
+    patterns=(
+       ("sand",r"песчан\w*|по песку"),
+       ("trail",r"лесн\w* троп|грунтов\w* дорог"),
+       ("garage",r"парковк\w* под земл|подземн\w* парк"),
+       ("alley",r"узк\w* улиц|промышленн\w* район"),
+       ("city",r"городск\w* улиц"),
+       ("road",r"асфальтированн\w* дорог|сельск\w* местн"),
+    )
+    found=[key for key,pattern in patterns if re.search(pattern,seen)]
+    return found[0] if len(found)==1 else None
+
+
 def require_episode_dynamic_sources(episode, reports=None):
     """This blocks queued ungrounded scenes *before* reserving an episode."""
     footage=episode.get("footage") or []

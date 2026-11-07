@@ -432,7 +432,8 @@ def native_source_candidates(candidates, profile="2k"):
     from native_source_preflight import source_proof
     require_real_action=os.environ.get("GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED")=="1"
     if require_real_action:
-        from source_action_evidence import source_dynamic_action_verified
+        from source_action_evidence import (
+            source_dynamic_action_verified,verified_riding_context)
     valid=[]
     for source in candidates:
         try:
@@ -443,7 +444,14 @@ def native_source_candidates(candidates, profile="2k"):
         # require a SHA-matched visual model verdict on three real frames.
         if require_real_action and not source_dynamic_action_verified(source):
             continue
-        valid.append(source)
+        item=dict(source)
+        # Make a terrain-specific microguide only with actual-frame proof.
+        # Preserve underlying source SHAs; no video is invented or upscaled.
+        if require_real_action:
+            terrain=verified_riding_context(source)
+            if terrain:
+                item["verified_riding_context"]=terrain
+        valid.append(item)
     return valid
 
 
