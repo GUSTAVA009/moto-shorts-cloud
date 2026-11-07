@@ -1,8 +1,12 @@
 {
   "channel_id": "UCS0QCodPcFBTjMt4ioEWOUw",
   "episode": "control-before-the-jump-2k-20261107",
+  "privacy_requested": "public",
   "run_id": "42349066543",
+  "scheduled_at": null,
   "sha256": "f2c22eddfeea1968fb5aa9eab2c9a8a804f66607f7fc9fec5c7ec732f0bc9db3",
-  "status": "reserved",
-  "warning": "Do not retry if upload outcome is uncertain; reconcile with YouTube Studio."
+  "status": "uploaded",
+  "video_id": "1z85PAWtY-g",
+  "warning": "Do not retry if upload outcome is uncertain; reconcile with YouTube Studio.",
+  "youtube_url": "https://www.youtube.com/watch?v=1z85PAWtY-g"
 }
