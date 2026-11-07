@@ -1254,7 +1254,11 @@
         "racing",
         "dirt"
       ],
-      "duration": 10
+      "duration": 10,
+      "native_4k_sha256": "eebd9f56e482fa4c15681251d9a32b6dac58ab6e4c5c9daee1a139d00cb36a84",
+      "native_4k_bytes": 23849102,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "key": "px_5803518",
@@ -1268,7 +1272,11 @@
         "motocross",
         "training"
       ],
-      "duration": 16
+      "duration": 16,
+      "native_4k_sha256": "cb26e6a7d148e11cabafffee90c1fdf244b3f0615bbb68844d3340e0bec6c010",
+      "native_4k_bytes": 39481018,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "key": "px_5806212",
@@ -1281,7 +1289,11 @@
         "helmet",
         "training"
       ],
-      "duration": 9
+      "duration": 9,
+      "native_4k_sha256": "5f59b7a62a2e0c6781f37a53db5d901c47f88a8af73492c3f85062453f49838a",
+      "native_4k_bytes": 24465224,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "key": "px_5207054",
@@ -1294,7 +1306,11 @@
         "city",
         "roadtrip"
       ],
-      "duration": 13
+      "duration": 13,
+      "native_4k_sha256": "1358947c0cc37cd8a19f29b85f4c0c1ef9df2677d8f0f883417cf26c0fb3a928",
+      "native_4k_bytes": 35909143,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "key": "px_5207057",
@@ -1341,7 +1357,11 @@
         "helmet",
         "training"
       ],
-      "duration": 11
+      "duration": 11,
+      "native_4k_sha256": "00cf222c130bf3b9b1d8cd30db81168614cb679dfcef3132d73951dc53dcd3fc",
+      "native_4k_bytes": 20396560,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "key": "px_5199370",
@@ -1406,7 +1426,11 @@
         "motocross",
         "training"
       ],
-      "duration": 19
+      "duration": 19,
+      "native_4k_sha256": "78b059eabfd268dbd8deec726adadd99294229c8b86c33aceb8254c069b2a15f",
+      "native_4k_bytes": 33846097,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "key": "px_5803214",
@@ -1419,7 +1443,11 @@
         "helmet",
         "roadtrip"
       ],
-      "duration": 31
+      "duration": 31,
+      "native_4k_sha256": "930541a10f8e6a1c528cbd60e93026e47e61293890e678781286a873f05e65cc",
+      "native_4k_bytes": 81815699,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "key": "px_20642963",
@@ -1517,7 +1545,11 @@
         "city",
         "helmet"
       ],
-      "duration": 9
+      "duration": 9,
+      "native_2k_sha256": "7a8a555d41f047b9692fc37e8d64eafe221a684ae6bcca0da0da7cfce59a667e",
+      "native_2k_bytes": 14422758,
+      "native_2k_width": 1440,
+      "native_2k_height": 2560
     },
     {
       "key": "px_14545601",
@@ -1530,7 +1562,11 @@
         "roadtrip",
         "sunset"
       ],
-      "duration": 24
+      "duration": 24,
+      "native_2k_sha256": "51b1e906378fa12fe6ad448f7831b2fc71cdf4dc6f49b0e89f0ef8239cd9c4fe",
+      "native_2k_bytes": 43515988,
+      "native_2k_width": 1440,
+      "native_2k_height": 2560
     },
     {
       "key": "px_5199366",
@@ -1543,7 +1579,11 @@
         "city",
         "helmet"
       ],
-      "duration": 8
+      "duration": 8,
+      "native_4k_sha256": "de18b9671e4d7c0a32c3045b92d13e630c073479bfa77f3bca00d7e00eb7cbcc",
+      "native_4k_bytes": 21618971,
+      "native_4k_width": 2160,
+      "native_4k_height": 4096
     }
   ]
 }
