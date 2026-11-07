@@ -92,7 +92,14 @@ def eligible_private_episode(episode, receipt):
             or episode.get("visual_revision_requested") is True
             or episode.get("visual_revision_status") not in (None, "", "pending")
             or episode.get("editorial_format") not in (
-                "source_anchored_action_contrast", "original_action_microguide_v1")
+                "source_anchored_action_contrast", "original_action_microguide_v1",
+                # These scene-specific revisions were previously excluded
+                # although the real native 2K MP4 and Deep voice passed QA.
+                # Visual inspection below remains mandatory; this is NOT
+                # public-release approval or an override of frame rejection.
+                "original_city_control_microguide_v2",
+                "original_road_awareness_microguide_v2",
+                "original_helmet_safety_microguide_v2")
             or int(episode.get("visual_director_version") or 0) != 3
             or not has_verified_review_voice(episode)
             or not isinstance(receipt, dict)

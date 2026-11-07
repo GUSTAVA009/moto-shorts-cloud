@@ -166,6 +166,38 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
         ep["editorial_format"]="original_action_microguide_v1"
         self.assertTrue(review.eligible_private_episode(ep,self.make_receipt()))
 
+    def test_three_actual_native_2k_deep_shorts_can_enter_strict_frame_review(self):
+        # Regression: the factory rendered these actual MP4s, but the
+        # old two-format allowlist silently stranded them before ANY frames
+        # were inspected. This only allows candidacy, NOT public upload.
+        records = {
+            "moto-city-9561eabb9e24": "42354543323",
+            "moto-roadtrip-83f0461a1801": "42354718553",
+            "moto-helmet-3368471b0f59": "42354884536",
+        }
+        actual = {e["id"]: e for e in json.loads(
+            (Path(__file__).parent / "episodes.json").read_text(encoding="utf8")
+        )["episodes"] if e["id"] in records}
+        self.assertEqual(set(actual),set(records))
+        for slug, run_id in records.items():
+            ep = actual[slug]
+            receipt = {"id":slug, "state":"preview_ready",
+                       "run_id":run_id,
+                       "deep_source_sha256":ep["deep_audio"]["source_audio_sha256"],
+                       "voice_qa_passed":True,
+                       "mixed_audio_qa_passed":True}
+            with self.subTest(slug=slug):
+                self.assertTrue(review.eligible_private_episode(ep,receipt))
+                self.assertFalse(review.eligible_private_episode(
+                    dict(ep,auto_publish=True),receipt))
+                self.assertFalse(review.eligible_private_episode(
+                    dict(ep,editorial_format="owner_rejected_static_slides"),
+                    receipt))
+                self.assertFalse(review.eligible_private_episode(
+                    dict(ep,visual_review_failed=True),receipt))
+                self.assertFalse(review.eligible_private_episode(
+                    ep,dict(receipt,deep_source_sha256="0"*64)))
+
     def test_only_genuine_private_cartoon_b_with_two_distinct_actions(self):
         ep=self.make_episode()
         receipt=self.make_receipt()
