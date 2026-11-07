@@ -44,9 +44,14 @@ def source_proof(source, profile="2k"):
     if type(bytecount) is not int or not 1_000_000<=bytecount<=MAX_SOURCE_BYTES:
         raise ValueError("NATIVE_2K_SOURCE_BYTES_INVALID")
     if (type(width) is not int or type(height) is not int
-            or (width,height)!=(w,h)):
+            or not 640<=width<=8192 or not 640<=height<=8192):
         raise ValueError("NATIVE_2K_SOURCE_PIXELS_NOT_PROVEN")
     crop_w,crop_h=available_portrait_crop(width,height)
+    # Preserve the ACTUAL source dimensions, including 2160x4096 videos
+    # that can be cropped to 2160x3840 without inventing a single pixel.
+    required_crop=(2160,3840) if kind=="4k" else (1440,2560)
+    if crop_w<required_crop[0] or crop_h<required_crop[1]:
+        raise ValueError("NATIVE_2K_SOURCE_PIXELS_NOT_PROVEN")
     if crop_w<req_w or crop_h<req_h:
         raise ValueError("NATIVE_4K_SOURCE_REQUIRED_FOR_4K_PROFILE")
     return {"sha256":hashval,"bytes":bytecount,

@@ -17,6 +17,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+from production_quality import available_portrait_crop
 import tempfile
 import urllib.error
 import urllib.parse
@@ -78,11 +79,14 @@ def verify_one(source, cache_dir):
                 if (target.scheme!="https" or target.hostname!="videos.pexels.com"
                         or not target.path.startswith("/video-files/"+sid+"/")):
                     return "unexpected_cdn_or_redirect",None
-                # URLs name the exact approved portrait encoding. If the
-                # source link offers only a low-res rendition, do not waste
-                # bandwidth and never invent native resolution.
-                if not any(pattern in target.path for pattern in
-                           ("2160_3840","1440_2560")):
+                # Screen the offered CDN rendition before downloading 90MB.
+                # 2160x4096 genuinely crops to 2160x3840; do not require an
+                # EXACT 9:16 original, but never allow fewer real pixels.
+                candidates=re.findall(
+                    r"[_-](\d{3,4})_(\d{3,4})(?=[_.-])",target.path)
+                crops=[available_portrait_crop(int(w),int(h))
+                       for w,h in candidates]
+                if not any(w>=1440 and h>=2560 for w,h in crops):
                     return "no_native_portrait_rendition",None
                 declared=reply.headers.get("Content-Length")
                 if declared and int(declared)>MAX_SOURCE_BYTES:
@@ -112,13 +116,14 @@ def verify_one(source, cache_dir):
         if not 1_000_000<=size<=MAX_SOURCE_BYTES:
             raise ValueError("invalid_file_size")
         w,h,duration=ffprobe_video(path)
-        if (w,h) not in ((1440,2560),(2160,3840)):
+        crop_w,crop_h=available_portrait_crop(w,h)
+        if crop_w<1440 or crop_h<2560:
             raise ValueError("source_is_not_native_2k_or_4k")
         if duration<4.5:
             raise ValueError("source_too_short")
         with path.open("rb") as check:
             digest=hashlib.file_digest(check,"sha256").hexdigest()
-        profile="4k" if (w,h)==(2160,3840) else "2k"
+        profile=("4k" if crop_w>=2160 and crop_h>=3840 else "2k")
         return "verified_"+profile,{
             "native_"+profile+"_sha256":digest,
             "native_"+profile+"_bytes":size,

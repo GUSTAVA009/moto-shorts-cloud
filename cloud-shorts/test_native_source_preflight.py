@@ -27,6 +27,17 @@ class NativeSourcePreflightTests(unittest.TestCase):
                 "footage":[source(key="clip_0"),source(key="clip_1")]
             },profile)),2)
 
+    def test_2160x4096_real_pixels_crop_to_exact_4k(self):
+        media=dict(source(),native_4k_height=4096)
+        result=source_proof(media,"4k")
+        self.assertEqual((result["width"],result["height"]),(2160,4096))
+        # Landscape UHD and nominally high-res narrow clips cannot yield
+        # real 2160x3840 pixels after 9:16 cropping.
+        with self.assertRaisesRegex(ValueError,"PIXELS_NOT_PROVEN"):
+            source_proof(dict(media,native_4k_width=3840,native_4k_height=2160))
+        with self.assertRaisesRegex(ValueError,"PIXELS_NOT_PROVEN"):
+            source_proof(dict(media,native_4k_width=1080,native_4k_height=4096))
+
     def test_exact_2k_is_usable_only_for_2k_profile(self):
         self.assertEqual(source_proof(source("2k"))["width"],1440)
         with self.assertRaisesRegex(ValueError,"NATIVE_4K_SOURCE_REQUIRED"):

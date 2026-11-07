@@ -51,6 +51,23 @@ class PinnedNativeStockTests(unittest.TestCase):
             self.assertEqual(proof["native_4k_width"],2160)
             self.assertEqual(proof["native_4k_height"],3840)
 
+    def test_genuine_2160x4096_is_native_4k_crop_not_upscale(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cached=Path(tmp)/"pexels-5806214.mp4"
+            cached.write_bytes(b"Y"*1_100_000)
+            with patch.object(h,"ffprobe_video",return_value=(2160,4096,11.2)):
+                status,proof=h.verify_one(source(),Path(tmp))
+            self.assertEqual(status,"verified_4k")
+            self.assertEqual(proof["native_4k_width"],2160)
+            self.assertEqual(proof["native_4k_height"],4096)
+        with tempfile.TemporaryDirectory() as tmp:
+            cached=Path(tmp)/"pexels-5806214.mp4"
+            cached.write_bytes(b"Y"*1_100_000)
+            with patch.object(h,"ffprobe_video",return_value=(3840,2160,11.2)):
+                status,proof=h.verify_one(source(),Path(tmp))
+            self.assertTrue(status.startswith("media_probe_failed"))
+            self.assertIsNone(proof)
+
     def test_real_2k_is_accepted_without_fake_4k_field(self):
         with tempfile.TemporaryDirectory() as tmp:
             cached=Path(tmp)/"pexels-5806214.mp4"
