@@ -2282,6 +2282,16 @@
       "episode": "moto-helmet-3368471b0f59",
       "source": "https://www.pexels.com/video/person-riding-a-motorcycle-6801391/",
       "status": "reserved-or-rendered"
+    },
+    "5207054": {
+      "episode": "moto-roadtrip-153fe6130270",
+      "source": "https://www.pexels.com/video/couple-riding-a-black-motorcycle-5207054/",
+      "status": "reserved-or-rendered"
+    },
+    "26447454": {
+      "episode": "moto-roadtrip-153fe6130270",
+      "source": "https://www.pexels.com/video/a-person-riding-a-dirt-bike-on-a-hill-26447454/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3705,6 +3715,13 @@
       "people": "gear-specialists-33684",
       "story": "helmet-gear-choice-33684",
       "visual": "three-clips-33684"
+    },
+    "moto-roadtrip-153fe6130270": {
+      "environment": "countryside-road-153fe",
+      "bike": "touring-motorcycle",
+      "people": "touring-travelers-153fe",
+      "story": "scenic-country-road-153fe",
+      "visual": "three-clips-153fe"
     }
   }
 }
