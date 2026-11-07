@@ -2252,6 +2252,16 @@
       "episode": "moto-dirt-39ad24832e31",
       "source": "https://84-252-66-87.sslip.io/yt-factory-originals/meta/f8d793d47c5609ac57217692224bc312f106f1f99315e8a9391a206ee30ea282.json",
       "status": "reserved-or-rendered"
+    },
+    "5199370": {
+      "episode": "moto-city-9561eabb9e24",
+      "source": "https://www.pexels.com/video/man-driving-his-motorcycle-5199370/",
+      "status": "reserved-or-rendered"
+    },
+    "37154727": {
+      "episode": "moto-city-9561eabb9e24",
+      "source": "https://www.pexels.com/video/urban-motorcycle-ride-in-narrow-alleyway-37154727/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3654,6 +3664,13 @@
       "people": "trail-groups-39ad2",
       "story": "muddy-terrain-39ad2",
       "visual": "three-clips-39ad2"
+    },
+    "moto-city-9561eabb9e24": {
+      "environment": "urban-streets-9561e",
+      "bike": "urban-motorbike",
+      "people": "city-riders-9561e",
+      "story": "urban-riding-9561e",
+      "visual": "three-clips-9561e"
     }
   }
 }
