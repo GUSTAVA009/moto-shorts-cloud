@@ -156,7 +156,11 @@
       "author": "Evgenij Mikhailov",
       "license": "Pexels License",
       "duration": 22,
-      "source_title": "nighttime city street with moving vehicles"
+      "source_title": "nighttime city street with moving vehicles",
+      "native_4k_sha256": "828051a0ca7ac0bb1fe3054a4ecdab537d7dae1927465e356c793581f64fc5c4",
+      "native_4k_bytes": 43836363,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "topics": [
@@ -221,7 +225,11 @@
       "author": "Anastasia Shuraeva",
       "license": "Pexels License",
       "duration": 19,
-      "source_title": "close up shot of a man on a motorcycle"
+      "source_title": "close up shot of a man on a motorcycle",
+      "native_4k_sha256": "0bf0b1300e455f87435e1abd56f4a9412b482348dc80c35f592914429c6d6b3e",
+      "native_4k_bytes": 30736932,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "topics": [
@@ -380,7 +388,11 @@
       "author": "cottonbro studio",
       "license": "Pexels License",
       "duration": 19,
-      "source_title": "motocross riders"
+      "source_title": "motocross riders",
+      "native_4k_sha256": "1958de1e30579dfbfe0373d32890aeef389917013c64db44149bb63dea1838e7",
+      "native_4k_bytes": 46672514,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "topics": [
@@ -589,7 +601,11 @@
       "author": "Minh Thong",
       "license": "Pexels License",
       "duration": 10.77,
-      "source_title": "busy urban street with motorcycles and cars"
+      "source_title": "busy urban street with motorcycles and cars",
+      "native_4k_sha256": "7a4471ab2c2967f3a9241f36adb356f6fa685bb92301327948d523ec44f15264",
+      "native_4k_bytes": 21446828,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "topics": [
@@ -746,7 +762,11 @@
         "repair",
         "vintage"
       ],
-      "duration": 15
+      "duration": 15,
+      "native_4k_sha256": "7fac5012929a0a9e79e74c4785a755987dbb17cf903e4ca6d0db2ede6f310f9a",
+      "native_4k_bytes": 31037711,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "key": "px_39848200",
@@ -947,7 +967,11 @@
       "topics": [
         "forest",
         "roadtrip"
-      ]
+      ],
+      "native_4k_sha256": "f66f8e6befb595de36ec005969eecdb6487d09fdf8994c67a6fc90c5e8277433",
+      "native_4k_bytes": 34476409,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "key": "px_5052822",
@@ -1025,7 +1049,11 @@
       "topics": [
         "sunset",
         "roadtrip"
-      ]
+      ],
+      "native_2k_sha256": "09f2db1136ec5b4d650dc84525340ef05e4f64a829e484b9f6f22e7251677d9d",
+      "native_2k_bytes": 19186805,
+      "native_2k_width": 1440,
+      "native_2k_height": 2560
     },
     {
       "key": "px_30031070",
@@ -1103,7 +1131,11 @@
       "topics": [
         "repair",
         "vintage"
-      ]
+      ],
+      "native_4k_sha256": "05d676d8e0615e6416bacee589044629b009c7b1336418eb21ee604c1e44f4ee",
+      "native_4k_bytes": 40396475,
+      "native_4k_width": 2160,
+      "native_4k_height": 3840
     },
     {
       "key": "px_5803383",

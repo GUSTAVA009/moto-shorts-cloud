@@ -1,0 +1,50 @@
+name: GUSTAVA - Autonomous Native 2K and 4K Source Supply
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/native-stock-supply.yml
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gustava-pinned-native-portrait-stock
+  cancel-in-progress: false
+
+jobs:
+  audit-native-footage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Verify media decoder for original pixels
+        run: |
+          command -v ffprobe
+          python3 --version
+      - name: Verify next vetted Pexels originals, maximum two genuine 2K/4K
+        run: |
+          python3 cloud-shorts/native_stock_harvester.py \
+            --max-files 2 --max-checks 12
+      - name: Save only real SHA and ffprobe evidence, never a fake MP4
+        run: |
+          git config user.name 'GUSTAVA native stock bot'
+          git config user.email '199168929+GUSTAVA009@users.noreply.github.com'
+          git add cloud-shorts/verified_pexels_pool.json
+          if test -f cloud-shorts/native_stock_scan_state.json; then
+            git add cloud-shorts/native_stock_scan_state.json
+          fi
+          if git diff --cached --quiet; then
+            echo 'No new verified native stock; no false source inventory'
+            exit 0
+          fi
+          git commit -m 'Automatically pin true 2K/4K licensed Pexels source SHAs'
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo 'NATIVE_STOCK_PROVENANCE_COMMITTED'
