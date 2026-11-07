@@ -244,6 +244,54 @@
     "5803627": {
       "result": "verified_4k",
       "date": "2026-11-07"
+    },
+    "32918034": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "33987059": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "34308331": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "34311538": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "34948751": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "35021631": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "35132133": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "35261797": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "35261826": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "35613949": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "35623340": {
+      "result": "no_native_portrait_rendition",
+      "date": "2026-11-07"
+    },
+    "35841419": {
+      "result": "source_above_90MB_cap",
+      "date": "2026-11-07"
     }
   }
 }
