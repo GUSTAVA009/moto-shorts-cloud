@@ -430,11 +430,18 @@ def native_source_candidates(candidates, profile="2k"):
     because the final encoder has an FFmpeg scale argument.
     """
     from native_source_preflight import source_proof
+    require_real_action=os.environ.get("GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED")=="1"
+    if require_real_action:
+        from source_action_evidence import source_dynamic_action_verified
     valid=[]
     for source in candidates:
         try:
             source_proof(dict(source,key="clip_0"),profile)
         except ValueError:
+            continue
+        # Titles such as "riding", "helmet" and "city" are not proof:
+        # require a SHA-matched visual model verdict on three real frames.
+        if require_real_action and not source_dynamic_action_verified(source):
             continue
         valid.append(source)
     return valid

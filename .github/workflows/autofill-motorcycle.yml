@@ -74,6 +74,7 @@ jobs:
           # Count only genuinely renderable 2K sources, NOT 448x800 LTX
           # drafts. Unverified scripts are never counted as MP4 reserves.
           GUSTAVA_NATIVE_SOURCE_ONLY: '1'
+          GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED: '1'
           GUSTAVA_EXPORT_PROFILE: 2k
           GUSTAVA_VOICE_REFERENCE_SHA256: ${{ vars.GUSTAVA_VOICE_REFERENCE_SHA256 || 'ed27b23b9f86345c45263ab28957e96fd2d399379b3ea90ed9fbc75be183a3cc' }}
           GUSTAVA_VOICE_OIDC_ENABLED: '1'

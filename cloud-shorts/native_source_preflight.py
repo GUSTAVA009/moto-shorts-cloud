@@ -5,6 +5,7 @@ Metadata is only a preflight: render_episode verifies every source's real
 decoded pixels and SHA after download. No fake upscales or inference from tags.
 """
 from __future__ import annotations
+import os
 import re
 import urllib.parse
 from production_quality import export_dimensions, available_portrait_crop
@@ -63,4 +64,7 @@ def require_native_sources(episode,profile="2k"):
     if len(originals)!=2:
         raise ValueError("NATIVE_2K_TWO_ACTION_SCENES_REQUIRED")
     proofs=[source_proof(x,profile) for x in originals]
+    if os.environ.get("GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED")=="1":
+        from source_action_evidence import require_episode_dynamic_sources
+        require_episode_dynamic_sources(episode)
     return proofs

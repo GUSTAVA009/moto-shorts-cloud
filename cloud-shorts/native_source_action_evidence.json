@@ -1,0 +1,706 @@
+{
+  "version": 1,
+  "sources_checked": 28,
+  "reports": [
+    {
+      "source_id": "13687335",
+      "sha256": "f66f8e6befb595de36ec005969eecdb6487d09fdf8994c67a6fc90c5e8277433",
+      "width": 2160,
+      "height": 3840,
+      "duration": 10.37,
+      "frame_sha256": [
+        "d18e290a74d40ceb54547ffd9894be04e9b94506fbf40f42945cda566fa1d46e",
+        "9c39b84478a884574e6f9a74608d67b304a236987775f1bf5423d73659206d95",
+        "7697a252674f0b8af7b910c6a937f21e4bb715a3f7b0edbc08fb3b8fce39d88f"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Мотоцикл движется по извилистой асфальтированной дороге в лесу.",
+      "supported_narration_claims": [
+        "Мотоцикл находится на дороге.",
+        "Дорога имеет изгиб.",
+        "Вокруг много деревьев."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "14545601",
+      "sha256": "51b1e906378fa12fe6ad448f7831b2fc71cdf4dc6f49b0e89f0ef8239cd9c4fe",
+      "width": 1440,
+      "height": 2560,
+      "duration": 24.96,
+      "frame_sha256": [
+        "8c1156edeba81e196a492154d08548af1e518a5b9cd1d5f501deba10ae2c5b89",
+        "a79f6c1e00b1c2d3ac2ad5dcabedd0f5334c26d7cb91d80ee510b492a8b5b90d",
+        "b07ebb3e6798edb8a0e2716ba9a72eb02e5385af2df180ce4be1dc27604989a1"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "scenic",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.15,
+      "observed": "Кадр показывает вид на дорогу и мост при закате; вдали видны силуэты мотоциклов, но их движение не подтверждено.",
+      "supported_narration_claims": [
+        "Мотоциклы находятся вдали от камеры.",
+        "Видимые объекты — это силуэты на дороге.",
+        "Движение не видно из-за расстояния и освещения."
+      ],
+      "why_not_action": "Нет визуального подтверждения движения мотоцикла; силуэты могут быть неподвижными или слишком малыми для анализа.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "20642963",
+      "sha256": "3fd3269f72d55eb7dd393cbe287f233f99010f766739308d55b9a2ef83da1269",
+      "width": 2160,
+      "height": 3840,
+      "duration": 9.09,
+      "frame_sha256": [
+        "10d7791868568aa0230a45ab47558b03516ca89957ea7fb619f1460c396d0880",
+        "e6ce454cdf13d7d9af5fceef936c055b757748321b0cae266291d72d2e11f9d6",
+        "44f3af68530c731f8923990cf4cf3b2c224a6d727cc37f42f6deef71e51a345b"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Райдер едет на мотоцикле по широкой асфальтированной дороге в пригороде.",
+      "supported_narration_claims": [
+        "Мотоцикл движется вперед по прямой дороге.",
+        "Райдер находится в центре кадра и занимает значительную часть изображения.",
+        "Фон показывает жилые дома и солнечные панели, что указывает на городскую или пригородную местность."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "28322546",
+      "sha256": "93c7edf94ba5f581a38bb74b3184db3f7a6a34b6adb740666c7f1c7f7bc097f5",
+      "width": 2160,
+      "height": 3840,
+      "duration": 11.3,
+      "frame_sha256": [
+        "46871c8b24a54da6d661f5cd077de76ac6adc06b0b19811735b1e92441efcc5f",
+        "e1388f7b162ec4500cf5e9f539cced964ef28892eaf6b92b133fdec7f6773703",
+        "ff4c7446bdbaa48a17006ec21b03eadec0e91787636c391b42f448f681a12ec9"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Камеры на мотоцикле фиксируют движение по асфальтированной дороге в сельской местности; видны зеркала заднего вида и руль.",
+      "supported_narration_claims": [
+        "Мотоцикл находится в движении по прямой дороге.",
+        "Видны элементы управления (зеркала, руль).",
+        "Пейзаж меняется, что подтверждает движение."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "28332401",
+      "sha256": "81908a2a62dbfabc01e3e0eee9672ba10ee12e64ab15120977d50cca50fd5fc4",
+      "width": 2160,
+      "height": 3840,
+      "duration": 10.71,
+      "frame_sha256": [
+        "b73101f700dba6281a0b98f8ea6e473864a4160f163aea71b19d47d9beb05d18",
+        "14b2863c5ce873dcd00af67508e39120f857c66d049fa72b4756da067b6b27c0",
+        "fc5c9e6ee5675c4b51763fbbbe4d622f7f8eeeaf34f80e17d7ac5f682fbd6f31"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Камеры на мотоцикле фиксируют движение по асфальтированной дороге в сельской местности; видны размытые объекты фона и дорожные знаки.",
+      "supported_narration_claims": [
+        "Мотоцикл движется по прямой дороге.",
+        "Видны боковые зеркала заднего вида.",
+        "Райдер одет в шлем и темную куртку."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "28385844",
+      "sha256": "f4cd4d3c46bc2376d1302fbe22bc0a7181773b018c3bbcc79bfb05b14af21eb4",
+      "width": 2160,
+      "height": 3840,
+      "duration": 6.21,
+      "frame_sha256": [
+        "71baf60fa73df43006898d8ac63455c1be28838bc791bca534cb6255c41548c9",
+        "79e033f957b90012b7e258ac64de29c725d53714d0dfe5f3bdbe3a563ec57ff3",
+        "b017f6ef91aac0dd501f69a85466009698283436c1cf6fc22b7768273dd19a10"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "standing",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.15,
+      "observed": "Райдер в полной экипировке сидит на мотоцикле у заправочной станции ночью, слегка поворачивает голову и поднимает руку к шлему.",
+      "supported_narration_claims": [
+        "Мотоцикл стоит на месте (нет движения колес).",
+        "Райдер одет в черную кожаную куртку и ботинки.",
+        "На заднем плане виден логотип Shell."
+      ],
+      "why_not_action": "Нет видимых признаков езды, прыжка или обслуживания; мотоцикл неподвижен, райдер просто сидит.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "31862458",
+      "sha256": "09f2db1136ec5b4d650dc84525340ef05e4f64a829e484b9f6f22e7251677d9d",
+      "width": 1440,
+      "height": 2560,
+      "duration": 12.28,
+      "frame_sha256": [
+        "28eab531389cb036dbe0c7c58c90ee2eed7392e42db55416ac097decffe41b57",
+        "82b9899f14cd98b8e2fb641b2734b164a67145a6bf76731b2be7a1037307f0fb",
+        "8f87867ea67a43b96156bc74ab5a577da8a944c285371741f117d273352da53a"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Два райдера на спортивных мотоциклах едут по асфальтированной дороге в городском районе.",
+      "supported_narration_claims": [
+        "Мотоциклы находятся в движении (видна скорость).",
+        "Райдеры одеты в полную экипировку с шлемами.",
+        "Движение происходит по городской улице."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "31901418",
+      "sha256": "fbea6df29be30c9a888a563873f37dcba430f8236452321287640adaab741106",
+      "width": 2160,
+      "height": 3840,
+      "duration": 8.64,
+      "frame_sha256": [
+        "b1b0e02b6db26b26258b0547779747a37df1f6136c9d8c311f43ab7d44679006",
+        "116453ceb0de3e1a709eb644934d741864686696a9e814f79fc0533daa7ddb54",
+        "eff14a75cd84b02b633fd41768f086a99074ef129b52972702bcbcf6806c2cde"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Райдер на спортивном мотоцикле едет по парковке под землёй, фары включены.",
+      "supported_narration_claims": [
+        "Мотоцикл находится в движении (кадры 1 и 2).",
+        "Райдер одет в шлем и темную одежду.",
+        "Локация — подземный паркинг с бетонным полом."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "34540535",
+      "sha256": "7fac5012929a0a9e79e74c4785a755987dbb17cf903e4ca6d0db2ede6f310f9a",
+      "width": 2160,
+      "height": 3840,
+      "duration": 15.13,
+      "frame_sha256": [
+        "a73ec5698780f67d19db70339a3165bddae2c26b7d612bfeae8a9f788c0a9fc8",
+        "eee2f54c6a33c2b18f16366398357f862e3bf4bcd0fbb5b253c0d510de0f3b0d",
+        "dbc6fbb304f89d0e2d457dd4a8d12b98f4b450506b819d9dd5aa5859e896cd7e"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "maintenance",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Мужчина в тюрбане сидит на коленях и работает с мотоциклетным колесом, установленным на подставке.",
+      "supported_narration_claims": [
+        "Мужчина использует инструмент для работы с тормозной системой колеса.",
+        "Колесо установлено на специальном держателе в гараже.",
+        "Вокруг мужчины видны другие мотоциклы и инструменты."
+      ],
+      "why_not_action": "Нет движения мотоцикла, он зафиксирован на подставке для ремонта.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "34679320",
+      "sha256": "828051a0ca7ac0bb1fe3054a4ecdab537d7dae1927465e356c793581f64fc5c4",
+      "width": 2160,
+      "height": 3840,
+      "duration": 22.67,
+      "frame_sha256": [
+        "a334e9c4d6f7a2f2509f6ae6fb29a0835c8cddd43dacd09d0b50bf3d3039482b",
+        "3fa69cafb77f6be237e85b030143ea5d5d9c028a8076064611690eb8a2f32e31",
+        "a9c35c87cd83e97fbc2117a500e12e687d6c8d9f82fccb6d8289cbb17a2c272f"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "В ночном городе на дороге виден силуэт райдера на мотоцикле с включенными фарами.",
+      "supported_narration_claims": [
+        "Мотоцикл движется по городской улице.",
+        "Райдер одет в темную одежду и шлем.",
+        "Вокруг много других автомобилей."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "35963831",
+      "sha256": "7a4471ab2c2967f3a9241f36adb356f6fa685bb92301327948d523ec44f15264",
+      "width": 2160,
+      "height": 3840,
+      "duration": 10.77,
+      "frame_sha256": [
+        "9eff1ef8a735f6c61bcb3110d0f8043d8acb4045d60a3300c92e41e0d7406799",
+        "d27db05abbc20f739aa4550788b611a36f51e4123aca8c86718674e75c1160e7",
+        "7de4a18470bafa8bcc008fb3dce886f199790f30a4514b92d923f94625f7a925"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Группа райдеров на мотоскоутерах едет по городской дороге в одном направлении.",
+      "supported_narration_claims": [
+        "Мотоциклы находятся в движении по асфальтированной дороге.",
+        "Райдеры одеты в защитную экипировку (шлемы, куртки).",
+        "Вокруг много других транспортных средств и райдеров."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "37154727",
+      "sha256": "ca0a6d56745decd4b633bf8e2ebcabe84595db040eed36d69c8243918b16c538",
+      "width": 2160,
+      "height": 3840,
+      "duration": 21.02,
+      "frame_sha256": [
+        "28fc8c5d9500466acd1d910a87e78826bfbd4815676e764dfb41201fb2dd6bb1",
+        "31520d34db710eb8a1257c636933ca354d2181e72bc8d954337e69141f5b1194",
+        "86661be243b2998a96b53a9168a68a8230aadbcf5d1258e38892a974b6dd2447"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Два райдера на мотоциклах с включенными фарами едут по узкой городской улице.",
+      "supported_narration_claims": [
+        "Мотоциклы находятся в движении (кадры 2 и 3 показывают движение вперед).",
+        "Райдеры одеты в шлемы и куртки, что соответствует правилам безопасности.",
+        "Фары включены, что указывает на движение или подготовку к движению."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "5198981",
+      "sha256": "0042693f5c60af80600ee4de58aaca2ea510376ee88ca303d7ebd307492c1b20",
+      "width": 1440,
+      "height": 2732,
+      "duration": 10.44,
+      "frame_sha256": [
+        "089d797e230009790bbdb61ab069e50041dfdf870b80aa34ea8c2bd53ccf54b0",
+        "370d3db7ac43667adf0f8c5b4c9d551a6c502cc2d5981aaf067f9abacefbd067",
+        "b3e13146fb4482b00490cbdf0fdffcc9474cb09d2e1a33a385c5cf0ac95b3ebe"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "standing",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.15,
+      "observed": "Райдер стоит на мотоцикле в городе, смотрит в зеркало заднего вида.",
+      "supported_narration_claims": [
+        "Мотоцикл находится на асфальтированной дороге.",
+        "Видны руль и часть корпуса байка.",
+        "Райдер одет в черную кожаную куртку."
+      ],
+      "why_not_action": "Нет видимых признаков движения: байк не едет, не прыгает, не обслуживается; райдер стоит на месте.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5199366",
+      "sha256": "de18b9671e4d7c0a32c3045b92d13e630c073479bfa77f3bca00d7e00eb7cbcc",
+      "width": 2160,
+      "height": 4096,
+      "duration": 7.96,
+      "frame_sha256": [
+        "c2325e1cd9e8d2a034cbc23e940b3e85f46f593f8fb8bf7cf1f08f74afbaca06",
+        "c3c30c8aca192bc6d4505531c42f21f865bd5c7baf26baaab5d41eedb0043186",
+        "010b42f8db7474167f2c992d36e48d6d10b3324b103e0659e814f667ecb746b3"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "maintenance",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Мужчина сидит на мотоцикле и что-то делает с ним руками.",
+      "supported_narration_claims": [
+        "Мотоцикл стоит на месте (не едет).",
+        "Действие похоже на техническое обслуживание или настройку.",
+        "В кадрах нет движения мотоцикла по дороге."
+      ],
+      "why_not_action": "Нет признаков езды, прыжка или ходьбы с байком; человек сидит и взаимодействует с техникой.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5199370",
+      "sha256": "579f797126fbe99a4c7ed5f9ba3e58162ca1c7cb2944f0ad3f3ef9dc804b9abf",
+      "width": 2160,
+      "height": 4096,
+      "duration": 21.84,
+      "frame_sha256": [
+        "81e2d894cfab53d1cf0e6303c58e908ee9c1de57950080a46442dbba6285680d",
+        "a59b13b72848ba77cd3cb72b46e664e0e33997bfc0328be1e54e019a3f92a8f8",
+        "85db72a47f61dbe1070b87e39fe5392a8be7c2809a0fd9bbdf71ce31c3aa6557"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "standing",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.15,
+      "observed": "Мужчина в очках сидит на мотоцикле и смотрит в сторону.",
+      "supported_narration_claims": [
+        "Мотоцикл стоит на месте.",
+        "Райдер не едет.",
+        "В кадре видна только одна машина."
+      ],
+      "why_not_action": "Нет видимого движения мотоцикла или райдера, нет прыжка, обслуживания или езды по дороге.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5207054",
+      "sha256": "1358947c0cc37cd8a19f29b85f4c0c1ef9df2677d8f0f883417cf26c0fb3a928",
+      "width": 2160,
+      "height": 3840,
+      "duration": 12.52,
+      "frame_sha256": [
+        "b4ad72de3fa72afaa04b55d1362c5542a5f5787dc844fafa0e54a6816a0a0137",
+        "06d2a60eacd36a9587261bf604d217b139483f916e262546db036b4aa7293937",
+        "c792b7b77d2d1da91392233376a71b73df05dca69552bd321eeb23c348dacc6e"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Двое райдеров на мотоцикле едут по городской улице.",
+      "supported_narration_claims": [
+        "Мотоцикл находится в движении по асфальтированной дороге.",
+        "Райдеры находятся в городе, рядом с домами и машинами.",
+        "Видна передняя часть мотоцикла и руль."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "5207057",
+      "sha256": "698d742402c63f1343cb81d73d2fc88886c38163728e92ad2b61de6b1578fc87",
+      "width": 2160,
+      "height": 3840,
+      "duration": 11.2,
+      "frame_sha256": [
+        "bf22e5a25195c4704003d475e919d7608c77976a17596ff1f02c10163394e5dc",
+        "ebe2fdc2b1f563b1343af1129a880143f668b0c47136314d849c944b6df530c1",
+        "c35cef7b25df83275da846205b8906e8aa8837a8ed3a7685122fe7d4b2df1438"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Мотоцикл с двумя пассажирами движется по городской улице, обгоняя или едущая рядом с белым старинным автомобилем.",
+      "supported_narration_claims": [
+        "Видна передняя часть мотоцикла и руль.",
+        "Пассажиры сидят на мотоцикле в движении.",
+        "На заднем плане видны деревья и здания."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "5803206",
+      "sha256": "b4e4d5fb3631fe726d9d23510a300ee3f8c3e08470b4ac9afe66754a345d4e26",
+      "width": 2160,
+      "height": 3840,
+      "duration": 21.88,
+      "frame_sha256": [
+        "436f5d8dc3fb8bf13b320c2e3f284ee125d0d832a80c97ecaf9a1e16027400fe",
+        "729b8012b67f101d641fa37c60563e7dee7873447668de0a558364f72158e99a",
+        "dcdfa0063d5e07c7e59c1af7988d14335961dc9fe884b9f4b40cb2132c2de12b"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "standing",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.15,
+      "observed": "Райдер в экипировке сидит на мотоцикле, снимает шлем и поправляет волосы.",
+      "supported_narration_claims": [
+        "Шлем снят с головы райдера.",
+        "Рукав экипировки имеет оранжевую полосу.",
+        "Видны рукояти руля в переднем плане."
+      ],
+      "why_not_action": "Нет видимого движения мотоцикла или прыжка, только статичная поза райдера.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5803214",
+      "sha256": "930541a10f8e6a1c528cbd60e93026e47e61293890e678781286a873f05e65cc",
+      "width": 2160,
+      "height": 3840,
+      "duration": 31.08,
+      "frame_sha256": [
+        "3962bba60d1da5fd8205f742e8e2f698fecf1418e2264e290c593e9ad18a5285",
+        "7dbad1c566847b5b1d5b350ce87357aad0fea315f9e4b6c9973f3183001e40c6",
+        "d675e999c764f9e3c60ac24a4aab96c1c16f27117ba340f55b75993b5e1c0c21"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "standing",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.95,
+      "observed": "Два райдера на мотоциклах стоят рядом у воды, один снимает шлем.",
+      "supported_narration_claims": [
+        "Мотоциклы зафиксированы в неподвижном состоянии.",
+        "Райдеры находятся в статичной позе.",
+        "В кадрах нет признаков движения мотоцикла или прыжка."
+      ],
+      "why_not_action": "Нет визуальных доказательств движения, езды или прыжка; байки стоят на месте.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5803514",
+      "sha256": "78b059eabfd268dbd8deec726adadd99294229c8b86c33aceb8254c069b2a15f",
+      "width": 2160,
+      "height": 3840,
+      "duration": 18.6,
+      "frame_sha256": [
+        "4b85389c5eabbf9135a60eb3c6447aa62dfc61c061e91b8c4112f90d71de0fb3",
+        "b03129ae10e3ea7082b1efaa4834263df681fd9155f49930a9a7b0109aa593f1",
+        "12abc1707e2027d45527420a621109a8e50ece3266ae55b7bd33076c456dca7a"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "standing",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.95,
+      "observed": "Мужчина и женщина стоят рядом с мотоциклом на фоне холмов; они смотрят друг на друга.",
+      "supported_narration_claims": [
+        "Мотоцикл стоит неподвижно.",
+        "Персонажи находятся в состоянии покоя.",
+        "Нет признаков движения или езды."
+      ],
+      "why_not_action": "В кадрах нет видимого движения мотоцикла, прыжка или действий по обслуживанию; персонажи стоят и общаются.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5803517",
+      "sha256": "eebd9f56e482fa4c15681251d9a32b6dac58ab6e4c5c9daee1a139d00cb36a84",
+      "width": 2160,
+      "height": 3840,
+      "duration": 10.4,
+      "frame_sha256": [
+        "d8b2f7ec17ef26f0024a56c81045dd58e2eac53869aefb0a0380173669784dbf",
+        "0299213ae3c215fc2e6ad5599a45dcc3953b6f49f81d7e2315de26908a19af6d",
+        "9c72b7a3f4760a9767ebc52d140ea8e05744fb6794b84553179f573422119284"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "riding",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Райдер в шлеме едет на мотокроссовом мотоцикле по песчаной трассе.",
+      "supported_narration_claims": [
+        "Мотоцикл находится в движении.",
+        "Движение происходит по песку.",
+        "Видна только одна машина."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "5803518",
+      "sha256": "cb26e6a7d148e11cabafffee90c1fdf244b3f0615bbb68844d3340e0bec6c010",
+      "width": 2160,
+      "height": 3840,
+      "duration": 16.16,
+      "frame_sha256": [
+        "ca9f918120e94630c7d69ad0e818cfc4258168bc0eb3a73725ca1cc69ca20c7f",
+        "244b5970e22c624fca37a0464a264b0e2d5ff952b4c27d51be57338b7a4866ba",
+        "b142a3a5b33fb3d60b09f304cbcfd6299c2164ebecdba750958fdb8aaaa28882"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "standing",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.95,
+      "observed": "Три райдера стоят на мотоциклах у воды в песчаной долине.",
+      "supported_narration_claims": [
+        "Райдеры находятся в статичной позе.",
+        "Мотоциклы не двигаются по кадрам.",
+        "Фон — берег реки и холмы."
+      ],
+      "why_not_action": "Нет визуальных признаков движения: байки не едут, прыжки или обслуживание техники не видно.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5803522",
+      "sha256": "00cf222c130bf3b9b1d8cd30db81168614cb679dfcef3132d73951dc53dcd3fc",
+      "width": 2160,
+      "height": 3840,
+      "duration": 10.64,
+      "frame_sha256": [
+        "11b4b84e6bd1a9856f273d3eb59e4e2ea62fd37c0e1165d58c0e31a7cd88bc78",
+        "f056631012fd92d96017ad7859922fcfb7be6f2d09ac53397228b7eb9a2084ef",
+        "397b2cb00b0058935113d1b524be4205753a32d206dfbb0128095e5dcd5eae7d"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "standing",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.15,
+      "observed": "Райдер стоит на месте, держит шлем в руках и улыбается камере. На переднем плане видна размытая часть мотоцикла.",
+      "supported_narration_claims": [
+        "Райдер одет в экипировку для кросс-кантри.",
+        "Шлем находится в руках райдера, а не на голове.",
+        "Мотоцикл стоит рядом с райдером."
+      ],
+      "why_not_action": "Нет видимого движения мотоцикла или действий по его обслуживанию/наденью шлема. Райдер статичен во всех кадрах.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5806212",
+      "sha256": "5f59b7a62a2e0c6781f37a53db5d901c47f88a8af73492c3f85062453f49838a",
+      "width": 2160,
+      "height": 3840,
+      "duration": 8.88,
+      "frame_sha256": [
+        "46083200cc8a22d06f0a94b2f063d2e0c4325ba5b563a67edad5a864872e8a18",
+        "eb633cfd0e2445a26dd38935e963d9845154529546aa5ad843fbd53e8deb3760",
+        "beec8f70004cf600d733e84228898ecb823052a5ffcc38d27577e8b7ae12dde6"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "helmet_put_on",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Райдер в шлеме и перчатках аккуратно надевает защитные очки на свой мотоциклетный шлем.",
+      "supported_narration_claims": [
+        "Видна рука райдера в белой перчатке с черными полосами.",
+        "На шлеме установлены белые защитные очки с логотипом 'ON'.",
+        "Внизу кадра виден красный рукоять руля мотоцикла."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "5806214",
+      "sha256": "1958de1e30579dfbfe0373d32890aeef389917013c64db44149bb63dea1838e7",
+      "width": 2160,
+      "height": 3840,
+      "duration": 18.8,
+      "frame_sha256": [
+        "abc9cabd6c88c64392306648fa4d286cd7d48fe4c47c4b057386cefb71fafebd",
+        "6bdfcdc7d810a6c6980374f8f94a9a975c3a3ec8d4458131e9c7ffd72a385889",
+        "546d4d4dedd056dc569750ab5536f36dff342a80faeb5b7c1b210f8da8a81378"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "standing",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.15,
+      "observed": "Райдеры в полной экипировке стоят на мотоциклах рядом друг с другом, один из них держит руль.",
+      "supported_narration_claims": [
+        "Видны шлемы и защитная одежда райдеров.",
+        "Мотоциклы находятся в покое, нет признаков движения.",
+        "Райдеры стоят близко друг к другу."
+      ],
+      "why_not_action": "Нет визуальных доказательств движения мотоцикла (дорога, грунт, город), только статичные кадры райдеров на байках.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "6801391",
+      "sha256": "7a8a555d41f047b9692fc37e8d64eafe221a684ae6bcca0da0da7cfce59a667e",
+      "width": 1440,
+      "height": 2560,
+      "duration": 9.4,
+      "frame_sha256": [
+        "69a8445b517ce59204a15a28e862ab560b36aa3363a877439d91aef75c7800e8",
+        "8de519e428a873faf8b1a9d37fda2890757473f07c87dbcb2230a1841d5cf25a",
+        "69caaff6e8dda16c2674ac6f33648b7655cf3be6493c8a7c7a86ab3347390cd2"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "standing",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.15,
+      "observed": "Райдер стоит на мотоцикле в помещении, камера показывает детали техники и лицо.",
+      "supported_narration_claims": [
+        "Мотоцикл зафиксирован в одной позиции во всех кадрах.",
+        "Видны только ноги райдера и верхняя часть тела.",
+        "Нет признаков движения или взаимодействия с техникой."
+      ],
+      "why_not_action": "Отсутствие видимого движения мотоцикла, прыжка или действий райдера исключает riding, stunt_jump, helmet_put_on, maintenance и walking_bike.",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "8551236",
+      "sha256": "05d676d8e0615e6416bacee589044629b009c7b1336418eb21ee604c1e44f4ee",
+      "width": 2160,
+      "height": 3840,
+      "duration": 12.95,
+      "frame_sha256": [
+        "0d58433dc5291346d945ae5859b97b340769c380e63c4fbd1455b0895c9784b3",
+        "5a80619dbf02683f7df31beef9a07950c17c6f6cd88cd85011abbece5210bab0",
+        "cd43b66bb9341e1b4df08c604e3dd131ab328dbc05ea48d5f92c75b268745abb"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "maintenance",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Трое людей (два женщины и один мужчина) собираются вокруг мотоцикла на подъездной дорожке дома. Мужчина в светлой футболке присел у двигателя, работая с ним. Две женщины стоят рядом, наблюдая за процессом.",
+      "supported_narration_claims": [
+        "Мужчина работает над двигателем мотоцикла.",
+        "Две женщины наблюдают за работой мужчины.",
+        "На земле лежит красный инструментальный ящик."
+      ],
+      "why_not_action": "Нет движения мотоцикла, нет прыжков или езды. Мотоцикл стоит на месте, люди находятся в статичных позах (стоят или присели).",
+      "candidate_dynamic_action": false
+    },
+    {
+      "source_id": "9606878",
+      "sha256": "0bf0b1300e455f87435e1abd56f4a9412b482348dc80c35f592914429c6d6b3e",
+      "width": 2160,
+      "height": 3840,
+      "duration": 18.8,
+      "frame_sha256": [
+        "8c40bfbdc6f1b2738e7122668f13351d527ea314b89fbbea341f1d7e1c6a6a0b",
+        "f30e2c5d8da41d53e2b8a6a797af68c5dceae85a7c6278e505fb3ca41f89ebe5",
+        "df1c726d8f56c3227b5d9d599fa5d3ed52af5925f6914567634e26a82d7d479c"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "unclear",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": false,
+      "confidence": 0.15,
+      "observed": "Райдер сидит на мотоцикле и держит руль; видны руки, шлема нет.",
+      "supported_narration_claims": [
+        "Рука находится на тормозе",
+        "Мотоцикл зафиксирован в одной позиции",
+        "Нет движения байка или прыжка"
+      ],
+      "why_not_action": "Нет визуальных признаков езды, прыжка или обслуживания; райдер просто сидит.",
+      "candidate_dynamic_action": false
+    }
+  ]
+}
