@@ -21837,9 +21837,8 @@
       "auto_publish": false,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
-      "voice_engine": "gustava_selfhosted_qwen3",
-      "voice_profile": "gustava_cartoon_b_qwen3_v1",
-      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
       "title": "Поездка или городская поездка: какой момент интереснее? #shorts",
       "narration": "Мотоцикл и разные сцены: на одном видео байкер едет на мотоцикле, далее байкер едет по городской улице. Съёмки не связаны. Куда бы посмотрел?",
       "description": "Две разные мотоистории: поездка и городская поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
@@ -21919,7 +21918,22 @@
         "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
       },
       "source_selection": "Independent official video APIs, no clip reuse",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/e36a3ade-bbda-498a-9fa3-a6f35d9bc46b.mp3",
+        "transcript_sha256": "ef90236a1d8cae3c5a5c5399f9fc063c192d1f388c33639d29ae119b39e47066",
+        "source_audio_sha256": "e2f0170436cd2451a355114a973d6ab4843584025bba8f45b5f9fa5a0afec565",
+        "context_id": "272c449316454cca81286cbc17011887",
+        "licence_mode": "public_provider_attribution"
+      },
+      "editorial_review_status": "awaiting_frame_review",
+      "deep_source_asr_report": {
+        "engine": "faster-whisper tiny CPU",
+        "lexical_coverage": 1.0,
+        "passed": true
+      }
     },
     {
       "id": "moto-helmet-3368471b0f59",
@@ -21927,9 +21941,8 @@
       "auto_publish": false,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
-      "voice_engine": "gustava_selfhosted_qwen3",
-      "voice_profile": "gustava_cartoon_b_qwen3_v1",
-      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
       "title": "Два мотоэпизода: надевание шлема и поездка. Что выберешь? #shorts",
       "narration": "Мотоцикл и разные сцены: сначала райдер надевает мотошлем, во втором видео байкер едет на мотоцикле. Здесь две независимые записи. Где больше динамики?",
       "description": "Две разные мотоистории: надевание шлема и поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
@@ -22010,7 +22023,22 @@
         "description": "Подпишись, если любишь настоящие мотопутешествия."
       },
       "source_selection": "Independent official video APIs, no clip reuse",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "keyless_action_filmable_v1",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/732a47a7-f632-466c-82e8-44384f7361fc.mp3",
+        "transcript_sha256": "17d323abe922e1b0fade8ebe32a1e0e848ff7d934de96ea97c87de8ec713b88b",
+        "source_audio_sha256": "26eccfa023fa5f23704e504a7fdf38a7fed9ee10b13df6b285c0120a1e3c7d89",
+        "context_id": "3a57c021eaaa4a67b3e140846069cbeb",
+        "licence_mode": "public_provider_attribution"
+      },
+      "editorial_review_status": "awaiting_frame_review",
+      "deep_source_asr_report": {
+        "engine": "faster-whisper tiny CPU",
+        "lexical_coverage": 1.0,
+        "passed": true
+      }
     }
   ]
 }
