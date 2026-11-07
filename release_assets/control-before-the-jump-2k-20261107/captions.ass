@@ -1,0 +1,18 @@
+[Script Info]
+Title: GUSTAVA - Before The Jump
+ScriptType: v4.00+
+PlayResX: 1440
+PlayResY: 2560
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Top,Arial,73,&H00FFFFFF,&H00F5F5F5,&H85060606,&H90060606,-1,0,0,0,100,100,0,0,1,4,2,8,78,78,205,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:04.45,Top,,0,0,0,,{\fad(160,210)\1c&H00CEFF&}СЦЕПЛЕНИЕ МОЖЕТ ИСЧЕЗНУТЬ{\1c&HFFFFFF&}\NЗА ДОЛЮ СЕКУНДЫ
+Dialogue: 0,0:00:04.65,0:00:07.62,Top,,0,0,0,,{\fad(170,170)}СМОТРИ ВПЕРЁД\NДЕЙСТВУЙ ПЛАВНО
+Dialogue: 0,0:00:08.02,0:00:11.72,Top,,0,0,0,,{\fad(170,170)}ПРЫЖОК НАЧИНАЕТСЯ\NЕЩЁ НА ЗЕМЛЕ
+Dialogue: 0,0:00:12.05,0:00:15.47,Top,,0,0,0,,{\fad(170,190)\1c&H00CEFF&}КОНТРОЛЬ{\1c&HFFFFFF&} ВАЖНЕЕ СКОРОСТИ

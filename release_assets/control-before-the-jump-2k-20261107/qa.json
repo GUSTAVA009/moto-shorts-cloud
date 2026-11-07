@@ -1,0 +1,62 @@
+{
+  "episode_id": "control-before-the-jump-2k-20261107",
+  "final_mp4_sha256": "f2c22eddfeea1968fb5aa9eab2c9a8a804f66607f7fc9fec5c7ec732f0bc9db3",
+  "video_bytes": 43354782,
+  "width": 1440,
+  "height": 2560,
+  "duration": 15.6,
+  "source_pixels": "native 2160x3840 Pexels footage downsampled, NOT upscale",
+  "source_sha256": [
+    {
+      "filename": "solo_action_5803634.mp4",
+      "source_page": "https://www.pexels.com/video/people-riding-a-dirt-bike-5803634/",
+      "author": "cottonbro studio",
+      "license": "Pexels License",
+      "source_sha256": "7244d8f3124c77b3f6baa469c43f4ed6f4bf41502a035cd87ddbd5d4e28bdfb9",
+      "source_resolution": [
+        2160,
+        3840
+      ],
+      "start": 2.2,
+      "duration": 4.7
+    },
+    {
+      "filename": "forest_riders_5806214.mp4",
+      "source_page": "https://www.pexels.com/video/motocross-riders-5806214/",
+      "author": "cottonbro studio",
+      "license": "Pexels License",
+      "source_sha256": "1958de1e30579dfbfe0373d32890aeef389917013c64db44149bb63dea1838e7",
+      "source_resolution": [
+        2160,
+        3840
+      ],
+      "start": 1.5,
+      "duration": 3.1
+    },
+    {
+      "filename": "melbourne_stunt_34110751.mp4",
+      "source_page": "https://www.pexels.com/video/dynamic-motocross-stunts-at-melbourne-show-34110751/",
+      "author": "Joolsmagools",
+      "license": "Pexels License",
+      "source_sha256": "c2e1d6d4be0e000e9ab36392a522cc931eaa3c62e7179b2afafba9e02c6ab26d",
+      "source_resolution": [
+        2160,
+        3840
+      ],
+      "start": 2.3,
+      "duration": 7.8
+    }
+  ],
+  "license_origin": "Pexels License",
+  "voice_audio": "Unchanged soundtrack originating from archived GUSTAVA DEEP voice-approved mix",
+  "original_audio_mix_video_sha256": "a8c8658f028defa3feef2279bc0ad05125f1c09165079e8da3df6cb031907ed0",
+  "audio_qa_status": "passed",
+  "status": "TECHNICALLY_APPROVED_OWNER_RELEASE_CANDIDATE",
+  "asr_matches_original_mix_exactly": true,
+  "mixed_final_asr_coverage": 0.8823529411764706,
+  "final_word_present": true,
+  "mixed_recognized_text": "На рыхлой трассе мотоцикл может потерять сцепления за долю секунды. Поэтому райдер действует плавно и смотрит вперед. А прыжок начинается не в воздухе, а с подготовки на треке. Скорость без контроля ничего не стоит.",
+  "decode_passed": true,
+  "video_freeze_over_2s": false,
+  "visual_review_status": "contact_sheet_reviewed_9_frames"
+}
