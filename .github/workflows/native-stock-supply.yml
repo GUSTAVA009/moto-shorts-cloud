@@ -24,9 +24,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
-      - name: Verify media decoder for original pixels
+      - name: Install decoder only when GitHub runner lacks ffprobe
         run: |
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
           command -v ffprobe
+          ffprobe -version | head -n 1
           python3 --version
       - name: Verify next vetted Pexels originals, maximum two genuine 2K/4K
         run: |

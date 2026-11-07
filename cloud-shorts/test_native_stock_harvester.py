@@ -23,6 +23,7 @@ class PinnedNativeStockTests(unittest.TestCase):
         self.assertIsNone(h.source_id(dict(source(),license="Unknown")))
         self.assertIsNone(h.source_id(dict(source(),author="")))
         self.assertIsNone(h.source_id(dict(source(),url="http://example.com/x")))
+        self.assertIsNone(h.source_id(dict(source(),url=source()["url"]+"?token=abc")))
         self.assertIsNone(h.source_id(dict(
             source(),source_page="https://www.pexels.com/video/another-12345/")))
 

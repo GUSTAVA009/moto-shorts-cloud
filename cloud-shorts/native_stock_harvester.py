@@ -38,7 +38,9 @@ def atomic_json(path, obj):
 def source_id(source):
     url=urllib.parse.urlsplit(str(source.get("url") or ""))
     m=re.fullmatch(r"/download/video/(\d+)/?",url.path)
-    if url.scheme!="https" or url.hostname!="www.pexels.com" or not m:
+    if (url.scheme!="https" or url.hostname!="www.pexels.com"
+            or url.port not in (None,443) or url.username or url.password
+            or url.query or url.fragment or not m):
         return None
     token=m.group(1)
     page=str(source.get("source_page") or "").rstrip("/")
@@ -100,7 +102,7 @@ def verify_one(source, cache_dir):
                 finally:
                     tmp.unlink(missing_ok=True)
         except urllib.error.HTTPError as error:
-            if error.code in (429,503,502,504):
+            if error.code==429 or 500<=error.code<=599:
                 return "temporary_http_"+str(error.code),None
             return "source_http_"+str(error.code),None
         except (OSError,urllib.error.URLError,TimeoutError,ValueError) as error:
@@ -170,6 +172,9 @@ def harvest(max_files=2,max_checks=24,ids=(),cache=None):
         if not status.startswith("temporary_"):
             state["scanned"][sid]={"result":status,"date":dt.datetime.now(
                 dt.timezone.utc).date().isoformat()}
+        if status=="temporary_http_429":
+            print("NATIVE_STOCK_RATE_LIMITED_STOP_THIS_CYCLE",flush=True)
+            break
     if examined:
         atomic_json(STATE,state)
     if complete:
