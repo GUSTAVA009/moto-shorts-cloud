@@ -10,6 +10,23 @@ import hashlib
 import json
 import re
 
+def resolve_large_catalog_entry(contents_entry, fetch_blob):
+    """Return an exact validated Contents-shaped entry even above GitHub's 1MiB limit.
+
+    This keeps historical callers that expect entry["content"] working
+    without silently rewriting the catalog or trusting a changed SHA.
+    """
+    if not isinstance(contents_entry, dict):
+        raise RuntimeError("CATALOG_CONTENTS_ENTRY_INVALID")
+    if contents_entry.get("encoding") != "none" or contents_entry.get("content"):
+        return contents_entry
+    pinned = str(contents_entry.get("sha") or "")
+    if not re.fullmatch(r"[0-9a-f]{40}", pinned):
+        raise RuntimeError("CATALOG_SHA_OR_SIZE_INVALID")
+    blob = fetch_blob(pinned)
+    decode_catalog(contents_entry, lambda sha: blob)
+    return {**contents_entry, "encoding": "base64", "content": blob["content"]}
+
 
 def decode_catalog(contents_entry, fetch_blob):
     if not isinstance(contents_entry, dict):

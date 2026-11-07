@@ -3,7 +3,7 @@ import base64
 import hashlib
 import json
 import unittest
-from github_catalog import decode_catalog
+from github_catalog import decode_catalog, resolve_large_catalog_entry
 
 
 def fixture(obj):
@@ -54,6 +54,20 @@ class GitHubLargeCatalogTests(unittest.TestCase):
             decode_catalog(contents,lambda _:dict(original,content="!!"))
         with self.assertRaisesRegex(RuntimeError,"EPISODES_INVALID"):
             decode_catalog(fixture({"not_episodes":[]}),lambda _:None)
+
+    def test_legacy_api_consumers_get_real_large_catalog_bytes(self):
+        original = fixture({"episodes":[{"id":"new-motorcycle-story"}],
+                            "padding":"x"*1_100_000})
+        contents = dict(original, content="", encoding="none")
+        got = resolve_large_catalog_entry(contents, lambda sha: original)
+        self.assertEqual(got["sha"], contents["sha"])
+        self.assertEqual(got["encoding"], "base64")
+        self.assertEqual(json.loads(base64.b64decode(got["content"]))["episodes"],
+                         [{"id":"new-motorcycle-story"}])
+        self.assertEqual(resolve_large_catalog_entry(original,lambda sha:None),
+                         original)
+        with self.assertRaisesRegex(RuntimeError,"PINNED_BLOB_MISMATCH"):
+            resolve_large_catalog_entry(contents,lambda sha:dict(original,sha="0"*40))
 
 
 if __name__ == "__main__":

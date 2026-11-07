@@ -86,7 +86,12 @@ def github(method, path, payload=None):
     })
     with urllib.request.urlopen(req, timeout=35) as res:
         raw = res.read(8_000_000)
-        return json.loads(raw) if raw else {}
+        result = json.loads(raw) if raw else {}
+    if method == "GET" and path.startswith("contents/cloud-shorts/episodes.json"):
+        from github_catalog import resolve_large_catalog_entry
+        return resolve_large_catalog_entry(
+            result, lambda sha: github("GET", "git/blobs/" + sha))
+    return result
 
 
 def pending_originals(catalog, reserved, autonomous=False):

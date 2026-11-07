@@ -196,7 +196,11 @@ def gh(url,method="GET",payload=None):
              "User-Agent":"GUSTAVA-original-microguide-autonomy"}
     req=urllib.request.Request(target,method=method,data=data,headers=headers)
     with urllib.request.urlopen(req,timeout=45) as r:
-        return json.load(r) if r.status!=204 else {}
+        result = json.load(r) if r.status!=204 else {}
+    if method == "GET" and url.startswith("contents/cloud-shorts/episodes.json"):
+        from github_catalog import resolve_large_catalog_entry
+        return resolve_large_catalog_entry(result, lambda sha: gh("git/blobs/" + sha))
+    return result
 
 
 def do_run(dry_run=False):
