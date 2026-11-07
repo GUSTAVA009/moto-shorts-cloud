@@ -1,0 +1,11 @@
+{
+  "id": "moto-dirt-39ad24832e31",
+  "state": "reserved",
+  "run_id": "42350380801",
+  "attempt_count": 1,
+  "preview_fingerprint": "466edecbd2754cc7fc5fd735e6b505214f649f5cfee3bb62fe79477e87529f1c",
+  "deep_source_sha256": null,
+  "selfhosted_voice_id": "gustava-cartoon-b-v1",
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
