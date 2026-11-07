@@ -21740,6 +21740,186 @@
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
       "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-city-9561eabb9e24",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Что больше цепляет: поездка или городская поездка? #shorts",
+      "narration": "Мотоцикл и разные сцены: на одном видео байкер едет на мотоцикле, далее байкер едет по городской улице. Это не один заезд. Куда бы посмотрел?",
+      "description": "Две разные мотоистории: поездка и городская поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ПОЕЗДКА",
+      "caption_middle": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "night-drive",
+      "music_bpm": 133,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5199370/",
+          "source_page": "https://www.pexels.com/video/man-driving-his-motorcycle-5199370/",
+          "source_title": "Man Driving His Motorcycle",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "topics": [
+            "city",
+            "roadtrip"
+          ],
+          "duration": 22,
+          "native_4k_sha256": "579f797126fbe99a4c7ed5f9ba3e58162ca1c7cb2944f0ad3f3ef9dc804b9abf",
+          "native_4k_bytes": 51526293,
+          "native_4k_width": 2160,
+          "native_4k_height": 4096
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/37154727/",
+          "source_page": "https://www.pexels.com/video/urban-motorcycle-ride-in-narrow-alleyway-37154727/",
+          "source_title": "Urban Motorcycle Ride in Narrow Alleyway",
+          "author": "KUTLUER ERDAL Triumph rider",
+          "license": "Pexels License",
+          "topics": [
+            "city",
+            "roadtrip"
+          ],
+          "duration": 21,
+          "native_4k_sha256": "ca0a6d56745decd4b633bf8e2ebcabe84595db040eed36d69c8243918b16c538",
+          "native_4k_bytes": 29584293,
+          "native_4k_width": 2160,
+          "native_4k_height": 3840
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.5
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 11.5
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "urban-streets-9561e",
+        "bike": "urban-motorbike",
+        "people": "city-riders-9561e",
+        "story": "urban-riding-9561e",
+        "visual": "three-clips-9561e"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "like",
+        "overlay": "НРАВИТСЯ МОТО? ЛАЙК!",
+        "description": "Поставь лайк, если тебе нравится эта мототема."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
+    },
+    {
+      "id": "moto-roadtrip-83f0461a1801",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "gustava_selfhosted_qwen3",
+      "voice_profile": "gustava_cartoon_b_qwen3_v1",
+      "selfhosted_voice_id": "gustava-cartoon-b-v1",
+      "title": "Поездка или городская поездка: какой момент интереснее? #shorts",
+      "narration": "Мотоцикл и разные сцены: на одном видео байкер едет на мотоцикле, далее байкер едет по городской улице. Съёмки не связаны. Куда бы посмотрел?",
+      "description": "Две разные мотоистории: поездка и городская поездка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
+      "caption_start": "ПОЕЗДКА",
+      "caption_middle": "ГОРОДСКАЯ ПОЕЗДКА",
+      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 107,
+      "editorial_format": "source_anchored_action_contrast",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/28322546/",
+          "source_page": "https://www.pexels.com/video/a-person-riding-a-motorcycle-on-the-road-28322546/",
+          "source_title": "A person riding a motorcycle on the road",
+          "author": "Ravi Kant",
+          "license": "Pexels License",
+          "topics": [
+            "roadtrip",
+            "forest"
+          ],
+          "duration": 11,
+          "native_4k_sha256": "93c7edf94ba5f581a38bb74b3184db3f7a6a34b6adb740666c7f1c7f7bc097f5",
+          "native_4k_bytes": 49656503,
+          "native_4k_width": 2160,
+          "native_4k_height": 3840
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/20642963/",
+          "source_page": "https://www.pexels.com/video/a-person-riding-a-motorcycle-on-the-street-20642963/",
+          "source_title": "A person riding a motorcycle on the street",
+          "author": "Amanat Ali Warraich",
+          "license": "Pexels License",
+          "topics": [
+            "city",
+            "roadtrip"
+          ],
+          "duration": 9,
+          "native_4k_sha256": "3fd3269f72d55eb7dd393cbe287f233f99010f766739308d55b9a2ef83da1269",
+          "native_4k_bytes": 14714484,
+          "native_4k_width": 2160,
+          "native_4k_height": 3840
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 10.75
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 8.75
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "countryside-road-83f04",
+        "bike": "touring-motorcycle",
+        "people": "touring-travelers-83f04",
+        "story": "scenic-country-road-83f04",
+        "visual": "three-clips-83f04"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "comment",
+        "overlay": "НАПИШИ СВОЙ ВЫБОР",
+        "description": "Расскажи в комментариях, какой маршрут выбрал бы ты."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_action_filmable_v1"
     }
   ]
 }
