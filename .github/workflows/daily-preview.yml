@@ -71,6 +71,7 @@ jobs:
       - name: Check content queue and reserve next episode
         id: pick
         env:
+          GUSTAVA_PROVIDER_PREFLIGHT: "1"
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_RUN_ID: ${{ github.run_id }}
@@ -178,6 +179,7 @@ jobs:
         env:
           HAS_JOB: ${{ steps.pick.outputs.has_job }}
           EPISODE: ${{ steps.pick.outputs.episode }}
+          PROVIDER_BLOCKER: ${{ steps.pick.outputs.provider_blocker }}
         run: |
           if [ "$HAS_JOB" = "true" ]; then
             # Never label a failed ASR run as a successful production.
@@ -209,8 +211,13 @@ jobs:
           PY
             echo "Unique original MP4 preview with accurate native Russian speech ready for $EPISODE; public publication still requires approved episode + configured publisher." >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "::error::QUEUE_EMPTY — 0 videos generated because episode catalog has no new verified story."
-            echo "QUEUE_EMPTY: zero new videos generated. Add new unique rights-cleared scripts and footage; do not report as publishing success." >> "$GITHUB_STEP_SUMMARY"
+            if [ -n "$PROVIDER_BLOCKER" ]; then
+              echo "::error::FACTORY_PAUSED_PROVIDER_DOWN: $PROVIDER_BLOCKER"
+              echo "Source/TTS provider unreachable. No episode reserved, 0 MP4 created or published. Automatic schedule retries; no owner voice substitution." >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "::error::QUEUE_EMPTY — 0 videos generated because episode catalog has no new verified story."
+              echo "QUEUE_EMPTY: zero new videos generated. Add new unique rights-cleared scripts and footage; do not report as publishing success." >> "$GITHUB_STEP_SUMMARY"
+            fi
             exit 1
           fi
 
@@ -333,7 +340,9 @@ jobs:
                 "remaining_exact_mp3_ready",len(waiting),flush=True)
           PY
       - name: Replenish next eligible original voice preview from verified unrendered stock
-        if: ${{ always() && !cancelled() && steps.pick.outputs.has_job == 'true' }}
+        # Do not burn the next episode after origin, voice or QA failure.
+        # The existing regular schedule retries after infrastructure returns.
+        if: ${{ success() && steps.pick.outputs.has_job == 'true' }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}

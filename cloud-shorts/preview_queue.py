@@ -1150,6 +1150,23 @@ def choose(catalog, output):
     item = selected
     slug = item["id"]
     existing, old_receipt = records[slug]
+    # GitHub could consume successive original episodes while the media
+    # origin is offline, despite producing no usable MP4. No permanent source/episode reservation
+    # until this EXACT episode has reachable owner media and approved TTS.
+    # Provider availability is not a substitute for source hash, QA or review.
+    if os.environ.get("GUSTAVA_PROVIDER_PREFLIGHT") == "1":
+        from provider_preflight import require_available
+        try:
+            require_available(item)
+        except RuntimeError as exc:
+            message = str(exc)
+            if not message.startswith("PROVIDER_PREFLIGHT_"):
+                raise
+            output.write_text(
+                "has_job=false\nprovider_blocker=" + message[:240] + "\n",
+                encoding="utf8")
+            print("FACTORY_PROVIDER_OFFLINE_NO_RESERVATION", slug, message, flush=True)
+            return
     entry = api(HISTORY_PATH)
     history = decode_history(entry)
     assert_new_sources(item, history)
