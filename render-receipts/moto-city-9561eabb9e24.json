@@ -1,0 +1,11 @@
+{
+  "id": "moto-city-9561eabb9e24",
+  "state": "reserved",
+  "run_id": "42354543323",
+  "attempt_count": 1,
+  "preview_fingerprint": "becdbf77256f3687f6fa9cb9cf101038eb7480db98229d801782420de6eaec0c",
+  "deep_source_sha256": "a1068dbc76cfcf200b6aa0664ec7e872d1b36f1fee684bdd8cf9b53de8ff3192",
+  "selfhosted_voice_id": null,
+  "previous_run_id": null,
+  "notes": "Revised preview only; never retry a public or uncertain upload."
+}
