@@ -40,6 +40,23 @@ def actionable_voice_plan(episode):
                     and approved_legacy_deep(episode)))
 
 
+def native_episode_ready(episode, autonomous=False):
+    """A script is not production-ready if its sources cannot render native 2K.
+
+    This feature flag is enabled ONLY in the unattended production workflow.
+    Existing legacy tests and archived manifests remain unchanged.
+    """
+    if not autonomous or os.environ.get("GUSTAVA_NATIVE_SOURCE_ONLY")!="1":
+        return True
+    from native_source_preflight import require_native_sources
+    try:
+        require_native_sources(
+            episode,os.environ.get("GUSTAVA_EXPORT_PROFILE","2k"))
+        return True
+    except ValueError:
+        return False
+
+
 def candidate(catalog, seed_bank, reserved_ids, target=2, autonomous=False):
     """Pick a rights-cleared episode while the target has not been met."""
     if seed_bank.get("version") != 1:
@@ -47,13 +64,16 @@ def candidate(catalog, seed_bank, reserved_ids, target=2, autonomous=False):
     episodes = catalog["episodes"]
     pending = sum(x.get("auto_preview") is True and x["id"] not in reserved_ids
                   and (not autonomous or actionable_voice_plan(x))
+                  and native_episode_ready(x,autonomous)
                   for x in episodes)
     if pending >= target:
         return None
     used = {x["id"] for x in episodes}
     used_media = {source_id(video) for x in episodes for video in x["footage"]}
     for scene in seed_bank["episodes"]:
-        if scene["id"] in used or (autonomous and not actionable_voice_plan(scene)):
+        if (scene["id"] in used
+                or (autonomous and not actionable_voice_plan(scene))
+                or not native_episode_ready(scene,autonomous)):
             continue
         validate_episode(scene)
         require_novel_visual_story(scene, episodes)
@@ -97,6 +117,7 @@ def github(method, path, payload=None):
 def pending_originals(catalog, reserved, autonomous=False):
     return sum(e.get("auto_preview") is True and e["id"] not in reserved
                and (not autonomous or actionable_voice_plan(e))
+               and native_episode_ready(e,autonomous)
                for e in catalog["episodes"])
 
 

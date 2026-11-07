@@ -423,6 +423,23 @@ def assemble_episode(catalog, theme, media, prose, seed_index):
     return ep
 
 
+def native_source_candidates(candidates, profile="2k"):
+    """Only include SHA-pinned real pixel provenance for unattended Shorts.
+
+    A generated 448x800 LTX clip is never a native 2K master merely
+    because the final encoder has an FFmpeg scale argument.
+    """
+    from native_source_preflight import source_proof
+    valid=[]
+    for source in candidates:
+        try:
+            source_proof(dict(source,key="clip_0"),profile)
+        except ValueError:
+            continue
+        valid.append(source)
+    return valid
+
+
 def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_results,
                prose_factory=original_story, permanently_used=(), prepared_scripts=()):
     # IDs from removed failed/revised footage are still reserved forever.
@@ -443,7 +460,15 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
                                    t[3] == last_bike))
     # Prefer two provable, contrasting actions by different filmmakers,
     # instead of a random collection of generic motorcycle riding B-roll.
-    from source_story import select_pair
+    from source_story import select_pair as original_select_pair
+    native_only=os.getenv("GUSTAVA_NATIVE_SOURCE_ONLY")=="1"
+    native_profile=os.getenv("GUSTAVA_EXPORT_PROFILE","2k")
+    def select_pair(candidates, used_ids):
+        # Filter even the cross-theme fallback by actual original pixels,
+        # not the provider's marketing "4K" title or site tags.
+        if native_only:
+            candidates=native_source_candidates(candidates,native_profile)
+        return original_select_pair(candidates,used_ids)
     chosen = None
     key = os.getenv("PEXELS_API_KEY", "")
     last_bike = catalog["episodes"][-1]["editorial"]["bike"] if catalog["episodes"] else None
@@ -471,8 +496,8 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
         # Previously the code always called an external provider BEFORE
         # looking for our already-created footage. That is neither needed
         # for ownership/licensing nor sustainable at high Shorts cadence.
-        found = list(original_results(theme, used))
-        if not select_pair(found, used) and key:
+        found = ([] if native_only else list(original_results(theme, used)))
+        if not select_pair(found, used) and key and not native_only:
             for page in (1, 2, 3):
                 found.extend(source_fetch(theme, page, key))
                 if select_pair(found, used):
@@ -489,6 +514,7 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
             found.extend(curated_pexels_results(partner, used))
             found.extend(curated_mixkit_results(partner, used))
         if (not select_pair(found, used) and commons_calls == 0
+                and not native_only
                 and external_scout_window and theme[0] == commons_target):
             commons_calls += 1
             try:
@@ -532,7 +558,8 @@ def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_resul
         for candidate_theme in themes:
             if candidate_theme[3] == last_bike:
                 continue
-            for clip in (original_results(candidate_theme, used)
+            for clip in (([] if native_only
+                          else original_results(candidate_theme, used))
                          + curated_pexels_results(candidate_theme, used)
                          + curated_mixkit_results(candidate_theme, used)):
                 if all(source_id(existing) != source_id(clip)

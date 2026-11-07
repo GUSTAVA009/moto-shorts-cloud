@@ -60,9 +60,10 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
-          # New clips are rendered ONLY on the owner's existing LTX/RTX
-          # producer and hosted as SHA-checked, read-only original assets.
-          # Never fetch any untrusted/user-submitted third-party feed.
+          # Historical LTX/RTX originals remain immutable, but new 2K
+          # scripts select only SHAs certified from licensed original
+          # portrait footage. Never upsample 448x800 LTX sources or
+          # fetch any untrusted/user-submitted third-party feed.
           GUSTAVA_ORIGINAL_FEED_URL: https://84-252-66-87.sslip.io/yt-factory-originals/index.json
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
@@ -70,6 +71,10 @@ jobs:
           # New episodes must be synthesizable without calling ChatGPT.
           # Historic Deep-only recordings retain their immutable profile.
           GUSTAVA_TTS_PROVIDER: gustava_selfhosted_qwen3
+          # Count only genuinely renderable 2K sources, NOT 448x800 LTX
+          # drafts. Unverified scripts are never counted as MP4 reserves.
+          GUSTAVA_NATIVE_SOURCE_ONLY: '1'
+          GUSTAVA_EXPORT_PROFILE: 2k
           GUSTAVA_VOICE_REFERENCE_SHA256: ${{ vars.GUSTAVA_VOICE_REFERENCE_SHA256 || 'ed27b23b9f86345c45263ab28957e96fd2d399379b3ea90ed9fbc75be183a3cc' }}
           GUSTAVA_VOICE_OIDC_ENABLED: '1'
           GUSTAVA_SELFHOSTED_TTS_ENABLED: ${{ vars.GUSTAVA_SELFHOSTED_TTS_ENABLED || '1' }}
