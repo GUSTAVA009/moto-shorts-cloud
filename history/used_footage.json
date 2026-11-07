@@ -2272,6 +2272,16 @@
       "episode": "moto-roadtrip-83f0461a1801",
       "source": "https://www.pexels.com/video/a-person-riding-a-motorcycle-on-the-street-20642963/",
       "status": "reserved-or-rendered"
+    },
+    "5803518": {
+      "episode": "moto-helmet-3368471b0f59",
+      "source": "https://www.pexels.com/video/people-posing-dirt-bikes-putting-on-their-helmets-5803518/",
+      "status": "reserved-or-rendered"
+    },
+    "6801391": {
+      "episode": "moto-helmet-3368471b0f59",
+      "source": "https://www.pexels.com/video/person-riding-a-motorcycle-6801391/",
+      "status": "reserved-or-rendered"
     }
   },
   "scene_profiles": {
@@ -3688,6 +3698,13 @@
       "people": "touring-travelers-83f04",
       "story": "scenic-country-road-83f04",
       "visual": "three-clips-83f04"
+    },
+    "moto-helmet-3368471b0f59": {
+      "environment": "riding-gear-workshop-33684",
+      "bike": "motorbike-safety-gear",
+      "people": "gear-specialists-33684",
+      "story": "helmet-gear-choice-33684",
+      "visual": "three-clips-33684"
     }
   }
 }
