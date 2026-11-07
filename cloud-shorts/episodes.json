@@ -22053,6 +22053,107 @@
         "lexical_coverage": 1.0,
         "passed": true
       }
+    },
+    {
+      "id": "moto-roadtrip-153fe6130270",
+      "auto_preview": true,
+      "auto_publish": false,
+      "channel_niche": "motorcycle",
+      "research_pillar": "motorcycle",
+      "voice_engine": "aidocmaker_deep",
+      "voice_profile": "gustava_create_audio_deep_v1",
+      "title": "Оба колеса в воздухе: настоящий мотопрыжок #shorts",
+      "narration": "Мотоцикл едет по дороге. Это первый кадр. Во втором кадре мотоциклист прыгает с трамплина. Теперь мотоцикл летит по воздуху. Перед нами настоящий прыжок на мотоцикле.",
+      "description": "Два независимых лицензированных видео: движение на дороге и настоящий прыжок мотоцикла над трамплином. Без выдуманных приземлений или общего заезда.\n\n#shorts",
+      "caption_start": "КОЛЁСА НА ДОРОГЕ",
+      "caption_middle": "МОТОЦИКЛ В ВОЗДУХЕ",
+      "caption_end": "ТРАЕКТОРИЯ РЕШАЕТ",
+      "max_duration_seconds": 34,
+      "opening_trim_seconds": 0.1,
+      "music_style": "action",
+      "music_bpm": 129,
+      "editorial_format": "original_action_microguide_v1",
+      "creative_treatment": "observable_riding_jump_mechanics",
+      "footage": [
+        {
+          "key": "clip_0",
+          "url": "https://www.pexels.com/download/video/5207054/",
+          "source_page": "https://www.pexels.com/video/couple-riding-a-black-motorcycle-5207054/",
+          "source_title": "Couple Riding a Black Motorcycle",
+          "author": "cottonbro studio",
+          "license": "Pexels License",
+          "topics": [
+            "city",
+            "roadtrip"
+          ],
+          "duration": 13,
+          "native_4k_sha256": "1358947c0cc37cd8a19f29b85f4c0c1ef9df2677d8f0f883417cf26c0fb3a928",
+          "native_4k_bytes": 35909143,
+          "native_4k_width": 2160,
+          "native_4k_height": 3840
+        },
+        {
+          "key": "clip_1",
+          "url": "https://www.pexels.com/download/video/26447454/",
+          "source_page": "https://www.pexels.com/video/a-person-riding-a-dirt-bike-on-a-hill-26447454/",
+          "source_title": "A person riding a dirt bike on a hill",
+          "author": "Pexels User",
+          "license": "Pexels License",
+          "topics": [
+            "motocross",
+            "racing",
+            "dirt"
+          ],
+          "duration": 7.7,
+          "native_2k_sha256": "55345b85d0cf5798a713ee1c521bab47d07fb9bc51b1ac086c543f1353dd4e77",
+          "native_2k_bytes": 17710827,
+          "native_2k_width": 1440,
+          "native_2k_height": 3124
+        }
+      ],
+      "shots": [
+        {
+          "source": "clip_0",
+          "start": 0.0,
+          "seconds": 11.5
+        },
+        {
+          "source": "clip_1",
+          "start": 0.0,
+          "seconds": 7.45
+        }
+      ],
+      "visual_director_version": 3,
+      "align_middle_caption_to_second_scene": true,
+      "editorial": {
+        "environment": "countryside-road-153fe",
+        "bike": "touring-motorcycle",
+        "people": "touring-travelers-153fe",
+        "story": "scenic-country-road-153fe",
+        "visual": "three-clips-153fe"
+      },
+      "tags": [
+        "мото",
+        "мотокросс",
+        "shorts"
+      ],
+      "cta": {
+        "kind": "share",
+        "overlay": "ОТПРАВЬ ДРУГУ С МОТО",
+        "description": "Поделись роликом с другом, который любит мотоциклы."
+      },
+      "source_selection": "Independent official video APIs, no clip reuse",
+      "generation_provenance": "keyless_sha_grounded_airborne_moto_v1",
+      "deep_audio": {
+        "provider": "aidocmaker.com",
+        "voice_id": "deep",
+        "preview_url": "https://storage.googleapis.com/adm--audio-playback--7d--public/mcp-preview/28e31f4b-1e08-4658-a61d-b63fbd5220b4.mp3",
+        "transcript_sha256": "168bcdae7400f43b549da1d366b444d33c66c88de284d0b8bef43bbe0a73f0e2",
+        "source_audio_sha256": "45093f8f58be65041d91e2bff9752fdc6b9026ef1f774c1c94cc57434cb7ee19",
+        "context_id": "dcdc34c9ac344d0ba83f769863a82579",
+        "licence_mode": "public_provider_attribution"
+      },
+      "editorial_review_status": "awaiting_automated_six_frame_review"
     }
   ]
 }

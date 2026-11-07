@@ -7,6 +7,7 @@ No fabricated incidents, shared characters, source tags or safety instructions.
 """
 from __future__ import annotations
 import hashlib
+import os
 import re
 from urllib.parse import unquote, urlsplit
 
@@ -85,6 +86,16 @@ def scene_for(media):
         return next((s for s in SCENES if s[0]==kind),None)
     if url.scheme != "https" or url.hostname not in ("www.pexels.com", "commons.wikimedia.org", "mixkit.co"):
         return None
+    # Some Pexels pages are named "riding on a hill" even though THREE
+    # SHA-bound real source frames confirm a motorcycle airborne. Trust only
+    # the approved original-pixel visual evidence, never self-assigned tags.
+    if url.hostname == "www.pexels.com":
+        from source_action_evidence import load_evidence, source_dynamic_action_verified
+        if source_dynamic_action_verified(media):
+            sid=str(media.get("url") or "").rstrip("/").split("/")[-1]
+            evidence=load_evidence().get(sid)
+            if evidence and evidence.get("action") == "stunt_jump":
+                return next(x for x in SCENES if x[0] == "jump")
     # This exact Pexels 4K file was inspected at 0.4s, 2.6s, 3.3s,
     # 4.0s and 5.5s: an airborne motorcycle/backflip is visibly present.
     # Generic source pages saying "stunts" are NOT otherwise presumed jumps.
@@ -262,6 +273,54 @@ def touring_track_myth(sources, previous_titles, rewrite_attempt=0, previous_nar
         raise ValueError("MYTH_TITLE_PREVIOUSLY_USED")
     return item
 
+def grounded_riding_jump_story(sources, previous_titles,
+                              rewrite_attempt=0, previous_narrations=()):
+    """Technical observation grounded in independently reviewed real actions.
+
+    Avoid the rejected generic 'A or B' contest. Ground each spoken claim
+    in two real SHA-pinned motorcycle scenes; no landing footage is invented.
+    """
+    from source_action_evidence import source_dynamic_action_verified
+    from moto_assets import source_id
+    a,b=(scene_for(x) for x in sources)
+    if (a is None or b is None or (a[0],b[0])!=("ride","jump")
+            or not all(source_dynamic_action_verified(x) for x in sources)):
+        raise ValueError("GROUNDING_REQUIRES_VERIFIED_RIDE_THEN_AIRBORNE_JUMP")
+    options=[
+        "Мотоцикл едет по дороге. Это первый кадр. Во втором кадре мотоциклист прыгает с трамплина. Теперь мотоцикл летит по воздуху. Перед нами настоящий прыжок на мотоцикле.",
+        "Сначала байк едет по дороге. На другой записи райдер прыгает с трамплина. В воздухе колёса оторваны от земли. Посмотри, как меняется положение мотоцикла!",
+    ]
+    already={" ".join(str(x).casefold().split()) for x in previous_narrations}
+    available=[x for x in options if " ".join(x.casefold().split()) not in already]
+    if not available:
+        raise ValueError("GROUNDING_RIDE_JUMP_NARRATION_EXHAUSTED")
+    narration=available[rewrite_attempt % len(available)]
+    titles=[
+        "Оба колеса в воздухе: настоящий мотопрыжок #shorts",
+        "Колёса оторваны от земли: мотопрыжок в деталях #shorts",
+    ]
+    titles=[x for x in titles if x.casefold() not in
+            {str(y).casefold() for y in previous_titles}]
+    if not titles:
+        raise ValueError("GROUNDING_RIDE_JUMP_TITLE_EXHAUSTED")
+    result={
+        "title":titles[rewrite_attempt % len(titles)],
+        "narration":narration,
+        "description":(
+            "Два независимых лицензированных видео: движение на дороге "
+            "и настоящий прыжок мотоцикла над трамплином. "
+            "Без выдуманных приземлений или общего заезда.\n\n#shorts"),
+        "caption_start":"КОЛЁСА НА ДОРОГЕ",
+        "caption_middle":"МОТОЦИКЛ В ВОЗДУХЕ",
+        "caption_end":"ТРАЕКТОРИЯ РЕШАЕТ",
+        "_editorial_format":"original_action_microguide_v1",
+        "_creative_treatment":"observable_riding_jump_mechanics",
+        "_generation_source":"keyless_sha_grounded_airborne_moto_v1",
+    }
+    require_filmable(result,sources)
+    return result
+
+
 def compose(sources, previous_titles, rewrite_attempt=0, previous_narrations=()):
     """A short, grounded contrast, not a fabricated one-event storyline."""
     if len(sources) != 2:
@@ -269,6 +328,10 @@ def compose(sources, previous_titles, rewrite_attempt=0, previous_narrations=())
     a, b = (scene_for(s) for s in sources)
     if a is None or b is None or a[0] == b[0]:
         raise ValueError("NO_ACTION_DIVERSITY: source footage not suitable for story")
+    if ((a[0],b[0]) == ("ride","jump")
+            and os.environ.get("GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED")=="1"):
+        return grounded_riding_jump_story(
+            sources,previous_titles,rewrite_attempt,previous_narrations)
     if {a[0], b[0]} == {"touring", "race"}:
         return touring_track_myth(sources, previous_titles,
                                   rewrite_attempt=rewrite_attempt,

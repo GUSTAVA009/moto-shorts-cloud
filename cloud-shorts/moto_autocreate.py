@@ -450,7 +450,11 @@ def native_source_candidates(candidates, profile="2k"):
 def create_one(catalog, source_fetch=pexels_results, commons_fetch=commons_results,
                prose_factory=original_story, permanently_used=(), prepared_scripts=()):
     # IDs from removed failed/revised footage are still reserved forever.
-    used = set(permanently_used) | {
+    from editorial_guard import PUBLISHED_SOURCE_IDS
+    # The catalog does not contain the very first already-published video.
+    # Reserve its actual source IDs *before* attempting a new story; do not
+    # loop three failed drafts using footage that the release guard rejects.
+    used = set(PUBLISHED_SOURCE_IDS) | set(permanently_used) | {
         source_id(x) for ep in catalog["episodes"] for x in ep["footage"]
     }
     first = choose_theme(catalog["episodes"])

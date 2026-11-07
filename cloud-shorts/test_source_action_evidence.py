@@ -20,14 +20,14 @@ class FactoryMotionSourceTests(unittest.TestCase):
             encoding="utf8"))["sources"]
         cls.evidence=load_evidence()
 
-    def test_all_28_sources_have_sha_pinned_visual_evidence_and_12_confirmed_riding(self):
+    def test_all_30_sources_have_sha_pinned_evidence_and_14_confirmed_moving(self):
         sources=[s for s in self.pool
                  if (s.get("native_4k_sha256") or s.get("native_2k_sha256"))
                  and s["url"].rstrip("/").split("/")[-1] in self.evidence]
-        self.assertEqual(len(sources),28)
+        self.assertEqual(len(sources),30)
         approved=[s for s in sources if source_dynamic_action_verified(
             s,self.evidence)]
-        self.assertEqual(len(approved),12)
+        self.assertEqual(len(approved),14)
         # Provenance alone does not make a parked bike a riding action.
         self.assertEqual(len(sources)-len(approved),16)
 
@@ -63,11 +63,39 @@ class FactoryMotionSourceTests(unittest.TestCase):
             self.assertFalse(source_dynamic_action_verified(good,broken),
                              field)
 
+    def test_new_2k_jump_is_proven_from_real_frames_not_page_title(self):
+        from source_story import scene_for
+        jump=next(s for s in self.pool if s["url"].endswith("/26447454/"))
+        self.assertTrue(source_dynamic_action_verified(jump,self.evidence))
+        self.assertEqual(scene_for(jump)[0],"jump")
+        forged=dict(jump,native_2k_sha256="0"*64)
+        self.assertFalse(source_dynamic_action_verified(forged,self.evidence))
+        self.assertNotEqual(scene_for(forged)[0],"jump")
+
+    def test_original_factory_auto_selects_unused_different_motorcycle_actions(self):
+        from moto_autocreate import create_one
+        data=json.loads((HERE/"episodes.json").read_text(encoding="utf8"))
+        # Reproduce the pre-production stock window, even after this first
+        # validated candidate has been reserved in the immutable catalog.
+        data["episodes"]=[ep for ep in data["episodes"]
+                          if ep["id"]!="moto-roadtrip-153fe6130270"]
+        with patch.dict(os.environ,{
+                "GUSTAVA_NATIVE_SOURCE_ONLY":"1",
+                "GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED":"1",
+                "GUSTAVA_EXPORT_PROFILE":"2k",
+                "PEXELS_API_KEY":""}):
+            ep=create_one(data,commons_fetch=lambda _:[])
+        used={x["url"].rstrip("/").split("/")[-1] for x in ep["footage"]}
+        self.assertIn("26447454",used)
+        self.assertNotIn("5803517",used)
+        self.assertEqual(ep["editorial_format"],"original_action_microguide_v1")
+        self.assertIs(ep["auto_publish"],False)
+
     def test_autonomous_script_stock_excludes_ungrounded_footage(self):
         with patch.dict(os.environ,{
                "GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED":"1"}):
             selected=native_source_candidates(self.pool,"2k")
-            self.assertEqual(len(selected),12)
+            self.assertEqual(len(selected),14)
             self.assertTrue(all(source_dynamic_action_verified(s)
                                 for s in selected))
             self.assertFalse(any(x["url"].endswith("/5806214/")
@@ -75,7 +103,7 @@ class FactoryMotionSourceTests(unittest.TestCase):
         with patch.dict(os.environ,{
                "GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED":"0"}):
             selected=native_source_candidates(self.pool,"2k")
-            self.assertGreater(len(selected),12)
+            self.assertGreater(len(selected),14)
 
     def test_eligible_episode_still_needs_two_native_sources_and_action_proof(self):
         active=[s for s in self.pool if source_dynamic_action_verified(

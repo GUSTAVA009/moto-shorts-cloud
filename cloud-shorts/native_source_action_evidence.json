@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sources_checked": 28,
+  "sources_checked": 30,
   "reports": [
     {
       "source_id": "13687335",
@@ -73,6 +73,31 @@
         "Мотоцикл движется вперед по прямой дороге.",
         "Райдер находится в центре кадра и занимает значительную часть изображения.",
         "Фон показывает жилые дома и солнечные панели, что указывает на городскую или пригородную местность."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "26447454",
+      "sha256": "55345b85d0cf5798a713ee1c521bab47d07fb9bc51b1ac086c543f1353dd4e77",
+      "width": 1440,
+      "height": 3124,
+      "duration": 7.7,
+      "frame_sha256": [
+        "04b05f4bcd8669a914e9cf02f87ec4e0b545457b20bbbdd5313ccb9c2ed1845f",
+        "515d7c4660b503f98a4899b08fc79726f08b1fe16bcaf0e95eda447afe3ab07e",
+        "a4838de2ebb35a668663f409fd65d70becd5b70fa791b2e3c8da2fca1c014145"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "stunt_jump",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Райдер на мотокроссе выполняет прыжок по dirt-треку, поднимая заднее колесо и пытаясь удержать баланс в воздухе.",
+      "supported_narration_claims": [
+        "Мотоцикл находится в воздухе над землей.",
+        "Заднее колесо поднято высоко вверх.",
+        "Райдер держится за руль, контролируя положение."
       ],
       "why_not_action": "",
       "candidate_dynamic_action": true
@@ -198,6 +223,31 @@
         "Мотоцикл находится в движении (кадры 1 и 2).",
         "Райдер одет в шлем и темную одежду.",
         "Локация — подземный паркинг с бетонным полом."
+      ],
+      "why_not_action": "",
+      "candidate_dynamic_action": true
+    },
+    {
+      "source_id": "34110751",
+      "sha256": "c2e1d6d4be0e000e9ab36392a522cc931eaa3c62e7179b2afafba9e02c6ab26d",
+      "width": 2160,
+      "height": 3840,
+      "duration": 12.8,
+      "frame_sha256": [
+        "3c4d8506ab7031fd7ed343eab7ce3b4b49ff6d3264c7823c25d6375e9e44ad72",
+        "aa1e54334ff427e9f386057c2725ed60f0906450122645ad6aaf380a2ae1f162",
+        "50108254800f587a0d92cefc55d7e62441a326a0b57b44123e0501093037f389"
+      ],
+      "model": "qwen3.5:4b",
+      "action": "stunt_jump",
+      "motorcycle_visible": true,
+      "action_visually_confirmed": true,
+      "confidence": 0.95,
+      "observed": "Мотоциклист в полный рост перелетает через высокий трамплин на фоне облачного неба.",
+      "supported_narration_claims": [
+        "Мотоцикл находится в воздухе над трамплином.",
+        "Райдер выполняет прыжок, а не едет по земле.",
+        "Видна фигура мотоцикла с райдером на фоне неба."
       ],
       "why_not_action": "",
       "candidate_dynamic_action": true
