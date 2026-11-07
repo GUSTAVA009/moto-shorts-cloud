@@ -21220,17 +21220,17 @@
       "voice_engine": "gustava_selfhosted_qwen3",
       "voice_profile": "gustava_cartoon_b_qwen3_v1",
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
-      "title": "Неожиданный контраст: надевание шлема и ремонт байка #shorts",
-      "narration": "Мотоцикл и разные сцены: в первой съёмке райдер надевает мотошлем, далее механик работает с мотоциклом. Видео сняты отдельно. Куда бы посмотрел?",
-      "description": "Две разные мотоистории: надевание шлема и ремонт байка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
-      "caption_start": "НАДЕВАНИЕ ШЛЕМА",
-      "caption_middle": "РЕМОНТ БАЙКА",
-      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "title": "Две проверки мотоциклиста до выезда #shorts",
+      "narration": "Мотоцикл: сначала райдер надевает мотошлем. В другом кадре механик работает с мотоциклом. До выезда проверь и шлем, и состояние техники.",
+      "description": "До выезда проверь и шлем, и состояние техники. Два независимых иллюстративных видео; не один заезд.\n\n#мото #shorts",
+      "caption_start": "ДО ВЫЕЗДА",
+      "caption_middle": "ШЛЕМ И ТЕХНИКА",
+      "caption_end": "НЕ ТОРОПИСЬ",
       "max_duration_seconds": 34,
       "opening_trim_seconds": 0.1,
       "music_style": "action",
       "music_bpm": 141,
-      "editorial_format": "source_anchored_action_contrast",
+      "editorial_format": "original_action_microguide_v1",
       "footage": [
         {
           "key": "clip_0",
@@ -21297,7 +21297,8 @@
         "description": "Подпишись, если любишь настоящие мотопутешествия."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "Unattended source-grounded microguide, immutable owner LTX originals",
+      "creative_treatment": "microguide_helmet_repair"
     },
     {
       "id": "moto-dirt-39ad24832e31",
@@ -21308,17 +21309,17 @@
       "voice_engine": "gustava_selfhosted_qwen3",
       "voice_profile": "gustava_cartoon_b_qwen3_v1",
       "selfhosted_voice_id": "gustava-cartoon-b-v1",
-      "title": "Неожиданный контраст: грязевая трасса и ремонт байка #shorts",
-      "narration": "Мотоцикл в действии: в первой съёмке райдер проезжает грязный участок, а отдельно механик работает с мотоциклом. Видео сняты отдельно. Куда бы посмотрел?",
-      "description": "Две разные мотоистории: грязевая трасса и ремонт байка. Независимые кадры, без выдуманного общего события.\n\n#shorts",
-      "caption_start": "ГРЯЗЕВАЯ ТРАССА",
-      "caption_middle": "РЕМОНТ БАЙКА",
-      "caption_end": "ЧТО ВЫБРАЛ БЫ ТЫ?",
+      "title": "После грязевой поездки проверь мотоцикл #shorts",
+      "narration": "Мотоцикл: сначала райдер проезжает грязный участок. В другом кадре механик работает с мотоциклом. После грязной трассы полезен технический осмотр.",
+      "description": "После грязной трассы полезен технический осмотр. Два независимых иллюстративных видео; не один заезд.\n\n#мото #shorts",
+      "caption_start": "ПОСЛЕ ГРЯЗИ",
+      "caption_middle": "ОСМОТ В МАСТЕРСКОЙ",
+      "caption_end": "БЕЗ СПЕШКИ",
       "max_duration_seconds": 34,
       "opening_trim_seconds": 0.1,
       "music_style": "action",
       "music_bpm": 115,
-      "editorial_format": "source_anchored_action_contrast",
+      "editorial_format": "original_action_microguide_v1",
       "footage": [
         {
           "key": "clip_0",
@@ -21385,7 +21386,8 @@
         "description": "Поделись роликом с другом, который любит мотоциклы."
       },
       "source_selection": "Owner-authored original LTX clips, immutable SHA verified",
-      "generation_provenance": "keyless_action_filmable_v1"
+      "generation_provenance": "Unattended source-grounded microguide, immutable owner LTX originals",
+      "creative_treatment": "microguide_mud_repair"
     },
     {
       "id": "moto-forest-757f12a5e945",
