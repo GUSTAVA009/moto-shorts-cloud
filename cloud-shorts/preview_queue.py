@@ -221,6 +221,96 @@ def eligible_private_original_cartoon_b_asr_retry(episode, receipt, new_fingerpr
     return True
 
 
+def eligible_independently_rejected_scene_repair(episode, receipt, new_fingerprint):
+    """A genuinely reviewed, unpublished first-scene replacement is rerenderable.
+
+    This guard NEVER approves a release. The exact previous six-frame
+    rejection must also be independently fetched from the immutable render
+    ledger in choose() before a new reservation is written.
+    """
+    if not (isinstance(receipt,dict)
+            and receipt.get("id")==episode.get("id")
+            and receipt.get("state")=="preview_ready"
+            and receipt.get("attempt_count")==1
+            and receipt.get("voice_qa_passed") is True
+            and receipt.get("mixed_audio_qa_passed") is True
+            and receipt.get("male_voice_verified") is True
+            and episode.get("auto_preview") is True
+            and episode.get("auto_publish") is False
+            and episode.get("visual_revision_requested") is True
+            and episode.get("visual_revision_reason")==
+                "independent_frame_review_rejected_first_source_action"
+            and episode.get("voice_engine")==REQUIRED_MALE_ENGINE
+            and episode.get("voice_profile")==receipt.get("voice_profile")
+            and new_fingerprint!=receipt.get("preview_fingerprint")):
+        return False
+    proof=episode.get("visual_revision_evidence") or {}
+    sources=episode.get("footage") or []
+    audio=episode.get("deep_audio") or {}
+    if (not isinstance(proof,dict) or len(sources)!=2
+            or proof.get("prior_run_id")!=str(receipt.get("run_id"))
+            or proof.get("prior_preview_fingerprint")!=receipt.get("preview_fingerprint")
+            or proof.get("prior_deep_audio_sha256")!=receipt.get("deep_source_sha256")
+            or audio.get("source_audio_sha256")!=receipt.get("deep_source_sha256")
+            or not re.fullmatch(r"[0-9a-f]{64}",str(proof.get("prior_mp4_sha256") or ""))
+            or not re.fullmatch(r"[0-9a-f]{40}",str(proof.get("rejection_receipt_blob_sha") or ""))
+            or proof.get("previous_review_status")!="needs_new_verified_visuals"
+            or proof.get("rejection_reason")!="FRAME_MODEL_REJECTED_ACTION_OR_NARRATION"
+            or proof.get("unpublished_only") is not True
+            or proof.get("immutable_narration") is not True
+            or proof.get("max_total_attempts")!=2):
+        return False
+    from editorial_guard import source_id
+    from native_source_preflight import source_proof
+    from source_action_evidence import source_dynamic_action_verified
+    from source_story import scene_for
+    try:
+        first,second=sources
+        if (source_id(first)!=proof.get("replacement_source_id")
+                or source_id(second)!=proof.get("unchanged_second_source_id")
+                or source_id(first)==proof.get("prior_source_id")
+                or first.get("native_4k_sha256")!=proof.get("replacement_source_sha256")
+                or not source_dynamic_action_verified(first)
+                or not source_dynamic_action_verified(second)
+                or scene_for(first)[0]!="ride"
+                or scene_for(second)[0]!="jump"):
+            return False
+        source_proof(first,"2k")
+        source_proof(second,"2k")
+    except (ValueError,TypeError,IndexError,KeyError):
+        return False
+    return True
+
+
+def independently_verified_rejection_receipt(episode, receipt, get=api):
+    """Cross-check owner/GitHub rejection, never trust a catalog self-report."""
+    if not (episode.get("visual_revision_reason")==
+            "independent_frame_review_rejected_first_source_action"):
+        return True
+    if not isinstance(receipt,dict):
+        return False
+    proof=episode.get("visual_revision_evidence") or {}
+    run=str(receipt.get("run_id") or "")
+    if not re.fullmatch(r"[0-9]{8,16}",run):
+        return False
+    path=("automation/visual-review-rejections/"+episode["id"]+
+          "-"+run+".json")
+    entry=get(path)
+    if (not isinstance(entry,dict)
+            or entry.get("sha")!=proof.get("rejection_receipt_blob_sha")
+            or not isinstance(entry.get("content"),str)):
+        return False
+    try:
+        record=json.loads(base64.b64decode(
+            "".join(entry["content"].split()),validate=True))
+    except (ValueError,TypeError,KeyError,binascii.Error):
+        return False
+    return bool(record.get("episode")==episode["id"]
+                and str(record.get("run_id"))==run
+                and record.get("status")=="needs_new_verified_visuals"
+                and record.get("reason")=="FRAME_MODEL_REJECTED_ACTION_OR_NARRATION")
+
+
 def eligible_retry(episode, receipt, new_fingerprint):
     """Rerender only a genuinely revised, never-published failed preview."""
     if receipt is None or receipt.get("id") != episode["id"]:
@@ -384,8 +474,14 @@ def eligible_retry(episode, receipt, new_fingerprint):
             and episode.get("visual_revision_reason") == "spoken_scene_caption_mismatch"
             and not city_caption_repair):
         return False
+    independent_scene_repair=eligible_independently_rejected_scene_repair(
+        episode,receipt,new_fingerprint)
+    if (episode.get("visual_revision_reason")==
+            "independent_frame_review_rejected_first_source_action"
+            and not independent_scene_repair):
+        return False
     visual_repair = (episode.get("visual_revision_requested") is True
-                     and (scene_source_repair
+                     and (independent_scene_repair or scene_source_repair
                      or episode.get("visual_revision_reason") in (
                          "source_freeze_confirmed",
                          "owner_rejected_static_helmet_coverage",
@@ -1058,6 +1154,12 @@ def choose(catalog, output):
                     or item.get("visual_revision_requested") is True):
                 continue
             _, receipt = records[item["id"]]
+            # The current catalogue does not grant its own frame-approval:
+            # require the exact GitHub rejection blob from the old MP4.
+            if (item.get("visual_revision_reason")==
+                    "independent_frame_review_rejected_first_source_action"
+                    and not independently_verified_rejection_receipt(item,receipt)):
+                continue
             if eligible_retry(item, receipt, preview_fingerprint(item)):
                 if unpublished(item["id"]):
                     selected = item

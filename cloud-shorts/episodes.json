@@ -22077,18 +22077,18 @@
       "footage": [
         {
           "key": "clip_0",
-          "url": "https://www.pexels.com/download/video/5207054/",
-          "source_page": "https://www.pexels.com/video/couple-riding-a-black-motorcycle-5207054/",
-          "source_title": "Couple Riding a Black Motorcycle",
+          "url": "https://www.pexels.com/download/video/5207057/",
+          "source_page": "https://www.pexels.com/video/a-couple-riding-a-big-bike-on-the-city-road-5207057/",
+          "source_title": "A Couple Riding A Big Bike On The City Road",
           "author": "cottonbro studio",
           "license": "Pexels License",
           "topics": [
             "city",
             "roadtrip"
           ],
-          "duration": 13,
-          "native_4k_sha256": "1358947c0cc37cd8a19f29b85f4c0c1ef9df2677d8f0f883417cf26c0fb3a928",
-          "native_4k_bytes": 35909143,
+          "duration": 11,
+          "native_4k_sha256": "698d742402c63f1343cb81d73d2fc88886c38163728e92ad2b61de6b1578fc87",
+          "native_4k_bytes": 34865927,
           "native_4k_width": 2160,
           "native_4k_height": 3840
         },
@@ -22153,7 +22153,26 @@
         "context_id": "dcdc34c9ac344d0ba83f769863a82579",
         "licence_mode": "public_provider_attribution"
       },
-      "editorial_review_status": "awaiting_automated_six_frame_review"
+      "editorial_review_status": "private_rerender_after_actual_frame_rejection",
+      "spoken_second_scene_at_seconds": 5.12,
+      "visual_revision_requested": true,
+      "visual_revision_reason": "independent_frame_review_rejected_first_source_action",
+      "visual_revision_evidence": {
+        "prior_run_id": "42400239823",
+        "prior_preview_fingerprint": "c1d22c500deb6bc34896327a362737a4417e2372e68eabf0b1139c803bfb5bd9",
+        "prior_mp4_sha256": "b52ada9e43725f747c1a6465fed72ed88ef02b61f49b954016bd35a4952f7749",
+        "prior_deep_audio_sha256": "45093f8f58be65041d91e2bff9752fdc6b9026ef1f774c1c94cc57434cb7ee19",
+        "rejection_receipt_blob_sha": "a37c44f4ff073d93d8b8e1de7a9b88a9fba2aba1",
+        "rejection_reason": "FRAME_MODEL_REJECTED_ACTION_OR_NARRATION",
+        "prior_source_id": "5207054",
+        "replacement_source_id": "5207057",
+        "replacement_source_sha256": "698d742402c63f1343cb81d73d2fc88886c38163728e92ad2b61de6b1578fc87",
+        "unchanged_second_source_id": "26447454",
+        "previous_review_status": "needs_new_verified_visuals",
+        "unpublished_only": true,
+        "immutable_narration": true,
+        "max_total_attempts": 2
+      }
     }
   ]
 }

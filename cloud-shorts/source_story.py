@@ -109,6 +109,17 @@ def scene_for(media):
     for scene in SCENES:
         if re.search(scene[1], name):
             return scene
+    # Official page naming does not always match the historical category
+    # regex. Only SHA-pinned three-frame evidence may qualify such a clip
+    # as a riding scene. This is a planning hint; the final real-MP4
+    # reviewer still has to verify moving motorcycle pixels.
+    if url.hostname == "www.pexels.com":
+        from source_action_evidence import load_evidence, source_dynamic_action_verified
+        if source_dynamic_action_verified(media):
+            sid=str(media.get("url") or "").rstrip("/").split("/")[-1]
+            report=load_evidence().get(sid) or {}
+            if report.get("action")=="riding":
+                return next((x for x in SCENES if x[0]=="ride"),None)
     return None
 
 
