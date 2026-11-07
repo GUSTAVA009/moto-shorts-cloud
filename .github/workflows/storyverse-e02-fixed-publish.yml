@@ -1,0 +1,139 @@
+name: STORYVERSE - Fixed Lighthouse E02 verified YouTube publish
+on:
+  push:
+    branches:
+      - feature/storyverse-reference-r39b
+    paths:
+      - .github/workflows/storyverse-e02-fixed-publish.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: storyverse-fixed-lighthouse-e02-sha8519709
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      GITHUB_TOKEN: ${{ github.token }}
+      VIDEO_SOURCE: https://cdn.openart.ai/openart-uploads/production/attachment-transfers/51ec905f6c53dd7a7eeee5308435242acc052d19ed6cafeeb4e254228022e911.mp4
+      VIDEO_SHA256: 8519709b831306c0ed856063120d7c4e972960e984076f9aec54194a68c6e8d4
+      VIDEO_BYTES: "21271009"
+      VIDEO_TAG: storyverse-paperlight-e02-8519709b8313
+      RELEASE_VIDEO: storyverse-paperlight-e02.mp4
+    steps:
+      - name: Download exact improved movie and verify complete MP4
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fL -A "Mozilla/5.0" --connect-timeout 15 --max-time 210 -o "$RELEASE_VIDEO" "$VIDEO_SOURCE"
+          echo "$VIDEO_SHA256  $RELEASE_VIDEO" | sha256sum -c -
+          test "$(stat -c %s "$RELEASE_VIDEO")" -eq "$VIDEO_BYTES"
+          ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 "$RELEASE_VIDEO"
+          python3 - <<'PY'
+          import json,subprocess,os
+          p=subprocess.run(["ffprobe","-v","error","-show_entries","format=duration:stream=codec_type,codec_name,width,height,channels,avg_frame_rate","-of","json",os.environ["RELEASE_VIDEO"]],check=True,capture_output=True,text=True)
+          o=json.loads(p.stdout); s=o["streams"]
+          video=next((x for x in s if x["codec_type"]=="video"),None)
+          audio=next((x for x in s if x["codec_type"]=="audio"),None)
+          assert video and video["width"]==1080 and video["height"]==1920
+          assert video["codec_name"]=="h264" and video["avg_frame_rate"]=="24/1"
+          assert audio and audio["codec_name"]=="aac" and audio["channels"]==2
+          assert abs(float(o["format"]["duration"])-114)<0.2
+          print("NEW_CARTOON_AV_QA_PASSED",flush=True)
+          PY
+          ffmpeg -hide_banner -loglevel error -i "$RELEASE_VIDEO" -f null -
+          echo "FULL_DECODE_OK"
+      - name: Publish immutable MP4 asset at public GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if gh release view "$VIDEO_TAG" --repo "$GH_REPO" >/dev/null 2>&1; then
+            echo "Existing release: verifying exact asset"
+            gh release view "$VIDEO_TAG" --repo "$GH_REPO" --json assets --jq '.assets[] | select(.name == "storyverse-paperlight-e02.mp4") | .size' > /tmp/existing_size
+            test "$(cat /tmp/existing_size)" -eq "$VIDEO_BYTES"
+          else
+            gh release create "$VIDEO_TAG" "$RELEASE_VIDEO" --repo "$GH_REPO" --title "Бумажный маяк — исправленная серия 02" --notes "Owner-requested original visual rework. Exact SHA-256: $VIDEO_SHA256" --latest=false --target "${GITHUB_SHA}"
+          fi
+          url="https://github.com/$GH_REPO/releases/download/$VIDEO_TAG/$RELEASE_VIDEO"
+          curl -fIL --retry 2 --max-time 55 "$url" >/dev/null
+          echo "PUBLIC_IMMUTABLE_MP4_READY $url"
+      - name: Publish now exactly once to authenticated GUSTAVA YouTube channel
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os,json,urllib.request,urllib.error,datetime
+          token=os.getenv("BUFFER_API_KEY","")
+          if len(token)<30:raise RuntimeError("BUFFER_KEY_NOT_AVAILABLE")
+          org="6ae237b760e9c8dd49173dc8"
+          channel_id="6ae238b32f1f5ed648ff9011"
+          expected_service_id="UCS0QCodPcFBTjMt4ioEWOUw"
+          title="Бумажный маяк: спасение в шторм 🌊 | Мульт-история #Shorts"
+          description=("В ночь, когда шторм погасил старый маяк, смотритель Марк и его дочь Соня "
+             "должны спасти лодку рыбаков от подводных скал. Смогут ли они создать свет без электричества?\n\n"
+             "Оригинальная вымышленная мульт-история с русской озвучкой. "
+             "Что бы вы сделали на месте смотрителя?\n\n#Shorts #Мультфильм #Истории #Маяк")
+          video_url="https://github.com/GUSTAVA009/moto-shorts-cloud/releases/download/"+os.environ["VIDEO_TAG"]+"/"+os.environ["RELEASE_VIDEO"]
+          def buffer(query,variables=None):
+              body=json.dumps({"query":query,"variables":variables or {}},ensure_ascii=False).encode("utf-8")
+              req=urllib.request.Request("https://api.buffer.com",data=body,method="POST",
+                   headers={"Authorization":"Bearer "+token,"Content-Type":"application/json"})
+              with urllib.request.urlopen(req,timeout=55) as resp: out=json.load(resp)
+              if out.get("errors"):raise RuntimeError("BUFFER_GRAPHQL_ERROR "+str(out["errors"])[:400])
+              return out.get("data") or {}
+          channel=(buffer('query {channel(input:{id:"'+channel_id+'"}'
+                   ') {id name service serviceId isQueuePaused isDisconnected}}').get("channel") or {})
+          print("PINNED_DESTINATION",channel.get("name"),channel.get("service"),channel.get("serviceId"),flush=True)
+          if (channel.get("id")!=channel_id or channel.get("service")!="youtube" or
+              channel.get("serviceId")!=expected_service_id or
+              channel.get("isQueuePaused") is not False or
+              channel.get("isDisconnected") is not False):
+              raise RuntimeError("WRONG_OR_UNAVAILABLE_CHANNEL")
+          duplicate_query=('query {posts(first:100,input:{organizationId:"'+org+
+             '",filter:{channelIds:["'+channel_id+'"],status:[scheduled,sending,sent,error],'
+             'dueAt:{start:"2026-11-01T00:00:00.000Z"}}})'
+             '{edges{node{id text status dueAt externalLink}} pageInfo{hasNextPage}}}')
+          pre=(buffer(duplicate_query).get("posts") or {})
+          if (pre.get("pageInfo") or {}).get("hasNextPage"):
+              raise RuntimeError("INCOMPLETE_POST_INVENTORY_NO_PUBLICATION")
+          posts=[x["node"] for x in pre.get("edges") or []]
+          if any("Бумажный маяк" in (p.get("text") or "") for p in posts):
+              raise RuntimeError("E02_ALREADY_IN_BUFFER_OR_SENT_DO_NOT_DUPLICATE")
+          post_input={"channelId":channel_id,"text":title+"\n\n"+description,
+             "schedulingType":"automatic","mode":"shareNow","aiAssisted":True,
+             "metadata":{"youtube":{"title":title,"categoryId":"24",
+                "madeForKids":False,"privacy":"public","isAiGenerated":True}},
+             "assets":[{"video":{"url":video_url}}]}
+          q="""mutation($input:CreatePostInput!){createPost(input:$input){
+                    ... on PostActionSuccess{post{id channelId dueAt status externalLink}}
+                    ... on MutationError{message}}}"""
+          try:
+              result=(buffer(q,{"input":post_input}).get("createPost") or {})
+          except Exception:
+              print("BUFFER_OUTCOME_UNKNOWN_NO_AUTO_RETRY",flush=True)
+              raise
+          post=result.get("post")
+          if not post or post.get("channelId")!=channel_id:
+              raise RuntimeError("BUFFER_REJECTED_OR_UNKNOWN "+str(result.get("message",""))[:300])
+          receipt={"episode_id":"storyverse-e02-paper-lighthouse-fixed","buffer_post_id":post["id"],
+              "channel_id":expected_service_id,
+              "mp4_sha256":os.environ["VIDEO_SHA256"],"mp4_url":video_url,
+              "status":post.get("status"),
+              "youtube_url":post.get("externalLink"),
+              "submitted_at":datetime.datetime.now(datetime.timezone.utc).isoformat()}
+          with open("storyverse_e02_fixed_publication_receipt.json","w",encoding="utf-8") as file:
+              json.dump(receipt,file,ensure_ascii=False,indent=2)
+          print("BUFFER_ACCEPTED",json.dumps(receipt,ensure_ascii=False),flush=True)
+          PY
+      - name: Persist unique delivery receipt
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: storyverse-e02-fixed-youtube-receipt
+          path: storyverse_e02_fixed_publication_receipt.json
+          retention-days: 90

@@ -1,0 +1,39 @@
+name: STORYVERSE - Read-only Buffer channel inspection
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/storyverse-reference-r39b
+    paths:
+      - .github/workflows/storyverse-buffer-inspect.yml
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+    steps:
+      - name: Verify actual channels without exposing credentials
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, urllib.request, json
+          token=os.getenv("BUFFER_API_KEY","")
+          if len(token)<30: raise SystemExit("BUFFER_API_KEY_MISSING")
+          def query(q):
+              req=urllib.request.Request("https://api.buffer.com",
+                  data=json.dumps({"query":q}).encode("utf-8"),
+                  headers={"Authorization":"Bearer "+token,"Content-Type":"application/json"},
+                  method="POST")
+              with urllib.request.urlopen(req,timeout=30) as r: data=json.load(r)
+              if data.get("errors"): raise RuntimeError("Buffer query failed: "+str(data["errors"])[:400])
+              return data.get("data") or {}
+          account=query("query { account { organizations { id name } } }")
+          for org in (account.get("account") or {}).get("organizations") or []:
+              print("BUFFER_ORGANIZATION",org["name"],org["id"],flush=True)
+              channels=query('query {channels(input:{organizationId:"'+org["id"]+'"}) {id name displayName service serviceId isQueuePaused isDisconnected}}')
+              for x in channels.get("channels") or []:
+                  print("BUFFER_CHANNEL",json.dumps(x,ensure_ascii=False),flush=True)
+          PY
