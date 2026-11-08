@@ -52,6 +52,20 @@ jobs:
           run-id: ${{ steps.pick.outputs.render_id }}
           repository: ${{ github.repository }}
           github-token: ${{ github.token }}
+      - name: Install real FFmpeg and FFprobe before independent final-MP4 verification
+        if: steps.pick.outputs.has_job == 'true'
+        run: |
+          set -euo pipefail
+          # GitHub ubuntu-latest can lack ffprobe. It is mandatory for
+          # native 2K video verification, not an optional installation.
+          if ! command -v ffprobe >/dev/null 2>&1 || ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+          command -v ffmpeg
+          command -v ffprobe
+          ffprobe -version >/dev/null
+          echo REAL_NATIVE_MP4_FFPROBE_READY
       - name: Require licensed visual review, voice and final mixed audio and MP4 QA
         if: steps.pick.outputs.has_job == 'true'
         env:
