@@ -397,7 +397,7 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
                   if x["id"]=="moto-roadtrip-153fe6130270")
         original = {
             "id":ep["id"],"state":"preview_ready",
-            "run_id":"42405242545","attempt_count":2,
+            "run_id":"42499999999","attempt_count":3,
             "deep_source_sha256":ep["deep_audio"]["source_audio_sha256"],
             "voice_qa_passed":True,"mixed_audio_qa_passed":True,
         }
@@ -405,6 +405,8 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
         self.assertTrue(review.eligible_private_episode(ep,original))
         self.assertFalse(review.eligible_private_episode(
             ep,dict(original,run_id="42400239823",attempt_count=1)))
+        self.assertFalse(review.eligible_private_episode(
+            ep,dict(original,run_id="42405242545",attempt_count=2)))
         self.assertFalse(review.eligible_private_episode(
             ep,dict(original,deep_source_sha256="0"*64)))
         self.assertFalse(review.eligible_private_episode(

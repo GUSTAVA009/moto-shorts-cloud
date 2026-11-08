@@ -22077,20 +22077,20 @@
       "footage": [
         {
           "key": "clip_0",
-          "url": "https://www.pexels.com/download/video/5207057/",
-          "source_page": "https://www.pexels.com/video/a-couple-riding-a-big-bike-on-the-city-road-5207057/",
-          "source_title": "A Couple Riding A Big Bike On The City Road",
+          "url": "https://www.pexels.com/download/video/5198992/",
+          "source_page": "https://www.pexels.com/video/a-group-of-motorcycle-riders-5198992/",
+          "source_title": "A Group of Motorcycle Riders",
           "author": "cottonbro studio",
           "license": "Pexels License",
+          "duration": 15.0,
           "topics": [
             "city",
             "roadtrip"
           ],
-          "duration": 11,
-          "native_4k_sha256": "698d742402c63f1343cb81d73d2fc88886c38163728e92ad2b61de6b1578fc87",
-          "native_4k_bytes": 34865927,
+          "native_4k_sha256": "56d9e5720306b41e2c90ce2c8e9b622bb7871e6ad598e6a04de1377498ec0ba2",
+          "native_4k_bytes": 29490865,
           "native_4k_width": 2160,
-          "native_4k_height": 3840
+          "native_4k_height": 4096
         },
         {
           "key": "clip_1",
@@ -22158,20 +22158,37 @@
       "visual_revision_requested": true,
       "visual_revision_reason": "independent_frame_review_rejected_first_source_action",
       "visual_revision_evidence": {
-        "prior_run_id": "42400239823",
-        "prior_preview_fingerprint": "c1d22c500deb6bc34896327a362737a4417e2372e68eabf0b1139c803bfb5bd9",
-        "prior_mp4_sha256": "b52ada9e43725f747c1a6465fed72ed88ef02b61f49b954016bd35a4952f7749",
+        "prior_run_id": "42405242545",
+        "prior_preview_fingerprint": "ec4eb19f59f6d4867400064c4461754f876d5a3ffc92e4fb5d2d4e43064a356a",
+        "prior_mp4_sha256": "124fa924fb222ab273429435b526ff80065f39ea55aacc7b7c1fef636fc167dd",
         "prior_deep_audio_sha256": "45093f8f58be65041d91e2bff9752fdc6b9026ef1f774c1c94cc57434cb7ee19",
-        "rejection_receipt_blob_sha": "a37c44f4ff073d93d8b8e1de7a9b88a9fba2aba1",
+        "rejection_receipt_blob_sha": "e21c49627bfee6041f3b9bb52ea61dc6778f45ed",
         "rejection_reason": "FRAME_MODEL_REJECTED_ACTION_OR_NARRATION",
-        "prior_source_id": "5207054",
-        "replacement_source_id": "5207057",
-        "replacement_source_sha256": "698d742402c63f1343cb81d73d2fc88886c38163728e92ad2b61de6b1578fc87",
-        "unchanged_second_source_id": "26447454",
         "previous_review_status": "needs_new_verified_visuals",
+        "prior_source_id": "5207057",
+        "replacement_source_id": "5198992",
+        "replacement_source_sha256": "56d9e5720306b41e2c90ce2c8e9b622bb7871e6ad598e6a04de1377498ec0ba2",
+        "unchanged_second_source_id": "26447454",
+        "max_total_attempts": 3,
         "unpublished_only": true,
         "immutable_narration": true,
-        "max_total_attempts": 2
+        "source_provenance_note": "Unposted second MP4 confirmed with actual six frames; replacement visibly rides through a real 4K alley",
+        "past_private_rejected_attempt": {
+          "prior_run_id": "42400239823",
+          "prior_preview_fingerprint": "c1d22c500deb6bc34896327a362737a4417e2372e68eabf0b1139c803bfb5bd9",
+          "prior_mp4_sha256": "b52ada9e43725f747c1a6465fed72ed88ef02b61f49b954016bd35a4952f7749",
+          "prior_deep_audio_sha256": "45093f8f58be65041d91e2bff9752fdc6b9026ef1f774c1c94cc57434cb7ee19",
+          "rejection_receipt_blob_sha": "a37c44f4ff073d93d8b8e1de7a9b88a9fba2aba1",
+          "rejection_reason": "FRAME_MODEL_REJECTED_ACTION_OR_NARRATION",
+          "prior_source_id": "5207054",
+          "replacement_source_id": "5207057",
+          "replacement_source_sha256": "698d742402c63f1343cb81d73d2fc88886c38163728e92ad2b61de6b1578fc87",
+          "unchanged_second_source_id": "26447454",
+          "previous_review_status": "needs_new_verified_visuals",
+          "unpublished_only": true,
+          "immutable_narration": true,
+          "max_total_attempts": 2
+        }
       }
     },
     {

@@ -231,7 +231,8 @@ def eligible_independently_rejected_scene_repair(episode, receipt, new_fingerpri
     if not (isinstance(receipt,dict)
             and receipt.get("id")==episode.get("id")
             and receipt.get("state")=="preview_ready"
-            and receipt.get("attempt_count")==1
+            and type(receipt.get("attempt_count")) is int
+            and receipt["attempt_count"] in (1,2)
             and receipt.get("voice_qa_passed") is True
             and receipt.get("mixed_audio_qa_passed") is True
             and receipt.get("male_voice_verified") is True
@@ -258,7 +259,7 @@ def eligible_independently_rejected_scene_repair(episode, receipt, new_fingerpri
             or proof.get("rejection_reason")!="FRAME_MODEL_REJECTED_ACTION_OR_NARRATION"
             or proof.get("unpublished_only") is not True
             or proof.get("immutable_narration") is not True
-            or proof.get("max_total_attempts")!=2):
+            or proof.get("max_total_attempts")!=receipt["attempt_count"]+1):
         return False
     from editorial_guard import source_id
     from native_source_preflight import source_proof

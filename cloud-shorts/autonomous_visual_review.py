@@ -594,6 +594,26 @@ def review_and_promote(episode, run_id, directory):
     chapters = actual_frames(movie,visual,episode)
     provider,secret,url,model = model_credentials()
     result = request_vision(chapters,episode,provider,secret,url,model)
+    # Make real six-frame rejections diagnosable. Only log the model's
+    # response to the actual MP4; NEVER call this evidence release approval.
+    verdict=result if isinstance(result,dict) else {}
+    rows=verdict.get("chapters")
+    if not isinstance(rows,list):
+        rows=[]
+    print("AUTONOMOUS_REAL_FRAME_VERDICT",json.dumps({
+        "episode":episode["id"],"run_id":str(run_id),
+        "narration_fully_supported":verdict.get("narration_fully_supported"),
+        "independent_events_not_fabricated":verdict.get("independent_events_not_fabricated"),
+        "safe_for_release":verdict.get("safe_for_release"),
+        "no_embedded_channel_branding":verdict.get("no_embedded_channel_branding"),
+        "no_static_slide_majority":verdict.get("no_static_slide_majority"),
+        "chapters":[{
+            "visible_motorcycle":r.get("visible_motorcycle"),
+            "action_supported":r.get("action_supported"),
+            "confidence":r.get("confidence"),
+            "observed":str(r.get("observed") or "")[:180],
+        } for r in rows[:2] if isinstance(r,dict)],
+    },ensure_ascii=False)[:2200],flush=True)
     if not verified_model_response(result,chapters):
         reject_once(episode,run_id,"FRAME_MODEL_REJECTED_ACTION_OR_NARRATION")
         return False
