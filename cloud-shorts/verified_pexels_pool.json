@@ -780,7 +780,11 @@
         "racing",
         "training"
       ],
-      "duration": 24
+      "duration": 24,
+      "native_2k_sha256": "d88a5c30d64698254cda89fdd6d1f2c9936a22cc81170be1351ee92e7e483836",
+      "native_2k_bytes": 22079165,
+      "native_2k_width": 1440,
+      "native_2k_height": 2566
     },
     {
       "key": "px_28197087",
