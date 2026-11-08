@@ -53,7 +53,8 @@ def select(catalog, receipt_entries, published, artifacts):
                   or ep.get("selfhosted_voice_id") == CARTOON_B_VOICE_ID
                   or os.environ.get("GUSTAVA_ORIGINAL_VOICE_APPROVED") == "1")
              and ep.get("visual_review_failed") is not True
-             and ep.get("visual_revision_requested") is not True
+             and (ep.get("visual_revision_requested") is not True
+                  or checked_review(ep))
              and (int(ep.get("visual_director_version") or 0)<3
                   or (ep.get("visual_revision_status") == "assistant_checked_passed"
                       and bool(ep.get("scene_script_anchors")))

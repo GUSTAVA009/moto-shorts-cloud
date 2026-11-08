@@ -68,6 +68,8 @@ class StrictSplitVisionForExistingMovie(unittest.TestCase):
             "id":EPISODE_ID,"state":"preview_ready",
             "run_id":RENDER_RUN,"attempt_count":3,
             "deep_source_sha256":VOICE_SHA256,
+            "voice_profile":"gustava_create_audio_deep_v1",
+            "male_voice_verified":True,
             "voice_qa_passed":True,"mixed_audio_qa_passed":True}
 
     def paths(self):
@@ -198,6 +200,14 @@ class StrictSplitVisionForExistingMovie(unittest.TestCase):
         }
         ep["automated_frame_review"]=proof
         self.assertTrue(checked_review(ep,MOVIE_SHA256))
+        # A completed independent v2 review satisfies the live direct queue,
+        # even if the immutable history still records a previous visual fix.
+        from find_pending_publication import select as find_ready
+        self.assertIs(ep["visual_revision_requested"],True)
+        live_artifact="daily-preview-"+EPISODE_ID+"-"+RENDER_RUN
+        eligible=find_ready({"episodes":[ep]},[self.receipt()],set(),
+                            [{"name":live_artifact,"expired":False}])
+        self.assertEqual(eligible,(int(RENDER_RUN),EPISODE_ID,live_artifact))
         forged=deepcopy(ep)
         forged["automated_frame_review"]["protocol_version"]=1
         self.assertFalse(checked_review(forged,MOVIE_SHA256))

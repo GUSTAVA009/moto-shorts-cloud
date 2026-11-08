@@ -41,7 +41,13 @@ def publication_allowed(episode, meta, qa, video):
     # Apply at the vendor-independent boundary so Buffer cannot bypass it.
     if episode.get("editorial_format") == "owner_original_single_source_explainer_v4":
         raise ValueError("OWNER_REJECTED_BRANDED_STATIC_SLIDE_FORMAT")
-    if episode.get("visual_review_failed") is True or episode.get("visual_revision_requested") is True:
+    # A visual-revision request blocks publication UNTIL the exact corrected
+    # final MP4 passes a SHA-bound independent review. Historical rejected
+    # MP4s remain blocked even when a later revision of the same story passes.
+    if (episode.get("visual_review_failed") is True
+            or (episode.get("visual_revision_requested") is True
+                and (not video.is_file()
+                     or not checked_review(episode,file_sha256(video))))):
         raise ValueError("OWNER_REJECTED_VISUALS: reject unfinished or rejected visual material")
     if int(episode.get("visual_director_version") or 0) >= 3:
         if not ((episode.get("visual_revision_status") == "assistant_checked_passed"
