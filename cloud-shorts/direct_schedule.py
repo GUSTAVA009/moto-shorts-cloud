@@ -128,6 +128,79 @@ def _provider_upload_snapshot(api, playlist_id, page_size):
     return videos
 
 
+def _independent_owned_video_search(api, uploads):
+    """Fallback to separate owner-authenticated YouTube Search API if the
+
+    Uploads playlist's own page tokens overlap. Never infer missing IDs or
+    schedule from GitHub metadata; Search must enumerate every owned Video ID
+    and independently agree with the original playlist's reported count.
+    This extra quota is spent only when playlist pagination is contradictory.
+    """
+    first=api.playlistItems().list(
+        playlistId=uploads,part="id,contentDetails",maxResults=50).execute()
+    reported=(first.get("pageInfo") or {}).get("totalResults")
+    initial=first.get("items")
+    if (type(reported) is not int or not 1<=reported<=MAX_UPLOADS_TO_AUDIT
+            or not isinstance(initial,list) or len(initial)>50):
+        raise RuntimeError("YOUTUBE_INDEPENDENT_SEARCH_UNTRUSTED_PLAYLIST_COUNT")
+    first_ids=[]
+    for item in initial:
+        video_id=str((item.get("contentDetails") or {}).get("videoId") or "")
+        if len(video_id)!=11:
+            raise RuntimeError("YOUTUBE_INDEPENDENT_SEARCH_BAD_INITIAL_VIDEO_ID")
+        first_ids.append(video_id)
+
+    all_rows=[]
+    seen=set()
+    page_tokens=set()
+    token=None
+    # forMine + type=video is an official OAuth-scoped channel-owned search.
+    # It includes private/scheduled uploads, unlike public-only channel lists.
+    while True:
+        params={"part":"id","forMine":True,"type":"video",
+                "order":"date","maxResults":50}
+        if token:
+            params["pageToken"]=token
+        data=api.search().list(**params).execute()
+        results=data.get("items")
+        if not isinstance(results,list):
+            raise RuntimeError("YOUTUBE_INDEPENDENT_SEARCH_BAD_RESPONSE")
+        new_ids=[]
+        for item in results:
+            ident=item.get("id") or {}
+            vid=ident.get("videoId") if isinstance(ident,dict) else None
+            kind=ident.get("kind") if isinstance(ident,dict) else None
+            if (not isinstance(vid,str) or len(vid)!=11
+                    or kind!="youtube#video" or vid in seen):
+                raise RuntimeError("YOUTUBE_INDEPENDENT_SEARCH_DUPLICATE_OR_INVALID")
+            seen.add(vid)
+            new_ids.append(vid)
+        if new_ids:
+            details=api.videos().list(
+                part="id,status,snippet",id=",".join(new_ids)).execute().get("items",[])
+            if (not isinstance(details,list) or len(details)!=len(new_ids)
+                    or {x.get("id") for x in details}!=set(new_ids)):
+                raise RuntimeError("YOUTUBE_INDEPENDENT_SEARCH_STATUSES_INCOMPLETE")
+            all_rows.extend(details)
+        token=data.get("nextPageToken")
+        if not token:
+            break
+        if token in page_tokens or len(seen)>MAX_UPLOADS_TO_AUDIT:
+            raise RuntimeError("YOUTUBE_INDEPENDENT_SEARCH_BAD_PAGINATION")
+        page_tokens.add(token)
+    # A search index can lag or omit private videos. Never treat a subset as
+    # a complete list when another owner API reports more upload records.
+    if (len(seen)!=reported or not set(first_ids).issubset(seen)
+            or len(all_rows)!=reported):
+        print("YOUTUBE_SEARCH_CROSSCHECK_INCOMPLETE",
+              "playlist_total",reported,"unique_owner_search",len(seen),
+              "first_playlist_covered",set(first_ids).issubset(seen),flush=True)
+        raise RuntimeError("YOUTUBE_UPLOAD_INVENTORY_CROSSCHECK_INCOMPLETE")
+    print("YOUTUBE_UPLOAD_INVENTORY_INDEPENDENT_OWNER_SEARCH_VERIFIED",
+          "unique_videos",len(seen),"playlist_reported",reported,flush=True)
+    return all_rows
+
+
 def youtube_inventory(api, expected=EXPECTED_CHANNEL):
     channels=api.channels().list(part="id,contentDetails",mine=True).execute().get("items",[])
     exact=[row for row in channels if row.get("id")==expected]
@@ -145,7 +218,14 @@ def youtube_inventory(api, expected=EXPECTED_CHANNEL):
         # provider pages with a different size; do not count the overlapped
         # playlist item twice or reserve from an incomplete snapshot.
         print("YOUTUBE_UPLOAD_PLAYLIST_RESCAN_DIFFERENT_PAGE_BOUNDARIES",flush=True)
-        videos=_provider_upload_snapshot(api,uploads,37)
+        try:
+            videos=_provider_upload_snapshot(api,uploads,37)
+        except RuntimeError as again:
+            if str(again)!="YOUTUBE_UPLOAD_PLAYLIST_PAGE_OVERLAP":
+                raise
+            print("YOUTUBE_UPLOAD_PLAYLIST_TWO_INCONSISTENT_SCANS",
+                  "independent_owner_search_required",flush=True)
+            videos=_independent_owned_video_search(api,uploads)
     return release_times_from_items(videos)
 
 def next_verified_slot(api, now=None):

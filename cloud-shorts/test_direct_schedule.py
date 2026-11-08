@@ -107,8 +107,62 @@ class DirectScheduleTests(unittest.TestCase):
             Mock(execute=lambda:items(**kw)))
         api.videos.return_value.list.return_value.execute.return_value={
             "items":[{"id":"12345678901","status":{"privacyStatus":"private"}}]}
-        with self.assertRaisesRegex(RuntimeError,"PAGE_OVERLAP"):
+        api.search.return_value.list.return_value.execute.return_value={"items":[]}
+        with self.assertRaisesRegex(RuntimeError,"CROSSCHECK_INCOMPLETE"):
             youtube_inventory(api)
+
+    def test_independent_owner_api_can_resolve_two_overlapping_uploads_scans(self):
+        """Search must independently prove exactly all 101 channel-owned IDs."""
+        import contextlib
+        import io
+        from unittest.mock import Mock
+        from direct_schedule import youtube_inventory,EXPECTED_CHANNEL
+        api=Mock()
+        api.channels.return_value.list.return_value.execute.return_value={
+            "items":[{"id":EXPECTED_CHANNEL,
+                      "contentDetails":{"relatedPlaylists":{"uploads":"UU-channel"}}}]}
+        def playlist(**kwargs):
+            page=kwargs.get("pageToken")
+            if not page:
+                rows=[{"id":"playlist-"+str(i),
+                       "contentDetails":{"videoId":f"{i:011d}"}}
+                      for i in range(50)]
+                return {"items":rows,"pageInfo":{"totalResults":101},
+                        "nextPageToken":"overlap"}
+            # A corrupt pagination boundary repeats one of the same playlist
+            # resources, and is never accepted as a new video.
+            return {"items":[{"id":"playlist-49",
+                               "contentDetails":{"videoId":f"{49:011d}"}}],
+                    "pageInfo":{"totalResults":101}}
+        def search(**kwargs):
+            token=kwargs.get("pageToken")
+            offset={None:0,"p2":50,"p3":100}[token]
+            rows=[{"id":{"kind":"youtube#video","videoId":f"{i:011d}"}}
+                  for i in range(offset,min(offset+50,101))]
+            response={"items":rows}
+            nxt={None:"p2","p2":"p3","p3":None}[token]
+            if nxt:response["nextPageToken"]=nxt
+            return response
+        queried=[]
+        def videos(**kwargs):
+            ids=kwargs["id"].split(",")
+            queried.extend(ids)
+            return {"items":[{"id":v,"status":{"privacyStatus":"private"}}
+                             for v in ids]}
+        api.playlistItems.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:playlist(**kw)))
+        api.search.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:search(**kw)))
+        api.videos.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:videos(**kw)))
+        capture=io.StringIO()
+        with contextlib.redirect_stdout(capture):
+            self.assertEqual(youtube_inventory(api),[])
+        self.assertEqual(len(set(queried)),101)
+        # Two failed but read-only playlist passes also verified 50 IDs each.
+        self.assertEqual(len(queried),201)
+        self.assertIn("INDEPENDENT_OWNER_SEARCH_VERIFIED",capture.getvalue())
+        self.assertNotIn(f"{40:011d}",capture.getvalue())
 
     def test_only_valid_live_inventory_may_select_next(self):
         import unittest.mock
