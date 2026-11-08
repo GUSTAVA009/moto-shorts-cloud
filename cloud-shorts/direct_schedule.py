@@ -55,8 +55,23 @@ def youtube_inventory(api, expected=EXPECTED_CHANNEL):
         result = api.playlistItems().list(**args).execute()
         batch = result.get("items") or []
         ids = [str((v.get("contentDetails") or {}).get("videoId") or "") for v in batch]
-        if (not ids and result.get("nextPageToken")) or any(
-                len(v) != 11 or v in seen for v in ids):
+        # This production account hit an unexplained *live YouTube API*
+        # inventory anomaly after OAuth and full original-MP4 QA passed.
+        # Log only aggregate shape/counts (never private Video IDs or OAuth)
+        # so real provider inconsistency can be distinguished from a parser
+        # bug before another upload or unsafe schedule reservation.
+        invalid=sum(len(v)!=11 for v in ids)
+        duplicate=len(ids)-len(set(ids)) + sum(v in seen for v in set(ids))
+        if (not ids and result.get("nextPageToken")) or invalid or duplicate:
+            info=result.get("pageInfo") or {}
+            print("YOUTUBE_UPLOAD_PLAYLIST_SAFE_DIAG",
+                  "batch",len(ids),
+                  "invalid_id_count",invalid,
+                  "duplicate_count",duplicate,
+                  "unique_before",len(seen),
+                  "reported_total",info.get("totalResults"),
+                  "has_next",bool(result.get("nextPageToken")),
+                  flush=True)
             raise RuntimeError("YOUTUBE_UPLOAD_PLAYLIST_INCOMPLETE_OR_DUPLICATE")
         seen.update(ids)
         if ids:

@@ -27,6 +27,26 @@ class DirectScheduleTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "DUPLICATE"):
             release_times_from_items([{"id": "abcdefghijk"}, {"id": "abcdefghijk"}])
 
+    def test_live_upload_api_anomaly_logs_counts_without_private_ids(self):
+        import contextlib
+        import io
+        from unittest.mock import Mock
+        from direct_schedule import youtube_inventory,EXPECTED_CHANNEL
+        api=Mock()
+        api.channels.return_value.list.return_value.execute.return_value={
+            "items":[{"id":EXPECTED_CHANNEL,
+                      "contentDetails":{"relatedPlaylists":{"uploads":"UU-channel"}}}]}
+        api.playlistItems.return_value.list.return_value.execute.return_value={
+            "items":[{"contentDetails":{"videoId":"SECRET-VIDEO-ID-PLACEHOLDER"}}],
+            "pageInfo":{"totalResults":9}}
+        output=io.StringIO()
+        with contextlib.redirect_stdout(output):
+            with self.assertRaisesRegex(RuntimeError,"PLAYLIST_INCOMPLETE_OR_DUPLICATE"):
+                youtube_inventory(api)
+        self.assertIn("YOUTUBE_UPLOAD_PLAYLIST_SAFE_DIAG",output.getvalue())
+        self.assertIn("invalid_id_count 1",output.getvalue())
+        self.assertNotIn("SECRET-VIDEO-ID-PLACEHOLDER",output.getvalue())
+
     def test_only_valid_live_inventory_may_select_next(self):
         import unittest.mock
         with unittest.mock.patch("direct_schedule.youtube_inventory", return_value=[]):
