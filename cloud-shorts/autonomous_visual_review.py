@@ -228,6 +228,17 @@ def checked_review(episode, mp4_sha=None):
             or episode.get("reviewed_mp4_sha256") != proof.get("mp4_sha256")
             or (mp4_sha is not None and proof["mp4_sha256"] != mp4_sha)):
         return False
+    # An old v1 false-negative is NOT superseded by a metadata edit alone.
+    # The strict two-chapter protocol is valid only for the exact same six-
+    # frame, immutable final movie with pinned DEEP/audio and real sources.
+    from split_frame_review_v2 import EPISODE_ID as V2_EPISODE,exact_assets
+    if episode.get("id")==V2_EPISODE:
+        if (proof.get("protocol_version") != 2
+                or not exact_assets(episode,proof.get("render_run_id"),
+                                    proof.get("mp4_sha256"))):
+            return False
+    elif proof.get("protocol_version",1)!=1:
+        return False
     chapters = proof.get("chapters")
     footage = episode.get("footage") or []
     if not isinstance(chapters, list) or len(chapters) != len(footage) or len(chapters) != 2:
@@ -324,7 +335,11 @@ def select_private(catalog, ledger_paths, get=api):
         if not eligible_private_episode(episode, receipt):
             continue
         run_id = str(receipt["run_id"])
-        if (REVIEW_REJECTION_PATH + "/" + slug + "-" + run_id + ".json") in paths:
+        legacy_rejected = (REVIEW_REJECTION_PATH + "/" + slug + "-" + run_id + ".json") in paths
+        from split_frame_review_v2 import eligible_rereview, v2_rejection_present
+        if v2_rejection_present(paths):
+            continue
+        if legacy_rejected and not eligible_rereview(episode, receipt, paths):
             continue
         result = get("actions/runs/" + run_id + "/artifacts?per_page=100")
         artifacts = result.get("artifacts") or []
@@ -519,10 +534,17 @@ def verified_model_response(result, chapters):
     return True
 
 
-def reject_once(episode, run_id, reason):
+def reject_once(episode, run_id, reason, protocol_version=1):
     """Permanent one-run denial prevents spending vision tokens repeatedly."""
     slug = episode["id"]
-    path = REVIEW_REJECTION_PATH + "/" + slug + "-" + run_id + ".json"
+    if protocol_version == 2:
+        from split_frame_review_v2 import V2_REJECTION_PATH
+        base=V2_REJECTION_PATH
+    elif protocol_version == 1:
+        base=REVIEW_REJECTION_PATH
+    else:
+        raise ValueError("INVALID_FRAME_REVIEW_PROTOCOL")
+    path = base + "/" + slug + "-" + run_id + ".json"
     payload = {"episode":slug,"run_id":run_id,"reason":reason[:120],
                "status":"needs_new_verified_visuals",
                "recorded_at":datetime.now(timezone.utc).isoformat()}
@@ -565,6 +587,8 @@ def review_and_promote(episode, run_id, directory):
         if not path.is_file():
             raise RuntimeError("AUTO_FRAME_REVIEW_MISSING_ACTUAL_ARTIFACT: "+path.name)
     sha = digest(movie)
+    from split_frame_review_v2 import exact_assets as exact_v2_assets
+    v2_review = exact_v2_assets(episode, run_id, sha)
     raw = json.loads(raw_path.read_text("utf8"))
     mixed = json.loads(mixed_path.read_text("utf8"))
     visual = json.loads(visual_path.read_text("utf8"))
@@ -593,7 +617,11 @@ def review_and_promote(episode, run_id, directory):
     verify_story_subject(episode)
     chapters = actual_frames(movie,visual,episode)
     provider,secret,url,model = model_credentials()
-    result = request_vision(chapters,episode,provider,secret,url,model)
+    if v2_review:
+        from split_frame_review_v2 import review as split_review
+        result = split_review(chapters,episode,provider,secret,url,model)
+    else:
+        result = request_vision(chapters,episode,provider,secret,url,model)
     # Make real six-frame rejections diagnosable. Only log the model's
     # response to the actual MP4; NEVER call this evidence release approval.
     verdict=result if isinstance(result,dict) else {}
@@ -615,9 +643,12 @@ def review_and_promote(episode, run_id, directory):
         } for r in rows[:2] if isinstance(r,dict)],
     },ensure_ascii=False)[:2200],flush=True)
     if not verified_model_response(result,chapters):
-        reject_once(episode,run_id,"FRAME_MODEL_REJECTED_ACTION_OR_NARRATION")
+        reject_once(episode,run_id,"FRAME_MODEL_REJECTED_ACTION_OR_NARRATION",
+                    protocol_version=2 if v2_review else 1)
         return False
-    proof = {"version":REVIEW_VERSION,"status":"passed",
+    proof = {"version":REVIEW_VERSION,
+             "protocol_version":2 if v2_review else 1,
+             "status":"passed",
              "episode_id":episode["id"],"render_run_id":str(run_id),
              "mp4_sha256":sha,"asset_fingerprint":visual_asset_fingerprint(episode),
              "no_embedded_channel_branding":result["no_embedded_channel_branding"],
@@ -635,12 +666,24 @@ def review_and_promote(episode, run_id, directory):
     current = decode_file(entry)
     live = next((x for x in current.get("episodes") or []
                  if x.get("id")==episode["id"]),None)
-    if (live is None or not eligible_private_episode(live,{
+    if v2_review:
+        # A catalog flag cannot impersonate the genuine ready MP4 receipt.
+        # Retrieve the actual third render SHA-provenance/ASR state from the
+        # immutable render-ledger branch, not an in-memory forged receipt.
+        from split_frame_review_v2 import exact_receipt
+        real_entry=api("contents/render-receipts/"+episode["id"]+
+                       ".json?ref=render-ledger")
+        real_receipt=decode_file(real_entry)
+        if not exact_receipt(live,real_receipt):
+            raise RuntimeError("V2_REAL_THIRD_RENDER_RECEIPT_MISMATCH")
+    else:
+        real_receipt={
             "id":episode["id"],"state":"preview_ready",
             "selfhosted_voice_id":VOICE_ID if has_original_cartoon_b(live) else None,
             "deep_source_sha256":(live.get("deep_audio") or {}).get("source_audio_sha256"),
             "run_id":str(run_id),
-            "voice_qa_passed":True,"mixed_audio_qa_passed":True})
+            "voice_qa_passed":True,"mixed_audio_qa_passed":True}
+    if (live is None or not eligible_private_episode(live,real_receipt)
             or visual_asset_fingerprint(live) != proof["asset_fingerprint"]):
         raise RuntimeError("AUTO_FRAME_REVIEW_CATALOG_CHANGED_STOP")
     live.update({"auto_publish":True,
