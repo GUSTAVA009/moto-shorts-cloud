@@ -54,13 +54,23 @@ class GroundedTerrainShortTests(unittest.TestCase):
         self.assertEqual(result["_editorial_format"],"original_action_microguide_v1")
 
     def test_real_factory_recovers_exact_new_private_script_without_source_reuse(self):
+        # Recreate the stock window BEFORE this proven terrain pair was
+        # reserved in the immutable catalog. Once reserved, the real planner
+        # must correctly refuse reusing its footage, not falsely claim it is
+        # another brand-new episode.
+        previous=dict(self.catalog,episodes=[
+            x for x in self.catalog["episodes"]
+            if x["id"]!="moto-racing-1a27db9dcf31"])
         with patch.dict(os.environ,{
                 "GUSTAVA_NATIVE_SOURCE_ONLY":"1",
                 "GUSTAVA_SOURCE_ACTION_EVIDENCE_REQUIRED":"1",
                 "GUSTAVA_EXPORT_PROFILE":"2k",
                 "PEXELS_API_KEY":""}):
-            ep=create_one(self.catalog,commons_fetch=lambda _:[])
-        old={source_id(s) for x in self.catalog["episodes"]
+            ep=create_one(previous,commons_fetch=lambda _:[])
+            with self.assertRaisesRegex(RuntimeError,
+                    "NO_NEW_ACTION_MATCHING_LICENSED_MOTO_CLIPS"):
+                create_one(self.catalog,commons_fetch=lambda _:[])
+        old={source_id(s) for x in previous["episodes"]
              for s in x["footage"]}
         self.assertTrue(all(source_id(s) not in old for s in ep["footage"]))
         self.assertEqual(ep["editorial_format"],"original_action_microguide_v1")
