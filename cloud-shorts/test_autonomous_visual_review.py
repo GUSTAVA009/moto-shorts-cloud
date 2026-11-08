@@ -387,6 +387,41 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
             "prior-rejected",get=fake_api))
         self.assertFalse(any(v[0]=="POST" for v in calls))
 
+    def test_actual_revised_motocross_mp4_can_reenter_six_frame_review(self):
+        """Only new immutable render can be reviewed after first-shot rejection."""
+        from pathlib import Path
+        from copy import deepcopy
+        full = json.loads((Path(__file__).parent/"episodes.json").read_text(
+            encoding="utf8"))
+        ep = next(x for x in full["episodes"]
+                  if x["id"]=="moto-roadtrip-153fe6130270")
+        original = {
+            "id":ep["id"],"state":"preview_ready",
+            "run_id":"42405242545","attempt_count":2,
+            "deep_source_sha256":ep["deep_audio"]["source_audio_sha256"],
+            "voice_qa_passed":True,"mixed_audio_qa_passed":True,
+        }
+        self.assertTrue(review.verified_unpublished_visual_revision(ep,original))
+        self.assertTrue(review.eligible_private_episode(ep,original))
+        self.assertFalse(review.eligible_private_episode(
+            ep,dict(original,run_id="42400239823",attempt_count=1)))
+        self.assertFalse(review.eligible_private_episode(
+            ep,dict(original,deep_source_sha256="0"*64)))
+        self.assertFalse(review.eligible_private_episode(
+            dict(ep,visual_review_failed=True),original))
+        self.assertFalse(review.eligible_private_episode(
+            dict(ep,auto_publish=True),original))
+        tampered=deepcopy(ep)
+        tampered["visual_revision_evidence"]["replacement_source_sha256"]="0"*64
+        self.assertFalse(review.eligible_private_episode(tampered,original))
+        tampered=deepcopy(ep)
+        tampered["visual_revision_evidence"]["unchanged_second_source_id"]="wrong"
+        self.assertFalse(review.eligible_private_episode(tampered,original))
+        tampered=deepcopy(ep)
+        tampered["visual_revision_requested"]=False
+        tampered["visual_revision_status"]="needs_new_verified_visuals"
+        self.assertFalse(review.eligible_private_episode(tampered,original))
+
     def test_private_selection_requires_real_unexpired_artifact_and_no_post_receipt(self):
         ep=self.make_episode()
         receipt=self.make_receipt()

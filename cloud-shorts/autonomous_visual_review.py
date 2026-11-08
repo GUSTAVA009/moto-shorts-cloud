@@ -83,13 +83,71 @@ def receipt_voice_identity_matches(episode, receipt):
     return False
 
 
+def verified_unpublished_visual_revision(episode, receipt):
+    """Only a NEW complete MP4 replacing a previously rejected PRIVATE movie.
+
+    The old SHA-pinned rejection remains a permanent veto for its own run.
+    An edited source with the SAME episode ID is separately eligible for
+    another real six-frame review, never an automatic public approval.
+    """
+    if episode.get("visual_revision_requested") is not True:
+        return False
+    reason=episode.get("visual_revision_reason")
+    evidence=episode.get("visual_revision_evidence")
+    if (reason!="independent_frame_review_rejected_first_source_action"
+            or not isinstance(evidence,dict)
+            or episode.get("editorial_review_status") !=
+               "private_rerender_after_actual_frame_rejection"
+            or episode.get("visual_revision_status") not in (None,"","pending")
+            or not isinstance(receipt,dict)
+            or receipt.get("state")!="preview_ready"
+            or type(receipt.get("attempt_count")) is not int
+            or receipt["attempt_count"]<2
+            or receipt["attempt_count"]>5):
+        return False
+    old_run=str(evidence.get("prior_run_id") or "")
+    new_run=str(receipt.get("run_id") or "")
+    old_sha=str(evidence.get("prior_mp4_sha256") or "")
+    old_fingerprint=str(evidence.get("prior_preview_fingerprint") or "")
+    if (not old_run.isdecimal() or not new_run.isdecimal()
+            or old_run==new_run
+            or not re.fullmatch(r"[0-9a-f]{64}",old_sha)
+            or not re.fullmatch(r"[0-9a-f]{64}",old_fingerprint)
+            or evidence.get("unpublished_only") is not True
+            or evidence.get("immutable_narration") is not True
+            or not 2<=int(evidence.get("max_total_attempts") or 0)<=5
+            or receipt["attempt_count"]>int(evidence["max_total_attempts"])
+            or evidence.get("prior_deep_audio_sha256")!=
+                (episode.get("deep_audio") or {}).get("source_audio_sha256")
+            or receipt.get("deep_source_sha256")!=
+                evidence.get("prior_deep_audio_sha256")):
+        return False
+    footage=episode.get("footage") or []
+    if len(footage)!=2:
+        return False
+    from editorial_guard import source_id
+    try:
+        first,second=[source_id(x) for x in footage]
+    except (KeyError,TypeError,ValueError):
+        return False
+    if (evidence.get("prior_source_id")==first
+            or evidence.get("replacement_source_id")!=first
+            or evidence.get("unchanged_second_source_id")!=second
+            or evidence.get("replacement_source_sha256") not in (
+                footage[0].get("native_2k_sha256"),
+                footage[0].get("native_4k_sha256"))):
+        return False
+    return True
+
+
 def eligible_private_episode(episode, receipt):
     """No historic/provider drafts, tutorials or already-released videos."""
     if (episode.get("auto_preview") is not True
             or episode.get("auto_publish") is not False
             or episode.get("editorial_rejected") is True
             or episode.get("visual_review_failed") is True
-            or episode.get("visual_revision_requested") is True
+            or (episode.get("visual_revision_requested") is True
+                and not verified_unpublished_visual_revision(episode,receipt))
             or episode.get("visual_revision_status") not in (None, "", "pending")
             or episode.get("editorial_format") not in (
                 "source_anchored_action_contrast", "original_action_microguide_v1",
