@@ -22057,7 +22057,7 @@
     {
       "id": "moto-roadtrip-153fe6130270",
       "auto_preview": true,
-      "auto_publish": false,
+      "auto_publish": true,
       "channel_niche": "motorcycle",
       "research_pillar": "motorcycle",
       "voice_engine": "aidocmaker_deep",
@@ -22189,6 +22189,50 @@
           "immutable_narration": true,
           "max_total_attempts": 2
         }
+      },
+      "visual_revision_status": "automated_frame_review_passed",
+      "caption_fit_required": true,
+      "reviewed_mp4_sha256": "a55e0ff729248427973221a573ba980c0070a29e81d17da0414d9b1aaded40e5",
+      "reviewed_artifact_run_id": "42482620426",
+      "automated_frame_review": {
+        "version": 1,
+        "protocol_version": 2,
+        "status": "passed",
+        "episode_id": "moto-roadtrip-153fe6130270",
+        "render_run_id": "42482620426",
+        "mp4_sha256": "a55e0ff729248427973221a573ba980c0070a29e81d17da0414d9b1aaded40e5",
+        "asset_fingerprint": "4e85d7ff18a6fe197117938e26f200c83f0690a5b3d8bef28b5489dd9f42abe5",
+        "no_embedded_channel_branding": true,
+        "no_static_slide_majority": true,
+        "model_provider": "ollama",
+        "model": "qwen3.5:4b",
+        "reviewed_at": "2026-11-08T13:21:37.013565+00:00",
+        "chapters": [
+          {
+            "source": "clip_0",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.95,
+            "observed": "Мотоцикл едет по дороге к камере на фоне статичных зданий.",
+            "frames_sha256": [
+              "9a0399303690c723d79d68c62e3bc018ff2d66ae8185f1a3f311f07d42aa6cfe",
+              "6e8b79f2b082f13c7f53d1e20922ee384651eaaeb4c917d424499c1c1b529f0a",
+              "77485faa6eb07c1832857a1cde3ed86c9e8b7a1caa779097f327a7320ce64e16"
+            ]
+          },
+          {
+            "source": "clip_1",
+            "visible_motorcycle": true,
+            "action_supported": true,
+            "confidence": 0.98,
+            "observed": "Мотоциклист с номером 616 (WILCOX) в воздухе над землей — видно отрыв от поверхности и траекторию полета.",
+            "frames_sha256": [
+              "de7bf480733ccad75fb86449adffbd371aa2f1289b13a01cd770f2fea1ab19e5",
+              "516a11b7cb7c6e03e3b93255560268c27312a87b40cbcadebf27b8899e03d0ea",
+              "2dc74b19a2dab30ac3062f14c6c5b616425e3ffa63d915701202fa087950bf62"
+            ]
+          }
+        ]
       }
     },
     {
