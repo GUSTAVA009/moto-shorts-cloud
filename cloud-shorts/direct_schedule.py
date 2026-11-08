@@ -37,55 +37,116 @@ def release_times_from_items(videos):
     return slots
 
 
-def youtube_inventory(api, expected=EXPECTED_CHANNEL):
-    channels = api.channels().list(part="id,contentDetails", mine=True).execute().get("items", [])
-    exact = [row for row in channels if row.get("id") == expected]
-    if len(exact) != 1 or len(channels) != 1:
-        raise RuntimeError("WRONG_OR_AMBIGUOUS_YOUTUBE_OAUTH_CHANNEL")
-    uploads = (exact[0].get("contentDetails") or {}).get("relatedPlaylists", {}).get("uploads")
-    if not uploads:
-        raise RuntimeError("YOUTUBE_UPLOAD_PLAYLIST_NOT_FOUND")
-    videos = []
-    seen = set()
-    page = None
+def _provider_upload_snapshot(api, playlist_id, page_size):
+    """Fetch EVERY playlist item and its status with identity proofs.
+
+    A video can appear twice as different playlist resources, but must never
+    be counted twice toward schedule capacity. An overlapping exact resource
+    ID indicates pagination drift, NOT a legitimate second playlist item.
+    """
+    videos=[]
+    seen_videos=set()
+    seen_items=set()
+    total_entries=0
+    expected_total=None
+    duplicate_video_entries=0
+    page=None
+    page_tokens=set()
     while True:
-        args = {"playlistId": uploads, "part": "contentDetails", "maxResults": 50}
+        args={"playlistId":playlist_id,"part":"id,contentDetails",
+              "maxResults":page_size}
         if page:
-            args["pageToken"] = page
-        result = api.playlistItems().list(**args).execute()
-        batch = result.get("items") or []
-        ids = [str((v.get("contentDetails") or {}).get("videoId") or "") for v in batch]
-        # This production account hit an unexplained *live YouTube API*
-        # inventory anomaly after OAuth and full original-MP4 QA passed.
-        # Log only aggregate shape/counts (never private Video IDs or OAuth)
-        # so real provider inconsistency can be distinguished from a parser
-        # bug before another upload or unsafe schedule reservation.
-        invalid=sum(len(v)!=11 for v in ids)
-        duplicate=len(ids)-len(set(ids)) + sum(v in seen for v in set(ids))
-        if (not ids and result.get("nextPageToken")) or invalid or duplicate:
-            info=result.get("pageInfo") or {}
-            print("YOUTUBE_UPLOAD_PLAYLIST_SAFE_DIAG",
-                  "batch",len(ids),
-                  "invalid_id_count",invalid,
-                  "duplicate_count",duplicate,
-                  "unique_before",len(seen),
-                  "reported_total",info.get("totalResults"),
-                  "has_next",bool(result.get("nextPageToken")),
-                  flush=True)
+            args["pageToken"]=page
+        result=api.playlistItems().list(**args).execute()
+        batch=result.get("items")
+        if not isinstance(batch,list):
+            raise RuntimeError("YOUTUBE_UPLOAD_PLAYLIST_INVALID_ITEMS")
+        reported=(result.get("pageInfo") or {}).get("totalResults")
+        if type(reported) is not int or reported<0 or reported>MAX_UPLOADS_TO_AUDIT:
+            raise RuntimeError("YOUTUBE_UPLOAD_PLAYLIST_TOTAL_UNTRUSTED")
+        if expected_total is None:
+            expected_total=reported
+        elif expected_total!=reported:
+            raise RuntimeError("YOUTUBE_UPLOAD_PLAYLIST_CHANGED_DURING_SCAN")
+        next_page=result.get("nextPageToken")
+        if not batch and next_page:
             raise RuntimeError("YOUTUBE_UPLOAD_PLAYLIST_INCOMPLETE_OR_DUPLICATE")
-        seen.update(ids)
-        if ids:
-            details = api.videos().list(part="id,status,snippet", id=",".join(ids)).execute().get("items", [])
-            if {r.get("id") for r in details} != set(ids):
+        batch_new=[]
+        invalid=0
+        overlaps=0
+        for row in batch:
+            video_id=str((row.get("contentDetails") or {}).get("videoId") or "")
+            playlist_item_id=str(row.get("id") or "")
+            if len(video_id)!=11 or not playlist_item_id:
+                invalid+=1
+                continue
+            if playlist_item_id in seen_items:
+                overlaps+=1
+                continue
+            seen_items.add(playlist_item_id)
+            if video_id in seen_videos:
+                duplicate_video_entries+=1
+            else:
+                seen_videos.add(video_id)
+                batch_new.append(video_id)
+        total_entries+=len(batch)
+        if invalid or overlaps:
+            print("YOUTUBE_UPLOAD_PLAYLIST_SAFE_DIAG",
+                  "batch",len(batch),
+                  "invalid_id_count",invalid,
+                  "duplicate_item_count",overlaps,
+                  "duplicate_video_entries",duplicate_video_entries,
+                  "reported_total",expected_total,
+                  "has_next",bool(next_page),flush=True)
+            if overlaps and not invalid:
+                raise RuntimeError("YOUTUBE_UPLOAD_PLAYLIST_PAGE_OVERLAP")
+            raise RuntimeError("YOUTUBE_UPLOAD_PLAYLIST_INCOMPLETE_OR_DUPLICATE")
+        if total_entries>MAX_UPLOADS_TO_AUDIT:
+            raise RuntimeError("YOUTUBE_UPLOAD_INVENTORY_TOO_LARGE_TO_VERIFY")
+        if batch_new:
+            details=api.videos().list(part="id,status,snippet",
+                                      id=",".join(batch_new)).execute().get("items",[])
+            if (not isinstance(details,list) or len(details)!=len(batch_new)
+                    or {row.get("id") for row in details}!=set(batch_new)):
                 raise RuntimeError("YOUTUBE_UPLOAD_STATUSES_INCOMPLETE")
             videos.extend(details)
-        page = result.get("nextPageToken")
+        page=next_page
         if not page:
             break
-        if len(videos) >= MAX_UPLOADS_TO_AUDIT:
-            raise RuntimeError("YOUTUBE_UPLOAD_INVENTORY_TOO_LARGE_TO_VERIFY")
-    return release_times_from_items(videos)
+        if page in page_tokens:
+            raise RuntimeError("YOUTUBE_UPLOAD_PLAYLIST_PAGE_TOKEN_CYCLE")
+        page_tokens.add(page)
+    if (expected_total!=total_entries
+            or len(seen_items)!=total_entries
+            or len(seen_videos)!=len(videos)):
+        raise RuntimeError("YOUTUBE_UPLOAD_PLAYLIST_INCOMPLETE_OR_DUPLICATE")
+    print("YOUTUBE_UPLOAD_PLAYLIST_IDENTITY_VERIFIED",
+          "playlist_items",total_entries,
+          "unique_videos",len(seen_videos),
+          "duplicate_video_entries",duplicate_video_entries,
+          "page_size",page_size,flush=True)
+    return videos
 
+
+def youtube_inventory(api, expected=EXPECTED_CHANNEL):
+    channels=api.channels().list(part="id,contentDetails",mine=True).execute().get("items",[])
+    exact=[row for row in channels if row.get("id")==expected]
+    if len(exact)!=1 or len(channels)!=1:
+        raise RuntimeError("WRONG_OR_AMBIGUOUS_YOUTUBE_OAUTH_CHANNEL")
+    uploads=(exact[0].get("contentDetails") or {}).get("relatedPlaylists",{}).get("uploads")
+    if not uploads:
+        raise RuntimeError("YOUTUBE_UPLOAD_PLAYLIST_NOT_FOUND")
+    try:
+        videos=_provider_upload_snapshot(api,uploads,50)
+    except RuntimeError as error:
+        if str(error)!="YOUTUBE_UPLOAD_PLAYLIST_PAGE_OVERLAP":
+            raise
+        # A live upload shifted a page boundary mid-scan. Re-read all
+        # provider pages with a different size; do not count the overlapped
+        # playlist item twice or reserve from an incomplete snapshot.
+        print("YOUTUBE_UPLOAD_PLAYLIST_RESCAN_DIFFERENT_PAGE_BOUNDARIES",flush=True)
+        videos=_provider_upload_snapshot(api,uploads,37)
+    return release_times_from_items(videos)
 
 def next_verified_slot(api, now=None):
     now = now or datetime.now(timezone.utc)
