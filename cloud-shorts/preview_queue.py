@@ -1135,6 +1135,30 @@ def choose(catalog, output):
                 print("FIRST_GENUINE_4K_RETRY_GITHUB_VERIFIED",
                       ep["id"],flush=True)
                 break
+    # A fully rendered, immutable original DEEP movie was independently
+    # rejected for its first shot; a different SHA-verified source is now
+    # attached and its previous rejection exists in GitHub's ledger.
+    # It is safe to give this PRIVATE rerender priority over a fresh Qwen
+    # story whose approved voice provider is offline (HTTP 530). There is
+    # NO publish permission until the new MP4 passes six-frame review.
+    if selected is None:
+        for ep in listed:
+            if ep.get("visual_revision_reason") != (
+                    "independent_frame_review_rejected_first_source_action"):
+                continue
+            _, receipt = records[ep["id"]]
+            if (not isinstance(receipt,dict)
+                    or not unpublished(ep["id"])
+                    or not independently_verified_rejection_receipt(ep,receipt)):
+                continue
+            fp = preview_fingerprint(ep)
+            if (eligible_independently_rejected_scene_repair(ep,receipt,fp)
+                    and eligible_retry(ep,receipt,fp)):
+                selected=ep
+                print("PRIORITIZE_ACTUAL_REJECTED_DEEP_PRIVATE_2K_REPAIR",
+                      ep["id"],"attempt",receipt["attempt_count"]+1,
+                      flush=True)
+                break
     if selected is None:
         selected = next((ep for ep in listed
                          if ep.get("research_pillar") in ("engineering", "nature", "science",

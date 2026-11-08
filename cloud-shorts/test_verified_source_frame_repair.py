@@ -24,7 +24,7 @@ def fixture():
     proof=ep["visual_revision_evidence"]
     receipt={
        "id":SLUG,"state":"preview_ready","run_id":proof["prior_run_id"],
-       "attempt_count":1,"preview_fingerprint":proof["prior_preview_fingerprint"],
+       "attempt_count":2,"preview_fingerprint":proof["prior_preview_fingerprint"],
        "deep_source_sha256":proof["prior_deep_audio_sha256"],
        "voice_profile":ep["voice_profile"],
        "male_voice_verified":True,
@@ -41,14 +41,14 @@ class VerifiedFrameReplacementTests(unittest.TestCase):
         self.assertTrue(require_episode_dynamic_sources(ep))
         self.assertEqual([x["source_page"].split("/")[-2]
                           for x in ep["footage"]],
-                         ["a-couple-riding-a-big-bike-on-the-city-road-5207057",
+                         ["a-group-of-motorcycle-riders-5198992",
                           "a-person-riding-a-dirt-bike-on-a-hill-26447454"])
         self.assertEqual(ep["auto_publish"],False)
         self.assertEqual(ep["deep_audio"]["source_audio_sha256"],
                          receipt["deep_source_sha256"])
         # Real first and second originals fit the FULL 12.53s timeline
         # without repeating, freezing, or upscaling a single source.
-        scenes=directed_plan(ep,{"clip_0":11.0,"clip_1":7.7},12.53)
+        scenes=directed_plan(ep,{"clip_0":15.0,"clip_1":7.7},12.53)
         self.assertEqual([x["source"] for x in scenes],["clip_0","clip_1"])
         self.assertAlmostEqual(scenes[0]["seconds"],5.12,places=2)
         self.assertAlmostEqual(sum(x["seconds"] for x in scenes),12.53,places=2)
@@ -74,7 +74,7 @@ class VerifiedFrameReplacementTests(unittest.TestCase):
             ("changed_second_shot",lambda e,r:e["footage"][1].__setitem__("url","https://www.pexels.com/download/video/99999999/")),
             ("tamper_sha",lambda e,r:e["footage"][0].__setitem__("native_4k_sha256","0"*64)),
             ("unverified_moto",lambda e,r:e["footage"][0].__setitem__("native_4k_width",1024)),
-            ("attempt_exhausted",lambda e,r:r.__setitem__("attempt_count",2)),
+            ("attempt_exhausted",lambda e,r:r.__setitem__("attempt_count",3)),
             ("no_final_audio_qa",lambda e,r:r.__setitem__("mixed_audio_qa_passed",False)),
             ("wrong_speaker",lambda e,r:r.__setitem__("voice_profile","silero")),
         ]
