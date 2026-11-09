@@ -209,23 +209,26 @@ def youtube_inventory(api, expected=EXPECTED_CHANNEL):
     uploads=(exact[0].get("contentDetails") or {}).get("relatedPlaylists",{}).get("uploads")
     if not uploads:
         raise RuntimeError("YOUTUBE_UPLOAD_PLAYLIST_NOT_FOUND")
-    try:
-        videos=_provider_upload_snapshot(api,uploads,50)
-    except RuntimeError as error:
-        if str(error)!="YOUTUBE_UPLOAD_PLAYLIST_PAGE_OVERLAP":
-            raise
-        # A live upload shifted a page boundary mid-scan. Re-read all
-        # provider pages with a different size; do not count the overlapped
-        # playlist item twice or reserve from an incomplete snapshot.
-        print("YOUTUBE_UPLOAD_PLAYLIST_RESCAN_DIFFERENT_PAGE_BOUNDARIES",flush=True)
+    # YouTube sometimes returns the SAME playlistItem on adjacent pages
+    # even when neither page includes an invalid Video ID. A 50-item
+    # snapshot and a 37-item retry can both have overlapping boundaries
+    # (confirmed for the real 101-item owned uploads playlist).
+    # Small, independent page partitions are safer than falsely treating
+    # a 99-video Search subset as complete or bypassing inventory checks.
+    # Accept ONLY one complete, exact-count, SHA-free provider snapshot:
+    # _provider_upload_snapshot validates all resource IDs and statuses.
+    for size in (50,37,25,10,5):
         try:
-            videos=_provider_upload_snapshot(api,uploads,37)
-        except RuntimeError as again:
-            if str(again)!="YOUTUBE_UPLOAD_PLAYLIST_PAGE_OVERLAP":
+            videos=_provider_upload_snapshot(api,uploads,size)
+            return release_times_from_items(videos)
+        except RuntimeError as error:
+            if str(error)!="YOUTUBE_UPLOAD_PLAYLIST_PAGE_OVERLAP":
                 raise
-            print("YOUTUBE_UPLOAD_PLAYLIST_TWO_INCONSISTENT_SCANS",
-                  "independent_owner_search_required",flush=True)
-            videos=_independent_owned_video_search(api,uploads)
+            print("YOUTUBE_UPLOAD_PLAYLIST_RESCAN_DIFFERENT_PAGE_BOUNDARIES",
+                  "page_size",size,flush=True)
+    print("YOUTUBE_UPLOAD_PLAYLIST_ALL_PARTITIONS_INCONSISTENT",
+          "independent_owner_search_required",flush=True)
+    videos=_independent_owned_video_search(api,uploads)
     return release_times_from_items(videos)
 
 def next_verified_slot(api, now=None):

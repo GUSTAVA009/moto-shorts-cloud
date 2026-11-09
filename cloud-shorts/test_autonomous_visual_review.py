@@ -393,8 +393,16 @@ class AutonomousFactoryVisualReviewTests(unittest.TestCase):
         from copy import deepcopy
         full = json.loads((Path(__file__).parent/"episodes.json").read_text(
             encoding="utf8"))
-        ep = next(x for x in full["episodes"]
+        live = next(x for x in full["episodes"]
                   if x["id"]=="moto-roadtrip-153fe6130270")
+        # The real episode has already passed its third independent
+        # frame review. Test the previously PRIVATE revision state,
+        # not the subsequently approved production catalog entry.
+        self.assertTrue(review.checked_review(live))
+        ep=deepcopy(live)
+        ep["auto_publish"]=False
+        ep["visual_revision_status"]="pending"
+        ep.pop("automated_frame_review",None)
         original = {
             "id":ep["id"],"state":"preview_ready",
             "run_id":"42499999999","attempt_count":3,

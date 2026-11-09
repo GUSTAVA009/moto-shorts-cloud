@@ -160,9 +160,60 @@ class DirectScheduleTests(unittest.TestCase):
             self.assertEqual(youtube_inventory(api),[])
         self.assertEqual(len(set(queried)),101)
         # Two failed but read-only playlist passes also verified 50 IDs each.
-        self.assertEqual(len(queried),201)
+        # Five fail-closed playlist partitions each verified 50 rows,
+        # plus 101 identity-verified owner-search results.
+        self.assertEqual(len(queried),351)
         self.assertIn("INDEPENDENT_OWNER_SEARCH_VERIFIED",capture.getvalue())
         self.assertNotIn(f"{40:011d}",capture.getvalue())
+
+    def test_real_live_page_overlap_recovers_with_25_item_pages(self):
+        """101 owned entries: 50/37 drift, 25 fully reconciles all 100 videos.
+
+        Do NOT use a 99-video private-omitting YouTube Search index.
+        """
+        import io,contextlib
+        from unittest.mock import Mock
+        from direct_schedule import youtube_inventory,EXPECTED_CHANNEL
+        api=Mock()
+        api.channels.return_value.list.return_value.execute.return_value={
+            "items":[{"id":EXPECTED_CHANNEL,
+                      "contentDetails":{"relatedPlaylists":{"uploads":"UU-channel"}}}]}
+        resources=[{"id":f"playlist-{i}",
+                    "contentDetails":{"videoId":f"{i%100:011d}"}}
+                   for i in range(101)]
+        sizes=[]
+        def playlist(**kw):
+            size=kw["maxResults"]
+            sizes.append(size)
+            if size in (50,37):
+                return {
+                    "items":[resources[0]] if not kw.get("pageToken")
+                        else [resources[0]],
+                    "pageInfo":{"totalResults":101},
+                    **({"nextPageToken":"overlap"} if not kw.get("pageToken") else {})}
+            self.assertEqual(size,25)
+            start=int(kw.get("pageToken") or "0")
+            batch=resources[start:start+25]
+            ans={"items":batch,"pageInfo":{"totalResults":101}}
+            if start+25<101:
+                ans["nextPageToken"]=str(start+25)
+            return ans
+        def videos(**kw):
+            return {"items":[{"id":x,"status":{"privacyStatus":"private"}}
+                             for x in kw["id"].split(",")]}
+        api.playlistItems.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:playlist(**kw)))
+        api.videos.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:videos(**kw)))
+        capture=io.StringIO()
+        with contextlib.redirect_stdout(capture):
+            self.assertEqual(youtube_inventory(api),[])
+        self.assertEqual(sizes.count(25),5)
+        self.assertEqual(sizes.count(50),2)
+        self.assertEqual(sizes.count(37),2)
+        self.assertIn("playlist_items 101 unique_videos 100",
+                      capture.getvalue())
+        api.search.assert_not_called()
 
     def test_only_valid_live_inventory_may_select_next(self):
         import unittest.mock
