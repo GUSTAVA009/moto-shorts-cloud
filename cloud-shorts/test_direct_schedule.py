@@ -299,15 +299,27 @@ class DirectScheduleTests(unittest.TestCase):
             self.assertEqual(youtube_inventory(api),[])
         self.assertIn("verified_missing_videos 3",out.getvalue())
 
-        # More than six omitted IDs is not a trustworthy owner Search
+        def wrong_channel(**kw):
+            return {"items":[{"id":vid,"status":{"privacyStatus":"private"},
+                              "snippet":{"channelId":"UCwrong-owner"}}
+                             for vid in kw["id"].split(",")]}
+        api.videos.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:wrong_channel(**kw)))
+        with self.assertRaisesRegex(RuntimeError,
+                                    "LAG_NOT_PROVEN"):
+            youtube_inventory(api)
+        api.videos.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:videos(**kw)))
+
+        # A large missing Search subset is not a trustworthy owner Search
         # inventory, even if every queried entry appears in the playlist.
         def too_incomplete(**kw):
             start=int(kw.get("pageToken") or "0")
             items=[{"id":{"kind":"youtube#video",
                            "videoId":f"{i:011d}"}}
-                   for i in range(start,min(start+50,92))]
+                   for i in range(start,min(start+50,75))]
             ans={"items":items}
-            if start+50<92:
+            if start+50<75:
                 ans["nextPageToken"]=str(start+50)
             return ans
         api.search.return_value.list.side_effect=lambda **kw:(
