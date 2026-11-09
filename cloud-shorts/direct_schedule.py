@@ -192,6 +192,38 @@ def _provider_identity_snapshot_with_overlaps(api, uploads, size):
     return frozenset(ids),expected
 
 
+def _owner_verified_playlist_videos(api, video_ids):
+    """Verify every Video ID in the OAuth owner's complete uploads playlist.
+
+    YouTube Search is an index and may omit many older/private uploads.
+    The owner's uploads playlist + videos.list(status,snippet.channelId)
+    are authoritative for scheduling; do not use search result counts.
+    """
+    if (not isinstance(video_ids,frozenset) or not video_ids
+            or len(video_ids)>MAX_UPLOADS_TO_AUDIT
+            or any(not isinstance(x,str) or len(x)!=11 for x in video_ids)):
+        raise RuntimeError("YOUTUBE_VERIFIED_UPLOAD_IDS_INVALID")
+    result=[]
+    ordered=sorted(video_ids)
+    for start in range(0,len(ordered),50):
+        requested=ordered[start:start+50]
+        page=api.videos().list(
+            part="id,status,snippet",id=",".join(requested)).execute()
+        found=page.get("items")
+        if (not isinstance(found,list) or len(found)!=len(requested)
+                or {item.get("id") for item in found}!=set(requested)):
+            raise RuntimeError("YOUTUBE_VERIFIED_UPLOAD_STATUSES_INCOMPLETE")
+        for item in found:
+            if (not isinstance(item.get("status"),dict)
+                    or not isinstance(item.get("snippet"),dict)
+                    or item["snippet"].get("channelId")!=EXPECTED_CHANNEL):
+                raise RuntimeError("YOUTUBE_VERIFIED_UPLOAD_WRONG_OWNER_OR_STATUS")
+        result.extend(found)
+    print("YOUTUBE_UPLOADS_OAUTH_OWNER_AND_STATUS_VERIFIED",
+          "unique_videos",len(result),"owner",EXPECTED_CHANNEL,flush=True)
+    return result
+
+
 def _independent_owned_video_search(api, uploads, expected_video_ids=None,
                                     allow_search_index_lag=False):
     """Fallback to separate owner-authenticated YouTube Search API if the
@@ -352,8 +384,13 @@ def youtube_inventory(api, expected=EXPECTED_CHANNEL):
     print("YOUTUBE_UPLOAD_PLAYLIST_TWO_STABLE_OWNER_SCANS",
           "unique_video_ids",len(first),
           "small_page_subset",len(smaller),flush=True)
-    videos=_independent_owned_video_search(
-        api,uploads,expected_video_ids=first,allow_search_index_lag=True)
+    # Official owner playlist explicitly identifies every uploaded Video ID.
+    # Read all 99 IDs from videos.list and demand the exact authenticated
+    # channelId on EACH row. The independent Search index previously returned
+    # 99, 98, 96, 92 and 75 IDs for the very same stable owner inventory.
+    # It is therefore not a trustworthy completeness source for PRIVATE
+    # videos, whereas videos.list supplies actual status/publishAt for each.
+    videos=_owner_verified_playlist_videos(api,first)
     return release_times_from_items(videos)
 
 def next_verified_slot(api, now=None):

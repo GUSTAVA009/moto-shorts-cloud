@@ -108,7 +108,7 @@ class DirectScheduleTests(unittest.TestCase):
         api.videos.return_value.list.return_value.execute.return_value={
             "items":[{"id":"12345678901","status":{"privacyStatus":"private"}}]}
         api.search.return_value.list.return_value.execute.return_value={"items":[]}
-        with self.assertRaisesRegex(RuntimeError,"CROSSCHECK_INCOMPLETE"):
+        with self.assertRaisesRegex(RuntimeError,"WRONG_OWNER_OR_STATUS"):
             youtube_inventory(api)
 
     def test_independent_owner_api_can_resolve_two_overlapping_uploads_scans(self):
@@ -264,7 +264,7 @@ class DirectScheduleTests(unittest.TestCase):
         text=out.getvalue()
         self.assertIn("TWO_STABLE_OWNER_SCANS",text)
         self.assertIn("unique_videos 99",text)
-        self.assertIn("INDEPENDENT_OWNER_SEARCH_VERIFIED",text)
+        self.assertIn("UPLOADS_OAUTH_OWNER_AND_STATUS_VERIFIED",text)
 
         # One Search-index missing PRIVATE video is admissible only if
         # videos.list verifies its exact owner-playlist Video ID.
@@ -281,7 +281,7 @@ class DirectScheduleTests(unittest.TestCase):
             Mock(execute=lambda:truncated(**kw)))
         with contextlib.redirect_stdout(out):
             self.assertEqual(youtube_inventory(api),[])
-        self.assertIn("verified_missing_videos 1",out.getvalue())
+        self.assertIn("UPLOADS_OAUTH_OWNER_AND_STATUS_VERIFIED",out.getvalue())
 
         # Three owner Search omissions cannot safely be reconciled.
         def incomplete(**kw):
@@ -297,7 +297,7 @@ class DirectScheduleTests(unittest.TestCase):
             Mock(execute=lambda:incomplete(**kw)))
         with contextlib.redirect_stdout(out):
             self.assertEqual(youtube_inventory(api),[])
-        self.assertIn("verified_missing_videos 3",out.getvalue())
+        self.assertIn("UPLOADS_OAUTH_OWNER_AND_STATUS_VERIFIED",out.getvalue())
 
         def wrong_channel(**kw):
             return {"items":[{"id":vid,"status":{"privacyStatus":"private"},
@@ -306,7 +306,7 @@ class DirectScheduleTests(unittest.TestCase):
         api.videos.return_value.list.side_effect=lambda **kw:(
             Mock(execute=lambda:wrong_channel(**kw)))
         with self.assertRaisesRegex(RuntimeError,
-                                    "LAG_NOT_PROVEN"):
+                                    "WRONG_OWNER_OR_STATUS"):
             youtube_inventory(api)
         api.videos.return_value.list.side_effect=lambda **kw:(
             Mock(execute=lambda:videos(**kw)))
@@ -324,9 +324,9 @@ class DirectScheduleTests(unittest.TestCase):
             return ans
         api.search.return_value.list.side_effect=lambda **kw:(
             Mock(execute=lambda:too_incomplete(**kw)))
-        with self.assertRaisesRegex(RuntimeError,
-                                    "CROSSCHECK_INCOMPLETE"):
-            youtube_inventory(api)
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(youtube_inventory(api),[])
+        api.search.assert_not_called()
 
     def test_only_valid_live_inventory_may_select_next(self):
         import unittest.mock
