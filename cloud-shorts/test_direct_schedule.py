@@ -156,14 +156,15 @@ class DirectScheduleTests(unittest.TestCase):
         api.videos.return_value.list.side_effect=lambda **kw:(
             Mock(execute=lambda:videos(**kw)))
         capture=io.StringIO()
+        # The fixture returns only 51 playlist rows despite a reported 101.
+        # An incomplete provider snapshot cannot be rescued by a search
+        # index, even if that index claims to contain all 101 video IDs.
         with contextlib.redirect_stdout(capture):
-            self.assertEqual(youtube_inventory(api),[])
-        self.assertEqual(len(set(queried)),101)
-        # Two failed but read-only playlist passes also verified 50 IDs each.
-        # Five fail-closed playlist partitions each verified 50 rows,
-        # plus 101 identity-verified owner-search results.
-        self.assertEqual(len(queried),351)
-        self.assertIn("INDEPENDENT_OWNER_SEARCH_VERIFIED",capture.getvalue())
+            with self.assertRaisesRegex(RuntimeError,"CROSSCHECK_INCOMPLETE"):
+                youtube_inventory(api)
+        self.assertEqual(len(set(queried)),50)
+        self.assertIn("PARTITION_REJECTED",capture.getvalue())
+        self.assertNotIn("INDEPENDENT_OWNER_SEARCH_VERIFIED",capture.getvalue())
         self.assertNotIn(f"{40:011d}",capture.getvalue())
 
     def test_real_live_page_overlap_recovers_with_25_item_pages(self):
@@ -214,6 +215,72 @@ class DirectScheduleTests(unittest.TestCase):
         self.assertIn("playlist_items 101 unique_videos 100",
                       capture.getvalue())
         api.search.assert_not_called()
+
+    def test_live_101_playlist_rows_and_99_owner_videos_agree_only_after_two_full_scans(self):
+        """The real anomaly: exactly two repeated item IDs, 99 owned Video IDs.
+
+        Match the complete IDs across two differently paginated playlist
+        passes AND OAuth owner search. No guessing missing videos.
+        """
+        import io,contextlib
+        from unittest.mock import Mock
+        from direct_schedule import youtube_inventory,EXPECTED_CHANNEL
+        api=Mock()
+        api.channels.return_value.list.return_value.execute.return_value={
+            "items":[{"id":EXPECTED_CHANNEL,
+                      "contentDetails":{"relatedPlaylists":{"uploads":"UU-channel"}}}]}
+        distinct=[{"id":"playlist-"+str(i),
+                   "contentDetails":{"videoId":f"{i:011d}"}} for i in range(99)]
+        rows=distinct+[distinct[30],distinct[40]]
+        def playlist(**kw):
+            start=int(kw.get("pageToken") or "0")
+            size=kw["maxResults"]
+            result={"items":rows[start:start+size],
+                    "pageInfo":{"totalResults":101}}
+            if start+size<101:
+                result["nextPageToken"]=str(start+size)
+            return result
+        def search(**kw):
+            start=int(kw.get("pageToken") or "0")
+            items=[{"id":{"kind":"youtube#video",
+                           "videoId":f"{i:011d}"}}
+                   for i in range(start,min(start+50,99))]
+            result={"items":items}
+            if start+50<99:
+                result["nextPageToken"]=str(start+50)
+            return result
+        def videos(**kw):
+            return {"items":[{"id":vid,"status":{"privacyStatus":"private"}}
+                             for vid in kw["id"].split(",")]}
+        api.playlistItems.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:playlist(**kw)))
+        api.search.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:search(**kw)))
+        api.videos.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:videos(**kw)))
+        out=io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(youtube_inventory(api),[])
+        text=out.getvalue()
+        self.assertIn("TWO_FULL_SAME_ID_SETS",text)
+        self.assertIn("unique_videos 99",text)
+        self.assertIn("INDEPENDENT_OWNER_SEARCH_VERIFIED",text)
+
+        # With one private owned video missing from Search, block upload.
+        def truncated(**kw):
+            start=int(kw.get("pageToken") or "0")
+            items=[{"id":{"kind":"youtube#video",
+                           "videoId":f"{i:011d}"}}
+                   for i in range(start,min(start+50,98))]
+            result={"items":items}
+            if start+50<98:
+                result["nextPageToken"]=str(start+50)
+            return result
+        api.search.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:truncated(**kw)))
+        with self.assertRaisesRegex(RuntimeError,
+                                    "CROSSCHECK_INCOMPLETE"):
+            youtube_inventory(api)
 
     def test_only_valid_live_inventory_may_select_next(self):
         import unittest.mock
