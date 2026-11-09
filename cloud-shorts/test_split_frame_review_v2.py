@@ -61,7 +61,13 @@ class StrictSplitVisionForExistingMovie(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         catalog=json.loads((HERE/"episodes.json").read_text(encoding="utf8"))
-        cls.episode=next(x for x in catalog["episodes"] if x["id"]==EPISODE_ID)
+        live=next(x for x in catalog["episodes"] if x["id"]==EPISODE_ID)
+        # The third real MP4 has since passed frame review and is approved.
+        # Replay its earlier private pre-approval state, not the live state.
+        cls.episode=deepcopy(live)
+        cls.episode["auto_publish"]=False
+        cls.episode["visual_revision_status"]="pending"
+        cls.episode.pop("automated_frame_review",None)
 
     def receipt(self):
         return {

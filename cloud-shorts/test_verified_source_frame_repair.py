@@ -20,7 +20,12 @@ SLUG="moto-roadtrip-153fe6130270"
 
 def fixture():
     d=json.loads((HERE/"episodes.json").read_text(encoding="utf8"))
-    ep=next(x for x in d["episodes"] if x["id"]==SLUG)
+    live=next(x for x in d["episodes"] if x["id"]==SLUG)
+    # Original repair was private, before subsequent independent approval.
+    ep=deepcopy(live)
+    ep["auto_publish"]=False
+    ep["visual_revision_status"]="pending"
+    ep.pop("automated_frame_review",None)
     proof=ep["visual_revision_evidence"]
     receipt={
        "id":SLUG,"state":"preview_ready","run_id":proof["prior_run_id"],
