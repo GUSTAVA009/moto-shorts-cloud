@@ -235,7 +235,14 @@ class DirectScheduleTests(unittest.TestCase):
         def playlist(**kw):
             start=int(kw.get("pageToken") or "0")
             size=kw["maxResults"]
-            result={"items":rows[start:start+size],
+            # Real 25-row pagination includes one distinct upload missing
+            # from BOTH stable 37-row scans. The full verified ID union must
+            # include that additional owner video, never discard it.
+            sampled=list(rows)
+            if size==25:
+                sampled[70]={"id":"playlist-extra-100",
+                             "contentDetails":{"videoId":f"{100:011d}"}}
+            result={"items":sampled[start:start+size],
                     "pageInfo":{"totalResults":101}}
             if start+size<101:
                 result["nextPageToken"]=str(start+size)
@@ -262,8 +269,8 @@ class DirectScheduleTests(unittest.TestCase):
         with contextlib.redirect_stdout(out):
             self.assertEqual(youtube_inventory(api),[])
         text=out.getvalue()
-        self.assertIn("TWO_STABLE_OWNER_SCANS",text)
-        self.assertIn("unique_videos 99",text)
+        self.assertIn("STABLE_OWNER_AND_BOUNDARY_UNION",text)
+        self.assertIn("unique_videos 100",text)
         self.assertIn("UPLOADS_OAUTH_OWNER_AND_STATUS_VERIFIED",text)
 
         # One Search-index missing PRIVATE video is admissible only if

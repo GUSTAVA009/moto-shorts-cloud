@@ -377,20 +377,26 @@ def youtube_inventory(api, expected=EXPECTED_CHANNEL):
     except RuntimeError as error:
         raise RuntimeError(
             "YOUTUBE_UPLOAD_INVENTORY_CROSSCHECK_INCOMPLETE") from error
+    # The live YouTube page=25 view can contain one video *missing* from
+    # the two identical page=37 scans. Retain its ID rather than silently
+    # under-counting actual uploads. Every merged ID must be independently
+    # resolved to the SAME authenticated channel by videos.list below.
+    merged=frozenset(first|smaller)
+    drift=len(first.symmetric_difference(smaller))
     if (total!=second_total or total!=small_total
-            or first!=repeat or not smaller.issubset(first)
-            or len(first)-len(smaller)>2):
+            or first!=repeat or drift>6
+            or len(merged)>total or len(merged)<total-4):
         raise RuntimeError("YOUTUBE_UPLOAD_INVENTORY_CROSSCHECK_INCOMPLETE")
-    print("YOUTUBE_UPLOAD_PLAYLIST_TWO_STABLE_OWNER_SCANS",
-          "unique_video_ids",len(first),
-          "small_page_subset",len(smaller),flush=True)
+    print("YOUTUBE_UPLOAD_PLAYLIST_STABLE_OWNER_AND_BOUNDARY_UNION",
+          "stable_ids",len(first),"alternate_ids",len(smaller),
+          "union",len(merged),"boundary_difference",drift,flush=True)
     # Official owner playlist explicitly identifies every uploaded Video ID.
     # Read all 99 IDs from videos.list and demand the exact authenticated
     # channelId on EACH row. The independent Search index previously returned
     # 99, 98, 96, 92 and 75 IDs for the very same stable owner inventory.
     # It is therefore not a trustworthy completeness source for PRIVATE
     # videos, whereas videos.list supplies actual status/publishAt for each.
-    videos=_owner_verified_playlist_videos(api,first)
+    videos=_owner_verified_playlist_videos(api,merged)
     return release_times_from_items(videos)
 
 def next_verified_slot(api, now=None):
