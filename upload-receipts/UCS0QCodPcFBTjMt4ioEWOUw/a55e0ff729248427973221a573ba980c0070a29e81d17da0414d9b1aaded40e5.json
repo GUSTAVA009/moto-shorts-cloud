@@ -1,8 +1,12 @@
 {
   "channel_id": "UCS0QCodPcFBTjMt4ioEWOUw",
   "episode": "moto-roadtrip-153fe6130270",
+  "privacy_requested": "private",
   "run_id": "42552305531",
+  "scheduled_at": "2026-11-09T05:00:00Z",
   "sha256": "a55e0ff729248427973221a573ba980c0070a29e81d17da0414d9b1aaded40e5",
-  "status": "reserved",
-  "warning": "Do not retry if upload outcome is uncertain; reconcile with YouTube Studio."
+  "status": "uploaded",
+  "video_id": "yXEqerEreTA",
+  "warning": "Do not retry if upload outcome is uncertain; reconcile with YouTube Studio.",
+  "youtube_url": "https://www.youtube.com/watch?v=yXEqerEreTA"
 }
