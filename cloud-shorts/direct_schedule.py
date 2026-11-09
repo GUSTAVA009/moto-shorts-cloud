@@ -275,7 +275,7 @@ def _independent_owned_video_search(api, uploads, expected_video_ids=None,
         complete=(isinstance(expected_video_ids,frozenset)
                   and len(all_rows)==len(seen)
                   and seen.issubset(expected_video_ids)
-                  and 0<=len(expected_video_ids)-len(seen)<=2
+                  and 0<=len(expected_video_ids)-len(seen)<=6
                   and 0<=reported-len(expected_video_ids)<=2)
     if not complete or not set(first_ids).issubset(seen):
         print("YOUTUBE_SEARCH_CROSSCHECK_INCOMPLETE",
@@ -291,6 +291,7 @@ def _independent_owned_video_search(api, uploads, expected_video_ids=None,
                     or {x.get("id") for x in verified}!=set(missing)
                     or any(not isinstance(x.get("status"),dict)
                            or not isinstance(x.get("snippet"),dict)
+                           or x["snippet"].get("channelId")!=EXPECTED_CHANNEL
                            for x in verified)):
                 raise RuntimeError("YOUTUBE_OWNED_PRIVATE_SEARCH_LAG_NOT_PROVEN")
             all_rows.extend(verified)

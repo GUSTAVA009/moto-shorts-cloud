@@ -250,7 +250,7 @@ class DirectScheduleTests(unittest.TestCase):
                 result["nextPageToken"]=str(start+50)
             return result
         def videos(**kw):
-            return {"items":[{"id":vid,"status":{"privacyStatus":"private"},"snippet":{}}
+            return {"items":[{"id":vid,"status":{"privacyStatus":"private"},"snippet":{"channelId":EXPECTED_CHANNEL}}
                              for vid in kw["id"].split(",")]}
         api.playlistItems.return_value.list.side_effect=lambda **kw:(
             Mock(execute=lambda:playlist(**kw)))
@@ -295,6 +295,23 @@ class DirectScheduleTests(unittest.TestCase):
             return result
         api.search.return_value.list.side_effect=lambda **kw:(
             Mock(execute=lambda:incomplete(**kw)))
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(youtube_inventory(api),[])
+        self.assertIn("verified_missing_videos 3",out.getvalue())
+
+        # More than six omitted IDs is not a trustworthy owner Search
+        # inventory, even if every queried entry appears in the playlist.
+        def too_incomplete(**kw):
+            start=int(kw.get("pageToken") or "0")
+            items=[{"id":{"kind":"youtube#video",
+                           "videoId":f"{i:011d}"}}
+                   for i in range(start,min(start+50,92))]
+            ans={"items":items}
+            if start+50<92:
+                ans["nextPageToken"]=str(start+50)
+            return ans
+        api.search.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:too_incomplete(**kw)))
         with self.assertRaisesRegex(RuntimeError,
                                     "CROSSCHECK_INCOMPLETE"):
             youtube_inventory(api)
