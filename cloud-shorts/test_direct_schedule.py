@@ -163,7 +163,7 @@ class DirectScheduleTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,"CROSSCHECK_INCOMPLETE"):
                 youtube_inventory(api)
         self.assertEqual(len(set(queried)),50)
-        self.assertIn("PARTITION_REJECTED",capture.getvalue())
+        self.assertIn("ALL_PARTITIONS_INCONSISTENT",capture.getvalue())
         self.assertNotIn("INDEPENDENT_OWNER_SEARCH_VERIFIED",capture.getvalue())
         self.assertNotIn(f"{40:011d}",capture.getvalue())
 
@@ -250,7 +250,7 @@ class DirectScheduleTests(unittest.TestCase):
                 result["nextPageToken"]=str(start+50)
             return result
         def videos(**kw):
-            return {"items":[{"id":vid,"status":{"privacyStatus":"private"}}
+            return {"items":[{"id":vid,"status":{"privacyStatus":"private"},"snippet":{}}
                              for vid in kw["id"].split(",")]}
         api.playlistItems.return_value.list.side_effect=lambda **kw:(
             Mock(execute=lambda:playlist(**kw)))
@@ -262,11 +262,12 @@ class DirectScheduleTests(unittest.TestCase):
         with contextlib.redirect_stdout(out):
             self.assertEqual(youtube_inventory(api),[])
         text=out.getvalue()
-        self.assertIn("TWO_FULL_SAME_ID_SETS",text)
+        self.assertIn("TWO_STABLE_OWNER_SCANS",text)
         self.assertIn("unique_videos 99",text)
         self.assertIn("INDEPENDENT_OWNER_SEARCH_VERIFIED",text)
 
-        # With one private owned video missing from Search, block upload.
+        # One Search-index missing PRIVATE video is admissible only if
+        # videos.list verifies its exact owner-playlist Video ID.
         def truncated(**kw):
             start=int(kw.get("pageToken") or "0")
             items=[{"id":{"kind":"youtube#video",
@@ -278,6 +279,22 @@ class DirectScheduleTests(unittest.TestCase):
             return result
         api.search.return_value.list.side_effect=lambda **kw:(
             Mock(execute=lambda:truncated(**kw)))
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(youtube_inventory(api),[])
+        self.assertIn("verified_missing_videos 1",out.getvalue())
+
+        # Three owner Search omissions cannot safely be reconciled.
+        def incomplete(**kw):
+            start=int(kw.get("pageToken") or "0")
+            rows=[{"id":{"kind":"youtube#video",
+                         "videoId":f"{i:011d}"}}
+                  for i in range(start,min(start+50,96))]
+            result={"items":rows}
+            if start+50<96:
+                result["nextPageToken"]=str(start+50)
+            return result
+        api.search.return_value.list.side_effect=lambda **kw:(
+            Mock(execute=lambda:incomplete(**kw)))
         with self.assertRaisesRegex(RuntimeError,
                                     "CROSSCHECK_INCOMPLETE"):
             youtube_inventory(api)

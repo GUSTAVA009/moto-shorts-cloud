@@ -192,7 +192,8 @@ def _provider_identity_snapshot_with_overlaps(api, uploads, size):
     return frozenset(ids),expected
 
 
-def _independent_owned_video_search(api, uploads, expected_video_ids=None):
+def _independent_owned_video_search(api, uploads, expected_video_ids=None,
+                                    allow_search_index_lag=False):
     """Fallback to separate owner-authenticated YouTube Search API if the
 
     Uploads playlist's own page tokens overlap. Never infer missing IDs or
@@ -260,18 +261,46 @@ def _independent_owned_video_search(api, uploads, expected_video_ids=None):
     # index. The playlist's row count is not a count of unique videos.
     if expected_video_ids is None:
         complete=(len(seen)==reported and len(all_rows)==reported)
-    else:
+    elif not allow_search_index_lag:
         complete=(isinstance(expected_video_ids,frozenset)
                   and seen==expected_video_ids
                   and len(all_rows)==len(seen)
                   and len(seen)<=reported)
+    else:
+        # Search forMine sometimes omits one or two older PRIVATE videos.
+        # Such a video is never inferred: it must be present in TWO complete
+        # repeat scans of the OAuth owner's uploads playlist, which itself
+        # reports 101 raw rows (including two duplicated item resources).
+        # Then require a real videos.list status for every Search-omitted ID.
+        complete=(isinstance(expected_video_ids,frozenset)
+                  and len(all_rows)==len(seen)
+                  and seen.issubset(expected_video_ids)
+                  and 0<=len(expected_video_ids)-len(seen)<=2
+                  and 0<=reported-len(expected_video_ids)<=2)
     if not complete or not set(first_ids).issubset(seen):
         print("YOUTUBE_SEARCH_CROSSCHECK_INCOMPLETE",
               "playlist_total",reported,"unique_owner_search",len(seen),
               "first_playlist_covered",set(first_ids).issubset(seen),flush=True)
         raise RuntimeError("YOUTUBE_UPLOAD_INVENTORY_CROSSCHECK_INCOMPLETE")
+    if allow_search_index_lag and expected_video_ids is not None:
+        missing=sorted(expected_video_ids-seen)
+        if missing:
+            verified=api.videos().list(
+                part="id,status,snippet",id=",".join(missing)).execute().get("items",[])
+            if (not isinstance(verified,list) or len(verified)!=len(missing)
+                    or {x.get("id") for x in verified}!=set(missing)
+                    or any(not isinstance(x.get("status"),dict)
+                           or not isinstance(x.get("snippet"),dict)
+                           for x in verified)):
+                raise RuntimeError("YOUTUBE_OWNED_PRIVATE_SEARCH_LAG_NOT_PROVEN")
+            all_rows.extend(verified)
+        if {x.get("id") for x in all_rows}!=expected_video_ids:
+            raise RuntimeError("YOUTUBE_SEARCH_PLAYLIST_FULL_ID_SET_MISMATCH")
+        print("YOUTUBE_OWNER_SEARCH_INDEX_LAG_RECONCILED",
+              "search",len(seen),"playlist",len(expected_video_ids),
+              "verified_missing_videos",len(missing),flush=True)
     print("YOUTUBE_UPLOAD_INVENTORY_INDEPENDENT_OWNER_SEARCH_VERIFIED",
-          "unique_videos",len(seen),"playlist_reported",reported,flush=True)
+          "unique_videos",len(all_rows),"playlist_reported",reported,flush=True)
     return all_rows
 
 
@@ -302,27 +331,29 @@ def youtube_inventory(api, expected=EXPECTED_CHANNEL):
                   "page_size",size,flush=True)
     print("YOUTUBE_UPLOAD_PLAYLIST_ALL_PARTITIONS_INCONSISTENT",
           "require_two_full_identity_reconciliations",flush=True)
-    snapshots={}
-    for size in (37,25,10,5):
-        try:
-            id_set,total=_provider_identity_snapshot_with_overlaps(
-                api,uploads,size)
-        except RuntimeError as error:
-            print("YOUTUBE_OVERLAP_RECONCILE_PARTITION_REJECTED",
-                  "page_size",size,str(error),flush=True)
-            continue
-        key=(id_set,total)
-        snapshots.setdefault(key,[]).append(size)
-        if len(snapshots[key])>=2:
-            print("YOUTUBE_UPLOAD_PLAYLIST_TWO_FULL_SAME_ID_SETS",
-                  "page_sizes",snapshots[key],
-                  "unique_video_ids",len(id_set),flush=True)
-            videos=_independent_owned_video_search(
-                api,uploads,expected_video_ids=id_set)
-            return release_times_from_items(videos)
-    # Still fail closed when Search omits private uploads or when changing
-    # playlist pages cannot agree on an identical complete owner ID set.
-    raise RuntimeError("YOUTUBE_UPLOAD_INVENTORY_CROSSCHECK_INCOMPLETE")
+    # The real API yields 99 unique IDs at page_size=37 but only 98,
+    # 94 or 87 with smaller page sizes. Repeat 37 independently to prove
+    # the SAME full ID set, then use size=25 only as a subset crosscheck.
+    # Never mistake a smaller truncated page partition for a new video.
+    try:
+        first,total=_provider_identity_snapshot_with_overlaps(api,uploads,37)
+        repeat,second_total=_provider_identity_snapshot_with_overlaps(
+            api,uploads,37)
+        smaller,small_total=_provider_identity_snapshot_with_overlaps(
+            api,uploads,25)
+    except RuntimeError as error:
+        raise RuntimeError(
+            "YOUTUBE_UPLOAD_INVENTORY_CROSSCHECK_INCOMPLETE") from error
+    if (total!=second_total or total!=small_total
+            or first!=repeat or not smaller.issubset(first)
+            or len(first)-len(smaller)>2):
+        raise RuntimeError("YOUTUBE_UPLOAD_INVENTORY_CROSSCHECK_INCOMPLETE")
+    print("YOUTUBE_UPLOAD_PLAYLIST_TWO_STABLE_OWNER_SCANS",
+          "unique_video_ids",len(first),
+          "small_page_subset",len(smaller),flush=True)
+    videos=_independent_owned_video_search(
+        api,uploads,expected_video_ids=first,allow_search_index_lag=True)
+    return release_times_from_items(videos)
 
 def next_verified_slot(api, now=None):
     now = now or datetime.now(timezone.utc)
